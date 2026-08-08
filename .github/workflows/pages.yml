@@ -32,8 +32,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Skip re-entry when bot commits refreshed docs
-    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message || '', '[skip ci]') }}
+    # Avoid loop when bot commits refreshed docs
+    if: ${{ github.event_name != 'push' || github.event.head_commit == null || !contains(github.event.head_commit.message, '[skip ci]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
