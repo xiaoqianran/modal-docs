@@ -279,13 +279,24 @@
   document.querySelectorAll("[data-copy]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const code = btn.closest(".code-block")?.querySelector("code")?.innerText || "";
+      const copyL = btn.getAttribute("data-label-copy") || "Copy";
+      const copiedL = btn.getAttribute("data-label-copied") || "Copied";
       try {
         await navigator.clipboard.writeText(code);
-        btn.textContent = "Copied";
-        setTimeout(() => (btn.textContent = "Copy"), 1200);
+        btn.textContent = copiedL;
+        setTimeout(() => (btn.textContent = copyL), 1200);
       } catch {
         btn.textContent = "Failed";
       }
+    });
+  });
+
+  // remember language preference when user clicks switcher
+  document.querySelectorAll("[data-lang-set]").forEach((a) => {
+    a.addEventListener("click", () => {
+      try {
+        localStorage.setItem("modal-docs-lang", a.getAttribute("data-lang-set") || "en");
+      } catch (_) {}
     });
   });
 

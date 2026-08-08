@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-08T18:13:25.617Z",
+  "fetchedAt": "2026-08-08T18:26:01.806Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 294,
   "ok": 294,
@@ -7,2061 +7,2355 @@
   "pages": [
     {
       "url": "https://modal.com/docs",
-      "source": "https://modal.com/docs",
+      "source": "stub",
       "finalUrl": "https://modal.com/docs",
       "path": "docs.md",
-      "bytes": 54159
+      "bytes": 171,
+      "stub": true
+    },
+    {
+      "url": "https://modal.com/docs/cli/changelog.md",
+      "source": "https://modal.com/docs/cli/changelog.md",
+      "finalUrl": "https://modal.com/docs/sdk/py/changelog.md",
+      "path": "docs/cli/changelog.md",
+      "bytes": 61640,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/app.md",
       "source": "https://modal.com/docs/cli/latest/app.md",
       "finalUrl": "https://modal.com/docs/cli/latest/app.md",
       "path": "docs/cli/latest/app.md",
-      "bytes": 6482
+      "bytes": 6482,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/billing.md",
       "source": "https://modal.com/docs/cli/latest/billing.md",
       "finalUrl": "https://modal.com/docs/cli/latest/billing.md",
       "path": "docs/cli/latest/billing.md",
-      "bytes": 3422
+      "bytes": 3422,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/bootstrap.md",
       "source": "https://modal.com/docs/cli/latest/bootstrap.md",
       "finalUrl": "https://modal.com/docs/cli/latest/bootstrap.md",
       "path": "docs/cli/latest/bootstrap.md",
-      "bytes": 290
+      "bytes": 290,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/changelog.md",
       "source": "https://modal.com/docs/cli/latest/changelog.md",
       "finalUrl": "https://modal.com/docs/cli/latest/changelog.md",
       "path": "docs/cli/latest/changelog.md",
-      "bytes": 1454
+      "bytes": 1454,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/config.md",
       "source": "https://modal.com/docs/cli/latest/config.md",
       "finalUrl": "https://modal.com/docs/cli/latest/config.md",
       "path": "docs/cli/latest/config.md",
-      "bytes": 1236
+      "bytes": 1236,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/container.md",
       "source": "https://modal.com/docs/cli/latest/container.md",
       "finalUrl": "https://modal.com/docs/cli/latest/container.md",
       "path": "docs/cli/latest/container.md",
-      "bytes": 3279
+      "bytes": 3279,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/curl.md",
       "source": "https://modal.com/docs/cli/latest/curl.md",
       "finalUrl": "https://modal.com/docs/cli/latest/curl.md",
       "path": "docs/cli/latest/curl.md",
-      "bytes": 756
+      "bytes": 756,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/dashboard.md",
       "source": "https://modal.com/docs/cli/latest/dashboard.md",
       "finalUrl": "https://modal.com/docs/cli/latest/dashboard.md",
       "path": "docs/cli/latest/dashboard.md",
-      "bytes": 183
+      "bytes": 183,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/deploy.md",
       "source": "https://modal.com/docs/cli/latest/deploy.md",
       "finalUrl": "https://modal.com/docs/cli/latest/deploy.md",
       "path": "docs/cli/latest/deploy.md",
-      "bytes": 740
+      "bytes": 740,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/dict.md",
       "source": "https://modal.com/docs/cli/latest/dict.md",
       "finalUrl": "https://modal.com/docs/cli/latest/dict.md",
       "path": "docs/cli/latest/dict.md",
-      "bytes": 3175
+      "bytes": 3175,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/endpoint.md",
       "source": "https://modal.com/docs/cli/latest/endpoint.md",
       "finalUrl": "https://modal.com/docs/cli/latest/endpoint.md",
       "path": "docs/cli/latest/endpoint.md",
-      "bytes": 3675
+      "bytes": 3675,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/environment.md",
       "source": "https://modal.com/docs/cli/latest/environment.md",
       "finalUrl": "https://modal.com/docs/cli/latest/environment.md",
       "path": "docs/cli/latest/environment.md",
-      "bytes": 7333
+      "bytes": 7333,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/image.md",
       "source": "https://modal.com/docs/cli/latest/image.md",
       "finalUrl": "https://modal.com/docs/cli/latest/image.md",
       "path": "docs/cli/latest/image.md",
-      "bytes": 848
+      "bytes": 848,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/intro.md",
       "source": "https://modal.com/docs/cli/latest/intro.md",
       "finalUrl": "https://modal.com/docs/cli/latest/intro.md",
       "path": "docs/cli/latest/intro.md",
-      "bytes": 2510
+      "bytes": 2510,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/profile.md",
       "source": "https://modal.com/docs/cli/latest/profile.md",
       "finalUrl": "https://modal.com/docs/cli/latest/profile.md",
       "path": "docs/cli/latest/profile.md",
-      "bytes": 925
+      "bytes": 925,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/queue.md",
       "source": "https://modal.com/docs/cli/latest/queue.md",
       "finalUrl": "https://modal.com/docs/cli/latest/queue.md",
       "path": "docs/cli/latest/queue.md",
-      "bytes": 3272
+      "bytes": 3272,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/run.md",
       "source": "https://modal.com/docs/cli/latest/run.md",
       "finalUrl": "https://modal.com/docs/cli/latest/run.md",
       "path": "docs/cli/latest/run.md",
-      "bytes": 1510
+      "bytes": 1510,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/secret.md",
       "source": "https://modal.com/docs/cli/latest/secret.md",
       "finalUrl": "https://modal.com/docs/cli/latest/secret.md",
       "path": "docs/cli/latest/secret.md",
-      "bytes": 1604
+      "bytes": 1604,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/serve.md",
       "source": "https://modal.com/docs/cli/latest/serve.md",
       "finalUrl": "https://modal.com/docs/cli/latest/serve.md",
       "path": "docs/cli/latest/serve.md",
-      "bytes": 941
+      "bytes": 941,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/setup.md",
       "source": "https://modal.com/docs/cli/latest/setup.md",
       "finalUrl": "https://modal.com/docs/cli/latest/setup.md",
       "path": "docs/cli/latest/setup.md",
-      "bytes": 172
+      "bytes": 172,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/shell.md",
       "source": "https://modal.com/docs/cli/latest/shell.md",
       "finalUrl": "https://modal.com/docs/cli/latest/shell.md",
       "path": "docs/cli/latest/shell.md",
-      "bytes": 2337
+      "bytes": 2337,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/skills.md",
       "source": "https://modal.com/docs/cli/latest/skills.md",
       "finalUrl": "https://modal.com/docs/cli/latest/skills.md",
       "path": "docs/cli/latest/skills.md",
-      "bytes": 1288
+      "bytes": 1288,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/token.md",
       "source": "https://modal.com/docs/cli/latest/token.md",
       "finalUrl": "https://modal.com/docs/cli/latest/token.md",
       "path": "docs/cli/latest/token.md",
-      "bytes": 1815
+      "bytes": 1815,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/volume.md",
       "source": "https://modal.com/docs/cli/latest/volume.md",
       "finalUrl": "https://modal.com/docs/cli/latest/volume.md",
       "path": "docs/cli/latest/volume.md",
-      "bytes": 5495
+      "bytes": 5495,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/cli/latest/workspace.md",
       "source": "https://modal.com/docs/cli/latest/workspace.md",
       "finalUrl": "https://modal.com/docs/cli/latest/workspace.md",
       "path": "docs/cli/latest/workspace.md",
-      "bytes": 4607
+      "bytes": 4607,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples",
-      "source": "https://modal.com/docs/examples",
+      "source": "stub",
       "finalUrl": "https://modal.com/docs/examples",
       "path": "docs/examples.md",
-      "bytes": 66992
+      "bytes": 169,
+      "stub": true
     },
     {
       "url": "https://modal.com/docs/examples/agent.md",
       "source": "https://modal.com/docs/examples/agent.md",
       "finalUrl": "https://modal.com/docs/examples/agent.md",
       "path": "docs/examples/agent.md",
-      "bytes": 7700
+      "bytes": 7700,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/algolia_indexer.md",
       "source": "https://modal.com/docs/examples/algolia_indexer.md",
       "finalUrl": "https://modal.com/docs/examples/algolia_indexer.md",
       "path": "docs/examples/algolia_indexer.md",
-      "bytes": 5750
+      "bytes": 5750,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/amazon_embeddings.md",
       "source": "https://modal.com/docs/examples/amazon_embeddings.md",
       "finalUrl": "https://modal.com/docs/examples/amazon_embeddings.md",
       "path": "docs/examples/amazon_embeddings.md",
-      "bytes": 11426
+      "bytes": 11426,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/basic_web.md",
       "source": "https://modal.com/docs/examples/basic_web.md",
       "finalUrl": "https://modal.com/docs/examples/basic_web.md",
       "path": "docs/examples/basic_web.md",
-      "bytes": 10415
+      "bytes": 10415,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/batched_whisper.md",
       "source": "https://modal.com/docs/examples/batched_whisper.md",
       "finalUrl": "https://modal.com/docs/examples/batched_whisper.md",
       "path": "docs/examples/batched_whisper.md",
-      "bytes": 6618
+      "bytes": 6618,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/blender_video.md",
       "source": "https://modal.com/docs/examples/blender_video.md",
       "finalUrl": "https://modal.com/docs/examples/blender_video.md",
       "path": "docs/examples/blender_video.md",
-      "bytes": 7518
+      "bytes": 7518,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/boltz_predict.md",
       "source": "https://modal.com/docs/examples/boltz_predict.md",
       "finalUrl": "https://modal.com/docs/examples/boltz_predict.md",
       "path": "docs/examples/boltz_predict.md",
-      "bytes": 7816
+      "bytes": 7816,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/chai1.md",
       "source": "https://modal.com/docs/examples/chai1.md",
       "finalUrl": "https://modal.com/docs/examples/chai1.md",
       "path": "docs/examples/chai1.md",
-      "bytes": 11054
+      "bytes": 11054,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/chat_with_pdf_vision.md",
       "source": "https://modal.com/docs/examples/chat_with_pdf_vision.md",
       "finalUrl": "https://modal.com/docs/examples/chat_with_pdf_vision.md",
       "path": "docs/examples/chat_with_pdf_vision.md",
-      "bytes": 16560
+      "bytes": 16560,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/chatterbox_tts.md",
       "source": "https://modal.com/docs/examples/chatterbox_tts.md",
       "finalUrl": "https://modal.com/docs/examples/chatterbox_tts.md",
       "path": "docs/examples/chatterbox_tts.md",
-      "bytes": 4992
+      "bytes": 4992,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/claude-slack-gif-creator.md",
       "source": "https://modal.com/docs/examples/claude-slack-gif-creator.md",
       "finalUrl": "https://modal.com/docs/examples/claude-slack-gif-creator.md",
       "path": "docs/examples/claude-slack-gif-creator.md",
-      "bytes": 6916
+      "bytes": 6916,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/computer_use_vnc.md",
       "source": "https://modal.com/docs/examples/computer_use_vnc.md",
       "finalUrl": "https://modal.com/docs/examples/computer_use_vnc.md",
       "path": "docs/examples/computer_use_vnc.md",
-      "bytes": 13933
+      "bytes": 13933,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/cron_datasette.md",
       "source": "https://modal.com/docs/examples/cron_datasette.md",
       "finalUrl": "https://modal.com/docs/examples/cron_datasette.md",
       "path": "docs/examples/cron_datasette.md",
-      "bytes": 13636
+      "bytes": 13636,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/db_to_sheet.md",
       "source": "https://modal.com/docs/examples/db_to_sheet.md",
       "finalUrl": "https://modal.com/docs/examples/db_to_sheet.md",
       "path": "docs/examples/db_to_sheet.md",
-      "bytes": 10391
+      "bytes": 10391,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/dbt_duckdb.md",
       "source": "https://modal.com/docs/examples/dbt_duckdb.md",
       "finalUrl": "https://modal.com/docs/examples/dbt_duckdb.md",
       "path": "docs/examples/dbt_duckdb.md",
-      "bytes": 10807
+      "bytes": 10807,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/deepseek_v4_flash.md",
       "source": "https://modal.com/docs/examples/deepseek_v4_flash.md",
       "finalUrl": "https://modal.com/docs/examples/deepseek_v4_flash.md",
       "path": "docs/examples/deepseek_v4_flash.md",
-      "bytes": 11493
+      "bytes": 11493,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
       "source": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
       "finalUrl": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
       "path": "docs/examples/diffusers_lora_finetune.md",
-      "bytes": 21861
+      "bytes": 21861,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/discord_bot.md",
       "source": "https://modal.com/docs/examples/discord_bot.md",
       "finalUrl": "https://modal.com/docs/examples/discord_bot.md",
       "path": "docs/examples/discord_bot.md",
-      "bytes": 15957
+      "bytes": 15957,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "source": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "finalUrl": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "path": "docs/examples/doc_ocr_jobs.md",
-      "bytes": 7815
+      "bytes": 7815,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/doc_ocr_webapp.md",
       "source": "https://modal.com/docs/examples/doc_ocr_webapp.md",
       "finalUrl": "https://modal.com/docs/examples/doc_ocr_webapp.md",
       "path": "docs/examples/doc_ocr_webapp.md",
-      "bytes": 5452
+      "bytes": 5452,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/esm3.md",
       "source": "https://modal.com/docs/examples/esm3.md",
       "finalUrl": "https://modal.com/docs/examples/esm3.md",
       "path": "docs/examples/esm3.md",
-      "bytes": 16912
+      "bytes": 16912,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/esmfold2_binder_design.md",
       "source": "https://modal.com/docs/examples/esmfold2_binder_design.md",
       "finalUrl": "https://modal.com/docs/examples/esmfold2_binder_design.md",
       "path": "docs/examples/esmfold2_binder_design.md",
-      "bytes": 11806
+      "bytes": 11806,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/fastrtc_flip_webcam.md",
       "source": "https://modal.com/docs/examples/fastrtc_flip_webcam.md",
       "finalUrl": "https://modal.com/docs/examples/fastrtc_flip_webcam.md",
       "path": "docs/examples/fastrtc_flip_webcam.md",
-      "bytes": 8672
+      "bytes": 8672,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/fine_tune_asr.md",
       "source": "https://modal.com/docs/examples/fine_tune_asr.md",
       "finalUrl": "https://modal.com/docs/examples/fine_tune_asr.md",
       "path": "docs/examples/fine_tune_asr.md",
-      "bytes": 20382
+      "bytes": 20382,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/finetune_yolo.md",
       "source": "https://modal.com/docs/examples/finetune_yolo.md",
       "finalUrl": "https://modal.com/docs/examples/finetune_yolo.md",
       "path": "docs/examples/finetune_yolo.md",
-      "bytes": 12347
+      "bytes": 12347,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/flux.md",
       "source": "https://modal.com/docs/examples/flux.md",
       "finalUrl": "https://modal.com/docs/examples/flux.md",
       "path": "docs/examples/flux.md",
-      "bytes": 10221
+      "bytes": 10221,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/generate_music.md",
       "source": "https://modal.com/docs/examples/generate_music.md",
       "finalUrl": "https://modal.com/docs/examples/generate_music.md",
       "path": "docs/examples/generate_music.md",
-      "bytes": 10117
+      "bytes": 10117,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/grpo_trl.md",
       "source": "https://modal.com/docs/examples/grpo_trl.md",
       "finalUrl": "https://modal.com/docs/examples/grpo_trl.md",
       "path": "docs/examples/grpo_trl.md",
-      "bytes": 11448
+      "bytes": 11448,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/grpo_verl.md",
       "source": "https://modal.com/docs/examples/grpo_verl.md",
       "finalUrl": "https://modal.com/docs/examples/grpo_verl.md",
       "path": "docs/examples/grpo_verl.md",
-      "bytes": 12382
+      "bytes": 12382,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/hackernews_alerts.md",
       "source": "https://modal.com/docs/examples/hackernews_alerts.md",
       "finalUrl": "https://modal.com/docs/examples/hackernews_alerts.md",
       "path": "docs/examples/hackernews_alerts.md",
-      "bytes": 3459
+      "bytes": 3459,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/harbor_evals.md",
       "source": "https://modal.com/docs/examples/harbor_evals.md",
       "finalUrl": "https://modal.com/docs/examples/harbor_evals.md",
       "path": "docs/examples/harbor_evals.md",
-      "bytes": 5151
+      "bytes": 5151,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/hello_world.md",
       "source": "https://modal.com/docs/examples/hello_world.md",
       "finalUrl": "https://modal.com/docs/examples/hello_world.md",
       "path": "docs/examples/hello_world.md",
-      "bytes": 4084
+      "bytes": 4084,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/hp_sweep_gpt.md",
       "source": "https://modal.com/docs/examples/hp_sweep_gpt.md",
       "finalUrl": "https://modal.com/docs/examples/hp_sweep_gpt.md",
       "path": "docs/examples/hp_sweep_gpt.md",
-      "bytes": 29039
+      "bytes": 29039,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/image_to_image.md",
       "source": "https://modal.com/docs/examples/image_to_image.md",
       "finalUrl": "https://modal.com/docs/examples/image_to_image.md",
       "path": "docs/examples/image_to_image.md",
-      "bytes": 7076
+      "bytes": 7076,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/image_to_video.md",
       "source": "https://modal.com/docs/examples/image_to_video.md",
       "finalUrl": "https://modal.com/docs/examples/image_to_video.md",
       "path": "docs/examples/image_to_video.md",
-      "bytes": 10710
+      "bytes": 10710,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/inkling_small.md",
       "source": "https://modal.com/docs/examples/inkling_small.md",
       "finalUrl": "https://modal.com/docs/examples/inkling_small.md",
       "path": "docs/examples/inkling_small.md",
-      "bytes": 9293
+      "bytes": 9293,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/liquidai_embeddings_server.md",
       "source": "https://modal.com/docs/examples/liquidai_embeddings_server.md",
       "finalUrl": "https://modal.com/docs/examples/liquidai_embeddings_server.md",
       "path": "docs/examples/liquidai_embeddings_server.md",
-      "bytes": 9319
+      "bytes": 9319,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/examples/llm_inference.md",
+      "source": "https://modal.com/docs/examples/llm_inference.md",
+      "finalUrl": "https://modal.com/docs/examples/vllm_inference.md",
+      "path": "docs/examples/llm_inference.md",
+      "bytes": 13210,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/llm-finetuning.md",
       "source": "https://modal.com/docs/examples/llm-finetuning.md",
       "finalUrl": "https://modal.com/docs/examples/llm-finetuning.md",
       "path": "docs/examples/llm-finetuning.md",
-      "bytes": 9490
+      "bytes": 9490,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/llm-voice-chat.md",
       "source": "https://modal.com/docs/examples/llm-voice-chat.md",
       "finalUrl": "https://modal.com/docs/examples/llm-voice-chat.md",
       "path": "docs/examples/llm-voice-chat.md",
-      "bytes": 6884
+      "bytes": 6884,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/long-training.md",
       "source": "https://modal.com/docs/examples/long-training.md",
       "finalUrl": "https://modal.com/docs/examples/long-training.md",
       "path": "docs/examples/long-training.md",
-      "bytes": 9767
+      "bytes": 9767,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/ltx.md",
       "source": "https://modal.com/docs/examples/ltx.md",
       "finalUrl": "https://modal.com/docs/examples/ltx.md",
       "path": "docs/examples/ltx.md",
-      "bytes": 8050
+      "bytes": 8050,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/mcp_server_stateless.md",
       "source": "https://modal.com/docs/examples/mcp_server_stateless.md",
       "finalUrl": "https://modal.com/docs/examples/mcp_server_stateless.md",
       "path": "docs/examples/mcp_server_stateless.md",
-      "bytes": 4590
+      "bytes": 4590,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/ministral3_inference.md",
       "source": "https://modal.com/docs/examples/ministral3_inference.md",
       "finalUrl": "https://modal.com/docs/examples/ministral3_inference.md",
       "path": "docs/examples/ministral3_inference.md",
-      "bytes": 15350
+      "bytes": 15350,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/miscellaneous",
-      "source": "https://modal.com/docs/examples/miscellaneous.md",
+      "source": "https://modal.com/docs/examples/miscellaneous",
       "finalUrl": "https://modal.com/docs/examples/miscellaneous.md",
       "path": "docs/examples/miscellaneous.md",
-      "bytes": 1658
+      "bytes": 1658,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/modal_tailscale.md",
       "source": "https://modal.com/docs/examples/modal_tailscale.md",
       "finalUrl": "https://modal.com/docs/examples/modal_tailscale.md",
       "path": "docs/examples/modal_tailscale.md",
-      "bytes": 2672
+      "bytes": 2672,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/modal-vibe.md",
       "source": "https://modal.com/docs/examples/modal-vibe.md",
       "finalUrl": "https://modal.com/docs/examples/modal-vibe.md",
       "path": "docs/examples/modal-vibe.md",
-      "bytes": 2281
+      "bytes": 2281,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/mongodb-search.md",
       "source": "https://modal.com/docs/examples/mongodb-search.md",
       "finalUrl": "https://modal.com/docs/examples/mongodb-search.md",
       "path": "docs/examples/mongodb-search.md",
-      "bytes": 8136
+      "bytes": 8136,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/music-video-gen.md",
       "source": "https://modal.com/docs/examples/music-video-gen.md",
       "finalUrl": "https://modal.com/docs/examples/music-video-gen.md",
       "path": "docs/examples/music-video-gen.md",
-      "bytes": 5245
+      "bytes": 5245,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/nemotron_inference.md",
       "source": "https://modal.com/docs/examples/nemotron_inference.md",
       "finalUrl": "https://modal.com/docs/examples/nemotron_inference.md",
       "path": "docs/examples/nemotron_inference.md",
-      "bytes": 17896
+      "bytes": 17896,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/opencode_server.md",
       "source": "https://modal.com/docs/examples/opencode_server.md",
       "finalUrl": "https://modal.com/docs/examples/opencode_server.md",
       "path": "docs/examples/opencode_server.md",
-      "bytes": 9691
+      "bytes": 9691,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/potus_speech_qanda.md",
       "source": "https://modal.com/docs/examples/potus_speech_qanda.md",
       "finalUrl": "https://modal.com/docs/examples/potus_speech_qanda.md",
       "path": "docs/examples/potus_speech_qanda.md",
-      "bytes": 9369
+      "bytes": 9369,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/pushgateway.md",
       "source": "https://modal.com/docs/examples/pushgateway.md",
       "finalUrl": "https://modal.com/docs/examples/pushgateway.md",
       "path": "docs/examples/pushgateway.md",
-      "bytes": 6615
+      "bytes": 6615,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/s3_bucket_mount.md",
       "source": "https://modal.com/docs/examples/s3_bucket_mount.md",
       "finalUrl": "https://modal.com/docs/examples/s3_bucket_mount.md",
       "path": "docs/examples/s3_bucket_mount.md",
-      "bytes": 7124
+      "bytes": 7124,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/safe_code_execution.md",
       "source": "https://modal.com/docs/examples/safe_code_execution.md",
       "finalUrl": "https://modal.com/docs/examples/safe_code_execution.md",
       "path": "docs/examples/safe_code_execution.md",
-      "bytes": 3421
+      "bytes": 3421,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/sandbox_pool.md",
       "source": "https://modal.com/docs/examples/sandbox_pool.md",
       "finalUrl": "https://modal.com/docs/examples/sandbox_pool.md",
       "path": "docs/examples/sandbox_pool.md",
-      "bytes": 14396
+      "bytes": 14396,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/serve_streamlit.md",
       "source": "https://modal.com/docs/examples/serve_streamlit.md",
       "finalUrl": "https://modal.com/docs/examples/serve_streamlit.md",
       "path": "docs/examples/serve_streamlit.md",
-      "bytes": 2398
+      "bytes": 2398,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/sglang_low_latency.md",
       "source": "https://modal.com/docs/examples/sglang_low_latency.md",
       "finalUrl": "https://modal.com/docs/examples/sglang_low_latency.md",
       "path": "docs/examples/sglang_low_latency.md",
-      "bytes": 23951
+      "bytes": 23951,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/simple_code_interpreter.md",
       "source": "https://modal.com/docs/examples/simple_code_interpreter.md",
       "finalUrl": "https://modal.com/docs/examples/simple_code_interpreter.md",
       "path": "docs/examples/simple_code_interpreter.md",
-      "bytes": 4202
+      "bytes": 4202,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/streaming_kyutai_stt.md",
       "source": "https://modal.com/docs/examples/streaming_kyutai_stt.md",
       "finalUrl": "https://modal.com/docs/examples/streaming_kyutai_stt.md",
       "path": "docs/examples/streaming_kyutai_stt.md",
-      "bytes": 18128
+      "bytes": 18128,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/text_to_image.md",
       "source": "https://modal.com/docs/examples/text_to_image.md",
       "finalUrl": "https://modal.com/docs/examples/text_to_image.md",
       "path": "docs/examples/text_to_image.md",
-      "bytes": 8290
+      "bytes": 8290,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/unsloth_finetune.md",
       "source": "https://modal.com/docs/examples/unsloth_finetune.md",
       "finalUrl": "https://modal.com/docs/examples/unsloth_finetune.md",
       "path": "docs/examples/unsloth_finetune.md",
-      "bytes": 20959
-    },
-    {
-      "url": "https://modal.com/docs/examples/llm_inference.md",
-      "source": "https://modal.com/docs/examples/llm_inference.md",
-      "finalUrl": "https://modal.com/docs/examples/vllm_inference.md",
-      "path": "docs/examples/vllm_inference.md",
-      "bytes": 13210
+      "bytes": 20959,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/vllm_throughput.md",
       "source": "https://modal.com/docs/examples/vllm_throughput.md",
       "finalUrl": "https://modal.com/docs/examples/vllm_throughput.md",
       "path": "docs/examples/vllm_throughput.md",
-      "bytes": 23705
+      "bytes": 23705,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/webrtc_yolo.md",
       "source": "https://modal.com/docs/examples/webrtc_yolo.md",
       "finalUrl": "https://modal.com/docs/examples/webrtc_yolo.md",
       "path": "docs/examples/webrtc_yolo.md",
-      "bytes": 24733
+      "bytes": 24733,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/examples/webscraper.md",
       "source": "https://modal.com/docs/examples/webscraper.md",
       "finalUrl": "https://modal.com/docs/examples/webscraper.md",
       "path": "docs/examples/webscraper.md",
-      "bytes": 10697
+      "bytes": 10697,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide",
-      "source": "https://modal.com/docs/guide",
+      "source": "stub",
       "finalUrl": "https://modal.com/docs/guide",
       "path": "docs/guide.md",
-      "bytes": 46266
+      "bytes": 163,
+      "stub": true
     },
     {
       "url": "https://modal.com/docs/guide/apps.md",
       "source": "https://modal.com/docs/guide/apps.md",
       "finalUrl": "https://modal.com/docs/guide/apps.md",
       "path": "docs/guide/apps.md",
-      "bytes": 5123
+      "bytes": 5123,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/async.md",
       "source": "https://modal.com/docs/guide/async.md",
       "finalUrl": "https://modal.com/docs/guide/async.md",
       "path": "docs/guide/async.md",
-      "bytes": 2056
+      "bytes": 2056,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/audit-logs.md",
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 19139
+      "bytes": 19139,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/batch-processing.md",
       "source": "https://modal.com/docs/guide/batch-processing.md",
       "finalUrl": "https://modal.com/docs/guide/batch-processing.md",
       "path": "docs/guide/batch-processing.md",
-      "bytes": 3596
+      "bytes": 3596,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/billing.md",
       "source": "https://modal.com/docs/guide/billing.md",
       "finalUrl": "https://modal.com/docs/guide/billing.md",
       "path": "docs/guide/billing.md",
-      "bytes": 3619
+      "bytes": 3619,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/budgets.md",
       "source": "https://modal.com/docs/guide/budgets.md",
       "finalUrl": "https://modal.com/docs/guide/budgets.md",
       "path": "docs/guide/budgets.md",
-      "bytes": 2404
+      "bytes": 2404,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "source": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "finalUrl": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "path": "docs/guide/cloud-bucket-mounts.md",
-      "bytes": 10825
+      "bytes": 10825,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/cold-start.md",
       "source": "https://modal.com/docs/guide/cold-start.md",
       "finalUrl": "https://modal.com/docs/guide/cold-start.md",
       "path": "docs/guide/cold-start.md",
-      "bytes": 11239
+      "bytes": 11239,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/concurrent-inputs.md",
       "source": "https://modal.com/docs/guide/concurrent-inputs.md",
       "finalUrl": "https://modal.com/docs/guide/concurrent-inputs.md",
       "path": "docs/guide/concurrent-inputs.md",
-      "bytes": 6714
+      "bytes": 6714,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/continuous-deployment.md",
       "source": "https://modal.com/docs/guide/continuous-deployment.md",
       "finalUrl": "https://modal.com/docs/guide/continuous-deployment.md",
       "path": "docs/guide/continuous-deployment.md",
-      "bytes": 1552
+      "bytes": 1552,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/cron",
-      "source": "https://modal.com/docs/guide/cron.md",
+      "source": "https://modal.com/docs/guide/cron",
       "finalUrl": "https://modal.com/docs/guide/cron.md",
       "path": "docs/guide/cron.md",
-      "bytes": 2773
+      "bytes": 2773,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/cuda.md",
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10154
+      "bytes": 10154,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/customer-supplied-encryption-keys.md",
       "source": "https://modal.com/docs/guide/customer-supplied-encryption-keys.md",
       "finalUrl": "https://modal.com/docs/guide/customer-supplied-encryption-keys.md",
       "path": "docs/guide/customer-supplied-encryption-keys.md",
-      "bytes": 7937
+      "bytes": 7937,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/datadog-integration.md",
       "source": "https://modal.com/docs/guide/datadog-integration.md",
       "finalUrl": "https://modal.com/docs/guide/datadog-integration.md",
       "path": "docs/guide/datadog-integration.md",
-      "bytes": 4674
+      "bytes": 4674,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/dataset-ingestion.md",
       "source": "https://modal.com/docs/guide/dataset-ingestion.md",
       "finalUrl": "https://modal.com/docs/guide/dataset-ingestion.md",
       "path": "docs/guide/dataset-ingestion.md",
-      "bytes": 5120
+      "bytes": 5120,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/developing-debugging.md",
       "source": "https://modal.com/docs/guide/developing-debugging.md",
       "finalUrl": "https://modal.com/docs/guide/developing-debugging.md",
       "path": "docs/guide/developing-debugging.md",
-      "bytes": 9148
+      "bytes": 9148,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/dicts.md",
       "source": "https://modal.com/docs/guide/dicts.md",
       "finalUrl": "https://modal.com/docs/guide/dicts.md",
       "path": "docs/guide/dicts.md",
-      "bytes": 3831
+      "bytes": 3831,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/dynamic-batching.md",
       "source": "https://modal.com/docs/guide/dynamic-batching.md",
       "finalUrl": "https://modal.com/docs/guide/dynamic-batching.md",
       "path": "docs/guide/dynamic-batching.md",
-      "bytes": 6291
+      "bytes": 6291,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/dynamic-function-config.md",
       "source": "https://modal.com/docs/guide/dynamic-function-config.md",
       "finalUrl": "https://modal.com/docs/guide/dynamic-function-config.md",
       "path": "docs/guide/dynamic-function-config.md",
-      "bytes": 4682
+      "bytes": 4682,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/endpoint-benchmarks.md",
       "source": "https://modal.com/docs/guide/endpoint-benchmarks.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-benchmarks.md",
       "path": "docs/guide/endpoint-benchmarks.md",
-      "bytes": 2674
+      "bytes": 2674,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/endpoint-integrations.md",
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
       "path": "docs/guide/endpoint-integrations.md",
-      "bytes": 1742
+      "bytes": 1742,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/endpoint-metrics.md",
       "source": "https://modal.com/docs/guide/endpoint-metrics.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-metrics.md",
       "path": "docs/guide/endpoint-metrics.md",
-      "bytes": 2199
+      "bytes": 2199,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/endpoints.md",
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 7797
+      "bytes": 7797,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/environment_variables.md",
       "source": "https://modal.com/docs/guide/environment_variables.md",
       "finalUrl": "https://modal.com/docs/guide/environment_variables.md",
       "path": "docs/guide/environment_variables.md",
-      "bytes": 2459
+      "bytes": 2459,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/environments.md",
       "source": "https://modal.com/docs/guide/environments.md",
       "finalUrl": "https://modal.com/docs/guide/environments.md",
       "path": "docs/guide/environments.md",
-      "bytes": 2431
+      "bytes": 2431,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/existing-images.md",
       "source": "https://modal.com/docs/guide/existing-images.md",
       "finalUrl": "https://modal.com/docs/guide/existing-images.md",
       "path": "docs/guide/existing-images.md",
-      "bytes": 8495
+      "bytes": 8495,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/fast-pull-from-registry.md",
       "source": "https://modal.com/docs/guide/fast-pull-from-registry.md",
       "finalUrl": "https://modal.com/docs/guide/fast-pull-from-registry.md",
       "path": "docs/guide/fast-pull-from-registry.md",
-      "bytes": 2706
+      "bytes": 2706,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/feature-maturity.md",
       "source": "https://modal.com/docs/guide/feature-maturity.md",
       "finalUrl": "https://modal.com/docs/guide/feature-maturity.md",
       "path": "docs/guide/feature-maturity.md",
-      "bytes": 3499
+      "bytes": 3499,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/global-variables.md",
       "source": "https://modal.com/docs/guide/global-variables.md",
       "finalUrl": "https://modal.com/docs/guide/global-variables.md",
       "path": "docs/guide/global-variables.md",
-      "bytes": 1663
+      "bytes": 1663,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/gpu-health.md",
       "source": "https://modal.com/docs/guide/gpu-health.md",
       "finalUrl": "https://modal.com/docs/guide/gpu-health.md",
       "path": "docs/guide/gpu-health.md",
-      "bytes": 2956
+      "bytes": 2956,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/gpu-metrics.md",
       "source": "https://modal.com/docs/guide/gpu-metrics.md",
       "finalUrl": "https://modal.com/docs/guide/gpu-metrics.md",
       "path": "docs/guide/gpu-metrics.md",
-      "bytes": 2459
+      "bytes": 2459,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/gpu.md",
       "source": "https://modal.com/docs/guide/gpu.md",
       "finalUrl": "https://modal.com/docs/guide/gpu.md",
       "path": "docs/guide/gpu.md",
-      "bytes": 7875
+      "bytes": 7875,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/high-performance-llm-inference.md",
       "source": "https://modal.com/docs/guide/high-performance-llm-inference.md",
       "finalUrl": "https://modal.com/docs/guide/high-performance-llm-inference.md",
       "path": "docs/guide/high-performance-llm-inference.md",
-      "bytes": 16780
+      "bytes": 16780,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/images.md",
       "source": "https://modal.com/docs/guide/images.md",
       "finalUrl": "https://modal.com/docs/guide/images.md",
       "path": "docs/guide/images.md",
-      "bytes": 14706
+      "bytes": 14706,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/job-queue.md",
       "source": "https://modal.com/docs/guide/job-queue.md",
       "finalUrl": "https://modal.com/docs/guide/job-queue.md",
       "path": "docs/guide/job-queue.md",
-      "bytes": 5543
+      "bytes": 5543,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "source": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "finalUrl": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "path": "docs/guide/jupyter-notebooks.md",
-      "bytes": 2388
+      "bytes": 2388,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/lifecycle-functions.md",
       "source": "https://modal.com/docs/guide/lifecycle-functions.md",
       "finalUrl": "https://modal.com/docs/guide/lifecycle-functions.md",
       "path": "docs/guide/lifecycle-functions.md",
-      "bytes": 3824
+      "bytes": 3824,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/local-data.md",
       "source": "https://modal.com/docs/guide/local-data.md",
       "finalUrl": "https://modal.com/docs/guide/local-data.md",
       "path": "docs/guide/local-data.md",
-      "bytes": 1130
+      "bytes": 1130,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/managing-deployments.md",
       "source": "https://modal.com/docs/guide/managing-deployments.md",
       "finalUrl": "https://modal.com/docs/guide/managing-deployments.md",
       "path": "docs/guide/managing-deployments.md",
-      "bytes": 7083
+      "bytes": 7083,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/memory-snapshots.md",
       "source": "https://modal.com/docs/guide/memory-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/memory-snapshots.md",
       "path": "docs/guide/memory-snapshots.md",
-      "bytes": 13945
+      "bytes": 13945,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/modal-1-0-migration.md",
       "source": "https://modal.com/docs/guide/modal-1-0-migration.md",
       "finalUrl": "https://modal.com/docs/guide/modal-1-0-migration.md",
       "path": "docs/guide/modal-1-0-migration.md",
-      "bytes": 15264
+      "bytes": 15264,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/modal-user-account-setup.md",
       "source": "https://modal.com/docs/guide/modal-user-account-setup.md",
       "finalUrl": "https://modal.com/docs/guide/modal-user-account-setup.md",
       "path": "docs/guide/modal-user-account-setup.md",
-      "bytes": 1104
+      "bytes": 1104,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/model-weights.md",
       "source": "https://modal.com/docs/guide/model-weights.md",
       "finalUrl": "https://modal.com/docs/guide/model-weights.md",
       "path": "docs/guide/model-weights.md",
-      "bytes": 7160
+      "bytes": 7160,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/multi-node-training.md",
       "source": "https://modal.com/docs/guide/multi-node-training.md",
       "finalUrl": "https://modal.com/docs/guide/multi-node-training.md",
       "path": "docs/guide/multi-node-training.md",
-      "bytes": 8616
+      "bytes": 8616,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/named-images.md",
       "source": "https://modal.com/docs/guide/named-images.md",
       "finalUrl": "https://modal.com/docs/guide/named-images.md",
       "path": "docs/guide/named-images.md",
-      "bytes": 4902
+      "bytes": 4902,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/notebooks",
-      "source": "https://modal.com/docs/guide/notebooks.md",
+      "source": "https://modal.com/docs/guide/notebooks",
       "finalUrl": "https://modal.com/docs/guide/notebooks.md",
       "path": "docs/guide/notebooks.md",
-      "bytes": 12296
+      "bytes": 12296,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/oidc-integration.md",
       "source": "https://modal.com/docs/guide/oidc-integration.md",
       "finalUrl": "https://modal.com/docs/guide/oidc-integration.md",
       "path": "docs/guide/oidc-integration.md",
-      "bytes": 10536
+      "bytes": 10536,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/okta-sso.md",
       "source": "https://modal.com/docs/guide/okta-sso.md",
       "finalUrl": "https://modal.com/docs/guide/okta-sso.md",
       "path": "docs/guide/okta-sso.md",
-      "bytes": 2972
+      "bytes": 2972,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/otel-integration.md",
       "source": "https://modal.com/docs/guide/otel-integration.md",
       "finalUrl": "https://modal.com/docs/guide/otel-integration.md",
       "path": "docs/guide/otel-integration.md",
-      "bytes": 4282
+      "bytes": 4282,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/parametrized-functions.md",
       "source": "https://modal.com/docs/guide/parametrized-functions.md",
       "finalUrl": "https://modal.com/docs/guide/parametrized-functions.md",
       "path": "docs/guide/parametrized-functions.md",
-      "bytes": 4485
+      "bytes": 4485,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/preemption.md",
       "source": "https://modal.com/docs/guide/preemption.md",
       "finalUrl": "https://modal.com/docs/guide/preemption.md",
       "path": "docs/guide/preemption.md",
-      "bytes": 1826
+      "bytes": 1826,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/private-networking.md",
       "source": "https://modal.com/docs/guide/private-networking.md",
       "finalUrl": "https://modal.com/docs/guide/private-networking.md",
       "path": "docs/guide/private-networking.md",
-      "bytes": 2732
+      "bytes": 2732,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/project-structure.md",
       "source": "https://modal.com/docs/guide/project-structure.md",
       "finalUrl": "https://modal.com/docs/guide/project-structure.md",
       "path": "docs/guide/project-structure.md",
-      "bytes": 4280
+      "bytes": 4280,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/proxy-ips.md",
       "source": "https://modal.com/docs/guide/proxy-ips.md",
       "finalUrl": "https://modal.com/docs/guide/proxy-ips.md",
       "path": "docs/guide/proxy-ips.md",
-      "bytes": 3185
+      "bytes": 3185,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/queues.md",
       "source": "https://modal.com/docs/guide/queues.md",
       "finalUrl": "https://modal.com/docs/guide/queues.md",
       "path": "docs/guide/queues.md",
-      "bytes": 4680
+      "bytes": 4680,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/rbac.md",
       "source": "https://modal.com/docs/guide/rbac.md",
       "finalUrl": "https://modal.com/docs/guide/rbac.md",
       "path": "docs/guide/rbac.md",
-      "bytes": 13965
+      "bytes": 13965,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/region-selection.md",
       "source": "https://modal.com/docs/guide/region-selection.md",
       "finalUrl": "https://modal.com/docs/guide/region-selection.md",
       "path": "docs/guide/region-selection.md",
-      "bytes": 5924
+      "bytes": 5924,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/resources.md",
       "source": "https://modal.com/docs/guide/resources.md",
       "finalUrl": "https://modal.com/docs/guide/resources.md",
       "path": "docs/guide/resources.md",
-      "bytes": 3978
+      "bytes": 3978,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/restricted-access.md",
       "source": "https://modal.com/docs/guide/restricted-access.md",
       "finalUrl": "https://modal.com/docs/guide/restricted-access.md",
       "path": "docs/guide/restricted-access.md",
-      "bytes": 5560
+      "bytes": 5560,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/retries.md",
       "source": "https://modal.com/docs/guide/retries.md",
       "finalUrl": "https://modal.com/docs/guide/retries.md",
       "path": "docs/guide/retries.md",
-      "bytes": 1894
+      "bytes": 1894,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
       "source": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
       "path": "docs/guide/s3-gateway-endpoints.md",
-      "bytes": 1337
+      "bytes": 1337,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/saml-sso.md",
       "source": "https://modal.com/docs/guide/saml-sso.md",
       "finalUrl": "https://modal.com/docs/guide/saml-sso.md",
       "path": "docs/guide/saml-sso.md",
-      "bytes": 3111
+      "bytes": 3111,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandbox-files.md",
       "source": "https://modal.com/docs/guide/sandbox-files.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-files.md",
       "path": "docs/guide/sandbox-files.md",
-      "bytes": 14351
+      "bytes": 14351,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandbox-networking.md",
       "source": "https://modal.com/docs/guide/sandbox-networking.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-networking.md",
       "path": "docs/guide/sandbox-networking.md",
-      "bytes": 17083
+      "bytes": 17083,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandbox-resources.md",
       "source": "https://modal.com/docs/guide/sandbox-resources.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-resources.md",
       "path": "docs/guide/sandbox-resources.md",
-      "bytes": 4495
+      "bytes": 4495,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 17244
+      "bytes": 17244,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandbox-spawn.md",
       "source": "https://modal.com/docs/guide/sandbox-spawn.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-spawn.md",
       "path": "docs/guide/sandbox-spawn.md",
-      "bytes": 4148
+      "bytes": 4148,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sandboxes.md",
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 38122
+      "bytes": 38122,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/scale.md",
       "source": "https://modal.com/docs/guide/scale.md",
       "finalUrl": "https://modal.com/docs/guide/scale.md",
       "path": "docs/guide/scale.md",
-      "bytes": 7605
+      "bytes": 7605,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/scim.md",
       "source": "https://modal.com/docs/guide/scim.md",
       "finalUrl": "https://modal.com/docs/guide/scim.md",
       "path": "docs/guide/scim.md",
-      "bytes": 5140
+      "bytes": 5140,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/sdk-javascript-go.md",
       "source": "https://modal.com/docs/guide/sdk-javascript-go.md",
       "finalUrl": "https://modal.com/docs/guide/sdk-javascript-go.md",
       "path": "docs/guide/sdk-javascript-go.md",
-      "bytes": 3920
+      "bytes": 3920,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/secrets.md",
       "source": "https://modal.com/docs/guide/secrets.md",
       "finalUrl": "https://modal.com/docs/guide/secrets.md",
       "path": "docs/guide/secrets.md",
-      "bytes": 4073
+      "bytes": 4073,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/security.md",
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 12204
+      "bytes": 12204,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/servers.md",
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 8836
+      "bytes": 8836,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/service-users.md",
       "source": "https://modal.com/docs/guide/service-users.md",
       "finalUrl": "https://modal.com/docs/guide/service-users.md",
       "path": "docs/guide/service-users.md",
-      "bytes": 3086
+      "bytes": 3086,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/slack-notifications.md",
       "source": "https://modal.com/docs/guide/slack-notifications.md",
       "finalUrl": "https://modal.com/docs/guide/slack-notifications.md",
       "path": "docs/guide/slack-notifications.md",
-      "bytes": 2280
+      "bytes": 2280,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/streaming-endpoints.md",
       "source": "https://modal.com/docs/guide/streaming-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/streaming-endpoints.md",
       "path": "docs/guide/streaming-endpoints.md",
-      "bytes": 4742
+      "bytes": 4742,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/timeouts.md",
       "source": "https://modal.com/docs/guide/timeouts.md",
       "finalUrl": "https://modal.com/docs/guide/timeouts.md",
       "path": "docs/guide/timeouts.md",
-      "bytes": 2296
+      "bytes": 2296,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/trigger-deployed-functions.md",
       "source": "https://modal.com/docs/guide/trigger-deployed-functions.md",
       "finalUrl": "https://modal.com/docs/guide/trigger-deployed-functions.md",
       "path": "docs/guide/trigger-deployed-functions.md",
-      "bytes": 10156
+      "bytes": 10156,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/troubleshooting.md",
       "source": "https://modal.com/docs/guide/troubleshooting.md",
       "finalUrl": "https://modal.com/docs/guide/troubleshooting.md",
       "path": "docs/guide/troubleshooting.md",
-      "bytes": 5865
+      "bytes": 5865,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/tunnels.md",
       "source": "https://modal.com/docs/guide/tunnels.md",
       "finalUrl": "https://modal.com/docs/guide/tunnels.md",
       "path": "docs/guide/tunnels.md",
-      "bytes": 5857
+      "bytes": 5857,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/vm-sandboxes.md",
       "source": "https://modal.com/docs/guide/vm-sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/vm-sandboxes.md",
       "path": "docs/guide/vm-sandboxes.md",
-      "bytes": 7739
+      "bytes": 7739,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/volumes.md",
       "source": "https://modal.com/docs/guide/volumes.md",
       "finalUrl": "https://modal.com/docs/guide/volumes.md",
       "path": "docs/guide/volumes.md",
-      "bytes": 26195
+      "bytes": 26195,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "source": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "path": "docs/guide/webhook-proxy-auth.md",
-      "bytes": 2774
+      "bytes": 2774,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/webhook-timeouts.md",
       "source": "https://modal.com/docs/guide/webhook-timeouts.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-timeouts.md",
       "path": "docs/guide/webhook-timeouts.md",
-      "bytes": 2927
+      "bytes": 2927,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/webhook-urls.md",
       "source": "https://modal.com/docs/guide/webhook-urls.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-urls.md",
       "path": "docs/guide/webhook-urls.md",
-      "bytes": 8145
+      "bytes": 8145,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/webhooks.md",
       "source": "https://modal.com/docs/guide/webhooks.md",
       "finalUrl": "https://modal.com/docs/guide/webhooks.md",
       "path": "docs/guide/webhooks.md",
-      "bytes": 15834
+      "bytes": 15834,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/workspaces.md",
       "source": "https://modal.com/docs/guide/workspaces.md",
       "finalUrl": "https://modal.com/docs/guide/workspaces.md",
       "path": "docs/guide/workspaces.md",
-      "bytes": 5352
+      "bytes": 5352,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Allowlist.md",
       "source": "https://modal.com/docs/sdk/go/latest/Allowlist.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Allowlist.md",
       "path": "docs/sdk/go/latest/Allowlist.md",
-      "bytes": 166
+      "bytes": 166,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/App.md",
       "source": "https://modal.com/docs/sdk/go/latest/App.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/App.md",
       "path": "docs/sdk/go/latest/App.md",
-      "bytes": 505
+      "bytes": 505,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Client.md",
       "source": "https://modal.com/docs/sdk/go/latest/Client.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Client.md",
       "path": "docs/sdk/go/latest/Client.md",
-      "bytes": 2568
+      "bytes": 2568,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/CloudBucketMount.md",
       "source": "https://modal.com/docs/sdk/go/latest/CloudBucketMount.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/CloudBucketMount.md",
       "path": "docs/sdk/go/latest/CloudBucketMount.md",
-      "bytes": 786
+      "bytes": 786,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Cls.md",
       "source": "https://modal.com/docs/sdk/go/latest/Cls.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Cls.md",
       "path": "docs/sdk/go/latest/Cls.md",
-      "bytes": 2141
+      "bytes": 2141,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/ClsInstance.md",
       "source": "https://modal.com/docs/sdk/go/latest/ClsInstance.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/ClsInstance.md",
       "path": "docs/sdk/go/latest/ClsInstance.md",
-      "bytes": 325
+      "bytes": 325,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/ContainerProcess.md",
       "source": "https://modal.com/docs/sdk/go/latest/ContainerProcess.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/ContainerProcess.md",
       "path": "docs/sdk/go/latest/ContainerProcess.md",
-      "bytes": 629
+      "bytes": 629,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Errors.md",
       "source": "https://modal.com/docs/sdk/go/latest/Errors.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Errors.md",
       "path": "docs/sdk/go/latest/Errors.md",
-      "bytes": 3777
+      "bytes": 3777,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FileInfo.md",
       "source": "https://modal.com/docs/sdk/go/latest/FileInfo.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FileInfo.md",
       "path": "docs/sdk/go/latest/FileInfo.md",
-      "bytes": 343
+      "bytes": 343,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FileType.md",
       "source": "https://modal.com/docs/sdk/go/latest/FileType.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FileType.md",
       "path": "docs/sdk/go/latest/FileType.md",
-      "bytes": 223
+      "bytes": 223,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FileWatchEvent.md",
       "source": "https://modal.com/docs/sdk/go/latest/FileWatchEvent.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FileWatchEvent.md",
       "path": "docs/sdk/go/latest/FileWatchEvent.md",
-      "bytes": 509
+      "bytes": 509,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FileWatchEventType.md",
       "source": "https://modal.com/docs/sdk/go/latest/FileWatchEventType.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FileWatchEventType.md",
       "path": "docs/sdk/go/latest/FileWatchEventType.md",
-      "bytes": 368
+      "bytes": 368,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Function.md",
       "source": "https://modal.com/docs/sdk/go/latest/Function.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Function.md",
       "path": "docs/sdk/go/latest/Function.md",
-      "bytes": 3134
+      "bytes": 3134,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FunctionCall.md",
       "source": "https://modal.com/docs/sdk/go/latest/FunctionCall.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FunctionCall.md",
       "path": "docs/sdk/go/latest/FunctionCall.md",
-      "bytes": 1410
+      "bytes": 1410,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/FunctionStats.md",
       "source": "https://modal.com/docs/sdk/go/latest/FunctionStats.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/FunctionStats.md",
       "path": "docs/sdk/go/latest/FunctionStats.md",
-      "bytes": 160
+      "bytes": 160,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Image.md",
       "source": "https://modal.com/docs/sdk/go/latest/Image.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Image.md",
       "path": "docs/sdk/go/latest/Image.md",
-      "bytes": 4024
+      "bytes": 4024,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/intro.md",
       "source": "https://modal.com/docs/sdk/go/latest/intro.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/intro.md",
       "path": "docs/sdk/go/latest/intro.md",
-      "bytes": 4986
+      "bytes": 4986,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Probe.md",
       "source": "https://modal.com/docs/sdk/go/latest/Probe.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Probe.md",
       "path": "docs/sdk/go/latest/Probe.md",
-      "bytes": 508
+      "bytes": 508,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Profile.md",
       "source": "https://modal.com/docs/sdk/go/latest/Profile.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Profile.md",
       "path": "docs/sdk/go/latest/Profile.md",
-      "bytes": 488
+      "bytes": 488,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Proxy.md",
       "source": "https://modal.com/docs/sdk/go/latest/Proxy.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Proxy.md",
       "path": "docs/sdk/go/latest/Proxy.md",
-      "bytes": 414
+      "bytes": 414,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Queue.md",
       "source": "https://modal.com/docs/sdk/go/latest/Queue.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Queue.md",
       "path": "docs/sdk/go/latest/Queue.md",
-      "bytes": 4263
+      "bytes": 4263,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Retries.md",
       "source": "https://modal.com/docs/sdk/go/latest/Retries.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Retries.md",
       "path": "docs/sdk/go/latest/Retries.md",
-      "bytes": 672
+      "bytes": 672,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Sandbox.md",
       "source": "https://modal.com/docs/sdk/go/latest/Sandbox.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Sandbox.md",
       "path": "docs/sdk/go/latest/Sandbox.md",
-      "bytes": 32465
+      "bytes": 32465,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md",
       "source": "https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md",
       "path": "docs/sdk/go/latest/SandboxCreateConnectCredentials.md",
-      "bytes": 210
+      "bytes": 210,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Secret.md",
       "source": "https://modal.com/docs/sdk/go/latest/Secret.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Secret.md",
       "path": "docs/sdk/go/latest/Secret.md",
-      "bytes": 1230
+      "bytes": 1230,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/SidecarContainer.md",
       "source": "https://modal.com/docs/sdk/go/latest/SidecarContainer.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/SidecarContainer.md",
       "path": "docs/sdk/go/latest/SidecarContainer.md",
-      "bytes": 13187
+      "bytes": 13187,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/StdioBehavior.md",
       "source": "https://modal.com/docs/sdk/go/latest/StdioBehavior.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/StdioBehavior.md",
       "path": "docs/sdk/go/latest/StdioBehavior.md",
-      "bytes": 323
+      "bytes": 323,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Tunnel.md",
       "source": "https://modal.com/docs/sdk/go/latest/Tunnel.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Tunnel.md",
       "path": "docs/sdk/go/latest/Tunnel.md",
-      "bytes": 689
+      "bytes": 689,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md",
       "source": "https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md",
       "path": "docs/sdk/go/latest/ValidateExecArgs.md",
-      "bytes": 157
+      "bytes": 157,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/go/latest/Volume.md",
       "source": "https://modal.com/docs/sdk/go/latest/Volume.md",
       "finalUrl": "https://modal.com/docs/sdk/go/latest/Volume.md",
       "path": "docs/sdk/go/latest/Volume.md",
-      "bytes": 1963
+      "bytes": 1963,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/App.md",
       "source": "https://modal.com/docs/sdk/js/latest/App.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/App.md",
       "path": "docs/sdk/js/latest/App.md",
-      "bytes": 518
+      "bytes": 518,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/CloudBucketMount.md",
       "source": "https://modal.com/docs/sdk/js/latest/CloudBucketMount.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/CloudBucketMount.md",
       "path": "docs/sdk/js/latest/CloudBucketMount.md",
-      "bytes": 685
+      "bytes": 685,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Cls.md",
       "source": "https://modal.com/docs/sdk/js/latest/Cls.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Cls.md",
       "path": "docs/sdk/js/latest/Cls.md",
-      "bytes": 1786
+      "bytes": 1786,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/ClsInstance.md",
       "source": "https://modal.com/docs/sdk/js/latest/ClsInstance.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/ClsInstance.md",
       "path": "docs/sdk/js/latest/ClsInstance.md",
-      "bytes": 239
+      "bytes": 239,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/ContainerProcess.md",
       "source": "https://modal.com/docs/sdk/js/latest/ContainerProcess.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/ContainerProcess.md",
       "path": "docs/sdk/js/latest/ContainerProcess.md",
-      "bytes": 268
+      "bytes": 268,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Errors.md",
       "source": "https://modal.com/docs/sdk/js/latest/Errors.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Errors.md",
       "path": "docs/sdk/js/latest/Errors.md",
-      "bytes": 2897
+      "bytes": 2897,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FileInfo.md",
       "source": "https://modal.com/docs/sdk/js/latest/FileInfo.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FileInfo.md",
       "path": "docs/sdk/js/latest/FileInfo.md",
-      "bytes": 421
+      "bytes": 421,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FileType.md",
       "source": "https://modal.com/docs/sdk/js/latest/FileType.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FileType.md",
       "path": "docs/sdk/js/latest/FileType.md",
-      "bytes": 109
+      "bytes": 109,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FileWatchEvent.md",
       "source": "https://modal.com/docs/sdk/js/latest/FileWatchEvent.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FileWatchEvent.md",
       "path": "docs/sdk/js/latest/FileWatchEvent.md",
-      "bytes": 506
+      "bytes": 506,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FileWatchEventType.md",
       "source": "https://modal.com/docs/sdk/js/latest/FileWatchEventType.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FileWatchEventType.md",
       "path": "docs/sdk/js/latest/FileWatchEventType.md",
-      "bytes": 168
+      "bytes": 168,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Function.md",
       "source": "https://modal.com/docs/sdk/js/latest/Function.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Function.md",
       "path": "docs/sdk/js/latest/Function.md",
-      "bytes": 3013
+      "bytes": 3013,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FunctionCall.md",
       "source": "https://modal.com/docs/sdk/js/latest/FunctionCall.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FunctionCall.md",
       "path": "docs/sdk/js/latest/FunctionCall.md",
-      "bytes": 980
+      "bytes": 980,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/FunctionStats.md",
       "source": "https://modal.com/docs/sdk/js/latest/FunctionStats.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/FunctionStats.md",
       "path": "docs/sdk/js/latest/FunctionStats.md",
-      "bytes": 172
+      "bytes": 172,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Image.md",
       "source": "https://modal.com/docs/sdk/js/latest/Image.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Image.md",
       "path": "docs/sdk/js/latest/Image.md",
-      "bytes": 3915
+      "bytes": 3915,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/intro.md",
       "source": "https://modal.com/docs/sdk/js/latest/intro.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/intro.md",
       "path": "docs/sdk/js/latest/intro.md",
-      "bytes": 4737
+      "bytes": 4737,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Logger.md",
       "source": "https://modal.com/docs/sdk/js/latest/Logger.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Logger.md",
       "path": "docs/sdk/js/latest/Logger.md",
-      "bytes": 239
+      "bytes": 239,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/LogLevel.md",
       "source": "https://modal.com/docs/sdk/js/latest/LogLevel.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/LogLevel.md",
       "path": "docs/sdk/js/latest/LogLevel.md",
-      "bytes": 83
+      "bytes": 83,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/ModalClient.md",
       "source": "https://modal.com/docs/sdk/js/latest/ModalClient.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/ModalClient.md",
       "path": "docs/sdk/js/latest/ModalClient.md",
-      "bytes": 2405
+      "bytes": 2405,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/ModalReadStream.md",
       "source": "https://modal.com/docs/sdk/js/latest/ModalReadStream.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/ModalReadStream.md",
       "path": "docs/sdk/js/latest/ModalReadStream.md",
-      "bytes": 728
+      "bytes": 728,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/ModalWriteStream.md",
       "source": "https://modal.com/docs/sdk/js/latest/ModalWriteStream.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/ModalWriteStream.md",
       "path": "docs/sdk/js/latest/ModalWriteStream.md",
-      "bytes": 800
+      "bytes": 800,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Probe.md",
       "source": "https://modal.com/docs/sdk/js/latest/Probe.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Probe.md",
       "path": "docs/sdk/js/latest/Probe.md",
-      "bytes": 541
+      "bytes": 541,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Profile.md",
       "source": "https://modal.com/docs/sdk/js/latest/Profile.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Profile.md",
       "path": "docs/sdk/js/latest/Profile.md",
-      "bytes": 365
+      "bytes": 365,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Proxy.md",
       "source": "https://modal.com/docs/sdk/js/latest/Proxy.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Proxy.md",
       "path": "docs/sdk/js/latest/Proxy.md",
-      "bytes": 595
+      "bytes": 595,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Queue.md",
       "source": "https://modal.com/docs/sdk/js/latest/Queue.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Queue.md",
       "path": "docs/sdk/js/latest/Queue.md",
-      "bytes": 5229
+      "bytes": 5229,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Retries.md",
       "source": "https://modal.com/docs/sdk/js/latest/Retries.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Retries.md",
       "path": "docs/sdk/js/latest/Retries.md",
-      "bytes": 400
+      "bytes": 400,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Sandbox.md",
       "source": "https://modal.com/docs/sdk/js/latest/Sandbox.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Sandbox.md",
       "path": "docs/sdk/js/latest/Sandbox.md",
-      "bytes": 31276
+      "bytes": 31276,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md",
       "source": "https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md",
       "path": "docs/sdk/js/latest/SandboxCreateConnectCredentials.md",
-      "bytes": 186
+      "bytes": 186,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Secret.md",
       "source": "https://modal.com/docs/sdk/js/latest/Secret.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Secret.md",
       "path": "docs/sdk/js/latest/Secret.md",
-      "bytes": 1644
+      "bytes": 1644,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/SidecarContainer.md",
       "source": "https://modal.com/docs/sdk/js/latest/SidecarContainer.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/SidecarContainer.md",
       "path": "docs/sdk/js/latest/SidecarContainer.md",
-      "bytes": 10889
+      "bytes": 10889,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/StdioBehavior.md",
       "source": "https://modal.com/docs/sdk/js/latest/StdioBehavior.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/StdioBehavior.md",
       "path": "docs/sdk/js/latest/StdioBehavior.md",
-      "bytes": 293
+      "bytes": 293,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/StreamMode.md",
       "source": "https://modal.com/docs/sdk/js/latest/StreamMode.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/StreamMode.md",
       "path": "docs/sdk/js/latest/StreamMode.md",
-      "bytes": 274
+      "bytes": 274,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Tunnel.md",
       "source": "https://modal.com/docs/sdk/js/latest/Tunnel.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Tunnel.md",
       "path": "docs/sdk/js/latest/Tunnel.md",
-      "bytes": 356
+      "bytes": 356,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/js/latest/Volume.md",
       "source": "https://modal.com/docs/sdk/js/latest/Volume.md",
       "finalUrl": "https://modal.com/docs/sdk/js/latest/Volume.md",
       "path": "docs/sdk/js/latest/Volume.md",
-      "bytes": 1803
-    },
-    {
-      "url": "https://modal.com/docs/cli/changelog.md",
-      "source": "https://modal.com/docs/cli/changelog.md",
-      "finalUrl": "https://modal.com/docs/sdk/py/changelog.md",
-      "path": "docs/sdk/py/changelog.md",
-      "bytes": 61640
+      "bytes": 1803,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/changelog.md",
       "source": "https://modal.com/docs/sdk/py/changelog.md",
       "finalUrl": "https://modal.com/docs/sdk/py/changelog.md",
       "path": "docs/sdk/py/changelog.md",
-      "bytes": 61640
+      "bytes": 61640,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/App.md",
       "source": "https://modal.com/docs/sdk/py/latest/App.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/App.md",
       "path": "docs/sdk/py/latest/App.md",
-      "bytes": 30317
+      "bytes": 30317,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/asgi_app.md",
       "source": "https://modal.com/docs/sdk/py/latest/asgi_app.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/asgi_app.md",
       "path": "docs/sdk/py/latest/asgi_app.md",
-      "bytes": 542
+      "bytes": 542,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/batched.md",
       "source": "https://modal.com/docs/sdk/py/latest/batched.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/batched.md",
       "path": "docs/sdk/py/latest/batched.md",
-      "bytes": 882
+      "bytes": 882,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/billing.md",
       "source": "https://modal.com/docs/sdk/py/latest/billing.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/billing.md",
       "path": "docs/sdk/py/latest/billing.md",
-      "bytes": 2276
+      "bytes": 2276,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Client.md",
       "source": "https://modal.com/docs/sdk/py/latest/Client.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Client.md",
       "path": "docs/sdk/py/latest/Client.md",
-      "bytes": 1529
+      "bytes": 1529,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/CloudBucketMount.md",
       "source": "https://modal.com/docs/sdk/py/latest/CloudBucketMount.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/CloudBucketMount.md",
       "path": "docs/sdk/py/latest/CloudBucketMount.md",
-      "bytes": 2673
+      "bytes": 2673,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Cls.md",
       "source": "https://modal.com/docs/sdk/py/latest/Cls.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Cls.md",
       "path": "docs/sdk/py/latest/Cls.md",
-      "bytes": 6886
+      "bytes": 6886,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/concurrent.md",
       "source": "https://modal.com/docs/sdk/py/latest/concurrent.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/concurrent.md",
       "path": "docs/sdk/py/latest/concurrent.md",
-      "bytes": 1645
+      "bytes": 1645,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/config.md",
       "source": "https://modal.com/docs/sdk/py/latest/config.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/config.md",
       "path": "docs/sdk/py/latest/config.md",
-      "bytes": 5305
+      "bytes": 5305,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/container_process.md",
       "source": "https://modal.com/docs/sdk/py/latest/container_process.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/container_process.md",
       "path": "docs/sdk/py/latest/container_process.md",
-      "bytes": 1051
+      "bytes": 1051,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Cron.md",
       "source": "https://modal.com/docs/sdk/py/latest/Cron.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Cron.md",
       "path": "docs/sdk/py/latest/Cron.md",
-      "bytes": 1163
+      "bytes": 1163,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/current_function_call_id.md",
       "source": "https://modal.com/docs/sdk/py/latest/current_function_call_id.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/current_function_call_id.md",
       "path": "docs/sdk/py/latest/current_function_call_id.md",
-      "bytes": 366
+      "bytes": 366,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/current_input_id.md",
       "source": "https://modal.com/docs/sdk/py/latest/current_input_id.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/current_input_id.md",
       "path": "docs/sdk/py/latest/current_input_id.md",
-      "bytes": 314
+      "bytes": 314,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Dict.md",
       "source": "https://modal.com/docs/sdk/py/latest/Dict.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Dict.md",
       "path": "docs/sdk/py/latest/Dict.md",
-      "bytes": 10485
+      "bytes": 10485,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/enable_output.md",
       "source": "https://modal.com/docs/sdk/py/latest/enable_output.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/enable_output.md",
       "path": "docs/sdk/py/latest/enable_output.md",
-      "bytes": 346
+      "bytes": 346,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/enter.md",
       "source": "https://modal.com/docs/sdk/py/latest/enter.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/enter.md",
       "path": "docs/sdk/py/latest/enter.md",
-      "bytes": 238
+      "bytes": 238,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Environment.md",
       "source": "https://modal.com/docs/sdk/py/latest/Environment.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Environment.md",
       "path": "docs/sdk/py/latest/Environment.md",
-      "bytes": 6804
+      "bytes": 6804,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Error.md",
       "source": "https://modal.com/docs/sdk/py/latest/Error.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Error.md",
       "path": "docs/sdk/py/latest/Error.md",
-      "bytes": 356
+      "bytes": 356,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/exception.md",
       "source": "https://modal.com/docs/sdk/py/latest/exception.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/exception.md",
       "path": "docs/sdk/py/latest/exception.md",
-      "bytes": 11822
+      "bytes": 11822,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/exit.md",
       "source": "https://modal.com/docs/sdk/py/latest/exit.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/exit.md",
       "path": "docs/sdk/py/latest/exit.md",
-      "bytes": 254
+      "bytes": 254,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/fastapi_endpoint.md",
       "source": "https://modal.com/docs/sdk/py/latest/fastapi_endpoint.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/fastapi_endpoint.md",
       "path": "docs/sdk/py/latest/fastapi_endpoint.md",
-      "bytes": 868
+      "bytes": 868,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/file_io.md",
       "source": "https://modal.com/docs/sdk/py/latest/file_io.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/file_io.md",
       "path": "docs/sdk/py/latest/file_io.md",
-      "bytes": 2676
+      "bytes": 2676,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/FilePatternMatcher.md",
       "source": "https://modal.com/docs/sdk/py/latest/FilePatternMatcher.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/FilePatternMatcher.md",
       "path": "docs/sdk/py/latest/FilePatternMatcher.md",
-      "bytes": 1509
+      "bytes": 1509,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/forward.md",
       "source": "https://modal.com/docs/sdk/py/latest/forward.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/forward.md",
       "path": "docs/sdk/py/latest/forward.md",
-      "bytes": 3402
+      "bytes": 3402,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Function.md",
       "source": "https://modal.com/docs/sdk/py/latest/Function.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Function.md",
       "path": "docs/sdk/py/latest/Function.md",
-      "bytes": 15652
+      "bytes": 15652,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/FunctionCall.md",
       "source": "https://modal.com/docs/sdk/py/latest/FunctionCall.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/FunctionCall.md",
       "path": "docs/sdk/py/latest/FunctionCall.md",
-      "bytes": 8458
+      "bytes": 8458,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Image.md",
       "source": "https://modal.com/docs/sdk/py/latest/Image.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Image.md",
       "path": "docs/sdk/py/latest/Image.md",
-      "bytes": 49552
+      "bytes": 49552,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/interact.md",
       "source": "https://modal.com/docs/sdk/py/latest/interact.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/interact.md",
       "path": "docs/sdk/py/latest/interact.md",
-      "bytes": 247
+      "bytes": 247,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/intro.md",
       "source": "https://modal.com/docs/sdk/py/latest/intro.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/intro.md",
       "path": "docs/sdk/py/latest/intro.md",
-      "bytes": 4269
+      "bytes": 4269,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/io_streams.md",
       "source": "https://modal.com/docs/sdk/py/latest/io_streams.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/io_streams.md",
       "path": "docs/sdk/py/latest/io_streams.md",
-      "bytes": 1811
+      "bytes": 1811,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/is_local.md",
       "source": "https://modal.com/docs/sdk/py/latest/is_local.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/is_local.md",
       "path": "docs/sdk/py/latest/is_local.md",
-      "bytes": 377
+      "bytes": 377,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/method.md",
       "source": "https://modal.com/docs/sdk/py/latest/method.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/method.md",
       "path": "docs/sdk/py/latest/method.md",
-      "bytes": 267
+      "bytes": 267,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/parameter.md",
       "source": "https://modal.com/docs/sdk/py/latest/parameter.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/parameter.md",
       "path": "docs/sdk/py/latest/parameter.md",
-      "bytes": 569
+      "bytes": 569,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Period.md",
       "source": "https://modal.com/docs/sdk/py/latest/Period.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Period.md",
       "path": "docs/sdk/py/latest/Period.md",
-      "bytes": 1020
+      "bytes": 1020,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Probe.md",
       "source": "https://modal.com/docs/sdk/py/latest/Probe.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Probe.md",
       "path": "docs/sdk/py/latest/Probe.md",
-      "bytes": 942
+      "bytes": 942,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Proxy.md",
       "source": "https://modal.com/docs/sdk/py/latest/Proxy.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Proxy.md",
       "path": "docs/sdk/py/latest/Proxy.md",
-      "bytes": 1429
+      "bytes": 1429,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Queue.md",
       "source": "https://modal.com/docs/sdk/py/latest/Queue.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Queue.md",
       "path": "docs/sdk/py/latest/Queue.md",
-      "bytes": 16166
+      "bytes": 16166,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Retries.md",
       "source": "https://modal.com/docs/sdk/py/latest/Retries.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Retries.md",
       "path": "docs/sdk/py/latest/Retries.md",
-      "bytes": 1470
+      "bytes": 1470,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "source": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "path": "docs/sdk/py/latest/Sandbox.md",
-      "bytes": 35867
+      "bytes": 35867,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/SandboxSnapshot.md",
       "source": "https://modal.com/docs/sdk/py/latest/SandboxSnapshot.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/SandboxSnapshot.md",
       "path": "docs/sdk/py/latest/SandboxSnapshot.md",
-      "bytes": 1311
+      "bytes": 1311,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Secret.md",
       "source": "https://modal.com/docs/sdk/py/latest/Secret.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Secret.md",
       "path": "docs/sdk/py/latest/Secret.md",
-      "bytes": 8689
+      "bytes": 8689,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Server.md",
       "source": "https://modal.com/docs/sdk/py/latest/Server.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Server.md",
       "path": "docs/sdk/py/latest/Server.md",
-      "bytes": 6131
+      "bytes": 6131,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Tunnel.md",
       "source": "https://modal.com/docs/sdk/py/latest/Tunnel.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Tunnel.md",
       "path": "docs/sdk/py/latest/Tunnel.md",
-      "bytes": 703
+      "bytes": 703,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/types.md",
       "source": "https://modal.com/docs/sdk/py/latest/types.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/types.md",
       "path": "docs/sdk/py/latest/types.md",
-      "bytes": 7954
+      "bytes": 7954,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Volume.md",
       "source": "https://modal.com/docs/sdk/py/latest/Volume.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Volume.md",
       "path": "docs/sdk/py/latest/Volume.md",
-      "bytes": 15432
+      "bytes": 15432,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/web_server.md",
       "source": "https://modal.com/docs/sdk/py/latest/web_server.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/web_server.md",
       "path": "docs/sdk/py/latest/web_server.md",
-      "bytes": 1155
+      "bytes": 1155,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/Workspace.md",
       "source": "https://modal.com/docs/sdk/py/latest/Workspace.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Workspace.md",
       "path": "docs/sdk/py/latest/Workspace.md",
-      "bytes": 8569
+      "bytes": 8569,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/sdk/py/latest/wsgi_app.md",
       "source": "https://modal.com/docs/sdk/py/latest/wsgi_app.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/wsgi_app.md",
       "path": "docs/sdk/py/latest/wsgi_app.md",
-      "bytes": 806
+      "bytes": 806,
+      "stub": false
     }
   ],
   "errors": []

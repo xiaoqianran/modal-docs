@@ -1,5 +1,6 @@
-.DS_Store
 *.log
-node_modules/
-index/documents.db
+.DS_Store
 dist
+index/documents.db
+node_modules/
+serve-root

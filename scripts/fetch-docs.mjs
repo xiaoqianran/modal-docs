@@ -33,16 +33,17 @@ function sleep(ms) {
 /** Redact secrets / tokens that sometimes appear in examples */
 function sanitize(text) {
   let t = String(text);
-  // Docker Hub style personal access tokens
   t = t.replace(/\bdckr_pat_[A-Za-z0-9_]+\b/g, "dckr_pat_REDACTED");
-  // GitHub PATs
   t = t.replace(/\bghp_[A-Za-z0-9]{20,}\b/g, "ghp_REDACTED");
   t = t.replace(/\bgithub_pat_[A-Za-z0-9_]{20,}\b/g, "github_pat_REDACTED");
-  // AWS-ish keys (conservative)
   t = t.replace(/\bAKIA[0-9A-Z]{16}\b/g, "AKIA_REDACTED");
-  // Modal tokens if ever embedded
   t = t.replace(/\bak-[A-Za-z0-9]{20,}\b/g, "ak-REDACTED");
   return t;
+}
+
+function isHtml(text) {
+  const t = String(text).trimStart().slice(0, 200).toLowerCase();
+  return t.startsWith("<!doctype") || t.startsWith("<html") || t.startsWith("<head");
 }
 
 function extractUrls(llmsText) {
@@ -51,7 +52,6 @@ function extractUrls(llmsText) {
   );
   const set = new Set();
   for (const u of raw) {
-    // normalize trailing fragments
     const clean = u.split("#")[0].replace(/\/$/, "");
     if (clean) set.add(clean);
   }
@@ -66,15 +66,36 @@ function urlToRelPath(url) {
   return u;
 }
 
+/** Hub pages with no public .md source get a short stub so nav still works */
+function stubMarkdown(url) {
+  const pathPart = url.replace(/^https:\/\/modal\.com\//, "").replace(/\.md$/, "");
+  const title =
+    pathPart === "docs"
+      ? "Modal documentation"
+      : pathPart
+          .split("/")
+          .pop()
+          .replace(/[-_]/g, " ")
+          .replace(/\b\w/g, (c) => c.toUpperCase());
+  return `# ${title}
+
+This section index is not published as Markdown on modal.com.
+
+Browse the **left navigation**, or open the [official page](${url.replace(/\.md$/, "")}).
+`;
+}
+
 async function fetchText(url, { accept } = {}) {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
+    // Prefer strict markdown Accept — including text/html makes some Modal
+    // endpoints return the SPA shell instead of the .md source.
     const res = await fetch(url, {
       signal: ctrl.signal,
       headers: {
         "User-Agent": UA,
-        Accept: accept || "text/markdown, text/plain;q=0.9, text/html;q=0.5, */*;q=0.1",
+        Accept: accept || "text/markdown, text/plain;q=0.9, */*;q=0.1",
       },
       redirect: "follow",
     });
@@ -85,28 +106,29 @@ async function fetchText(url, { accept } = {}) {
     }
     const buf = await res.arrayBuffer();
     const text = new TextDecoder("utf-8").decode(buf);
-    return { text, finalUrl: res.url };
+    return { text, finalUrl: res.url, contentType: res.headers.get("content-type") || "" };
   } finally {
     clearTimeout(timer);
   }
 }
 
 async function fetchPage(url) {
-  // Prefer .md sources; fall back to bare URL
+  // Prefer bare URL first: many Modal pages serve text/markdown only without .md,
+  // while .md often 404s as HTML. Then try .md suffix.
   const candidates = [];
-  if (url.endsWith(".md")) candidates.push(url);
-  else {
-    candidates.push(url + ".md");
+  if (url.endsWith(".md")) {
     candidates.push(url);
+    candidates.push(url.slice(0, -3));
+  } else {
+    candidates.push(url);
+    candidates.push(url + ".md");
   }
-  // also try without trailing path variants
+
   let lastErr;
   for (const cu of candidates) {
     try {
-      const { text, finalUrl } = await fetchText(cu);
-      // skip obvious HTML error pages
-      const trimmed = text.trimStart();
-      if (trimmed.startsWith("<!DOCTYPE") || trimmed.startsWith("<html")) {
+      const { text, finalUrl, contentType } = await fetchText(cu);
+      if (isHtml(text) || /text\/html/i.test(contentType)) {
         lastErr = new Error(`HTML response for ${cu}`);
         continue;
       }
@@ -114,12 +136,22 @@ async function fetchPage(url) {
     } catch (e) {
       lastErr = e;
       if (e.status === 404) continue;
-      // brief backoff on 429/5xx
       if (e.status === 429 || (e.status >= 500 && e.status < 600)) {
         await sleep(800);
       }
     }
   }
+
+  // Hub pages (docs / guide / examples roots) may only ship HTML SPA shells
+  if (/^https:\/\/modal\.com\/docs(\/guide|\/examples)?$/.test(url.replace(/\.md$/, ""))) {
+    return {
+      text: stubMarkdown(url),
+      finalUrl: url,
+      source: "stub",
+      stub: true,
+    };
+  }
+
   throw lastErr || new Error(`Failed ${url}`);
 }
 
@@ -145,7 +177,6 @@ async function main() {
   fs.writeFileSync(path.join(DOCS, "llms.txt"), sanitize(llmsText));
 
   const urls = extractUrls(llmsText);
-  // Always include the catalog root pages
   for (const extra of [
     "https://modal.com/docs",
     "https://modal.com/docs/guide",
@@ -162,16 +193,22 @@ async function main() {
 
   await mapPool(urls, CONCURRENCY, async (url) => {
     try {
-      const { text, finalUrl, source } = await fetchPage(url);
-      // Map to filesystem path from final URL when possible
-      let rel = urlToRelPath(finalUrl.includes("modal.com") ? finalUrl.split("#")[0] : url);
-      // normalize /docs/foo/ -> docs/foo.md already handled
+      const { text, finalUrl, source, stub } = await fetchPage(url);
+      // Prefer catalog URL for path so SPA redirects don't scramble filenames
+      let rel = urlToRelPath(url);
       if (rel.endsWith("/.md")) rel = rel.replace(/\/\.md$/, ".md");
       const outAbs = path.join(PAGES, rel);
       ensureDir(path.dirname(outAbs));
       fs.writeFileSync(outAbs, text);
-      ok.push({ url, source, finalUrl, path: rel, bytes: Buffer.byteLength(text) });
-      process.stdout.write(".");
+      ok.push({
+        url,
+        source,
+        finalUrl,
+        path: rel,
+        bytes: Buffer.byteLength(text),
+        stub: !!stub,
+      });
+      process.stdout.write(stub ? "s" : ".");
     } catch (e) {
       failed.push({ url, error: String(e.message || e) });
       process.stdout.write("x");
@@ -190,18 +227,16 @@ async function main() {
   };
   fs.writeFileSync(path.join(DOCS, "list.json"), JSON.stringify(list, null, 2));
 
-  console.log(`OK ${ok.length} / ${urls.length}  failed ${failed.length}`);
+  console.log(`OK ${ok.length} / ${urls.length}  failed ${failed.length}  stubs=${ok.filter((p) => p.stub).length}`);
   if (failed.length) {
     console.log("Failures (first 20):");
     for (const f of failed.slice(0, 20)) console.log(`  - ${f.url}: ${f.error}`);
   }
 
-  // Soft-fail only if almost everything failed
   if (ok.length < 10) {
     console.error("Too few pages fetched; aborting");
     process.exit(1);
   }
-  // Non-zero if many failures (signal in CI logs) but still allow build
   if (failed.length > urls.length * 0.35) {
     console.warn("High failure rate; continuing with partial mirror");
   }

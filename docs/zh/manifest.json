@@ -1,0 +1,1487 @@
+{
+  "version": 1,
+  "files": {
+    "docs/cli/latest/app.md": {
+      "hash": "794805026d91c165a1dd4bd395cdd756cf4076a1",
+      "translatedAt": "2026-08-08T18:21:48.097Z",
+      "bytes": 6645
+    },
+    "docs/cli/latest/billing.md": {
+      "hash": "cbc030c4da7fec6555d3134b47bae4b950f7ada9",
+      "translatedAt": "2026-08-08T18:21:48.765Z",
+      "bytes": 3394
+    },
+    "docs/cli/latest/bootstrap.md": {
+      "hash": "a583e7e09711ccfe084314b57a606c6f3fa57059",
+      "translatedAt": "2026-08-08T18:22:37.551Z",
+      "bytes": 287
+    },
+    "docs/cli/latest/changelog.md": {
+      "hash": "01c74ac98a297ec640ecb4eb0300ef25b4a3125f",
+      "translatedAt": "2026-08-08T18:22:38.038Z",
+      "bytes": 1352
+    },
+    "docs.md": {
+      "hash": "fd484ec349077d75e5d8db0b4a0bb467678a0985",
+      "translatedAt": "2026-08-08T18:27:36.742Z",
+      "bytes": 157
+    },
+    "docs/cli/latest/config.md": {
+      "hash": "d4f18621f46b350780c5d5cc8d1526a5b9803b47",
+      "translatedAt": "2026-08-08T18:27:36.743Z",
+      "bytes": 1146
+    },
+    "docs/cli/latest/curl.md": {
+      "hash": "965f282a0a3e3971c1093432cc8724f64810bc72",
+      "translatedAt": "2026-08-08T18:27:37.571Z",
+      "bytes": 712
+    },
+    "docs/cli/latest/dashboard.md": {
+      "hash": "bb6b4c9e85b4fb49318ba708e1d6f4688534c3ab",
+      "translatedAt": "2026-08-08T18:27:37.791Z",
+      "bytes": 188
+    },
+    "docs/cli/latest/deploy.md": {
+      "hash": "cf35464fb4b34939f48f9c3e34a0652a0467acb2",
+      "translatedAt": "2026-08-08T18:27:38.188Z",
+      "bytes": 720
+    },
+    "docs/cli/latest/container.md": {
+      "hash": "803d0561e2165c7b125d849940ea839db45dc2c0",
+      "translatedAt": "2026-08-08T18:27:39.248Z",
+      "bytes": 3224
+    },
+    "docs/cli/latest/dict.md": {
+      "hash": "508e049d05c4799353906881303a1f3cd2643d5e",
+      "translatedAt": "2026-08-08T18:27:41.795Z",
+      "bytes": 3119
+    },
+    "docs/cli/latest/endpoint.md": {
+      "hash": "c734cb2df221db7b9220e97762c8287040edefd8",
+      "translatedAt": "2026-08-08T18:27:42.595Z",
+      "bytes": 3510
+    },
+    "docs/cli/latest/image.md": {
+      "hash": "e27b58071c13b54f509dafef8120b597db257de3",
+      "translatedAt": "2026-08-08T18:27:43.022Z",
+      "bytes": 861
+    },
+    "docs/cli/latest/intro.md": {
+      "hash": "ce82f8798e22eb96357cb88642dce5ae8daac369",
+      "translatedAt": "2026-08-08T18:27:45.309Z",
+      "bytes": 2390
+    },
+    "docs/cli/latest/profile.md": {
+      "hash": "da1a738797f7fe16ed5c73af678fd20406f2c3c2",
+      "translatedAt": "2026-08-08T18:27:45.761Z",
+      "bytes": 988
+    },
+    "docs/cli/latest/environment.md": {
+      "hash": "94d66c718f92f322af418f25d113a57b79a7eda0",
+      "translatedAt": "2026-08-08T18:27:46.174Z",
+      "bytes": 7001
+    },
+    "docs/cli/latest/run.md": {
+      "hash": "a48806f0007c5176247b39b20ac482f6b9140ece",
+      "translatedAt": "2026-08-08T18:27:47.308Z",
+      "bytes": 1533
+    },
+    "docs/cli/latest/queue.md": {
+      "hash": "7dd6603b24cbdd1d3b5b28eb0ad8d4e07664cb5c",
+      "translatedAt": "2026-08-08T18:27:48.176Z",
+      "bytes": 3190
+    },
+    "docs/cli/latest/secret.md": {
+      "hash": "8e8c3d28cc692f7556d75a7f073d570e41a04294",
+      "translatedAt": "2026-08-08T18:27:48.236Z",
+      "bytes": 1628
+    },
+    "docs/cli/latest/serve.md": {
+      "hash": "9fd523175e154d5a68378d58e3a81d9806e868e5",
+      "translatedAt": "2026-08-08T18:27:48.596Z",
+      "bytes": 912
+    },
+    "docs/cli/latest/setup.md": {
+      "hash": "04f4792e80e04aed9d035eee5b13a7d9fc0cf07f",
+      "translatedAt": "2026-08-08T18:27:48.765Z",
+      "bytes": 171
+    },
+    "docs/cli/latest/skills.md": {
+      "hash": "9ef0ff8c91c23a6c9f1ae480d23d06fae2f1061e",
+      "translatedAt": "2026-08-08T18:27:49.527Z",
+      "bytes": 1258
+    },
+    "docs/cli/latest/shell.md": {
+      "hash": "70a55d82337435943e7af1f8b17f8c429d99102d",
+      "translatedAt": "2026-08-08T18:27:49.712Z",
+      "bytes": 2342
+    },
+    "docs/cli/latest/token.md": {
+      "hash": "a19620352ac1c34e48bf27b7500219231b636e35",
+      "translatedAt": "2026-08-08T18:27:50.452Z",
+      "bytes": 1715
+    },
+    "docs/cli/latest/volume.md": {
+      "hash": "1d757a0e9893e09169a1dafcaa6e05db6dcb255b",
+      "translatedAt": "2026-08-08T18:27:52.426Z",
+      "bytes": 5294
+    },
+    "docs/cli/latest/workspace.md": {
+      "hash": "ff444f44be0673391d13dc723081cf044dc36b3b",
+      "translatedAt": "2026-08-08T18:27:52.431Z",
+      "bytes": 4418
+    },
+    "docs/examples.md": {
+      "hash": "99ea2028532f0a8dd61031cd1c27e5841b0d42a4",
+      "translatedAt": "2026-08-08T18:27:52.518Z",
+      "bytes": 160
+    },
+    "docs/examples/agent.md": {
+      "hash": "416dd549aced17287f9132b50ac924c9a3425652",
+      "translatedAt": "2026-08-08T18:27:54.425Z",
+      "bytes": 7545
+    },
+    "docs/examples/algolia_indexer.md": {
+      "hash": "6b62ce0cfc17714a08c94b72fbf11bef3f9010bb",
+      "translatedAt": "2026-08-08T18:27:54.455Z",
+      "bytes": 5682
+    },
+    "docs/examples/amazon_embeddings.md": {
+      "hash": "32f78f4bf54364b320eab23b324257e484b466e6",
+      "translatedAt": "2026-08-08T18:27:56.806Z",
+      "bytes": 10958
+    },
+    "docs/examples/batched_whisper.md": {
+      "hash": "64f0c788fe36f6ca51a2cce70ac6589f62146f9a",
+      "translatedAt": "2026-08-08T18:27:57.867Z",
+      "bytes": 6408
+    },
+    "docs/examples/basic_web.md": {
+      "hash": "847358cf3bc1ab0b23b81be42d9de992fbc54da8",
+      "translatedAt": "2026-08-08T18:27:58.212Z",
+      "bytes": 9786
+    },
+    "docs/examples/blender_video.md": {
+      "hash": "ab1470edf0e2eed49d068cb994d3c5fe2f13780c",
+      "translatedAt": "2026-08-08T18:27:59.302Z",
+      "bytes": 7246
+    },
+    "docs/examples/boltz_predict.md": {
+      "hash": "3458475af06b39d9ace0bb32cc68c591cc672307",
+      "translatedAt": "2026-08-08T18:28:01.246Z",
+      "bytes": 7622
+    },
+    "docs/examples/chai1.md": {
+      "hash": "4b09a702e9edaa2c8575799dc11862d2c87c3042",
+      "translatedAt": "2026-08-08T18:28:01.926Z",
+      "bytes": 10762
+    },
+    "docs/examples/chatterbox_tts.md": {
+      "hash": "c94b1206262a5116c307343dbca0d038139528fd",
+      "translatedAt": "2026-08-08T18:28:03.018Z",
+      "bytes": 4869
+    },
+    "docs/examples/chat_with_pdf_vision.md": {
+      "hash": "5d37e4e8ea899101ad60a3a17b053fde624e9265",
+      "translatedAt": "2026-08-08T18:28:04.029Z",
+      "bytes": 16281
+    },
+    "docs/examples/computer_use_vnc.md": {
+      "hash": "7153a2424276b09df6aaa6d0c9b0b35e98ea279f",
+      "translatedAt": "2026-08-08T18:28:05.243Z",
+      "bytes": 13787
+    },
+    "docs/cli/changelog.md": {
+      "hash": "b45fd625f59a936c6443d9d9e6e1289190001041",
+      "translatedAt": "2026-08-08T18:28:06.278Z",
+      "bytes": 56992
+    },
+    "docs/examples/claude-slack-gif-creator.md": {
+      "hash": "cd701a8fae5d74de59ee9824e8a50736b8ce5a5d",
+      "translatedAt": "2026-08-08T18:28:06.515Z",
+      "bytes": 6859
+    },
+    "docs/examples/cron_datasette.md": {
+      "hash": "0c8d86bd3426cb1f0cfd72a020c01bfe3cd3174f",
+      "translatedAt": "2026-08-08T18:28:07.039Z",
+      "bytes": 13396
+    },
+    "docs/examples/deepseek_v4_flash.md": {
+      "hash": "7d96bf3586e66ead36489b99fd3024cc2e40f95d",
+      "translatedAt": "2026-08-08T18:28:08.336Z",
+      "bytes": 11206
+    },
+    "docs/examples/dbt_duckdb.md": {
+      "hash": "15852c9df0427f46fc73382d8aab3f18307d5208",
+      "translatedAt": "2026-08-08T18:28:09.183Z",
+      "bytes": 10542
+    },
+    "docs/examples/db_to_sheet.md": {
+      "hash": "7200c76a5103a43c8c5e75ac93c15cb66f5b353f",
+      "translatedAt": "2026-08-08T18:28:09.498Z",
+      "bytes": 10063
+    },
+    "docs/examples/doc_ocr_jobs.md": {
+      "hash": "3983685339c223e401103aaa9c2c485889adca5e",
+      "translatedAt": "2026-08-08T18:28:11.241Z",
+      "bytes": 7813
+    },
+    "docs/examples/diffusers_lora_finetune.md": {
+      "hash": "a50b899a5cfcf1887d3c1c1350ac31a665825fe6",
+      "translatedAt": "2026-08-08T18:28:12.295Z",
+      "bytes": 21314
+    },
+    "docs/examples/discord_bot.md": {
+      "hash": "7585d9c5f5081269a095a3edb489fa390e62d00f",
+      "translatedAt": "2026-08-08T18:28:12.807Z",
+      "bytes": 15812
+    },
+    "docs/examples/doc_ocr_webapp.md": {
+      "hash": "f562f2b8da1fa40eb1166f891576e2240c989e6b",
+      "translatedAt": "2026-08-08T18:28:13.994Z",
+      "bytes": 5449
+    },
+    "docs/examples/esm3.md": {
+      "hash": "87c99b9d30c8f4f94fbbf9199ffba7afe5618ad2",
+      "translatedAt": "2026-08-08T18:28:15.503Z",
+      "bytes": 16564
+    },
+    "docs/examples/esmfold2_binder_design.md": {
+      "hash": "d427fc120bef547e8cf89f1f962f1f697ab30208",
+      "translatedAt": "2026-08-08T18:28:16.282Z",
+      "bytes": 11477
+    },
+    "docs/examples/fastrtc_flip_webcam.md": {
+      "hash": "53347a686ff17c588b36e5ab916e149bb0694c21",
+      "translatedAt": "2026-08-08T18:28:17.206Z",
+      "bytes": 8440
+    },
+    "docs/examples/finetune_yolo.md": {
+      "hash": "f7a86dc3665ee10ace5b9839a528af68929c041e",
+      "translatedAt": "2026-08-08T18:28:18.688Z",
+      "bytes": 12210
+    },
+    "docs/examples/fine_tune_asr.md": {
+      "hash": "89b8f11bddc6956257a6234e99a61cf53e678674",
+      "translatedAt": "2026-08-08T18:28:19.166Z",
+      "bytes": 19761
+    },
+    "docs/examples/flux.md": {
+      "hash": "6f219970882c241c58d95d1560619f443ecd1326",
+      "translatedAt": "2026-08-08T18:28:19.890Z",
+      "bytes": 9945
+    },
+    "docs/examples/generate_music.md": {
+      "hash": "4dc68a07002173022aee4ac7d78423b6bbe17037",
+      "translatedAt": "2026-08-08T18:28:20.265Z",
+      "bytes": 9985
+    },
+    "docs/examples/hackernews_alerts.md": {
+      "hash": "434abf9286f4053450f71706869442b6a6fc9041",
+      "translatedAt": "2026-08-08T18:28:21.121Z",
+      "bytes": 3460
+    },
+    "docs/examples/grpo_verl.md": {
+      "hash": "7b3f6c5dec672e2562eea50cc0766def52f0826d",
+      "translatedAt": "2026-08-08T18:28:21.765Z",
+      "bytes": 12184
+    },
+    "docs/examples/grpo_trl.md": {
+      "hash": "300146a1c1f83161cb0b2d203b5a6596a10209f4",
+      "translatedAt": "2026-08-08T18:28:21.766Z",
+      "bytes": 11286
+    },
+    "docs/examples/harbor_evals.md": {
+      "hash": "a01a2403e83e665e3d621f1cd2bd8144a308f8de",
+      "translatedAt": "2026-08-08T18:28:22.390Z",
+      "bytes": 5058
+    },
+    "docs/examples/image_to_image.md": {
+      "hash": "389ea8eee5c92be746bf6d694f7637e36bc80c69",
+      "translatedAt": "2026-08-08T18:28:24.030Z",
+      "bytes": 6930
+    },
+    "docs/examples/hello_world.md": {
+      "hash": "901f08a5fd148ea891439f5738eee63ebdd96740",
+      "translatedAt": "2026-08-08T18:28:24.075Z",
+      "bytes": 3973
+    },
+    "docs/examples/inkling_small.md": {
+      "hash": "21833a2cece7bf097b744b4e9ce8f9acdcfd4345",
+      "translatedAt": "2026-08-08T18:28:25.088Z",
+      "bytes": 9198
+    },
+    "docs/examples/image_to_video.md": {
+      "hash": "1754a15b6a403d2a558c9b7ce8b91c7238b0b596",
+      "translatedAt": "2026-08-08T18:28:25.766Z",
+      "bytes": 10529
+    },
+    "docs/examples/hp_sweep_gpt.md": {
+      "hash": "d2ff16727c8f0f16a6ce0b1129f532572cb1a8f8",
+      "translatedAt": "2026-08-08T18:28:25.900Z",
+      "bytes": 28720
+    },
+    "docs/examples/liquidai_embeddings_server.md": {
+      "hash": "dab4961fa95c38a7c9672be08754d97359894dbe",
+      "translatedAt": "2026-08-08T18:28:26.826Z",
+      "bytes": 9153
+    },
+    "docs/examples/llm-voice-chat.md": {
+      "hash": "d9d1d60b1bb6bfaf1c77d776f4cd29057bd44cab",
+      "translatedAt": "2026-08-08T18:28:28.353Z",
+      "bytes": 6622
+    },
+    "docs/examples/llm_inference.md": {
+      "hash": "a16a31808aa453a5baee0a3fd5446c5baeacc578",
+      "translatedAt": "2026-08-08T18:28:29.719Z",
+      "bytes": 12874
+    },
+    "docs/examples/llm-finetuning.md": {
+      "hash": "f0ca8e337f5d2abfffce66b6d33d83c4fe7c1e7e",
+      "translatedAt": "2026-08-08T18:28:29.766Z",
+      "bytes": 9263
+    },
+    "docs/examples/long-training.md": {
+      "hash": "547d31037e30e1f2d832ea80e69eee58308b063f",
+      "translatedAt": "2026-08-08T18:28:30.421Z",
+      "bytes": 9414
+    },
+    "docs/examples/mcp_server_stateless.md": {
+      "hash": "2b141f16a60b9ed779e9f5545770ca390025ca1b",
+      "translatedAt": "2026-08-08T18:28:30.965Z",
+      "bytes": 4666
+    },
+    "docs/examples/ltx.md": {
+      "hash": "3368405b3d942ca70c602153adb6ece78bb5af7e",
+      "translatedAt": "2026-08-08T18:28:31.534Z",
+      "bytes": 7882
+    },
+    "docs/examples/miscellaneous.md": {
+      "hash": "31171cf2decb70eaaffd7f25a3d3009ee32d714a",
+      "translatedAt": "2026-08-08T18:28:31.673Z",
+      "bytes": 1619
+    },
+    "docs/examples/modal_tailscale.md": {
+      "hash": "d2144062b263247b0bad630108cceb322320aeb6",
+      "translatedAt": "2026-08-08T18:28:32.425Z",
+      "bytes": 2531
+    },
+    "docs/examples/modal-vibe.md": {
+      "hash": "8d7adfad93b5d38bab8e2a4cf773dbf23c87dcdb",
+      "translatedAt": "2026-08-08T18:28:32.788Z",
+      "bytes": 2293
+    },
+    "docs/examples/ministral3_inference.md": {
+      "hash": "759f03b1ce1b02e448b9b6797402fcaa19e7fd46",
+      "translatedAt": "2026-08-08T18:28:34.706Z",
+      "bytes": 14970
+    },
+    "docs/examples/music-video-gen.md": {
+      "hash": "54da5eeaa30668cc2c7fd5af3ba64f44d911da27",
+      "translatedAt": "2026-08-08T18:28:36.297Z",
+      "bytes": 5119
+    },
+    "docs/examples/mongodb-search.md": {
+      "hash": "1e64ec5466735b177c4d25e41c279ec3555aaba8",
+      "translatedAt": "2026-08-08T18:28:36.491Z",
+      "bytes": 7650
+    },
+    "docs/examples/potus_speech_qanda.md": {
+      "hash": "79fba0ee23eda820df1ad6b6db3023c0e8bc5179",
+      "translatedAt": "2026-08-08T18:28:37.706Z",
+      "bytes": 9046
+    },
+    "docs/examples/opencode_server.md": {
+      "hash": "2363a4d6eb8ba0a4b6e917a33bf6597db836a8cd",
+      "translatedAt": "2026-08-08T18:28:38.071Z",
+      "bytes": 9575
+    },
+    "docs/examples/pushgateway.md": {
+      "hash": "74d7af7fb93ebc283852031c5c6e65c6ebff92e1",
+      "translatedAt": "2026-08-08T18:28:39.030Z",
+      "bytes": 6494
+    },
+    "docs/examples/s3_bucket_mount.md": {
+      "hash": "7880a6397970a4ea2b4bd0346a2c5aa7a27bc4f9",
+      "translatedAt": "2026-08-08T18:28:39.380Z",
+      "bytes": 7113
+    },
+    "docs/examples/nemotron_inference.md": {
+      "hash": "4492234811e9d341eba3aa913394a12be76d50ed",
+      "translatedAt": "2026-08-08T18:28:40.215Z",
+      "bytes": 17173
+    },
+    "docs/examples/safe_code_execution.md": {
+      "hash": "536845dd5cbb9d8cca1a093be4c199a848d6bc72",
+      "translatedAt": "2026-08-08T18:28:40.394Z",
+      "bytes": 3430
+    },
+    "docs/examples/serve_streamlit.md": {
+      "hash": "c308ca631b7bcba1a966f06b15748250486a11da",
+      "translatedAt": "2026-08-08T18:28:41.738Z",
+      "bytes": 2421
+    },
+    "docs/examples/simple_code_interpreter.md": {
+      "hash": "38dd931f4e396ef2ecf3af30c2cca8087b056b6a",
+      "translatedAt": "2026-08-08T18:28:43.176Z",
+      "bytes": 4195
+    },
+    "docs/examples/sandbox_pool.md": {
+      "hash": "e5ef293564e6af47c024debc24a1fa30f81f6f31",
+      "translatedAt": "2026-08-08T18:28:44.368Z",
+      "bytes": 13990
+    },
+    "docs/examples/streaming_kyutai_stt.md": {
+      "hash": "d0e6df12813659d7cf67897561a5581da238b175",
+      "translatedAt": "2026-08-08T18:28:44.858Z",
+      "bytes": 18030
+    },
+    "docs/examples/text_to_image.md": {
+      "hash": "f4ae896e489bf5444bdac19d11cd73188e30febc",
+      "translatedAt": "2026-08-08T18:28:46.434Z",
+      "bytes": 8159
+    },
+    "docs/examples/unsloth_finetune.md": {
+      "hash": "cdf89fb326976b8422bd5d7cb57fcbce5c8eb5d3",
+      "translatedAt": "2026-08-08T18:28:46.909Z",
+      "bytes": 20563
+    },
+    "docs/examples/vllm_inference.md": {
+      "hash": "a16a31808aa453a5baee0a3fd5446c5baeacc578",
+      "translatedAt": "2026-08-08T18:28:46.926Z",
+      "bytes": 12874
+    },
+    "docs/examples/sglang_low_latency.md": {
+      "hash": "636988df6f839cd3ff7ea3141e9bd36366c9bbc9",
+      "translatedAt": "2026-08-08T18:28:47.411Z",
+      "bytes": 22664
+    },
+    "docs/examples/webscraper.md": {
+      "hash": "5c49406b6da188f2e515f7ac6689b99f1dd2cdf3",
+      "translatedAt": "2026-08-08T18:28:51.774Z",
+      "bytes": 10388
+    },
+    "docs/examples/webrtc_yolo.md": {
+      "hash": "fec02ea9db9b518d30d7f9ce2c024fba69cc4ff1",
+      "translatedAt": "2026-08-08T18:28:53.019Z",
+      "bytes": 24273
+    },
+    "docs/guide.md": {
+      "hash": "820f77123a171b78c8e8204b0c0bc882a3c9e614",
+      "translatedAt": "2026-08-08T18:28:53.085Z",
+      "bytes": 3849
+    },
+    "docs/examples/vllm_throughput.md": {
+      "hash": "5d2c3d7a100277131ad5ec7b2112ac2e95bb403f",
+      "translatedAt": "2026-08-08T18:28:53.735Z",
+      "bytes": 22974
+    },
+    "docs/guide/async.md": {
+      "hash": "2e6a8748362728d12c9f672c3beda34e9167e11a",
+      "translatedAt": "2026-08-08T18:28:53.957Z",
+      "bytes": 1892
+    },
+    "docs/guide/batch-processing.md": {
+      "hash": "018dfee5ca81607ded0600e60991eebed83a039c",
+      "translatedAt": "2026-08-08T18:28:55.030Z",
+      "bytes": 3283
+    },
+    "docs/guide/apps.md": {
+      "hash": "e4f33b7571d049c61541ea9d6cf267aef7c4aaa6",
+      "translatedAt": "2026-08-08T18:28:55.313Z",
+      "bytes": 4911
+    },
+    "docs/guide/budgets.md": {
+      "hash": "da9c0a1a585b70f178ea853d60b710ba689e4227",
+      "translatedAt": "2026-08-08T18:28:56.645Z",
+      "bytes": 2233
+    },
+    "docs/guide/billing.md": {
+      "hash": "9a4d3231aca49544b7efce10d135464cc4ccd144",
+      "translatedAt": "2026-08-08T18:28:57.139Z",
+      "bytes": 3272
+    },
+    "docs/guide/cloud-bucket-mounts.md": {
+      "hash": "52af4d0cf3334217b8b6704ef1be793c167ec52e",
+      "translatedAt": "2026-08-08T18:28:59.718Z",
+      "bytes": 10091
+    },
+    "docs/guide/cold-start.md": {
+      "hash": "d52d21dc31d276ebab77c376cbf5410456ecee22",
+      "translatedAt": "2026-08-08T18:29:00.986Z",
+      "bytes": 10055
+    },
+    "docs/guide/continuous-deployment.md": {
+      "hash": "2653747e82ebbdf64825b1bac09a3d89e072f34a",
+      "translatedAt": "2026-08-08T18:29:01.450Z",
+      "bytes": 1529
+    },
+    "docs/guide/concurrent-inputs.md": {
+      "hash": "acae32d3e7dbd46db416533f834ab7d9140c0c78",
+      "translatedAt": "2026-08-08T18:29:02.106Z",
+      "bytes": 5794
+    },
+    "docs/guide/cron.md": {
+      "hash": "8de68e1cc0224a0c1d9874d97ce828eae9c3fa0a",
+      "translatedAt": "2026-08-08T18:29:02.477Z",
+      "bytes": 2663
+    },
+    "docs/guide/customer-supplied-encryption-keys.md": {
+      "hash": "867736bb085a2664fe471c6273db4db2913b1e19",
+      "translatedAt": "2026-08-08T18:29:04.409Z",
+      "bytes": 7599
+    },
+    "docs/guide/cuda.md": {
+      "hash": "f7f48e3af0fc9ff10c05c869e52491ab5dfd0b42",
+      "translatedAt": "2026-08-08T18:29:04.951Z",
+      "bytes": 9688
+    },
+    "docs/guide/dataset-ingestion.md": {
+      "hash": "fe6d87ce5d46d1c1a550a94276464d6518fa8604",
+      "translatedAt": "2026-08-08T18:29:06.619Z",
+      "bytes": 4660
+    },
+    "docs/guide/datadog-integration.md": {
+      "hash": "dbfe1541e01b808d0c0457db923afa92d5b52d8d",
+      "translatedAt": "2026-08-08T18:29:06.700Z",
+      "bytes": 4412
+    },
+    "docs/guide/audit-logs.md": {
+      "hash": "8a79438412ded101f43f5eaa8a485296139dd1fb",
+      "translatedAt": "2026-08-08T18:29:07.791Z",
+      "bytes": 17013
+    },
+    "docs/guide/dicts.md": {
+      "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
+      "translatedAt": "2026-08-08T18:29:08.020Z",
+      "bytes": 3641
+    },
+    "docs/guide/dynamic-function-config.md": {
+      "hash": "28a87bd540ddda5c649f65fb64f8157a3851f7f6",
+      "translatedAt": "2026-08-08T18:29:10.056Z",
+      "bytes": 4153
+    },
+    "docs/guide/developing-debugging.md": {
+      "hash": "924e84d19be609d4b20c18dc592e3e26b14485f9",
+      "translatedAt": "2026-08-08T18:29:10.888Z",
+      "bytes": 8786
+    },
+    "docs/guide/dynamic-batching.md": {
+      "hash": "51d8a317b4711e051927a56443e2242151585606",
+      "translatedAt": "2026-08-08T18:29:10.982Z",
+      "bytes": 5894
+    },
+    "docs/guide/endpoint-integrations.md": {
+      "hash": "f84f1be3fa98934e65b11f9c5231f18b8fde0c96",
+      "translatedAt": "2026-08-08T18:29:11.340Z",
+      "bytes": 1722
+    },
+    "docs/guide/endpoint-metrics.md": {
+      "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
+      "translatedAt": "2026-08-08T18:29:12.218Z",
+      "bytes": 2050
+    },
+    "docs/guide/endpoint-benchmarks.md": {
+      "hash": "2b5d7f9272f09ce17b5244e7b221f636d090dd0a",
+      "translatedAt": "2026-08-08T18:29:12.864Z",
+      "bytes": 2379
+    },
+    "docs/guide/environment_variables.md": {
+      "hash": "b74c060063e14579e96ce4656cf7e9ca132ae79e",
+      "translatedAt": "2026-08-08T18:29:13.864Z",
+      "bytes": 2151
+    },
+    "docs/guide/environments.md": {
+      "hash": "f05be64522a32612737278425f1e78df436303b2",
+      "translatedAt": "2026-08-08T18:29:13.897Z",
+      "bytes": 2224
+    },
+    "docs/guide/endpoints.md": {
+      "hash": "4d95dd5e5474977af9c4675cfc56c3df941bb533",
+      "translatedAt": "2026-08-08T18:29:14.863Z",
+      "bytes": 7633
+    },
+    "docs/guide/fast-pull-from-registry.md": {
+      "hash": "73b08889e83c4b24978756264984d796b94fabd7",
+      "translatedAt": "2026-08-08T18:29:15.076Z",
+      "bytes": 2537
+    },
+    "docs/guide/global-variables.md": {
+      "hash": "9a9b3ac81384c77f6fad68360b14ff165f9b7257",
+      "translatedAt": "2026-08-08T18:29:15.499Z",
+      "bytes": 1634
+    },
+    "docs/guide/existing-images.md": {
+      "hash": "8d6f7d14c8702a4d292ff755768b50f4fe489487",
+      "translatedAt": "2026-08-08T18:29:16.886Z",
+      "bytes": 8160
+    },
+    "docs/guide/gpu-health.md": {
+      "hash": "3fceed83375040080cd46d70ca9d6308d4b3a10f",
+      "translatedAt": "2026-08-08T18:29:17.114Z",
+      "bytes": 2727
+    },
+    "docs/guide/feature-maturity.md": {
+      "hash": "5a823be4890291672cbf73c5aa99530e537a3433",
+      "translatedAt": "2026-08-08T18:29:17.408Z",
+      "bytes": 3154
+    },
+    "docs/guide/gpu-metrics.md": {
+      "hash": "907567dbf4af9ff276bc2b0188e43425a13f1277",
+      "translatedAt": "2026-08-08T18:29:18.489Z",
+      "bytes": 2143
+    },
+    "docs/guide/gpu.md": {
+      "hash": "a5a828efbd8dbb94bb0c1af33a2f4e0b62011d0e",
+      "translatedAt": "2026-08-08T18:29:21.218Z",
+      "bytes": 7422
+    },
+    "docs/guide/job-queue.md": {
+      "hash": "7a5152e855ad73ba499f402f707b41ff962e9e69",
+      "translatedAt": "2026-08-08T18:29:23.154Z",
+      "bytes": 5370
+    },
+    "docs/guide/high-performance-llm-inference.md": {
+      "hash": "a2043b3c71c381dbc8db45bb0bb4a176da38bbb6",
+      "translatedAt": "2026-08-08T18:29:23.942Z",
+      "bytes": 15053
+    },
+    "docs/guide/jupyter-notebooks.md": {
+      "hash": "1c5bbbf6bd5450a067ddff88b4a106b36ca35fbe",
+      "translatedAt": "2026-08-08T18:29:24.336Z",
+      "bytes": 2334
+    },
+    "docs/guide/images.md": {
+      "hash": "b51638021b9bb3aaced9545b355d4c74ff8101bc",
+      "translatedAt": "2026-08-08T18:29:24.787Z",
+      "bytes": 13684
+    },
+    "docs/guide/local-data.md": {
+      "hash": "e28be65e806b94e4dc6d425dbe9233d2efed43a5",
+      "translatedAt": "2026-08-08T18:29:24.922Z",
+      "bytes": 1076
+    },
+    "docs/guide/lifecycle-functions.md": {
+      "hash": "afcf9f72f85721b9f7fdb4610cc05b3c656808dc",
+      "translatedAt": "2026-08-08T18:29:24.922Z",
+      "bytes": 3666
+    },
+    "docs/guide/managing-deployments.md": {
+      "hash": "d1c2349f4c514906e46fc6052ab5e257c3f2d314",
+      "translatedAt": "2026-08-08T18:29:28.206Z",
+      "bytes": 6410
+    },
+    "docs/guide/modal-user-account-setup.md": {
+      "hash": "afd0de13fd27902ea1a8c2d42a8ba43d92d9896a",
+      "translatedAt": "2026-08-08T18:29:28.614Z",
+      "bytes": 1083
+    },
+    "docs/guide/memory-snapshots.md": {
+      "hash": "43fa21474dc8db472036c5021a716456052c1702",
+      "translatedAt": "2026-08-08T18:29:29.647Z",
+      "bytes": 12869
+    },
+    "docs/guide/model-weights.md": {
+      "hash": "b902e73f6ca0c8128056ad71d2c38d02df404e28",
+      "translatedAt": "2026-08-08T18:29:30.179Z",
+      "bytes": 6881
+    },
+    "docs/guide/modal-1-0-migration.md": {
+      "hash": "42c6c1738686359a1d1af121317c3c1c42a118ce",
+      "translatedAt": "2026-08-08T18:29:31.109Z",
+      "bytes": 13862
+    },
+    "docs/guide/named-images.md": {
+      "hash": "d05c2af21eeb996f2a47970154088126d0dd7f5d",
+      "translatedAt": "2026-08-08T18:29:31.274Z",
+      "bytes": 4594
+    },
+    "docs/guide/multi-node-training.md": {
+      "hash": "1aeab020af70bdea13ff1b1c2fbf5a90de01f371",
+      "translatedAt": "2026-08-08T18:29:32.708Z",
+      "bytes": 7844
+    },
+    "docs/guide/oidc-integration.md": {
+      "hash": "9882dbcbe3439a0ec77869b1ffab583e7176f84b",
+      "translatedAt": "2026-08-08T18:29:33.605Z",
+      "bytes": 10405
+    },
+    "docs/guide/okta-sso.md": {
+      "hash": "5e3a993072512703ec954a19cfd3548092f6fa40",
+      "translatedAt": "2026-08-08T18:29:34.242Z",
+      "bytes": 2887
+    },
+    "docs/guide/otel-integration.md": {
+      "hash": "7ae07ad1fdc71103eb1d127465df947c755bdfe8",
+      "translatedAt": "2026-08-08T18:29:35.524Z",
+      "bytes": 4061
+    },
+    "docs/guide/parametrized-functions.md": {
+      "hash": "c963adf94db86aadd82b7a3b2eb7b4f9d1da0934",
+      "translatedAt": "2026-08-08T18:29:36.234Z",
+      "bytes": 4292
+    },
+    "docs/guide/preemption.md": {
+      "hash": "4bacf8d6888fbe857ce0d920255065c7a0fbc5ad",
+      "translatedAt": "2026-08-08T18:29:36.469Z",
+      "bytes": 1581
+    },
+    "docs/guide/notebooks.md": {
+      "hash": "c497f501318775173b5f457d651486e7b1e5ab7d",
+      "translatedAt": "2026-08-08T18:29:36.633Z",
+      "bytes": 11688
+    },
+    "docs/guide/private-networking.md": {
+      "hash": "a12130b9883c250ed6256cc9f5cd845a3e266f74",
+      "translatedAt": "2026-08-08T18:29:37.245Z",
+      "bytes": 2411
+    },
+    "docs/guide/proxy-ips.md": {
+      "hash": "bdafa252cdbc5d3b7f58972c11e2aef381ee5645",
+      "translatedAt": "2026-08-08T18:29:37.891Z",
+      "bytes": 3065
+    },
+    "docs/guide/project-structure.md": {
+      "hash": "ba2f072bda1e6c1d41df003feb2f2d5e99689f70",
+      "translatedAt": "2026-08-08T18:29:38.804Z",
+      "bytes": 4055
+    },
+    "docs/guide/queues.md": {
+      "hash": "1dc1c857709c9004b6375cfe747d8cd19c58a046",
+      "translatedAt": "2026-08-08T18:29:39.138Z",
+      "bytes": 4372
+    },
+    "docs/guide/resources.md": {
+      "hash": "a97e775f8118b6363e9f3b458cce7a3e0add0d68",
+      "translatedAt": "2026-08-08T18:29:41.007Z",
+      "bytes": 3557
+    },
+    "docs/guide/region-selection.md": {
+      "hash": "c72e83aeeb5aadd224b113aa5d0d8ce4d9869459",
+      "translatedAt": "2026-08-08T18:29:41.177Z",
+      "bytes": 5508
+    },
+    "docs/guide/retries.md": {
+      "hash": "2517360db58b6d27496728db01b7ab661caa7225",
+      "translatedAt": "2026-08-08T18:29:42.118Z",
+      "bytes": 1730
+    },
+    "docs/guide/restricted-access.md": {
+      "hash": "eb582c6a8272cf1e7a4da62b0f4aa7e4d31153a7",
+      "translatedAt": "2026-08-08T18:29:42.730Z",
+      "bytes": 4961
+    },
+    "docs/guide/s3-gateway-endpoints.md": {
+      "hash": "35a00295044708be51d488183066364da89c0bdb",
+      "translatedAt": "2026-08-08T18:29:42.891Z",
+      "bytes": 1259
+    },
+    "docs/guide/saml-sso.md": {
+      "hash": "868dd91980d16ced3f042f9230820e303d125d47",
+      "translatedAt": "2026-08-08T18:29:44.461Z",
+      "bytes": 2934
+    },
+    "docs/guide/sandbox-files.md": {
+      "hash": "37231f90d092a27b197c7d847bbf66b95dcc89dd",
+      "translatedAt": "2026-08-08T18:29:45.352Z",
+      "bytes": 14053
+    },
+    "docs/guide/sandbox-resources.md": {
+      "hash": "8f3f8e3af13569eebd911e55c877fe80945b2b7c",
+      "translatedAt": "2026-08-08T18:29:47.535Z",
+      "bytes": 4278
+    },
+    "docs/guide/rbac.md": {
+      "hash": "d57c5342dd15367a0ce09795c607be0a477e9e6f",
+      "translatedAt": "2026-08-08T18:29:47.932Z",
+      "bytes": 11171
+    },
+    "docs/guide/sandbox-spawn.md": {
+      "hash": "9f8363b13ca21589a166dfa7878364e7702083c4",
+      "translatedAt": "2026-08-08T18:29:49.071Z",
+      "bytes": 3934
+    },
+    "docs/guide/sandbox-networking.md": {
+      "hash": "76503b7c81d18cc488624510d31543a425823e3a",
+      "translatedAt": "2026-08-08T18:29:50.497Z",
+      "bytes": 16206
+    },
+    "docs/guide/sandbox-snapshots.md": {
+      "hash": "cdeed616a50d2d179b1ffb5bf615a1f315152610",
+      "translatedAt": "2026-08-08T18:29:52.725Z",
+      "bytes": 16179
+    },
+    "docs/guide/scale.md": {
+      "hash": "d1d72549b70759624a8cd7546a0caed44bf16403",
+      "translatedAt": "2026-08-08T18:29:53.350Z",
+      "bytes": 7015
+    },
+    "docs/guide/sdk-javascript-go.md": {
+      "hash": "7af54e0f1a5378ac2a0866d12d75bd45598dcc21",
+      "translatedAt": "2026-08-08T18:29:54.281Z",
+      "bytes": 3746
+    },
+    "docs/guide/secrets.md": {
+      "hash": "9cf0eadcea09200c0ce2a0d3e85c7ef3779589d2",
+      "translatedAt": "2026-08-08T18:29:56.220Z",
+      "bytes": 3840
+    },
+    "docs/guide/scim.md": {
+      "hash": "d6a394e320bcef03bc44bceec90223187c589222",
+      "translatedAt": "2026-08-08T18:29:57.141Z",
+      "bytes": 4166
+    },
+    "docs/guide/sandboxes.md": {
+      "hash": "bc22360fb3345f27fdf0dc316f9ca8a5d97c2388",
+      "translatedAt": "2026-08-08T18:29:59.076Z",
+      "bytes": 36905
+    },
+    "docs/guide/service-users.md": {
+      "hash": "c519f4226284b3071ce9563a38b74cd82144d08b",
+      "translatedAt": "2026-08-08T18:30:00.464Z",
+      "bytes": 2912
+    },
+    "docs/guide/slack-notifications.md": {
+      "hash": "f43a394a5fcc0cd78217ff4be8fa7c7572338a31",
+      "translatedAt": "2026-08-08T18:30:01.614Z",
+      "bytes": 2060
+    },
+    "docs/guide/servers.md": {
+      "hash": "bb273621f1cd365e46840757cc7d27f9e2916c61",
+      "translatedAt": "2026-08-08T18:30:02.157Z",
+      "bytes": 7843
+    },
+    "docs/guide/streaming-endpoints.md": {
+      "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
+      "translatedAt": "2026-08-08T18:30:03.311Z",
+      "bytes": 4503
+    },
+    "docs/guide/timeouts.md": {
+      "hash": "89a61e17769d1c30cb0b0edffeacdf7460c379a5",
+      "translatedAt": "2026-08-08T18:30:03.417Z",
+      "bytes": 2115
+    },
+    "docs/guide/security.md": {
+      "hash": "259474dd15caf24e28cb8db6894e35acbb837ec5",
+      "translatedAt": "2026-08-08T18:30:04.339Z",
+      "bytes": 9445
+    },
+    "docs/guide/tunnels.md": {
+      "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
+      "translatedAt": "2026-08-08T18:30:05.510Z",
+      "bytes": 5713
+    },
+    "docs/guide/troubleshooting.md": {
+      "hash": "daac3a9c18e118987068d90dee6c6f544bc1750a",
+      "translatedAt": "2026-08-08T18:30:05.556Z",
+      "bytes": 5536
+    },
+    "docs/guide/trigger-deployed-functions.md": {
+      "hash": "56c90aa1cb0fe67695688b2f99cf04a3e019ec32",
+      "translatedAt": "2026-08-08T18:30:06.649Z",
+      "bytes": 9556
+    },
+    "docs/guide/vm-sandboxes.md": {
+      "hash": "60528e59390aa08a1c26fdeae80e3b32181b6755",
+      "translatedAt": "2026-08-08T18:30:06.918Z",
+      "bytes": 7583
+    },
+    "docs/guide/webhook-timeouts.md": {
+      "hash": "3ce8a509c5c149cf62d0143d7f36b5b7d8a03779",
+      "translatedAt": "2026-08-08T18:30:07.835Z",
+      "bytes": 2741
+    },
+    "docs/guide/webhook-proxy-auth.md": {
+      "hash": "a60f0b5b42521141f90e44abcdbbe65e6e263f7d",
+      "translatedAt": "2026-08-08T18:30:08.309Z",
+      "bytes": 2701
+    },
+    "docs/guide/webhook-urls.md": {
+      "hash": "402c30bb9cc4ecf82e14f7f81a8686947160444e",
+      "translatedAt": "2026-08-08T18:30:11.780Z",
+      "bytes": 7482
+    },
+    "docs/guide/volumes.md": {
+      "hash": "3cea03f9375a48b226cd3f2d0a673c7bb1d47db7",
+      "translatedAt": "2026-08-08T18:30:12.429Z",
+      "bytes": 24630
+    },
+    "docs/sdk/go/latest/Allowlist.md": {
+      "hash": "83cf87e357688e095723ab39eb571571be393572",
+      "translatedAt": "2026-08-08T18:30:12.930Z",
+      "bytes": 149
+    },
+    "docs/sdk/go/latest/App.md": {
+      "hash": "891c3ad98cdfb49e33322e559abd26c90096b0c1",
+      "translatedAt": "2026-08-08T18:30:13.403Z",
+      "bytes": 545
+    },
+    "docs/guide/webhooks.md": {
+      "hash": "b204e5d5d32b5d2ac9cd9434190eca868da73b4d",
+      "translatedAt": "2026-08-08T18:30:13.754Z",
+      "bytes": 15471
+    },
+    "docs/guide/workspaces.md": {
+      "hash": "ab0ec44670791a683d4889d926422e566940b74e",
+      "translatedAt": "2026-08-08T18:30:14.256Z",
+      "bytes": 5014
+    },
+    "docs/sdk/go/latest/CloudBucketMount.md": {
+      "hash": "295dfc449a1b611601c168c2fede1a970df19732",
+      "translatedAt": "2026-08-08T18:30:14.257Z",
+      "bytes": 768
+    },
+    "docs/sdk/go/latest/Client.md": {
+      "hash": "49efc98ac499dd1fd98a39b341b2399711765cd4",
+      "translatedAt": "2026-08-08T18:30:14.462Z",
+      "bytes": 2515
+    },
+    "docs/sdk/go/latest/ClsInstance.md": {
+      "hash": "20ec68a6f983d146c1cca3642129f08f9609f5cb",
+      "translatedAt": "2026-08-08T18:30:14.518Z",
+      "bytes": 292
+    },
+    "docs/sdk/go/latest/ContainerProcess.md": {
+      "hash": "9b9e2eb030de76ab2c7a37474675ddcef1b43a5d",
+      "translatedAt": "2026-08-08T18:30:14.895Z",
+      "bytes": 596
+    },
+    "docs/sdk/go/latest/FileInfo.md": {
+      "hash": "dee7fc07b24db038c6929e8f1a86b6a7c193e4aa",
+      "translatedAt": "2026-08-08T18:30:15.159Z",
+      "bytes": 344
+    },
+    "docs/sdk/go/latest/FileType.md": {
+      "hash": "e48e451d9525d5f606bb189a4f13889d2c21de53",
+      "translatedAt": "2026-08-08T18:30:15.693Z",
+      "bytes": 214
+    },
+    "docs/sdk/go/latest/Cls.md": {
+      "hash": "1dc7001833a8305c1413a8bf06b76647d5f67fd1",
+      "translatedAt": "2026-08-08T18:30:15.757Z",
+      "bytes": 1969
+    },
+    "docs/sdk/go/latest/Errors.md": {
+      "hash": "d952473051eb0ad400fb1964992e0496b1e3dc9c",
+      "translatedAt": "2026-08-08T18:30:16.010Z",
+      "bytes": 3610
+    },
+    "docs/sdk/go/latest/FileWatchEvent.md": {
+      "hash": "3fc7df2dddf812f63c937ba0176dbba139a14c0d",
+      "translatedAt": "2026-08-08T18:30:16.019Z",
+      "bytes": 470
+    },
+    "docs/sdk/go/latest/FileWatchEventType.md": {
+      "hash": "a018592d6d77f683e39b34e28084d0bb50f888e5",
+      "translatedAt": "2026-08-08T18:30:16.201Z",
+      "bytes": 361
+    },
+    "docs/sdk/go/latest/FunctionStats.md": {
+      "hash": "f80bc1da3567aaa3a305c19f90628fb9503a2902",
+      "translatedAt": "2026-08-08T18:30:16.574Z",
+      "bytes": 158
+    },
+    "docs/sdk/go/latest/FunctionCall.md": {
+      "hash": "53b5160b500d30c383c576a0e948e0b9385e32a4",
+      "translatedAt": "2026-08-08T18:30:16.574Z",
+      "bytes": 1348
+    },
+    "docs/sdk/go/latest/Probe.md": {
+      "hash": "9ad9683cc5aa838f179ded89082fe0c1f3cbdd33",
+      "translatedAt": "2026-08-08T18:30:16.884Z",
+      "bytes": 493
+    },
+    "docs/sdk/go/latest/Profile.md": {
+      "hash": "888921bfc18d50f6b478001b614503ab9e923854",
+      "translatedAt": "2026-08-08T18:30:17.186Z",
+      "bytes": 482
+    },
+    "docs/sdk/go/latest/Function.md": {
+      "hash": "69a133d2e5e7b3d6a364e825258f070a23352889",
+      "translatedAt": "2026-08-08T18:30:17.299Z",
+      "bytes": 3039
+    },
+    "docs/sdk/go/latest/Proxy.md": {
+      "hash": "8d6a77381bc98f11f3614d5b9d56bc832552163d",
+      "translatedAt": "2026-08-08T18:30:17.630Z",
+      "bytes": 403
+    },
+    "docs/sdk/go/latest/Retries.md": {
+      "hash": "323af01411dc8f016b1ad41cc1c205393c1f48f9",
+      "translatedAt": "2026-08-08T18:30:18.177Z",
+      "bytes": 630
+    },
+    "docs/sdk/go/latest/Image.md": {
+      "hash": "8d57ceea44b1351c451e6b358a952ba41ac61bc5",
+      "translatedAt": "2026-08-08T18:30:18.666Z",
+      "bytes": 3846
+    },
+    "docs/sdk/go/latest/SandboxCreateConnectCredentials.md": {
+      "hash": "1dab8aafcafebded132ccabb56bda1b02e807d58",
+      "translatedAt": "2026-08-08T18:30:19.392Z",
+      "bytes": 204
+    },
+    "docs/sdk/go/latest/Secret.md": {
+      "hash": "81af39e6bf9aed4aae3faf1a79d8c31ef6146f32",
+      "translatedAt": "2026-08-08T18:30:19.824Z",
+      "bytes": 1218
+    },
+    "docs/sdk/go/latest/Queue.md": {
+      "hash": "869cc7780a283fdcdaf9208c48198615982a3535",
+      "translatedAt": "2026-08-08T18:30:20.052Z",
+      "bytes": 4124
+    },
+    "docs/sdk/go/latest/StdioBehavior.md": {
+      "hash": "d48de8818ba5bb94e89c8ab2651a18331e5d8ed4",
+      "translatedAt": "2026-08-08T18:30:20.502Z",
+      "bytes": 289
+    },
+    "docs/sdk/go/latest/Tunnel.md": {
+      "hash": "f05cd76cc57ce391b7618dc81bf57082f3c81dd9",
+      "translatedAt": "2026-08-08T18:30:20.842Z",
+      "bytes": 697
+    },
+    "docs/sdk/go/latest/ValidateExecArgs.md": {
+      "hash": "385de11f115d2aee4719bbdc9eb2e71c80c36017",
+      "translatedAt": "2026-08-08T18:30:21.277Z",
+      "bytes": 158
+    },
+    "docs/sdk/go/latest/Volume.md": {
+      "hash": "c91f639e70d68208d92b472b11cf247f467ec142",
+      "translatedAt": "2026-08-08T18:30:22.290Z",
+      "bytes": 1891
+    },
+    "docs/sdk/go/latest/intro.md": {
+      "hash": "e3a80724467f1917ccee842153b8611aaa4fda97",
+      "translatedAt": "2026-08-08T18:30:24.202Z",
+      "bytes": 4636
+    },
+    "docs/sdk/js/latest/App.md": {
+      "hash": "d7f06723b649313d8ddaa355b237b9b8564e7bba",
+      "translatedAt": "2026-08-08T18:30:24.524Z",
+      "bytes": 521
+    },
+    "docs/sdk/js/latest/CloudBucketMount.md": {
+      "hash": "1fbb9ceb1a56981d1e4d536b82c94f92b7202780",
+      "translatedAt": "2026-08-08T18:30:24.795Z",
+      "bytes": 665
+    },
+    "docs/sdk/go/latest/SidecarContainer.md": {
+      "hash": "42e91b4e82d1f768668e0846f6db15d4abe26148",
+      "translatedAt": "2026-08-08T18:30:25.183Z",
+      "bytes": 12546
+    },
+    "docs/sdk/js/latest/ClsInstance.md": {
+      "hash": "0a7561f5b7aa425570cc9ce3d2f2d2e5aafb8079",
+      "translatedAt": "2026-08-08T18:30:25.486Z",
+      "bytes": 226
+    },
+    "docs/sdk/js/latest/Cls.md": {
+      "hash": "c748025c2feb611f8a3b2828318d29a57131309c",
+      "translatedAt": "2026-08-08T18:30:25.541Z",
+      "bytes": 1663
+    },
+    "docs/sdk/js/latest/ContainerProcess.md": {
+      "hash": "8a6be6e7f7cbf2baa280995af75be2092bfd658d",
+      "translatedAt": "2026-08-08T18:30:25.932Z",
+      "bytes": 254
+    },
+    "docs/sdk/js/latest/FileInfo.md": {
+      "hash": "87f3da4e5475d244613b9661ddfdc15cf4191564",
+      "translatedAt": "2026-08-08T18:30:26.083Z",
+      "bytes": 417
+    },
+    "docs/sdk/js/latest/FileType.md": {
+      "hash": "412ecb787b3fbdaf005e40483684bc4dc61345cb",
+      "translatedAt": "2026-08-08T18:30:26.563Z",
+      "bytes": 115
+    },
+    "docs/sdk/js/latest/Errors.md": {
+      "hash": "bac7949f10af412d8308b4ae88f67230f90aa56f",
+      "translatedAt": "2026-08-08T18:30:26.827Z",
+      "bytes": 2735
+    },
+    "docs/sdk/js/latest/FileWatchEventType.md": {
+      "hash": "5d1dff97d46ba0667569aca22abe147952a22180",
+      "translatedAt": "2026-08-08T18:30:27.075Z",
+      "bytes": 176
+    },
+    "docs/sdk/js/latest/FileWatchEvent.md": {
+      "hash": "a73ea4b6b59f10c979bbbbab57b5f9bf8e1b2a38",
+      "translatedAt": "2026-08-08T18:30:27.077Z",
+      "bytes": 469
+    },
+    "docs/sdk/js/latest/FunctionCall.md": {
+      "hash": "70935c4edc7723f86dab5cdd0a31e9f7d894cc8e",
+      "translatedAt": "2026-08-08T18:30:27.381Z",
+      "bytes": 958
+    },
+    "docs/sdk/js/latest/FunctionStats.md": {
+      "hash": "f01f6975bed19f8cd19a0a32e5f1bfcfd4bf78a0",
+      "translatedAt": "2026-08-08T18:30:27.684Z",
+      "bytes": 179
+    },
+    "docs/sdk/js/latest/Function.md": {
+      "hash": "6d46d65247adbe54900a793056e6305cdee2a1e0",
+      "translatedAt": "2026-08-08T18:30:28.231Z",
+      "bytes": 2876
+    },
+    "docs/sdk/js/latest/LogLevel.md": {
+      "hash": "64dfa8616ab63e5092ce91a8b6f15f9e73c1feba",
+      "translatedAt": "2026-08-08T18:30:28.603Z",
+      "bytes": 86
+    },
+    "docs/sdk/js/latest/Logger.md": {
+      "hash": "13acdeb9c8ca6ddce8b61d4babc5b7f5503bc962",
+      "translatedAt": "2026-08-08T18:30:28.926Z",
+      "bytes": 241
+    },
+    "docs/sdk/js/latest/Image.md": {
+      "hash": "8d2fc986f4d334eecec3a469cb3e0498c1f73826",
+      "translatedAt": "2026-08-08T18:30:30.551Z",
+      "bytes": 3695
+    },
+    "docs/sdk/js/latest/ModalClient.md": {
+      "hash": "ebb6a361ae0e58fa16b40256ef0f9aea1ebbb929",
+      "translatedAt": "2026-08-08T18:30:30.626Z",
+      "bytes": 2347
+    },
+    "docs/sdk/js/latest/ModalReadStream.md": {
+      "hash": "dd8fd315e48209985876b5ac6ec1b92c6eb39750",
+      "translatedAt": "2026-08-08T18:30:30.872Z",
+      "bytes": 703
+    },
+    "docs/sdk/js/latest/ModalWriteStream.md": {
+      "hash": "994cdeb1447b8a36a995a7fa68b011ad3686fccc",
+      "translatedAt": "2026-08-08T18:30:31.478Z",
+      "bytes": 762
+    },
+    "docs/sdk/js/latest/Probe.md": {
+      "hash": "d1d90966a6c3c5981f1246edb0222ec00688164d",
+      "translatedAt": "2026-08-08T18:30:31.478Z",
+      "bytes": 520
+    },
+    "docs/sdk/js/latest/Profile.md": {
+      "hash": "c53a05a006fe7300cb451d911dbe90964f9ffccb",
+      "translatedAt": "2026-08-08T18:30:31.809Z",
+      "bytes": 342
+    },
+    "docs/sdk/js/latest/Proxy.md": {
+      "hash": "ea14beff250c661d9c5a809a8de6bce981636fc3",
+      "translatedAt": "2026-08-08T18:30:32.023Z",
+      "bytes": 570
+    },
+    "docs/sdk/js/latest/Retries.md": {
+      "hash": "b447b88cc17cd45cfef2d71593dc2a5c50e6f909",
+      "translatedAt": "2026-08-08T18:30:32.357Z",
+      "bytes": 387
+    },
+    "docs/sdk/go/latest/Sandbox.md": {
+      "hash": "7b45e0f2d68f3a10aa7910a77fa6f15a3fce1f24",
+      "translatedAt": "2026-08-08T18:30:32.511Z",
+      "bytes": 31002
+    },
+    "docs/sdk/js/latest/SandboxCreateConnectCredentials.md": {
+      "hash": "3a241f9c55b1cc27ef8fb24efac48822d5a5c243",
+      "translatedAt": "2026-08-08T18:30:33.054Z",
+      "bytes": 179
+    },
+    "docs/sdk/js/latest/Secret.md": {
+      "hash": "c2e53efb4df57768638e058daf667e67aa8e6299",
+      "translatedAt": "2026-08-08T18:30:33.512Z",
+      "bytes": 1574
+    },
+    "docs/sdk/js/latest/Queue.md": {
+      "hash": "392d249a55b586e4faf3dbe20bdd235f1d04b754",
+      "translatedAt": "2026-08-08T18:30:35.071Z",
+      "bytes": 5062
+    },
+    "docs/sdk/js/latest/StdioBehavior.md": {
+      "hash": "8c044e34c3fb751fb8a7417830a5406de6c8a6aa",
+      "translatedAt": "2026-08-08T18:30:35.445Z",
+      "bytes": 296
+    },
+    "docs/sdk/js/latest/StreamMode.md": {
+      "hash": "875e6712b21f6521915490b2c4052e689eadadd0",
+      "translatedAt": "2026-08-08T18:30:35.709Z",
+      "bytes": 259
+    },
+    "docs/sdk/js/latest/Tunnel.md": {
+      "hash": "bc87a3212e88a8854ec5b724fac1fe039304ecf7",
+      "translatedAt": "2026-08-08T18:30:36.083Z",
+      "bytes": 356
+    },
+    "docs/sdk/js/latest/Volume.md": {
+      "hash": "781fceae3fbe3cc4986e1fe2eabb1a9f98158962",
+      "translatedAt": "2026-08-08T18:30:37.364Z",
+      "bytes": 1720
+    },
+    "docs/sdk/js/latest/intro.md": {
+      "hash": "564c7ea9ffbb8fb623a84f340b6ecdcc8653b495",
+      "translatedAt": "2026-08-08T18:30:38.995Z",
+      "bytes": 4312
+    },
+    "docs/sdk/js/latest/SidecarContainer.md": {
+      "hash": "7e8ae50226d86c275076ca514a6f5bf41519faf6",
+      "translatedAt": "2026-08-08T18:30:39.660Z",
+      "bytes": 10252
+    },
+    "docs/sdk/py/changelog.md": {
+      "hash": "b45fd625f59a936c6443d9d9e6e1289190001041",
+      "translatedAt": "2026-08-08T18:30:43.525Z",
+      "bytes": 56992
+    },
+    "docs/sdk/py/latest/Client.md": {
+      "hash": "7d27cd4355383499d01260bbd105a960f988bf2e",
+      "translatedAt": "2026-08-08T18:30:44.085Z",
+      "bytes": 1491
+    },
+    "docs/sdk/py/latest/CloudBucketMount.md": {
+      "hash": "2b3059626a9e2cb34a3c1d2731ed7f2be55bce85",
+      "translatedAt": "2026-08-08T18:30:44.603Z",
+      "bytes": 2644
+    },
+    "docs/sdk/py/latest/App.md": {
+      "hash": "4ff23dae179f91a620e7c1f3ff3080c0acf51815",
+      "translatedAt": "2026-08-08T18:30:46.795Z",
+      "bytes": 29883
+    },
+    "docs/sdk/py/latest/Cls.md": {
+      "hash": "9fb9ce7f1a81f0c8adbdb017c7ac640f5ab79ea3",
+      "translatedAt": "2026-08-08T18:30:46.797Z",
+      "bytes": 6691
+    },
+    "docs/sdk/py/latest/Cron.md": {
+      "hash": "3838d793a05323413cc924aca27af6551e8fb421",
+      "translatedAt": "2026-08-08T18:30:47.198Z",
+      "bytes": 1120
+    },
+    "docs/sdk/js/latest/Sandbox.md": {
+      "hash": "e6dd700a2fe0765987744ecf49b63d796407ad4c",
+      "translatedAt": "2026-08-08T18:30:49.572Z",
+      "bytes": 29550
+    },
+    "docs/sdk/py/latest/Environment.md": {
+      "hash": "4d21e52605c768d3b412579fcdc3afdf208ba434",
+      "translatedAt": "2026-08-08T18:30:49.769Z",
+      "bytes": 6393
+    },
+    "docs/sdk/py/latest/Error.md": {
+      "hash": "1cfa33fcee99f2fee4f0252c0f8483bc9ecfa06b",
+      "translatedAt": "2026-08-08T18:30:49.938Z",
+      "bytes": 349
+    },
+    "docs/sdk/py/latest/FilePatternMatcher.md": {
+      "hash": "53410b7ead2823581d11a974c5af52e89b48c75c",
+      "translatedAt": "2026-08-08T18:30:50.127Z",
+      "bytes": 1487
+    },
+    "docs/sdk/py/latest/Dict.md": {
+      "hash": "70655e55d09716b837833bd50c05239e350bab22",
+      "translatedAt": "2026-08-08T18:30:50.354Z",
+      "bytes": 10184
+    },
+    "docs/sdk/py/latest/FunctionCall.md": {
+      "hash": "56c6a31280bfaa801f0f8e879ab1fb5d084a776b",
+      "translatedAt": "2026-08-08T18:30:52.971Z",
+      "bytes": 8037
+    },
+    "docs/sdk/py/latest/Period.md": {
+      "hash": "6c34f009f2aa29431549c6408a12b1edb2791a99",
+      "translatedAt": "2026-08-08T18:30:53.822Z",
+      "bytes": 986
+    },
+    "docs/sdk/py/latest/Probe.md": {
+      "hash": "21aa3b5e8f4ed7302ea4fd079e6b5c1401762520",
+      "translatedAt": "2026-08-08T18:30:54.213Z",
+      "bytes": 921
+    },
+    "docs/sdk/py/latest/Function.md": {
+      "hash": "06b72ec4529d42b5e639a7ea4b08903be6f1d24a",
+      "translatedAt": "2026-08-08T18:30:54.215Z",
+      "bytes": 14946
+    },
+    "docs/sdk/py/latest/Proxy.md": {
+      "hash": "8126b5b4dbd9eff0059e708a29aa5554fabe44e4",
+      "translatedAt": "2026-08-08T18:30:54.856Z",
+      "bytes": 1358
+    },
+    "docs/sdk/py/latest/Retries.md": {
+      "hash": "7bd1324fc767fc9e82d90c20488d848e8aad34ab",
+      "translatedAt": "2026-08-08T18:30:55.436Z",
+      "bytes": 1438
+    },
+    "docs/sdk/py/latest/Queue.md": {
+      "hash": "e8d0303c5e2ec350b2c2715d0815314ac245810e",
+      "translatedAt": "2026-08-08T18:30:59.056Z",
+      "bytes": 15803
+    },
+    "docs/sdk/py/latest/SandboxSnapshot.md": {
+      "hash": "73574f9eaad88687a9c0f6eec38b81000b05d564",
+      "translatedAt": "2026-08-08T18:31:00.322Z",
+      "bytes": 1194
+    },
+    "docs/sdk/py/latest/Secret.md": {
+      "hash": "916d44af2202740d6d5d3248a1f75bd98a09665b",
+      "translatedAt": "2026-08-08T18:31:03.600Z",
+      "bytes": 8457
+    },
+    "docs/sdk/py/latest/Image.md": {
+      "hash": "13ab13c33039d49bbd38466bc08322af7f62aac7",
+      "translatedAt": "2026-08-08T18:31:04.721Z",
+      "bytes": 48179
+    },
+    "docs/sdk/py/latest/Server.md": {
+      "hash": "96f6e40519e16eb00486ad253dc452bd581a295c",
+      "translatedAt": "2026-08-08T18:31:04.849Z",
+      "bytes": 6077
+    },
+    "docs/sdk/py/latest/Tunnel.md": {
+      "hash": "d9e581d44f98f73ca895d1ecfc99bcfbf4d795f6",
+      "translatedAt": "2026-08-08T18:31:05.345Z",
+      "bytes": 718
+    },
+    "docs/sdk/py/latest/Sandbox.md": {
+      "hash": "4ad48f0a88bb2a1b68bb38b60f6e66b2c72d3f73",
+      "translatedAt": "2026-08-08T18:31:07.733Z",
+      "bytes": 34698
+    },
+    "docs/sdk/py/latest/asgi_app.md": {
+      "hash": "da78589b4f5a98002591316af85515e89f88a6e3",
+      "translatedAt": "2026-08-08T18:31:08.183Z",
+      "bytes": 545
+    },
+    "docs/sdk/py/latest/Workspace.md": {
+      "hash": "1edf3003a768436b241b1b1f8fe815d8340b949e",
+      "translatedAt": "2026-08-08T18:31:08.515Z",
+      "bytes": 8152
+    },
+    "docs/sdk/py/latest/batched.md": {
+      "hash": "3122c59fd8fe2ce1484443eda28fc6f22b159c08",
+      "translatedAt": "2026-08-08T18:31:08.730Z",
+      "bytes": 870
+    },
+    "docs/sdk/py/latest/Volume.md": {
+      "hash": "0ed10d42bc06e987f721c1f12e0ef758f6060b8c",
+      "translatedAt": "2026-08-08T18:31:09.941Z",
+      "bytes": 14786
+    },
+    "docs/sdk/py/latest/concurrent.md": {
+      "hash": "9137ba6e24b11920e318fae61458c8db9f5b41c4",
+      "translatedAt": "2026-08-08T18:31:09.943Z",
+      "bytes": 1462
+    },
+    "docs/sdk/py/latest/billing.md": {
+      "hash": "099020f9ab1206aac8babb6ab6204acc8b47c392",
+      "translatedAt": "2026-08-08T18:31:10.534Z",
+      "bytes": 2114
+    },
+    "docs/sdk/py/latest/container_process.md": {
+      "hash": "a3b517fad3d8d0512f7fdd36c616a3a3dfa529f5",
+      "translatedAt": "2026-08-08T18:31:10.882Z",
+      "bytes": 983
+    },
+    "docs/sdk/py/latest/current_function_call_id.md": {
+      "hash": "e1938f4dcac2ccf34471b911b7eb2a6a3be70a1d",
+      "translatedAt": "2026-08-08T18:31:10.894Z",
+      "bytes": 344
+    },
+    "docs/sdk/py/latest/current_input_id.md": {
+      "hash": "f40d0dab9003fd729bd3ee9e3a6008bf3187ca2e",
+      "translatedAt": "2026-08-08T18:31:11.204Z",
+      "bytes": 295
+    },
+    "docs/sdk/py/latest/enter.md": {
+      "hash": "45bc2d0fd41d421c57bf0041b8f6dcbb33a682db",
+      "translatedAt": "2026-08-08T18:31:11.643Z",
+      "bytes": 209
+    },
+    "docs/sdk/py/latest/enable_output.md": {
+      "hash": "836d7c37d968d3cdf644e7f2d59293d3001350ea",
+      "translatedAt": "2026-08-08T18:31:11.644Z",
+      "bytes": 317
+    },
+    "docs/sdk/py/latest/exit.md": {
+      "hash": "c096495b892897fdc12d721af3d440304bef6089",
+      "translatedAt": "2026-08-08T18:31:12.067Z",
+      "bytes": 227
+    },
+    "docs/sdk/py/latest/config.md": {
+      "hash": "35d029f880f1572bd3cdc8e4cadd170dc7afdabf",
+      "translatedAt": "2026-08-08T18:31:12.291Z",
+      "bytes": 5088
+    },
+    "docs/sdk/py/latest/fastapi_endpoint.md": {
+      "hash": "c69ca66ddd0b8c493059ec6dae3c79b385e7b618",
+      "translatedAt": "2026-08-08T18:31:12.666Z",
+      "bytes": 882
+    },
+    "docs/sdk/py/latest/forward.md": {
+      "hash": "74d6125987313fe6e4647d1787a0cbcb69261fa3",
+      "translatedAt": "2026-08-08T18:31:13.048Z",
+      "bytes": 3421
+    },
+    "docs/sdk/py/latest/interact.md": {
+      "hash": "7d9c0bf0da4664d6982e39471bec946151032234",
+      "translatedAt": "2026-08-08T18:31:13.474Z",
+      "bytes": 227
+    },
+    "docs/sdk/py/latest/file_io.md": {
+      "hash": "161b73b7cca9acbd0a9dd91115c728ccde6b3342",
+      "translatedAt": "2026-08-08T18:31:13.476Z",
+      "bytes": 2586
+    },
+    "docs/sdk/py/latest/io_streams.md": {
+      "hash": "6678464011ad6bdbd54582e0f8a63a1fa48d4d9a",
+      "translatedAt": "2026-08-08T18:31:14.926Z",
+      "bytes": 1712
+    },
+    "docs/sdk/py/latest/is_local.md": {
+      "hash": "39e072b08fbdca6e78dc9ed6096e3bbdcaa53bff",
+      "translatedAt": "2026-08-08T18:31:15.167Z",
+      "bytes": 330
+    },
+    "docs/sdk/py/latest/method.md": {
+      "hash": "d0df5e56a4211f55fb3c874a865c5d37c0c6ffd7",
+      "translatedAt": "2026-08-08T18:31:15.615Z",
+      "bytes": 237
+    },
+    "docs/sdk/py/latest/exception.md": {
+      "hash": "5ad164c0f6857c9945465c7d5dca63d8a41e015d",
+      "translatedAt": "2026-08-08T18:31:15.659Z",
+      "bytes": 11187
+    },
+    "docs/sdk/py/latest/parameter.md": {
+      "hash": "98346118c9149bd11fae3c86f683064bc72d1201",
+      "translatedAt": "2026-08-08T18:31:16.426Z",
+      "bytes": 494
+    },
+    "docs/sdk/py/latest/intro.md": {
+      "hash": "4e05df21d777a2859c88606e4e0b57e4b9528d1f",
+      "translatedAt": "2026-08-08T18:31:16.549Z",
+      "bytes": 3782
+    },
+    "docs/sdk/py/latest/web_server.md": {
+      "hash": "7898e0b0724c4a227c6b0784ebaae88e2cc71395",
+      "translatedAt": "2026-08-08T18:31:16.906Z",
+      "bytes": 1105
+    },
+    "docs/sdk/py/latest/wsgi_app.md": {
+      "hash": "016ae92a7f9680e9715224962b88a9e1a7d5d58f",
+      "translatedAt": "2026-08-08T18:31:17.116Z",
+      "bytes": 769
+    },
+    "docs/sdk/py/latest/types.md": {
+      "hash": "2c28f6cc1d285677b3909cbc39b8da426a79f70e",
+      "translatedAt": "2026-08-08T18:31:18.180Z",
+      "bytes": 7745
+    }
+  },
+  "updatedAt": "2026-08-08T18:31:18.181Z",
+  "stats": {
+    "translated": 291,
+    "skipped": 4,
+    "failed": 0,
+    "total": 295
+  }
+}

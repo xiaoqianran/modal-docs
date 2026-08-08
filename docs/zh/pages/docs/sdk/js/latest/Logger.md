@@ -1,0 +1,12 @@
+<!-- modal-docs: machine-translated zh-CN from English source -->
+
+# 记录器
+
+```typescript
+interface Logger {
+  debug(message: string, ...args: any[]): void;
+  info(message: string, ...args: any[]): void;
+  warn(message: string, ...args: any[]): void;
+  error(message: string, ...args: any[]): void;
+}
+```
