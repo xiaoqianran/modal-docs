@@ -1,0 +1,15 @@
+{
+  "scraper": {
+    "security": {
+      "fileAccess": {
+        "mode": "allowedRoots",
+        "allowedRoots": [
+          "/workspace/docs/modal",
+          "/workspace/docs/modal/pages"
+        ],
+        "followSymlinks": false,
+        "includeHidden": false
+      }
+    }
+  }
+}

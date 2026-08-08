@@ -1,0 +1,17 @@
+[
+  {
+    "name": "modal",
+    "versions": [
+      {
+        "id": 1,
+        "version": "",
+        "documentCount": 2897,
+        "uniqueUrlCount": 630,
+        "indexedAt": "2026-08-08T17:29:03.000Z",
+        "status": "completed",
+        "sourceUrl": "file:///workspace/docs/modal/pages",
+        "preserveHashes": false
+      }
+    ]
+  }
+]

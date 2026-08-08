@@ -1,0 +1,104 @@
+❌ Playwright failed to render https://modal.com/playground/get_started: TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('body, frameset') to be visible
+    13 × locator resolved to hidden <body data-sveltekit-preload-data="hover">…</body>
+❌ Playwright failed to render https://modal.com/playground/get_started: TimeoutError: page.waitForSelector: Timeout 5000ms exceeded.
+Call log:
+  - waiting for locator('body, frameset') to be visible
+    11 × locator resolved to hidden <body data-sveltekit-preload-data="hover">…</body>
+Successfully scraped 500 pages
+Successfully scraped 200 pages
+Successfully scraped 150 pages
+Successfully scraped 80 pages
+Successfully scraped 100 pages
+Successfully scraped 80 pages
+❌ Job failed: ea69e5ac-874b-4fa3-a4f9-25e4adb3147e: AccessPolicyError: Local file access is limited to configured roots, but none of its entries are available on this system ($DOCUMENTS did not resolve), so file:///workspace/docs/modal/pages cannot be indexed. See https://github.com/arabold/docs-mcp-server/blob/main/docs/setup/configuration.md to configure the allowed roots.
+❌ Job ea69e5ac-874b-4fa3-a4f9-25e4adb3147e failed or was cancelled: AccessPolicyError: Local file access is limited to configured roots, but none of its entries are available on this system ($DOCUMENTS did not resolve), so file:///workspace/docs/modal/pages cannot be indexed. See https://github.com/arabold/docs-mcp-server/blob/main/docs/setup/configuration.md to configure the allowed roots.
+❌ Scraping failed: Local file access is limited to configured roots, but none of its entries are available on this system ($DOCUMENTS did not resolve), so file:///workspace/docs/modal/pages cannot be indexed. See https://github.com/arabold/docs-mcp-server/blob/main/docs/setup/configuration.md to configure the allowed roots.
+docs-mcp-server scrape <library> <url> [options]
+
+Scrape and index documentation from a URL or local folder.
+
+To scrape local files or folders, use a file:// URL.
+Examples:
+scrape mylib https://react.dev/reference/react
+scrape mylib file:///Users/me/docs/index.html
+scrape mylib file:///Users/me/docs/my-library
+
+Note: For local files/folders, you must use the file:// prefix. If running in
+Docker, mount the folder and use the container path. See README for details.
+
+Positionals:
+  library  Library name                                      [string] [required]
+  url      URL or file:// path to scrape                     [string] [required]
+
+Options:
+  -h, --help                                Show help                  [boolean]
+      --output                              Structured output format for
+                                            commands that return data
+                                      [string] [choices: "json", "yaml", "toon"]
+      --verbose                             Enable verbose (debug) logging
+                                                      [boolean] [default: false]
+      --quiet, --silent                     Disable all logging except errors
+                                                      [boolean] [default: false]
+      --telemetry                           Enable/disable telemetry collection
+                                                                       [boolean]
+      --store-path, --storePath             Custom path for data storage
+                                            directory                   [string]
+      --config                              Path to configuration file  [string]
+      --logo                                Show ASCII art logo on startup
+                                                       [boolean] [default: true]
+  -v, --version                             Version of the library (optional)
+                                                                        [string]
+  -p, --max-pages, --maxPages               Maximum pages to scrape     [number]
+  -d, --max-depth, --maxDepth               Maximum navigation depth    [number]
+  -c, --max-concurrency, --maxConcurrency   Maximum concurrent page requests
+                                                                        [number]
+      --ignore-errors, --ignoreErrors       Ignore errors during scraping
+                                                       [boolean] [default: true]
+      --scope                               Crawling boundary
+               [choices: "subpages", "hostname", "domain"] [default: "subpages"]
+      --follow-redirects,                   Follow HTTP redirects
+      --followRedirects                                [boolean] [default: true]
+      --scrape-mode, --scrapeMode           HTML processing strategy
+                      [choices: "fetch", "playwright", "auto"] [default: "auto"]
+      --preserve-hashes, --preserveHashes   Preserve URL hash fragments for
+                                            hash-routed SPA documentation sites
+                                                                       [boolean]
+      --include-pattern, --includePattern   Glob or regex pattern for URLs to
+                                            include (can be specified multiple
+                                            times). Regex patterns must be
+                                            wrapped in slashes, e.g. /pattern/.
+                                                           [array] [default: []]
+      --exclude-pattern, --excludePattern   Glob or regex pattern for URLs to
+                                            exclude (can be specified multiple
+                                            times, takes precedence over
+                                            include). Regex patterns must be
+                                            wrapped in slashes, e.g. /pattern/.
+                                                           [array] [default: []]
+      --header                              Custom HTTP header to send with each
+                                            request (can be specified multiple
+                                            times)         [array] [default: []]
+      --embedding-model, --embeddingModel   Embedding model configuration (e.g.,
+                                            'openai:text-embedding-3-small')
+                                                                        [string]
+      --server-url, --serverUrl             URL of external pipeline worker RPC
+                                            (e.g., http://localhost:8080/api)
+                                                                        [string]
+      --clean                               Clear existing documents before
+                                            scraping   [boolean] [default: true]
+
+AccessPolicyError: Local file access is limited to configured roots, but none of its entries are available on this system ($DOCUMENTS did not resolve), so file:///workspace/docs/modal/pages cannot be indexed. See https://github.com/arabold/docs-mcp-server/blob/main/docs/setup/configuration.md to configure the allowed roots.
+    at ScraperAccessPolicy.resolveFileAccess (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/utils/accessPolicy.ts:207:15)
+    at async LocalFileStrategy.processItem (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/scraper/strategies/LocalFileStrategy.ts:52:22)
+    at async <anonymous> (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/scraper/strategies/BaseScraperStrategy.ts:247:26)
+    at async Promise.all (index 0)
+    at async LocalFileStrategy.processBatch (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/scraper/strategies/BaseScraperStrategy.ts:432:22)
+    at async LocalFileStrategy.scrape (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/scraper/strategies/BaseScraperStrategy.ts:535:23)
+    at async ScraperService.scrape (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/scraper/ScraperService.ts:36:7)
+    at async PipelineWorker.executeJob (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/pipeline/PipelineWorker.ts:68:7)
+    at async PipelineManager._runJob (/workspace/.tools/docs-mcp/node_modules/@arabold/docs-mcp-server/src/pipeline/PipelineManager.ts:647:7) {
+  isRetryable: false,
+  cause: undefined
+}
+Successfully scraped 290 pages
