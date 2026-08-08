@@ -1,0 +1,12 @@
+{
+  "name": "modal-docs",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-site.mjs",
+    "build:local": "PAGES_BASE= node scripts/build-site.mjs"
+  },
+  "devDependencies": {
+    "marked": "^15.0.0"
+  }
+}
