@@ -1,3 +1,4 @@
+https://modal.com/docs
 https://modal.com/docs/cli/changelog.md
 https://modal.com/docs/cli/latest/app.md
 https://modal.com/docs/cli/latest/billing.md
