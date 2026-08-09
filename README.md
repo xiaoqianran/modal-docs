@@ -82,3 +82,13 @@ Env knobs for translate:
 - https://modal.com/llms.txt  
 
 Unofficial mirror for personal/dev use. Content © Modal Labs. Chinese pages are machine-translated.
+
+## LLM / agent access ([llmstxt.org](https://llmstxt.org/))
+
+| File | Purpose |
+|------|---------|
+| [`/llms.txt`](./llms.txt) | Curated page index (mirror URLs) |
+| [`/llms-full.txt`](./llms-full.txt) | Full markdown corpus for ingestion |
+| `/meta/llms-index.json` | Machine-readable page list |
+
+Generated at build time from scraped pages.

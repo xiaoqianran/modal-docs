@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
+import { writeLlmsArtifacts } from "./generate-llms.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -741,7 +742,8 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
     <div class="hero-actions">
       <a class="btn" href="${asset("docs/guide.html", locale)}">${htmlEscape(ui.getStarted || "Get started")}</a>
       <a class="btn ghost" href="https://modal.com/docs" target="_blank" rel="noopener">${htmlEscape(ui.officialDocs)}</a>
-      <a class="btn ghost" href="${asset("meta/llms.txt")}">llms.txt</a>
+      <a class="btn ghost" href="${asset("llms.txt")}">llms.txt</a>
+      <a class="btn ghost" href="${asset("llms-full.txt")}">llms-full.txt</a>
     </div>
     <div class="hero-meta">
       <span class="pill"><b>${totalPages}</b> ${htmlEscape(ui.pages)}</span>
@@ -839,6 +841,46 @@ const summary = (label, res) => {
     .join(" · ");
   console.log(`[${label}] ${res.pageMap.size} pages — ${tracks}`);
 };
+
+// --- llmstxt.org artifacts (llms.txt + llms-full.txt) ---
+try {
+  const llmsPages = [...en.pageMap.values()].map((p) => ({
+    rel: p.outRel.replace(/\.html$/i, ".md"),
+    title: p.title,
+    md: p.md,
+  }));
+  // adapt nav tracks label->name for generator
+  const llmsNav = (en.navTracks || []).map((t) => ({
+    id: t.id,
+    name: t.label || t.name || t.id,
+    groups: (t.groups || []).map((g) => ({
+      name: g.name,
+      items: (g.items || []).map((it) => ({
+        title: it.title,
+        rel: (it.outRel || it.rel || "").replace(/\.html$/i, ".md"),
+        href: it.href,
+      })),
+    })),
+  }));
+  const llmsResult = writeLlmsArtifacts({
+    dist: DIST,
+    pages: llmsPages,
+    base: BASE,
+    origin: process.env.SITE_ORIGIN || "https://xiaoqianran.github.io",
+    brand: "Modal Docs",
+    description: "Unofficial mirror of Modal documentation (Guide, Examples, SDKs, CLI).",
+    officialUrl: "https://modal.com/docs",
+    repo: "modal-docs",
+    nav: llmsNav,
+  });
+  console.log(
+    `[llms] llms.txt + llms-full.txt — ${llmsResult.pageCount} pages, full=${Math.round(llmsResult.fullBytes / 1024)}KB` +
+      (llmsResult.fullTruncated ? " (truncated)" : ""),
+  );
+} catch (err) {
+  console.warn("[llms] failed:", err?.message || err);
+}
+
 summary("en", en);
 summary("zh", zh);
 console.log(`Built locales en+zh -> ${DIST} (BASE=${BASE || "/"})`);
