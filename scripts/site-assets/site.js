@@ -1,6 +1,6 @@
 /**
- * Modal Docs chrome — reference paradigm
- * multi-open accordion · TOC spy · progress · keyboard · copy
+ * Modal Docs chrome — reference paradigm v3
+ * multi-open accordion · TOC spy · progress · keyboard · copy · chips auto-fill
  */
 (function () {
   const sidebar = document.getElementById("sidebar");
@@ -9,6 +9,7 @@
   const nav = document.getElementById("nav");
   const backdrop = document.getElementById("backdrop");
   const STORE_KEY = "modal-docs-nav-v3";
+  const LANG_KEY = "modal-docs-lang";
 
   function loadState() {
     try {
@@ -56,6 +57,30 @@
       const id = c.getAttribute("data-jump-track");
       c.classList.toggle("active", Boolean(isOpen && id === activeId));
     });
+  }
+
+  // ---- auto-fill chips from nav when host is empty (sister-repo safety) ----
+  const chipsHost =
+    document.getElementById("trackChips") ||
+    document.getElementById("chips") ||
+    document.querySelector(".chips");
+  if (chipsHost && !chipsHost.querySelector("[data-jump-track]") && nav) {
+    const frag = document.createDocumentFragment();
+    let n = 0;
+    nav.querySelectorAll(".track").forEach((t) => {
+      if (n >= 12) return;
+      const id = t.dataset.track;
+      const label = t.querySelector(".track-label")?.textContent?.trim();
+      if (!id || !label || id === "home") return;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "chip";
+      btn.setAttribute("data-jump-track", id);
+      btn.textContent = label;
+      frag.appendChild(btn);
+      n += 1;
+    });
+    chipsHost.appendChild(frag);
   }
 
   // ---- track toggles ----
@@ -214,7 +239,6 @@
           leaf.closest("li")?.classList.toggle("hidden", !ok);
           if (ok) groupHit = true;
         });
-        // also flat leaves under track-body
         group.classList.toggle("hidden", searching && !groupHit);
         if (groupHit) {
           trackHit = true;
@@ -235,16 +259,41 @@
     });
   });
 
-  // ---- keyboard: / focus search, Esc close ----
+  function focusSearch() {
+    if (window.matchMedia("(max-width: 1023px)").matches) openMobile();
+    search?.focus();
+    search?.select();
+  }
+
+  // ---- keyboard: / · ⌘K · Esc · ? ----
+  const kbdHelp = document.getElementById("kbdHelp");
+  function closeKbdHelp() {
+    kbdHelp?.classList.remove("open");
+  }
+  function toggleKbdHelp() {
+    if (!kbdHelp) return;
+    kbdHelp.classList.toggle("open");
+  }
+  kbdHelp?.addEventListener("click", (e) => {
+    if (e.target === kbdHelp) closeKbdHelp();
+  });
+  document.getElementById("kbdHelpClose")?.addEventListener("click", closeKbdHelp);
+
   document.addEventListener("keydown", (e) => {
     const tag = (e.target && e.target.tagName) || "";
     const typing = tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable;
-    if (e.key === "/" && !typing) {
+    if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k")) && !typing) {
       e.preventDefault();
-      search?.focus();
-      search?.select();
+      focusSearch();
+      return;
+    }
+    if (e.key === "?" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      toggleKbdHelp();
+      return;
     }
     if (e.key === "Escape") {
+      closeKbdHelp();
       if (document.activeElement === search) {
         search.blur();
         search.value = "";
@@ -269,6 +318,20 @@
           btn.textContent = btn.getAttribute("data-label-copy") || prev;
           btn.classList.remove("copied");
         }, 1400);
+      } catch {
+        /* ignore */
+      }
+    });
+  });
+
+  // ---- heading anchor: copy URL ----
+  document.querySelectorAll(".prose .anchor").forEach((a) => {
+    a.addEventListener("click", async (e) => {
+      try {
+        const url = new URL(a.href, location.href).href;
+        await navigator.clipboard.writeText(url);
+        a.dataset.tip = "copied";
+        setTimeout(() => delete a.dataset.tip, 1200);
       } catch {
         /* ignore */
       }
@@ -301,6 +364,27 @@
   window.addEventListener("resize", updateProgress, { passive: true });
   updateProgress();
 
+  // ---- back to top ----
+  let toTop = document.getElementById("toTop");
+  if (!toTop) {
+    toTop = document.createElement("button");
+    toTop.type = "button";
+    toTop.id = "toTop";
+    toTop.className = "to-top";
+    toTop.setAttribute("aria-label", "Back to top");
+    toTop.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>';
+    document.body.appendChild(toTop);
+  }
+  toTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function updateToTop() {
+    toTop.classList.toggle("show", window.scrollY > 480);
+  }
+  window.addEventListener("scroll", updateToTop, { passive: true });
+  updateToTop();
+
   // ---- TOC scroll spy ----
   const tocLinks = [...document.querySelectorAll(".toc a[href^='#']")];
   if (tocLinks.length && "IntersectionObserver" in window) {
@@ -330,7 +414,7 @@
   document.querySelectorAll("[data-lang-set]").forEach((a) => {
     a.addEventListener("click", () => {
       try {
-        localStorage.setItem("modal-docs-lang", a.getAttribute("data-lang-set") || "en");
+        localStorage.setItem(LANG_KEY, a.getAttribute("data-lang-set") || "en");
       } catch {
         /* ignore */
       }

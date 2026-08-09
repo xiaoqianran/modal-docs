@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Modal docs static site — EN + zh-CN locales, learning-vue3 accordion nav
+// Reference paradigm v3 layout contract for all *-docs mirrors
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -18,21 +19,10 @@ const CHEV_SVG =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>';
 
 const TRACK_ORDER = ["Guide", "Examples", "Python SDK", "JS SDK", "Go SDK", "CLI", "Reference", "Other"];
-const TRACK_BADGE = {
-  Guide: "①",
-  Examples: "②",
-  "Python SDK": "③",
-  "JS SDK": "④",
-  "Go SDK": "⑤",
-  CLI: "⑥",
-  Reference: "⑦",
-  Other: "·",
-};
 
 /** @param {string} p path relative to site root, no leading slash */
 function asset(p, locale = "en") {
   const rel = String(p).replace(/^\//, "");
-  // shared assets always at site root (not under /zh/)
   const isShared = rel.startsWith("assets/") || rel.startsWith("meta/");
   const locPrefix = !isShared && locale === "zh" ? "zh/" : "";
   const full = locPrefix + rel;
@@ -115,7 +105,7 @@ function parseLlms(text) {
 
     const topLink = /^- \[([^\]]+)\]\((https:\/\/modal\.com\/[^)]+)\)\s*$/.exec(line);
     if (topLink) {
-      const title = topLink[1].replace(/[`]/g, "").trim();
+      const title = topLink[1].replace(/[`']/g, "").trim();
       const url = topLink[2];
       let j = i + 1;
       let hasKids = false;
@@ -193,7 +183,7 @@ function makeRenderer(ui) {
       text = this.parser.parseInline(text.tokens);
     }
     const id = slugify(String(text).replace(/<[^>]+>/g, ""));
-    return `<h${level} id="${id}"><a class="anchor" href="#${id}">#</a>${text}</h${level}>\n`;
+    return `<h${level} id="${id}"><a class="anchor" href="#${id}" aria-label="Link to this section">#</a>${text}</h${level}>\n`;
   };
   renderer.code = function (code, infostring) {
     let lang = "";
@@ -251,7 +241,7 @@ function extractToc(md) {
 
 function tocHtml(toc, ui) {
   if (!toc.length) return "";
-  let html = `<nav class="toc"><div class="toc-title">${htmlEscape(ui.onThisPage)}</div><ul>`;
+  let html = `<nav class="toc" aria-label="${htmlEscape(ui.onThisPage)}"><div class="toc-title">${htmlEscape(ui.onThisPage)}</div><ul>`;
   for (const t of toc) {
     html += `<li class="l${t.level}"><a href="#${t.id}">${htmlEscape(t.text)}</a></li>`;
   }
@@ -275,7 +265,7 @@ function loadPages(pagesRoot) {
   const map = new Map();
   for (const abs of walk(pagesRoot)) {
     const md = fs.readFileSync(abs, "utf8");
-    if (isHtmlDoc(md)) continue; // never render SPA shells as docs
+    if (isHtmlDoc(md)) continue;
     let outRel = path.relative(pagesRoot, abs).split(path.sep).join("/");
     if (outRel.endsWith(".md")) outRel = outRel.slice(0, -3) + ".html";
     const title = titleFromMd(md, path.basename(abs, ".md"));
@@ -527,7 +517,6 @@ function langSwitcher(locale, outRel, ui) {
   </div>`;
 }
 
-
 function flattenNavItems(tracks) {
   const items = [];
   for (const t of tracks) {
@@ -552,6 +541,28 @@ function renderPager(flat, outRel, ui) {
     ? `<a class="next" href="${next.href}"><span class="dir">${htmlEscape(nextLabel)} →</span><span class="title">${htmlEscape(next.title)}</span></a>`
     : `<div class="empty"></div>`;
   return `<nav class="pager" aria-label="Pagination">${prevHtml}${nextHtml}</nav>`;
+}
+
+function kbdHelpHtml(ui) {
+  const rows = [
+    [ui.kbdSearch || "Focus search", "/  ·  ⌘K"],
+    [ui.kbdEsc || "Close / clear", "Esc"],
+    [ui.kbdHelp || "Keyboard help", "?"],
+  ];
+  return `<div class="kbd-help" id="kbdHelp" role="dialog" aria-modal="true" aria-label="${htmlEscape(ui.kbdTitle || "Keyboard shortcuts")}">
+  <div class="kbd-panel">
+    <h3>${htmlEscape(ui.kbdTitle || "Keyboard shortcuts")}</h3>
+    ${rows
+      .map(
+        ([label, keys]) =>
+          `<div class="kbd-row"><span>${htmlEscape(label)}</span><kbd>${htmlEscape(keys)}</kbd></div>`,
+      )
+      .join("")}
+    <div style="margin-top:0.9rem;text-align:right">
+      <button type="button" class="btn ghost" id="kbdHelpClose" style="margin:0;min-height:2.1rem;padding:0.4rem 0.85rem">${htmlEscape(ui.closeMenu || "Close")}</button>
+    </div>
+  </div>
+</div>`;
 }
 
 function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui, outRel, showMtBanner, pagerHtml = "" }) {
@@ -579,6 +590,9 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
   <meta name="description" content="${desc}" />
   <meta name="color-scheme" content="dark" />
   <meta name="theme-color" content="#08090c" />
+  <meta property="og:title" content="${htmlEscape(title)} · ${htmlEscape(ui.brand)}" />
+  <meta property="og:description" content="${desc}" />
+  <meta property="og:type" content="website" />
   <title>${htmlEscape(title)} · ${htmlEscape(ui.brand)}</title>
   <link rel="alternate" hreflang="en" href="${asset(outRel || "index.html", "en")}" />
   <link rel="alternate" hreflang="zh-CN" href="${asset(outRel || "index.html", "zh")}" />
@@ -589,6 +603,7 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/github-dark.min.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">${htmlEscape(ui.skipToContent || "Skip to content")}</a>
   <div class="progress" aria-hidden="true"></div>
   <header class="topbar">
     <div class="topbar-inner">
@@ -609,17 +624,17 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
       <div class="side-head">
         <div class="search-wrap">
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-          <input class="search" id="search" type="search" placeholder="${htmlEscape(ui.searchPlaceholder)}" autocomplete="off" />
+          <input class="search" id="search" type="search" placeholder="${htmlEscape(ui.searchPlaceholder)}" autocomplete="off" enterkeyhint="search" />
           <span class="search-kbd" aria-hidden="true">/</span>
         </div>
         <p class="side-label">${htmlEscape(ui.sideLabel)}</p>
       </div>
-      <nav class="nav" id="nav" data-active-rel="${htmlEscape(outRel || "")}">${navHtml}</nav>
+      <nav class="nav" id="nav" data-active-rel="${htmlEscape(outRel || "")}" aria-label="${htmlEscape(ui.sideLabel)}">${navHtml}</nav>
       <div class="side-foot">${htmlEscape(ui.sideFoot)}</div>
     </aside>
     <button type="button" class="backdrop" id="backdrop" aria-label="${htmlEscape(ui.closeMenu)}"></button>
 
-    <div class="main">
+    <div class="main" id="main">
       ${banner}
       <div class="crumb">${breadcrumb}</div>
       <div class="content-wrap">
@@ -630,6 +645,11 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
       <footer class="page-foot">${htmlEscape(ui.pageFoot)}</footer>
     </div>
   </div>
+
+  <button type="button" class="to-top" id="toTop" aria-label="${htmlEscape(ui.backToTop || "Back to top")}">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+  ${kbdHelpHtml(ui)}
 
   <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/highlight.min.js"></script>
   <script src="${asset("assets/site.js")}"></script>
@@ -708,17 +728,32 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
     })
     .join("\n");
 
+  const totalPages = pageMap.size;
+  const totalTracks = navTracks.length;
+  const localesLabel = ui.statLocales || "EN + 中文";
+
   const indexActive = { trackId: "guide", group: "", outRel: "index.html" };
   const indexBody = `
   <div class="hero">
     <div class="eyebrow">${htmlEscape(ui.eyebrow || "Documentation")}</div>
     <h1>${htmlEscape(ui.indexTitle)}</h1>
     <p class="lead">${htmlEscape(ui.indexLead)}</p>
-    <p>
+    <div class="hero-actions">
       <a class="btn" href="${asset("docs/guide.html", locale)}">${htmlEscape(ui.getStarted || "Get started")}</a>
       <a class="btn ghost" href="https://modal.com/docs" target="_blank" rel="noopener">${htmlEscape(ui.officialDocs)}</a>
       <a class="btn ghost" href="${asset("meta/llms.txt")}">llms.txt</a>
-    </p>
+    </div>
+    <div class="hero-meta">
+      <span class="pill"><b>${totalPages}</b> ${htmlEscape(ui.pages)}</span>
+      <span class="pill"><b>${totalTracks}</b> ${htmlEscape(ui.tracksShort || "tracks")}</span>
+      <span class="pill">${htmlEscape(localesLabel)}</span>
+      <span class="pill">${htmlEscape(ui.hierarchyNote)}</span>
+    </div>
+  </div>
+  <div class="stats" aria-label="Stats">
+    <div class="stat"><div class="n">${totalPages}</div><div class="l">${htmlEscape(ui.statPages || "mirrored pages")}</div></div>
+    <div class="stat"><div class="n">${totalTracks}</div><div class="l">${htmlEscape(ui.statTracks || "learning tracks")}</div></div>
+    <div class="stat"><div class="n">2</div><div class="l">${htmlEscape(ui.statLangs || "locales")}</div></div>
   </div>
   <h2>${htmlEscape(ui.tracks)}</h2>
   <div class="cards">${cards}</div>
@@ -730,7 +765,7 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
     <li><a href="${asset("docs/sdk/go/latest/intro.html", locale)}"><span>Go SDK</span><span class="hint">module</span></a></li>
     <li><a href="${asset("docs/guide/sandboxes.html", locale)}"><span>Sandboxes</span><span class="hint">${htmlEscape(ui.hintSandbox || "isolated compute")}</span></a></li>
   </ul>
-  <p class="muted">${pageMap.size} ${htmlEscape(ui.pages)} · ${htmlEscape(ui.hierarchyNote)}</p>
+  <p class="muted">${htmlEscape(ui.kbdHint || "Press ? for keyboard shortcuts · / to search")}</p>
 `;
 
   const indexHtml = layout({
@@ -757,7 +792,7 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
       path.join(DIST, "404.html"),
       layout({
         title: ui.notFound,
-        body: `<h1>${htmlEscape(ui.notFound)}</h1><p><a class="btn" href="${asset("index.html", "en")}">${htmlEscape(ui.backHome)}</a></p>`,
+        body: `<div class="hero"><div class="eyebrow">404</div><h1>${htmlEscape(ui.notFound)}</h1><p class="lead">${htmlEscape(ui.notFoundLead || "This page is not in the mirror.")}</p><p><a class="btn" href="${asset("index.html", "en")}">${htmlEscape(ui.backHome)}</a></p></div>`,
         navHtml: renderNav(navTracks, indexActive, ui),
         breadcrumb: `<span class="current">404</span>`,
         toc: "",
@@ -795,7 +830,6 @@ if (llmsText) {
 }
 
 const en = buildLocale("en", EN_PAGES, llmsText, llmsTracks);
-// Prefer zh cache; fall back to EN pages so /zh/ still has full UI + content
 const zhRoot = fs.existsSync(ZH_PAGES) && walk(ZH_PAGES).length ? ZH_PAGES : EN_PAGES;
 const zh = buildLocale("zh", zhRoot, llmsText, llmsTracks);
 
