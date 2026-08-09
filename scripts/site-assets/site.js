@@ -1,9 +1,6 @@
 /**
- * Modal docs nav — learning-vue3 style:
- * - multi-open tracks (independent expand)
- * - groups open independently; active path expanded on load
- * - smooth grid expand + scroll-to-active
- * - search expands matching tracks/groups
+ * Modal Docs chrome — reference paradigm
+ * multi-open accordion · TOC spy · progress · keyboard · copy
  */
 (function () {
   const sidebar = document.getElementById("sidebar");
@@ -11,7 +8,7 @@
   const search = document.getElementById("search");
   const nav = document.getElementById("nav");
   const backdrop = document.getElementById("backdrop");
-  const STORE_KEY = "modal-docs-nav-v2";
+  const STORE_KEY = "modal-docs-nav-v3";
 
   function loadState() {
     try {
@@ -33,13 +30,11 @@
     const btn = trackEl.querySelector(":scope > [data-track-toggle]");
     if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
   }
-
   function setGroupOpen(groupEl, open) {
     groupEl.dataset.open = open ? "1" : "0";
     const btn = groupEl.querySelector(":scope > .group-btn");
     if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
   }
-
   function persistFromDom() {
     if (!nav) return;
     const tracks = {};
@@ -56,7 +51,14 @@
     saveState({ tracks, groups });
   }
 
-  // ---- track toggles (independent, like learning-vue3) ----
+  function syncChips(activeId, isOpen) {
+    document.querySelectorAll(".chip").forEach((c) => {
+      const id = c.getAttribute("data-jump-track");
+      c.classList.toggle("active", Boolean(isOpen && id === activeId));
+    });
+  }
+
+  // ---- track toggles ----
   nav?.querySelectorAll("[data-track-toggle]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const id = btn.getAttribute("data-track-toggle");
@@ -65,7 +67,6 @@
       const willOpen = track.dataset.open !== "1";
       setTrackOpen(track, willOpen);
       if (willOpen) {
-        // open all groups in this track for browse-friendly path (vue3 shows full list)
         track.querySelectorAll(":scope .group").forEach((g) => setGroupOpen(g, true));
         requestAnimationFrame(() => {
           track.scrollIntoView({ block: "nearest", behavior: "smooth" });
@@ -76,7 +77,6 @@
     });
   });
 
-  // ---- group toggles (independent) ----
   nav?.querySelectorAll(".group-btn").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -87,27 +87,16 @@
     });
   });
 
-  function syncChips(activeId, isOpen) {
-    document.querySelectorAll(".chip").forEach((c) => {
-      const id = c.getAttribute("data-jump-track");
-      c.classList.toggle("active", isOpen && id === activeId);
-    });
-  }
-
-  // ---- initial expand: active leaf path + session restore ----
+  // ---- initial expand ----
   const active = nav?.querySelector(".leaf.active");
   const stored = loadState();
 
   if (active) {
     const track = active.closest(".track");
     const group = active.closest(".group");
-    // mark active track for style
     track?.setAttribute("data-active", "1");
-
-    // open active track
     if (track) setTrackOpen(track, true);
 
-    // restore other tracks from session (multi-open)
     nav?.querySelectorAll(".track").forEach((t) => {
       if (t === track) return;
       const id = t.dataset.track;
@@ -116,13 +105,10 @@
       }
     });
 
-    // groups: open ALL groups in active track for smooth browsing
-    // (user complained exclusive single-group was clunky)
     if (track) {
       track.querySelectorAll(":scope .group").forEach((g) => {
         const key = `${track.dataset.track}::${g.dataset.group}`;
         if (stored.groups && typeof stored.groups[key] === "boolean") {
-          // still force-open the group that contains active
           setGroupOpen(g, g === group ? true : stored.groups[key]);
         } else {
           setGroupOpen(g, true);
@@ -130,7 +116,6 @@
       });
     }
 
-    // restore groups in other open tracks
     nav?.querySelectorAll(".track").forEach((t) => {
       if (t === track || t.dataset.open !== "1") return;
       t.querySelectorAll(":scope .group").forEach((g) => {
@@ -144,12 +129,10 @@
     });
 
     syncChips(track?.dataset.track, true);
-
     setTimeout(() => {
       active.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    }, 80);
+    }, 60);
   } else {
-    // home: open Guide by default (and restore multi-open)
     let anyRestored = false;
     nav?.querySelectorAll(".track").forEach((t) => {
       const id = t.dataset.track;
@@ -169,18 +152,19 @@
       }
     });
     if (!anyRestored) {
-      const guide = nav?.querySelector('.track[data-track="guide"]');
-      if (guide) {
-        setTrackOpen(guide, true);
-        guide.querySelectorAll(":scope .group").forEach((g) => setGroupOpen(g, true));
-        syncChips("guide", true);
+      const preferred =
+        nav?.querySelector('.track[data-track="guide"]') ||
+        nav?.querySelector(".track");
+      if (preferred) {
+        setTrackOpen(preferred, true);
+        preferred.querySelectorAll(":scope .group").forEach((g) => setGroupOpen(g, true));
+        syncChips(preferred.dataset.track, true);
       }
     }
   }
-
   persistFromDom();
 
-  // ---- top chips: expand track (keep others), scroll, open groups ----
+  // ---- chips ----
   document.querySelectorAll("[data-jump-track]").forEach((chip) => {
     chip.addEventListener("click", () => {
       const id = chip.getAttribute("data-jump-track");
@@ -197,6 +181,7 @@
     });
   });
 
+  // ---- mobile menu ----
   function closeMobile() {
     sidebar?.classList.remove("open");
     backdrop?.classList.remove("show");
@@ -205,7 +190,6 @@
     sidebar?.classList.add("open");
     backdrop?.classList.add("show");
   }
-
   menuBtn?.addEventListener("click", () => {
     if (sidebar?.classList.contains("open")) closeMobile();
     else openMobile();
@@ -215,93 +199,110 @@
     if (window.matchMedia("(max-width: 1023px)").matches) closeMobile();
   });
 
-  // ---- search ----
+  // ---- search filter ----
   search?.addEventListener("input", () => {
     const q = search.value.trim().toLowerCase();
     const searching = q.length > 0;
 
     nav?.querySelectorAll(".track").forEach((track) => {
-      let trackAny = false;
-
+      let trackHit = false;
       track.querySelectorAll(":scope .group").forEach((group) => {
-        let groupAny = false;
-        group.querySelectorAll("li").forEach((li) => {
-          const a = li.querySelector(".leaf");
-          const hay = (a?.dataset.search || a?.textContent || "").toLowerCase();
-          const show = !searching || hay.includes(q);
-          li.classList.toggle("hidden", !show);
-          if (show) groupAny = true;
+        let groupHit = false;
+        group.querySelectorAll("a.leaf").forEach((leaf) => {
+          const hay = (leaf.getAttribute("data-search") || leaf.textContent || "").toLowerCase();
+          const ok = !searching || hay.includes(q);
+          leaf.closest("li")?.classList.toggle("hidden", !ok);
+          if (ok) groupHit = true;
         });
-        group.classList.toggle("hidden", searching ? !groupAny : false);
-        if (searching && groupAny) setGroupOpen(group, true);
-        if (groupAny) trackAny = true;
-      });
-
-      // flat leaf lists directly under track-body
-      track.querySelectorAll(":scope > .track-panel .track-body > .leaf-list > li").forEach((li) => {
-        const a = li.querySelector(".leaf");
-        const hay = (a?.dataset.search || a?.textContent || "").toLowerCase();
-        const show = !searching || hay.includes(q);
-        li.classList.toggle("hidden", !show);
-        if (show) trackAny = true;
-      });
-
-      track.classList.toggle("hidden", searching ? !trackAny : false);
-      if (searching && trackAny) setTrackOpen(track, true);
-
-      if (!searching) {
-        // restore active + session
-        const isActiveTrack = active && track.contains(active);
-        const id = track.dataset.track;
-        if (isActiveTrack) {
-          setTrackOpen(track, true);
-        } else if (stored.tracks && typeof stored.tracks[id] === "boolean") {
-          setTrackOpen(track, stored.tracks[id]);
-        } else {
-          setTrackOpen(track, false);
+        // also flat leaves under track-body
+        group.classList.toggle("hidden", searching && !groupHit);
+        if (groupHit) {
+          trackHit = true;
+          if (searching) setGroupOpen(group, true);
         }
-        track.querySelectorAll(":scope .group").forEach((g) => {
-          if (isActiveTrack) setGroupOpen(g, true);
-          else if (track.dataset.open === "1") setGroupOpen(g, true);
-        });
+      });
+      track.querySelectorAll(":scope > .track-panel .leaf-list > li").forEach((li) => {
+        if (li.closest(".group")) return;
+        const leaf = li.querySelector("a.leaf");
+        if (!leaf) return;
+        const hay = (leaf.getAttribute("data-search") || leaf.textContent || "").toLowerCase();
+        const ok = !searching || hay.includes(q);
+        li.classList.toggle("hidden", !ok);
+        if (ok) trackHit = true;
+      });
+      track.classList.toggle("hidden", searching && !trackHit);
+      if (searching && trackHit) setTrackOpen(track, true);
+    });
+  });
+
+  // ---- keyboard: / focus search, Esc close ----
+  document.addEventListener("keydown", (e) => {
+    const tag = (e.target && e.target.tagName) || "";
+    const typing = tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable;
+    if (e.key === "/" && !typing) {
+      e.preventDefault();
+      search?.focus();
+      search?.select();
+    }
+    if (e.key === "Escape") {
+      if (document.activeElement === search) {
+        search.blur();
+        search.value = "";
+        search.dispatchEvent(new Event("input"));
+      }
+      closeMobile();
+    }
+  });
+
+  // ---- copy code ----
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const block = btn.closest(".code-block");
+      const code = block?.querySelector("pre code")?.innerText || "";
+      try {
+        await navigator.clipboard.writeText(code);
+        const prev = btn.textContent;
+        const copied = btn.getAttribute("data-label-copied") || "Copied";
+        btn.textContent = copied;
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = btn.getAttribute("data-label-copy") || prev;
+          btn.classList.remove("copied");
+        }, 1400);
+      } catch {
+        /* ignore */
       }
     });
   });
 
-  // highlight + copy
+  // ---- hljs ----
   if (window.hljs) {
     document.querySelectorAll("pre code").forEach((el) => {
       try {
-        hljs.highlightElement(el);
-      } catch (_) {}
-    });
-  }
-  document.querySelectorAll("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const code = btn.closest(".code-block")?.querySelector("code")?.innerText || "";
-      const copyL = btn.getAttribute("data-label-copy") || "Copy";
-      const copiedL = btn.getAttribute("data-label-copied") || "Copied";
-      try {
-        await navigator.clipboard.writeText(code);
-        btn.textContent = copiedL;
-        setTimeout(() => (btn.textContent = copyL), 1200);
+        window.hljs.highlightElement(el);
       } catch {
-        btn.textContent = "Failed";
+        /* ignore */
       }
     });
-  });
+  }
 
-  // remember language preference when user clicks switcher
-  document.querySelectorAll("[data-lang-set]").forEach((a) => {
-    a.addEventListener("click", () => {
-      try {
-        localStorage.setItem("modal-docs-lang", a.getAttribute("data-lang-set") || "en");
-      } catch (_) {}
-    });
-  });
+  // ---- reading progress ----
+  const progress = document.querySelector(".progress");
+  const article = document.querySelector("article.prose, article.content");
+  function updateProgress() {
+    if (!progress || !article) return;
+    const rect = article.getBoundingClientRect();
+    const total = article.scrollHeight - window.innerHeight;
+    const scrolled = Math.min(Math.max(-rect.top, 0), Math.max(total, 1));
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    progress.style.width = `${Math.min(100, Math.max(0, pct))}%`;
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+  updateProgress();
 
-  // TOC spy
-  const tocLinks = [...document.querySelectorAll(".toc a")];
+  // ---- TOC scroll spy ----
+  const tocLinks = [...document.querySelectorAll(".toc a[href^='#']")];
   if (tocLinks.length && "IntersectionObserver" in window) {
     const map = new Map();
     tocLinks.forEach((a) => {
@@ -311,14 +312,28 @@
     });
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          tocLinks.forEach((l) => l.classList.remove("active"));
-          map.get(e.target)?.classList.add("active");
+        entries.forEach((entry) => {
+          const a = map.get(entry.target);
+          if (!a) return;
+          if (entry.isIntersecting) {
+            tocLinks.forEach((l) => l.classList.remove("active"));
+            a.classList.add("active");
+          }
         });
       },
       { rootMargin: "-20% 0px -70% 0px", threshold: [0, 1] },
     );
     map.forEach((_, el) => io.observe(el));
   }
+
+  // ---- lang preference ----
+  document.querySelectorAll("[data-lang-set]").forEach((a) => {
+    a.addEventListener("click", () => {
+      try {
+        localStorage.setItem("modal-docs-lang", a.getAttribute("data-lang-set") || "en");
+      } catch {
+        /* ignore */
+      }
+    });
+  });
 })();

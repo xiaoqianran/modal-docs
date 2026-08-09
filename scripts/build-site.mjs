@@ -461,8 +461,7 @@ function renderNav(tracks, active, ui) {
   for (const t of tracks) {
     const count = t.groups.reduce((n, g) => n + g.items.length, 0);
     const isActiveTrack = t.id === active.trackId;
-    const badge = TRACK_BADGE[t.label] || "·";
-    const label = `${badge} ${displayTrackLabel(ui, t.label)}`;
+    const label = displayTrackLabel(ui, t.label);
 
     html += `<section class="track" data-track="${htmlEscape(t.id)}" data-open="${isActiveTrack ? "1" : "0"}"${isActiveTrack ? ' data-active="1"' : ""}>`;
     html += `<button type="button" class="track-btn" data-track-toggle="${htmlEscape(t.id)}" aria-expanded="${isActiveTrack}">`;
@@ -528,7 +527,34 @@ function langSwitcher(locale, outRel, ui) {
   </div>`;
 }
 
-function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui, outRel, showMtBanner }) {
+
+function flattenNavItems(tracks) {
+  const items = [];
+  for (const t of tracks) {
+    for (const g of t.groups) {
+      for (const it of g.items) items.push({ ...it, trackLabel: t.label, trackId: t.id });
+    }
+  }
+  return items;
+}
+
+function renderPager(flat, outRel, ui) {
+  const idx = flat.findIndex((it) => it.outRel === outRel);
+  if (idx < 0) return "";
+  const prev = idx > 0 ? flat[idx - 1] : null;
+  const next = idx < flat.length - 1 ? flat[idx + 1] : null;
+  const prevLabel = ui.prev || "Previous";
+  const nextLabel = ui.next || "Next";
+  const prevHtml = prev
+    ? `<a class="prev" href="${prev.href}"><span class="dir">← ${htmlEscape(prevLabel)}</span><span class="title">${htmlEscape(prev.title)}</span></a>`
+    : `<div class="empty"></div>`;
+  const nextHtml = next
+    ? `<a class="next" href="${next.href}"><span class="dir">${htmlEscape(nextLabel)} →</span><span class="title">${htmlEscape(next.title)}</span></a>`
+    : `<div class="empty"></div>`;
+  return `<nav class="pager" aria-label="Pagination">${prevHtml}${nextHtml}</nav>`;
+}
+
+function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui, outRel, showMtBanner, pagerHtml = "" }) {
   const chipDefs = ["Guide", "Examples", "Python SDK", "JS SDK", "Go SDK", "CLI"];
   const chips = chipDefs
     .map((label) => {
@@ -543,21 +569,27 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
     ? `<div class="mt-banner">${htmlEscape(ui.mtBanner)} <a href="${asset(outRel || "index.html", "en")}">${htmlEscape(ui.viewEn)}</a></div>`
     : "";
 
+  const desc = htmlEscape(ui.indexLead || title);
+
   return `<!DOCTYPE html>
 <html lang="${htmlEscape(ui.htmlLang)}" data-locale="${htmlEscape(locale)}">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="${desc}" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#08090c" />
   <title>${htmlEscape(title)} · ${htmlEscape(ui.brand)}</title>
   <link rel="alternate" hreflang="en" href="${asset(outRel || "index.html", "en")}" />
   <link rel="alternate" hreflang="zh-CN" href="${asset(outRel || "index.html", "zh")}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Noto+Sans+SC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="${asset("assets/site.css")}" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.11.1/build/styles/github-dark.min.css" />
 </head>
 <body>
+  <div class="progress" aria-hidden="true"></div>
   <header class="topbar">
     <div class="topbar-inner">
       <button type="button" class="menu-btn" id="menuBtn" aria-label="${htmlEscape(ui.menu)}">${htmlEscape(ui.menu)}</button>
@@ -578,10 +610,11 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
         <div class="search-wrap">
           <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
           <input class="search" id="search" type="search" placeholder="${htmlEscape(ui.searchPlaceholder)}" autocomplete="off" />
+          <span class="search-kbd" aria-hidden="true">/</span>
         </div>
         <p class="side-label">${htmlEscape(ui.sideLabel)}</p>
       </div>
-      <nav class="nav" id="nav">${navHtml}</nav>
+      <nav class="nav" id="nav" data-active-rel="${htmlEscape(outRel || "")}">${navHtml}</nav>
       <div class="side-foot">${htmlEscape(ui.sideFoot)}</div>
     </aside>
     <button type="button" class="backdrop" id="backdrop" aria-label="${htmlEscape(ui.closeMenu)}"></button>
@@ -593,6 +626,7 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
         <article class="content prose">${body}</article>
         ${toc || ""}
       </div>
+      ${pagerHtml || ""}
       <footer class="page-foot">${htmlEscape(ui.pageFoot)}</footer>
     </div>
   </div>
@@ -637,6 +671,8 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
       `<span class="sep">/</span><span class="current">${htmlEscape(page.title)}</span>`,
     ].join("");
 
+    const flat = flattenNavItems(navTracks);
+    const pagerHtml = renderPager(flat, page.outRel, ui);
     const html = layout({
       title: page.title,
       body,
@@ -648,6 +684,7 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
       ui,
       outRel: page.outRel,
       showMtBanner: locale === "zh",
+      pagerHtml,
     });
     const outAbs =
       locale === "zh"
@@ -664,29 +701,34 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
     href: t.groups[0]?.items[0]?.href || asset("index.html", locale),
   }));
   const cards = counts
-    .map(
-      (c) =>
-        `<a class="card" href="${c.href}"><strong>${htmlEscape((TRACK_BADGE[c.label] || "·") + " " + displayTrackLabel(ui, c.label))}</strong><span>${c.n} ${htmlEscape(ui.pages)}</span></a>`,
-    )
+    .map((c, i) => {
+      const label = displayTrackLabel(ui, c.label);
+      const icon = String(i + 1).padStart(2, "0");
+      return `<a class="card" href="${c.href}"><span class="card-icon">${icon}</span><strong>${htmlEscape(label)}</strong><span>${c.n} ${htmlEscape(ui.pages)}</span></a>`;
+    })
     .join("\n");
 
   const indexActive = { trackId: "guide", group: "", outRel: "index.html" };
   const indexBody = `
-  <h1>${htmlEscape(ui.indexTitle)}</h1>
-  <p class="lead">${htmlEscape(ui.indexLead)}</p>
-  <p>
-    <a class="btn" href="https://modal.com/docs" target="_blank" rel="noopener">${htmlEscape(ui.officialDocs)}</a>
-    <a class="btn ghost" href="${asset("meta/llms.txt")}">llms.txt</a>
-  </p>
+  <div class="hero">
+    <div class="eyebrow">${htmlEscape(ui.eyebrow || "Documentation")}</div>
+    <h1>${htmlEscape(ui.indexTitle)}</h1>
+    <p class="lead">${htmlEscape(ui.indexLead)}</p>
+    <p>
+      <a class="btn" href="${asset("docs/guide.html", locale)}">${htmlEscape(ui.getStarted || "Get started")}</a>
+      <a class="btn ghost" href="https://modal.com/docs" target="_blank" rel="noopener">${htmlEscape(ui.officialDocs)}</a>
+      <a class="btn ghost" href="${asset("meta/llms.txt")}">llms.txt</a>
+    </p>
+  </div>
   <h2>${htmlEscape(ui.tracks)}</h2>
   <div class="cards">${cards}</div>
   <h2>${htmlEscape(ui.startHere)}</h2>
-  <ul>
-    <li><a href="${asset("docs/guide.html", locale)}">${htmlEscape(displayTrackLabel(ui, "Guide"))} · Introduction</a></li>
-    <li><a href="${asset("docs/sdk/go/latest/intro.html", locale)}">Go SDK</a></li>
-    <li><a href="${asset("docs/sdk/js/latest/intro.html", locale)}">JS SDK</a></li>
-    <li><a href="${asset("docs/sdk/py/latest/intro.html", locale)}">Python SDK</a></li>
-    <li><a href="${asset("docs/guide/sandboxes.html", locale)}">Sandboxes</a></li>
+  <ul class="start-list">
+    <li><a href="${asset("docs/guide.html", locale)}"><span>${htmlEscape(displayTrackLabel(ui, "Guide"))} · Introduction</span><span class="hint">${htmlEscape(ui.hintGuide || "core concepts")}</span></a></li>
+    <li><a href="${asset("docs/sdk/py/latest/intro.html", locale)}"><span>Python SDK</span><span class="hint">pip</span></a></li>
+    <li><a href="${asset("docs/sdk/js/latest/intro.html", locale)}"><span>JS / TS SDK</span><span class="hint">npm</span></a></li>
+    <li><a href="${asset("docs/sdk/go/latest/intro.html", locale)}"><span>Go SDK</span><span class="hint">module</span></a></li>
+    <li><a href="${asset("docs/guide/sandboxes.html", locale)}"><span>Sandboxes</span><span class="hint">${htmlEscape(ui.hintSandbox || "isolated compute")}</span></a></li>
   </ul>
   <p class="muted">${pageMap.size} ${htmlEscape(ui.pages)} · ${htmlEscape(ui.hierarchyNote)}</p>
 `;
