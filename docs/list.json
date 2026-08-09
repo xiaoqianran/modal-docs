@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-08T18:26:01.806Z",
+  "fetchedAt": "2026-08-09T07:06:31.170Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 294,
   "ok": 294,
@@ -751,11 +751,11 @@
     },
     {
       "url": "https://modal.com/docs/guide",
-      "source": "stub",
+      "source": "https://modal.com/docs/guide",
       "finalUrl": "https://modal.com/docs/guide",
       "path": "docs/guide.md",
-      "bytes": 163,
-      "stub": true
+      "bytes": 4017,
+      "stub": false
     },
     {
       "url": "https://modal.com/docs/guide/apps.md",
