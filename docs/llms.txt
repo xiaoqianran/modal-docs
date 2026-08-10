@@ -1,431 +1,355 @@
-# Modal Docs
+# Modal llms.txt
 
-> Unofficial mirror of Modal documentation (Guide, Examples, SDKs, CLI).
+> Modal is a platform for running AI workloads in the cloud with minimal
+> configuration. Key use cases include AI model training and inference,
+> high-performance batch jobs, and sandboxed code execution. It offers,
+> fast prototyping, serverless APIs, scheduled jobs, GPU inference,
+> distributed storage volumes, and highly scalable secure sandboxes.
 
 Important notes:
 
-- This is an unofficial documentation mirror for LLM / agent ingestion ([llmstxt.org](https://llmstxt.org/)).
-- Prefer the [official docs](https://modal.com/docs) as the source of truth.
-- Mirror site: https://xiaoqianran.github.io/modal-docs/
-- Full corpus: https://xiaoqianran.github.io/modal-docs/llms-full.txt
-- Index JSON: https://xiaoqianran.github.io/modal-docs/meta/list.json (if present)
-- Source repo: https://github.com/xiaoqianran/modal-docs
-- Pages in this index: 295
+- Modal's platform is optimized for AI use cases, but it can support
+  general-purpose cloud workflows.
+- Modal is a serverless platform, meaning you are only billed for resources used.
+  Containers scale to zero when idle and boot in seconds when needed.
+- Modal offers official SDKs in Python, Go, and JavaScript/TypeScript, along with
+  a fully-featured CLI for interacting with the platform.
+
+You can sign up for free at [https://modal.com] and get $30/month of credits.
+
+The docs are organized into three main sections:
+- _Guide_ pages explain Modal's features, primitives, and workflows
+- _Examples_ pages contain didactic examples of many different AI applications
+- _Reference_ pages provide detailed information about the SDKs and CLI
 
 ## Guide
 
-### Start here
-
-- [Introduction](https://xiaoqianran.github.io/modal-docs/docs/guide.html)
-- [Modal Notebooks](https://xiaoqianran.github.io/modal-docs/docs/guide/notebooks.html)
-- [Scheduling remote cron jobs](https://xiaoqianran.github.io/modal-docs/docs/guide/cron.html)
-
-### Custom container images
-
-- [Images](https://xiaoqianran.github.io/modal-docs/docs/guide/images.html)
-- [Using existing images](https://xiaoqianran.github.io/modal-docs/docs/guide/existing-images.html)
-- [Named images](https://xiaoqianran.github.io/modal-docs/docs/guide/named-images.html)
-- [Fast pull from registry](https://xiaoqianran.github.io/modal-docs/docs/guide/fast-pull-from-registry.html)
-
-### GPUs and other resources
-
-- [GPU acceleration](https://xiaoqianran.github.io/modal-docs/docs/guide/gpu.html)
-- [Using CUDA on Modal](https://xiaoqianran.github.io/modal-docs/docs/guide/cuda.html)
-- [Configuring CPU, memory, and disk](https://xiaoqianran.github.io/modal-docs/docs/guide/resources.html)
-
-### Scaling out
-
-- [Scaling out](https://xiaoqianran.github.io/modal-docs/docs/guide/scale.html)
-- [Input concurrency](https://xiaoqianran.github.io/modal-docs/docs/guide/concurrent-inputs.html)
-- [Batch Processing](https://xiaoqianran.github.io/modal-docs/docs/guide/batch-processing.html)
-- [Job processing](https://xiaoqianran.github.io/modal-docs/docs/guide/job-queue.html)
-- [Dynamic batching](https://xiaoqianran.github.io/modal-docs/docs/guide/dynamic-batching.html)
-- [Multi-node clusters](https://xiaoqianran.github.io/modal-docs/docs/guide/multi-node-training.html)
-
-### Deployment
-
-- [Apps, Functions, and entrypoints](https://xiaoqianran.github.io/modal-docs/docs/guide/apps.html)
-- [Managing deployments](https://xiaoqianran.github.io/modal-docs/docs/guide/managing-deployments.html)
-- [Invoking deployed Functions](https://xiaoqianran.github.io/modal-docs/docs/guide/trigger-deployed-functions.html)
-- [Continuous deployment](https://xiaoqianran.github.io/modal-docs/docs/guide/continuous-deployment.html)
-- [Run untrusted code with Restricted Functions](https://xiaoqianran.github.io/modal-docs/docs/guide/restricted-access.html)
-
-### Modal Endpoints
-
-- [Endpoints](https://xiaoqianran.github.io/modal-docs/docs/guide/endpoints.html)
-- [Endpoint metrics](https://xiaoqianran.github.io/modal-docs/docs/guide/endpoint-metrics.html)
-- [Benchmark an endpoint](https://xiaoqianran.github.io/modal-docs/docs/guide/endpoint-benchmarks.html)
-- [Endpoint integrations](https://xiaoqianran.github.io/modal-docs/docs/guide/endpoint-integrations.html)
-
-### Modal Sandboxes
-
-- [Sandboxes](https://xiaoqianran.github.io/modal-docs/docs/guide/sandboxes.html)
-- [Running commands in Sandboxes](https://xiaoqianran.github.io/modal-docs/docs/guide/sandbox-spawn.html)
-- [Networking and security](https://xiaoqianran.github.io/modal-docs/docs/guide/sandbox-networking.html)
-- [Filesystem Access](https://xiaoqianran.github.io/modal-docs/docs/guide/sandbox-files.html)
-- [Snapshots](https://xiaoqianran.github.io/modal-docs/docs/guide/sandbox-snapshots.html)
-- [Sandbox resources and pricing](https://xiaoqianran.github.io/modal-docs/docs/guide/sandbox-resources.html)
-- [VM Sandboxes](https://xiaoqianran.github.io/modal-docs/docs/guide/vm-sandboxes.html)
-
-### Secrets and environment variables
-
-- [Secrets](https://xiaoqianran.github.io/modal-docs/docs/guide/secrets.html)
-- [Environment variables](https://xiaoqianran.github.io/modal-docs/docs/guide/environment_variables.html)
-
-### HTTP Applications
-
-- [Servers](https://xiaoqianran.github.io/modal-docs/docs/guide/servers.html)
-- [Web Functions](https://xiaoqianran.github.io/modal-docs/docs/guide/webhooks.html)
-- [Streaming endpoints](https://xiaoqianran.github.io/modal-docs/docs/guide/streaming-endpoints.html)
-- [Web Function URLs](https://xiaoqianran.github.io/modal-docs/docs/guide/webhook-urls.html)
-- [Request timeouts](https://xiaoqianran.github.io/modal-docs/docs/guide/webhook-timeouts.html)
-- [Proxy Tokens](https://xiaoqianran.github.io/modal-docs/docs/guide/webhook-proxy-auth.html)
-
-### Networking
-
-- [Tunnels](https://xiaoqianran.github.io/modal-docs/docs/guide/tunnels.html)
-- [Proxies](https://xiaoqianran.github.io/modal-docs/docs/guide/proxy-ips.html)
-- [Cluster networking](https://xiaoqianran.github.io/modal-docs/docs/guide/private-networking.html)
-
-### Data sharing and storage
-
-- [Passing local data](https://xiaoqianran.github.io/modal-docs/docs/guide/local-data.html)
-- [Volumes](https://xiaoqianran.github.io/modal-docs/docs/guide/volumes.html)
-- [Storing model weights on Modal](https://xiaoqianran.github.io/modal-docs/docs/guide/model-weights.html)
-- [Cloud bucket mounts](https://xiaoqianran.github.io/modal-docs/docs/guide/cloud-bucket-mounts.html)
-- [Dicts](https://xiaoqianran.github.io/modal-docs/docs/guide/dicts.html)
-- [Queues](https://xiaoqianran.github.io/modal-docs/docs/guide/queues.html)
-- [Large dataset ingestion](https://xiaoqianran.github.io/modal-docs/docs/guide/dataset-ingestion.html)
-
-### Performance
-
-- [Cold start performance](https://xiaoqianran.github.io/modal-docs/docs/guide/cold-start.html)
-- [Memory Snapshots](https://xiaoqianran.github.io/modal-docs/docs/guide/memory-snapshots.html)
-- [High-performance LLM inference](https://xiaoqianran.github.io/modal-docs/docs/guide/high-performance-llm-inference.html)
-
-### Reliability and robustness
-
-- [Failures and retries](https://xiaoqianran.github.io/modal-docs/docs/guide/retries.html)
-- [Preemption](https://xiaoqianran.github.io/modal-docs/docs/guide/preemption.html)
-- [Timeouts](https://xiaoqianran.github.io/modal-docs/docs/guide/timeouts.html)
-- [GPU Health](https://xiaoqianran.github.io/modal-docs/docs/guide/gpu-health.html)
-- [Troubleshooting](https://xiaoqianran.github.io/modal-docs/docs/guide/troubleshooting.html)
-
-### Security and privacy
-
-- [Security and privacy at Modal](https://xiaoqianran.github.io/modal-docs/docs/guide/security.html)
-- [Customer Supplied Encryption Keys](https://xiaoqianran.github.io/modal-docs/docs/guide/customer-supplied-encryption-keys.html)
-- [Audit Logs](https://xiaoqianran.github.io/modal-docs/docs/guide/audit-logs.html)
-
-### Integrations
-
-- [Using OIDC to authenticate with external services](https://xiaoqianran.github.io/modal-docs/docs/guide/oidc-integration.html)
-- [Connecting Modal to your Datadog account](https://xiaoqianran.github.io/modal-docs/docs/guide/datadog-integration.html)
-- [Connecting Modal to your OpenTelemetry Provider](https://xiaoqianran.github.io/modal-docs/docs/guide/otel-integration.html)
-- [Okta SSO](https://xiaoqianran.github.io/modal-docs/docs/guide/okta-sso.html)
-- [Custom SAML SSO](https://xiaoqianran.github.io/modal-docs/docs/guide/saml-sso.html)
-- [SCIM Integration](https://xiaoqianran.github.io/modal-docs/docs/guide/scim.html)
-- [Slack notifications](https://xiaoqianran.github.io/modal-docs/docs/guide/slack-notifications.html)
-
-### Workspace & account settings
-
-- [Workspaces](https://xiaoqianran.github.io/modal-docs/docs/guide/workspaces.html)
-- [Environments](https://xiaoqianran.github.io/modal-docs/docs/guide/environments.html)
-- [Modal user account setup](https://xiaoqianran.github.io/modal-docs/docs/guide/modal-user-account-setup.html)
-- [Service Users](https://xiaoqianran.github.io/modal-docs/docs/guide/service-users.html)
-- [Role-Based Access Control (RBAC)](https://xiaoqianran.github.io/modal-docs/docs/guide/rbac.html)
-- [Billing](https://xiaoqianran.github.io/modal-docs/docs/guide/billing.html)
-- [Budgets](https://xiaoqianran.github.io/modal-docs/docs/guide/budgets.html)
-
-### Other topics
-
-- [Feature Maturity](https://xiaoqianran.github.io/modal-docs/docs/guide/feature-maturity.html)
-- [Modal SDKs for JavaScript and Go](https://xiaoqianran.github.io/modal-docs/docs/guide/sdk-javascript-go.html)
-- [Modal 1.0 migration guide](https://xiaoqianran.github.io/modal-docs/docs/guide/modal-1-0-migration.html)
-- [Project structure](https://xiaoqianran.github.io/modal-docs/docs/guide/project-structure.html)
-- [Developing and debugging](https://xiaoqianran.github.io/modal-docs/docs/guide/developing-debugging.html)
-- [Jupyter notebooks](https://xiaoqianran.github.io/modal-docs/docs/guide/jupyter-notebooks.html)
-- [Asynchronous API usage](https://xiaoqianran.github.io/modal-docs/docs/guide/async.html)
-- [Global variables](https://xiaoqianran.github.io/modal-docs/docs/guide/global-variables.html)
-- [Region selection](https://xiaoqianran.github.io/modal-docs/docs/guide/region-selection.html)
-- [Container lifecycle hooks](https://xiaoqianran.github.io/modal-docs/docs/guide/lifecycle-functions.html)
-- [Parametrized functions](https://xiaoqianran.github.io/modal-docs/docs/guide/parametrized-functions.html)
-- [Dynamic Function configuration](https://xiaoqianran.github.io/modal-docs/docs/guide/dynamic-function-config.html)
-- [S3 Gateway endpoints](https://xiaoqianran.github.io/modal-docs/docs/guide/s3-gateway-endpoints.html)
-- [GPU Metrics](https://xiaoqianran.github.io/modal-docs/docs/guide/gpu-metrics.html)
+- [Introduction](https://modal.com/docs/guide)
+- Custom container images
+  - [Defining Images](https://modal.com/docs/guide/images.md)
+  - [Using existing container images](https://modal.com/docs/guide/existing-images.md)
+  - [Named images](https://modal.com/docs/guide/named-images.md)
+  - [Fast pull from registry](https://modal.com/docs/guide/fast-pull-from-registry.md)
+- GPUs and other resources
+  - [GPU acceleration](https://modal.com/docs/guide/gpu.md)
+  - [Using CUDA on Modal](https://modal.com/docs/guide/cuda.md)
+  - [Configuring CPU, memory, and disk](https://modal.com/docs/guide/resources.md)
+- Scaling out
+  - [Scaling out](https://modal.com/docs/guide/scale.md)
+  - [Input concurrency](https://modal.com/docs/guide/concurrent-inputs.md)
+  - [Batch processing](https://modal.com/docs/guide/batch-processing.md)
+  - [Job queues](https://modal.com/docs/guide/job-queue.md)
+  - [Dynamic batching](https://modal.com/docs/guide/dynamic-batching.md)
+  - [Multi-node clusters (Beta)](https://modal.com/docs/guide/multi-node-training.md)
+- Deployment
+  - [Apps, Functions, and entrypoints](https://modal.com/docs/guide/apps.md)
+  - [Managing deployments](https://modal.com/docs/guide/managing-deployments.md)
+  - [Invoking deployed functions](https://modal.com/docs/guide/trigger-deployed-functions.md)
+  - [Continuous deployment](https://modal.com/docs/guide/continuous-deployment.md)
+  - [Running untrusted code in Functions](https://modal.com/docs/guide/restricted-access.md)
+- Modal Endpoints
+  - [Endpoints](https://modal.com/docs/guide/endpoints.md)
+  - [Endpoint metrics](https://modal.com/docs/guide/endpoint-metrics.md)
+  - [Benchmark an endpoint](https://modal.com/docs/guide/endpoint-benchmarks.md)
+  - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
+- Modal Sandboxes
+  - [Sandboxes](https://modal.com/docs/guide/sandboxes.md)
+  - [Running commands](https://modal.com/docs/guide/sandbox-spawn.md)
+  - [Networking and security](https://modal.com/docs/guide/sandbox-networking.md)
+  - [File access](https://modal.com/docs/guide/sandbox-files.md)
+  - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
+  - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
+  - [VM Sandboxes (Beta)](https://modal.com/docs/guide/vm-sandboxes.md)
+- [Modal Notebooks](https://modal.com/docs/guide/notebooks)
+- Secrets and environment variables
+  - [Secrets](https://modal.com/docs/guide/secrets.md)
+  - [Environment variables](https://modal.com/docs/guide/environment_variables.md)
+- [Scheduling and cron jobs](https://modal.com/docs/guide/cron)
+- HTTP Applications
+  - [Servers](https://modal.com/docs/guide/servers.md)
+  - [Web Functions](https://modal.com/docs/guide/webhooks.md)
+  - [Streaming endpoints](https://modal.com/docs/guide/streaming-endpoints.md)
+  - [Web Function URLs](https://modal.com/docs/guide/webhook-urls.md)
+  - [Request timeouts](https://modal.com/docs/guide/webhook-timeouts.md)
+  - [Proxy Tokens](https://modal.com/docs/guide/webhook-proxy-auth.md)
+- Networking
+  - [Tunnels](https://modal.com/docs/guide/tunnels.md)
+  - [Proxies (Beta)](https://modal.com/docs/guide/proxy-ips.md)
+  - [Cluster networking](https://modal.com/docs/guide/private-networking.md)
+- Data sharing and storage
+  - [Passing local data](https://modal.com/docs/guide/local-data.md)
+  - [Volumes](https://modal.com/docs/guide/volumes.md)
+  - [Storing model weights](https://modal.com/docs/guide/model-weights.md)
+  - [Cloud bucket mounts](https://modal.com/docs/guide/cloud-bucket-mounts.md)
+  - [Dicts](https://modal.com/docs/guide/dicts.md)
+  - [Queues](https://modal.com/docs/guide/queues.md)
+  - [Dataset ingestion](https://modal.com/docs/guide/dataset-ingestion.md)
+- Performance
+  - [Cold start performance](https://modal.com/docs/guide/cold-start.md)
+  - [Memory Snapshots](https://modal.com/docs/guide/memory-snapshots.md)
+  - [High-performance LLM inference](https://modal.com/docs/guide/high-performance-llm-inference.md)
+- Reliability and robustness
+  - [Failures and retries](https://modal.com/docs/guide/retries.md)
+  - [Preemption](https://modal.com/docs/guide/preemption.md)
+  - [Timeouts](https://modal.com/docs/guide/timeouts.md)
+  - [GPU health](https://modal.com/docs/guide/gpu-health.md)
+  - [Troubleshooting](https://modal.com/docs/guide/troubleshooting.md)
+- Security and privacy
+  - [Security and privacy](https://modal.com/docs/guide/security.md)
+  - [Customer-supplied encryption keys (Alpha)](https://modal.com/docs/guide/customer-supplied-encryption-keys.md)
+  - [Audit logs](https://modal.com/docs/guide/audit-logs.md)
+- Integrations
+  - [Using OIDC to authenticate with external services](https://modal.com/docs/guide/oidc-integration.md)
+  - [Connecting Modal to your Datadog account](https://modal.com/docs/guide/datadog-integration.md)
+  - [Connecting Modal to your OpenTelemetry provider](https://modal.com/docs/guide/otel-integration.md)
+  - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
+  - [Custom SAML SSO](https://modal.com/docs/guide/saml-sso.md)
+  - [SCIM Integration (Beta)](https://modal.com/docs/guide/scim.md)
+  - [Slack notifications (Beta)](https://modal.com/docs/guide/slack-notifications.md)
+- Workspace & account settings
+  - [Workspaces](https://modal.com/docs/guide/workspaces.md)
+  - [Environments](https://modal.com/docs/guide/environments.md)
+  - [Modal user account setup](https://modal.com/docs/guide/modal-user-account-setup.md)
+  - [Service users](https://modal.com/docs/guide/service-users.md)
+  - [Role-Based Access Control (RBAC)](https://modal.com/docs/guide/rbac.md)
+  - [Billing](https://modal.com/docs/guide/billing.md)
+  - [Budgets](https://modal.com/docs/guide/budgets.md)
+- Other topics
+  - [Feature maturity](https://modal.com/docs/guide/feature-maturity.md)
+  - [JavaScript/Go SDKs (Beta)](https://modal.com/docs/guide/sdk-javascript-go.md)
+  - [Modal 1.0 migration guide](https://modal.com/docs/guide/modal-1-0-migration.md)
+  - [File and project structure](https://modal.com/docs/guide/project-structure.md)
+  - [Developing and debugging](https://modal.com/docs/guide/developing-debugging.md)
+  - [Jupyter notebooks](https://modal.com/docs/guide/jupyter-notebooks.md)
+  - [Asynchronous API usage](https://modal.com/docs/guide/async.md)
+  - [Global variables](https://modal.com/docs/guide/global-variables.md)
+  - [Region selection](https://modal.com/docs/guide/region-selection.md)
+  - [Container lifecycle hooks](https://modal.com/docs/guide/lifecycle-functions.md)
+  - [Parametrized functions](https://modal.com/docs/guide/parametrized-functions.md)
+  - [Dynamic function configuration](https://modal.com/docs/guide/dynamic-function-config.md)
+  - [S3 Gateway endpoints](https://modal.com/docs/guide/s3-gateway-endpoints.md)
+  - [GPU Metrics](https://modal.com/docs/guide/gpu-metrics.md)
 
 ## Examples
 
-### Start here
+- [Featured](https://modal.com/docs/examples)
+- Getting started
+  - [Hello, world](https://modal.com/docs/examples/hello_world.md)
+  - [Simple web scraper](https://modal.com/docs/examples/webscraper.md)
+  - [Serving Web Functions](https://modal.com/docs/examples/basic_web.md)
+- Large language models (LLMs)
+  - [Deploy an OpenAI-compatible LLM service with vLLM](https://modal.com/docs/examples/llm_inference.md)
+  - [Cut Ministral 3 cold start times by 10x with snapshots](https://modal.com/docs/examples/ministral3_inference.md)
+  - [Maximize tokens per second in batch processing with vLLM](https://modal.com/docs/examples/vllm_throughput.md)
+  - [Serve an ultra-low-latency chatbot with SGLang](https://modal.com/docs/examples/sglang_low_latency.md)
+  - [Deploy Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
+  - [Serve Inkling-Small with SGLang](https://modal.com/docs/examples/inkling_small.md)
+  - [Serve DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
+  - [Efficient LLM Finetuning with Unsloth](https://modal.com/docs/examples/unsloth_finetune.md)
+  - [Run a multimodal RAG chatbot to answer questions about PDFs](https://modal.com/docs/examples/chat_with_pdf_vision.md)
+  - [Fine-tune an LLM to replace your CEO](https://modal.com/docs/examples/llm-finetuning.md)
+  - [Deploy a stateless MCP with FastMCP](https://modal.com/docs/examples/mcp_server_stateless.md)
+- Images, video, & 3D
+  - [Edit images with Flux Kontext](https://modal.com/docs/examples/image_to_image.md)
+  - [Fine-tune Wan2.1 video models on your face](https://modal.com/docs/examples/music-video-gen.md)
+  - [Run Flux fast with torch.compile](https://modal.com/docs/examples/flux.md)
+  - [Fine-tune Flux with LoRA](https://modal.com/docs/examples/diffusers_lora_finetune.md)
+  - [Animate images with LTX-Video](https://modal.com/docs/examples/image_to_video.md)
+  - [Generate video clips with LTX-Video](https://modal.com/docs/examples/ltx.md)
+  - [Run Stable Diffusion with a CLI, API, and web UI](https://modal.com/docs/examples/text_to_image.md)
+- Audio
+  - [Deploy a Moshi voice chatbot](https://modal.com/docs/examples/llm-voice-chat.md)
+  - [Stream transcripts at the speed of speech using Kyutai STT](https://modal.com/docs/examples/streaming_kyutai_stt.md)
+  - [Make music with ACE-Step](https://modal.com/docs/examples/generate_music.md)
+  - [Generate speech with Chatterbox](https://modal.com/docs/examples/chatterbox_tts.md)
+  - [Run high throughput batched transcription with Whisper](https://modal.com/docs/examples/batched_whisper.md)
+  - [Fine-tune Whisper to recognize new words](https://modal.com/docs/examples/fine_tune_asr.md)
+- Real-time communication (WebRTC)
+  - [Serverless WebRTC](https://modal.com/docs/examples/webrtc_yolo.md)
+  - [WebRTC quickstart with FastRTC](https://modal.com/docs/examples/fastrtc_flip_webcam.md)
+- Computational biology
+  - [Design protein binders with ESMFold2](https://modal.com/docs/examples/esmfold2_binder_design.md)
+  - [Fold proteins with Chai-1](https://modal.com/docs/examples/chai1.md)
+  - [Build a protein-folding dashboard](https://modal.com/docs/examples/esm3.md)
+  - [Fold proteins with Boltz-2](https://modal.com/docs/examples/boltz_predict.md)
+- Modal Sandboxes
+  - [Run a background coding agent with OpenCode](https://modal.com/docs/examples/opencode_server.md)
+  - [Build a scalable AI coding platform](https://modal.com/docs/examples/modal-vibe.md)
+  - [Create GIFs from Slack using the Claude Agent SDK](https://modal.com/docs/examples/claude-slack-gif-creator.md)
+  - [Run a LangGraph agent's code in a secure GPU sandbox](https://modal.com/docs/examples/agent.md)
+  - [Watch a computer-use agent work in real-time over VNC](https://modal.com/docs/examples/computer_use_vnc.md)
+  - [Run massively parallel evals on Modal Sandboxes](https://modal.com/docs/examples/harbor_evals.md)
+  - [Build a stateful, sandboxed code interpreter](https://modal.com/docs/examples/simple_code_interpreter.md)
+  - [Run Node.js, Ruby, and more in a Sandbox](https://modal.com/docs/examples/safe_code_execution.md)
+  - [Speed up Sandbox starts with warm pools](https://modal.com/docs/examples/sandbox_pool.md)
+- Reinforcement Learning
+  - [Train a model to solve math problems using GRPO and verl](https://modal.com/docs/examples/grpo_verl.md)
+  - [Train a model to solve coding problems using GRPO and TRL](https://modal.com/docs/examples/grpo_trl.md)
+- Embeddings
+  - [Serve Liquid AI embeddings with Modal Servers](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [Embed millions of documents with TEI](https://modal.com/docs/examples/amazon_embeddings.md)
+  - [Turn satellite images into vectors and store them in MongoDB](https://modal.com/docs/examples/mongodb-search.md)
+- Parallel processing and job scheduling
+  - [Deploy a Hacker News Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
+  - [Run a Document OCR job queue](https://modal.com/docs/examples/doc_ocr_jobs.md)
+  - [Serve a Document OCR web app](https://modal.com/docs/examples/doc_ocr_webapp.md)
+- Training models from scratch
+  - [Train an SLM with early-stopping grid search over hyperparameters](https://modal.com/docs/examples/hp_sweep_gpt.md)
+  - [Run long, resumable training jobs](https://modal.com/docs/examples/long-training.md)
+- Hosting popular libraries
+  - [YOLO: Fine-tune and serve computer vision models](https://modal.com/docs/examples/finetune_yolo.md)
+  - [Blender: Build a 3D render farm](https://modal.com/docs/examples/blender_video.md)
+  - [Streamlit: Run and deploy Streamlit apps](https://modal.com/docs/examples/serve_streamlit.md)
+  - [SQLite: Publish explorable data with Datasette](https://modal.com/docs/examples/cron_datasette.md)
+  - [Algolia: Build docsearch with a crawler](https://modal.com/docs/examples/algolia_indexer.md)
+- Connecting to other APIs
+  - [Discord: Deploy and run a Discord Bot](https://modal.com/docs/examples/discord_bot.md)
+  - [Google Sheets: Sync databases and APIs to a Google Sheet](https://modal.com/docs/examples/db_to_sheet.md)
+  - [OpenAI: Run a RAG Q&A chatbot](https://modal.com/docs/examples/potus_speech_qanda.md)
+  - [Tailscale: Add Modal Apps to your VPN](https://modal.com/docs/examples/modal_tailscale.md)
+  - [Prometheus: Publish custom metrics with Pushgateway](https://modal.com/docs/examples/pushgateway.md)
+- Managing data
+  - [Mount S3 buckets in Modal Apps](https://modal.com/docs/examples/s3_bucket_mount.md)
+  - [Build your own data warehouse with DuckDB, dbt, and Modal](https://modal.com/docs/examples/dbt_duckdb.md)
+- [Miscellaneous](https://modal.com/docs/examples/miscellaneous)
 
-- [Examples](https://xiaoqianran.github.io/modal-docs/docs/examples.html)
-- [Miscellaneous examples](https://xiaoqianran.github.io/modal-docs/docs/examples/miscellaneous.html)
+## Reference
 
-### Getting started
-
-- [Hello, world!](https://xiaoqianran.github.io/modal-docs/docs/examples/hello_world.html)
-- [A simple web scraper](https://xiaoqianran.github.io/modal-docs/docs/examples/webscraper.html)
-- [Hello world wide web!](https://xiaoqianran.github.io/modal-docs/docs/examples/basic_web.html)
-
-### Large language models (LLMs)
-
-- [Run OpenAI-compatible LLM inference with Gemma and vLLM](https://xiaoqianran.github.io/modal-docs/docs/examples/llm_inference.html)
-- [Serverless Ministral 3 with vLLM and Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/ministral3_inference.html)
-- [Run LLM inference at maximum throughput](https://xiaoqianran.github.io/modal-docs/docs/examples/vllm_throughput.html)
-- [Low latency Qwen 3.6 with SGLang and Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/sglang_low_latency.html)
-- [Low latency Nvidia Nemotron 3 with SGLang and Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/nemotron_inference.html)
-- [Serve Inkling-Small on Modal with SGLang](https://xiaoqianran.github.io/modal-docs/docs/examples/inkling_small.html)
-- [Deploy DeepSeek-V4-Flash with SGLang and Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/deepseek_v4_flash.html)
-- [Efficient LLM Finetuning with Unsloth](https://xiaoqianran.github.io/modal-docs/docs/examples/unsloth_finetune.html)
-- [Chat with PDF: RAG with ColQwen2](https://xiaoqianran.github.io/modal-docs/docs/examples/chat_with_pdf_vision.html)
-- [DoppelBot: Fine-tune an LLM to replace your CEO](https://xiaoqianran.github.io/modal-docs/docs/examples/llm-finetuning.html)
-- [Deploy a remote, stateless MCP server on Modal with FastMCP](https://xiaoqianran.github.io/modal-docs/docs/examples/mcp_server_stateless.html)
-
-### Images, video, & 3D
-
-- [Edit images with Flux Kontext](https://xiaoqianran.github.io/modal-docs/docs/examples/image_to_image.html)
-- [Deploy a personalized music video generation service on Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/music-video-gen.html)
-- [Run Flux fast on H100s with torch.compile](https://xiaoqianran.github.io/modal-docs/docs/examples/flux.html)
-- [Fine-tune Flux on your pet using LoRA](https://xiaoqianran.github.io/modal-docs/docs/examples/diffusers_lora_finetune.html)
-- [Animate images with Lightricks LTX-Video via CLI, API, and web UI](https://xiaoqianran.github.io/modal-docs/docs/examples/image_to_video.html)
-- [Generate videos from prompts with Lightricks LTX-Video](https://xiaoqianran.github.io/modal-docs/docs/examples/ltx.html)
-- [Run Stable Diffusion 3.5 Large Turbo as a CLI, API, and web UI](https://xiaoqianran.github.io/modal-docs/docs/examples/text_to_image.html)
-
-### Audio
-
-- [QuiLLMan: Voice Chat with Moshi](https://xiaoqianran.github.io/modal-docs/docs/examples/llm-voice-chat.html)
-- [Stream transcriptions with Kyutai STT](https://xiaoqianran.github.io/modal-docs/docs/examples/streaming_kyutai_stt.html)
-- [Make music with ACE-Step 1.5](https://xiaoqianran.github.io/modal-docs/docs/examples/generate_music.html)
-- [Create a Chatterbox TTS API on Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/chatterbox_tts.html)
-- [Fast Whisper inference using dynamic batching](https://xiaoqianran.github.io/modal-docs/docs/examples/batched_whisper.html)
-- [Fine-tune Whisper to Improve Transcription on Domain-Specific Vocab](https://xiaoqianran.github.io/modal-docs/docs/examples/fine_tune_asr.html)
-
-### Real-time communication (WebRTC)
-
-- [Real-time object detection with WebRTC and YOLO](https://xiaoqianran.github.io/modal-docs/docs/examples/webrtc_yolo.html)
-- [Run a FastRTC app on Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/fastrtc_flip_webcam.html)
-
-### Computational biology
-
-- [Design protein binders at scale with ESMFold2 and ESMC](https://xiaoqianran.github.io/modal-docs/docs/examples/esmfold2_binder_design.html)
-- [Fold proteins with Chai-1](https://xiaoqianran.github.io/modal-docs/docs/examples/chai1.html)
-- [Build a protein folding dashboard with ESM3, Molstar, and Gradio](https://xiaoqianran.github.io/modal-docs/docs/examples/esm3.html)
-- [Fold proteins with Boltz-2](https://xiaoqianran.github.io/modal-docs/docs/examples/boltz_predict.html)
-
-### Modal Sandboxes
-
-- [Run OpenCode in a Modal Sandbox](https://xiaoqianran.github.io/modal-docs/docs/examples/opencode_server.html)
-- [Modal Vibe: A scalable AI coding platform](https://xiaoqianran.github.io/modal-docs/docs/examples/modal-vibe.html)
-- [Claude Slack GIF Creator](https://xiaoqianran.github.io/modal-docs/docs/examples/claude-slack-gif-creator.html)
-- [Build a coding agent with Modal Sandboxes and LangGraph](https://xiaoqianran.github.io/modal-docs/docs/examples/agent.html)
-- [Watch a Browser Use agent drive Chromium over VNC](https://xiaoqianran.github.io/modal-docs/docs/examples/computer_use_vnc.html)
-- [Run massively parallel evals on Modal Sandboxes](https://xiaoqianran.github.io/modal-docs/docs/examples/harbor_evals.html)
-- [Build a stateful, sandboxed code interpreter](https://xiaoqianran.github.io/modal-docs/docs/examples/simple_code_interpreter.html)
-- [Run arbitrary code in a sandboxed environment](https://xiaoqianran.github.io/modal-docs/docs/examples/safe_code_execution.html)
-- [Maintain a pool of warm Sandboxes that are healthy and ready to serve requests](https://xiaoqianran.github.io/modal-docs/docs/examples/sandbox_pool.html)
-
-### Reinforcement Learning
-
-- [Train a model to solve math problems using GRPO and verl](https://xiaoqianran.github.io/modal-docs/docs/examples/grpo_verl.html)
-- [Train a model to solve coding problems using GRPO and TRL](https://xiaoqianran.github.io/modal-docs/docs/examples/grpo_trl.html)
-
-### Embeddings
-
-- [Serve Liquid AI ColBERT embeddings with llama.cpp and Modal Servers](https://xiaoqianran.github.io/modal-docs/docs/examples/liquidai_embeddings_server.html)
-- [Embed 30 million Amazon reviews at 575k tokens per second with Qwen2-7B](https://xiaoqianran.github.io/modal-docs/docs/examples/amazon_embeddings.html)
-- [Using MongoDB Atlas Vector and GeoJSON Search with Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/mongodb-search.html)
-
-### Parallel processing and job scheduling
-
-- [Run cron jobs in the cloud to search Hacker News](https://xiaoqianran.github.io/modal-docs/docs/examples/hackernews_alerts.html)
-- [Run a job queue that turns documents into structured data with Datalab Marker](https://xiaoqianran.github.io/modal-docs/docs/examples/doc_ocr_jobs.html)
-- [Serve a receipt parsing web app](https://xiaoqianran.github.io/modal-docs/docs/examples/doc_ocr_webapp.html)
-
-### Training models from scratch
-
-- [Train an SLM from scratch with early-stopping grid search over hyperparameters](https://xiaoqianran.github.io/modal-docs/docs/examples/hp_sweep_gpt.html)
-- [Run long, resumable training jobs on Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/long-training.html)
-
-### Hosting popular libraries
-
-- [Fine-tune open source YOLO models for object detection](https://xiaoqianran.github.io/modal-docs/docs/examples/finetune_yolo.html)
-- [Render a video with Blender on many GPUs or CPUs in parallel](https://xiaoqianran.github.io/modal-docs/docs/examples/blender_video.html)
-- [Run and share Streamlit apps](https://xiaoqianran.github.io/modal-docs/docs/examples/serve_streamlit.html)
-- [Publish interactive datasets with Datasette](https://xiaoqianran.github.io/modal-docs/docs/examples/cron_datasette.html)
-- [Algolia docsearch crawler](https://xiaoqianran.github.io/modal-docs/docs/examples/algolia_indexer.html)
-
-### Connecting to other APIs
-
-- [Serve a Discord Bot on Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/discord_bot.html)
-- [Write to Google Sheets from Postgres](https://xiaoqianran.github.io/modal-docs/docs/examples/db_to_sheet.html)
-- [Retrieval-augmented generation (RAG) for question-answering with LangChain](https://xiaoqianran.github.io/modal-docs/docs/examples/potus_speech_qanda.html)
-- [Add Modal Apps to Tailscale](https://xiaoqianran.github.io/modal-docs/docs/examples/modal_tailscale.html)
-- [Publish custom metrics with Prometheus Pushgateway](https://xiaoqianran.github.io/modal-docs/docs/examples/pushgateway.html)
-
-### Managing data
-
-- [Analyze NYC yellow taxi data with DuckDB on Parquet files from S3](https://xiaoqianran.github.io/modal-docs/docs/examples/s3_bucket_mount.html)
-- [Build your own data warehouse with DuckDB, DBT, and Modal](https://xiaoqianran.github.io/modal-docs/docs/examples/dbt_duckdb.html)
-
-### More
-
-- [Run OpenAI-compatible LLM inference with Gemma and vLLM](https://xiaoqianran.github.io/modal-docs/docs/examples/vllm_inference.html)
-
-## Python SDK
-
-- [Python SDK Reference](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/intro.html)
-- [Changelog](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/changelog.html)
-- [App](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/App.html)
-- [Client](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Client.html)
-- [CloudBucketMount](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/CloudBucketMount.html)
-- [Cls](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Cls.html)
-- [Cron](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Cron.html)
-- [Dict](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Dict.html)
-- [Environment](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Environment.html)
-- [Error](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Error.html)
-- [FilePatternMatcher](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/FilePatternMatcher.html)
-- [Function](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Function.html)
-- [FunctionCall](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/FunctionCall.html)
-- [Image](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Image.html)
-- [Period](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Period.html)
-- [Probe](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Probe.html)
-- [Proxy](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Proxy.html)
-- [Queue](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Queue.html)
-- [Retries](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Retries.html)
-- [Sandbox](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Sandbox.html)
-- [SandboxSnapshot](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/SandboxSnapshot.html)
-- [Secret](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Secret.html)
-- [Server](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Server.html)
-- [Tunnel](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Tunnel.html)
-- [Volume](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Volume.html)
-- [Workspace](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/Workspace.html)
-- [asgi\_app](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/asgi_app.html)
-- [batched](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/batched.html)
-- [billing](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/billing.html)
-- [concurrent](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/concurrent.html)
-- [config](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/config.html)
-- [container\_process](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/container_process.html)
-- [current\_function\_call\_id](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/current_function_call_id.html)
-- [current\_input\_id](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/current_input_id.html)
-- [enable\_output](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/enable_output.html)
-- [enter](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/enter.html)
-- [exception](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/exception.html)
-- [exit](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/exit.html)
-- [fastapi\_endpoint](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/fastapi_endpoint.html)
-- [file\_io](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/file_io.html)
-- [forward](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/forward.html)
-- [interact](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/interact.html)
-- [io\_streams](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/io_streams.html)
-- [is\_local](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/is_local.html)
-- [method](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/method.html)
-- [parameter](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/parameter.html)
-- [types](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/types.html)
-- [web\_server](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/web_server.html)
-- [wsgi\_app](https://xiaoqianran.github.io/modal-docs/docs/sdk/py/latest/wsgi_app.html)
-
-## JS SDK
-
-- [JavaScript SDK Reference](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/intro.html)
-- [App](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/App.html)
-- [CloudBucketMount](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/CloudBucketMount.html)
-- [Cls](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Cls.html)
-- [ClsInstance](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/ClsInstance.html)
-- [ContainerProcess](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/ContainerProcess.html)
-- [Errors](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Errors.html)
-- [FileInfo](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FileInfo.html)
-- [FileType](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FileType.html)
-- [FileWatchEvent](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FileWatchEvent.html)
-- [FileWatchEventType](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FileWatchEventType.html)
-- [Function](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Function.html)
-- [FunctionCall](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FunctionCall.html)
-- [FunctionStats](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/FunctionStats.html)
-- [Image](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Image.html)
-- [Logger](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Logger.html)
-- [LogLevel](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/LogLevel.html)
-- [ModalClient](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/ModalClient.html)
-- [ModalReadStream](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/ModalReadStream.html)
-- [ModalWriteStream](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/ModalWriteStream.html)
-- [Probe](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Probe.html)
-- [Profile](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Profile.html)
-- [Proxy](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Proxy.html)
-- [Queue](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Queue.html)
-- [Retries](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Retries.html)
-- [Sandbox](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Sandbox.html)
-- [SandboxCreateConnectCredentials](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/SandboxCreateConnectCredentials.html)
-- [Secret](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Secret.html)
-- [SidecarContainer](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/SidecarContainer.html)
-- [StdioBehavior](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/StdioBehavior.html)
-- [StreamMode](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/StreamMode.html)
-- [Tunnel](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Tunnel.html)
-- [Volume](https://xiaoqianran.github.io/modal-docs/docs/sdk/js/latest/Volume.html)
-
-## Go SDK
-
-- [Go SDK Reference](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/intro.html)
-- [Allowlist](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Allowlist.html)
-- [App](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/App.html)
-- [Client](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Client.html)
-- [CloudBucketMount](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/CloudBucketMount.html)
-- [Cls](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Cls.html)
-- [ClsInstance](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/ClsInstance.html)
-- [ContainerProcess](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/ContainerProcess.html)
-- [Errors](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Errors.html)
-- [FileInfo](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FileInfo.html)
-- [FileType](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FileType.html)
-- [FileWatchEvent](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FileWatchEvent.html)
-- [FileWatchEventType](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FileWatchEventType.html)
-- [Function](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Function.html)
-- [FunctionCall](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FunctionCall.html)
-- [FunctionStats](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/FunctionStats.html)
-- [Image](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Image.html)
-- [Probe](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Probe.html)
-- [Profile](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Profile.html)
-- [Proxy](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Proxy.html)
-- [Queue](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Queue.html)
-- [Retries](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Retries.html)
-- [Sandbox](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Sandbox.html)
-- [SandboxCreateConnectCredentials](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/SandboxCreateConnectCredentials.html)
-- [Secret](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Secret.html)
-- [SidecarContainer](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/SidecarContainer.html)
-- [StdioBehavior](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/StdioBehavior.html)
-- [Tunnel](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Tunnel.html)
-- [ValidateExecArgs](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/ValidateExecArgs.html)
-- [Volume](https://xiaoqianran.github.io/modal-docs/docs/sdk/go/latest/Volume.html)
-
-## CLI
-
-- [CLI Reference](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/intro.html)
-- [Changelog](https://xiaoqianran.github.io/modal-docs/docs/cli/changelog.html)
-- [modal app](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/app.html)
-- [modal billing](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/billing.html)
-- [modal bootstrap](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/bootstrap.html)
-- [modal changelog](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/changelog.html)
-- [modal config](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/config.html)
-- [modal container](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/container.html)
-- [modal curl](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/curl.html)
-- [modal dashboard](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/dashboard.html)
-- [modal deploy](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/deploy.html)
-- [modal dict](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/dict.html)
-- [modal endpoint](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/endpoint.html)
-- [modal environment](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/environment.html)
-- [modal image](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/image.html)
-- [modal profile](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/profile.html)
-- [modal queue](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/queue.html)
-- [modal run](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/run.html)
-- [modal secret](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/secret.html)
-- [modal serve](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/serve.html)
-- [modal setup](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/setup.html)
-- [modal shell](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/shell.html)
-- [modal skills](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/skills.html)
-- [modal token](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/token.html)
-- [modal volume](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/volume.html)
-- [modal workspace](https://xiaoqianran.github.io/modal-docs/docs/cli/latest/workspace.html)
-
-## Other
-
-- [Modal documentation](https://xiaoqianran.github.io/modal-docs/docs.html)
-
-## Optional
-
-- [Full documentation corpus (llms-full.txt)](https://xiaoqianran.github.io/modal-docs/llms-full.txt)
-- [This index (llms.txt)](https://xiaoqianran.github.io/modal-docs/llms.txt)
+- [Python SDK](https://modal.com/docs/sdk/py/latest/intro.md)
+  - [Changelog](https://modal.com/docs/sdk/py/changelog.md)
+  - [`App`](https://modal.com/docs/sdk/py/latest/App.md)
+  - [`Client`](https://modal.com/docs/sdk/py/latest/Client.md)
+  - [`CloudBucketMount`](https://modal.com/docs/sdk/py/latest/CloudBucketMount.md)
+  - [`Cls`](https://modal.com/docs/sdk/py/latest/Cls.md)
+  - [`Cron`](https://modal.com/docs/sdk/py/latest/Cron.md)
+  - [`Dict`](https://modal.com/docs/sdk/py/latest/Dict.md)
+  - [`Environment`](https://modal.com/docs/sdk/py/latest/Environment.md)
+  - [`Error`](https://modal.com/docs/sdk/py/latest/Error.md)
+  - [`FilePatternMatcher`](https://modal.com/docs/sdk/py/latest/FilePatternMatcher.md)
+  - [`Function`](https://modal.com/docs/sdk/py/latest/Function.md)
+  - [`FunctionCall`](https://modal.com/docs/sdk/py/latest/FunctionCall.md)
+  - [`Image`](https://modal.com/docs/sdk/py/latest/Image.md)
+  - [`Period`](https://modal.com/docs/sdk/py/latest/Period.md)
+  - [`Probe`](https://modal.com/docs/sdk/py/latest/Probe.md)
+  - [`Proxy`](https://modal.com/docs/sdk/py/latest/Proxy.md)
+  - [`Queue`](https://modal.com/docs/sdk/py/latest/Queue.md)
+  - [`Retries`](https://modal.com/docs/sdk/py/latest/Retries.md)
+  - [`Sandbox`](https://modal.com/docs/sdk/py/latest/Sandbox.md)
+  - [`SandboxSnapshot`](https://modal.com/docs/sdk/py/latest/SandboxSnapshot.md)
+  - [`Secret`](https://modal.com/docs/sdk/py/latest/Secret.md)
+  - [`Server`](https://modal.com/docs/sdk/py/latest/Server.md)
+  - [`Tunnel`](https://modal.com/docs/sdk/py/latest/Tunnel.md)
+  - [`Volume`](https://modal.com/docs/sdk/py/latest/Volume.md)
+  - [`Workspace`](https://modal.com/docs/sdk/py/latest/Workspace.md)
+  - [`asgi_app`](https://modal.com/docs/sdk/py/latest/asgi_app.md)
+  - [`batched`](https://modal.com/docs/sdk/py/latest/batched.md)
+  - [`billing`](https://modal.com/docs/sdk/py/latest/billing.md)
+  - [`concurrent`](https://modal.com/docs/sdk/py/latest/concurrent.md)
+  - [`config`](https://modal.com/docs/sdk/py/latest/config.md)
+  - [`container_process`](https://modal.com/docs/sdk/py/latest/container_process.md)
+  - [`current_function_call_id`](https://modal.com/docs/sdk/py/latest/current_function_call_id.md)
+  - [`current_input_id`](https://modal.com/docs/sdk/py/latest/current_input_id.md)
+  - [`enable_output`](https://modal.com/docs/sdk/py/latest/enable_output.md)
+  - [`enter`](https://modal.com/docs/sdk/py/latest/enter.md)
+  - [`exception`](https://modal.com/docs/sdk/py/latest/exception.md)
+  - [`exit`](https://modal.com/docs/sdk/py/latest/exit.md)
+  - [`fastapi_endpoint`](https://modal.com/docs/sdk/py/latest/fastapi_endpoint.md)
+  - [`file_io`](https://modal.com/docs/sdk/py/latest/file_io.md)
+  - [`forward`](https://modal.com/docs/sdk/py/latest/forward.md)
+  - [`interact`](https://modal.com/docs/sdk/py/latest/interact.md)
+  - [`io_streams`](https://modal.com/docs/sdk/py/latest/io_streams.md)
+  - [`is_local`](https://modal.com/docs/sdk/py/latest/is_local.md)
+  - [`method`](https://modal.com/docs/sdk/py/latest/method.md)
+  - [`parameter`](https://modal.com/docs/sdk/py/latest/parameter.md)
+  - [`types`](https://modal.com/docs/sdk/py/latest/types.md)
+  - [`web_server`](https://modal.com/docs/sdk/py/latest/web_server.md)
+  - [`wsgi_app`](https://modal.com/docs/sdk/py/latest/wsgi_app.md)
+- [JS SDK](https://modal.com/docs/sdk/js/latest/intro.md)
+  - [`App`](https://modal.com/docs/sdk/js/latest/App.md)
+  - [`CloudBucketMount`](https://modal.com/docs/sdk/js/latest/CloudBucketMount.md)
+  - [`Cls`](https://modal.com/docs/sdk/js/latest/Cls.md)
+  - [`ClsInstance`](https://modal.com/docs/sdk/js/latest/ClsInstance.md)
+  - [`ContainerProcess`](https://modal.com/docs/sdk/js/latest/ContainerProcess.md)
+  - [`Errors`](https://modal.com/docs/sdk/js/latest/Errors.md)
+  - [`FileInfo`](https://modal.com/docs/sdk/js/latest/FileInfo.md)
+  - [`FileType`](https://modal.com/docs/sdk/js/latest/FileType.md)
+  - [`FileWatchEvent`](https://modal.com/docs/sdk/js/latest/FileWatchEvent.md)
+  - [`FileWatchEventType`](https://modal.com/docs/sdk/js/latest/FileWatchEventType.md)
+  - [`Function`](https://modal.com/docs/sdk/js/latest/Function.md)
+  - [`FunctionCall`](https://modal.com/docs/sdk/js/latest/FunctionCall.md)
+  - [`FunctionStats`](https://modal.com/docs/sdk/js/latest/FunctionStats.md)
+  - [`Image`](https://modal.com/docs/sdk/js/latest/Image.md)
+  - [`Logger`](https://modal.com/docs/sdk/js/latest/Logger.md)
+  - [`LogLevel`](https://modal.com/docs/sdk/js/latest/LogLevel.md)
+  - [`ModalClient`](https://modal.com/docs/sdk/js/latest/ModalClient.md)
+  - [`ModalReadStream`](https://modal.com/docs/sdk/js/latest/ModalReadStream.md)
+  - [`ModalWriteStream`](https://modal.com/docs/sdk/js/latest/ModalWriteStream.md)
+  - [`Probe`](https://modal.com/docs/sdk/js/latest/Probe.md)
+  - [`Profile`](https://modal.com/docs/sdk/js/latest/Profile.md)
+  - [`Proxy`](https://modal.com/docs/sdk/js/latest/Proxy.md)
+  - [`Queue`](https://modal.com/docs/sdk/js/latest/Queue.md)
+  - [`Retries`](https://modal.com/docs/sdk/js/latest/Retries.md)
+  - [`Sandbox`](https://modal.com/docs/sdk/js/latest/Sandbox.md)
+  - [`SandboxCreateConnectCredentials`](https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md)
+  - [`Secret`](https://modal.com/docs/sdk/js/latest/Secret.md)
+  - [`SidecarContainer`](https://modal.com/docs/sdk/js/latest/SidecarContainer.md)
+  - [`StdioBehavior`](https://modal.com/docs/sdk/js/latest/StdioBehavior.md)
+  - [`StreamMode`](https://modal.com/docs/sdk/js/latest/StreamMode.md)
+  - [`Tunnel`](https://modal.com/docs/sdk/js/latest/Tunnel.md)
+  - [`Volume`](https://modal.com/docs/sdk/js/latest/Volume.md)
+- [Go SDK](https://modal.com/docs/sdk/go/latest/intro.md)
+  - [`Allowlist`](https://modal.com/docs/sdk/go/latest/Allowlist.md)
+  - [`App`](https://modal.com/docs/sdk/go/latest/App.md)
+  - [`Client`](https://modal.com/docs/sdk/go/latest/Client.md)
+  - [`CloudBucketMount`](https://modal.com/docs/sdk/go/latest/CloudBucketMount.md)
+  - [`Cls`](https://modal.com/docs/sdk/go/latest/Cls.md)
+  - [`ClsInstance`](https://modal.com/docs/sdk/go/latest/ClsInstance.md)
+  - [`ContainerProcess`](https://modal.com/docs/sdk/go/latest/ContainerProcess.md)
+  - [`Errors`](https://modal.com/docs/sdk/go/latest/Errors.md)
+  - [`FileInfo`](https://modal.com/docs/sdk/go/latest/FileInfo.md)
+  - [`FileType`](https://modal.com/docs/sdk/go/latest/FileType.md)
+  - [`FileWatchEvent`](https://modal.com/docs/sdk/go/latest/FileWatchEvent.md)
+  - [`FileWatchEventType`](https://modal.com/docs/sdk/go/latest/FileWatchEventType.md)
+  - [`Function`](https://modal.com/docs/sdk/go/latest/Function.md)
+  - [`FunctionCall`](https://modal.com/docs/sdk/go/latest/FunctionCall.md)
+  - [`FunctionStats`](https://modal.com/docs/sdk/go/latest/FunctionStats.md)
+  - [`Image`](https://modal.com/docs/sdk/go/latest/Image.md)
+  - [`Probe`](https://modal.com/docs/sdk/go/latest/Probe.md)
+  - [`Profile`](https://modal.com/docs/sdk/go/latest/Profile.md)
+  - [`Proxy`](https://modal.com/docs/sdk/go/latest/Proxy.md)
+  - [`Queue`](https://modal.com/docs/sdk/go/latest/Queue.md)
+  - [`Retries`](https://modal.com/docs/sdk/go/latest/Retries.md)
+  - [`Sandbox`](https://modal.com/docs/sdk/go/latest/Sandbox.md)
+  - [`SandboxCreateConnectCredentials`](https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md)
+  - [`Secret`](https://modal.com/docs/sdk/go/latest/Secret.md)
+  - [`SidecarContainer`](https://modal.com/docs/sdk/go/latest/SidecarContainer.md)
+  - [`StdioBehavior`](https://modal.com/docs/sdk/go/latest/StdioBehavior.md)
+  - [`Tunnel`](https://modal.com/docs/sdk/go/latest/Tunnel.md)
+  - [`ValidateExecArgs`](https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md)
+  - [`Volume`](https://modal.com/docs/sdk/go/latest/Volume.md)
+- [CLI](https://modal.com/docs/cli/latest/intro.md)
+  - [Changelog](https://modal.com/docs/cli/changelog.md)
+  - [`modal app`](https://modal.com/docs/cli/latest/app.md)
+  - [`modal billing`](https://modal.com/docs/cli/latest/billing.md)
+  - [`modal bootstrap`](https://modal.com/docs/cli/latest/bootstrap.md)
+  - [`modal changelog`](https://modal.com/docs/cli/latest/changelog.md)
+  - [`modal config`](https://modal.com/docs/cli/latest/config.md)
+  - [`modal container`](https://modal.com/docs/cli/latest/container.md)
+  - [`modal curl`](https://modal.com/docs/cli/latest/curl.md)
+  - [`modal dashboard`](https://modal.com/docs/cli/latest/dashboard.md)
+  - [`modal deploy`](https://modal.com/docs/cli/latest/deploy.md)
+  - [`modal dict`](https://modal.com/docs/cli/latest/dict.md)
+  - [`modal endpoint`](https://modal.com/docs/cli/latest/endpoint.md)
+  - [`modal environment`](https://modal.com/docs/cli/latest/environment.md)
+  - [`modal image`](https://modal.com/docs/cli/latest/image.md)
+  - [`modal profile`](https://modal.com/docs/cli/latest/profile.md)
+  - [`modal queue`](https://modal.com/docs/cli/latest/queue.md)
+  - [`modal run`](https://modal.com/docs/cli/latest/run.md)
+  - [`modal secret`](https://modal.com/docs/cli/latest/secret.md)
+  - [`modal serve`](https://modal.com/docs/cli/latest/serve.md)
+  - [`modal setup`](https://modal.com/docs/cli/latest/setup.md)
+  - [`modal shell`](https://modal.com/docs/cli/latest/shell.md)
+  - [`modal skills`](https://modal.com/docs/cli/latest/skills.md)
+  - [`modal token`](https://modal.com/docs/cli/latest/token.md)
+  - [`modal volume`](https://modal.com/docs/cli/latest/volume.md)
+  - [`modal workspace`](https://modal.com/docs/cli/latest/workspace.md)
