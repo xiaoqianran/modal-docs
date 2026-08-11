@@ -5,6 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
+import { normalizeMdxMarkdown } from "./mdx-normalize.mjs";
 import { writeLlmsArtifacts } from "./generate-llms.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -674,11 +675,11 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
 
   for (const page of pageMap.values()) {
     slugCount.clear();
-    let body = marked.parse(page.md, { async: false });
+    let body = marked.parse(normalizeMdxMarkdown(page.md), { async: false });
     body = rewriteMdLinks(body, locale);
     const active = findActivePath(navTracks, page.outRel);
     const navHtml = renderNav(navTracks, active, ui);
-    const toc = tocHtml(extractToc(page.md), ui);
+    const toc = tocHtml(extractToc(normalizeMdxMarkdown(page.md)), ui);
     const track = navTracks.find((t) => t.id === active.trackId);
     const groupName = active.group;
     const crumb = [
