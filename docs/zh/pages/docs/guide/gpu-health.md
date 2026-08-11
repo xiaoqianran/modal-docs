@@ -31,8 +31,6 @@ Modal 持续监控主机 GPU 运行状况，因严重问题而耗尽工作人员
 与应用程序异常相关联。应用程序应该捕获由 GPU 相关故障引起的异常
 并拨打`modal.experimental.stop_fetching_inputs()`：
 
-<!-- TODO: 在发货时将代码片段迁移到 modal.Container。参考：https://modal-com.slack.com/archives/C056CGAANRM/p1756931590088119 -->
-
 ```python
 import modal.experimental
 ...

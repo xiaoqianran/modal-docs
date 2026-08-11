@@ -2,7 +2,7 @@
 
 # 文件系统访问
 
-有多种选项可用于将文件上传到沙箱并访问它们
+有多种选项可用于将文件上传到沙盒并访问它们
 从沙箱外部。
 
 ## 文件系统API
@@ -86,7 +86,7 @@ func main() {
 	sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 	defer sb.Terminate(ctx, nil)
 
-	fs := sb.Filesystem()
+	fs := sb.Filesystem
 
 	// Write text to a file in the Sandbox.
 	fs.WriteText(ctx, "Hello World!\n", "/tmp/test.txt", nil)
@@ -158,7 +158,7 @@ await sb.terminate();
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 defer sb.Terminate(ctx, nil)
 
-fs := sb.Filesystem()
+fs := sb.Filesystem
 
 // Write a local file.
 os.WriteFile("local-file.txt", []byte("Hello World!\n"), 0o644)
@@ -252,7 +252,7 @@ await sb.terminate();
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 defer sb.Terminate(ctx, nil)
 
-fs := sb.Filesystem()
+fs := sb.Filesystem
 
 // Set up a structured project.
 fs.MakeDirectory(ctx, "/tmp/project/results", nil)
@@ -287,7 +287,7 @@ fs.Remove(ctx, "/tmp/project", &modal.SandboxFilesystemRemoveParams{Recursive: t
 
 ## 使用体积
 可以使用模态 [Volume](/docs/sdk/py/latest/Volume) 或
-带有沙箱的 [CloudBucketMount](/docs/guide/cloud-bucket-mounts)。
+带有沙盒的 [CloudBucketMount](/docs/guide/cloud-bucket-mounts)。
 
 Volumes 和 CloudBucketMounts 允许您上传一次数据并访问该数据
 从许多沙箱中有效地获取数据。
@@ -469,32 +469,3 @@ print(p.stdout.read())
 p.wait()
 sb.detach()
 ```
-
-<!-- TODO(WRK-956) -->
-
-<!-- ## 文件查看
-
-您可以使用 [`watch`](/docs/sdk/py/latest/Sandbox#watch) 监视文件或目录的更改，这在概念上类似于 [`fsnotify`](https://pkg.go.dev/github.com/fsnotify/fsnotify)。
-
-```python notest
-from modal.file_io import FileWatchEventType
-
-async def watch(sb: modal.Sandbox):
-    event_stream = sb.watch.aio(
-        "/watch",
-        recursive=True,
-        filter=[FileWatchEventType.Create, FileWatchEventType.Modify],
-    )
-    async for event in event_stream:
-        print(event)
-
-async def main():
-    app = modal.App.lookup("sandbox-file-watch", create_if_missing=True)
-    sb = await modal.Sandbox.create.aio(app=app)
-    asyncio.create_task(watch(sb))
-
-    await sb.mkdir.aio("/watch")
-    for i in range(10):
-        async with await sb.open.aio(f"/watch/bar-{i}.txt", "w") as f:
-            await f.write.aio(f"hello-{i}")
-``` -->

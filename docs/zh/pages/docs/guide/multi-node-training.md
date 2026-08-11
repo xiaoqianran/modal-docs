@@ -115,7 +115,7 @@ Modal 不会跨容器同步输入执行。容器负责确保它们处理输入�
 
 ## 示例
 
-要亲自进行多节点训练，您可以跳转到 [`multinode-training-guide` 存储库](https://github.com/modal-labs/multinode-training-guide) 或 [`modal-examples` 存储库](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) 和 `modal run` 等内容！
+要亲自进行多节点训练，您可以跳入 [`Modal Training Gym`](https://gym.modal.dev)、[`multinode-training-guide` 存储库](https://github.com/modal-labs/multinode-training-guide) 或 [`modal-examples` 存储库](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) 和 `modal run` 等内容！
 
 * [简单的“hello world”4 x 1 H100 火炬集群示例](https://github.com/modal-labs/modal-examples/blob/main/14_clusters/simple_torch_cluster.py)
 * [Infiniband RDMA性能测试](https://github.com/modal-labs/multinode-training-guide/tree/main/benchmark)

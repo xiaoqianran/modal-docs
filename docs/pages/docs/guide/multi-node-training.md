@@ -117,7 +117,7 @@ In particular, it is important that the leader container (rank 0) only starts pr
 
 ## Examples
 
-To get hands-on with multi-node training you can jump into the [`multinode-training-guide` repository](https://github.com/modal-labs/multinode-training-guide) or [`modal-examples` repository](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) and `modal run` something!
+To get hands-on with multi-node training you can jump into the [`Modal Training Gym`](https://gym.modal.dev), [`multinode-training-guide` repository](https://github.com/modal-labs/multinode-training-guide), or [`modal-examples` repository](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) and `modal run` something!
 
 * [Simple ‘hello world’ 4 x 1 H100 torch cluster example](https://github.com/modal-labs/modal-examples/blob/main/14_clusters/simple_torch_cluster.py)
 * [Infiniband RDMA performance test](https://github.com/modal-labs/multinode-training-guide/tree/main/benchmark)

@@ -30,8 +30,6 @@ As noted above, Modal will automatically respond to critical GPU events, but war
 be associated with application exceptions. Applications should catch exceptions caused by GPU-related faults
 and call `modal.experimental.stop_fetching_inputs()`:
 
-<!-- TODO: Migrate snippet to modal.Container when it's shipped. ref: https://modal-com.slack.com/archives/C056CGAANRM/p1756931590088119 -->
-
 ```python
 import modal.experimental
 ...

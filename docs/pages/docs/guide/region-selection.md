@@ -39,8 +39,6 @@ If you specify multiple container regions and they span the two categories above
 
 Modal offers different levels of granularity for container regions. Use broader regions when possible, as this increases the pool of available resources your Function or Sandbox containers can be assigned to, which improves cold-start time and availability.
 
-<!-- TODO: auto-generate this table, this is not sustainable -->
-
 ```
   Broad          Narrow               Notes
  ===========================================================

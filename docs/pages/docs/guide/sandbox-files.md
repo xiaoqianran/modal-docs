@@ -84,7 +84,7 @@ func main() {
 	sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 	defer sb.Terminate(ctx, nil)
 
-	fs := sb.Filesystem()
+	fs := sb.Filesystem
 
 	// Write text to a file in the Sandbox.
 	fs.WriteText(ctx, "Hello World!\n", "/tmp/test.txt", nil)
@@ -158,7 +158,7 @@ await sb.terminate();
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 defer sb.Terminate(ctx, nil)
 
-fs := sb.Filesystem()
+fs := sb.Filesystem
 
 // Write a local file.
 os.WriteFile("local-file.txt", []byte("Hello World!\n"), 0o644)
@@ -252,7 +252,7 @@ await sb.terminate();
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
 defer sb.Terminate(ctx, nil)
 
-fs := sb.Filesystem()
+fs := sb.Filesystem
 
 // Set up a structured project.
 fs.MakeDirectory(ctx, "/tmp/project/results", nil)
@@ -471,32 +471,3 @@ print(p.stdout.read())
 p.wait()
 sb.detach()
 ```
-
-<!-- TODO(WRK-956) -->
-
-<!-- ## File Watching
-
-You can watch files or directories for changes using [`watch`](/docs/sdk/py/latest/Sandbox#watch), which is conceptually similar to [`fsnotify`](https://pkg.go.dev/github.com/fsnotify/fsnotify).
-
-```python notest
-from modal.file_io import FileWatchEventType
-
-async def watch(sb: modal.Sandbox):
-    event_stream = sb.watch.aio(
-        "/watch",
-        recursive=True,
-        filter=[FileWatchEventType.Create, FileWatchEventType.Modify],
-    )
-    async for event in event_stream:
-        print(event)
-
-async def main():
-    app = modal.App.lookup("sandbox-file-watch", create_if_missing=True)
-    sb = await modal.Sandbox.create.aio(app=app)
-    asyncio.create_task(watch(sb))
-
-    await sb.mkdir.aio("/watch")
-    for i in range(10):
-        async with await sb.open.aio(f"/watch/bar-{i}.txt", "w") as f:
-            await f.write.aio(f"hello-{i}")
-``` -->

@@ -56,8 +56,6 @@ components we deploy on our network.
   Kubernetes Engine* cloud services.
 * We conduct annual business continuity and security incident exercises.
 
-<!-- TODO: we don't yet encrypt network file system data. "Customer information on databases and volumes at Modal is encrypted with the Linux LUKS block storage encryption secrets." -->
-
 ## Vulnerability remediation
 
 Security vulnerabilities directly affecting Modal's systems and services will be
