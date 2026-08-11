@@ -4,8 +4,8 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { marked } from "marked";
 import { normalizeMdxMarkdown } from "./mdx-normalize.mjs";
+import { renderMarkdown, extractToc, tocHtml } from "./marked-renderer.mjs";
 import { writeLlmsArtifacts } from "./generate-llms.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -164,91 +164,7 @@ function parseLlms(text) {
   return tracks;
 }
 
-const slugCount = new Map();
-function slugify(text) {
-  const base = String(text)
-    .toLowerCase()
-    .replace(/<[^>]+>/g, "")
-    .replace(/[^\w\u4e00-\u9fff\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
-  const n = slugCount.get(base) || 0;
-  slugCount.set(base, n + 1);
-  return n ? `${base}-${n}` : base;
-}
-
-function makeRenderer(ui) {
-  const renderer = new marked.Renderer();
-  renderer.heading = function (text, level) {
-    if (typeof text === "object" && text !== null) {
-      level = text.depth;
-      text = this.parser.parseInline(text.tokens);
-    }
-    const id = slugify(String(text).replace(/<[^>]+>/g, ""));
-    return `<h${level} id="${id}"><a class="anchor" href="#${id}" aria-label="Link to this section">#</a>${text}</h${level}>\n`;
-  };
-  renderer.code = function (code, infostring) {
-    let lang = "";
-    let text = code;
-    if (typeof code === "object" && code !== null) {
-      lang = (code.lang || "").trim();
-      text = code.text;
-    } else {
-      lang = (infostring || "").trim();
-    }
-    lang = (lang.split(/\s+/)[0] || "").toLowerCase();
-    const aliases = {
-      js: "javascript",
-      ts: "typescript",
-      sh: "bash",
-      shell: "bash",
-      yml: "yaml",
-      console: "bash",
-    };
-    if (aliases[lang]) lang = aliases[lang];
-    const cls = lang ? `language-${lang}` : "";
-    const label = lang || "text";
-    const escaped = String(text)
-      .replaceAll("\u0026", "\u0026amp;")
-      .replaceAll("\u003c", "\u0026lt;")
-      .replaceAll("\u003e", "\u0026gt;");
-    return `<div class="code-block" data-lang="${label}">
-  <div class="code-bar">
-    <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-    <span class="lang">${label}</span>
-    <button type="button" class="copy-btn" data-copy data-label-copy="${htmlEscape(ui.copy)}" data-label-copied="${htmlEscape(ui.copied)}">${htmlEscape(ui.copy)}</button>
-  </div>
-  <pre><code class="${cls}">${escaped}</code></pre>
-</div>\n`;
-  };
-  return renderer;
-}
-
-function extractToc(md) {
-  const toc = [];
-  for (const line of md.split("\n")) {
-    const m = /^(#{2,3})\s+(.+)$/.exec(line);
-    if (!m) continue;
-    const level = m[1].length;
-    const text = m[2].replace(/[`*_]/g, "").trim();
-    const id = text
-      .toLowerCase()
-      .replace(/[^\w\u4e00-\u9fff\s-]/g, "")
-      .trim()
-      .replace(/\s+/g, "-");
-    toc.push({ level, text, id });
-  }
-  return toc;
-}
-
-function tocHtml(toc, ui) {
-  if (!toc.length) return "";
-  let html = `<nav class="toc" aria-label="${htmlEscape(ui.onThisPage)}"><div class="toc-title">${htmlEscape(ui.onThisPage)}</div><ul>`;
-  for (const t of toc) {
-    html += `<li class="l${t.level}"><a href="#${t.id}">${htmlEscape(t.text)}</a></li>`;
-  }
-  return html + `</ul></nav>`;
-}
+// makeRenderer / extractToc / tocHtml → ./marked-renderer.mjs
 
 function rewriteMdLinks(html, locale) {
   return html.replace(
@@ -661,7 +577,6 @@ function layout({ title, body, navHtml, breadcrumb, toc, activeTrack, locale, ui
 
 function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
   const ui = UI[locale] || UI.en;
-  marked.use({ renderer: makeRenderer(ui), gfm: true });
 
   const pageMap = loadPages(pagesRoot);
   if (pageMap.size === 0) {
@@ -674,12 +589,12 @@ function buildLocale(locale, pagesRoot, llmsText, llmsTracks) {
   fs.writeFileSync(path.join(DIST, "assets", navName), JSON.stringify(navTracks, null, 2));
 
   for (const page of pageMap.values()) {
-    slugCount.clear();
-    let body = marked.parse(normalizeMdxMarkdown(page.md), { async: false });
+    const norm = normalizeMdxMarkdown(page.md);
+    let body = renderMarkdown(norm, ui);
     body = rewriteMdLinks(body, locale);
     const active = findActivePath(navTracks, page.outRel);
     const navHtml = renderNav(navTracks, active, ui);
-    const toc = tocHtml(extractToc(normalizeMdxMarkdown(page.md)), ui);
+    const toc = tocHtml(extractToc(norm), ui);
     const track = navTracks.find((t) => t.id === active.trackId);
     const groupName = active.group;
     const crumb = [

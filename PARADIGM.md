@@ -70,3 +70,18 @@ Keep **structure identical**; only swap CSS variables + brand mark + `STORE_KEY`
 - Gradient text on `h1` (clips invisible on some GPUs)
 - Binding only `localhost` / wrong `PAGES_BASE`
 - Diverging layout markup across mirrors without updating this file
+
+## Shared body pipeline (v3.1)
+
+All `*-docs` mirrors share:
+
+| Module | Role |
+|--------|------|
+| `scripts/mdx-normalize.mjs` | MDX/Mintlify → GFM before render |
+| `scripts/marked-renderer.mjs` | heading anchors + code-bar renderer (`renderMarkdown`) |
+| `scripts/link-rewrite.mjs` | official host / root-path → mirror links |
+| `scripts/quality-report.mjs` | body quality gate (`npm run quality`) |
+
+Port repos: `build-site.mjs` thin shell + `paradigm-page.mjs` chrome.
+Modal: still has bespoke nav from `llms.txt`; uses the same renderer/normalize modules.
+

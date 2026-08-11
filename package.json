@@ -9,7 +9,8 @@
     "build": "node scripts/build-site.mjs",
     "build:local": "PAGES_BASE= node scripts/build-site.mjs",
     "build:pages": "PAGES_BASE=/modal-docs node scripts/build-site.mjs",
-    "refresh": "node scripts/fetch-docs.mjs && node scripts/translate-docs.mjs && PAGES_BASE=/modal-docs node scripts/build-site.mjs"
+    "refresh": "node scripts/fetch-docs.mjs && node scripts/translate-docs.mjs && PAGES_BASE=/modal-docs node scripts/build-site.mjs",
+    "quality": "node scripts/quality-report.mjs"
   },
   "devDependencies": {
     "marked": "^15.0.0"
