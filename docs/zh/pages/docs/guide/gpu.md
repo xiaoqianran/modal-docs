@@ -123,7 +123,7 @@ def run_deepseek():
 NVIDIA 的新一代顶级数据中心芯片，基于 Hopper [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
 这些 GPU 比 Blackwell GPU 具有更好的软件支持（例如，流行的库包括 Hopper 的预编译内核，但不包括 Blackwell），
 而且它们通常能够以具有竞争力的成本完成工作，因此无论是在 Modal 还是非 Modal，它们都是加速器的常见选择。
-Modal 平台上的所有 H100 GPU 都是 SXM 变体，这可以通过检查
+Modal 平台上的所有 H100 和 H200 GPU 都是 SXM 变体，这可以通过检查
 [功耗](/docs/guide/gpu-metrics) 在仪表板中或使用 `nvidia-smi`。
 
 ### 自动升级到 H200
@@ -143,7 +143,6 @@ H200 的 [HBM3e 内存](/gpu-glossary/device-hardware/gpu-ram)
 
 [A100s](https://www.nvidia.com/en-us/data-center/a100/) 基于 NVIDIA 的 Ampere [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
 Modal 提供两个版本的 A100：一个具有 40 GB RAM，另一个具有 80 GB RAM。
-
 要请求具有 40 GB [GPU 内存](/gpu-glossary/device-hardware/gpu-ram) 的 A100，请使用 `gpu="A100"`：
 
 ```python
@@ -151,6 +150,7 @@ Modal 提供两个版本的 A100：一个具有 40 GB RAM，另一个具有 80 G
 def qwen_7b():
     ...
 ```
+
 Modal 可能会自动升级 `gpu="A100"` 请求以在 80 GB A100 上运行。
 这种自动升级不会改变 GPU 的成本。
 
@@ -182,7 +182,6 @@ def run_on_80gb():
 
 Modal 目前支持在单节点上进行多 GPU 训练，并在私有 Beta 版中支持多节点训练（请发送电子邮件至 support@modal.com 获取访问权限）。
 根据您使用的框架，您可能需要使用不同的技术在多个 GPU 上进行训练。
-
 如果框架重新执行 Python 进程的入口点（例如 [PyTorch Lightning](https://lightning.ai/docs/pytorch/stable/index.html)），如果您希望直接调用训练，则需要将策略设置为 `ddp_spawn` 或 `ddp_notebook`。另一种选择是将训练脚本作为子进程运行。
 
 ```python
@@ -196,6 +195,7 @@ def run():
         check=True,
     )
 ```
+
 ## 示例和更多资源
 
 有关 GPU 的更多一般信息，请查看我们的 [GPU 术语表](/gpu-glossary/readme)。

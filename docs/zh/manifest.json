@@ -612,9 +612,9 @@
       "bytes": 1634
     },
     "docs/guide/existing-images.md": {
-      "hash": "8d6f7d14c8702a4d292ff755768b50f4fe489487",
-      "translatedAt": "2026-08-08T18:29:16.886Z",
-      "bytes": 8160
+      "hash": "074ec6ada9c830ac69289b545aa6a26edb1b7680",
+      "translatedAt": "2026-08-12T07:42:22.754Z",
+      "bytes": 8887
     },
     "docs/guide/gpu-health.md": {
       "hash": "38025bcc27e0f76d4610b051998ab58ec1922ee5",
@@ -632,9 +632,9 @@
       "bytes": 2143
     },
     "docs/guide/gpu.md": {
-      "hash": "a5a828efbd8dbb94bb0c1af33a2f4e0b62011d0e",
-      "translatedAt": "2026-08-08T18:29:21.218Z",
-      "bytes": 7422
+      "hash": "08cdd726991de24391f6d784935cfe14532d86b9",
+      "translatedAt": "2026-08-12T07:42:20.862Z",
+      "bytes": 7431
     },
     "docs/guide/job-queue.md": {
       "hash": "7a5152e855ad73ba499f402f707b41ff962e9e69",
@@ -1477,10 +1477,10 @@
       "bytes": 7745
     }
   },
-  "updatedAt": "2026-08-11T07:18:59.218Z",
+  "updatedAt": "2026-08-12T07:42:22.754Z",
   "stats": {
-    "translated": 6,
-    "skipped": 289,
+    "translated": 2,
+    "skipped": 293,
     "failed": 0,
     "total": 295
   }

@@ -26,7 +26,7 @@ def fit_knn():
 `from_registry`方法可以从所有公共注册中心加载图像，例如
 [Nvidia的`nvcr.io`](https://catalog.ngc.nvidia.com/containers),
 [AWS ECR](https://aws.amazon.com/ecr/)，以及
-[GitHub 的`ghcr.io`](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)。
+[GitHub 的 `ghcr.io`](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry)。
 
 您可以进一步修改图像[就像任何其他模态图像一样](/docs/guide/images)：
 
@@ -77,7 +77,7 @@ REGISTRY_PASSWORD=dckr_pat_REDACTED
 
 ### 弹性容器注册表 (ECR)
 
-您可以通过指定完整图像 URI 从 AWS ECR 账户中提取图像
+您可以通过指定完整图像 URI 从您的 AWS ECR 账户中提取图像
 如下：
 
 ```python
@@ -155,7 +155,7 @@ Modal 没有本机 Azure 支持，但您可以使用以下命令从私有 ACR �
 ACR 的[基于令牌的存储库权限](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-token-based-repository-permissions)
 生成长期存在的 Docker 凭证。然后可以存储这些凭据（令牌和密码）
 作为模态秘密并与 [`modal.Image.from_registry`](/docs/sdk/py/latest/Image#from_registry) 一起使用
-与 [Docker Hub 私有注册表](#docker-hub-private) 凭证相同。
+与 [Docker Hub 私有注册表](#docker-hub-private) 凭据相同。
 
 ## 使用 `.from_dockerfile` 带来您自己的图像定义
 
@@ -173,29 +173,39 @@ def fit():
 ```
 
 请注意，您仍然可以使用图像生成器方法扩展此图像！
-有关详细信息，请参阅[指南](/docs/guide/images)。
-
-### Dockerfile 命令兼容性
+有关详细信息，请参阅[指南](/docs/guide/images)。### Dockerfile 命令兼容性
 
 由于 Modal 不使用 Docker 来构建容器，因此我们有自己的容器
 的实施
 [Dockerfile规范](https://docs.docker.com/engine/reference/builder/)。
-大多数 Dockerfile 应该开箱即用，但有一些差异
+大多数 Dockerfile 应该可以开箱即用，但有一些差异
 请注意。
 
-首先，一些较小的 Dockerfile 命令和标志尚未实现。
-其中包括 `ONBUILD`、`STOPSIGNAL` 和 `VOLUME`。
+首先，一些次要的 Dockerfile 命令和标志尚未实现。
+其中包括 `EXPOSE`、`HEALTHCHECK`、`LABEL`、`ONBUILD`、`STOPSIGNAL` 和
+`VOLUME`。
 如果您的用例需要其中任何一个，请联系我们。
 
 接下来，有一些特定于命令的东西在移植时可能有用。
 Dockerfile 到模态。
 
+#### `USER`
+
+模态容器始终以 root (uid 0) 身份运行。这
+[`USER`](https://docs.docker.com/engine/reference/builder/#user)指令是
+忽略，无论它出现在您的 Dockerfile 中还是从基础镜像继承
+使用 [`Image.from_registry`](/docs/sdk/py/latest/Image#from_registry) 拉取。
+
+[减少权限](https://dwheeler.com/secure-programs/Secure-Programs-HOWTO/minimize-privileges.html)
+对于在 Modal 容器内运行的程序，请使用操作系统用户管理功能
+像[`setuid`](https://man7.org/linux/man-pages/man2/setuid.2.html)。例如，
+在Python中，您可以在[子进程创建](https://docs.python.org/3/library/subprocess.html)期间传入`user`。
+
 #### `ENTRYPOINT`
 
 虽然
 [`ENTRYPOINT`](https://docs.docker.com/engine/reference/builder/#entrypoint)
-支持命令，但入口点脚本有一个额外的限制
-提供：当与模态函数一起使用时，它还必须 `exec` 在某个时刻传递给它的参数。
+支持命令，但入口点脚本有一个额外的限制提供：当与模态函数一起使用时，它还必须 `exec` 在某个时刻传递给它的参数。
 这样模态函数运行时的 Python 入口点就可以在您自己的入口点之后运行。大多数入口点
 Docker 容器中的脚本是其他脚本的包装器，因此这很可能
 已经是这样了。

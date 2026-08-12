@@ -185,11 +185,24 @@ Most Dockerfiles should work out of the box, but there are some differences to
 be aware of.
 
 First, a few minor Dockerfile commands and flags have not been implemented yet.
-These include `ONBUILD`, `STOPSIGNAL`, and `VOLUME`.
+These include `EXPOSE`, `HEALTHCHECK`, `LABEL`, `ONBUILD`, `STOPSIGNAL`, and
+`VOLUME`.
 Please reach out to us if your use case requires any of these.
 
 Next, there are some command-specific things that may be useful when porting a
 Dockerfile to Modal.
+
+#### `USER`
+
+Modal containers always run as root (uid 0). The
+[`USER`](https://docs.docker.com/engine/reference/builder/#user) instruction is
+ignored, whether it appears in your Dockerfile or is inherited from a base image
+pulled with [`Image.from_registry`](/docs/sdk/py/latest/Image#from_registry).
+
+To [reduce privileges](https://dwheeler.com/secure-programs/Secure-Programs-HOWTO/minimize-privileges.html)
+for programs running inside your Modal containers, use OS user management features
+like [`setuid`](https://man7.org/linux/man-pages/man2/setuid.2.html). For instance,
+in Python, you can pass in a `user`during [subprocess creation](https://docs.python.org/3/library/subprocess.html).
 
 #### `ENTRYPOINT`
 

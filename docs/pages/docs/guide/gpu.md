@@ -124,7 +124,7 @@ generation of top-of-the-line data center chips from NVIDIA, based on the Hopper
 These GPUs have better software support than do Blackwell GPUs (e.g. popular libraries include pre-compiled kernels for Hopper, but not Blackwell),
 and they often get the job done at a competitive cost, so they are a common choice of accelerator, on and off Modal.
 
-All H100 GPUs on the Modal platform are of the SXM variant, as can be verified by examining the
+All H100 and H200 GPUs on the Modal platform are of the SXM variant, as can be verified by examining the
 [power draw](/docs/guide/gpu-metrics) in the dashboard or with `nvidia-smi`.
 
 ### Automatic upgrades to H200s

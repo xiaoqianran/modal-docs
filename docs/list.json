@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-11T07:18:42.214Z",
+  "fetchedAt": "2026-08-12T07:42:13.704Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 294,
   "ok": 294,
@@ -962,7 +962,7 @@
       "source": "https://modal.com/docs/guide/existing-images.md",
       "finalUrl": "https://modal.com/docs/guide/existing-images.md",
       "path": "docs/guide/existing-images.md",
-      "bytes": 8495,
+      "bytes": 9223,
       "stub": false
     },
     {
@@ -1010,7 +1010,7 @@
       "source": "https://modal.com/docs/guide/gpu.md",
       "finalUrl": "https://modal.com/docs/guide/gpu.md",
       "path": "docs/guide/gpu.md",
-      "bytes": 7875,
+      "bytes": 7884,
       "stub": false
     },
     {
