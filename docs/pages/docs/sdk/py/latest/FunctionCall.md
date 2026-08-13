@@ -45,24 +45,25 @@ to follow new logs as they arrive.
 * [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
   CLI access to logs for an App.
 
-### logs.fetch
+### logs.stream
 
 ```python
-fetch(self, *, since=None, until=None, source=None, search_text="")
+stream(self, timeout=None)
 ```
 
-Fetch all associated logs corresponding to the date range and filters.
+Stream new FunctionCall logs until the timeout is reached.
+The timeout specifies the number of seconds to wait between log entries before terminating the stream.
+This method will stop when the FunctionCall is observed to have completed,
+or when the timeout is reached. The completion check is best-effort; if completion
+cannot be determined, the stream will continue until the timeout is reached.
 
 **Parameters**
 
-<Parameter name="since" type="datetime | None" defaultValue="None" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time. By default, this will fetch logs from the start of the function call." />
-<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
-<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
-<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
+<Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
 
 **Yields**
 
-`LogEntry` objects in chronological order.
+`LogEntry` objects as they arrive.
 
 **Usage**
 
@@ -70,8 +71,8 @@ Fetch all associated logs corresponding to the date range and filters.
 function = modal.Function.from_name("my-app", "train")
 call = function.spawn()
 
-for entry in call.logs.fetch():
-    print(entry.timestamp, entry.message, end="")
+for entry in call.logs.stream():
+    print(entry.message, end="")
 ```
 
 ### logs.tail
@@ -101,25 +102,24 @@ for entry in call.logs.tail(entries=10):
     print(entry.timestamp, entry.message, end="")
 ```
 
-### logs.stream
+### logs.fetch
 
 ```python
-stream(self, timeout=None)
+fetch(self, *, since=None, until=None, source=None, search_text="")
 ```
 
-Stream new FunctionCall logs until the timeout is reached.
-The timeout specifies the number of seconds to wait between log entries before terminating the stream.
-This method will stop when the FunctionCall is observed to have completed,
-or when the timeout is reached. The completion check is best-effort; if completion
-cannot be determined, the stream will continue until the timeout is reached.
+Fetch all associated logs corresponding to the date range and filters.
 
 **Parameters**
 
-<Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
+<Parameter name="since" type="datetime | None" defaultValue="None" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time. By default, this will fetch logs from the start of the function call." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
 
 **Yields**
 
-`LogEntry` objects as they arrive.
+`LogEntry` objects in chronological order.
 
 **Usage**
 
@@ -127,8 +127,8 @@ cannot be determined, the stream will continue until the timeout is reached.
 function = modal.Function.from_name("my-app", "train")
 call = function.spawn()
 
-for entry in call.logs.stream():
-    print(entry.message, end="")
+for entry in call.logs.fetch():
+    print(entry.timestamp, entry.message, end="")
 ```
 
 ## num\_inputs

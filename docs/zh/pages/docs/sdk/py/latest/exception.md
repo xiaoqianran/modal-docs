@@ -242,6 +242,18 @@ class FunctionTimeoutError(modal.exception.TimeoutError)
 
 当函数超出其执行持续时间限制并超时时引发。
 
+## 图像构建错误
+
+```python
+class ImageBuildError(modal.exception.RemoteError)
+```
+
+当映像构建失败时引发。
+
+```python
+__init__(self, message, image_id)
+```
+
 ## 输入取消
 
 ```python
@@ -249,7 +261,6 @@ class InputCancellation(BaseException)
 ```
 
 当任务取消当前输入时引发
-
 故意使用 BaseException 而不是 Exception，这样就不会得到
 被可能用于重试的未指定用户异常子句捕获
 其他控制流。
@@ -318,9 +329,7 @@ __init__(self, message=None)
 message(self)
 ```
 
-###状态
-
-```python
+###状态```python
 status(self)
 ```
 
@@ -330,7 +339,9 @@ status(self)
 details(self)
 ```
 
-## 日志获取错误```python
+## 日志获取错误
+
+```python
 class LogsFetchError(modal.exception.Error)
 ```
 
@@ -413,7 +424,6 @@ status(self)
 ```
 
 ###详细信息
-
 ```python
 details(self)
 ```
@@ -423,6 +433,7 @@ details(self)
 ```python
 class RemoteError(modal.exception.Error)
 ```
+
 当模态服务器上发生错误时引发。
 
 ## 请求大小错误
@@ -479,11 +490,11 @@ class SandboxFilesystemError(modal.exception.Error)
 
 沙箱文件系统错误的基类。
 
-## SandboxFilesystemFileTooLargeError
-
-```python
+## SandboxFilesystemFileTooLargeError```python
 class SandboxFilesystemFileTooLargeError(modal.exception.SandboxFilesystemError)
-```当文件超过沙箱中读取操作允许的最大大小时引发。
+```
+
+当文件超过沙箱中读取操作允许的最大大小时引发。
 
 ## SandboxFilesystemIsADirectoryError
 
@@ -546,7 +557,7 @@ class SandboxTimeoutError(modal.exception.TimeoutError)
 class SerializationError(modal.exception.Error)
 ```
 
-当序列化期间遇到错误时，提出该错误以提供更多上下文。
+当序列化过程中遇到错误时，提出该错误以提供更多上下文。
 
 ## 服务器警告
 

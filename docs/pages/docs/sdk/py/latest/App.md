@@ -482,7 +482,7 @@ See the [guide](https://modal.com/docs/guide/servers) for more information.
 <Parameter name="cpu" type="float | tuple[float, float] | None" defaultValue="None" description="Specify, in fractional CPU cores, how many CPU cores to request. Or, pass (request, limit) to additionally specify a hard limit in fractional CPU cores. CPU throttling will prevent a container from exceeding its specified limit." />
 <Parameter name="memory" type="int | tuple[int, int] | None" defaultValue="None" description="Specify, in MiB, a memory request which is the minimum memory required. Or, pass (request, limit) to additionally specify a hard limit in MiB." />
 <Parameter name="ephemeral_disk" type="int | None" defaultValue="None" description="Specify, in MiB, the ephemeral disk size for the server." />
-<Parameter name="target_concurrency" type="int | None" defaultValue="None" description="Target concurrency for the server; 0 disables autoscaling." />
+<Parameter name="target_concurrency" type="float | None" defaultValue="None" description="Target number of concurrent requests per container; 0 disables autoscaling. May be fractional, e.g. 1.5 to target three concurrent requests per two containers." />
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running regardless of demand." />
 <Parameter name="max_containers" type="int | None" defaultValue="None" description="Limit on the number of containers that can be concurrently running." />
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to scale up beyond current demand." />
@@ -596,3 +596,103 @@ Get the tags that are currently attached to the App.
 **Returns**
 
 Tags as a map from key to value.
+
+## logs
+
+```python
+logs: AppLogsManager
+```
+
+Access logs for an `App`.
+
+Use [`fetch()`](#logsfetch)
+to read logs from a UTC time range, [`tail()`](#logstail)
+to read the most recent logs, and [`stream()`](#logsstream)
+to follow new logs as they arrive.
+
+**See Also**
+
+* [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
+  CLI access to logs for an App.
+
+### logs.fetch
+
+```python
+fetch(self, *, since, until=None, source=None, search_text="")
+```
+
+Fetch App logs corresponding to the date range and filters.
+
+**Parameters**
+
+<Parameter name="since" type="datetime" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
+
+**Yields**
+
+`LogEntry` objects in chronological order.
+
+**Usage**
+
+```python notest
+app = modal.App.lookup("my-app")
+
+for entry in app.logs.fetch(
+    since=datetime.now() - timedelta(hours=4),
+    source="stdout",
+):
+    print(entry.message, end="")
+```
+
+### logs.tail
+
+```python
+tail(self, entries=100, *, source=None)
+```
+
+Fetch the most recent App logs.
+
+**Parameters**
+
+<Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+
+**Yields**
+
+`LogEntry` objects in chronological order.
+
+**Usage**
+
+```python notest
+app = modal.App.lookup("my-app")
+
+for entry in app.logs.tail(20):
+    print(entry.message, end="")
+```
+
+### logs.stream
+
+```python
+stream(self, timeout=None)
+```
+
+Stream new App logs until the timeout is reached.
+
+**Parameters**
+
+<Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
+
+**Yields**
+
+`LogEntry` objects as they arrive.
+
+**Usage**
+
+```python notest
+app = modal.App.lookup("my-app")
+
+for entry in app.logs.stream(timeout=60):
+    print(entry.message, end="")
+```

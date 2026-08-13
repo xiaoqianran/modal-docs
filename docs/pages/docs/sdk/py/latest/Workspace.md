@@ -68,6 +68,18 @@ billing: WorkspaceBillingManager
 
 Namespace for Workspace billing APIs.
 
+### billing.rates
+
+```python
+rates(self)
+```
+
+Return current pricing rates for the given workspace.
+
+**Returns**
+
+A single mapping containing cost values. All values are reported as `decimal.Decimal`s.
+
 ### billing.report
 
 ```python

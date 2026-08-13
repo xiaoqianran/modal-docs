@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# `modal billing`
+#`modal billing`
 
 查看工作区计费信息。
 
@@ -14,26 +14,47 @@ modal billing [OPTIONS] COMMAND [ARGS]...
 
 * `--help`：显示此消息并退出。
 
-**Commands**:
+**命令**：
 
-* `report`: Generate a billing report for the workspace.
-* `summary`: Generate a billing summary for the workspace.
+* `rates`：返回当前定价。
+* `report`：生成工作区的计费报告。
+* `summary`：生成工作区的账单摘要。
+
+## `modal billing rates`
+
+返回当前定价。
+
+示例：
+
+```bash
+modal billing rates
+```
+
+**用法**：
+
+```shell
+modal billing rates [OPTIONS]
+```
+
+**选项**：
+
+* `--json`：输出为 JSON。
+* `--help`：显示此消息并退出。
 
 ## `modal billing report`
 
 生成工作区的计费报告。
 
-The report range can be provided by setting `--start` / `--end` dates (`--end` defaults to 'now')
-或者使用 `--for` 请求日期范围（例如，`--for today`、`--for 'last month'`）。
+可以通过设置 `--start` / `--end` 日期来提供报告范围（`--end` 默认为“现在”）或者使用 `--for` 请求日期范围（例如，`--for today`、`--for 'last month'`）。
 
 该命令提供了一个 CLI 前端
 [`Workspace.billing.report`](https://modal.com/docs/sdk/py/latest/Workspace#billingreport) API。
 
-Note that, as with the API, the start date is inclusive and the end date is exclusive.
+请注意，与 API 一样，包含开始日期，不包含结束日期。
 仅报告完整时间间隔的数据。使用 `--for` 是定义
-complete interval.
+完整的区间。
 
-In addition, the `--show-resources` option further breaks the cost in each bucket by the resource
+此外，`--show-resources`选项进一步按资源划分每个桶中的成本
 生成它的（CPU、内存、特定 GPU 类型等）。注意具体的资源类型
 随着 Modal 计费模式的发展，报告中包含的内容可能会发生变化。
 
@@ -60,16 +81,14 @@ modal billing report --start 2025-12-01 --json > report.json
 ```shell
 modal billing report [OPTIONS]
 ```
-
 **选项**：
 
-* `--start TEXT`: Start date.日期（默认为 UTC）：ISO 格式 (2025-01-01) 或相对格式（昨天、3 天前等）。
-* `--end TEXT`: End date.日期（默认为 UTC）：ISO 格式 (2025-01-01) 或相对格式（昨天、3 天前等）。 Defaults to now.
+* `--start TEXT`：开始日期。日期（默认为 UTC）：ISO 格式 (2025-01-01) 或相对格式（昨天、3 天前等）。
+* `--end TEXT`：结束日期。日期（默认为 UTC）：ISO 格式 (2025-01-01) 或相对格式（昨天、3 天前等）。默认为现在。
 * `--for TEXT`：方便范围：今天、昨天、本周、上周、本月、上个月。
 * `-r, --resolution TEXT`：时间分辨率：“d”（每天）或“h”（每小时）。
 * `--tz TEXT`：日期解释的时区：“本地”、偏移量（5、-4、+05:30）或 IANA 名称。需要每小时解决。
-* `-t, --tag-names TEXT`：要包含的以逗号分隔的标签名称列表。
-* `--show-resources`：进一步按资源类型细分使用情况。
+* `-t, --tag-names TEXT`：要包含的以逗号分隔的标签名称列表。* `--show-resources`：进一步按资源类型细分使用情况。
 * `--json`：输出为 JSON。
 * `--csv`：输出为 CSV。
 * `--help`：显示此消息并退出。
@@ -81,7 +100,7 @@ modal billing report [OPTIONS]
 可以通过设置`--for`（例如`--for 'last month'`）来提供汇总范围。如果没有
 假设，`--for`默认为“本月”。
 
-仅针对单月间隔（与月份边界对齐）提供摘要。 To see
+仅针对单月间隔（与月份边界对齐）提供摘要。去看
 对于较长间隔的摘要，请针对该间隔内的每个月调用 `summary`。
 
 该命令提供了一个 CLI 前端
@@ -104,7 +123,6 @@ modal billing summary [OPTIONS]
 ```
 
 **选项**：
-
 * `--for TEXT`：显示哪个周期的摘要。接受：“本月”、“上个月”和 ISO 8601 月份 (“YYYY-MM”)。
 * `--json`：输出为 JSON。
 * `--help`：显示此消息并退出。

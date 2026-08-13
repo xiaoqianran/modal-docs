@@ -14,8 +14,30 @@ modal billing [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
+* `rates`: Return current pricing rates.
 * `report`: Generate a billing report for the workspace.
 * `summary`: Generate a billing summary for the workspace.
+
+## `modal billing rates`
+
+Return current pricing rates.
+
+Examples:
+
+```bash
+modal billing rates
+```
+
+**Usage**:
+
+```shell
+modal billing rates [OPTIONS]
+```
+
+**Options**:
+
+* `--json`: Output as JSON.
+* `--help`: Show this message and exit.
 
 ## `modal billing report`
 

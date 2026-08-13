@@ -376,13 +376,12 @@ Reload all Volumes mounted in the Sandbox.
 
 Added in v1.1.0.
 
-Blocks until the Volumes have been reloaded, bounded by `timeout` (55 seconds by default). If the reload
-does not complete within that window, `modal.exception.TimeoutError` is raised; note that the reload may
-still complete in the background.
+Blocks until the reload completes, or raises `modal.exception.TimeoutError` on timeout (the reload
+may still complete in the background).
 
 **Parameters**
 
-<Parameter name="timeout" type="int" defaultValue="55" description="Maximum time in seconds to wait for the reload. Must be positive." />
+<Parameter name="timeout" type="int" defaultValue="55" description="Defaults to 55 seconds." />
 
 ## terminate
 

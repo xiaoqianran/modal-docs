@@ -105,7 +105,7 @@ If an input fails on any container, this failure **is not propagated** to other 
 
 Only rank 0's output matters: if an input fails on the leader container (rank 0), the input is marked as failed, even if the input succeeds on another container. Similarly, if an input succeeds on the leader container but fails on another container, the input will still be marked as successful.
 
-If a container in the cluster is preempted, Modal will terminate all remaining containers in the cluster, and retry the input.
+If a container in the cluster is preempted, or if the leader container (rank 0) fails, Modal will terminate all remaining containers in the cluster, and retry the input.
 
 ### Input Synchronization
 

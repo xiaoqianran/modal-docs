@@ -103,7 +103,7 @@ def train():
 如果任何容器上的输入失败，该失败**不会传播**到集群中的其他容器。容器负责检测和响应其他容器上的输入故障。
 只有排名 0 的输出才重要：如果输入在领导容器（排名 0）上失败，则输入将被标记为失败，即使输入在另一个容器上成功。同样，如果输入在领导容器上成功但在另一个容器上失败，则输入仍将被标记为成功。
 
-如果集群中的容器被抢占，Modal 将终止集群中所有剩余的容器，并重试输入。
+如果集群中的容器被抢占，或者领导者容器（rank 0）失败，Modal 将终止集群中所有剩余的容器，并重试输入。
 
 ### 输入同步
 
@@ -116,7 +116,6 @@ Modal 不会跨容器同步输入执行。容器负责确保它们处理输入�
 ## 示例
 
 要亲自进行多节点训练，您可以跳入 [`Modal Training Gym`](https://gym.modal.dev)、[`multinode-training-guide` 存储库](https://github.com/modal-labs/multinode-training-guide) 或 [`modal-examples` 存储库](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) 和 `modal run` 等内容！
-
 * [简单的“hello world”4 x 1 H100 火炬集群示例](https://github.com/modal-labs/modal-examples/blob/main/14_clusters/simple_torch_cluster.py)
 * [Infiniband RDMA性能测试](https://github.com/modal-labs/multinode-training-guide/tree/main/benchmark)
 * [使用 2 x 8 H100 在 ImageNet 数据集上训练 ResNet50 模型](https://github.com/modal-labs/multinode-training-guide/tree/main/resnet50)

@@ -14,7 +14,24 @@ modal image [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
+* `logs`: Fetch build logs for an Image.
 * `names`: Manage Modal Image names.
+
+## `modal image logs`
+
+Fetch build logs for an Image.
+
+**Usage**:
+
+```shell
+modal image logs [OPTIONS] IMAGE_ID
+```
+
+**Options**:
+
+* `--layers INTEGER`: Fetch logs from the last N build layers. Defaults to 1.
+* `--all`: Fetch logs from all available build layers.
+* `--help`: Show this message and exit.
 
 ## `modal image names`
 

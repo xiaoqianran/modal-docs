@@ -21,7 +21,7 @@ modal volume [OPTIONS] COMMAND [ARGS]...
 * `cp`：在模态中复制。体积。
 * `create`：创建一个命名的、持久的modal.Volume。
 * `dashboard`：在网络浏览器中打开卷的仪表板页面。
-* `delete`：删除指定卷及其所有数据。
+* `delete`：删除指定的Volume及其所有数据。
 * `get`：从 modal.Volume 对象下载文件。
 * `list`：列出环境中所有 modal.Volume 体积的详细信息。
 * `ls`：以modal.Volume卷的形式列出文件和目录。* `put`：上传文件或目录到modal.Volume。
@@ -57,7 +57,7 @@ modal volume create [OPTIONS] NAME
 ```
 
 **选项**：
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
 * `--version INTEGER`：VolumeFS 版本。 （实验性）
 * `--help`：显示此消息并退出。
 
@@ -84,11 +84,11 @@ modal volume dashboard [OPTIONS] VOLUME_NAME
 
 ```shell
 modal volume delete [OPTIONS] NAME
-```**选项**：
+```
 
-* `--allow-missing`：如果卷不存在，则不会出错。
+**选项**：* `--allow-missing`：如果卷不存在，则不会出错。
 * `-y, --yes`：运行时不暂停确认。
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 
 ## `modal volume get`
@@ -100,12 +100,11 @@ modal volume delete [OPTIONS] NAME
 
 示例：
 
-````
 ```
-模态音量获取<volume_name>logs/april-12-1.txt
-模态音量获取 <volume_name> /volume_data_dump
+modal volume get <volume_name> logs/april-12-1.txt
+modal volume get <volume_name> / volume_data_dump
 ```
-````
+
 使用“-”作为 LOCAL\_DESTINATION 将文件内容写入标准输出。
 
 **用法**：
@@ -133,13 +132,12 @@ modal volume list [OPTIONS]
 **选项**：
 
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--json`* `--help`：显示此消息并退出。
+* `--json`
+* `--help`：显示此消息并退出。
 
 ## `modal volume ls`
 
-列出 modal.Volume 卷中的文件和目录。
-
-**用法**：
+列出 modal.Volume 卷中的文件和目录。**用法**：
 
 ```shell
 modal volume ls [OPTIONS] VOLUME_NAME [PATH]
@@ -167,6 +165,7 @@ modal volume put [OPTIONS] VOLUME_NAME LOCAL_PATH [REMOTE_PATH]
 ```
 
 **选项**：
+
 * `-f, --force`：覆盖现有文件。
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
 * `--help`：显示此消息并退出。
@@ -199,6 +198,6 @@ modal volume rm [OPTIONS] VOLUME_NAME REMOTE_PATH
 
 **选项**：
 
-* `-r, --recursive`：递归删除目录
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `-r, --recursive`: 递归删除目录
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
 * `--help`：显示此消息并退出。

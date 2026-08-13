@@ -49,15 +49,15 @@ members = modal.Workspace.from_context().members.list()
 print([m.name for m in members])
 ```
 
-## 来自\_context
-
-```python
+## 来自\_context```python
 from_context(*, client=None)
-```查找与当前上下文关联的工作区。
+```
+
+查找与当前上下文关联的工作区。
 
 这将返回活动模态凭据进行身份验证的工作空间
 （即您的活动配置文件或 `MODAL_TOKEN_ID` / `MODAL_TOKEN_SECRET` 环境
-变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作空间
+变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作区
 容器正在运行。
 
 ## 计费
@@ -68,12 +68,23 @@ billing: WorkspaceBillingManager
 
 Workspace 计费 API 的命名空间。
 
+### 计费费率
+
+```python
+rates(self)
+```
+
+返回给定工作区的当前定价。
+
+**退货**
+
+包含成本值的单个映射。所有值均报告为 `decimal.Decimal`s。
+
 ### 账单.报告
 
 ```python
 report(self, *, start, end=None, resolution="d", tag_names=None)
 ```
-
 返回所有工作区使用情况的成本报告，按对象和时间细分。
 
 **参数**
@@ -81,7 +92,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T29⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T31⟧ to include all tags in the report." />
 
 **退货**
 
@@ -93,8 +104,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 
 **另见**
 
-* [`modal billing report`](https://modal.com/docs/cli/latest/billing#modal-billing-report):
-  工作区报告 CLI，具有围绕相对时间范围查询的便利功能
+* [`modal billing report`](https://modal.com/docs/cli/latest/billing#modal-billing-report):工作区报告 CLI，具有围绕相对时间范围查询的便利功能
   和 JSON/CSV 输出。
 * [`Environment.billing.report()`](https://modal.com/docs/sdk/py/latest/Environment#billingreport):
   仅限于特定环境的类似报告 API。
@@ -103,11 +113,13 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 
 ```python
 summary(self, cycle=None)
-```返回由 `cycle` 确定的单个计费周期内工作区成本的摘要
+```
+
+返回由 `cycle` 确定的单个计费周期内工作区成本的摘要
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T34⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T36⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 
@@ -117,10 +129,10 @@ summary(self, cycle=None)
 * `billed_cost` 代表实际开具发票的成本，包括所有调整，
 * `adjustments` 包含弥补差异的调整细目
   `metered_cost` 和 `billed_cost` 之间。这可以包括免费数量的折扣
-  存储、由于计划积分而进行的调整等。其确切密钥取决于
+存储、由于计划积分而进行的调整等。其确切密钥取决于
   随着 Modal 计费模式的发展而变化。
 * `metered_cost_breakdown` 包含按 Modal 资源划分的成本明细
-产生它的。确切的键可能会随着 Modal 的计费而变化
+  产生它的。确切的键可能会随着 Modal 的计费而变化
   模型不断发展。
 
 所有值均报告为 `decimal.Decimal`s。
@@ -136,9 +148,7 @@ summary(self, cycle=None)
 
 ```python
 proxy_tokens: WorkspaceProxyTokenManager
-```
-
-具有用于管理工作空间中代理令牌的方法的命名空间。
+```具有用于管理工作空间中代理令牌的方法的命名空间。
 
 有关代理令牌的更多信息，请参阅[指南](https://modal.com/docs/guide/webhook-proxy-auth)。
 
@@ -150,7 +160,9 @@ create(self)
 
 为工作区创建新的代理令牌。
 
-**用法**```python notest
+**使用**
+
+```python notest
 token = modal.Workspace.from_context().proxy_tokens.create()
 print(token.token_id, token.token_secret)
 ```
@@ -190,7 +202,7 @@ allow(self, proxy_token_id, environment_name)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T45⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T47⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to allow access to." />
 
 **使用**
@@ -208,13 +220,12 @@ revoke(self, proxy_token_id, environment_name)
 ```
 
 撤销代理令牌对给定环境的访问权限。
-
 代理令牌不会被删除，它将继续对任何请求进行身份验证
 与其关联的其他环境。
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T46⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T48⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to revoke access from." />
 
 **使用**
@@ -231,12 +242,13 @@ delete(self, proxy_token_id)
 ```
 
 从工作区中删除代理令牌。
+
 这无法恢复。当前使用该代币的任何客户将立即
 失去对关联资源的访问。
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T47⟧) to delete." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T49⟧) to delete." />
 
 **使用**
 

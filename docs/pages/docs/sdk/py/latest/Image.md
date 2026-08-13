@@ -1180,8 +1180,8 @@ from_name(name, *, environment_name=None, client=None)
 
 Reference a named Image that was previously published with `.publish()`.
 
-Names can contain an optional `:tag` part - if no tag part is included `":latest"` is used,
-matching Docker conventions.
+Names can contain an optional `:tag` part. If no tag part is included, `":latest"` is used, matching
+Docker conventions.
 
 ```python notest
 image = modal.Image.from_name("my-image")     # references my-image:latest
@@ -1195,14 +1195,15 @@ def run():
 ## publish
 
 ```python
-publish(self, name, *, environment_name=None, client=None)
+publish(self, name, *, environment_name=None, experimental_options=None,
+    client=None)
 ```
 
 Publish this image under the given name
 
 The Image must already be created (typically by calling `image.build()` or `sandbox.snapshot_filesystem()`).
 
-Image names can contain an explicit tag designation (using the `name:tag`). If no tag is included in the name,
+Image names can contain an explicit tag designation using `name:tag`. If no tag is included in the name,
 `":latest"` is used, matching Docker conventions. To publish multiple tags, call `.publish()` once per tag.
 
 ```python notest
@@ -1211,3 +1212,44 @@ image.build(app)
 image.publish("my-image-with-numpy")     # my-image-with-numpy:latest
 image.publish("my-image-with-numpy:v1")
 ```
+
+## logs
+
+```python
+logs: ImageLogsManager
+```
+
+Access logs for an `Image`.
+
+Use [`fetch()`](#logsfetch)
+to read logs for individual build layers and [`tail()`](#logstail)
+to read the most recent logs.
+
+**See Also**
+
+* [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
+  CLI access to logs for an App.
+
+### logs.fetch
+
+```python
+fetch(self, layers=1)
+```
+
+Fetch logs for the most recent Image build steps.
+
+**Parameters**
+
+<Parameter name="layers" type="int | None" defaultValue="1" description="The number of build layers to fetch, counting backward from the final Image. If None, logs are fetched for all build steps." />
+
+### logs.tail
+
+```python
+tail(self, entries=100)
+```
+
+Fetch the most recent Image logs.
+
+**Parameters**
+
+<Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />

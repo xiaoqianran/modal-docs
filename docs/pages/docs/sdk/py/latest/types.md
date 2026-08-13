@@ -149,6 +149,15 @@ The possible values are:
 * `Modify`
 * `Remove`
 
+## FunctionAutoscalerSettings
+
+**Attributes**
+
+<Parameter name="min_containers" type="int | None" description="" />
+<Parameter name="max_containers" type="int | None" description="" />
+<Parameter name="scaledown_window" type="int | None" description="" />
+<Parameter name="buffer_containers" type="int | None" description="" />
+
 ## FunctionStats
 
 Simple data structure storing stats for a running function.
@@ -193,10 +202,11 @@ The possible values are:
 
 ## LogEntry
 
-A log entry emitted by a Modal object.
+A log entry queried through a Modal object or App.
 
-The context\_ids field contains a list of IDs corresponding to the context in which the log entry was emitted.
-For example, for a function log entry, this will contain the function call ID, the input ID, and the container ID.
+The object\_id field identifies the object or App whose log manager produced the entry. The context\_ids field
+contains progressively narrower IDs corresponding to the context in which the log entry was emitted. For example,
+for a function log entry, this will contain the function call ID, the input ID, and the container ID.
 
 **Attributes**
 
@@ -244,6 +254,17 @@ Information about a Secret object.
 <Parameter name="name" type="str | None" description="" />
 <Parameter name="created_at" type="datetime" description="" />
 <Parameter name="created_by" type="str | None" description="" />
+
+## ServerAutoscalerSettings
+
+**Attributes**
+
+<Parameter name="target_concurrency" type="int | float | None" description="" />
+<Parameter name="min_containers" type="int | None" description="" />
+<Parameter name="max_containers" type="int | None" description="" />
+<Parameter name="buffer_containers" type="int | None" description="" />
+<Parameter name="scaleup_window" type="int | None" description="" />
+<Parameter name="scaledown_window" type="int | None" description="" />
 
 ## TokenData
 

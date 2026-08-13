@@ -3,8 +3,11 @@
 Deploy a Modal application.
 
 Examples:
-modal deploy my\_script.py
-modal deploy -m my\_package.my\_mod
+
+```
+modal deploy my_script.py
+modal deploy -m my_package.my_mod
+```
 
 **Usage**:
 

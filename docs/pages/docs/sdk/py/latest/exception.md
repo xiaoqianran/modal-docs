@@ -244,6 +244,18 @@ class FunctionTimeoutError(modal.exception.TimeoutError)
 
 Raised when a Function exceeds its execution duration limit and times out.
 
+## ImageBuildError
+
+```python
+class ImageBuildError(modal.exception.RemoteError)
+```
+
+Raised when an image build fails.
+
+```python
+__init__(self, message, image_id)
+```
+
 ## InputCancellation
 
 ```python

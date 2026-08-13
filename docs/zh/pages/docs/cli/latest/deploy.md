@@ -5,8 +5,11 @@
 部署模态应用程序。
 
 示例：
-模态部署 my\_script.py
-模态部署 -m my\_package.my\_mod
+
+```
+modal deploy my_script.py
+modal deploy -m my_package.my_mod
+```
 
 **用法**：
 

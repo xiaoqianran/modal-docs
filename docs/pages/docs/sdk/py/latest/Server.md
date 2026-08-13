@@ -153,12 +153,17 @@ its static configuration.
 
 **Parameters**
 
-<Parameter name="target_concurrency" type="int | None" defaultValue="None" description="Target number of concurrent requests per container." />
+<Parameter name="target_concurrency" type="float | None" defaultValue="None" description="Target number of concurrent requests per container. May be fractional, e.g. 1.5 to target three concurrent requests per two containers." />
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running regardless of demand." />
 <Parameter name="max_containers" type="int | None" defaultValue="None" description="Limit on the number of containers that can be concurrently running." />
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to scale up beyond current demand." />
 <Parameter name="scaleup_window" type="int | None" defaultValue="None" description="Seconds of sustained demand required before scaling up new containers." />
 <Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />
+
+**Returns**
+
+A `ServerAutoscalerSettings` dataclass which contains the current autoscaler settings of
+this Server after the call.
 
 **Usage**
 
@@ -176,6 +181,9 @@ server.update_autoscaler(scaleup_window=30)
 
 # Adjust Server autoscaling to target 20 concurrent requests per replica
 server.update_autoscaler(target_concurrency=20)
+
+# Target three concurrent requests for every two containers
+server.update_autoscaler(target_concurrency=1.5)
 
 # Disable the Server autoscaling by setting target_concurrency to 0
 server.update_autoscaler(target_concurrency=0)

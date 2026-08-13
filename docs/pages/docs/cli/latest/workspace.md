@@ -58,12 +58,25 @@ modal workspace members list [OPTIONS]
 
 Manage the proxy tokens of the current Workspace.
 
-Proxy tokens provide authentication to HTTP interfaces on Modal Servers and Web Functions.
-They are passed as request headers (`Modal-Key` and `Modal-Secret`). See
-https://modal.com/docs/guide/webhook-proxy-auth for more information.
+Proxy tokens provide authentication to Modal Endpoints, Servers, and Web Functions.
 
-Proxy tokens and secrets have `wk-` and `ws-` prefixes, respectively. The cannot be
+Proxy tokens and secrets have `wk-` and `ws-` prefixes, respectively. They cannot be
 interchanged with API tokens (which use `ak-` and `as-` prefixes).
+
+Proxy tokens are passed as request headers, either as a key / secret pair:
+
+```
+Modal-Key: wk-123
+Modal-Secret: ws-456
+```
+
+Or as a single Bearer token:
+
+```
+Authorization: Bearer wk-123.ws-456
+```
+
+See https://modal.com/docs/guide/webhook-proxy-auth for more information.
 
 On workspaces with RBAC enabled, tokens are scoped to specific environments;
 use the `allow` and `revoke` commands to manage environment associations.

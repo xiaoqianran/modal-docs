@@ -58,12 +58,25 @@ modal workspace members list [OPTIONS]
 
 管理当前工作区的代理令牌。
 
-代理令牌为模态服务器和 Web 功能上的 HTTP 接口提供身份验证。
-它们作为请求标头（`Modal-Key` 和 `Modal-Secret`）传递。参见
-https://modal.com/docs/guide/webhook-proxy-auth 了解更多信息。
+代理令牌为模态端点、服务器和 Web 功能提供身份验证。
 
-代理令牌和秘密分别具有 `wk-` 和 `ws-` 前缀。不可能是
+代理令牌和秘密分别具有 `wk-` 和 `ws-` 前缀。他们不能是
 与 API 令牌（使用 `ak-` 和 `as-` 前缀）互换。
+
+代理令牌作为请求标头传递，或者作为密钥/秘密对：
+
+```
+Modal-Key: wk-123
+Modal-Secret: ws-456
+```
+
+或者作为单个不记名令牌：
+
+```
+Authorization: Bearer wk-123.ws-456
+```
+请参阅https://modal.com/docs/guide/webhook-proxy-auth了解更多信息。
+
 在启用 RBAC 的工作区中，令牌的范围仅限于特定环境；
 使用 `allow` 和 `revoke` 命令来管理环境关联。
 

@@ -140,7 +140,7 @@ class FileType(enum.Enum)
 class FileWatchEventType(enum.Enum)
 ```
 
-`Sandbox.filesystem.watch()`报告的文件系统监视事件的类型。
+`Sandbox.filesystem.watch()` 报告的文件系统监视事件的类型。
 
 可能的值为：
 
@@ -150,18 +150,27 @@ class FileWatchEventType(enum.Enum)
 * `Modify`
 * `Remove`
 
+## 函数自动缩放器设置
+
+**属性**
+
+<Parameter name="min_containers" type="int | None" description="" />
+<Parameter name="max_containers" type="int | None" description="" />
+<Parameter name="scaledown_window" type="int | None" description="" />
+<Parameter name="buffer_containers" type="int | None" description="" />
+
 ## 函数统计
 
 存储正在运行的函数的统计数据的简单数据结构。
 
-**属性**
-
-<Parameter name="backlog" type="int" description="" />
+**属性**<Parameter name="backlog" type="int" description="" />
 <Parameter name="num_total_runners" type="int" description="" />
 <Parameter name="num_running_inputs" type="int" description="" />
 <Parameter name="input_headroom" type="int" description="" />
 
-## 输入信息存储有关函数输入的信息的简单数据结构。
+## 输入信息
+
+存储有关函数输入的信息的简单数据结构。
 
 **属性**
 
@@ -192,10 +201,11 @@ class InputStatus(enum.IntEnum)
 
 ## 日志条目
 
-Modal 对象发出的日志条目。
+通过 Modal 对象或 App 查询的日志条目。
 
-context\_ids 字段包含与发出日志条目的上下文相对应的 ID 列表。
-例如，对于函数日志条目，它将包含函数调用 ID、输入 ID 和容器 ID。
+object\_id 字段标识其日志管理器生成该条目的对象或应用程序。 context\_ids 字段
+包含与发出日志条目的上下文相对应的逐渐缩小的 ID。例如，
+对于函数日志条目，这将包含函数调用 ID、输入 ID 和容器 ID。
 
 **属性**
 
@@ -206,6 +216,7 @@ context\_ids 字段包含与发出日志条目的上下文相对应的 ID 列表
 <Parameter name="context_ids" type="list[str]" description="" />
 
 ## 代理令牌信息
+
 有关代理令牌的元数据，不包括令牌秘密。
 
 **属性**
@@ -241,7 +252,16 @@ context\_ids 字段包含与发出日志条目的上下文相对应的 ID 列表
 
 <Parameter name="name" type="str | None" description="" />
 <Parameter name="created_at" type="datetime" description="" />
-<Parameter name="created_by" type="str | None" description="" />
+<Parameter name="created_by" type="str | None" description="" />## 服务器自动缩放器设置
+
+**属性**
+
+<Parameter name="target_concurrency" type="int | float | None" description="" />
+<Parameter name="min_containers" type="int | None" description="" />
+<Parameter name="max_containers" type="int | None" description="" />
+<Parameter name="buffer_containers" type="int | None" description="" />
+<Parameter name="scaleup_window" type="int | None" description="" />
+<Parameter name="scaledown_window" type="int | None" description="" />
 
 ## 代币数据
 
@@ -299,6 +319,5 @@ context\_ids 字段包含与发出日志条目的上下文相对应的 ID 列表
 工作区的当前设置。
 
 **属性**
-
 <Parameter name="default_environment" type="str" description="" />
 <Parameter name="image_builder_version" type="str" description="" />

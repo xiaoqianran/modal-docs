@@ -22,7 +22,7 @@ add_local_file(self, local_path, remote_path, *, copy=False)
 默认情况下（`copy=False`），文件在启动时添加到容器中，并且不会内置到实际的镜像中，
 这加快了部署速度。
 
-设置 `copy=True` 在构建时将文件复制到 Image 层，类似于
+设置 `copy=True` 在构建时将文件复制到图像层，类似于
 [`COPY`](https://docs.docker.com/engine/reference/builder/#copy) 在`Dockerfile` 中工作。copy=True 会减慢迭代速度，因为它需要重建图像和任何后续的
 每当包含的文件发生更改时，都会执行构建步骤，但如果您想运行额外的文件，则需要执行此步骤
 在这一步之后构建步骤。
@@ -49,7 +49,7 @@ add_local_dir(self, local_path, remote_path, *, copy=False, ignore=[])
 
 默认情况下（`copy=False`），文件在启动时添加到容器中，并且不会内置到实际的镜像中，
 这加快了部署速度。
-设置 `copy=True` 在构建时将文件复制到图像层，类似于
+设置 `copy=True` 在构建时将文件复制到 Image 层，类似于
 [`COPY`](https://docs.docker.com/engine/reference/builder/#copy) 在`Dockerfile` 中工作。
 
 copy=True 会减慢迭代速度，因为它需要重建图像和任何后续的
@@ -247,13 +247,13 @@ pip_install(self, *packages, find_links=None, index_url=None,
 
 **参数**
 
-<Parameter name="*packages" type="str | list[str]" description="Python packages to install, e.g. `⟦T90⟧⟦T91⟧⟦T92⟧`." />
-<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T93⟧` to pip." />
-<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T94⟧` to pip." />
-<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T95⟧` to pip." />
-<Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-release versions (`⟦T96⟧`)." />
-<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options for pip, e.g. `⟦T97⟧`." />
-<Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds (similar to `⟦T98⟧`)." />
+<Parameter name="*packages" type="str | list[str]" description="Python packages to install, e.g. `⟦T93⟧⟦T94⟧⟦T95⟧`." />
+<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T96⟧` to pip." />
+<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T97⟧` to pip." />
+<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T98⟧` to pip." />
+<Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-release versions (`⟦T99⟧`)." />
+<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options for pip, e.g. `⟦T100⟧`." />
+<Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds (similar to `⟦T101⟧`)." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
@@ -309,21 +309,21 @@ pip_install_private_repos(self, *repositories, git_user, find_links=None,
 
 **参数**
 
-<Parameter name="*repositories" type="str" description="Git URLs without scheme, e.g. `⟦T104⟧⟦T105⟧⟦T106⟧`." />
+<Parameter name="*repositories" type="str" description="Git URLs without scheme, e.g. `⟦T107⟧⟦T108⟧⟦T109⟧`." />
 <Parameter name="git_user" type="str" description="Username embedded in HTTPS git URLs for authentication." />
-<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T107⟧` to pip." />
-<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T108⟧` to pip." />
-<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T109⟧` to pip." />
+<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T110⟧` to pip." />
+<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T111⟧` to pip." />
+<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T112⟧` to pip." />
 <Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-release versions." />
 <Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options for pip." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
-<Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets that supply `⟦T110⟧⟦T111⟧⟦T112⟧` as required." />
+<Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets that supply `⟦T113⟧⟦T114⟧⟦T115⟧` as required." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 
 **退货**
 
-安装了私有存储库的新`Image`。
+安装了私人存储库的新`Image`。
 
 **使用**
 
@@ -355,10 +355,10 @@ pip_install_from_requirements(self, requirements_txt, find_links=None, *,
 
 **参数**
 
-<Parameter name="requirements_txt" type="str" description="Path to a `⟦T115⟧` file on the local machine." />
-<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T116⟧` to pip." />
-<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T117⟧` to pip." />
-<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T118⟧` to pip." />
+<Parameter name="requirements_txt" type="str" description="Path to a `⟦T118⟧` file on the local machine." />
+<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T119⟧` to pip." />
+<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T120⟧` to pip." />
+<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T121⟧` to pip." />
 <Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-release versions." />
 <Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options for pip." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
@@ -378,18 +378,18 @@ pip_install_from_pyproject(self, pyproject_toml, optional_dependencies=[], *,
     extra_options="", force_build=False, env=None, secrets=None, gpu=None)
 ```安装本地 `pyproject.toml` 文件指定的依赖项。
 
-`optional_dependencies` 是按键列表
+`optional_dependencies` 是一个按键列表
 `pyproject.toml` 文件的可选依赖项部分
 （例如测试、文档、实验等）。当提供时，
 每个列出的部分中的所有软件包也都已安装。
 
 **参数**
 
-<Parameter name="pyproject_toml" type="str" description="Path to a `⟦T123⟧⟦T124⟧⟦T125⟧`." />
-<Parameter name="optional_dependencies" type="list[str]" defaultValue="[]" description="Keys under `⟦T126⟧` to install additionally." />
-<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T127⟧` to pip." />
-<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T128⟧` to pip." />
-<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T129⟧` to pip." />
+<Parameter name="pyproject_toml" type="str" description="Path to a `⟦T126⟧⟦T127⟧⟦T128⟧`." />
+<Parameter name="optional_dependencies" type="list[str]" defaultValue="[]" description="Keys under `⟦T129⟧` to install additionally." />
+<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T130⟧` to pip." />
+<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T131⟧` to pip." />
+<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T132⟧` to pip." />
 <Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-release versions." />
 <Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options for pip." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
@@ -421,15 +421,15 @@ v1.1.0 中添加。
 
 **参数**
 
-<Parameter name="*packages" type="str | list[str]" description="Python packages to pass to `⟦T136⟧`." />
-<Parameter name="requirements" type="list[str] | None" defaultValue="None" description="Optional list of requirement file paths (passed as `⟦T137⟧`)." />
-<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T138⟧⟦T139⟧⟦T140⟧`." />
-<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T141⟧⟦T142⟧⟦T143⟧`." />
-<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T144⟧⟦T145⟧⟦T146⟧`." />
-<Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-releases (`⟦T147⟧`)." />
-<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options appended to the `⟦T148⟧` invocation." />
+<Parameter name="*packages" type="str | list[str]" description="Python packages to pass to `⟦T139⟧`." />
+<Parameter name="requirements" type="list[str] | None" defaultValue="None" description="Optional list of requirement file paths (passed as `⟦T140⟧`)." />
+<Parameter name="find_links" type="str | None" defaultValue="None" description="Passed as `⟦T141⟧⟦T142⟧⟦T143⟧`." />
+<Parameter name="index_url" type="str | None" defaultValue="None" description="Passed as `⟦T144⟧⟦T145⟧⟦T146⟧`." />
+<Parameter name="extra_index_url" type="str | None" defaultValue="None" description="Passed as `⟦T147⟧⟦T148⟧⟦T149⟧`." />
+<Parameter name="pre" type="bool" defaultValue="False" description="If True, allow pre-releases (`⟦T150⟧`)." />
+<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options appended to the `⟦T151⟧` invocation." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="uv_version" type="str | None" defaultValue="None" description="Pin the uv binary version copied from `⟦T149⟧`." />
+<Parameter name="uv_version" type="str | None" defaultValue="None" description="Pin the uv binary version copied from `⟦T152⟧`." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
@@ -466,14 +466,14 @@ poetry_install_from_file(self, poetry_pyproject_toml, poetry_lockfile=None, *,
 
 **参数**
 
-<Parameter name="poetry_pyproject_toml" type="str" description="Path to a Poetry `⟦T157⟧` file." />
-<Parameter name="poetry_lockfile" type="str | None" defaultValue="None" description="Path to `⟦T158⟧`; if omitted, inferred next to the pyproject." />
+<Parameter name="poetry_pyproject_toml" type="str" description="Path to a Poetry `⟦T160⟧` file." />
+<Parameter name="poetry_lockfile" type="str | None" defaultValue="None" description="Path to `⟦T161⟧`; if omitted, inferred next to the pyproject." />
 <Parameter name="ignore_lockfile" type="bool" defaultValue="False" description="If True, do not copy or use a lockfile even when present." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="with_" type="list[str]" defaultValue="[]" description="Optional dependency groups to include (`⟦T159⟧`)." />
-<Parameter name="without" type="list[str]" defaultValue="[]" description="Optional dependency groups to exclude (`⟦T160⟧`)." />
-<Parameter name="only" type="list[str]" defaultValue="[]" description="Only install dependency groups in this list (`⟦T161⟧`)." />
-<Parameter name="poetry_version" type="str | None" defaultValue="&quot;latest&quot;" description="Poetry version specifier to `⟦T162⟧`, or None to skip installing Poetry." />
+<Parameter name="with_" type="list[str]" defaultValue="[]" description="Optional dependency groups to include (`⟦T162⟧`)." />
+<Parameter name="without" type="list[str]" defaultValue="[]" description="Optional dependency groups to exclude (`⟦T163⟧`)." />
+<Parameter name="only" type="list[str]" defaultValue="[]" description="Only install dependency groups in this list (`⟦T164⟧`)." />
+<Parameter name="poetry_version" type="str | None" defaultValue="&quot;latest&quot;" description="Poetry version specifier to `⟦T165⟧`, or None to skip installing Poetry." />
 <Parameter name="old_installer" type="bool" defaultValue="False" description="If True, use Poetry&#x27;s legacy installer." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
@@ -507,13 +507,13 @@ v1.1.0 中添加。
 
 **参数**
 
-<Parameter name="uv_project_dir" type="str" defaultValue="&quot;./&quot;" description="Path to the local uv project directory (contains `⟦T173⟧`)." />
+<Parameter name="uv_project_dir" type="str" defaultValue="&quot;./&quot;" description="Path to the local uv project directory (contains `⟦T176⟧`)." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="groups" type="list[str] | None" defaultValue="None" description="Dependency groups passed as `⟦T174⟧`." />
-<Parameter name="extras" type="list[str] | None" defaultValue="None" description="Optional extras passed as `⟦T175⟧`." />
-<Parameter name="frozen" type="bool" defaultValue="True" description="If True and a `⟦T176⟧⟦T177⟧⟦T178⟧` so the lock is not updated at build time." />
-<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options appended to `⟦T179⟧`." />
-<Parameter name="uv_version" type="str | None" defaultValue="None" description="Pin the uv binary version copied from `⟦T180⟧`." />
+<Parameter name="groups" type="list[str] | None" defaultValue="None" description="Dependency groups passed as `⟦T177⟧`." />
+<Parameter name="extras" type="list[str] | None" defaultValue="None" description="Optional extras passed as `⟦T178⟧`." />
+<Parameter name="frozen" type="bool" defaultValue="True" description="If True and a `⟦T179⟧⟦T180⟧⟦T181⟧` so the lock is not updated at build time." />
+<Parameter name="extra_options" type="str" defaultValue="&quot;&quot;" description="Additional raw options appended to `⟦T182⟧`." />
+<Parameter name="uv_version" type="str | None" defaultValue="None" description="Pin the uv binary version copied from `⟦T183⟧`." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
@@ -540,15 +540,15 @@ dockerfile_commands(self, *dockerfile_commands, context_files={}, env=None,
 
 **参数**
 
-<Parameter name="*dockerfile_commands" type="str | list[str]" description="Dockerfile lines to append after `⟦T182⟧` (strings or nested lists)." />
+<Parameter name="*dockerfile_commands" type="str | list[str]" description="Dockerfile lines to append after `⟦T185⟧` (strings or nested lists)." />
 <Parameter name="context_files" type="dict[str, str]" defaultValue="&#123;&#125;" description="Map of container paths to local files to include in the build context." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
 <Parameter name="context_dir" type="Path | str | None" defaultValue="None" description="Root directory for resolving relative COPY paths in implicit context mounts." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="ignore" type="Sequence[str] | Callable[[Path], bool]" defaultValue="AUTO_DOCKERIGNORE" description="Ignore rules for the implicit context mount (defaults to auto `⟦T183⟧` behavior)." />
-<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile `⟦T184⟧` values forwarded to the build." />
+<Parameter name="ignore" type="Sequence[str] | Callable[[Path], bool]" defaultValue="AUTO_DOCKERIGNORE" description="Ignore rules for the implicit context mount (defaults to auto `⟦T186⟧` behavior)." />
+<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile `⟦T187⟧` values forwarded to the build." />
 
 **退货**
 
@@ -602,7 +602,7 @@ entrypoint(self, entrypoint_commands)
 
 **参数**
 
-<Parameter name="entrypoint_commands" type="list[str]" description="argv tokens for the `⟦T186⟧` JSON array form." />
+<Parameter name="entrypoint_commands" type="list[str]" description="argv tokens for the `⟦T189⟧` JSON array form." />
 
 **退货**
 应用了入口点 Dockerfile 指令的新 `Image`。
@@ -617,7 +617,7 @@ shell(self, shell_commands)
 
 **参数**
 
-<Parameter name="shell_commands" type="list[str]" description="argv tokens for the `⟦T188⟧` JSON array form." />
+<Parameter name="shell_commands" type="list[str]" description="argv tokens for the `⟦T191⟧` JSON array form." />
 
 **退货**
 
@@ -634,7 +634,7 @@ run_commands(self, *commands, env=None, secrets=None, volumes=None, gpu=None,
 
 **参数**
 
-<Parameter name="*commands" type="str | list[str]" description="Shell commands to run as separate `⟦T190⟧` lines (strings or nested lists)." />
+<Parameter name="*commands" type="str | list[str]" description="Shell commands to run as separate `⟦T193⟧` lines (strings or nested lists)." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="volumes" type="dict[str | PurePosixPath, _Volume] | None" defaultValue="None" description="Modal volumes to attach during the build step." />
@@ -671,9 +671,9 @@ micromamba_install(self, *packages, spec_file=None, channels=[],
 
 **参数**
 
-<Parameter name="*packages" type="str | list[str]" description="Conda packages to install, e.g. `⟦T193⟧` or version constraints." />
-<Parameter name="spec_file" type="str | None" defaultValue="None" description="Optional local path to a conda spec file to pass with `⟦T194⟧`." />
-<Parameter name="channels" type="list[str]" defaultValue="[]" description="Conda channels to pass with repeated `⟦T195⟧` flags." />
+<Parameter name="*packages" type="str | list[str]" description="Conda packages to install, e.g. `⟦T196⟧` or version constraints." />
+<Parameter name="spec_file" type="str | None" defaultValue="None" description="Optional local path to a conda spec file to pass with `⟦T197⟧`." />
+<Parameter name="channels" type="list[str]" defaultValue="[]" description="Conda channels to pass with repeated `⟦T198⟧` flags." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
@@ -692,11 +692,11 @@ from_registry(tag, secret=None, *, setup_dockerfile_commands=[],
 
 从公共或私有映像注册表（例如 Docker Hub）构建模态映像。
 
-镜像必须是为`linux/amd64`平台构建的。
+镜像必须是针对`linux/amd64`平台构建的。
 
-如果你的镜像没有安装Python，你可以使用`add_python`参数
+如果您的镜像未安装Python，您可以使用 `add_python` 参数
 指定要添加到图像的 Python 版本。否则，图像预计会
-PATH 上的 Python 为 `python`，以及 `pip`。
+在 PATH 上有 Python 作为 `python` 以及 `pip`。
 
 您还可以在执行之前使用 `setup_dockerfile_commands` 运行 Dockerfile 命令
 其余命令运行。如果您想要自定义 Python 安装或
@@ -711,8 +711,8 @@ PATH 上的 Python 为 `python`，以及 `pip`。
 
 **参数**
 
-<Parameter name="tag" type="str" description="Registry image reference (e.g. `⟦T210⟧`)." /><Parameter name="secret" type="_Secret | None" defaultValue="None" description="Optional secret for static registry credentials." />
-<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T211⟧` during base setup." />
+<Parameter name="tag" type="str" description="Registry image reference (e.g. `⟦T213⟧`)." /><Parameter name="secret" type="_Secret | None" defaultValue="None" description="Optional secret for static registry credentials." />
+<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T214⟧` during base setup." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
 <Parameter name="**kwargs" type="" description="Additional arguments forwarded to the internal image constructor (e.g. registry config)." />
@@ -755,11 +755,11 @@ from_gcp_artifact_registry(tag, secret=None, *, setup_dockerfile_commands=[],
 **参数**
 
 <Parameter name="tag" type="str" description="Full GCP Artifact Registry image reference." />
-<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Secret containing `⟦T219⟧` for registry authentication." />
-<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T220⟧` during base setup." />
+<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Secret containing `⟦T222⟧` for registry authentication." />
+<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T223⟧` during base setup." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
-<Parameter name="**kwargs" type="" description="Additional arguments forwarded to ⟦T221⟧." />
+<Parameter name="**kwargs" type="" description="Additional arguments forwarded to ⟦T224⟧." />
 
 **退货**
 
@@ -790,7 +790,7 @@ from_aws_ecr(tag, secret=None, *, setup_dockerfile_commands=[],
 
 对于 IAM 用户身份验证，设置 `AWS_ACCESS_KEY_ID`、`AWS_SECRET_ACCESS_KEY` 和 `AWS_REGION`。
 
-对于 OIDC 身份验证，请设置 `AWS_ROLE_ARN` 和 `AWS_REGION`。
+对于OIDC身份验证，设置`AWS_ROLE_ARN`和`AWS_REGION`。
 
 IAM 配置详细信息可以在 AWS 文档中找到：
 [“私有存储库策略”](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html)。
@@ -803,10 +803,10 @@ IAM 配置详细信息可以在 AWS 文档中找到：
 
 <Parameter name="tag" type="str" description="Full ECR image URI." />
 <Parameter name="secret" type="_Secret | None" defaultValue="None" description="Secret with IAM or OIDC credentials for ECR." />
-<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T230⟧` during base setup." />
+<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after `⟦T233⟧` during base setup." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
-<Parameter name="**kwargs" type="" description="Additional arguments forwarded to ⟦T231⟧." />
+<Parameter name="**kwargs" type="" description="Additional arguments forwarded to ⟦T234⟧." />
 
 **退货**
 
@@ -846,8 +846,8 @@ from_dockerfile(path, *, force_build=False, context_dir=None, env=None,
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
 <Parameter name="add_python" type="str | None" defaultValue="None" description="Standalone Python version to add when the Dockerfile does not install Python." />
-<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile `⟦T234⟧` values forwarded to the build." />
-<Parameter name="ignore" type="Sequence[str] | Callable[[Path], bool]" defaultValue="AUTO_DOCKERIGNORE" description="Ignore rules for the implicit context mount (defaults to auto `⟦T235⟧` behavior)." />
+<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile `⟦T237⟧` values forwarded to the build." />
+<Parameter name="ignore" type="Sequence[str] | Callable[[Path], bool]" defaultValue="AUTO_DOCKERIGNORE" description="Ignore rules for the implicit context mount (defaults to auto `⟦T238⟧` behavior)." />
 
 **退货**
 
@@ -953,7 +953,7 @@ apt_install(self, *packages, force_build=False, env=None, secrets=None,
 
 **参数**
 
-<Parameter name="*packages" type="str | list[str]" description="Apt package names to install, e.g. `⟦T245⟧⟦T246⟧⟦T247⟧`." />
+<Parameter name="*packages" type="str | list[str]" description="Apt package names to install, e.g. `⟦T248⟧⟦T249⟧⟦T250⟧`." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
@@ -1152,8 +1152,8 @@ from_name(name, *, environment_name=None, client=None)
 ```
 
 引用之前使用 `.publish()` 发布的命名图像。
-名称可以包含可选的 `:tag` 部分 - 如果不包含标签部分，则使用 `":latest"`，
-匹配 Docker 约定。
+名称可以包含可选的 `:tag` 部分。如果不包含标签部分，则使用`":latest"`，匹配
+Docker 约定。
 
 ```python notest
 image = modal.Image.from_name("my-image")     # references my-image:latest
@@ -1167,14 +1167,15 @@ def run():
 ## 发布
 
 ```python
-publish(self, name, *, environment_name=None, client=None)
+publish(self, name, *, environment_name=None, experimental_options=None,
+    client=None)
 ```
 
 以指定名称发布此图像
 
 图像必须已创建（通常通过调用`image.build()`或`sandbox.snapshot_filesystem()`）。
 
-图像名称可以包含明确的标签名称（使用`name:tag`）。如果名称中不包含标签，
+图像名称可以包含使用 `name:tag` 的显式标签指定。如果名称中不包含标签，
 使用`":latest"`，匹配 Docker 约定。要发布多个标签，请为每个标签调用一次`.publish()`。
 
 ```python notest
@@ -1183,3 +1184,44 @@ image.build(app)
 image.publish("my-image-with-numpy")     # my-image-with-numpy:latest
 image.publish("my-image-with-numpy:v1")
 ```
+
+## 日志
+
+```python
+logs: ImageLogsManager
+```
+
+`Image` 的访问日志。
+
+使用[`fetch()`](#logsfetch)
+读取各个构建层的日志和 [`tail()`](#logstail)
+读取最新的日志。
+
+**另见**
+
+* [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
+  CLI 访问应用程序的日志。
+
+### 日志.fetch
+
+```python
+fetch(self, layers=1)
+```
+
+获取最新镜像构建步骤的日志。
+
+**参数**
+
+<Parameter name="layers" type="int | None" defaultValue="1" description="The number of build layers to fetch, counting backward from the final Image. If None, logs are fetched for all build steps." />
+
+### 日志.tail
+
+```python
+tail(self, entries=100)
+```
+
+获取最新的图像日志。
+
+**参数**
+
+<Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />

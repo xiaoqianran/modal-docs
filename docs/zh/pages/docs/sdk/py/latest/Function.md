@@ -142,7 +142,12 @@ update_autoscaler(self, *, min_containers=None, max_containers=None,
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running." />
 <Parameter name="max_containers" type="int | None" defaultValue="None" description="Maximum concurrent containers." />
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to keep warm beyond current demand." />
-<Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />**使用**
+<Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />**退货**
+
+包含当前自动缩放器设置的`FunctionAutoscalerSettings`数据类
+调用后此函数的。
+
+**使用**
 
 ```python notest
 f = modal.Function.from_name("my-app", "function")
@@ -166,20 +171,20 @@ from_name(cls, app_name, name, *, version=None, environment_name=None,
 
 通过名称引用已部署应用程序中的函数。
 
-这是一种延迟对局部进行补水的惰性方法
+这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
 **参数**
 
 <Parameter name="app_name" type="str" description="Name of the deployed App." />
-<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T45⟧ instead." />
+<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T46⟧ instead." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Environment to look up the App in; defaults to the active environment." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T46⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T47⟧ when omitted." />
 
 **退货**
 
-懒惰的`Function`手柄。
+懒惰的 `Function` 手柄。
 
 **使用**
 
@@ -202,7 +207,6 @@ get_web_url(self)
 用于通过 HTTP 寻址 Web 功能的 URL。
 
 **退货**
-
 Web 端点的 HTTPS URL，如果此函数不是 Web 端点，则为 `None`。
 
 ## 带有\_选项
@@ -213,6 +217,7 @@ with_options(self, *, cpu=None, memory=None, gpu=None, env=None, secrets=None,
     scaledown_window=None, timeout=None, region=None, cloud=None,
     routing_region=None)
 ```
+
 使用特定于调用的值动态覆盖静态函数配置。
 
 此方法返回一个具有动态配置的新 Function 实例。的调用
@@ -261,6 +266,7 @@ with_concurrency(self, *, max_inputs, target_inputs=None)
 ```python
 with_batching(self, *, max_batch_size, wait_ms)
 ```
+
 使用特定于调用的动态批处理覆盖静态函数配置。
 
 返回一个新的 Function 实例，该实例被动态配置为像 Function 一样使用
@@ -318,7 +324,6 @@ local(self, *args, **kwargs)
 <Parameter name="**kwargs" type="P.kwargs" description="Keyword arguments passed to the underlying Python callable." />
 
 **退货**
-
 本地调用（或异步函数的协程）的返回值。
 
 ## 生成
@@ -326,6 +331,7 @@ local(self, *args, **kwargs)
 ```python
 spawn(self, *args, **kwargs)
 ```
+
 使用给定参数调用函数，而不等待结果。
 
 概念上类似于 `multiprocessing.pool.apply_async`，或其他上下文中的未来/承诺。
@@ -357,11 +363,11 @@ get_raw_f(self)
 
 ```python
 get_current_stats(self)
-```
+```返回一个 `FunctionStats` 对象，描述当前函数的队列和运行程序计数。
 
-返回一个 `FunctionStats` 对象，描述当前函数的队列和运行程序计数。
+**退货**
 
-**退货**积压、运行者和运行输入的快照计数。
+积压、运行者和运行输入的快照计数。
 
 ## 地图
 
@@ -413,13 +419,13 @@ def my_func(a):
 def main():
     print(list(my_func.map(range(3), return_exceptions=True)))
 ```
-
 ## 星图
 
 ```python
 starmap(self, input_iterator, *, kwargs={}, order_outputs=True,
     return_exceptions=False, wrap_returned_exceptions=None)
 ```
+
 与 `map` 类似，但每个输入项都被解包为多个位置参数。
 
 `input_iterator` 的每个元素应该是一个序列（例如元组），长度等于

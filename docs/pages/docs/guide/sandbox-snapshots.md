@@ -136,8 +136,6 @@ See [Snapshot Retention](#snapshot-retention) for TTL configuration options and 
 
 ## Directory Snapshots
 
-<Callout variant="beta" />
-
 Directory Snapshots allow you to snapshot a specific directory within a running Sandbox. The resulting snapshot is an Image that can then be mounted into another already-running Sandbox (typically at a later time), which can be useful for:
 
 * **Updating system dependencies separately from application code**: Base dependencies can be updated by starting a new Sandbox from an updated base Image, and then mounting in previously snapshotted application code.

@@ -152,12 +152,17 @@ update_autoscaler(self, *, target_concurrency=None, min_containers=None,
 
 **参数**
 
-<Parameter name="target_concurrency" type="int | None" defaultValue="None" description="Target number of concurrent requests per container." />
+<Parameter name="target_concurrency" type="float | None" defaultValue="None" description="Target number of concurrent requests per container. May be fractional, e.g. 1.5 to target three concurrent requests per two containers." />
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running regardless of demand." />
 <Parameter name="max_containers" type="int | None" defaultValue="None" description="Limit on the number of containers that can be concurrently running." />
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to scale up beyond current demand." />
 <Parameter name="scaleup_window" type="int | None" defaultValue="None" description="Seconds of sustained demand required before scaling up new containers." />
 <Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />
+
+**退货**
+
+一个`ServerAutoscalerSettings`数据类，包含当前的自动缩放器设置
+调用后此服务器。
 
 **使用**
 
@@ -175,6 +180,9 @@ server.update_autoscaler(scaleup_window=30)
 
 # Adjust Server autoscaling to target 20 concurrent requests per replica
 server.update_autoscaler(target_concurrency=20)
+
+# Target three concurrent requests for every two containers
+server.update_autoscaler(target_concurrency=1.5)
 
 # Disable the Server autoscaling by setting target_concurrency to 0
 server.update_autoscaler(target_concurrency=0)
@@ -200,6 +208,6 @@ from_name(cls, app_name, name, *, environment_name=None, client=None)
 
 通过名称从已部署的应用程序引用服务器。
 
-这是一种延迟对局部进行补水的惰性方法
+这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。

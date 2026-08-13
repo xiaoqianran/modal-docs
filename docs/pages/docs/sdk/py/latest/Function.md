@@ -145,6 +145,11 @@ its static configuration.
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to keep warm beyond current demand." />
 <Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />
 
+**Returns**
+
+A `FunctionAutoscalerSettings` dataclass which contains the current autoscaler settings
+of this Function after the call.
+
 **Usage**
 
 ```python notest

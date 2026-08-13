@@ -102,12 +102,10 @@ recursively, including all subdirectories.
 
 Examples:
 
-````
 ```
 modal volume get <volume_name> logs/april-12-1.txt
 modal volume get <volume_name> / volume_data_dump
 ```
-````
 
 Use "-" as LOCAL\_DESTINATION to write file contents to standard output.
 

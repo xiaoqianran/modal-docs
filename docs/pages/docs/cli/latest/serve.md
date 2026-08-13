@@ -4,11 +4,9 @@ Expose Web Functions with hot-reloading on code changes.
 
 Examples:
 
-````
 ```
 modal serve hello_world.py
 ```
-````
 
 Modal-generated URLs will have a `-dev` suffix appended to them when running with `modal serve`.
 To customize this suffix (i.e., to avoid collisions with other users in your workspace who are

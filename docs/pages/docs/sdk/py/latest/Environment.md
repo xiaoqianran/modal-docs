@@ -35,7 +35,7 @@ Namespace with methods for managing Environment objects.
 ### objects.create
 
 ```python
-create(self, name, *, restricted=False, client=None)
+create(self, name, *, restricted=False, experimental_options=None, client=None)
 ```
 
 Create a new Environment.

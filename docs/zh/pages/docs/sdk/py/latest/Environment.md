@@ -37,7 +37,7 @@ objects: EnvironmentManager
 ### 对象.create
 
 ```python
-create(self, name, *, restricted=False, client=None)
+create(self, name, *, restricted=False, experimental_options=None, client=None)
 ```
 
 创建一个新环境。

@@ -23,7 +23,8 @@ hydrate(self, client=None)
 
 将本地对象与其在 Modal 服务器上的标识同步。
 
-很少需要显式调用此方法，因为大多数操作需要时会懒洋洋地补充水分。主要用例是当您需要时
+很少需要显式调用此方法，因为大多数操作
+需要时会懒洋洋地补充水分。主要用例是当您需要时
 访问对象元数据，例如其 ID。
 
 *在 v0.72.39 中添加*：此方法取代了已弃用的 `.resolve()` 方法。
@@ -46,23 +47,25 @@ logs: FunctionCallLogsManager
 * [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
   CLI 访问应用程序的日志。
 
-### 日志.fetch
+### 日志.stream
 
 ```python
-fetch(self, *, since=None, until=None, source=None, search_text="")
+stream(self, timeout=None)
 ```
 
-获取与日期范围和过滤器相对应的所有关联日志。
+流式传输新的 FunctionCall 日志，直到达到超时。
+超时指定终止流之前日志条目之间等待的秒数。
+当观察到 FunctionCall 完成时，此方法将停止，
+或者达到超时时。尽最大努力进行完成检查；如果完成
+无法确定，流将继续，直到达到超时。
 
 **参数**
 
-<Parameter name="since" type="datetime | None" defaultValue="None" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time. By default, this will fetch logs from the start of the function call." />
-<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
-<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
-<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
+<Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
 
 **产量**
-`LogEntry` 按时间顺序排列的对象。
+
+`LogEntry` 物体到达时。
 
 **使用**
 
@@ -70,8 +73,8 @@ fetch(self, *, since=None, until=None, source=None, search_text="")
 function = modal.Function.from_name("my-app", "train")
 call = function.spawn()
 
-for entry in call.logs.fetch():
-    print(entry.timestamp, entry.message, end="")
+for entry in call.logs.stream():
+    print(entry.message, end="")
 ```
 
 ### 日志.tail
@@ -99,26 +102,24 @@ call = function.spawn()
 
 for entry in call.logs.tail(entries=10):
     print(entry.timestamp, entry.message, end="")
-```
-
-### 日志.stream
+```### 日志.fetch
 
 ```python
-stream(self, timeout=None)
+fetch(self, *, since=None, until=None, source=None, search_text="")
 ```
 
-流式传输新的 FunctionCall 日志，直到达到超时。
-超时指定终止流之前日志条目之间等待的秒数。
-当观察到 FunctionCall 已完成时，此方法将停止，
-或者达到超时时。尽最大努力进行完成检查；如果完成无法确定，流将继续，直到达到超时。
+获取与日期范围和过滤器相对应的所有关联日志。
 
 **参数**
 
-<Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
+<Parameter name="since" type="datetime | None" defaultValue="None" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time. By default, this will fetch logs from the start of the function call." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
 
 **产量**
 
-`LogEntry` 物体到达时。
+`LogEntry` 按时间顺序排列的对象。
 
 **使用**
 
@@ -126,8 +127,8 @@ stream(self, timeout=None)
 function = modal.Function.from_name("my-app", "train")
 call = function.spawn()
 
-for entry in call.logs.stream():
-    print(entry.message, end="")
+for entry in call.logs.fetch():
+    print(entry.timestamp, entry.message, end="")
 ```
 
 ## num\_inputs
@@ -152,7 +153,6 @@ get(self, timeout=None, *, index=0)
 
 `.spawn()` 调用只有一个输出，因此仅指定 `index=0` 才有效。
 当您的函数有多个输出（例如通过 `.spawn_map()`）时，非零索引非常有用。
-
 该函数默认无限期等待。它需要一个可选的
 `timeout` 参数，指定等待的最大秒数，
 可以设置为 `0` 以立即轮询输出。
@@ -185,9 +185,7 @@ iter(self, *, start=0, end=None)
 <Parameter name="start" type="int" defaultValue="0" description="First input index to include (inclusive)." />
 <Parameter name="end" type="int | None" defaultValue="None" description="One past the last index to include, or ⟦T41⟧ for all remaining inputs." />
 
-**产量**
-
-每个结果值均按索引顺序排列。
+**产量**每个结果值均按索引顺序排列。
 
 **使用**
 
@@ -204,7 +202,9 @@ def main():
     assert list(fc.iter(start=1, end=3)) == [4, 9]
 ```
 
-## 获取\_call\_graph```python
+## 获取\_call\_graph
+
+```python
 get_call_graph(self)
 ```
 
@@ -237,8 +237,8 @@ cancel(self, terminate_containers=False)
 ```python
 from_id(cls, function_call_id, client=None)
 ```
-
 从现有 ID 实例化 FunctionCall 对象。
+
 注意，此方法只需重新实例化`FunctionCall`即可
 如果您不再有权访问从 `Function.spawn` 返回的原始对象。
 
