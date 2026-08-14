@@ -782,9 +782,9 @@
       "bytes": 2934
     },
     "docs/guide/sandbox-files.md": {
-      "hash": "d5e03f068a0963e07a0370b93d44d4a485505ce5",
-      "translatedAt": "2026-08-11T07:18:51.767Z",
-      "bytes": 13149
+      "hash": "7d090bf6a4806c6fdcb4961b775baa1bd6412eab",
+      "translatedAt": "2026-08-14T07:42:10.692Z",
+      "bytes": 13237
     },
     "docs/guide/sandbox-resources.md": {
       "hash": "8f3f8e3af13569eebd911e55c877fe80945b2b7c",
@@ -1477,10 +1477,10 @@
       "bytes": 8657
     }
   },
-  "updatedAt": "2026-08-13T07:46:10.934Z",
+  "updatedAt": "2026-08-14T07:42:10.692Z",
   "stats": {
-    "translated": 21,
-    "skipped": 274,
+    "translated": 1,
+    "skipped": 294,
     "failed": 0,
     "total": 295
   }

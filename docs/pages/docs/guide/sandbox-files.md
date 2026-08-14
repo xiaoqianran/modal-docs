@@ -5,12 +5,6 @@ from outside the Sandbox.
 
 ## Filesystem API
 
-<Callout variant="beta">
-
-This API brings significant reliability improvements compared to the previous Sandbox filesystem API, which was available in releases prior to v1.4.0 and is now deprecated.
-
-</Callout>
-
 The most convenient way to pass data in and out of the Sandbox during
 execution is to use our filesystem API:
 
@@ -284,6 +278,12 @@ These APIs may be used to read files of up to 5GB and write files of any size.
 
 However, if you have a large dataset that you want to use repeatedly from many sandboxes,
 consider [using Volumes](#using-volumes).
+
+<Callout variant="info">
+
+Sandbox filesystem access was previously exposed through methods on the `Sandbox` and a `FileIO` object. This API is now deprecated; consult our [migration guide](/docs/guide/migrate-sandbox-filesystem) to update any code still using the legacy API.
+
+</Callout>
 
 ## Using Volumes
 

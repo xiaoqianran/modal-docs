@@ -7,12 +7,6 @@
 
 ## 文件系统API
 
-<Callout variant="beta">
-
-与之前的 Sandbox 文件系统 API 相比，此 API 带来了显着的可靠性改进，后者在 v1.4.0 之前的版本中可用，现已弃用。
-
-</Callout>
-
 在沙箱中传入和传出数据的最便捷方式
 执行是使用我们的文件系统API：
 
@@ -97,7 +91,9 @@ func main() {
 }
 ```
 
-{/片段} </CodeTabs>它具有方便的 API，用于双向流式传输文件副本：
+{/片段} </CodeTabs>
+
+它具有方便的 API，用于双向流式传输文件副本：
 
 <CodeTabs>
   {#snippet python()}
@@ -285,9 +281,15 @@ fs.Remove(ctx, "/tmp/project", &modal.SandboxFilesystemRemoveParams{Recursive: t
 但是，如果您有一个大型数据集，想要从多个沙箱中重复使用，
 考虑[使用卷](#using-volumes)。
 
+<Callout variant="info">
+沙盒文件系统访问之前是通过 `Sandbox` 和 `FileIO` 对象上的方法公开的。该 API 现已弃用；请参阅我们的[迁移指南](/docs/guide/migrate-sandbox-filesystem) 以更新仍使用旧版 API 的任何代码。
+
+</Callout>
+
 ## 使用体积
+
 可以使用模态 [Volume](/docs/sdk/py/latest/Volume) 或
-带有沙盒的 [CloudBucketMount](/docs/guide/cloud-bucket-mounts)。
+带有沙箱的 [CloudBucketMount](/docs/guide/cloud-bucket-mounts)。
 
 Volumes 和 CloudBucketMounts 允许您上传一次数据并访问该数据
 从许多沙箱中有效地获取数据。
@@ -323,7 +325,6 @@ for data in vol.read_file("a.txt"):
 沙盒终止。使用 Volumes v2，您还可以在任何时候显式提交（请参阅
 [使用 `sync` 提交卷更改](#committing-volume-changes-with-sync-v2-only)
 如下）。对于 CloudBucketMounts，文件会自动同步。
-
 您需要通过调用沙箱对象上的 [.reload\_volumes()](/docs/sdk/py/latest/Sandbox#reload_volumes) 方法显式重新加载卷以查看自首次安装以来所做的更改。
 
 ###挂载子目录
@@ -413,7 +414,7 @@ p.Wait(ctx)
 ### 使用 `sync` 提交卷更改（仅限 v2）
 
 对于 [Volumes v2](/docs/guide/volumes#volumes-v2-overview)，您可以明确
-通过运行 `sync` 在沙盒执行期间随时提交更改
+通过运行 `sync` 在沙箱执行期间随时提交更改
 挂载点上的命令。这会将所有数据和元数据更改保存到
 无需等待沙盒终止即可存储卷：
 
@@ -446,6 +447,7 @@ sb.detach()
 在某些情况下，您可能需要[将文件添加到图像本身](/docs/guide/images#add-local-files-with-add_local_dir-and-add_local_file)。
 如果该文件将被许多沙箱使用，或者如果您
 想要从沙盒的入口点命令访问该文件。
+
 这可以使用以下方法完成
 [`add_local_file`](/docs/sdk/py/latest/Image#add_local_file) 和
 [`add_local_dir`](/docs/sdk/py/latest/Image#add_local_dir) 上的方法
