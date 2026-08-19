@@ -244,3 +244,12 @@ standard Modal compute rates. Because endpoints scale to zero by default, you
 pay nothing for compute while idle. You can adjust the autoscaling configuration
 overrides in the UI. Region pinning applies a
 [region selection multiplier](https://modal.com/pricing).
+
+## Where credits can be used
+
+Starting **September 1st, 2026**, credits can no longer be used to pay for
+Shared Endpoint usage. Usage on all other Endpoints bill for compute as usual
+and can still be paid with credits.
+
+To cap out-of-pocket charges after this change, see
+[spend limits](/docs/guide/budgets#spend-limits).

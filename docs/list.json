@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-18T06:55:00.813Z",
+  "fetchedAt": "2026-08-19T06:55:14.641Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 294,
   "ok": 294,
@@ -586,7 +586,7 @@
       "source": "https://modal.com/docs/examples/miscellaneous",
       "finalUrl": "https://modal.com/docs/examples/miscellaneous.md",
       "path": "docs/examples/miscellaneous.md",
-      "bytes": 1658,
+      "bytes": 1670,
       "stub": false
     },
     {
@@ -802,7 +802,7 @@
       "source": "https://modal.com/docs/guide/budgets.md",
       "finalUrl": "https://modal.com/docs/guide/budgets.md",
       "path": "docs/guide/budgets.md",
-      "bytes": 2404,
+      "bytes": 3384,
       "stub": false
     },
     {
@@ -938,7 +938,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 7797,
+      "bytes": 8120,
       "stub": false
     },
     {
@@ -1074,7 +1074,7 @@
       "source": "https://modal.com/docs/guide/memory-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/memory-snapshots.md",
       "path": "docs/guide/memory-snapshots.md",
-      "bytes": 13945,
+      "bytes": 13935,
       "stub": false
     },
     {
@@ -1202,7 +1202,7 @@
       "source": "https://modal.com/docs/guide/rbac.md",
       "finalUrl": "https://modal.com/docs/guide/rbac.md",
       "path": "docs/guide/rbac.md",
-      "bytes": 13965,
+      "bytes": 14995,
       "stub": false
     },
     {

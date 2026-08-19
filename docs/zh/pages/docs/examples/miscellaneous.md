@@ -22,7 +22,7 @@
 * [运行OpenAI的gpt-oss模型](/docs/examples/gpt_oss_inference)
 * [运行OpenCV检测人脸](/docs/examples/count_faces)
 * [运行 SAM 2 视频分割模型](/docs/examples/segment_anything)
-* [运行文本嵌入推理 (TEI)](/docs/examples/text_embeddings_inference)
+* [使用 Modal 服务器提供 Liquid AI 嵌入服务](/docs/examples/liquidai_embeddings_server)
 * [以最大吞吐量服务 TensorRT-LLM](/docs/examples/trtllm_throughput)
 
 您可以在 [`modal-examples` GitHub 存储库](https://github.com/modal-labs/modal-examples) 上找到更多示例

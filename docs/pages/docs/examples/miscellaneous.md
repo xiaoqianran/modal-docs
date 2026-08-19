@@ -20,7 +20,7 @@ There's a guide for that:
 * [Run OpenAI's gpt-oss model](/docs/examples/gpt_oss_inference)
 * [Run OpenCV to detect faces](/docs/examples/count_faces)
 * [Run SAM 2 video segmentation model](/docs/examples/segment_anything)
-* [Run Text Embedding Inference (TEI)](/docs/examples/text_embeddings_inference)
+* [Serve Liquid AI embeddings with Modal Servers](/docs/examples/liquidai_embeddings_server)
 * [Serve TensorRT-LLM at maximum throughput](/docs/examples/trtllm_throughput)
 
 You can find even more examples on the [`modal-examples` GitHub repository](https://github.com/modal-labs/modal-examples)

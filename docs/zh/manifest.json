@@ -357,9 +357,9 @@
       "bytes": 7882
     },
     "docs/examples/miscellaneous.md": {
-      "hash": "31171cf2decb70eaaffd7f25a3d3009ee32d714a",
-      "translatedAt": "2026-08-08T18:28:31.673Z",
-      "bytes": 1619
+      "hash": "779777d1bd67e2f181e82f18410044c2cf67afd3",
+      "translatedAt": "2026-08-19T06:55:15.453Z",
+      "bytes": 1641
     },
     "docs/examples/modal_tailscale.md": {
       "hash": "d2144062b263247b0bad630108cceb322320aeb6",
@@ -492,9 +492,9 @@
       "bytes": 4911
     },
     "docs/guide/budgets.md": {
-      "hash": "da9c0a1a585b70f178ea853d60b710ba689e4227",
-      "translatedAt": "2026-08-08T18:28:56.645Z",
-      "bytes": 2233
+      "hash": "01b4895c8fa1402d258c67ab4b98b5662aa7329f",
+      "translatedAt": "2026-08-19T06:55:16.472Z",
+      "bytes": 3203
     },
     "docs/guide/billing.md": {
       "hash": "9a4d3231aca49544b7efce10d135464cc4ccd144",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "4d95dd5e5474977af9c4675cfc56c3df941bb533",
-      "translatedAt": "2026-08-08T18:29:14.863Z",
-      "bytes": 7633
+      "hash": "5673cbb8fd7681523c430dec7f941c545f5118f4",
+      "translatedAt": "2026-08-19T06:55:18.818Z",
+      "bytes": 7940
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -677,9 +677,9 @@
       "bytes": 1083
     },
     "docs/guide/memory-snapshots.md": {
-      "hash": "43fa21474dc8db472036c5021a716456052c1702",
-      "translatedAt": "2026-08-08T18:29:29.647Z",
-      "bytes": 12869
+      "hash": "5b17dcd02cabe231dc95ef4786e3b1c180a1cdf0",
+      "translatedAt": "2026-08-19T06:55:21.576Z",
+      "bytes": 12856
     },
     "docs/guide/model-weights.md": {
       "hash": "b902e73f6ca0c8128056ad71d2c38d02df404e28",
@@ -792,9 +792,9 @@
       "bytes": 4278
     },
     "docs/guide/rbac.md": {
-      "hash": "d57c5342dd15367a0ce09795c607be0a477e9e6f",
-      "translatedAt": "2026-08-08T18:29:47.932Z",
-      "bytes": 11171
+      "hash": "2b5fef0234da08d4f11dd24bc676fe0fadf981ad",
+      "translatedAt": "2026-08-19T06:55:28.002Z",
+      "bytes": 12063
     },
     "docs/guide/sandbox-spawn.md": {
       "hash": "9f8363b13ca21589a166dfa7878364e7702083c4",
@@ -1477,10 +1477,10 @@
       "bytes": 8657
     }
   },
-  "updatedAt": "2026-08-18T06:55:36.244Z",
+  "updatedAt": "2026-08-19T06:55:28.002Z",
   "stats": {
-    "translated": 1,
-    "skipped": 294,
+    "translated": 5,
+    "skipped": 290,
     "failed": 0,
     "total": 295
   }

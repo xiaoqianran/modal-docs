@@ -47,7 +47,7 @@ modal endpoint create --model Qwen/Qwen3.5-4B
 ```
 
 Modal 解析模型，选择兼容的配方，然后开始配置。
-该命令打印端点 ID 和仪表板链接，您可以在其中观看它
+该命令会打印端点 ID 和仪表板链接，您可以在其中观看它
 上线。您还可以从以下位置创建端点
 仪表板中的 [**Endpoints**](https://modal.com/endpoints) 选项卡 — 表单
 收集相同的选项。
@@ -104,7 +104,7 @@ Modal-Secret: ws-...
 
 ## 调用您的端点
 
-端点上线后，它会在以下位置为 OpenAI Chat Completions API 提供服务：
+端点上线后，它会在以下位置提供 OpenAI Chat Completions API：
 端点 URL — 在仪表板中或使用 `modal endpoint list` 找到它。应用程序编程接口
 在 `/v1` 下提供服务，要传递的模型名称是基本模型存储库 ID（对于
 目录和卷模型）或您的自定义 Hugging Face 存储库 ID。
@@ -152,7 +152,7 @@ client.chat.completions.create(
 )
 ```
 
-请参阅[端点集成](/docs/guide/endpoint-integrations) 以进行连接
+请参阅[端点集成](/docs/guide/endpoint-integrations)进行连接
 编码代理（例如 OpenCode 和 Codex）到共享端点。
 
 ## 提供自定义权重
@@ -189,7 +189,7 @@ modal endpoint create \
   `ca-central`、`eu-west` 或 `ap-south`。
 * **计算布局** (`--compute-region`, `--colocate-compute`) — 默认情况下，
   莫代尔按可用性放置容器。通过`--compute-region`选择
-  容器独立于请求路由运行。您可以重复
+  其中容器独立于请求路由运行。您可以重复
   允许在多个区域进行调度的选项。或者，通过
   `--colocate-compute` 使用路由区域。
 
@@ -243,3 +243,12 @@ Modal 端点是使用 Modal SDK 构建的，并利用我们的新功能
 空闲时无需支付任何计算费用。您可以调整自动缩放配置
 在 UI 中覆盖。区域固定应用
 [区域选择乘数](https://modal.com/pricing)。
+
+## 可以使用积分的地方
+
+从**2026 年 9 月 1 日**开始，积分不能再用于支付
+共享端点的使用。所有其他端点的使用情况照常进行计算
+并且仍然可以用积分支付。
+
+要限制此更改后的自付费用，请参阅
+[支出限制](/docs/guide/budgets#spend-limits)。
