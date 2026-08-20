@@ -1,8 +1,8 @@
-# Modal llms.txt
+# Modal Documentation
 
 > Modal is a platform for running AI workloads in the cloud with minimal
 > configuration. Key use cases include AI model training and inference,
-> high-performance batch jobs, and sandboxed code execution. It offers,
+> high-performance batch jobs, and sandboxed code execution. It offers
 > fast prototyping, serverless APIs, scheduled jobs, GPU inference,
 > distributed storage volumes, and highly scalable secure sandboxes.
 
@@ -25,6 +25,13 @@ The docs are organized into three main sections:
 ## Guide
 
 - [Introduction](https://modal.com/docs/guide)
+- Functions
+  - [Functions](https://modal.com/docs/guide/functions.md)
+  - [Invocation methods](https://modal.com/docs/guide/function-invocation-methods.md)
+  - [Function lookups](https://modal.com/docs/guide/trigger-deployed-functions.md)
+  - [Container lifecycle management](https://modal.com/docs/guide/lifecycle-functions.md)
+  - [Parametrized Functions](https://modal.com/docs/guide/parametrized-functions.md)
+  - [Dynamic configuration](https://modal.com/docs/guide/dynamic-function-config.md)
 - Custom container images
   - [Defining Images](https://modal.com/docs/guide/images.md)
   - [Using existing container images](https://modal.com/docs/guide/existing-images.md)
@@ -44,15 +51,14 @@ The docs are organized into three main sections:
 - Deployment
   - [Apps, Functions, and entrypoints](https://modal.com/docs/guide/apps.md)
   - [Managing deployments](https://modal.com/docs/guide/managing-deployments.md)
-  - [Invoking deployed functions](https://modal.com/docs/guide/trigger-deployed-functions.md)
   - [Continuous deployment](https://modal.com/docs/guide/continuous-deployment.md)
-  - [Running untrusted code in Functions](https://modal.com/docs/guide/restricted-access.md)
-- Modal Endpoints
+  - [Scheduled Functions](https://modal.com/docs/guide/cron.md)
+- Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Endpoint metrics](https://modal.com/docs/guide/endpoint-metrics.md)
   - [Benchmark an endpoint](https://modal.com/docs/guide/endpoint-benchmarks.md)
   - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
-- Modal Sandboxes
+- Sandboxes
   - [Sandboxes](https://modal.com/docs/guide/sandboxes.md)
   - [Running commands](https://modal.com/docs/guide/sandbox-spawn.md)
   - [Networking and security](https://modal.com/docs/guide/sandbox-networking.md)
@@ -60,11 +66,10 @@ The docs are organized into three main sections:
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [VM Sandboxes (Beta)](https://modal.com/docs/guide/vm-sandboxes.md)
-- [Modal Notebooks](https://modal.com/docs/guide/notebooks)
+- [Notebooks](https://modal.com/docs/guide/notebooks)
 - Secrets and environment variables
   - [Secrets](https://modal.com/docs/guide/secrets.md)
   - [Environment variables](https://modal.com/docs/guide/environment_variables.md)
-- [Scheduling and cron jobs](https://modal.com/docs/guide/cron)
 - HTTP Applications
   - [Servers](https://modal.com/docs/guide/servers.md)
   - [Web Functions](https://modal.com/docs/guide/webhooks.md)
@@ -116,6 +121,7 @@ The docs are organized into three main sections:
   - [Budgets](https://modal.com/docs/guide/budgets.md)
 - Other topics
   - [Feature maturity](https://modal.com/docs/guide/feature-maturity.md)
+  - [Restricted Functions](https://modal.com/docs/guide/restricted-access.md)
   - [JavaScript/Go SDKs (Beta)](https://modal.com/docs/guide/sdk-javascript-go.md)
   - [Modal 1.0 migration guide](https://modal.com/docs/guide/modal-1-0-migration.md)
   - [File and project structure](https://modal.com/docs/guide/project-structure.md)
@@ -124,9 +130,6 @@ The docs are organized into three main sections:
   - [Asynchronous API usage](https://modal.com/docs/guide/async.md)
   - [Global variables](https://modal.com/docs/guide/global-variables.md)
   - [Region selection](https://modal.com/docs/guide/region-selection.md)
-  - [Container lifecycle hooks](https://modal.com/docs/guide/lifecycle-functions.md)
-  - [Parametrized functions](https://modal.com/docs/guide/parametrized-functions.md)
-  - [Dynamic function configuration](https://modal.com/docs/guide/dynamic-function-config.md)
   - [S3 Gateway endpoints](https://modal.com/docs/guide/s3-gateway-endpoints.md)
   - [GPU Metrics](https://modal.com/docs/guide/gpu-metrics.md)
 
@@ -216,7 +219,7 @@ The docs are organized into three main sections:
 ## Reference
 
 - [Python SDK](https://modal.com/docs/sdk/py/latest/intro.md)
-  - [Changelog](https://modal.com/docs/sdk/py/changelog.md)
+  - [Python SDK Release Notes](https://modal.com/docs/sdk/py/releases.md)
   - [`App`](https://modal.com/docs/sdk/py/latest/App.md)
   - [`Client`](https://modal.com/docs/sdk/py/latest/Client.md)
   - [`CloudBucketMount`](https://modal.com/docs/sdk/py/latest/CloudBucketMount.md)
@@ -328,7 +331,7 @@ The docs are organized into three main sections:
   - [`ValidateExecArgs`](https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md)
   - [`Volume`](https://modal.com/docs/sdk/go/latest/Volume.md)
 - [CLI](https://modal.com/docs/cli/latest/intro.md)
-  - [Changelog](https://modal.com/docs/cli/changelog.md)
+  - [Python SDK Release Notes](https://modal.com/docs/sdk/py/releases.md)
   - [`modal app`](https://modal.com/docs/cli/latest/app.md)
   - [`modal billing`](https://modal.com/docs/cli/latest/billing.md)
   - [`modal bootstrap`](https://modal.com/docs/cli/latest/bootstrap.md)

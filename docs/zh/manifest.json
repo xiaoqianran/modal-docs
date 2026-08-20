@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "fd484ec349077d75e5d8db0b4a0bb467678a0985",
-      "translatedAt": "2026-08-08T18:27:36.742Z",
-      "bytes": 157
+      "hash": "980b6ee575859b34fc2f0f50a98f71dc13c76803",
+      "translatedAt": "2026-08-20T06:56:51.620Z",
+      "bytes": 23771
     },
     "docs/cli/latest/config.md": {
       "hash": "d4f18621f46b350780c5d5cc8d1526a5b9803b47",
@@ -812,9 +812,9 @@
       "bytes": 16160
     },
     "docs/guide/scale.md": {
-      "hash": "d1d72549b70759624a8cd7546a0caed44bf16403",
-      "translatedAt": "2026-08-08T18:29:53.350Z",
-      "bytes": 7015
+      "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
+      "translatedAt": "2026-08-20T06:56:57.499Z",
+      "bytes": 6798
     },
     "docs/guide/sdk-javascript-go.md": {
       "hash": "7af54e0f1a5378ac2a0866d12d75bd45598dcc21",
@@ -847,9 +847,9 @@
       "bytes": 2060
     },
     "docs/guide/servers.md": {
-      "hash": "bb273621f1cd365e46840757cc7d27f9e2916c61",
-      "translatedAt": "2026-08-08T18:30:02.157Z",
-      "bytes": 7843
+      "hash": "f0f10ca1160508483f6b36955ad7b2fec6a3cbd7",
+      "translatedAt": "2026-08-20T06:57:06.489Z",
+      "bytes": 7902
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -1475,13 +1475,28 @@
       "hash": "b0a32958011d46a3251d6ac485df079ef7ad094a",
       "translatedAt": "2026-08-13T07:46:10.934Z",
       "bytes": 8657
+    },
+    "docs/guide/function-invocation-methods.md": {
+      "hash": "71733471918e68c0584de211907560d93f2c455a",
+      "translatedAt": "2026-08-20T06:56:39.259Z",
+      "bytes": 8367
+    },
+    "docs/guide/functions.md": {
+      "hash": "193f4a3906ea5a87aba2c9e6434b97820c2d081e",
+      "translatedAt": "2026-08-20T06:56:56.445Z",
+      "bytes": 16617
+    },
+    "docs/sdk/py/releases.md": {
+      "hash": "5817b6cea7bff7710c832f9a3452db6b27c4e8ba",
+      "translatedAt": "2026-08-20T06:58:02.088Z",
+      "bytes": 58845
     }
   },
-  "updatedAt": "2026-08-19T06:55:28.002Z",
+  "updatedAt": "2026-08-20T06:58:02.088Z",
   "stats": {
-    "translated": 5,
-    "skipped": 290,
+    "translated": 6,
+    "skipped": 292,
     "failed": 0,
-    "total": 295
+    "total": 298
   }
 }

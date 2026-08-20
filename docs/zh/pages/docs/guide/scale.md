@@ -2,39 +2,38 @@
 
 # 横向扩展
 
-Modal 使得跨数千个容器扩展计算变得非常容易。
+Modal 可以轻松地跨数千个容器扩展计算。
 您不必担心您的应用程序会因病毒式传播或需要等待而崩溃
-批处理作业需要很长时间才能完成。
+a long time for your batch jobs to complete.
 
 在大多数情况下，扩展会自动发生，您不需要
 想想吧。但了解 Modal 的自动缩放器是如何工作的会很有帮助
 工作原理以及当您需要更精细的控制时如何控制其行为。
 
-## 自动缩放在 Modal 上如何工作？
+## How does autoscaling work on Modal?
 
 每个模态函数都对应一个自动缩放容器池。尺寸
-池的大小由 Modal 的自动缩放器管理。自动缩放器将启动新的
+of the pool is managed by Modal's autoscaler. The autoscaler will spin up new
 当没有容量可用于新输入时，容器会旋转
-当资源空闲时关闭容器。默认情况下，模态函数将
+down containers when resources are idling. By default, Modal Functions will
 当没有输入要处理时缩放为零。
 
 快速而频繁地做出自动缩放决策，以便您的批处理作业
 可以快速启动，您部署的应用程序可以响应任何突然的变化
 交通。
 
-## 配置自动缩放行为
+## Configuring autoscaling behavior
 
 Modal 公开了一些设置，允许您配置自动缩放器
 行为。这些设置可以传递到`@app.function`或`@app.cls`
 装饰器：
-
 * `max_containers`：特定功能的容器上限。
 * `min_containers`：应保温的最少容器数量，
-  即使该功能处于非活动状态。
+  even when the Function is inactive.
 * `buffer_containers`：函数运行时要维护的缓冲区大小
   活动的，这样额外的输入就不需要排队等待新容器。
 * `scaledown_window`：个体的最大持续时间（以秒为单位）
-  缩小规模时容器可以保持空闲状态。
+  containers can remain idle when scaling down.
 
 一般来说，这些设置允许您权衡成本和延迟。维护
 更大的热池或空闲缓冲区会增加成本，但会降低发生这种情况的可能性
@@ -45,7 +44,7 @@ Modal 公开了一些设置，允许您配置自动缩放器
 输入。请注意，容器可能不会在整个缩小窗口之前等待
 如果应用程序严重过度配置，则关闭。
 
-## 动态自动缩放器更新
+## Dynamic autoscaler updates
 
 还可以动态更新自动缩放器设置（即，无需重新部署
 应用程序）使用 [`Function.update_autoscaler()`](/docs/sdk/py/latest/Function#update_autoscaler)
@@ -56,7 +55,7 @@ f = modal.Function.from_name("my-app", "f")
 f.update_autoscaler(max_containers=100)
 ```
 自动定标器设置将恢复为函数中的配置
-下次部署应用程序时使用装饰器。或者它们可以被覆盖
+decorator the next time you deploy the App. Or they can be overridden by
 进一步动态更新：
 
 ```python notest
@@ -95,11 +94,11 @@ obj.update_autoscaler(buffer_containers=2)  # type: ignore
 对象将显示为您定义的类的实例，而不是
 模态包装类型。
 
-## 输入的并行执行
+## Parallel execution of inputs
 
 如果您的代码使用不同的独立函数重复运行相同的函数
 输入（例如，网格搜索），提高性能的最简单方法是运行
-使用 Modal 并行调用这些函数
+those function calls in parallel using Modal's
 [`Function.map()`](/docs/sdk/py/latest/Function#map) 方法。
 
 这是一个例子，如果我们有一个函数 `evaluate_model` 需要一个
@@ -194,20 +193,11 @@ results = map(evaluate_model, inputs)
 功能将远程执行。请参阅[异步指南](/docs/guide/async) 或
 有关异步使用的更多信息的示例。
 
-## GPU 加速
+## GPU加速
 
 有时，您可以利用 GPU 加速来加速应用程序。参见
 有关更多信息，请参阅 [GPU 部分](/docs/guide/gpu)。
 
 ## 缩放限制
 
-Modal 对每个函数强制执行以下限制：
-
-* 2,000 个待处理输入（尚未分配给容器的输入）
-* 总共 25,000 个输入（包括正在运行的输入和待处理的输入）
-
-对于使用`.spawn()`为异步作业创建的输入，Modal 允许最多 100 万个待处理输入，而不是 2,000 个。
-
-如果您尝试创建更多输入并超出这些限制，您将收到 `Resource Exhausted` 错误，您应该稍后重试您的请求。如果您需要更高的限制，请联系我们！
-
-此外，每个 `.map()` 调用最多可以同时处理 1000 个输入。
+Modal 强制实施影响可扩展性的各种平台限制。并发容器总数（以及并发使用的 GPU 总数）的限制取决于工作区的[计划级别](/定价)。单个函数运行的并发容器数也有 4,000 个硬性限制。其他限制适用于各个输入级别，并取决于特定的函数[调用方法](/docs/guide/function-incall-methods)。

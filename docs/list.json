@@ -1,24 +1,16 @@
 {
-  "fetchedAt": "2026-08-19T06:55:14.641Z",
+  "fetchedAt": "2026-08-20T06:56:30.222Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 294,
-  "ok": 294,
+  "totalUrls": 295,
+  "ok": 295,
   "failed": 0,
   "pages": [
     {
       "url": "https://modal.com/docs",
-      "source": "stub",
-      "finalUrl": "https://modal.com/docs",
+      "source": "https://modal.com/docs",
+      "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 171,
-      "stub": true
-    },
-    {
-      "url": "https://modal.com/docs/cli/changelog.md",
-      "source": "https://modal.com/docs/cli/changelog.md",
-      "finalUrl": "https://modal.com/docs/sdk/py/changelog.md",
-      "path": "docs/cli/changelog.md",
-      "bytes": 63585,
+      "bytes": 24258,
       "stub": false
     },
     {
@@ -838,8 +830,8 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/guide/cron",
-      "source": "https://modal.com/docs/guide/cron",
+      "url": "https://modal.com/docs/guide/cron.md",
+      "source": "https://modal.com/docs/guide/cron.md",
       "finalUrl": "https://modal.com/docs/guide/cron.md",
       "path": "docs/guide/cron.md",
       "bytes": 2773,
@@ -979,6 +971,22 @@
       "finalUrl": "https://modal.com/docs/guide/feature-maturity.md",
       "path": "docs/guide/feature-maturity.md",
       "bytes": 3499,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/function-invocation-methods.md",
+      "source": "https://modal.com/docs/guide/function-invocation-methods.md",
+      "finalUrl": "https://modal.com/docs/guide/function-invocation-methods.md",
+      "path": "docs/guide/function-invocation-methods.md",
+      "bytes": 9559,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/functions.md",
+      "source": "https://modal.com/docs/guide/functions.md",
+      "finalUrl": "https://modal.com/docs/guide/functions.md",
+      "path": "docs/guide/functions.md",
+      "bytes": 18374,
       "stub": false
     },
     {
@@ -1306,7 +1314,7 @@
       "source": "https://modal.com/docs/guide/scale.md",
       "finalUrl": "https://modal.com/docs/guide/scale.md",
       "path": "docs/guide/scale.md",
-      "bytes": 7605,
+      "bytes": 7456,
       "stub": false
     },
     {
@@ -1346,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 8836,
+      "bytes": 8888,
       "stub": false
     },
     {
@@ -1966,14 +1974,6 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/sdk/py/changelog.md",
-      "source": "https://modal.com/docs/sdk/py/changelog.md",
-      "finalUrl": "https://modal.com/docs/sdk/py/changelog.md",
-      "path": "docs/sdk/py/changelog.md",
-      "bytes": 63585,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/sdk/py/latest/App.md",
       "source": "https://modal.com/docs/sdk/py/latest/App.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/App.md",
@@ -2355,6 +2355,14 @@
       "finalUrl": "https://modal.com/docs/sdk/py/latest/wsgi_app.md",
       "path": "docs/sdk/py/latest/wsgi_app.md",
       "bytes": 806,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/sdk/py/releases.md",
+      "source": "https://modal.com/docs/sdk/py/releases.md",
+      "finalUrl": "https://modal.com/docs/sdk/py/releases.md",
+      "path": "docs/sdk/py/releases.md",
+      "bytes": 63604,
       "stub": false
     }
   ],

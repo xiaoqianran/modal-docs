@@ -16,7 +16,7 @@ class Server:
 
 Modal Server 原语为 [Endpoints](/docs/guide/endpoints) 提供底层基础设施。它们还可以通过完全定制的应用程序逻辑直接部署。
 
-模态服务器与模态函数共享许多功能。它们是模态应用程序的成员，并通过正常的 `modal deploy` 工作流程进行[部署](/docs/guide/managing-deployments)。服务器资源配置与Functions具有相同的[基线请求+突发语义](/docs/guide/resources)，当然它们也可以使用[GPU](/docs/guide/gpu)。服务器容器可以使用[完全定制](/docs/guide/images)映像在我们的全球队列中[在任何地方运行](/docs/guide/region-selection)，并且它们受益于相同的快速冷启动性能（包括[内存快照](/docs/guide/memory-snapshots)）。他们可以挂载[Secrets](/docs/guide/secrets)和[Volumes](/docs/guide/volumes)并拥有稳定的[出站IP地址](​​/docs/guide/proxy-ips)。
+模态服务器与 [模态函数](/docs/guide/functions) 共享许多功能。它们是模态应用程序的成员，并通过正常的 [`modal deploy`](/docs/cli/latest/deployments) 工作流程进行[部署](/docs/guide/managing-deployments)。服务器资源配置与Functions具有相同的[基线请求+突发语义](/docs/guide/resources)，当然它们也可以使用[GPU](/docs/guide/gpu)。服务器容器可以使用[完全定制](/docs/guide/images)映像在我们的全球队列中[在任何地方运行](/docs/guide/region-selection)，并且它们受益于相同的快速冷启动性能（包括[内存快照](/docs/guide/memory-snapshots)）。他们可以挂载[Secrets](/docs/guide/secrets)和[Volumes](/docs/guide/volumes)并拥有稳定的[出站IP地址](​​/docs/guide/proxy-ips)。
 这是模态服务器的高级指南。有关参考文档，请参阅 [`@app.server()`](/docs/sdk/py/latest/App#server) 装饰器和 [`modal.Server`](/docs/sdk/py/latest/Server) 对象参考页面。
 
 本指南强调服务器和函数之间的*差异*。服务器是从头开始设计的，旨在为侦听端口并本机使用 HTTP 的进程提供超低延迟。这引发了自动缩放、负载均衡、身份验证和容器生命周期方面的一些重要差异。这也意味着服务器缺乏模态函数的一些依赖于状态函数输入系统的操作功能。

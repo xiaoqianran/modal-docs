@@ -1,5 +1,4 @@
 https://modal.com/docs
-https://modal.com/docs/cli/changelog.md
 https://modal.com/docs/cli/latest/app.md
 https://modal.com/docs/cli/latest/billing.md
 https://modal.com/docs/cli/latest/bootstrap.md
@@ -102,7 +101,7 @@ https://modal.com/docs/guide/cloud-bucket-mounts.md
 https://modal.com/docs/guide/cold-start.md
 https://modal.com/docs/guide/concurrent-inputs.md
 https://modal.com/docs/guide/continuous-deployment.md
-https://modal.com/docs/guide/cron
+https://modal.com/docs/guide/cron.md
 https://modal.com/docs/guide/cuda.md
 https://modal.com/docs/guide/customer-supplied-encryption-keys.md
 https://modal.com/docs/guide/datadog-integration.md
@@ -120,6 +119,8 @@ https://modal.com/docs/guide/environments.md
 https://modal.com/docs/guide/existing-images.md
 https://modal.com/docs/guide/fast-pull-from-registry.md
 https://modal.com/docs/guide/feature-maturity.md
+https://modal.com/docs/guide/function-invocation-methods.md
+https://modal.com/docs/guide/functions.md
 https://modal.com/docs/guide/global-variables.md
 https://modal.com/docs/guide/gpu-health.md
 https://modal.com/docs/guide/gpu-metrics.md
@@ -243,7 +244,6 @@ https://modal.com/docs/sdk/js/latest/StreamMode.md
 https://modal.com/docs/sdk/js/latest/Tunnel.md
 https://modal.com/docs/sdk/js/latest/Volume.md
 https://modal.com/docs/sdk/js/latest/intro.md
-https://modal.com/docs/sdk/py/changelog.md
 https://modal.com/docs/sdk/py/latest/App.md
 https://modal.com/docs/sdk/py/latest/Client.md
 https://modal.com/docs/sdk/py/latest/CloudBucketMount.md
@@ -292,3 +292,4 @@ https://modal.com/docs/sdk/py/latest/parameter.md
 https://modal.com/docs/sdk/py/latest/types.md
 https://modal.com/docs/sdk/py/latest/web_server.md
 https://modal.com/docs/sdk/py/latest/wsgi_app.md
+https://modal.com/docs/sdk/py/releases.md
