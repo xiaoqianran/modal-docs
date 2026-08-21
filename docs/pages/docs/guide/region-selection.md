@@ -78,8 +78,6 @@ Need access to more granular region definitions? Contact <sales@modal.com>.
 
 ## Regional routing
 
-<Callout variant="beta" />
-
 In addition to letting you specify the region a Function's containers run in, Modal also allows you to specify which region your inputs and outputs will be routed through to reduce network overhead. By default, this is `us-east` (Virginia, USA).
 
 This doesn't apply to Sandboxes, as most operations go directly to the container (with some minor exceptions that are routed through `us-east`).

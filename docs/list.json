@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-20T06:56:30.222Z",
+  "fetchedAt": "2026-08-21T06:57:47.048Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 295,
   "ok": 295,
@@ -1218,7 +1218,7 @@
       "source": "https://modal.com/docs/guide/region-selection.md",
       "finalUrl": "https://modal.com/docs/guide/region-selection.md",
       "path": "docs/guide/region-selection.md",
-      "bytes": 5858,
+      "bytes": 5830,
       "stub": false
     },
     {
@@ -1418,7 +1418,7 @@
       "source": "https://modal.com/docs/guide/vm-sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/vm-sandboxes.md",
       "path": "docs/guide/vm-sandboxes.md",
-      "bytes": 7739,
+      "bytes": 7697,
       "stub": false
     },
     {

@@ -180,10 +180,10 @@ Docker 工作负载的行为更像是在非容器环境中的行为。特别是�
 
 现在可以使用只有在真正的 Linux 环境中才有意义的功能：
 
-* 支持自定义[初始化系统](https://arxiv.org/pdf/0706.2748)（如[`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html)）
+* 支持自定义[https://arxiv.org/pdf/0706.2748](如[`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html))
 * 支持[eBPF](https://ebpf.io/)
 * 支持[FUSE](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)安装座
-* 支持沙盒内通过[cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)进行资源隔离
+* 支持通过 [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html) 沙盒内的资源隔离
 
 最后，对于大多数工作负载，根文件系统在 VM 沙箱上的性能比在 gVisor 沙箱中的性能更好。
 
@@ -206,8 +206,8 @@ RAM 根据您的请求通过 `memory` 参数传递给 `Sandbox.create`。默认�
 * **不支持 GPU。** VM 沙盒当前仅支持 CPU 工作负载。
 * **[Sandbox 文件系统 API](/docs/guide/sandbox-files#filesystem-api-beta) 仅在新的 SDK 版本中可用**。对于Python SDK，它需要版本≥ 1.4.0，对于JS/TS/Go SDK，它需要版本≥ 0.7.6。
 * **不支持[`Sandbox.reload_volumes()`](/docs/sdk/py/latest/Sandbox#reload_volumes)。** VM Sandbox 目前不支持在运行时重新加载卷。
-* **尚不支持[内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。** 仅
-  [文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots) 目前适用于 VM 沙箱。
+* **[VM 内存快照](/docs/guide/vm-memory-snapshots) 仅适用于一组已启用的客户。**
+  如果您想提前访问，请联系我们。
 * **不支持 ≥ 512 GiB 的根映像。** VM 根文件系统当前限制为 512 GiB。从超过此大小的容器映像创建的沙箱将无法启动。
 
 如果您遇到此处未列出的问题，请通过 [Slack](/slack) 联系我们或发送电子邮件至 <support@modal.com>。

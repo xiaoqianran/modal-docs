@@ -757,9 +757,9 @@
       "bytes": 3557
     },
     "docs/guide/region-selection.md": {
-      "hash": "18e117f18e417052b695d53ed491ad2a2d94ee8d",
-      "translatedAt": "2026-08-11T07:18:49.009Z",
-      "bytes": 5443
+      "hash": "5de7ea4bb534acf21f14cd81d95cabf454b7cca8",
+      "translatedAt": "2026-08-21T06:57:52.399Z",
+      "bytes": 5421
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -882,9 +882,9 @@
       "bytes": 9556
     },
     "docs/guide/vm-sandboxes.md": {
-      "hash": "60528e59390aa08a1c26fdeae80e3b32181b6755",
-      "translatedAt": "2026-08-08T18:30:06.918Z",
-      "bytes": 7583
+      "hash": "7652dc03601bf02454785dd00dda0fc1818f56ec",
+      "translatedAt": "2026-08-21T06:57:50.273Z",
+      "bytes": 7514
     },
     "docs/guide/webhook-timeouts.md": {
       "hash": "3ce8a509c5c149cf62d0143d7f36b5b7d8a03779",
@@ -1492,10 +1492,10 @@
       "bytes": 58845
     }
   },
-  "updatedAt": "2026-08-20T06:58:02.088Z",
+  "updatedAt": "2026-08-21T06:57:52.399Z",
   "stats": {
-    "translated": 6,
-    "skipped": 292,
+    "translated": 2,
+    "skipped": 296,
     "failed": 0,
     "total": 298
   }

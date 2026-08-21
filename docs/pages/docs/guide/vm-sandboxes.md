@@ -204,8 +204,8 @@ The following limitations are known and we're tracking them:
 * **GPUs are not supported.** VM Sandboxes currently only support CPU workloads.
 * **The [Sandbox filesystem API](/docs/guide/sandbox-files#filesystem-api-beta) is only available in new SDK versions**. For the Python SDK, it requires version ≥ 1.4.0 and for the JS/TS/Go SDKs, it requires versions ≥ 0.7.6.
 * **[`Sandbox.reload_volumes()`](/docs/sdk/py/latest/Sandbox#reload_volumes) is not supported.** VM Sandboxes do not currently support reloading volumes at runtime.
-* **[Memory Snapshots](/docs/guide/sandbox-snapshots#memory-snapshots) are not yet supported.** Only
-  [Filesystem Snapshots](/docs/guide/sandbox-snapshots#filesystem-snapshots) work on VM Sandboxes today.
+* **[VM Memory Snapshots](/docs/guide/vm-memory-snapshots) are only available to a set of enabled customers.**
+  Please reach out to us if you'd like early access.
 * **Root images ≥ 512 GiB are not supported.** The VM root filesystem is currently limited to 512 GiB. Sandboxes created from container images exceeding this size will fail to start.
 
 If you hit a rough edge that isn't listed here, please reach out via [Slack](/slack) or email us at <support@modal.com>.
