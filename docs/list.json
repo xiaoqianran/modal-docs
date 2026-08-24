@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-23T06:52:11.529Z",
+  "fetchedAt": "2026-08-24T07:11:40.054Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 295,
   "ok": 295,
@@ -1370,7 +1370,7 @@
       "source": "https://modal.com/docs/guide/slack-notifications.md",
       "finalUrl": "https://modal.com/docs/guide/slack-notifications.md",
       "path": "docs/guide/slack-notifications.md",
-      "bytes": 2280,
+      "bytes": 2548,
       "stub": false
     },
     {
