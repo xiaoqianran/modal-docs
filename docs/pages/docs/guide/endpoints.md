@@ -247,9 +247,10 @@ overrides in the UI. Region pinning applies a
 
 ## Where credits can be used
 
-Starting **September 1st, 2026**, credits can no longer be used to pay for
-Shared Endpoint usage. Usage on all other Endpoints bill for compute as usual
-and can still be paid with credits.
+Starting **September 1st, 2026**, credits included with your plan can no longer
+be used to pay for Shared Endpoint usage. Other credits will continue to apply.
+Usage on all other Endpoints bills for compute as usual and can still be paid
+with credits.
 
 To cap out-of-pocket charges after this change, see
 [spend limits](/docs/guide/budgets#spend-limits).

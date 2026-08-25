@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-08-24T07:11:40.054Z",
+  "fetchedAt": "2026-08-25T06:58:57.479Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 295,
-  "ok": 295,
+  "totalUrls": 296,
+  "ok": 296,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 24258,
+      "bytes": 24331,
       "stub": false
     },
     {
@@ -234,7 +234,7 @@
       "source": "https://modal.com/docs/examples/algolia_indexer.md",
       "finalUrl": "https://modal.com/docs/examples/algolia_indexer.md",
       "path": "docs/examples/algolia_indexer.md",
-      "bytes": 5750,
+      "bytes": 6139,
       "stub": false
     },
     {
@@ -930,7 +930,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 8120,
+      "bytes": 8183,
       "stub": false
     },
     {
@@ -1283,6 +1283,14 @@
       "finalUrl": "https://modal.com/docs/guide/sandbox-resources.md",
       "path": "docs/guide/sandbox-resources.md",
       "bytes": 4495,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/sandbox-sidecars.md",
+      "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
+      "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
+      "path": "docs/guide/sandbox-sidecars.md",
+      "bytes": 8025,
       "stub": false
     },
     {

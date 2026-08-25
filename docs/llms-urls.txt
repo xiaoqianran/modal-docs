@@ -158,6 +158,7 @@ https://modal.com/docs/guide/saml-sso.md
 https://modal.com/docs/guide/sandbox-files.md
 https://modal.com/docs/guide/sandbox-networking.md
 https://modal.com/docs/guide/sandbox-resources.md
+https://modal.com/docs/guide/sandbox-sidecars.md
 https://modal.com/docs/guide/sandbox-snapshots.md
 https://modal.com/docs/guide/sandbox-spawn.md
 https://modal.com/docs/guide/sandboxes.md

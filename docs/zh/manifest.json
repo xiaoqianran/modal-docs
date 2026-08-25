@@ -1490,13 +1490,20 @@
       "hash": "5817b6cea7bff7710c832f9a3452db6b27c4e8ba",
       "translatedAt": "2026-08-20T06:58:02.088Z",
       "bytes": 58845
+    },
+    "docs/guide/sandbox-sidecars.md": {
+      "hash": "59178a0fd4a47a36d2847126b7f5c1fc3600e22f",
+      "translatedAt": "2026-08-25T06:59:24.403Z",
+      "bytes": 8025,
+      "fallback": true,
+      "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-08-24T07:11:53.394Z",
+  "updatedAt": "2026-08-25T06:59:37.018Z",
   "stats": {
     "translated": 0,
-    "skipped": 297,
-    "failed": 1,
-    "total": 298
+    "skipped": 294,
+    "failed": 5,
+    "total": 299
   }
 }

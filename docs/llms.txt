@@ -66,6 +66,7 @@ The docs are organized into three main sections:
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [VM Sandboxes (Beta)](https://modal.com/docs/guide/vm-sandboxes.md)
+  - [Sidecars (Alpha)](https://modal.com/docs/guide/sandbox-sidecars.md)
 - [Notebooks](https://modal.com/docs/guide/notebooks)
 - Secrets and environment variables
   - [Secrets](https://modal.com/docs/guide/secrets.md)
