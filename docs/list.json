@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-25T06:58:57.479Z",
+  "fetchedAt": "2026-08-26T06:59:40.485Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 296,
   "ok": 296,
@@ -1434,7 +1434,7 @@
       "source": "https://modal.com/docs/guide/volumes.md",
       "finalUrl": "https://modal.com/docs/guide/volumes.md",
       "path": "docs/guide/volumes.md",
-      "bytes": 26195,
+      "bytes": 26126,
       "stub": false
     },
     {
