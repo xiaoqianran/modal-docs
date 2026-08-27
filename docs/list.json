@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-08-26T06:59:40.485Z",
+  "fetchedAt": "2026-08-27T17:33:03.634Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 296,
-  "ok": 296,
+  "totalUrls": 295,
+  "ok": 295,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 24331,
+      "bytes": 24250,
       "stub": false
     },
     {
@@ -1194,7 +1194,7 @@
       "source": "https://modal.com/docs/guide/proxy-ips.md",
       "finalUrl": "https://modal.com/docs/guide/proxy-ips.md",
       "path": "docs/guide/proxy-ips.md",
-      "bytes": 3185,
+      "bytes": 3610,
       "stub": false
     },
     {
@@ -1243,14 +1243,6 @@
       "finalUrl": "https://modal.com/docs/guide/retries.md",
       "path": "docs/guide/retries.md",
       "bytes": 1894,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
-      "source": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
-      "finalUrl": "https://modal.com/docs/guide/s3-gateway-endpoints.md",
-      "path": "docs/guide/s3-gateway-endpoints.md",
-      "bytes": 1337,
       "stub": false
     },
     {

@@ -131,7 +131,6 @@ The docs are organized into three main sections:
   - [Asynchronous API usage](https://modal.com/docs/guide/async.md)
   - [Global variables](https://modal.com/docs/guide/global-variables.md)
   - [Region selection](https://modal.com/docs/guide/region-selection.md)
-  - [S3 Gateway endpoints](https://modal.com/docs/guide/s3-gateway-endpoints.md)
   - [GPU Metrics](https://modal.com/docs/guide/gpu-metrics.md)
 
 ## Examples

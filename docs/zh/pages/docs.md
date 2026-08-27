@@ -67,7 +67,8 @@
   - [快照](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [定价和资源](https://modal.com/docs/guide/sandbox-resources.md)
 - [虚拟机沙盒（测试版）](https://modal.com/docs/guide/vm-sandboxes.md)
-- [笔记本电脑](https://modal.com/docs/guide/notebooks)
+  - [边车（Alpha）](https://modal.com/docs/guide/sandbox-sidecars.md)
+- [笔记本](https://modal.com/docs/guide/notebooks)
 - 秘密和环境变量
   - [秘密](https://modal.com/docs/guide/secrets.md)
   - [环境变量](https://modal.com/docs/guide/environment_variables.md)
@@ -81,11 +82,11 @@
 - 网络
   - [隧道](https://modal.com/docs/guide/tunnels.md)
   - [代理（测试版）](https://modal.com/docs/guide/proxy-ips.md)
-  - [集群网络](https://modal.com/docs/guide/private-networking.md)
+  - [集群组网](https://modal.com/docs/guide/private-networking.md)
 - 数据共享和存储
   - [传递本地数据](https://modal.com/docs/guide/local-data.md)
-  - [卷数](https://modal.com/docs/guide/volumes.md)
-  - [存储模型权重](https://modal.com/docs/guide/model-weights.md)- [云桶坐骑](https://modal.com/docs/guide/cloud-bucket-mounts.md)
+  - [卷数](https://modal.com/docs/guide/volumes.md)- [存储模型权重](https://modal.com/docs/guide/model-weights.md)
+  - [云桶坐骑](https://modal.com/docs/guide/cloud-bucket-mounts.md)
   - [词典](https://modal.com/docs/guide/dicts.md)
   - [队列](https://modal.com/docs/guide/queues.md)
   - [数据集摄取](https://modal.com/docs/guide/dataset-ingestion.md)
@@ -104,8 +105,8 @@
   - [客户提供的加密密钥 (Alpha)](https://modal.com/docs/guide/customer-supplied-encryption-keys.md)
   - [审核日志](https://modal.com/docs/guide/audit-logs.md)
 - 集成
-  - [使用 OIDC 与外部服务进行身份验证](https://modal.com/docs/guide/oidc-integration.md)
-- [将 Modal 连接到您的 Datadog 帐户](https://modal.com/docs/guide/datadog-integration.md)
+- [使用 OIDC 与外部服务进行身份验证](https://modal.com/docs/guide/oidc-integration.md)
+  - [将 Modal 连接到您的 Datadog 帐户](https://modal.com/docs/guide/datadog-integration.md)
   - [将 Modal 连接到您的 OpenTelemetry 提供商](https://modal.com/docs/guide/otel-integration.md)
   - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
   - [自定义 SAML SSO](https://modal.com/docs/guide/saml-sso.md)
@@ -115,13 +116,13 @@
   - [工作空间](https://modal.com/docs/guide/workspaces.md)
   - [环境](https://modal.com/docs/guide/environments.md)
   - [模态用户帐户设置](https://modal.com/docs/guide/modal-user-account-setup.md)
-  - [服务用户](https://modal.com/docs/guide/service-users.md)
+  - [服务使用者](https://modal.com/docs/guide/service-users.md)
   - [基于角色的访问控制（RBAC）](https://modal.com/docs/guide/rbac.md)
   - [计费](https://modal.com/docs/guide/billing.md)
   - [预算](https://modal.com/docs/guide/budgets.md)
-- 其他主题
-  - [功能成熟度](https://modal.com/docs/guide/feature-maturity.md)
-  - [限制功能](https://modal.com/docs/guide/restricted-access.md)- [JavaScript/Go SDK（测试版）](https://modal.com/docs/guide/sdk-javascript-go.md)
+- 其他主题- [功能成熟度](https://modal.com/docs/guide/feature-maturity.md)
+  - [限制功能](https://modal.com/docs/guide/restricted-access.md)
+  - [JavaScript/Go SDK（测试版）](https://modal.com/docs/guide/sdk-javascript-go.md)
   - [Modal 1.0迁移指南](https://modal.com/docs/guide/modal-1-0-migration.md)
   - [文件和项目结构](https://modal.com/docs/guide/project-structure.md)
   - [开发与调试](https://modal.com/docs/guide/developing-debugging.md)
@@ -129,7 +130,6 @@
   - [异步API使用](https://modal.com/docs/guide/async.md)
   - [全局变量](https://modal.com/docs/guide/global-variables.md)
   - [区域选择](https://modal.com/docs/guide/region-selection.md)
-  - [S3 网关端点](https://modal.com/docs/guide/s3-gateway-endpoints.md)
   - [GPU指标](https://modal.com/docs/guide/gpu-metrics.md)
 
 ## 示例
@@ -141,7 +141,7 @@
   - [服务网络功能](https://modal.com/docs/examples/basic_web.md)
 - 大型语言模型（LLM）
   - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
-- [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
+- [通过快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
   - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)
   - [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
   - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)

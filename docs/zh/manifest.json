@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "980b6ee575859b34fc2f0f50a98f71dc13c76803",
-      "translatedAt": "2026-08-20T06:56:51.620Z",
-      "bytes": 23771
+      "hash": "6fe8eb78531b72e65a1b7ac45f84fc5a7636a766",
+      "translatedAt": "2026-08-27T17:33:27.394Z",
+      "bytes": 23766
     },
     "docs/cli/latest/config.md": {
       "hash": "d4f18621f46b350780c5d5cc8d1526a5b9803b47",
@@ -142,9 +142,9 @@
       "bytes": 7545
     },
     "docs/examples/algolia_indexer.md": {
-      "hash": "6b62ce0cfc17714a08c94b72fbf11bef3f9010bb",
-      "translatedAt": "2026-08-08T18:27:54.455Z",
-      "bytes": 5682
+      "hash": "d911194b91a174a526ed3eff7c0edec4443e73ca",
+      "translatedAt": "2026-08-27T17:33:08.514Z",
+      "bytes": 6071
     },
     "docs/examples/amazon_embeddings.md": {
       "hash": "32f78f4bf54364b320eab23b324257e484b466e6",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "5673cbb8fd7681523c430dec7f941c545f5118f4",
-      "translatedAt": "2026-08-19T06:55:18.818Z",
-      "bytes": 7940
+      "hash": "9ce756877adea9acbf310cf1f509c3d5cc20858e",
+      "translatedAt": "2026-08-27T17:33:16.533Z",
+      "bytes": 8001
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -737,9 +737,9 @@
       "bytes": 2411
     },
     "docs/guide/proxy-ips.md": {
-      "hash": "bdafa252cdbc5d3b7f58972c11e2aef381ee5645",
-      "translatedAt": "2026-08-08T18:29:37.891Z",
-      "bytes": 3065
+      "hash": "3032409651d2ea5ae11b320cc6d4a2a7ebdae73b",
+      "translatedAt": "2026-08-27T17:33:18.898Z",
+      "bytes": 3441
     },
     "docs/guide/project-structure.md": {
       "hash": "ba2f072bda1e6c1d41df003feb2f2d5e99689f70",
@@ -842,9 +842,9 @@
       "bytes": 2912
     },
     "docs/guide/slack-notifications.md": {
-      "hash": "f43a394a5fcc0cd78217ff4be8fa7c7572338a31",
-      "translatedAt": "2026-08-08T18:30:01.614Z",
-      "bytes": 2060
+      "hash": "5c138758bf0c9507b29fa3a81452d4ca9df716fa",
+      "translatedAt": "2026-08-27T17:33:22.121Z",
+      "bytes": 2318
     },
     "docs/guide/servers.md": {
       "hash": "f0f10ca1160508483f6b36955ad7b2fec6a3cbd7",
@@ -902,9 +902,9 @@
       "bytes": 7482
     },
     "docs/guide/volumes.md": {
-      "hash": "3cea03f9375a48b226cd3f2d0a673c7bb1d47db7",
-      "translatedAt": "2026-08-08T18:30:12.429Z",
-      "bytes": 24630
+      "hash": "3155a404447bae3c4beeb97b1ad92b5e83833aa8",
+      "translatedAt": "2026-08-27T17:33:33.521Z",
+      "bytes": 24575
     },
     "docs/sdk/go/latest/Allowlist.md": {
       "hash": "83cf87e357688e095723ab39eb571571be393572",
@@ -1499,11 +1499,11 @@
       "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-08-26T07:00:21.673Z",
+  "updatedAt": "2026-08-27T17:33:33.521Z",
   "stats": {
-    "translated": 0,
-    "skipped": 294,
-    "failed": 5,
+    "translated": 6,
+    "skipped": 293,
+    "failed": 0,
     "total": 299
   }
 }

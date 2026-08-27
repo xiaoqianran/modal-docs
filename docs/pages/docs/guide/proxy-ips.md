@@ -30,6 +30,10 @@ can have a maximum of five static IP addresses.
 
 Please reach out to <support@modal.com> if you need greater limits.
 
+You can select which region the Proxy should live in when creating it.
+This allows you to control where in the world the traffic will be routed through.
+Placing it closer to the resources you want to connect with can reduce overall latency.
+
 ## Using a Proxy
 
 After a Proxy is online, add it to a Modal Function with the argument
@@ -63,6 +67,9 @@ All traffic that goes through a Proxy is encrypted by WireGuard. This adds
 latency to your Function's networking. If you are experiencing networking issues
 with Proxies related to performance, first add more IP addresses to your
 Proxy (see [Adding more IP addresses to a Proxy](#adding-more-ip-addresses-to-a-proxy)).
+
+Placing your Proxy geographically closer to a target may also improve overall performance.
+See [Creating a Proxy](#creating-a-proxy) for selecting the Proxy region when creating it.
 
 ## Adding more IP addresses to a Proxy
 
