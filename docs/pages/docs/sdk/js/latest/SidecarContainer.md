@@ -50,6 +50,23 @@ Check if the sidecar container has finished running.
 
 Returns `null` if the container is still running, else the exit code.
 
+## reloadVolumes
+
+```typescript
+async reloadVolumes(params?: SidecarReloadVolumesParams): Promise<void>
+```
+
+Reload all Volumes mounted in this sidecar container.
+
+Blocks until the reload completes, or throws a `TimeoutError` on timeout
+(the reload may still complete in the background).
+
+**Parameters** (`SidecarReloadVolumesParams`)
+
+Optional parameters for `SidecarContainer.reloadVolumes()`.
+
+* `timeoutMs?` (`number`): Overall budget in milliseconds. Defaults to 55000.
+
 ## terminate
 
 ```typescript

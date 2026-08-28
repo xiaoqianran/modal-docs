@@ -134,6 +134,87 @@ utilizes the same infrastructure we use to get fast cold starts for your Sandbox
 
 See [Snapshot Retention](#snapshot-retention) for TTL configuration options and [Deleting Snapshots](#deleting-snapshots) to learn how to manage snapshot storage.
 
+### Forking
+
+Since Filesystem Snapshots are [Images](/docs/reference/modal.Image), you can create multiple Sandboxes from the same snapshot. Each Sandbox starts with an identical copy of the snapshotted filesystem, so you can use this to run parallel workloads or test different changes independently.
+
+<CodeTabs>
+  {#snippet python()}
+
+```python notest
+import modal
+
+app = modal.App.lookup("sandbox-fork-example", create_if_missing=True)
+
+sb = modal.Sandbox.create(app=app)
+p = sb.exec("bash", "-c", "pip install numpy && echo 'setup done' > /status")
+p.wait()
+
+image = sb.snapshot_filesystem()
+sb.terminate()
+
+# Start multiple Sandboxes from the same snapshot
+sb2 = modal.Sandbox.create(image=image, app=app)
+sb3 = modal.Sandbox.create(image=image, app=app)
+
+# Each fork starts from the snapshotted state
+assert sb2.exec("cat", "/status").stdout.read().strip() == "setup done"
+assert sb3.exec("cat", "/status").stdout.read().strip() == "setup done"
+```
+
+{/snippet}
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image);
+const p = await sb.exec([
+  "bash",
+  "-c",
+  "pip install numpy && echo 'setup done' > /status",
+]);
+await p.wait();
+
+const snapshot = await sb.snapshotFilesystem();
+await sb.terminate();
+
+// Start multiple Sandboxes from the same snapshot
+const sb2 = await modal.sandboxes.create(app, snapshot);
+const sb3 = await modal.sandboxes.create(app, snapshot);
+
+// Each fork starts from the snapshotted state
+const p2 = await sb2.exec(["cat", "/status"]);
+console.assert((await p2.stdout.readText()).trim() === "setup done");
+const p3 = await sb3.exec(["cat", "/status"]);
+console.assert((await p3.stdout.readText()).trim() === "setup done");
+```
+
+{/snippet}
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "pip install numpy && echo 'setup done' > /status"}, nil)
+p.Wait(ctx, nil)
+
+snapshot, _ := sb.SnapshotFilesystem(ctx, nil)
+sb.Terminate(ctx, nil)
+
+// Start multiple Sandboxes from the same snapshot
+sb2, _ := mc.Sandboxes.Create(ctx, app, snapshot, nil)
+sb3, _ := mc.Sandboxes.Create(ctx, app, snapshot, nil)
+
+// Each fork starts from the snapshotted state
+p2, _ := sb2.Exec(ctx, []string{"cat", "/status"}, nil)
+stdout2, _ := io.ReadAll(p2.Stdout)
+fmt.Println(strings.TrimSpace(string(stdout2))) // "setup done"
+
+p3, _ := sb3.Exec(ctx, []string{"cat", "/status"}, nil)
+stdout3, _ := io.ReadAll(p3.Stdout)
+fmt.Println(strings.TrimSpace(string(stdout3))) // "setup done"
+```
+
+{/snippet} </CodeTabs>
+
 ## Directory Snapshots
 
 Directory Snapshots allow you to snapshot a specific directory within a running Sandbox. The resulting snapshot is an Image that can then be mounted into another already-running Sandbox (typically at a later time), which can be useful for:

@@ -20,7 +20,7 @@ Exec runs a command in the sidecar container and returns the process handle.
 
 **Parameters** (`SidecarExecParams`)
 
-SidecarExecParams holds options for \[SidecarContainer.Exec].
+SidecarExecParams holds options for `SidecarContainer.Exec`.
 
 * `Stdout` (`StdioBehavior`): Stdout defines whether to pipe or ignore standard output.
 * `Stderr` (`StdioBehavior`): Stderr defines whether to pipe or ignore standard error.
@@ -41,9 +41,26 @@ Returns nil if the container is still running, else returns the exit code.
 
 **Parameters** (`SidecarPollParams`)
 
-SidecarPollParams holds options for \[SidecarContainer.Poll].
+SidecarPollParams holds options for `SidecarContainer.Poll`.
 
 *No configurable options.*
+
+## ReloadVolumes
+
+```go
+ReloadVolumes(ctx context.Context, params *SidecarReloadVolumesParams) error
+```
+
+ReloadVolumes reloads all Volumes mounted in this sidecar container.
+
+Blocks until the reload completes, or returns a TimeoutError on timeout (the
+reload may still complete in the background).
+
+**Parameters** (`SidecarReloadVolumesParams`)
+
+SidecarReloadVolumesParams are options for `SidecarContainer.ReloadVolumes`.
+
+* `Timeout` (`time.Duration`): Timeout bounds how long the call waits. Defaults to 55 seconds.
 
 ## Terminate
 
@@ -57,7 +74,7 @@ The returned exit code is only meaningful when Wait is true.
 
 **Parameters** (`SidecarTerminateParams`)
 
-SidecarTerminateParams holds options for \[SidecarContainer.Terminate].
+SidecarTerminateParams holds options for `SidecarContainer.Terminate`.
 
 * `Wait` (`bool`): Wait, when true, will wait for the sidecar container to terminate.
 
@@ -71,7 +88,7 @@ Wait blocks until the sidecar container exits, and returns its exit code.
 
 **Parameters** (`SidecarWaitParams`)
 
-SidecarWaitParams holds options for \[SidecarContainer.Wait].
+SidecarWaitParams holds options for `SidecarContainer.Wait`.
 
 *No configurable options.*
 
@@ -91,15 +108,15 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, \[SandboxFilesystemPermissionError] if
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, `SandboxFilesystemPermissionError` if
 write permission is denied, or an \*os.PathError if localPath does not
 exist, is a directory, or cannot be read.
 
 **Parameters** (`SandboxFilesystemCopyFromLocalParams`)
 
-SandboxFilesystemCopyFromLocalParams holds optional parameters for \[SandboxFilesystem.CopyFromLocal].
+SandboxFilesystemCopyFromLocalParams holds optional parameters for `SandboxFilesystem.CopyFromLocal`.
 
 *No configurable options.*
 
@@ -115,14 +132,14 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories for localPath are created if needed. The local file is
 overwritten if it already exists.
 
-Returns \[SandboxFilesystemNotFoundError] if the remote path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the remote path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the remote path does not exist,
+`SandboxFilesystemIsADirectoryError` if the remote path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemCopyToLocalParams`)
 
-SandboxFilesystemCopyToLocalParams holds optional parameters for \[SandboxFilesystem.CopyToLocal].
+SandboxFilesystemCopyToLocalParams holds optional parameters for `SandboxFilesystem.CopyToLocal`.
 
 *No configurable options.*
 
@@ -135,15 +152,15 @@ ListFiles(ctx context.Context, remotePath string, params *SandboxFilesystemListF
 ListFiles lists files and directories in a Sandbox directory.
 
 remotePath must be an absolute path to a directory in the Sandbox.
-Returns a slice of \[FileInfo] objects sorted by name.
+Returns a slice of `FileInfo` objects sorted by name.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemNotADirectoryError] if the path is not a directory,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemNotADirectoryError` if the path is not a directory,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemListFilesParams`)
 
-SandboxFilesystemListFilesParams holds optional parameters for \[SandboxFilesystem.ListFiles].
+SandboxFilesystemListFilesParams holds optional parameters for `SandboxFilesystem.ListFiles`.
 
 *No configurable options.*
 
@@ -162,16 +179,16 @@ missing parent directories are created and the call is idempotent (succeeds
 if the directory already exists). When false, the immediate parent must
 already exist and the path must not already exist.
 
-Returns \[SandboxFilesystemNotFoundError] if the parent does not exist and
-CreateParents is false, \[SandboxFilesystemPathAlreadyExistsError] if the
-path already exists, \[SandboxFilesystemNotADirectoryError] if a path
-component is not a directory, \[SandboxFilesystemPermissionError] if
-creation is not permitted, or \[InvalidError] if the mount does not
+Returns `SandboxFilesystemNotFoundError` if the parent does not exist and
+CreateParents is false, `SandboxFilesystemPathAlreadyExistsError` if the
+path already exists, `SandboxFilesystemNotADirectoryError` if a path
+component is not a directory, `SandboxFilesystemPermissionError` if
+creation is not permitted, or `InvalidError` if the mount does not
 support this operation.
 
 **Parameters** (`SandboxFilesystemMakeDirectoryParams`)
 
-SandboxFilesystemMakeDirectoryParams holds optional parameters for \[SandboxFilesystem.MakeDirectory].
+SandboxFilesystemMakeDirectoryParams holds optional parameters for `SandboxFilesystem.MakeDirectory`.
 
 * `CreateParents` (`*bool`): CreateParents controls whether missing parent directories are created automatically. Defaults to true when nil.
 
@@ -185,14 +202,14 @@ ReadBytes reads a file from the Sandbox and returns its contents as bytes.
 
 remotePath must be an absolute path to a file in the Sandbox.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemIsADirectoryError` if the path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemReadParams`)
 
-SandboxFilesystemReadParams holds optional parameters for \[SandboxFilesystem.ReadBytes] and \[SandboxFilesystem.ReadText].
+SandboxFilesystemReadParams holds optional parameters for `SandboxFilesystem.ReadBytes` and `SandboxFilesystem.ReadText`.
 
 *No configurable options.*
 
@@ -206,14 +223,14 @@ ReadText reads a file from the Sandbox and returns its contents as a UTF-8 strin
 
 remotePath must be an absolute path to a file in the Sandbox.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemIsADirectoryError` if the path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemReadParams`)
 
-SandboxFilesystemReadParams holds optional parameters for \[SandboxFilesystem.ReadBytes] and \[SandboxFilesystem.ReadText].
+SandboxFilesystemReadParams holds optional parameters for `SandboxFilesystem.ReadBytes` and `SandboxFilesystem.ReadText`.
 
 *No configurable options.*
 
@@ -230,14 +247,14 @@ directory and params.Recursive is false (the default when params is nil),
 it is removed only if empty. When Recursive is true, the directory and all
 its contents are removed. Recursive removal is not supported on all mounts.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemDirectoryNotEmptyError] if Recursive is false and the
-directory is not empty, \[SandboxFilesystemPermissionError] if removal is
-not permitted, or \[InvalidError] if the mount does not support this operation.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemDirectoryNotEmptyError` if Recursive is false and the
+directory is not empty, `SandboxFilesystemPermissionError` if removal is
+not permitted, or `InvalidError` if the mount does not support this operation.
 
 **Parameters** (`SandboxFilesystemRemoveParams`)
 
-SandboxFilesystemRemoveParams holds optional parameters for \[SandboxFilesystem.Remove].
+SandboxFilesystemRemoveParams holds optional parameters for `SandboxFilesystem.Remove`.
 
 * `Recursive` (`bool`): Recurisve controls whether contens of a removed directory are recursively removed. Defaults to false when nil.
 
@@ -250,17 +267,17 @@ Stat(ctx context.Context, remotePath string, params *SandboxFilesystemStatParams
 Stat returns metadata for a single file, directory, or symlink in the Sandbox.
 
 remotePath must be an absolute path in the Sandbox. If remotePath is a
-symlink, the returned \[FileInfo] describes the symlink itself, not the
+symlink, the returned `FileInfo` describes the symlink itself, not the
 target it points to.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemNotADirectoryError] if a non-leaf component of the path
-is not a directory, or \[SandboxFilesystemPermissionError] if a path
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemNotADirectoryError` if a non-leaf component of the path
+is not a directory, or `SandboxFilesystemPermissionError` if a path
 component is not searchable.
 
 **Parameters** (`SandboxFilesystemStatParams`)
 
-SandboxFilesystemStatParams holds optional parameters for \[SandboxFilesystem.Stat].
+SandboxFilesystemStatParams holds optional parameters for `SandboxFilesystem.Stat`.
 
 *No configurable options.*
 
@@ -283,7 +300,7 @@ to also receive events for all nested subdirectories. If remotePath is a
 symlink, it is followed and events reference paths under the resolved
 target.
 
-The returned \[iter.Seq2] yields \[FileWatchEvent] values as changes occur,
+The returned `iter.Seq2` yields `FileWatchEvent` values as changes occur,
 until the timeout elapses, the caller breaks from the range loop, ctx is
 cancelled, or the Sandbox is terminated. The remote watch process is not
 started until iteration begins, so a sequence that is never ranged over
@@ -299,13 +316,13 @@ without returning an error.
 
 Pass nil params for defaults (no filter, non-recursive, no timeout).
 
-Returns \[SandboxFilesystemNotFoundError] if remotePath does not exist,
-\[SandboxFilesystemPermissionError] if watch access is denied, or
-\[InvalidError] if the filesystem does not support watching.
+Returns `SandboxFilesystemNotFoundError` if remotePath does not exist,
+`SandboxFilesystemPermissionError` if watch access is denied, or
+`InvalidError` if the filesystem does not support watching.
 
 **Parameters** (`SandboxFilesystemWatchParams`)
 
-SandboxFilesystemWatchParams holds optional parameters for \[SandboxFilesystem.Watch].
+SandboxFilesystemWatchParams holds optional parameters for `SandboxFilesystem.Watch`.
 
 * `Filter` (`[]FileWatchEventType`)
 * `Recursive` (`bool`)
@@ -323,14 +340,14 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, or \[SandboxFilesystemPermissionError]
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, or `SandboxFilesystemPermissionError`
 if write permission is denied.
 
 **Parameters** (`SandboxFilesystemWriteParams`)
 
-SandboxFilesystemWriteParams holds optional parameters for \[SandboxFilesystem.WriteBytes] and \[SandboxFilesystem.WriteText].
+SandboxFilesystemWriteParams holds optional parameters for `SandboxFilesystem.WriteBytes` and `SandboxFilesystem.WriteText`.
 
 *No configurable options.*
 
@@ -346,13 +363,13 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, or \[SandboxFilesystemPermissionError]
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, or `SandboxFilesystemPermissionError`
 if write permission is denied.
 
 **Parameters** (`SandboxFilesystemWriteParams`)
 
-SandboxFilesystemWriteParams holds optional parameters for \[SandboxFilesystem.WriteBytes] and \[SandboxFilesystem.WriteText].
+SandboxFilesystemWriteParams holds optional parameters for `SandboxFilesystem.WriteBytes` and `SandboxFilesystem.WriteText`.
 
 *No configurable options.*

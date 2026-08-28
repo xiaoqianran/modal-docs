@@ -1497,13 +1497,90 @@
       "bytes": 8025,
       "fallback": true,
       "error": "HTTP 429"
+    },
+    "docs/guide/data-residency.md": {
+      "hash": "3833485c86227b83c09d7105ff2925b94b2651ef",
+      "translatedAt": "2026-08-28T18:29:59.220Z",
+      "bytes": 11863,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/FunctionAutoscalerSettings.md": {
+      "hash": "abeacba83058eb325c3015c9df2c1a3050e2cc1c",
+      "translatedAt": "2026-08-28T18:30:52.870Z",
+      "bytes": 194,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/LogEntry.md": {
+      "hash": "f20a34fe340622197ecd684cfcd5944821bacc0a",
+      "translatedAt": "2026-08-28T18:31:06.325Z",
+      "bytes": 150,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/LogSource.md": {
+      "hash": "50d3425ab8bb722fc12ca4b249a9462f13dea6e6",
+      "translatedAt": "2026-08-28T18:31:18.609Z",
+      "bytes": 171,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/SandboxSnapshot.md": {
+      "hash": "bb484d3cb7518dbfdf5260fec741573ebf5421ad",
+      "translatedAt": "2026-08-28T18:31:31.776Z",
+      "bytes": 699,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/releases.md": {
+      "hash": "bf77f6e973d4ba17f2417527ade712ca3e2523bd",
+      "translatedAt": "2026-08-28T18:31:46.483Z",
+      "bytes": 26992,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/FunctionAutoscalerSettings.md": {
+      "hash": "4d2ac7408bf7821f8ff2fe04159b66c6d5143a6a",
+      "translatedAt": "2026-08-28T18:32:12.848Z",
+      "bytes": 198,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/LogEntry.md": {
+      "hash": "f678ae44a5ee33738994a65c879cafbc0bf70fb8",
+      "translatedAt": "2026-08-28T18:32:26.462Z",
+      "bytes": 201,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/LogSource.md": {
+      "hash": "637219091c7fc51917dab3b36a51d1eb9600ea31",
+      "translatedAt": "2026-08-28T18:32:27.123Z",
+      "bytes": 80,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/SandboxSnapshot.md": {
+      "hash": "27b80d1024d396f67132869fdd99a1d7fb84eca3",
+      "translatedAt": "2026-08-28T18:32:53.191Z",
+      "bytes": 677,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/releases.md": {
+      "hash": "a5cc42433514afa7b3b5e12368402ac5831d3a33",
+      "translatedAt": "2026-08-28T18:33:06.862Z",
+      "bytes": 24639,
+      "fallback": true,
+      "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-08-27T17:33:33.521Z",
+  "updatedAt": "2026-08-28T18:33:19.852Z",
   "stats": {
-    "translated": 6,
-    "skipped": 293,
-    "failed": 0,
-    "total": 299
+    "translated": 0,
+    "skipped": 279,
+    "failed": 31,
+    "total": 310
   }
 }

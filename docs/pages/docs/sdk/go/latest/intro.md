@@ -16,7 +16,7 @@ Then you can import it in your code:
 import modal "github.com/modal-labs/modal-client/go"
 ```
 
-Go 1.24.0 or later is required.
+Go 1.25.0 or later is required.
 
 ## Configuration
 
@@ -138,7 +138,7 @@ if !ok {
 fmt.Println(response)
 ```
 
-All Function invocation methods are available:
+Synchronous and asynchronous [invocation methods](/docs/guide/function-invocation-methods) are both supported:
 
 ```go
 fc, err := f.Spawn(ctx, []any{"Hello, Modal!"}, nil)
@@ -152,6 +152,8 @@ if err != nil {
 }
 fmt.Println(result)
 ```
+
+Batched invocation is not currently supported from the Go SDK.
 
 ## Errors
 

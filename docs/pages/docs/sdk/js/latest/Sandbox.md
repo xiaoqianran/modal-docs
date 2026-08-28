@@ -63,6 +63,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `experimentalOptions?` (`Record<string, any>`): Optional experimental options.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
+* `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
 
 ## experimentalCreate
 
@@ -86,7 +87,9 @@ custom domains (`customDomain` allows connections to the Sandbox via a
 subdomain of that parent domain rather than a default Modal domain;
 requires prior setup by Modal).
 
-Features like memory snapshots and GPUs are not supported.
+Pass `experimentalEnableSnapshot: true` to create a sandbox that can be
+snapshotted with `Sandbox.experimentalSnapshot`. Features like network
+file systems and GPUs are not supported.
 
 V2 sandboxes created with this method are not currently returned by
 `client.sandboxes.list()`. A named Sandbox can be
@@ -131,6 +134,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `experimentalOptions?` (`Record<string, any>`): Optional experimental options.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
+* `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
 
 ## fromId
 
@@ -202,6 +206,30 @@ Optional parameters for `client.sandboxes.experimentalFromName()`.
 
 **Returns:** Promise that resolves to a Sandbox
 
+## experimentalFromSnapshot
+
+*Accessed via `modal.sandboxes`*
+
+```typescript
+async experimentalFromSnapshot(
+  snapshot: SandboxSnapshot,
+  params?: SandboxExperimentalFromSnapshotParams,
+): Promise<Sandbox>
+```
+
+Restore a `Sandbox` from a memory snapshot.
+
+The restore targets the same backend the snapshot was taken from. A V1
+snapshot restores as a V1 sandbox, a V2 snapshot as a V2 sandbox.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalFromSnapshotParams`)
+
+Optional parameters for `client.sandboxes.experimentalFromSnapshot()`.
+
+* `name?` (`string | null`): Name for the restored Sandbox. Omit to reuse the original Sandbox's name, pass `null` to leave it unnamed, or pass a string to override it.
+
 ## list
 
 *Accessed via `modal.sandboxes`*
@@ -229,19 +257,18 @@ Optional parameters for `client.sandboxes.list()`.
 
 ```typescript
 async *experimentalList(
-  params: SandboxExperimentalListParams,
+  params: SandboxExperimentalListParams = {},
 ): AsyncGenerator<Sandbox, void, unknown>
 ```
 
-List the V2 `Sandbox`es in an `App`.
+List V2 `Sandbox`es.
 
-This lists V2 Sandboxes, i.e. Sandboxes created via
-`client.sandboxes.experimentalCreate()`.
-Such Sandboxes are not returned by
-`client.sandboxes.list()`. If tags are specified,
+This lists all Sandboxes (both v1 and v2).
+Pass `appId` to scope to an App; omit it to list across the current
+environment (deprecated — prefer scoping by `appId`). If tags are specified,
 only Sandboxes that have at least those tags are returned.
 
-Yields `Sandbox` objects that are currently running in the App.
+Yields `Sandbox` objects that are currently running.
 
 EXPERIMENTAL: the API is subject to change.
 
@@ -249,8 +276,9 @@ EXPERIMENTAL: the API is subject to change.
 
 Parameters for `client.sandboxes.experimentalList()`.
 
-* `appId` (`string`): The App to list Sandboxes under.
+* `appId?` (`string`): The App to list Sandboxes under. Omit to list across the environment (deprecated).
 * `tags?` (`Record<string, string>`): Only return Sandboxes that include all specified tags.
+* `environment?` (`string`): Override environment for the request; defaults to current profile.
 
 ## createConnectToken
 
@@ -305,6 +333,30 @@ Optional parameters for `Sandbox.exec()`.
 * `secrets?` (`Secret[]`): `Secret`s to inject as environment variables for the commmand.
 * `pty?` (`boolean`): Enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty.
 
+## experimentalGetExitSnapshot
+
+```typescript
+async experimentalGetExitSnapshot(
+  params?: SandboxExperimentalGetExitSnapshotParams,
+): Promise<Image>
+```
+
+Get the exit filesystem snapshot image.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalGetExitSnapshotParams`)
+
+Optional parameters for Sandbox.experimentalGetExitSnapshot().
+
+* `timeoutMs?` (`number`): Total time to wait in milliseconds, spread across repeated long polls of at most `EXIT_SNAPSHOT_LONG_POLL_TIMEOUT` seconds each. `undefined` (the default) waits until the snapshot reaches a terminal state. `0` performs an immediate check without waiting.
+
+**Returns:** The exit snapshot Image.
+
+**Raises:**
+
+* `TimeoutError`: If `timeoutMs` elapses before the snapshot reaches a terminal state. This includes `timeoutMs = 0` when the snapshot is still pending.
+
 ## experimentalSetName
 
 ```typescript
@@ -328,6 +380,21 @@ EXPERIMENTAL: the API is subject to change.
 * `AlreadyExistsError`: If another running Sandbox in the App already holds the name.
 * `InvalidError`: If the server rejects the name as invalid.
 * `ConflictError`: If the Sandbox already has a name or is no longer running.
+
+## experimentalSnapshot
+
+```typescript
+async experimentalSnapshot(): Promise<SandboxSnapshot>
+```
+
+Snapshot the filesystem and memory of the Sandbox.
+
+Returns a `SandboxSnapshot` which can be restored into a new Sandbox
+with `client.sandboxes.experimentalFromSnapshot()`.
+
+The Sandbox must have been created with `experimentalEnableSnapshot: true`.
+
+EXPERIMENTAL: the API is subject to change.
 
 ## getTags
 
@@ -376,16 +443,14 @@ async reloadVolumes(params?: SandboxReloadVolumesParams): Promise<void>
 
 Reload all Volumes mounted in the Sandbox.
 
-Blocks until the Volumes have been reloaded, bounded by `timeoutMs` (55000
-by default). If the reload does not complete within that window, a
-`TimeoutError` is thrown; note that the reload may still complete in the
-background.
+Blocks until the reload completes, or throws a `TimeoutError` on timeout
+(the reload may still complete in the background).
 
 **Parameters** (`SandboxReloadVolumesParams`)
 
 Optional parameters for `Sandbox.reloadVolumes()`.
 
-* `timeoutMs?` (`number`): Overall budget for the reload call, in milliseconds. Defaults to 55000. If the reload does not complete within this window, the call is cancelled and a `TimeoutError` is thrown; note that the reload may still complete in the background.
+* `timeoutMs?` (`number`): Overall budget in milliseconds. Defaults to 55000.
 
 ## setTags
 
@@ -568,6 +633,9 @@ Options for `SidecarService.create()`.
 * `env?` (`Record<string, string>`): Environment variables to set in the sidecar container.
 * `secrets?` (`Secret[]`): `Secret`s to inject into the sidecar container as environment variables.
 * `workdir?` (`string`): Working directory of the sidecar container.
+* `outboundCidrAllowlist?` (`string[]`): List of CIDRs the sidecar is allowed to access. Independent of the main container; if not set, all CIDRs are allowed. An empty list blocks all external egress while preserving connectivity to the main container.
+* `outboundDomainAllowlist?` (`string[]`): List of domain names the sidecar is allowed to access. Supports wildcard prefixes (`*.example.com`). Independent of the main container.
+* `pty?` (`boolean`): Enable a PTY for the sidecar.
 
 ### get
 

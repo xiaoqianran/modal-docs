@@ -2,7 +2,7 @@
 
 Sandbox represents a Modal Sandbox, which can run commands and manage
 input/output streams for a remote process. After you are done interacting with the sandbox,
-we recommend calling \[Sandbox.Detach] which disconnects your client from the sandbox and
+we recommend calling `Sandbox.Detach` which disconnects your client from the sandbox and
 cleans up any resources associated with the connection.
 
 ```go
@@ -62,6 +62,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `ExperimentalOptions` (`map[string]any`): Experimental options
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
+* `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
 
 ## ExperimentalCreate
 
@@ -76,10 +77,13 @@ ExperimentalCreate creates a new Sandbox using the experimental V2 backend.
 Supported features include exec, encrypted tunnels, wait/poll/terminate,
 CPU and memory configuration, region placement, volumes, cloud bucket
 mounts (with static credentials via Secret or OidcAuthRoleArn), OIDC identity
-tokens, proxies, and filesystem snapshots.
+tokens, proxies, filesystem snapshots, and custom domains (CustomDomain
+allows connections to the Sandbox via a subdomain of that parent domain
+rather than a default Modal domain; requires prior setup by Modal).
 
-Features like memory snapshots, GPUs, and custom domains are not
-supported.
+Set ExperimentalEnableSnapshot to create a Sandbox that can be snapshotted
+with `Sandbox.ExperimentalSnapshot`. Features like network file systems and
+GPUs are not supported.
 
 V2 sandboxes created with this method are not currently returned by List. A
 named Sandbox can be looked up with ExperimentalFromName; otherwise store
@@ -121,6 +125,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `ExperimentalOptions` (`map[string]any`): Experimental options
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
+* `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
 
 ## FromID
 
@@ -176,6 +181,27 @@ SandboxExperimentalFromNameParams are options for SandboxService.ExperimentalFro
 
 * `Environment` (`string`)
 
+## ExperimentalFromSnapshot
+
+*Accessed via `client.Sandboxes`*
+
+```go
+ExperimentalFromSnapshot(ctx context.Context, snapshot *SandboxSnapshot, params *SandboxExperimentalFromSnapshotParams) (*Sandbox, error)
+```
+
+ExperimentalFromSnapshot restores a Sandbox from a memory snapshot.
+
+The restore targets the same backend the snapshot was taken from. A V1
+snapshot restores as a V1 sandbox, a V2 snapshot as a V2 sandbox.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalFromSnapshotParams`)
+
+SandboxExperimentalFromSnapshotParams are options for SandboxService.ExperimentalFromSnapshot.
+
+* `Name` (`*string`): Name for the restored Sandbox. Nil reuses the original Sandbox's name, a pointer to an empty string leaves it unnamed, and a pointer to a non-empty string overrides it.
+
 ## List
 
 *Accessed via `client.Sandboxes`*
@@ -202,9 +228,10 @@ SandboxListParams are options for listing Sandboxes.
 ExperimentalList(ctx context.Context, params *SandboxExperimentalListParams) (iter.Seq2[*Sandbox, error], error)
 ```
 
-ExperimentalList lists the V2 Sandboxes in an App, i.e. Sandboxes created via
-ExperimentalCreate. If Tags are specified, only Sandboxes that have all those
-tags are returned.
+ExperimentalList lists all sandboxes (v1 and v2).
+Pass AppID to scope to an App; omit it to list across the
+environment (deprecated — prefer scoping by AppID). If Tags are specified,
+only Sandboxes that have all those tags are returned.
 
 EXPERIMENTAL: the API is subject to change.
 
@@ -212,8 +239,9 @@ EXPERIMENTAL: the API is subject to change.
 
 SandboxExperimentalListParams are options for SandboxService.ExperimentalList.
 
-* `AppID` (`string`): The App to list Sandboxes under.
+* `AppID` (`string`): The App to list Sandboxes under. Omit to list across the environment (deprecated).
 * `Tags` (`map[string]string`): Only include Sandboxes that have all these tags.
+* `Environment` (`string`): Override environment for this request (used only when AppID is empty).
 
 ## CreateConnectToken
 
@@ -257,6 +285,67 @@ SandboxExecParams defines options for executing commands in a Sandbox.
 * `Env` (`map[string]string`): Environment variables to set for the command.
 * `Secrets` (`[]*Secret`): Secrets to inject as environment variables for the command.
 * `PTY` (`bool`): PTY defines whether to enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty.
+
+## ExperimentalGetExitSnapshot
+
+```go
+ExperimentalGetExitSnapshot(ctx context.Context, params *SandboxExperimentalGetExitSnapshotParams) (*Image, error)
+```
+
+ExperimentalGetExitSnapshot gets the exit filesystem snapshot image.
+
+Returns InvalidError if the Timeout is negative, or if exit snapshot is not
+enabled for the Sandbox. Returns TimeoutError if the Timeout elapses before
+the snapshot reaches a terminal state. This includes a Timeout of 0 when the
+snapshot is still pending. Returns SnapshotCreationError if no exit snapshot
+image will be produced. Returns NotFoundError if the Sandbox does not exist.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalGetExitSnapshotParams`)
+
+SandboxExperimentalGetExitSnapshotParams are options for Sandbox.ExperimentalGetExitSnapshot.
+
+* `Timeout` (`*time.Duration`): Timeout is the total time to wait, spread across repeated long polls of at most exitSnapshotLongPollTimeout each. nil (the default) waits until the snapshot reaches a terminal state. 0 performs an immediate check without waiting.
+
+## ExperimentalSetName
+
+```go
+ExperimentalSetName(ctx context.Context, name string, params *SandboxExperimentalSetNameParams) error
+```
+
+ExperimentalSetName assigns a name to a running V2 Sandbox that was created
+without one, i.e. a Sandbox created via ExperimentalCreate. A name may only be
+set once, and only on a Sandbox that has never had one; afterwards the Sandbox
+can be looked up with ExperimentalFromName. Names must be unique within an App.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalSetNameParams`)
+
+SandboxExperimentalSetNameParams are options for Sandbox.ExperimentalSetName.
+
+*No configurable options.*
+
+## ExperimentalSnapshot
+
+```go
+ExperimentalSnapshot(ctx context.Context, params *SandboxExperimentalSnapshotParams) (*SandboxSnapshot, error)
+```
+
+ExperimentalSnapshot snapshots the filesystem and memory of the Sandbox.
+
+Returns a SandboxSnapshot which can be restored into a new Sandbox with
+SandboxService.ExperimentalFromSnapshot. The Sandbox must have been created
+with SandboxCreateParams.ExperimentalEnableSnapshot set.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalSnapshotParams`)
+
+SandboxExperimentalSnapshotParams are options for Sandbox.ExperimentalSnapshot.
+
+*No configurable options.*
 
 ## GetTags
 
@@ -311,16 +400,14 @@ ReloadVolumes(ctx context.Context, params *SandboxReloadVolumesParams) error
 
 ReloadVolumes reloads all Volumes mounted in the Sandbox.
 
-Blocks until the Volumes have been reloaded, bounded by the timeout (55
-seconds by default; see \[SandboxReloadVolumesParams]). If the reload does not
-complete within that window, a TimeoutError is returned; note that the reload
-may still complete in the background.
+Blocks until the reload completes, or returns a TimeoutError on timeout (the
+reload may still complete in the background).
 
 **Parameters** (`SandboxReloadVolumesParams`)
 
 SandboxReloadVolumesParams are options for Sandbox.ReloadVolumes.
 
-* `Timeout` (`time.Duration`): Timeout bounds how long the call waits for the reload to complete. Defaults to 55 seconds. If the reload does not complete within this window, the call is cancelled and a TimeoutError is returned.
+* `Timeout` (`time.Duration`): Timeout bounds how long the call waits. Defaults to 55 seconds.
 
 ## SetTags
 
@@ -346,14 +433,14 @@ SnapshotDirectory snapshots and creates a new image from a directory in the runn
 
 If params is nil, the resulting image is retained for 30 days as a hard
 cutoff measured from creation, and the call has a 55-second timeout.
-See \[SandboxSnapshotDirectoryParams] for control over both.
+See `SandboxSnapshotDirectoryParams` for control over both.
 
 **Parameters** (`SandboxSnapshotDirectoryParams`)
 
-SandboxSnapshotDirectoryParams configures a \[Sandbox.SnapshotDirectory] call.
+SandboxSnapshotDirectoryParams configures a `Sandbox.SnapshotDirectory` call.
 
 * `Timeout` (`time.Duration`): Timeout is the overall budget for the snapshot call. Zero means the default (55 seconds). If it elapses before a snapshot completes, a TimeoutError is returned.
-* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero (or omitted) means use the default of 30 days, as a hard cutoff measured from creation. A positive value sets a custom lifetime; sub-second values are rejected. Pass \[NoExpiryTTL] to retain the image indefinitely. See \[NoExpiryTTL].
+* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero (or omitted) means use the default of 30 days, as a hard cutoff measured from creation. A positive value sets a custom lifetime; sub-second values are rejected. Pass `NoExpiryTTL` to retain the image indefinitely. See `NoExpiryTTL`.
 * `ExperimentalEncryptionKey` (`[]byte`): ExperimentalEncryptionKey is a customer-supplied encryption key used to encrypt the resulting snapshot. The same key is required when mounting the image. Modal does not persist the key.
 
 ## SnapshotFilesystem
@@ -367,14 +454,14 @@ Returns an Image object which can be used to spawn a new Sandbox with the same f
 
 If params is nil, the resulting image is retained for 30 days as a hard
 cutoff measured from creation, and the call has a 55-second timeout.
-See \[SandboxSnapshotFilesystemParams] for control over both.
+See `SandboxSnapshotFilesystemParams` for control over both.
 
 **Parameters** (`SandboxSnapshotFilesystemParams`)
 
-SandboxSnapshotFilesystemParams configures a \[Sandbox.SnapshotFilesystem] call.
+SandboxSnapshotFilesystemParams configures a `Sandbox.SnapshotFilesystem` call.
 
 * `Timeout` (`time.Duration`): Timeout is the overall budget for the snapshot call. Zero means the default (55 seconds). If it elapses before a snapshot completes, a TimeoutError is returned.
-* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero (or omitted) means use the default of 30 days, as a hard cutoff measured from creation. A positive value sets a custom lifetime; sub-second values are rejected. Pass \[NoExpiryTTL] to retain the image indefinitely. See \[NoExpiryTTL].
+* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero (or omitted) means use the default of 30 days, as a hard cutoff measured from creation. A positive value sets a custom lifetime; sub-second values are rejected. Pass `NoExpiryTTL` to retain the image indefinitely. See `NoExpiryTTL`.
 
 ## Terminate
 
@@ -486,7 +573,7 @@ Create(ctx context.Context, name string, image *Image, params *SidecarCreatePara
 ```
 
 Create starts a new sidecar container in the Sandbox. The Image must
-already be built by calling \[Image.Build] before it's passed to Create.
+already be built by calling `Image.Build` before it's passed to Create.
 
 **Parameters** (`SidecarCreateParams`)
 
@@ -496,6 +583,9 @@ SidecarCreateParams holds options for creating a sidecar container.
 * `Env` (`map[string]string`): Env are environment variables to set in the sidecar container.
 * `Secrets` (`[]*Secret`): Secrets to inject into the sidecar container as environment variables.
 * `Workdir` (`string`): Workdir sets the working directory of the sidecar container.
+* `OutboundCIDRAllowlist` (`*Allowlist`): OutboundCIDRAllowlist restricts the sidecar's outbound traffic to these CIDRs. Independent of the main container; nil means all CIDRs are allowed. A non-nil allowlist with empty Entries blocks all external egress while preserving connectivity to the main container.
+* `OutboundDomainAllowlist` (`*Allowlist`): OutboundDomainAllowlist restricts the sidecar's outbound TLS connections (port 443) to these SNI domains. Supports wildcard prefixes (\*.example.com). Independent of the main container.
+* `PTY` (`bool`): PTY sets whether to enable a PTY for the sidecar container.
 
 ### Get
 
@@ -541,15 +631,15 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, \[SandboxFilesystemPermissionError] if
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, `SandboxFilesystemPermissionError` if
 write permission is denied, or an \*os.PathError if localPath does not
 exist, is a directory, or cannot be read.
 
 **Parameters** (`SandboxFilesystemCopyFromLocalParams`)
 
-SandboxFilesystemCopyFromLocalParams holds optional parameters for \[SandboxFilesystem.CopyFromLocal].
+SandboxFilesystemCopyFromLocalParams holds optional parameters for `SandboxFilesystem.CopyFromLocal`.
 
 *No configurable options.*
 
@@ -565,14 +655,14 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories for localPath are created if needed. The local file is
 overwritten if it already exists.
 
-Returns \[SandboxFilesystemNotFoundError] if the remote path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the remote path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the remote path does not exist,
+`SandboxFilesystemIsADirectoryError` if the remote path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemCopyToLocalParams`)
 
-SandboxFilesystemCopyToLocalParams holds optional parameters for \[SandboxFilesystem.CopyToLocal].
+SandboxFilesystemCopyToLocalParams holds optional parameters for `SandboxFilesystem.CopyToLocal`.
 
 *No configurable options.*
 
@@ -585,15 +675,15 @@ ListFiles(ctx context.Context, remotePath string, params *SandboxFilesystemListF
 ListFiles lists files and directories in a Sandbox directory.
 
 remotePath must be an absolute path to a directory in the Sandbox.
-Returns a slice of \[FileInfo] objects sorted by name.
+Returns a slice of `FileInfo` objects sorted by name.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemNotADirectoryError] if the path is not a directory,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemNotADirectoryError` if the path is not a directory,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemListFilesParams`)
 
-SandboxFilesystemListFilesParams holds optional parameters for \[SandboxFilesystem.ListFiles].
+SandboxFilesystemListFilesParams holds optional parameters for `SandboxFilesystem.ListFiles`.
 
 *No configurable options.*
 
@@ -612,16 +702,16 @@ missing parent directories are created and the call is idempotent (succeeds
 if the directory already exists). When false, the immediate parent must
 already exist and the path must not already exist.
 
-Returns \[SandboxFilesystemNotFoundError] if the parent does not exist and
-CreateParents is false, \[SandboxFilesystemPathAlreadyExistsError] if the
-path already exists, \[SandboxFilesystemNotADirectoryError] if a path
-component is not a directory, \[SandboxFilesystemPermissionError] if
-creation is not permitted, or \[InvalidError] if the mount does not
+Returns `SandboxFilesystemNotFoundError` if the parent does not exist and
+CreateParents is false, `SandboxFilesystemPathAlreadyExistsError` if the
+path already exists, `SandboxFilesystemNotADirectoryError` if a path
+component is not a directory, `SandboxFilesystemPermissionError` if
+creation is not permitted, or `InvalidError` if the mount does not
 support this operation.
 
 **Parameters** (`SandboxFilesystemMakeDirectoryParams`)
 
-SandboxFilesystemMakeDirectoryParams holds optional parameters for \[SandboxFilesystem.MakeDirectory].
+SandboxFilesystemMakeDirectoryParams holds optional parameters for `SandboxFilesystem.MakeDirectory`.
 
 * `CreateParents` (`*bool`): CreateParents controls whether missing parent directories are created automatically. Defaults to true when nil.
 
@@ -635,14 +725,14 @@ ReadBytes reads a file from the Sandbox and returns its contents as bytes.
 
 remotePath must be an absolute path to a file in the Sandbox.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemIsADirectoryError` if the path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemReadParams`)
 
-SandboxFilesystemReadParams holds optional parameters for \[SandboxFilesystem.ReadBytes] and \[SandboxFilesystem.ReadText].
+SandboxFilesystemReadParams holds optional parameters for `SandboxFilesystem.ReadBytes` and `SandboxFilesystem.ReadText`.
 
 *No configurable options.*
 
@@ -656,14 +746,14 @@ ReadText reads a file from the Sandbox and returns its contents as a UTF-8 strin
 
 remotePath must be an absolute path to a file in the Sandbox.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemIsADirectoryError] if the path points to a directory,
-\[SandboxFilesystemFileTooLargeError] if the file exceeds the read size limit,
-or \[SandboxFilesystemPermissionError] if read permission is denied.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemIsADirectoryError` if the path points to a directory,
+`SandboxFilesystemFileTooLargeError` if the file exceeds the read size limit,
+or `SandboxFilesystemPermissionError` if read permission is denied.
 
 **Parameters** (`SandboxFilesystemReadParams`)
 
-SandboxFilesystemReadParams holds optional parameters for \[SandboxFilesystem.ReadBytes] and \[SandboxFilesystem.ReadText].
+SandboxFilesystemReadParams holds optional parameters for `SandboxFilesystem.ReadBytes` and `SandboxFilesystem.ReadText`.
 
 *No configurable options.*
 
@@ -680,14 +770,14 @@ directory and params.Recursive is false (the default when params is nil),
 it is removed only if empty. When Recursive is true, the directory and all
 its contents are removed. Recursive removal is not supported on all mounts.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemDirectoryNotEmptyError] if Recursive is false and the
-directory is not empty, \[SandboxFilesystemPermissionError] if removal is
-not permitted, or \[InvalidError] if the mount does not support this operation.
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemDirectoryNotEmptyError` if Recursive is false and the
+directory is not empty, `SandboxFilesystemPermissionError` if removal is
+not permitted, or `InvalidError` if the mount does not support this operation.
 
 **Parameters** (`SandboxFilesystemRemoveParams`)
 
-SandboxFilesystemRemoveParams holds optional parameters for \[SandboxFilesystem.Remove].
+SandboxFilesystemRemoveParams holds optional parameters for `SandboxFilesystem.Remove`.
 
 * `Recursive` (`bool`): Recurisve controls whether contens of a removed directory are recursively removed. Defaults to false when nil.
 
@@ -700,17 +790,17 @@ Stat(ctx context.Context, remotePath string, params *SandboxFilesystemStatParams
 Stat returns metadata for a single file, directory, or symlink in the Sandbox.
 
 remotePath must be an absolute path in the Sandbox. If remotePath is a
-symlink, the returned \[FileInfo] describes the symlink itself, not the
+symlink, the returned `FileInfo` describes the symlink itself, not the
 target it points to.
 
-Returns \[SandboxFilesystemNotFoundError] if the path does not exist,
-\[SandboxFilesystemNotADirectoryError] if a non-leaf component of the path
-is not a directory, or \[SandboxFilesystemPermissionError] if a path
+Returns `SandboxFilesystemNotFoundError` if the path does not exist,
+`SandboxFilesystemNotADirectoryError` if a non-leaf component of the path
+is not a directory, or `SandboxFilesystemPermissionError` if a path
 component is not searchable.
 
 **Parameters** (`SandboxFilesystemStatParams`)
 
-SandboxFilesystemStatParams holds optional parameters for \[SandboxFilesystem.Stat].
+SandboxFilesystemStatParams holds optional parameters for `SandboxFilesystem.Stat`.
 
 *No configurable options.*
 
@@ -733,7 +823,7 @@ to also receive events for all nested subdirectories. If remotePath is a
 symlink, it is followed and events reference paths under the resolved
 target.
 
-The returned \[iter.Seq2] yields \[FileWatchEvent] values as changes occur,
+The returned `iter.Seq2` yields `FileWatchEvent` values as changes occur,
 until the timeout elapses, the caller breaks from the range loop, ctx is
 cancelled, or the Sandbox is terminated. The remote watch process is not
 started until iteration begins, so a sequence that is never ranged over
@@ -749,13 +839,13 @@ without returning an error.
 
 Pass nil params for defaults (no filter, non-recursive, no timeout).
 
-Returns \[SandboxFilesystemNotFoundError] if remotePath does not exist,
-\[SandboxFilesystemPermissionError] if watch access is denied, or
-\[InvalidError] if the filesystem does not support watching.
+Returns `SandboxFilesystemNotFoundError` if remotePath does not exist,
+`SandboxFilesystemPermissionError` if watch access is denied, or
+`InvalidError` if the filesystem does not support watching.
 
 **Parameters** (`SandboxFilesystemWatchParams`)
 
-SandboxFilesystemWatchParams holds optional parameters for \[SandboxFilesystem.Watch].
+SandboxFilesystemWatchParams holds optional parameters for `SandboxFilesystem.Watch`.
 
 * `Filter` (`[]FileWatchEventType`)
 * `Recursive` (`bool`)
@@ -773,14 +863,14 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, or \[SandboxFilesystemPermissionError]
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, or `SandboxFilesystemPermissionError`
 if write permission is denied.
 
 **Parameters** (`SandboxFilesystemWriteParams`)
 
-SandboxFilesystemWriteParams holds optional parameters for \[SandboxFilesystem.WriteBytes] and \[SandboxFilesystem.WriteText].
+SandboxFilesystemWriteParams holds optional parameters for `SandboxFilesystem.WriteBytes` and `SandboxFilesystem.WriteText`.
 
 *No configurable options.*
 
@@ -796,13 +886,13 @@ remotePath must be an absolute path to a file in the Sandbox.
 Parent directories are created if needed. The remote file is overwritten
 if it already exists.
 
-Returns \[SandboxFilesystemNotADirectoryError] if a parent component of
-remotePath is not a directory, \[SandboxFilesystemIsADirectoryError] if
-remotePath points to a directory, or \[SandboxFilesystemPermissionError]
+Returns `SandboxFilesystemNotADirectoryError` if a parent component of
+remotePath is not a directory, `SandboxFilesystemIsADirectoryError` if
+remotePath points to a directory, or `SandboxFilesystemPermissionError`
 if write permission is denied.
 
 **Parameters** (`SandboxFilesystemWriteParams`)
 
-SandboxFilesystemWriteParams holds optional parameters for \[SandboxFilesystem.WriteBytes] and \[SandboxFilesystem.WriteText].
+SandboxFilesystemWriteParams holds optional parameters for `SandboxFilesystem.WriteBytes` and `SandboxFilesystem.WriteText`.
 
 *No configurable options.*

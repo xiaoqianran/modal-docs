@@ -769,6 +769,13 @@ fmt.Println(string(stdout))
 
 {/snippet} </CodeTabs>
 
+### OIDC identity tokens
+
+Pass `include_oidc_identity_token=True` to `modal.Sandbox.create` to inject a
+`MODAL_IDENTITY_TOKEN` environment variable containing an OIDC token into the
+Sandbox. See the [OIDC integration guide](/docs/guide/oidc-integration) for
+details.
+
 ### Custom Images
 
 Sandboxes support [custom images](/docs/guide/images) just as Functions do. These can be defined using [method chaining](/docs/guide/images) or by referencing an [existing Image in an external container registry](/docs/guide/existing-images).

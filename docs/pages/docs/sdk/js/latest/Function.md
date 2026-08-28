@@ -6,6 +6,7 @@ Represents a deployed Modal Function, which can be invoked remotely.
 class Function_ {
   readonly functionId: string;
   readonly methodName?: string;
+  get logs(): FunctionLogsManager; // Access logs for this Function. Use `fetch()` to read logs from a UTC time range, `tail()` to read the most recent logs, and `stream()` to follow new logs as they arrive. See also: [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs) for CLI access to logs for an App.
 }
 ```
 
@@ -79,7 +80,7 @@ async spawn(
 ```typescript
 async updateAutoscaler(
   params: FunctionUpdateAutoscalerParams,
-): Promise<void>
+): Promise<FunctionAutoscalerSettings>
 ```
 
 **Parameters** (`FunctionUpdateAutoscalerParams`)
@@ -147,3 +148,102 @@ Configuration options for `Function_.withOptions()`.
 * `scaledownWindowMs?` (`number`)
 * `timeoutMs?` (`number`)
 * `routingRegion?` (`string`)
+
+## Function.logs
+
+Access logs for this Function.
+
+Use `fetch()` to read logs from a UTC time
+range, `tail()` to read the most recent
+logs, and `stream()` to follow new logs as
+they arrive.
+
+See also: [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs)
+for CLI access to logs for an App.
+
+### fetch
+
+```typescript
+fetch(params: FunctionLogFetchParams): AsyncIterable<LogEntry>
+```
+
+Fetch Function logs corresponding to a UTC time range and optional
+filters.
+
+Entries are returned in chronological order.
+
+**Parameters** (`FunctionLogFetchParams`)
+
+* `since` (`Date`): Start of the UTC time range.
+* `until?` (`Date`): End of the UTC time range. Defaults to the current time.
+* `source?` (`LogSource`): Filter by source: `stdout`, `stderr`, or `system`.
+* `searchText?` (`string`): Filter by text contained in the log message.
+
+**Returns:** An async iterable of `LogEntry` objects.
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.fetch({
+  since: new Date(Date.now() - 4 * 60 * 60 * 1_000),
+  source: "stdout",
+})) {
+  process.stdout.write(entry.message);
+}
+```
+
+### stream
+
+```typescript
+stream(params: FunctionLogStreamParams = {}): AsyncIterable<LogEntry>
+```
+
+Stream new Function logs until the timeout is reached.
+
+**Parameters** (`FunctionLogStreamParams`)
+
+* `timeoutMs?` (`number`): Number of milliseconds to wait between log entries before ending the stream. By default, the stream blocks until it is interrupted.
+
+**Returns:** An async iterable of `LogEntry` objects as they arrive.
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.stream({ timeoutMs: 60_000 })) {
+  process.stdout.write(entry.message);
+}
+```
+
+### tail
+
+```typescript
+tail(params: FunctionLogTailParams = {}): AsyncIterable<LogEntry>
+```
+
+Fetch the most recent Function logs.
+
+Entries are returned in chronological order.
+
+**Parameters** (`FunctionLogTailParams`)
+
+* `entries?` (`number`): Number of log entries to return. Defaults to 100.
+* `source?` (`LogSource`): Filter by source: `stdout`, `stderr`, or `system`.
+
+**Returns:** An async iterable of `LogEntry` objects.
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.tail({ entries: 20 })) {
+  process.stdout.write(entry.message);
+}
+```

@@ -104,6 +104,7 @@ https://modal.com/docs/guide/continuous-deployment.md
 https://modal.com/docs/guide/cron.md
 https://modal.com/docs/guide/cuda.md
 https://modal.com/docs/guide/customer-supplied-encryption-keys.md
+https://modal.com/docs/guide/data-residency.md
 https://modal.com/docs/guide/datadog-integration.md
 https://modal.com/docs/guide/dataset-ingestion.md
 https://modal.com/docs/guide/developing-debugging.md
@@ -138,7 +139,7 @@ https://modal.com/docs/guide/modal-user-account-setup.md
 https://modal.com/docs/guide/model-weights.md
 https://modal.com/docs/guide/multi-node-training.md
 https://modal.com/docs/guide/named-images.md
-https://modal.com/docs/guide/notebooks
+https://modal.com/docs/guide/notebooks.md
 https://modal.com/docs/guide/oidc-integration.md
 https://modal.com/docs/guide/okta-sso.md
 https://modal.com/docs/guide/otel-integration.md
@@ -194,9 +195,12 @@ https://modal.com/docs/sdk/go/latest/FileType.md
 https://modal.com/docs/sdk/go/latest/FileWatchEvent.md
 https://modal.com/docs/sdk/go/latest/FileWatchEventType.md
 https://modal.com/docs/sdk/go/latest/Function.md
+https://modal.com/docs/sdk/go/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/go/latest/FunctionCall.md
 https://modal.com/docs/sdk/go/latest/FunctionStats.md
 https://modal.com/docs/sdk/go/latest/Image.md
+https://modal.com/docs/sdk/go/latest/LogEntry.md
+https://modal.com/docs/sdk/go/latest/LogSource.md
 https://modal.com/docs/sdk/go/latest/Probe.md
 https://modal.com/docs/sdk/go/latest/Profile.md
 https://modal.com/docs/sdk/go/latest/Proxy.md
@@ -204,13 +208,14 @@ https://modal.com/docs/sdk/go/latest/Queue.md
 https://modal.com/docs/sdk/go/latest/Retries.md
 https://modal.com/docs/sdk/go/latest/Sandbox.md
 https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/go/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/go/latest/Secret.md
 https://modal.com/docs/sdk/go/latest/SidecarContainer.md
 https://modal.com/docs/sdk/go/latest/StdioBehavior.md
 https://modal.com/docs/sdk/go/latest/Tunnel.md
-https://modal.com/docs/sdk/go/latest/ValidateExecArgs.md
 https://modal.com/docs/sdk/go/latest/Volume.md
 https://modal.com/docs/sdk/go/latest/intro.md
+https://modal.com/docs/sdk/go/releases.md
 https://modal.com/docs/sdk/js/latest/App.md
 https://modal.com/docs/sdk/js/latest/CloudBucketMount.md
 https://modal.com/docs/sdk/js/latest/Cls.md
@@ -222,10 +227,13 @@ https://modal.com/docs/sdk/js/latest/FileType.md
 https://modal.com/docs/sdk/js/latest/FileWatchEvent.md
 https://modal.com/docs/sdk/js/latest/FileWatchEventType.md
 https://modal.com/docs/sdk/js/latest/Function.md
+https://modal.com/docs/sdk/js/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/js/latest/FunctionCall.md
 https://modal.com/docs/sdk/js/latest/FunctionStats.md
 https://modal.com/docs/sdk/js/latest/Image.md
+https://modal.com/docs/sdk/js/latest/LogEntry.md
 https://modal.com/docs/sdk/js/latest/LogLevel.md
+https://modal.com/docs/sdk/js/latest/LogSource.md
 https://modal.com/docs/sdk/js/latest/Logger.md
 https://modal.com/docs/sdk/js/latest/ModalClient.md
 https://modal.com/docs/sdk/js/latest/ModalReadStream.md
@@ -237,6 +245,7 @@ https://modal.com/docs/sdk/js/latest/Queue.md
 https://modal.com/docs/sdk/js/latest/Retries.md
 https://modal.com/docs/sdk/js/latest/Sandbox.md
 https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/js/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/js/latest/Secret.md
 https://modal.com/docs/sdk/js/latest/SidecarContainer.md
 https://modal.com/docs/sdk/js/latest/StdioBehavior.md
@@ -244,6 +253,7 @@ https://modal.com/docs/sdk/js/latest/StreamMode.md
 https://modal.com/docs/sdk/js/latest/Tunnel.md
 https://modal.com/docs/sdk/js/latest/Volume.md
 https://modal.com/docs/sdk/js/latest/intro.md
+https://modal.com/docs/sdk/js/releases.md
 https://modal.com/docs/sdk/py/latest/App.md
 https://modal.com/docs/sdk/py/latest/Client.md
 https://modal.com/docs/sdk/py/latest/CloudBucketMount.md

@@ -5,6 +5,7 @@ Function references a deployed Modal Function.
 ```go
 type Function struct {
 	FunctionID string
+	Logs       *FunctionLogsManager // Logs provides access to logs emitted by this Function.
 }
 ```
 
@@ -73,7 +74,7 @@ Spawn starts running a single input on a remote Function.
 ## UpdateAutoscaler
 
 ```go
-UpdateAutoscaler(ctx context.Context, params *FunctionUpdateAutoscalerParams) error
+UpdateAutoscaler(ctx context.Context, params *FunctionUpdateAutoscalerParams) (*FunctionAutoscalerSettings, error)
 ```
 
 UpdateAutoscaler overrides the current autoscaler behavior for this Function.
@@ -85,7 +86,7 @@ FunctionUpdateAutoscalerParams contains options for overriding a Function's auto
 * `MinContainers` (`*uint32`)
 * `MaxContainers` (`*uint32`)
 * `BufferContainers` (`*uint32`)
-* `ScaledownWindow` (`*uint32`)
+* `ScaledownWindow` (`*time.Duration`)
 
 ## WithBatching
 
@@ -137,3 +138,68 @@ FunctionWithOptionsParams represents runtime options for a Modal Function.
 * `ScaledownWindow` (`*time.Duration`)
 * `Timeout` (`*time.Duration`)
 * `RoutingRegion` (`*string`)
+
+## Function.Logs
+
+Logs provides access to logs emitted by this Function.
+
+### Fetch
+
+```go
+Fetch(
+	ctx context.Context,
+	since time.Time,
+	params *FunctionLogFetchParams,
+) (iter.Seq2[LogEntry, error], error)
+```
+
+Fetch fetches Function logs corresponding to the date range and filters.
+
+since is the start of the time range. params.Until defaults to the current
+time. The sequence yields `LogEntry` values in chronological order.
+
+**Parameters** (`FunctionLogFetchParams`)
+
+FunctionLogFetchParams are options for fetching Function logs.
+
+* `Until` (`*time.Time`): Until is the end of the time range. It defaults to the current time.
+* `Source` (`LogSource`): Source filters logs by stdout, stderr, or system. The zero value includes all sources.
+* `SearchText` (`string`): SearchText filters Function logs by search text.
+
+### Stream
+
+```go
+Stream(
+	ctx context.Context,
+	params *LogStreamParams,
+) (iter.Seq2[LogEntry, error], error)
+```
+
+Stream streams new Function logs until the timeout is reached.
+
+The timeout specifies how long to wait between log entries before
+terminating the stream. By default, the stream blocks until it is
+interrupted. The sequence yields `LogEntry` values as they arrive.
+
+**Parameters** (`LogStreamParams`)
+
+LogStreamParams are options for streaming logs.
+
+* `Timeout` (`*time.Duration`): Timeout is the duration to wait between log entries before terminating the stream. When nil, the stream blocks until it is interrupted.
+
+### Tail
+
+```go
+Tail(ctx context.Context, params *LogTailParams) (iter.Seq2[LogEntry, error], error)
+```
+
+Tail fetches the most recent Function logs.
+
+The sequence yields `LogEntry` values in chronological order.
+
+**Parameters** (`LogTailParams`)
+
+LogTailParams are options for fetching the most recent logs.
+
+* `Entries` (`int`): Entries is the number of log entries to return. It defaults to 100.
+* `Source` (`LogSource`): Source filters logs by stdout, stderr, or system. The zero value includes all sources.

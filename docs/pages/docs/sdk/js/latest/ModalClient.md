@@ -27,6 +27,7 @@ class ModalClient {
   readonly proxies: ProxyService;
   readonly queues: QueueService;
   readonly sandboxes: SandboxService;
+  readonly sandboxSnapshots: SandboxSnapshotService;
   readonly secrets: SecretService;
   readonly volumes: VolumeService;
   readonly profile: Profile;

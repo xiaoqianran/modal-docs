@@ -1,7 +1,7 @@
 # Client
 
 Client exposes services for interacting with Modal resources.
-You should not instantiate it directly, and instead use \[NewClient]/\[NewClientWithOptions].
+You should not instantiate it directly, and instead use `NewClient`/`NewClientWithOptions`.
 
 ```go
 type Client struct {
@@ -14,6 +14,7 @@ type Client struct {
 	Proxies           ProxyService
 	Queues            QueueService
 	Sandboxes         SandboxService
+	SandboxSnapshots  SandboxSnapshotService
 	Secrets           SecretService
 	Volumes           VolumeService
 }

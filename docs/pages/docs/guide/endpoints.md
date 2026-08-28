@@ -104,7 +104,7 @@ To create an endpoint that accepts unauthenticated requests instead, pass
 ## Calling your endpoint
 
 Once the endpoint is live, it serves the OpenAI Chat Completions API at the
-endpoint URL — find it in the dashboard or with `modal endpoint list`. The API
+endpoint URL - which is displayed in the dashboard. The API
 is served under `/v1`, and the model name to pass is the base model repo ID (for
 catalog and Volume models) or your custom Hugging Face repo ID.
 

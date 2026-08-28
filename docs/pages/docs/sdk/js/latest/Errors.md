@@ -24,6 +24,14 @@ The current state of a resource conflicts with the requested operation.
 class ConflictError extends Error
 ```
 
+## ExecutionError
+
+Something unexpected happened during runtime.
+
+```typescript
+class ExecutionError extends Error
+```
+
 ## FunctionTimeoutError
 
 Function execution exceeds the allowed time limit.
@@ -150,6 +158,14 @@ Sandbox operations that exceed the allowed time limit.
 
 ```typescript
 class SandboxTimeoutError extends Error
+```
+
+## SnapshotCreationError
+
+No snapshot image will be produced for a Sandbox.
+
+```typescript
+class SnapshotCreationError extends Error
 ```
 
 ## TimeoutError

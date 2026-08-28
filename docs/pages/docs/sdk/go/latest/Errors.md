@@ -20,6 +20,17 @@ type ClientClosedError struct {
 }
 ```
 
+## ConflictError
+
+ConflictError is returned when the current state of a resource conflicts
+with the requested operation.
+
+```go
+type ConflictError struct {
+	Exception string
+}
+```
+
 ## ExecTimeoutError
 
 ExecTimeoutError is returned when a container exec exceeds its execution duration limit.
@@ -196,6 +207,16 @@ SandboxTimeoutError is returned when Sandbox operations exceed the allowed time 
 
 ```go
 type SandboxTimeoutError struct {
+	Exception string
+}
+```
+
+## SnapshotCreationError
+
+SnapshotCreationError is returned when no snapshot image will be produced for a Sandbox.
+
+```go
+type SnapshotCreationError struct {
 	Exception string
 }
 ```
