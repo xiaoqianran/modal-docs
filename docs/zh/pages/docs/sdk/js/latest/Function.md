@@ -8,6 +8,7 @@
 class Function_ {
   readonly functionId: string;
   readonly methodName?: string;
+  get logs(): FunctionLogsManager; // Access logs for this Function. Use `fetch()` to read logs from a UTC time range, `tail()` to read the most recent logs, and `stream()` to follow new logs as they arrive. See also: [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs) for CLI access to logs for an App.
 }
 ```
 
@@ -80,7 +81,7 @@ async spawn(
 ```typescript
 async updateAutoscaler(
   params: FunctionUpdateAutoscalerParams,
-): Promise<void>
+): Promise<FunctionAutoscalerSettings>
 ```
 
 **参数** (`FunctionUpdateAutoscalerParams`)
@@ -147,3 +148,100 @@ withOptions(options: FunctionWithOptionsParams): Function_
 * `scaledownWindowMs?` (`number`)
 * `timeoutMs?` (`number`)
 * `routingRegion?` (`string`)
+
+## 函数.logs
+
+此功能的访问日志。
+
+使用 `fetch()` 从 UTC 时间读取日志
+范围，`tail()`读取最新的
+日志，以及 `stream()` 来跟踪新日志
+他们到达了。
+
+另请参阅：[`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs)用于 CLI 访问应用程序的日志。
+
+### 获取
+
+```typescript
+fetch(params: FunctionLogFetchParams): AsyncIterable<LogEntry>
+```
+
+获取对应于 UTC 时间范围和可选的函数日志
+过滤器。
+
+条目按时间顺序返回。
+
+**参数** (`FunctionLogFetchParams`)
+
+* `since` (`Date`)：UTC 时间范围的开始。
+* `until?` (`Date`)：UTC 时间范围结束。默认为当前时间。
+* `source?` (`LogSource`)：按来源过滤：`stdout`、`stderr` 或 `system`。
+* `searchText?` (`string`)：按日志消息中包含的文本过滤。
+
+**返回：** `LogEntry` 对象的异步迭代。
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.fetch({
+  since: new Date(Date.now() - 4 * 60 * 60 * 1_000),
+  source: "stdout",
+})) {
+  process.stdout.write(entry.message);
+}
+```
+
+### 流
+
+```typescript
+stream(params: FunctionLogStreamParams = {}): AsyncIterable<LogEntry>
+```
+
+流式传输新的函数日志，直到达到超时。
+
+**参数** (`FunctionLogStreamParams`)
+* `timeoutMs?` (`number`)：结束流之前日志条目之间等待的毫秒数。默认情况下，流会阻塞直至被中断。
+
+**返回：** `LogEntry` 对象到达时的异步可迭代。
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.stream({ timeoutMs: 60_000 })) {
+  process.stdout.write(entry.message);
+}
+```
+
+### 尾巴
+
+```typescript
+tail(params: FunctionLogTailParams = {}): AsyncIterable<LogEntry>
+```
+
+获取最新的函数日志。
+
+条目按时间顺序返回。
+
+**参数** (`FunctionLogTailParams`)
+
+* `entries?` (`number`)：要返回的日志条目数。默认为 100。
+* `source?` (`LogSource`)：按来源过滤：`stdout`、`stderr` 或 `system`。
+
+**返回：** `LogEntry` 对象的异步迭代。
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const function_ = await modal.functions.fromName("my-app", "train");
+
+for await (const entry of function_.logs.tail({ entries: 20 })) {
+  process.stdout.write(entry.message);
+}
+```

@@ -157,6 +157,7 @@ modal environment create [OPTIONS] NAME
 **Options**:
 
 * `--restricted`: Enable RBAC restrictions on the new environment
+* `--default-role TEXT`: Default member Role for the Restricted Environment
 * `--help`: Show this message and exit.
 
 ## `modal environment delete`
@@ -227,6 +228,7 @@ modal environment roles list [OPTIONS] ENVIRONMENT
 
 **Options**:
 
+* `--exclude-default`: Only list roles that are directly assigned
 * `--json`
 * `--help`: Show this message and exit.
 

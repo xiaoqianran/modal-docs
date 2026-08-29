@@ -1,12 +1,12 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙盒
+# 沙箱
 
 ```python
 class Sandbox(modal.object.Object)
 ```
 
-`Sandbox` 对象可让您与正在运行的沙箱交互。这个API与Python的类似
+`Sandbox` 对象可让您与正在运行的沙箱进行交互。这个API与Python的类似
 [asyncio.subprocess.Process](https://docs.python.org/3/library/asyncio-subprocess.html#asyncio.subprocess.Process)。
 
 请参阅[指南](https://modal.com/docs/guide/sandbox)了解如何生成和使用沙箱。
@@ -62,7 +62,7 @@ Sandbox对应的容器将被异步创建。
 <Parameter name="memory" type="int | tuple[int, int] | None" defaultValue="None" description="Specify, in MiB, a memory request which is the minimum memory required. Or, pass (request, limit) to additionally specify a hard limit in MiB." />
 <Parameter name="block_network" type="bool" defaultValue="False" description="Whether to block network access." />
 <Parameter name="outbound_cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of CIDRs the sandbox is allowed to access. If None, all CIDRs are allowed." />
-<Parameter name="outbound_domain_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of domain names the sandbox is allowed to access. Supports wildcard prefixes (`⟦T62⟧⟦T63⟧⟦T64⟧⟦T65⟧Sandbox._experimental_set_outbound_network_policy`." />
+<Parameter name="outbound_domain_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of domain names the sandbox is allowed to access. Supports wildcard prefixes (`⟦T66⟧⟦T67⟧⟦T68⟧⟦T69⟧Sandbox._experimental_set_outbound_network_policy`." />
 <Parameter name="inbound_cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of CIDRs allowed to connect inbound to the sandbox (tunnels and connection tokens). If None, all CIDRs are allowed." />
 <Parameter name="volumes" type="dict[str | os.PathLike, _Volume | _CloudBucketMount]" defaultValue="&#123;&#125;" description="Mount points for Modal Volumes and CloudBucketMounts." />
 <Parameter name="pty" type="bool" defaultValue="False" description="Enable a PTY for the Sandbox entrypoint command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty." />
@@ -78,7 +78,7 @@ Sandbox对应的容器将被异步创建。
 <Parameter name="_experimental_enable_snapshot" type="bool" defaultValue="False" description="Enable memory snapshots." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Modal Client to use for the sandbox." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="*DEPRECATED* Optionally override the default environment" />
-<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T66⟧ instead. ⟦T67⟧ will override ⟦T68⟧." />
+<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T70⟧ instead. ⟦T71⟧ will override ⟦T72⟧." />
 <Parameter name="cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="*DEPRECATED* Use outbound_cidr_allowlist instead." />
 
 **退货**
@@ -107,7 +107,7 @@ detach(self)
 
 确保仅在与沙箱交互完成后才调用 `detach`。拨打`detach`后，
 任何使用 Sandbox 对象的操作都不再保证有效。如果你想继续互动
-对于正在运行的沙箱，使用 `Sandbox.from_id` 获取新的沙箱对象。
+在运行沙箱的情况下，使用 `Sandbox.from_id` 获取新的沙箱对象。
 
 ## 来自\_name
 
@@ -124,7 +124,7 @@ from_name(app_name, name, *, environment_name=None, client=None)
 <Parameter name="app_name" type="str" description="Name of the deployed app to look up the sandbox under." />
 <Parameter name="name" type="str" description="Sandbox name to resolve." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name for the lookup; defaults to the configured environment." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for the RPC; defaults to ⟦T76⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for the RPC; defaults to ⟦T80⟧ when omitted." />
 
 **退货**用于运行沙箱的`Sandbox`句柄。
 
@@ -187,8 +187,8 @@ snapshot_filesystem(self, timeout=55, *, ttl=30 * 24 * 3600)
 
 **参数**
 
-<Parameter name="timeout" type="int" defaultValue="55" description="Maximum time in seconds to wait for the snapshot operation. If the snapshot does not return within that window, the call is cancelled and ⟦T82⟧ is raised." />
-<Parameter name="ttl" type="int | None" defaultValue="30 * 24 * 3600" description="The resulting Image is retained for ⟦T83⟧ seconds (default: 30 days). Pass ⟦T84⟧ to retain the image indefinitely." />
+<Parameter name="timeout" type="int" defaultValue="55" description="Maximum time in seconds to wait for the snapshot operation. If the snapshot does not return within that window, the call is cancelled and ⟦T86⟧ is raised." />
+<Parameter name="ttl" type="int | None" defaultValue="30 * 24 * 3600" description="The resulting Image is retained for ⟦T87⟧ seconds (default: 30 days). Pass ⟦T88⟧ to retain the image indefinitely." />
 
 **退货**
 
@@ -214,8 +214,8 @@ mount_image(self, path, image, *, _experimental_encryption_key=None)
 
 **参数**
 
-<Parameter name="path" type="PurePosixPath | str" description="Absolute mount point directory inside the sandbox (not ⟦T94⟧)." />
-<Parameter name="image" type="_Image" description="Image to mount at ⟦T95⟧ (must be built, referenced by ID, or snapshot-based as described above)." />
+<Parameter name="path" type="PurePosixPath | str" description="Absolute mount point directory inside the sandbox (not ⟦T98⟧)." />
+<Parameter name="image" type="_Image" description="Image to mount at ⟦T99⟧ (must be built, referenced by ID, or snapshot-based as described above)." />
 
 **使用**
 
@@ -237,7 +237,7 @@ unmount_image(self, path)
 从正在运行的沙箱中卸载以前安装的映像。
 
 `path` 必须是传递给 `.mount_image()` 的确切安装点。
-卸载后，该路径下的底层沙箱文件系统变为
+卸载后，该路径下的底层沙盒文件系统变为
 再次可见。
 
 **参数**
@@ -254,7 +254,7 @@ snapshot_directory(self, path, *, timeout=55, ttl=30 * 24 * 3600,
 对正在运行的沙箱中的目录进行快照，用其内容创建一个新图像。
 
 `timeout` 如果快照未在该窗口内返回，则调用被取消
-`modal.exception.TimeoutError` 被提升。
+并且`modal.exception.TimeoutError`升高。
 
 `ttl` 生成的图像保留 `ttl` 秒（默认值：30 天）
 通过`ttl=None`无限期保留图像。
@@ -296,7 +296,7 @@ wait_until_ready(self, *, timeout=300)
 
 等待沙箱就绪探针报告沙箱已就绪。
 
-沙箱必须配置`readiness_probe`才能使用此方法。
+沙盒必须配置`readiness_probe`才能使用此方法。
 
 **参数**
 
@@ -426,10 +426,10 @@ exec(self, *args, stdout=StreamType.PIPE, stderr=StreamType.PIPE, timeout=None,
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables to set during command execution." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets to inject as environment variables during command execution." />
 <Parameter name="text" type="bool" defaultValue="True" description="If True, decode streams as text; if False, yield bytes." />
-<Parameter name="bufsize" type="Literal[-1, 1]" defaultValue="-1" description="Control line-buffered output. `⟦T112⟧⟦T113⟧⟦T114⟧⟦T115⟧⟦T116⟧` is True)." />
+<Parameter name="bufsize" type="Literal[-1, 1]" defaultValue="-1" description="Control line-buffered output. `⟦T116⟧⟦T117⟧⟦T118⟧⟦T119⟧⟦T120⟧` is True)." />
 <Parameter name="pty" type="bool" defaultValue="False" description="Enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty." />
-<Parameter name="_pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T117⟧ instead. ⟦T118⟧ will override ⟦T119⟧." />
-<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T120⟧ instead. ⟦T121⟧ will override ⟦T122⟧." />
+<Parameter name="_pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T121⟧ instead. ⟦T122⟧ will override ⟦T123⟧." />
+<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T124⟧ instead. ⟦T125⟧ will override ⟦T126⟧." />
 
 **退货**
 
@@ -494,9 +494,9 @@ sandbox.filesystem.copy_from_local(local_path, "/tmp/hello.txt")
 copy_to_local(self, remote_path, local_path)
 ```
 
-将文件从沙箱复制到本地路径。
+将文件从沙盒复制到本地路径。
 
-`remote_path` 必须是沙箱中文件的绝对路径。
+`remote_path` 必须是沙盒中文件的绝对路径。
 如果需要，会创建 `local_path` 的父目录。
 如果本地文件已存在，则覆盖该文件。
 
@@ -536,7 +536,7 @@ list_files(self, remote_path)
 **加薪**
 
 * `SandboxFilesystemNotFoundError`: 路径不存在。
-* `SandboxFilesystemNotADirectoryError`：路径不是目录。
+* `SandboxFilesystemNotADirectoryError`: 路径不是目录。
 * `SandboxFilesystemPermissionError`：读取权限被拒绝。* `SandboxFilesystemError`：命令因任何其他原因失败。
 
 **使用**
@@ -564,7 +564,7 @@ make_directory(self, remote_path, *, create_parents=True)
 **参数**
 
 <Parameter name="remote_path" type="str" description="Absolute path of the directory to create in the Sandbox." />
-<Parameter name="create_parents" type="bool" defaultValue="True" description="When `⟦T161⟧`, create missing parents and succeed if the directory already exists." />
+<Parameter name="create_parents" type="bool" defaultValue="True" description="When `⟦T165⟧`, create missing parents and succeed if the directory already exists." />
 
 **加薪**
 
@@ -621,7 +621,7 @@ read_text(self, remote_path)
 
 从沙盒中读取文件并将其内容作为 UTF-8 字符串返回。
 
-`remote_path` 必须是沙盒中文件的绝对路径。
+`remote_path` 必须是沙箱中文件的绝对路径。
 
 **参数**
 
@@ -660,12 +660,12 @@ remove(self, remote_path, *, recursive=False)
 
 并非所有安装都支持递归目录删除。
 特别是`CloudBucketMount`不支持。安
-在这种情况下，`InvalidError` 会被提升。
+在这种情况下，`InvalidError` 会被引发。
 
 **参数**
 
 <Parameter name="remote_path" type="str" description="Absolute path to the file in the Sandbox." />
-<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T186⟧`, remove the directory and all its contents." />
+<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T190⟧`, remove the directory and all its contents." />
 
 **加薪**
 
@@ -702,7 +702,7 @@ stat(self, remote_path)
 
 **加薪**
 
-* `SandboxFilesystemNotFoundError`: 路径不存在。
+* `SandboxFilesystemNotFoundError`：路径不存在。
 * `SandboxFilesystemNotADirectoryError`：路径的非叶组件不是目录。
 * `SandboxFilesystemPermissionError`：路径的某个组件不可搜索。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -722,7 +722,7 @@ watch(self, remote_path, *, filter=None, recursive=False, timeout=None)
 ```
 观察沙盒中的路径以了解文件系统更改。
 
-`remote_path` 必须是沙箱中的绝对路径。如果它指向
+`remote_path` 必须是沙盒中的绝对路径。如果它指向
 对于某个文件，会报告该文件的事件。如果它指向一个
 目录，报告直接位于其中的条目的事件。套装
 `recursive=True` 还接收所有嵌套子目录的事件。
@@ -730,7 +730,7 @@ watch(self, remote_path, *, filter=None, recursive=False, timeout=None)
 已解析目标下的路径。
 
 当变化发生时产生 `FileWatchEvent` 对象，直到
-`timeout` 秒过去，迭代器关闭，或者沙箱
+`timeout` 秒过去，迭代器关闭，或者沙盒
 被终止。
 
 可以选择限制向包含的事件发出的事件类型在`filter`。默认过滤器`None`允许所有事件类型。
@@ -780,7 +780,7 @@ write_bytes(self, data, remote_path)
 
 * `TypeError`：`data` 不是类似字节的。
 * `SandboxFilesystemNotADirectoryError`：父路径组件不是目录。
-* `SandboxFilesystemIsADirectoryError`：`remote_path`指向一个目录。
+* `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。
 * `SandboxFilesystemPermissionError`：写权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
 
@@ -798,7 +798,7 @@ write_text(self, data, remote_path)
 
 将 UTF-8 文本写入沙箱中的文件。
 
-`remote_path` 必须是沙盒中文件的绝对路径。
+`remote_path` 必须是沙箱中文件的绝对路径。
 如果需要，会创建 `remote_path` 的父目录。
 如果远程文件已存在，则将其覆盖。
 
@@ -810,7 +810,7 @@ write_text(self, data, remote_path)
 * `TypeError`: `data` 不是字符串。
 * `SandboxFilesystemNotADirectoryError`：父路径组件不是目录。
 * `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。
-* `SandboxFilesystemPermissionError`: 写权限被拒绝。
+* `SandboxFilesystemPermissionError`：写权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
 
 **使用**
@@ -835,7 +835,7 @@ open(self, path, mode="r")
 **参数**
 
 <Parameter name="path" type="str" description="Absolute path of the file inside the sandbox." />
-<Parameter name="mode" type="Union[_typeshed.OpenTextMode, _typeshed.OpenBinaryMode]" defaultValue="&quot;r&quot;" description="File open mode (text or binary), following built-in `⟦T237⟧` conventions." />
+<Parameter name="mode" type="Union[_typeshed.OpenTextMode, _typeshed.OpenBinaryMode]" defaultValue="&quot;r&quot;" description="File open mode (text or binary), following built-in `⟦T241⟧` conventions." />
 
 **退货**
 
@@ -873,7 +873,7 @@ ls(self, path)
 mkdir(self, path, parents=False)
 ```
 
-\[Alpha] 在沙箱中创建一个新目录。
+\[Alpha] 在沙盒中创建一个新目录。
 
 **已弃用 (2026-04-15)：** 使用 `Sandbox.filesystem.make_directory()` 代替以提高可靠性。
 
@@ -969,8 +969,76 @@ list(*, app_id=None, tags=None, client=None)
 
 <Parameter name="app_id" type="str | None" defaultValue="None" description="If set, restrict results to sandboxes under this app ID." />
 <Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="If set, only sandboxes containing at least these tags are returned." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for listing; defaults to ⟦T248⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for listing; defaults to ⟦T252⟧ when omitted." />
 
 **退货**
 
 一个异步生成器，生成 `Sandbox` 对象。
+
+## 日志
+
+```python
+logs: SandboxLogsManager
+```
+
+`Sandbox` 入口点的访问日志。
+
+对于沙箱终止后检查日志很有用。
+使用[`fetch()`](#logsfetch)从 UTC 时间范围读取日志，[`tail()`](#logstail)
+读取最新的日志。
+
+请注意，沙箱中执行命令的日志（通过`exec()`）不包含在
+入口点日志。
+
+**另见**
+
+* [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
+  CLI 访问应用程序的日志。
+
+### 日志.fetch
+
+```python
+fetch(self, *, since, until=None, source=None, search_text="")
+```
+
+获取与日期范围和过滤器相对应的沙箱日志。
+
+**参数**
+
+<Parameter name="since" type="datetime" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
+
+**产量**
+
+`LogEntry` 按时间顺序排列的对象。
+
+**使用**
+
+```python notest
+sandbox = modal.Sandbox.from_name("my-app", "sandbox")
+
+for entry in sandbox.logs.fetch(
+    since=datetime.now() - timedelta(minutes=25),
+    source="stdout",
+):
+    print(entry.message, end="")
+```
+
+### 日志.tail
+
+```python
+tail(self, entries=100, *, source=None)
+```
+
+获取最新的沙盒日志。
+
+**参数**
+
+<Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+
+**产量**
+
+`LogEntry` 按时间顺序排列的对象。

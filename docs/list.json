@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-08-28T18:29:45.773Z",
+  "fetchedAt": "2026-08-29T12:35:26.875Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 305,
-  "ok": 305,
+  "totalUrls": 306,
+  "ok": 306,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 25016,
+      "bytes": 25085,
       "stub": false
     },
     {
@@ -106,7 +106,7 @@
       "source": "https://modal.com/docs/cli/latest/environment.md",
       "finalUrl": "https://modal.com/docs/cli/latest/environment.md",
       "path": "docs/cli/latest/environment.md",
-      "bytes": 7333,
+      "bytes": 7475,
       "stub": false
     },
     {
@@ -170,7 +170,7 @@
       "source": "https://modal.com/docs/cli/latest/setup.md",
       "finalUrl": "https://modal.com/docs/cli/latest/setup.md",
       "path": "docs/cli/latest/setup.md",
-      "bytes": 172,
+      "bytes": 153,
       "stub": false
     },
     {
@@ -194,7 +194,7 @@
       "source": "https://modal.com/docs/cli/latest/token.md",
       "finalUrl": "https://modal.com/docs/cli/latest/token.md",
       "path": "docs/cli/latest/token.md",
-      "bytes": 1815,
+      "bytes": 1447,
       "stub": false
     },
     {
@@ -744,7 +744,7 @@
     {
       "url": "https://modal.com/docs/guide",
       "source": "https://modal.com/docs/guide",
-      "finalUrl": "https://modal.com/docs/guide",
+      "finalUrl": "https://modal.com/docs/guide.md",
       "path": "docs/guide.md",
       "bytes": 4017,
       "stub": false
@@ -939,6 +939,14 @@
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
       "bytes": 8162,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/entra-sso.md",
+      "source": "https://modal.com/docs/guide/entra-sso.md",
+      "finalUrl": "https://modal.com/docs/guide/entra-sso.md",
+      "path": "docs/guide/entra-sso.md",
+      "bytes": 5486,
       "stub": false
     },
     {
@@ -1258,7 +1266,7 @@
       "source": "https://modal.com/docs/guide/saml-sso.md",
       "finalUrl": "https://modal.com/docs/guide/saml-sso.md",
       "path": "docs/guide/saml-sso.md",
-      "bytes": 3111,
+      "bytes": 2844,
       "stub": false
     },
     {
@@ -1314,7 +1322,7 @@
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 38390,
+      "bytes": 38395,
       "stub": false
     },
     {
@@ -2090,7 +2098,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Client.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Client.md",
       "path": "docs/sdk/py/latest/Client.md",
-      "bytes": 1529,
+      "bytes": 2444,
       "stub": false
     },
     {
@@ -2122,7 +2130,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/config.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/config.md",
       "path": "docs/sdk/py/latest/config.md",
-      "bytes": 5305,
+      "bytes": 5511,
       "stub": false
     },
     {
@@ -2186,7 +2194,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Environment.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Environment.md",
       "path": "docs/sdk/py/latest/Environment.md",
-      "bytes": 6831,
+      "bytes": 7039,
       "stub": false
     },
     {
@@ -2202,7 +2210,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/exception.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/exception.md",
       "path": "docs/sdk/py/latest/exception.md",
-      "bytes": 11992,
+      "bytes": 10183,
       "stub": false
     },
     {
@@ -2362,7 +2370,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "path": "docs/sdk/py/latest/Sandbox.md",
-      "bytes": 35719,
+      "bytes": 37759,
       "stub": false
     },
     {
@@ -2442,7 +2450,7 @@
       "source": "https://modal.com/docs/sdk/py/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/py/releases.md",
       "path": "docs/sdk/py/releases.md",
-      "bytes": 63473,
+      "bytes": 64391,
       "stub": false
     }
   ],

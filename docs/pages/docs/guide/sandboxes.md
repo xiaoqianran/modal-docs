@@ -1083,7 +1083,7 @@ sbId := sb.SandboxID
 
 // ... later in the program ...
 
-sb2, err := mc.Sandboxes.FromID(ctx, sbId)
+sb2, err := mc.Sandboxes.FromID(ctx, sbId, nil)
 defer sb2.Terminate(ctx, nil)
 p, err := sb2.Exec(ctx, []string{"echo", "hello"}, nil)
 stdout, err := io.ReadAll(p.Stdout)

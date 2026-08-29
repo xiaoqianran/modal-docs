@@ -4,7 +4,7 @@
 
 特定于模态的异常类型。
 
-## `grpclib.GRPCError` 迁移注意事项
+**关于`grpclib.GRPCError`迁移的注释**
 
 从历史上看，Modal SDK 可以传播 `grpclib.GRPCError` 异常
 到用户代码。  从 v1.3 开始，我们正在优雅地迁移到
@@ -42,28 +42,6 @@ class AlreadyExistsError(modal.exception.Error, modal.exception._GRPCErrorWrappe
 
 当资源创建与现有资源冲突时引发。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## 异步使用警告
 
 ```python
@@ -80,28 +58,6 @@ class AuthError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 
 当客户端缺少身份验证或身份验证无效时引发。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## 客户端关闭
 
 ```python
@@ -116,27 +72,6 @@ class ConflictError(modal.exception.InvalidError, modal.exception._GRPCErrorWrap
 
 当请求和当前系统状态之间发生资源冲突时引发。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## 连接错误
 
 ```python
@@ -150,30 +85,7 @@ class ConnectionError(modal.exception.Error)
 ```python
 class DataLossError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 ```
-
 当数据丢失或损坏时引发。
-
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
 
 ## 弃用错误
 
@@ -198,7 +110,9 @@ class Error(Exception)
 ```
 
 所有模态错误的基类。参见[`modal.exception`](https://modal.com/docs/sdk/py/latest/exception)
-对于专门的错误类。**使用**
+对于专门的错误类。
+
+**使用**
 
 ```python notest
 import modal
@@ -224,9 +138,7 @@ class ExecTimeoutError(modal.exception.TimeoutError)
 class ExecutionError(modal.exception.Error)
 ```
 
-当运行时发生意外情况时引发。
-
-## 文件系统执行错误
+当运行时发生意外情况时引发。## 文件系统执行错误
 
 ```python
 class FilesystemExecutionError(modal.exception.Error)
@@ -248,11 +160,9 @@ class FunctionTimeoutError(modal.exception.TimeoutError)
 class ImageBuildError(modal.exception.RemoteError)
 ```
 
-当映像构建失败时引发。
+当镜像构建失败时引发。
 
-```python
-__init__(self, message, image_id)
-```
+使用 `image_id` 属性来引用失败的图像，例如获取构建日志。
 
 ## 输入取消
 
@@ -261,6 +171,7 @@ class InputCancellation(BaseException)
 ```
 
 当任务取消当前输入时引发
+
 故意使用 BaseException 而不是 Exception，这样就不会得到
 被可能用于重试的未指定用户异常子句捕获
 其他控制流。
@@ -281,28 +192,6 @@ class InternalError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 
 当 Modal 系统中发生内部错误时引发。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## 内部故障
 
 ```python
@@ -318,26 +207,6 @@ class InvalidError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 ```
 
 当用户执行无效操作时引发。
-
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
 
 ## 日志获取错误
 
@@ -365,31 +234,7 @@ class MountUploadTimeoutError(modal.exception.TimeoutError)
 
 ```python
 class NotFoundError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
-```
-
-当未找到请求的资源时引发。
-
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
+```当未找到请求的资源时引发。
 
 ## 输出过期错误
 
@@ -397,7 +242,7 @@ details(self)
 class OutputExpiredError(modal.exception.TimeoutError)
 ```
 
-当输出超过到期时间并超时时引发。
+当输出超过过期时间并超时时引发。
 
 ## 权限拒绝错误
 
@@ -406,27 +251,6 @@ class PermissionDeniedError(modal.exception.Error, modal.exception._GRPCErrorWra
 ```
 
 当用户无权执行请求的操作时引发。
-
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-```python
-details(self)
-```
 
 ## 远程错误
 
@@ -452,34 +276,11 @@ class ResourceExhaustedError(modal.exception.Error, modal.exception._GRPCErrorWr
 
 当服务器端资源耗尽时引发，例如配额或速率限制。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## SandboxFilesystemDirectoryNotEmptyError
 
 ```python
 class SandboxFilesystemDirectoryNotEmptyError(modal.exception.SandboxFilesystemError)
 ```
-
 当目录不为空时引发。
 
 ## Sandbox文件系统错误
@@ -490,7 +291,9 @@ class SandboxFilesystemError(modal.exception.Error)
 
 沙箱文件系统错误的基类。
 
-## SandboxFilesystemFileTooLargeError```python
+## SandboxFilesystemFileTooLargeError
+
+```python
 class SandboxFilesystemFileTooLargeError(modal.exception.SandboxFilesystemError)
 ```
 
@@ -527,6 +330,7 @@ class SandboxFilesystemPathAlreadyExistsError(modal.exception.SandboxFilesystemE
 ```
 
 当路径已存在且操作要求路径不存在时引发。
+
 ## Sandbox文件系统权限错误
 
 ```python
@@ -560,7 +364,6 @@ class SerializationError(modal.exception.Error)
 当序列化过程中遇到错误时，提出该错误以提供更多上下文。
 
 ## 服务器警告
-
 ```python
 class ServerWarning(UserWarning)
 ```
@@ -571,29 +374,9 @@ class ServerWarning(UserWarning)
 
 ```python
 class ServiceError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
-```当基本客户端/服务器通信中发生错误时引发。
-
-```python
-__init__(self, message=None)
 ```
 
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
+当基本客户端/服务器通信中发生错误时引发。
 
 ## 快照创建错误
 
@@ -619,28 +402,6 @@ class UnimplementedError(modal.exception.Error, modal.exception._GRPCErrorWrappe
 
 当请求的操作未实现或不支持时引发。
 
-```python
-__init__(self, message=None)
-```
-
-### 留言
-
-```python
-message(self)
-```
-
-###状态
-
-```python
-status(self)
-```
-
-###详细信息
-
-```python
-details(self)
-```
-
 ## 版本错误
 
 ```python
@@ -662,6 +423,7 @@ class VolumeUploadTimeoutError(modal.exception.TimeoutError)
 ```python
 class WorkspaceManagementError(modal.exception.Error)
 ```
+
 当管理工作区时发生错误时引发。
 
 ## 模拟\_抢占

@@ -997,3 +997,72 @@ Sandboxes that have at least those tags are returned.
 **Returns**
 
 An async generator yielding `Sandbox` objects.
+
+## logs
+
+```python
+logs: SandboxLogsManager
+```
+
+Access logs for a `Sandbox` entrypoint.
+
+Useful for inspecting logs after a Sandbox terminates.
+Use [`fetch()`](#logsfetch)
+to read logs from a UTC time range, [`tail()`](#logstail)
+to read the most recent logs.
+
+Note that the logs from executed commands in the sandbox (via `exec()`) are not included in the
+entrypoint logs.
+
+**See Also**
+
+* [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
+  CLI access to logs for an App.
+
+### logs.fetch
+
+```python
+fetch(self, *, since, until=None, source=None, search_text="")
+```
+
+Fetch Sandbox logs corresponding to the date range and filters.
+
+**Parameters**
+
+<Parameter name="since" type="datetime" description="Start date to fetch logs from. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="Defaults to current date if None. Must be in UTC or timezone-naive, which is interpreted as local time." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+<Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
+
+**Yields**
+
+`LogEntry` objects in chronological order.
+
+**Usage**
+
+```python notest
+sandbox = modal.Sandbox.from_name("my-app", "sandbox")
+
+for entry in sandbox.logs.fetch(
+    since=datetime.now() - timedelta(minutes=25),
+    source="stdout",
+):
+    print(entry.message, end="")
+```
+
+### logs.tail
+
+```python
+tail(self, entries=100, *, source=None)
+```
+
+Fetch the most recent Sandbox logs.
+
+**Parameters**
+
+<Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />
+<Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
+
+**Yields**
+
+`LogEntry` objects in chronological order.

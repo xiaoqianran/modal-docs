@@ -44,7 +44,6 @@ modal token new [OPTIONS]
 
 **Options**:
 
-* `--profile TEXT`: Modal profile to set credentials for. If unspecified (and MODAL\_PROFILE environment variable is not set), uses the workspace name associated with the credentials.
 * `--activate / --no-activate`: Activate the profile containing this token after creation.
 * `--verify / --no-verify`: Make a test request to verify the new credentials.
 * `--help`: Show this message and exit.
@@ -65,7 +64,6 @@ modal token set [OPTIONS]
 
 * `--token-id TEXT`: Account token ID.
 * `--token-secret TEXT`: Account token secret.
-* `--profile TEXT`: Modal profile to set credentials for. If unspecified (and MODAL\_PROFILE environment variable is not set), uses the workspace name associated with the credentials.
 * `--activate / --no-activate`: Activate the profile containing this token after creation.
 * `--verify / --no-verify`: Make a test request to verify the new credentials.
 * `--help`: Show this message and exit.

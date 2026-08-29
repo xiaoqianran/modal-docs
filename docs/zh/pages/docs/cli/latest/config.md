@@ -53,5 +53,5 @@ modal config show [OPTIONS]
 
 **选项**：
 
-* `--redact / --no-redact`：编辑 `token_secret` 值。
+* `--redact / --no-redact`：编辑秘密凭证值。
 * `--help`：显示此消息并退出。

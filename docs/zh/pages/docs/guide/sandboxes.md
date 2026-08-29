@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙箱
+# 沙盒
 
 此页面是沙箱的高级指南，
 用于在 Modal 上执行不受信任的用户或代理代码的安全容器。
@@ -159,12 +159,12 @@ func main() {
    指出 Sandbox 对象存在并具有 ID，但尚未使用任何计算资源
    尚未分配。这是调用`Sandbox.create`后的初始状态。
 
-2. **已安排** — 沙盒已安排给特定工作人员。的
-   工作人员现在正在配置沙盒所需的资源（CPU、内存、GPU、
+2. **已安排** — 沙箱已安排给特定工作人员。的
+   工作人员现在正在配置沙箱所需的资源（CPU、内存、GPU、
 卷等）并准备容器环境。沙盒将
-   容器完全初始化后，转换到 **Started**。
+   容器完全初始化后，过渡到 **Started**。
 
-3. **开始** — 沙盒的容器已在工作人员上启动，并且
+3. **开始** — 沙箱的容器已在工作人员上启动，并且
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
@@ -180,13 +180,13 @@ func main() {
    原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
-可以在沙箱内执行命令。您可以详细了解为什么沙盒
+commands can be executed inside the Sandbox. You can learn more about why a Sandbox
    在仪表板中停止运行或通过检查从返回的退出代码
    `sandbox.poll()`。
 
 ### 超时
 
-沙箱的默认最长生命周期为 5 分钟。您可以通过传递来更改此设置
+沙箱的默认最长生命周期为 5 分钟。 You can change this by passing
 `timeout` 长达 24 小时的 `Sandbox.create(...)` 功能。
 
 <CodeTabs>
@@ -230,13 +230,13 @@ defer sb.Detach()
 
 {/片段} </CodeTabs>如果您需要沙盒运行超过 24 小时，我们建议使用
 [文件系统快照](/docs/guide/sandbox-snapshots) 保留其状态，
-然后使用后续的沙箱从该快照恢复。
+然后使用后续沙箱从该快照恢复。
 
 ### 空闲超时
 
-沙箱也可以在一段时间不活动后自动终止 - 您可以通过设置 `idle_timeout` 参数来做到这一点。如果满足以下任一条件，则沙箱被视为处于活动状态：
+沙箱也可以在一段时间不活动后自动终止 - 您可以通过设置 `idle_timeout` 参数来做到这一点。如果满足以下任一条件，则沙盒被视为处于活动状态：
 
-1.它有一个正在运行的活动[命令](/docs/guide/sandbox-spawn)（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
+1.它有一个活动的[命令](/docs/guide/sandbox-spawn)正在运行（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
 2.它的标准输入正在被写入（通过[`sb.stdin.write()`](/docs/sdk/py/latest/Sandbox#stdin)）
 3. 它在其中一个[隧道](/docs/guide/tunnels) 上有一个开放的 TCP 连接
 
@@ -694,7 +694,9 @@ defer sb.Detach()
 
 ## 环境
 
-### 环境变量您可以使用内联机密设置环境变量：
+### 环境变量
+
+您可以使用内联机密设置环境变量：
 
 <CodeTabs>
   {#snippet python()}
@@ -762,8 +764,14 @@ fmt.Println(string(stdout))
 
 {/片段} </CodeTabs>
 
-### 自定义图像
+### OIDC 身份令牌
 
+将`include_oidc_identity_token=True`传递给`modal.Sandbox.create`来注入
+`MODAL_IDENTITY_TOKEN` 包含 OIDC 令牌的环境变量
+沙盒。请参阅 [OIDC 集成指南](/docs/guide/oidc-integration)
+详细信息。
+
+### 自定义图像
 就像函数一样，沙箱支持[自定义图像](/docs/guide/images)。这些可以使用[方法链接](/docs/guide/images)或通过引用[外部容器注册表中的现有映像](/docs/guide/existing-images)来定义。
 
 #### 将镜像构建与沙箱创建分开
@@ -826,7 +834,9 @@ app = await modal.App.lookup.aio("sandbox-app", create_if_missing=True)
 
 image = modal.Image.from_name("sandbox-runtime")
 await modal.Sandbox.create.aio(app=app, image=image)
-```{/片段}
+```
+
+{/片段}
 
 {#snippet javascript()}
 
@@ -881,7 +891,6 @@ defer sb.Detach()
 {/片段} </CodeTabs>
 
 <Callout variant="info">
-
 * **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
@@ -892,7 +901,7 @@ defer sb.Detach()
 您可能需要手动启用输出流才能查看映像构建日志：
 
 <CodeTabs>
-{#snippet python()}
+  {#snippet python()}
 
 ```python fixture:sb_app
 image = modal.Image.debian_slim().pip_install("pandas", "numpy")
@@ -914,9 +923,7 @@ with modal.enable_output():
 await sb.detach.aio()
 ```
 
-{/片段}
-
-{#snippet javascript()}
+{/片段}{#snippet javascript()}
 
 ```javascript notest
 const image = modal.images
@@ -970,7 +977,9 @@ async for line in sb.stdout:
 await sb.detach.aio()
 ```
 
-{/片段}{#snippet javascript()}
+{/片段}
+
+{#snippet javascript()}
 
 ```javascript notest
 const sb = await modal.sandboxes.create(app, image, {
@@ -993,7 +1002,6 @@ sb.Detach()
 ```
 
 {/片段} </CodeTabs>
-
 此功能对于运行您想要的长期服务最有用
 继续在后台运行。请参阅我们的 [Jupyter 笔记本示例](/docs/examples/jupyter_sandbox)
 更具体的例子。
@@ -1065,7 +1073,7 @@ sbId := sb.SandboxID
 
 // ... later in the program ...
 
-sb2, err := mc.Sandboxes.FromID(ctx, sbId)
+sb2, err := mc.Sandboxes.FromID(ctx, sbId, nil)
 defer sb2.Terminate(ctx, nil)
 p, err := sb2.Exec(ctx, []string{"echo", "hello"}, nil)
 stdout, err := io.ReadAll(p.Stdout)
@@ -1073,6 +1081,7 @@ fmt.Println(string(stdout))
 ```
 
 {/片段} </CodeTabs>
+
 一个常见的用例是保持沙箱池可用于执行任务
 当它们进来时。您可以保留“开放”沙箱的`object_id`列表，并且
 重用它们，在使用它们的任何函数中关闭`object_id`。
@@ -1081,7 +1090,8 @@ fmt.Println(string(stdout))
 
 您可以在创建沙箱时为其指定名称。每个名称在应用程序中必须是唯一的 -
 一次只有一个“正在运行”的沙箱可以使用给定名称。请注意，关联的应用程序必须是
-已部署的应用程序。一旦沙箱完全停止运行，其名称就可以重复使用。一些应用程序发现沙箱名称对于确保不超过一个沙箱是有用的。
+已部署的应用程序。一旦沙箱完全停止运行，其名称就可以重复使用。
+一些应用程序发现沙箱名称对于确保不超过一个沙箱是有用的。
 每个资源或项目运行。如果具有给定名称的沙箱已在运行，`create()`
 会引发错误。
 
@@ -1162,9 +1172,8 @@ assert sb1.object_id == sb2.object_id # sb1 and sb2 refer to the same Sandbox
 await sb1.detach.aio()
 await sb2.detach.aio()
 ```
-{/片段}
 
-{#snippet javascript()}
+{/片段}{#snippet javascript()}
 
 ```javascript notest
 const app = await modal.apps.fromName("my-app", { createIfMissing: true });
@@ -1351,7 +1360,8 @@ for sandbox := range it {
 
 {/片段} </CodeTabs>
 
-## 清理客户端连接与其他模态对象不同，本地沙箱将直接连接到
+## 清理客户端连接
+与其他模态对象不同，本地沙箱将直接连接到
 它的计算基板。虽然这个连接应该自动关闭
 在垃圾收集期间，我们建议显式清理资源
 一旦您通过调用沙箱的 `detach()` 方法完成与沙箱的交互：
@@ -1396,6 +1406,6 @@ defer sb.Detach()
 调用`detach`后，任何使用Sandbox对象的操作都不能保证
 工作。如果您想继续与正在运行的沙箱交互，请使用 `Sandbox.from_id`
 获取引用原始 Sandbox 的新 Sandbox 对象。在Python SDK中，
-`terminate` 会保留您的沙盒，因此我们建议您在完成后致电 `detach`
+`terminate` 会保留您的沙箱，因此我们建议您在完成后致电 `detach`
 已终止的沙箱已完成。在Go/JS SDK中，`Terminate`也会分离
-你的沙盒。
+你的沙箱。

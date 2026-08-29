@@ -22,14 +22,14 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "6fe8eb78531b72e65a1b7ac45f84fc5a7636a766",
-      "translatedAt": "2026-08-27T17:33:27.394Z",
-      "bytes": 23766
+      "hash": "0dca5619a55c5b8ce135b8184eb2ddbe92411d28",
+      "translatedAt": "2026-08-29T12:35:57.222Z",
+      "bytes": 24609
     },
     "docs/cli/latest/config.md": {
-      "hash": "d4f18621f46b350780c5d5cc8d1526a5b9803b47",
-      "translatedAt": "2026-08-08T18:27:36.743Z",
-      "bytes": 1146
+      "hash": "85a6762c3598b9d8249f7fdf60d44396e195e0f4",
+      "translatedAt": "2026-08-29T12:35:28.379Z",
+      "bytes": 1142
     },
     "docs/cli/latest/curl.md": {
       "hash": "965f282a0a3e3971c1093432cc8724f64810bc72",
@@ -77,9 +77,9 @@
       "bytes": 988
     },
     "docs/cli/latest/environment.md": {
-      "hash": "94d66c718f92f322af418f25d113a57b79a7eda0",
-      "translatedAt": "2026-08-08T18:27:46.174Z",
-      "bytes": 7001
+      "hash": "d84e0cb6de3e48d01d93da7389c5013cf991948f",
+      "translatedAt": "2026-08-29T12:35:41.012Z",
+      "bytes": 7116
     },
     "docs/cli/latest/run.md": {
       "hash": "a48806f0007c5176247b39b20ac482f6b9140ece",
@@ -102,9 +102,9 @@
       "bytes": 895
     },
     "docs/cli/latest/setup.md": {
-      "hash": "04f4792e80e04aed9d035eee5b13a7d9fc0cf07f",
-      "translatedAt": "2026-08-08T18:27:48.765Z",
-      "bytes": 171
+      "hash": "a031f6ae854f330c945b3e1678fa011e3f07f0d7",
+      "translatedAt": "2026-08-29T12:35:42.416Z",
+      "bytes": 152
     },
     "docs/cli/latest/skills.md": {
       "hash": "9ef0ff8c91c23a6c9f1ae480d23d06fae2f1061e",
@@ -117,9 +117,9 @@
       "bytes": 2342
     },
     "docs/cli/latest/token.md": {
-      "hash": "a19620352ac1c34e48bf27b7500219231b636e35",
-      "translatedAt": "2026-08-08T18:27:50.452Z",
-      "bytes": 1715
+      "hash": "0eac53560fa8bd0e92119b37a532c5402a3a9ec4",
+      "translatedAt": "2026-08-29T12:35:45.710Z",
+      "bytes": 1363
     },
     "docs/cli/latest/volume.md": {
       "hash": "28c5697ac8bdfcc396332c4858b4577097edbda3",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "9ce756877adea9acbf310cf1f509c3d5cc20858e",
-      "translatedAt": "2026-08-27T17:33:16.533Z",
-      "bytes": 8001
+      "hash": "1507790c7a4079f174af2650f9486073d6080829",
+      "translatedAt": "2026-08-29T12:35:56.157Z",
+      "bytes": 7976
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -702,9 +702,9 @@
       "bytes": 7930
     },
     "docs/guide/oidc-integration.md": {
-      "hash": "9882dbcbe3439a0ec77869b1ffab583e7176f84b",
-      "translatedAt": "2026-08-08T18:29:33.605Z",
-      "bytes": 10405
+      "hash": "a1a2de775193c51640f31acb089376d6d5b40caa",
+      "translatedAt": "2026-08-29T12:36:05.238Z",
+      "bytes": 10815
     },
     "docs/guide/okta-sso.md": {
       "hash": "5e3a993072512703ec954a19cfd3548092f6fa40",
@@ -777,9 +777,9 @@
       "bytes": 1259
     },
     "docs/guide/saml-sso.md": {
-      "hash": "868dd91980d16ced3f042f9230820e303d125d47",
-      "translatedAt": "2026-08-08T18:29:44.461Z",
-      "bytes": 2934
+      "hash": "3e992152913bba67a34a8cfe543270ff6c129040",
+      "translatedAt": "2026-08-29T12:36:10.190Z",
+      "bytes": 2681
     },
     "docs/guide/sandbox-files.md": {
       "hash": "7d090bf6a4806c6fdcb4961b775baa1bd6412eab",
@@ -807,9 +807,9 @@
       "bytes": 16206
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "0c27ddabe3d84a9def9990fe31556d859ac0472d",
-      "translatedAt": "2026-08-13T07:45:23.055Z",
-      "bytes": 16160
+      "hash": "2b14c70c159f26b8c5f9f69b5999e5b8e466c14a",
+      "translatedAt": "2026-08-29T12:36:17.061Z",
+      "bytes": 18675
     },
     "docs/guide/scale.md": {
       "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
@@ -832,9 +832,9 @@
       "bytes": 4166
     },
     "docs/guide/sandboxes.md": {
-      "hash": "bc22360fb3345f27fdf0dc316f9ca8a5d97c2388",
-      "translatedAt": "2026-08-08T18:29:59.076Z",
-      "bytes": 36905
+      "hash": "56841289f2aaf074a6a3a76ac6ae69ea18d8fa84",
+      "translatedAt": "2026-08-29T12:36:29.920Z",
+      "bytes": 37162
     },
     "docs/guide/service-users.md": {
       "hash": "c519f4226284b3071ce9563a38b74cd82144d08b",
@@ -932,9 +932,9 @@
       "bytes": 768
     },
     "docs/sdk/go/latest/Client.md": {
-      "hash": "49efc98ac499dd1fd98a39b341b2399711765cd4",
-      "translatedAt": "2026-08-08T18:30:14.462Z",
-      "bytes": 2515
+      "hash": "9343034f703a461dfe940ea5f6b401224931616a",
+      "translatedAt": "2026-08-29T12:36:19.103Z",
+      "bytes": 2557
     },
     "docs/sdk/go/latest/ClsInstance.md": {
       "hash": "20ec68a6f983d146c1cca3642129f08f9609f5cb",
@@ -962,9 +962,9 @@
       "bytes": 1969
     },
     "docs/sdk/go/latest/Errors.md": {
-      "hash": "d952473051eb0ad400fb1964992e0496b1e3dc9c",
-      "translatedAt": "2026-08-08T18:30:16.010Z",
-      "bytes": 3610
+      "hash": "80f50d13b6b34427ce5a940f02d179c6a5b6db94",
+      "translatedAt": "2026-08-29T12:36:22.775Z",
+      "bytes": 3943
     },
     "docs/sdk/go/latest/FileWatchEvent.md": {
       "hash": "3fc7df2dddf812f63c937ba0176dbba139a14c0d",
@@ -982,9 +982,9 @@
       "bytes": 158
     },
     "docs/sdk/go/latest/FunctionCall.md": {
-      "hash": "53b5160b500d30c383c576a0e948e0b9385e32a4",
-      "translatedAt": "2026-08-08T18:30:16.574Z",
-      "bytes": 1348
+      "hash": "899956948d73d3331dd9bf3c61cc1a34f8c388df",
+      "translatedAt": "2026-08-29T12:36:37.515Z",
+      "bytes": 3579
     },
     "docs/sdk/go/latest/Probe.md": {
       "hash": "9ad9683cc5aa838f179ded89082fe0c1f3cbdd33",
@@ -997,9 +997,9 @@
       "bytes": 482
     },
     "docs/sdk/go/latest/Function.md": {
-      "hash": "69a133d2e5e7b3d6a364e825258f070a23352889",
-      "translatedAt": "2026-08-08T18:30:17.299Z",
-      "bytes": 3039
+      "hash": "5d9ee750ae3177d8b9c995c6401e148d543511ed",
+      "translatedAt": "2026-08-29T12:36:29.924Z",
+      "bytes": 4954
     },
     "docs/sdk/go/latest/Proxy.md": {
       "hash": "8d6a77381bc98f11f3614d5b9d56bc832552163d",
@@ -1052,9 +1052,9 @@
       "bytes": 1891
     },
     "docs/sdk/go/latest/intro.md": {
-      "hash": "e3a80724467f1917ccee842153b8611aaa4fda97",
-      "translatedAt": "2026-08-08T18:30:24.202Z",
-      "bytes": 4636
+      "hash": "c3a896d6eda0beb1283527ed1f54f985cee4861b",
+      "translatedAt": "2026-08-29T12:37:03.213Z",
+      "bytes": 4726
     },
     "docs/sdk/js/latest/App.md": {
       "hash": "d7f06723b649313d8ddaa355b237b9b8564e7bba",
@@ -1067,9 +1067,9 @@
       "bytes": 665
     },
     "docs/sdk/go/latest/SidecarContainer.md": {
-      "hash": "42e91b4e82d1f768668e0846f6db15d4abe26148",
-      "translatedAt": "2026-08-08T18:30:25.183Z",
-      "bytes": 12546
+      "hash": "5af87caafd4315a2aaf71f5e8d1135c8d7cbe9d2",
+      "translatedAt": "2026-08-29T12:36:57.483Z",
+      "bytes": 12982
     },
     "docs/sdk/js/latest/ClsInstance.md": {
       "hash": "0a7561f5b7aa425570cc9ce3d2f2d2e5aafb8079",
@@ -1097,9 +1097,9 @@
       "bytes": 115
     },
     "docs/sdk/js/latest/Errors.md": {
-      "hash": "bac7949f10af412d8308b4ae88f67230f90aa56f",
-      "translatedAt": "2026-08-08T18:30:26.827Z",
-      "bytes": 2735
+      "hash": "d4684727255775dfc9ad38e406739dc4e3e6ee0b",
+      "translatedAt": "2026-08-29T12:37:07.623Z",
+      "bytes": 2975
     },
     "docs/sdk/js/latest/FileWatchEventType.md": {
       "hash": "5d1dff97d46ba0667569aca22abe147952a22180",
@@ -1112,9 +1112,9 @@
       "bytes": 469
     },
     "docs/sdk/js/latest/FunctionCall.md": {
-      "hash": "70935c4edc7723f86dab5cdd0a31e9f7d894cc8e",
-      "translatedAt": "2026-08-08T18:30:27.381Z",
-      "bytes": 958
+      "hash": "83d4236ecb23a680178b24674604aa99bd88cc21",
+      "translatedAt": "2026-08-29T12:37:21.341Z",
+      "bytes": 4183
     },
     "docs/sdk/js/latest/FunctionStats.md": {
       "hash": "f01f6975bed19f8cd19a0a32e5f1bfcfd4bf78a0",
@@ -1122,9 +1122,9 @@
       "bytes": 179
     },
     "docs/sdk/js/latest/Function.md": {
-      "hash": "6d46d65247adbe54900a793056e6305cdee2a1e0",
-      "translatedAt": "2026-08-08T18:30:28.231Z",
-      "bytes": 2876
+      "hash": "61f49a4faad26d0560c0d436f29a4dec1048bb64",
+      "translatedAt": "2026-08-29T12:37:14.184Z",
+      "bytes": 5771
     },
     "docs/sdk/js/latest/LogLevel.md": {
       "hash": "64dfa8616ab63e5092ce91a8b6f15f9e73c1feba",
@@ -1142,9 +1142,9 @@
       "bytes": 3695
     },
     "docs/sdk/js/latest/ModalClient.md": {
-      "hash": "ebb6a361ae0e58fa16b40256ef0f9aea1ebbb929",
-      "translatedAt": "2026-08-08T18:30:30.626Z",
-      "bytes": 2347
+      "hash": "e4c4434ca959b0ac9102a302a030eb01c56c31d0",
+      "translatedAt": "2026-08-29T12:37:26.072Z",
+      "bytes": 2400
     },
     "docs/sdk/js/latest/ModalReadStream.md": {
       "hash": "dd8fd315e48209985876b5ac6ec1b92c6eb39750",
@@ -1177,9 +1177,9 @@
       "bytes": 387
     },
     "docs/sdk/go/latest/Sandbox.md": {
-      "hash": "7b45e0f2d68f3a10aa7910a77fa6f15a3fce1f24",
-      "translatedAt": "2026-08-08T18:30:32.511Z",
-      "bytes": 31002
+      "hash": "0be4512106b2a98d22aff3a8fa826da3d95fac4c",
+      "translatedAt": "2026-08-29T12:37:23.091Z",
+      "bytes": 34823
     },
     "docs/sdk/js/latest/SandboxCreateConnectCredentials.md": {
       "hash": "3a241f9c55b1cc27ef8fb24efac48822d5a5c243",
@@ -1217,14 +1217,14 @@
       "bytes": 1720
     },
     "docs/sdk/js/latest/intro.md": {
-      "hash": "564c7ea9ffbb8fb623a84f340b6ecdcc8653b495",
-      "translatedAt": "2026-08-08T18:30:38.995Z",
-      "bytes": 4312
+      "hash": "616207602bd98ab55a0bf9045c9afa2ad633461b",
+      "translatedAt": "2026-08-29T12:37:53.373Z",
+      "bytes": 4402
     },
     "docs/sdk/js/latest/SidecarContainer.md": {
-      "hash": "7e8ae50226d86c275076ca514a6f5bf41519faf6",
-      "translatedAt": "2026-08-08T18:30:39.660Z",
-      "bytes": 10252
+      "hash": "6350918bf2554ac15d3c57e1f209acf5ab062100",
+      "translatedAt": "2026-08-29T12:37:46.338Z",
+      "bytes": 10737
     },
     "docs/sdk/py/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -1232,9 +1232,9 @@
       "bytes": 58828
     },
     "docs/sdk/py/latest/Client.md": {
-      "hash": "7d27cd4355383499d01260bbd105a960f988bf2e",
-      "translatedAt": "2026-08-08T18:30:44.085Z",
-      "bytes": 1491
+      "hash": "076ab40a6456772ea2769a179ed189168ecde05e",
+      "translatedAt": "2026-08-29T12:37:55.821Z",
+      "bytes": 2406
     },
     "docs/sdk/py/latest/CloudBucketMount.md": {
       "hash": "2b3059626a9e2cb34a3c1d2731ed7f2be55bce85",
@@ -1257,14 +1257,14 @@
       "bytes": 1120
     },
     "docs/sdk/js/latest/Sandbox.md": {
-      "hash": "e6dd700a2fe0765987744ecf49b63d796407ad4c",
-      "translatedAt": "2026-08-08T18:30:49.572Z",
-      "bytes": 29550
+      "hash": "ebe61eebea368ffe6693b16d9941a0e45b3d8b02",
+      "translatedAt": "2026-08-29T12:38:22.410Z",
+      "bytes": 31916
     },
     "docs/sdk/py/latest/Environment.md": {
-      "hash": "977b22e9861cbab334a4f0656d58b373d61a6aee",
-      "translatedAt": "2026-08-13T07:45:26.488Z",
-      "bytes": 6420
+      "hash": "51ea8ae30f2f7d08b5166947759d1701d7d0f4f2",
+      "translatedAt": "2026-08-29T12:38:03.287Z",
+      "bytes": 6627
     },
     "docs/sdk/py/latest/Error.md": {
       "hash": "1cfa33fcee99f2fee4f0252c0f8483bc9ecfa06b",
@@ -1342,9 +1342,9 @@
       "bytes": 718
     },
     "docs/sdk/py/latest/Sandbox.md": {
-      "hash": "e29ca569a5c907ffe8021a7ad9b167192460c10e",
-      "translatedAt": "2026-08-13T07:46:02.707Z",
-      "bytes": 34552
+      "hash": "54f71a61456225f0ae423b20d940c846736eacaf",
+      "translatedAt": "2026-08-29T12:38:38.397Z",
+      "bytes": 36563
     },
     "docs/sdk/py/latest/asgi_app.md": {
       "hash": "da78589b4f5a98002591316af85515e89f88a6e3",
@@ -1407,9 +1407,9 @@
       "bytes": 227
     },
     "docs/sdk/py/latest/config.md": {
-      "hash": "35d029f880f1572bd3cdc8e4cadd170dc7afdabf",
-      "translatedAt": "2026-08-08T18:31:12.291Z",
-      "bytes": 5088
+      "hash": "dd50e24632f7795158df191801308ff599d8ee97",
+      "translatedAt": "2026-08-29T12:38:31.769Z",
+      "bytes": 5322
     },
     "docs/sdk/py/latest/fastapi_endpoint.md": {
       "hash": "c69ca66ddd0b8c493059ec6dae3c79b385e7b618",
@@ -1447,9 +1447,9 @@
       "bytes": 237
     },
     "docs/sdk/py/latest/exception.md": {
-      "hash": "fffbaf2d2420694a8b6ece2e4b1d04c50ab570b3",
-      "translatedAt": "2026-08-13T07:46:10.836Z",
-      "bytes": 11362
+      "hash": "98f77d4575870db9e6e4ac393eeedbb7dd612d8e",
+      "translatedAt": "2026-08-29T12:38:42.966Z",
+      "bytes": 9532
     },
     "docs/sdk/py/latest/parameter.md": {
       "hash": "98346118c9149bd11fae3c86f683064bc72d1201",
@@ -1487,9 +1487,9 @@
       "bytes": 16617
     },
     "docs/sdk/py/releases.md": {
-      "hash": "5817b6cea7bff7710c832f9a3452db6b27c4e8ba",
-      "translatedAt": "2026-08-20T06:58:02.088Z",
-      "bytes": 58845
+      "hash": "264dd8fdb22ae2512074b59ebc4255e3bd1108b1",
+      "translatedAt": "2026-08-29T12:39:56.001Z",
+      "bytes": 59579
     },
     "docs/guide/sandbox-sidecars.md": {
       "hash": "59178a0fd4a47a36d2847126b7f5c1fc3600e22f",
@@ -1574,13 +1574,18 @@
       "bytes": 24639,
       "fallback": true,
       "error": "HTTP 429"
+    },
+    "docs/guide/entra-sso.md": {
+      "hash": "fd3e645675ff94c9286bd7720349514e7f51daea",
+      "translatedAt": "2026-08-29T12:36:02.779Z",
+      "bytes": 4949
     }
   },
-  "updatedAt": "2026-08-28T18:33:19.852Z",
+  "updatedAt": "2026-08-29T12:39:56.001Z",
   "stats": {
-    "translated": 0,
-    "skipped": 279,
-    "failed": 31,
-    "total": 310
+    "translated": 31,
+    "skipped": 280,
+    "failed": 0,
+    "total": 311
   }
 }

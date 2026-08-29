@@ -109,6 +109,7 @@ The docs are organized into three main sections:
   - [Connecting Modal to your Datadog account](https://modal.com/docs/guide/datadog-integration.md)
   - [Connecting Modal to your OpenTelemetry provider](https://modal.com/docs/guide/otel-integration.md)
   - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
+  - [Microsoft Entra SSO](https://modal.com/docs/guide/entra-sso.md)
   - [Custom SAML SSO](https://modal.com/docs/guide/saml-sso.md)
   - [SCIM Integration (Beta)](https://modal.com/docs/guide/scim.md)
   - [Slack notifications (Beta)](https://modal.com/docs/guide/slack-notifications.md)

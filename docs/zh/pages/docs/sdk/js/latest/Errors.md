@@ -26,9 +26,17 @@ class ClientClosedError extends Error
 class ConflictError extends Error
 ```
 
+## 执行错误
+
+运行时发生了一些意想不到的事情。
+
+```typescript
+class ExecutionError extends Error
+```
+
 ## 函数超时错误
 
-函数执行超出了允许的时间限制。
+函数执行超出允许的时间限制。
 
 ```typescript
 class FunctionTimeoutError extends Error
@@ -52,9 +60,7 @@ class InvalidError extends Error
 
 ## 未发现错误
 
-未找到某些资源。
-
-```typescript
+未找到某些资源。```typescript
 class NotFoundError extends Error
 ```
 
@@ -64,7 +70,9 @@ class NotFoundError extends Error
 
 ```typescript
 class QueueEmptyError extends Error
-```## 队列满错误
+```
+
+## 队列满错误
 
 队列已满。
 
@@ -82,7 +90,7 @@ class RemoteError extends Error
 
 ## SandboxFilesystemDirectoryNotEmptyError
 
-目录本应为空，但实际并非如此。
+目录预计为空，但实际并非如此。
 
 ```typescript
 class SandboxFilesystemDirectoryNotEmptyError extends SandboxFilesystemError
@@ -111,8 +119,8 @@ class SandboxFilesystemFileTooLargeError extends SandboxFilesystemError
 ```typescript
 class SandboxFilesystemIsADirectoryError extends SandboxFilesystemError
 ```
-
 ## SandboxFilesystemNotADirectoryError
+
 目录操作遇到了不是目录的路径组件。
 
 ```typescript
@@ -149,6 +157,14 @@ class SandboxFilesystemPermissionError extends SandboxFilesystemError
 
 ```typescript
 class SandboxTimeoutError extends Error
+```
+
+## 快照创建错误
+
+不会为沙盒生成快照图像。
+
+```typescript
+class SnapshotCreationError extends Error
 ```
 
 ## 超时错误

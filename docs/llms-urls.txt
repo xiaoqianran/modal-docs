@@ -115,6 +115,7 @@ https://modal.com/docs/guide/endpoint-benchmarks.md
 https://modal.com/docs/guide/endpoint-integrations.md
 https://modal.com/docs/guide/endpoint-metrics.md
 https://modal.com/docs/guide/endpoints.md
+https://modal.com/docs/guide/entra-sso.md
 https://modal.com/docs/guide/environment_variables.md
 https://modal.com/docs/guide/environments.md
 https://modal.com/docs/guide/existing-images.md

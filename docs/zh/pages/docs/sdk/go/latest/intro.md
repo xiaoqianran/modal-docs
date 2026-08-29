@@ -18,7 +18,7 @@ go get github.com/modal-labs/modal-client/go@latest
 import modal "github.com/modal-labs/modal-client/go"
 ```
 
-需要 Go 1.24.0 或更高版本。
+需要 Go 1.25.0 或更高版本。
 
 ## 配置
 
@@ -137,7 +137,7 @@ if !ok {
 fmt.Println(response)
 ```
 
-所有函数调用方法都可用：
+同步和异步[调用方法](/docs/guide/function-inplication-methods) 均受支持：
 
 ```go
 fc, err := f.Spawn(ctx, []any{"Hello, Modal!"}, nil)
@@ -151,6 +151,8 @@ if err != nil {
 }
 fmt.Println(result)
 ```
+
+Go SDK 目前不支持批量调用。
 
 ## 错误
 

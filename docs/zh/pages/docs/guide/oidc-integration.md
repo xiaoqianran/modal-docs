@@ -30,7 +30,7 @@ OIDC 集成有两个组件：发现文档和生成的
 交通方便。请参阅我们的[发现文档](https://oidc.modal.com/.well-known/openid-configuration)
 获取完整的索赔清单。
 
-生成的令牌通过 `MODAL_IDENTITY_TOKEN` 注入到函数的容器中
+生成的令牌会通过 `MODAL_IDENTITY_TOKEN` 自动注入到函数的容器中
 环境变量。以下是令牌中可能包含哪些声明的示例：
 
 ```json
@@ -52,6 +52,19 @@ OIDC 集成有两个组件：发现文档和生成的
 }
 ```
 
+### 沙箱
+
+与函数不同，[沙盒](/docs/guide/sandboxes) 不会收到身份
+默认情况下的令牌。要选择加入，请在以下情况下传递 `include_oidc_identity_token=True`
+创建沙箱：
+
+```python notest
+sb = modal.Sandbox.create(app=app, include_oidc_identity_token=True)
+```
+
+然后，该令牌可通过相同的方式在沙箱内使用
+`MODAL_IDENTITY_TOKEN`环境变量。
+
 ### 应用名称格式
 
 默认情况下，可以使用任意名称创建模态应用程序。然而，当使用
@@ -64,7 +77,6 @@ OIDC，App名称有更严格的字符集。具体来说，必须是64
 这意味着如果应用程序是可部署的，它也将与 OIDC 兼容。
 
 ## AWS S3 的演示使用
-
 要了解如何使用 OIDC 代币，我们将演示一个简单的函数，其中列出了
 S3 存储桶中的对象。
 
@@ -117,8 +129,7 @@ $ modal run oidc-token-test.py
 
 ### 步骤 1：配置 AWS 以信任 Modal 的 OIDC 提供商
 
-我们需要让 AWS 接受 Modal 身份令牌。为此，我们需要添加
-Modal 的 OIDC 提供商作为我们 AWS 账户中的可信实体。
+我们需要让 AWS 接受 Modal 身份令牌。为此，我们需要添加Modal 的 OIDC 提供商作为我们 AWS 账户中的可信实体。
 
 ```bash
 aws iam create-open-id-connect-provider \
@@ -182,7 +193,7 @@ OIDC 提供商 ARN 与 [第 1 步](#step-1-configure-aws-to-trust-modals-oidc-pr
 IAM 角色只能由工作区中的函数承担。您还可以进一步
 通过指定环境、应用程序或函数名称来限制这一点。
 
-理想情况下，我们将使用自定义声明来限制角色。不幸的是，AWS
+理想情况下，我们将使用自定义声明来进行角色限制。不幸的是，AWS
 不支持[匹配自定义声明](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_iam-condition-keys.html#condition-keys-wif)，
 所以我们使用 `sub` 声明来代替。
 
@@ -244,12 +255,12 @@ $ modal run oidc-token-test.py
 ### 先决条件
 
 1. 将 AWS 配置为信任 Modal 的 OIDC 提供商（[上述步骤 1](#step-1-configure-aws-to-trust-modals-oidc-provider)）
-
 2. [创建具有只读 ECR 访问权限的 AWS 策略](/docs/guide/existing-images#elastic-container-registry-ecr)
 
 3. 创建使用此策略的 IAM 角色（[上述步骤 3](#step-3-create-an-iam-role-that-can-be-assumed-by-modal-functions)）
 
 ### 使用示例图像进行测试
+
 创建示例 Dockerfile：
 
 ```dockerfile

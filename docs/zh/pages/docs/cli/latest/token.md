@@ -44,8 +44,7 @@ modal token info [OPTIONS]
 modal token new [OPTIONS]
 ```
 
-**选项**：* `--profile TEXT`：为其设置凭据的模态配置文件。如果未指定（并且未设置 MODAL\_PROFILE 环境变量），则使用与凭据关联的工作区名称。
-* `--activate / --no-activate`：创建后激活包含此令牌的配置文件。
+**选项**：* `--activate / --no-activate`：创建后激活包含此令牌的配置文件。
 * `--verify / --no-verify`：发出测试请求以验证新凭据。
 * `--help`：显示此消息并退出。
 
@@ -65,7 +64,6 @@ modal token set [OPTIONS]
 
 * `--token-id TEXT`：账户代币ID。
 * `--token-secret TEXT`：账户令牌秘密。
-* `--profile TEXT`：为其设置凭据的模态配置文件。如果未指定（并且未设置 MODAL\_PROFILE 环境变量），则使用与凭据关联的工作区名称。
 * `--activate / --no-activate`：创建后激活包含此令牌的配置文件。
 * `--verify / --no-verify`：发出测试请求以验证新凭据。
 * `--help`：显示此消息并退出。

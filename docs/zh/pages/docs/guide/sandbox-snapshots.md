@@ -98,7 +98,7 @@ snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirect
 ```
 
 {/片段} </CodeTabs>
-如果您尝试使用过期的快照，Modal 将在将映像安装到正在运行的沙箱中时立即引发 `NotFoundError`，或者在从过期映像启动新沙箱时首次交互（例如 `exec` 或 `wait`）。请注意，`Image.from_id()`本身是惰性的，即使提供的图像ID已被删除，也不会在构造时引发错误。
+如果您尝试使用过期的快照，Modal 将在将镜像安装到正在运行的沙箱中时立即引发`NotFoundError`，或者在从过期镜像启动新沙箱时在第一次交互时（例如`exec`或`wait`）。请注意，`Image.from_id()`本身是惰性的，即使提供的图像ID已被删除，也不会在构造时引发错误。
 
 要管理长期快照的存储，您可以在不再需要时以编程方式删除它们。有关详细信息，请参阅[删除快照](#deleting-snapshots)。
 
@@ -133,6 +133,87 @@ assert p2.stdout.read().strip() == "test"
 利用与我们为沙盒快速冷启动相同的基础设施。
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
+### 分叉
+
+由于文件系统快照是[图像](/docs/reference/modal.Image)，因此您可以从同一快照创建多个沙箱。每个沙盒都以快照文件系统的相同副本开始，因此您可以使用它来运行并行工作负载或独立测试不同的更改。
+
+<CodeTabs>
+  {#snippet python()}
+
+```python notest
+import modal
+
+app = modal.App.lookup("sandbox-fork-example", create_if_missing=True)
+
+sb = modal.Sandbox.create(app=app)
+p = sb.exec("bash", "-c", "pip install numpy && echo 'setup done' > /status")
+p.wait()
+
+image = sb.snapshot_filesystem()
+sb.terminate()
+
+# Start multiple Sandboxes from the same snapshot
+sb2 = modal.Sandbox.create(image=image, app=app)
+sb3 = modal.Sandbox.create(image=image, app=app)
+
+# Each fork starts from the snapshotted state
+assert sb2.exec("cat", "/status").stdout.read().strip() == "setup done"
+assert sb3.exec("cat", "/status").stdout.read().strip() == "setup done"
+```
+
+{/片段}
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image);
+const p = await sb.exec([
+  "bash",
+  "-c",
+  "pip install numpy && echo 'setup done' > /status",
+]);
+await p.wait();
+
+const snapshot = await sb.snapshotFilesystem();
+await sb.terminate();
+
+// Start multiple Sandboxes from the same snapshot
+const sb2 = await modal.sandboxes.create(app, snapshot);
+const sb3 = await modal.sandboxes.create(app, snapshot);
+
+// Each fork starts from the snapshotted state
+const p2 = await sb2.exec(["cat", "/status"]);
+console.assert((await p2.stdout.readText()).trim() === "setup done");
+const p3 = await sb3.exec(["cat", "/status"]);
+console.assert((await p3.stdout.readText()).trim() === "setup done");
+```
+
+{/片段}
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "pip install numpy && echo 'setup done' > /status"}, nil)
+p.Wait(ctx, nil)
+
+snapshot, _ := sb.SnapshotFilesystem(ctx, nil)
+sb.Terminate(ctx, nil)
+
+// Start multiple Sandboxes from the same snapshot
+sb2, _ := mc.Sandboxes.Create(ctx, app, snapshot, nil)
+sb3, _ := mc.Sandboxes.Create(ctx, app, snapshot, nil)
+
+// Each fork starts from the snapshotted state
+p2, _ := sb2.Exec(ctx, []string{"cat", "/status"}, nil)
+stdout2, _ := io.ReadAll(p2.Stdout)
+fmt.Println(strings.TrimSpace(string(stdout2))) // "setup done"
+
+p3, _ := sb3.Exec(ctx, []string{"cat", "/status"}, nil)
+stdout3, _ := io.ReadAll(p3.Stdout)
+fmt.Println(strings.TrimSpace(string(stdout3))) // "setup done"
+```
+
+{/片段} </CodeTabs>
+
 ## 目录快照
 
 目录快照允许您对正在运行的沙箱中的特定目录进行快照。生成的快照是一个图像，然后可以将其安装到另一个已经运行的沙箱中（通常在稍后的时间），这可用于：
@@ -141,9 +222,10 @@ assert p2.stdout.read().strip() == "test"
 * **将热池与快照结合使用**：对于受益于沙盒的[热池](/docs/examples/sandbox_pool) 来减少启动延迟的用例，第一次初始化现在可以在热池中进行，而不会失去在以后某个时间点恢复特定于应用程序的代码的能力。
 * **加快先前会话的恢复速度**：当容器加载文件时，已安装映像中的文件会被优先考虑，因此与从完整文件系统映像启动相比，安装目录可以加快沙盒恢复速度。
 
-＃＃＃ 用法
+### 用法
+
 使用`snapshot_directory`对目录进行快照，
-`mount_image` 在目录路径上挂载以前的目录快照，
+`mount_image` 在目录路径上挂载先前的目录快照，
 和 `unmount_image` 稍后删除已安装的图像。
 要使用客户持有的密钥材料保护目录快照，请参阅
 [客户提供的加密密钥](/docs/guide/customer-supplied-encryption-keys#directory-snapshots)。
@@ -249,9 +331,10 @@ fmt.Println(strings.TrimSpace(string(stdout))) // "data"
 
 {/片段} </CodeTabs>
 
-### 卸载已安装的映像
+### 卸载已安装的镜像
 
-要卸载以前安装的映像，在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
+要卸载以前安装的映像，
+在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
 卸载后，该路径下的底层沙盒文件系统再次可见。
 
 <CodeTabs>
@@ -285,8 +368,7 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 </Callout>
 
-沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
-要对 Sandbox 进行快照，请创建它并将 `_experimental_enable_snapshot` 设置为 `True`，然后使用 `_experimental_snapshot` 方法，该方法返回一个 `SandboxSnapshot` 对象：
+沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。要对 Sandbox 进行快照，请创建它并将 `_experimental_enable_snapshot` 设置为 `True`，然后使用 `_experimental_snapshot` 方法，该方法返回一个 `SandboxSnapshot` 对象：
 
 ```python notest
 image = modal.Image.debian_slim().apt_install("curl", "procps")
@@ -320,7 +402,7 @@ print(reply)  # <!DOCTYPE HTML><html lang...
 
 新沙箱将是原始沙箱的副本。所有正在运行的进程仍将运行，处于与快照时相同的状态，并且对文件系统所做的任何更改都将可见。
 
-您可以使用 `snapshot.object_id` 检索任何沙盒快照的 ID。要通过 ID 从快照恢复，请首先使用 `SandboxSnapshot.from_id` 对快照进行再水合，然后从中恢复：
+您可以使用 `snapshot.object_id` 检索任何沙盒快照的 ID。要按 ID 从快照恢复，请首先使用 `SandboxSnapshot.from_id` 对快照进行再水合，然后从中恢复：
 
 ```python notest
 snapshot_id = snapshot.object_id
@@ -331,7 +413,6 @@ sandbox = modal.Sandbox._experimental_from_snapshot(snapshot)
 ```
 
 请注意，这些方法是*实验性的*，我们将来可能会更改它们。
-
 ### 重新快照
 
 当从“本身”从内存快照创建的沙箱创建新的内存快照时，新快照将继承原始快照的到期日期。
@@ -353,18 +434,22 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 ```
 
 ### 限制
+
 * 沙箱内存快照在创建后 7 天后过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
-* 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
+* 对沙盒进行快照目前将导致其终止。 We intend to remove this limitation soon.
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
-* 当 `Sandbox.exec` 命令仍在运行时，无法对沙盒进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
-* 沙箱内存快照只能在与原始沙箱运行时完全相同的实例类型上恢复。鉴于 Modal 具有多样化的容量，这有时会导致调度延迟，特别是当内存快照与窄区域固定相结合时。
+* 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
+* 沙盒内存快照只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于 Modal 具有多样化的容量，这有时会导致调度延迟，特别是当内存快照与窄区域固定相结合时。
 
 ## 保持沙箱状态
 
 要在沙箱会话中保留状态，您需要：
+
 1. **触发快照。** 快照是从沙箱外部触发的，通常是在终止之前。一种常见的模式是在沙箱内运行 exec 进程并等待其退出。一旦完成，控制器就会拍摄快照并终止沙箱。
-2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。以下示例展示了这种模式。此代码通常会在模态函数或您自己的后端中运行，编排沙箱：
+2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。
+
+以下示例展示了这种模式。此代码通常在模态函数或您自己的后端中运行，编排沙箱：
 
 ```python notest
 import modal
@@ -391,7 +476,6 @@ sb.terminate()
 ```
 
 ## 删除快照
-
 由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除 API 删除它们。这对于管理存储或遵守数据保留策略很有用。
 
 <Callout variant="warning">
@@ -442,4 +526,5 @@ mc.Images.Delete(ctx, imageId, nil)
 ```
 
 {/片段} </CodeTabs>
+
 要删除快照，您需要自己跟踪图像 ID（例如，在数据库或 [Modal Dict](/docs/guide/dicts) 中），因为目前没有 API 可以列出您创建的所有快照。

@@ -51,5 +51,5 @@ modal config show [OPTIONS]
 
 **Options**:
 
-* `--redact / --no-redact`: Redact the `token_secret` value.
+* `--redact / --no-redact`: Redact secret credential values.
 * `--help`: Show this message and exit.

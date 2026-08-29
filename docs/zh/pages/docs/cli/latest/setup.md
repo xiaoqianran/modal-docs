@@ -12,5 +12,4 @@ modal setup [OPTIONS]
 
 **选项**：
 
-* `--profile TEXT`
 * `--help`：显示此消息并退出。

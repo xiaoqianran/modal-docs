@@ -152,6 +152,7 @@ modal environment create [OPTIONS] NAME
 **选项**：
 
 * `--restricted`：在新环境上启用RBAC限制
+* `--default-role TEXT`：受限环境的默认成员角色
 * `--help`：显示此消息并退出。
 
 ## `modal environment delete`
@@ -173,9 +174,7 @@ modal environment delete [OPTIONS] NAME
 
 ## `modal environment list`
 
-列出当前工作区中的所有环境。
-
-**用法**：
+列出当前工作区中的所有环境。**用法**：
 
 ```shell
 modal environment list [OPTIONS]
@@ -184,7 +183,9 @@ modal environment list [OPTIONS]
 **选项**：
 
 * `--json`
-* `--help`：显示此消息并退出。## `modal environment roles`
+* `--help`：显示此消息并退出。
+
+## `modal environment roles`
 
 管理用户和服务用户的环境角色。
 
@@ -209,7 +210,6 @@ modal environment roles [OPTIONS] COMMAND [ARGS]...
 * `update`：更新环境中用户或服务用户的角色
 
 ### `modal environment roles list`
-
 列出环境中每个用户和服务用户的角色
 
 **用法**：
@@ -219,6 +219,8 @@ modal environment roles list [OPTIONS] ENVIRONMENT
 ```
 
 **选项**：
+
+* `--exclude-default`：仅列出直接分配的角色
 * `--json`
 * `--help`：显示此消息并退出。
 

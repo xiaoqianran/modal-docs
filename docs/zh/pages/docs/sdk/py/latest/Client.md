@@ -24,7 +24,7 @@ is_closed(self)
 hello(self)
 ```
 
-连接服务器并获取版本信息；针对各种故障提出适当的错误。
+连接服务器并检索版本信息；针对各种故障提出适当的错误。
 
 **使用**
 
@@ -42,8 +42,7 @@ from_credentials(cls, token_id, token_secret)
 基于token凭证的构造函数；对于代表第三方用户管理 Modal 很有用。
 
 当需要显式管理客户端的生命周期时也很有用
-（例如，在分叉子流程中运行 Modal 时）- 请参阅
-[故障排除](/docs/guide/troubleshooting#connection-issues-in-forked-processes)。
+（例如，在分叉的子流程中运行 Modal 时）- 请参阅[疑难解答](/docs/guide/troubleshooting#connection-issues-in-forked-processes)。
 
 **参数**
 
@@ -58,6 +57,37 @@ from_credentials(cls, token_id, token_secret)
 
 ```python notest
 client = modal.Client.from_credentials("my_token_id", "my_token_secret")
+
+modal.Sandbox.create("echo", "hi", client=client, app=app)
+```
+
+## 来自\_oauth\_credentials
+
+```python
+from_oauth_credentials(cls, refresh_token, *, oauth_client_id,
+    oauth_client_secret)
+```
+
+基于 OAuth 凭证的构造函数；对于代表第三方用户管理 Modal 很有用。
+
+**参数**
+
+<Parameter name="refresh_token" type="str" description="OAuth refresh token returned by Modal&#x27;s token endpoint." />
+<Parameter name="oauth_client_id" type="str" description="Modal-issued OAuth client ID, with an ⟦T10⟧ prefix." />
+<Parameter name="oauth_client_secret" type="str" description="Modal-issued OAuth client secret, with an ⟦T11⟧ prefix." />
+
+**退货**
+
+经过身份验证的`Client`，其连接已打开。
+
+**使用**
+
+```python notest
+client = modal.Client.from_oauth_credentials(
+    refresh_token,
+    oauth_client_id=oauth_client_id,
+    oauth_client_secret=oauth_client_secret,
+)
 
 modal.Sandbox.create("echo", "hi", client=client, app=app)
 ```

@@ -35,7 +35,8 @@ Namespace with methods for managing Environment objects.
 ### objects.create
 
 ```python
-create(self, name, *, restricted=False, experimental_options=None, client=None)
+create(self, name, *, restricted=False, default_role=None,
+    experimental_options=None, client=None)
 ```
 
 Create a new Environment.
@@ -90,7 +91,7 @@ See https://modal.com/docs/guide/rbac for more information on Environment Roles.
 ### roles.list
 
 ```python
-list(self)
+list(self, *, exclude_default=False)
 ```
 
 Enumerate the Environment Role for each user and service user in the workspace.
@@ -105,6 +106,10 @@ print(roles)
 #     "service_users": {"alice-bot": "contributor", "ops-bot": "viewer", "ci-bot": "no-access"},
 # }
 ```
+
+**Parameters**
+
+<Parameter name="exclude_default" type="bool" defaultValue="False" description="If `True`, only include roles that are directly assigned." />
 
 ### roles.update
 

@@ -102,13 +102,15 @@ ret = await echo.remote([], { s: "Hello, Modal!" });
 console.log(ret);
 ```
 
-所有函数调用方法都可用：
+同步和异步[调用方法](/docs/guide/function-inplication-methods) 均受支持：
 
 ```typescript
 const functionCall = await echo.spawn(["Hello, Modal!"]);
 const ret = await functionCall.get();
 console.log(ret);
 ```
+
+JS SDK 目前不支持批量调用。
 
 ## 错误
 

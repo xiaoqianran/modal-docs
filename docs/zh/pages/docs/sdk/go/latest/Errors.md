@@ -22,6 +22,17 @@ type ClientClosedError struct {
 }
 ```
 
+## 冲突错误
+
+当资源的当前状态发生冲突时，返回 ConflictError
+与请求的操作。
+
+```go
+type ConflictError struct {
+	Exception string
+}
+```
+
 ## 执行超时错误
 
 当容器执行超出其执行持续时间限制时，将返回 ExecTimeoutError。
@@ -84,7 +95,7 @@ type NotFoundError struct {
 
 ## 队列空错误
 
-当尝试对空队列进行操作时，将返回 QueueEmptyError。
+当尝试对空队列执行操作时，将返回 QueueEmptyError。
 
 ```go
 type QueueEmptyError struct {
@@ -103,7 +114,6 @@ type QueueFullError struct {
 ```
 
 ## 远程错误
-
 RemoteError 表示 Modal 服务器上的错误，或 Python 异常。
 
 ```go
@@ -113,6 +123,7 @@ type RemoteError struct {
 ```
 
 ## SandboxFilesystemDirectoryNotEmptyError
+
 当非递归删除操作针对非空目录时，会返回 SandboxFilesystemDirectoryNotEmptyError。
 
 ```go
@@ -182,7 +193,6 @@ type SandboxFilesystemPathAlreadyExistsError struct {
 ```
 
 ## Sandbox文件系统权限错误
-
 当沙箱文件系统拒绝访问时，返回 SandboxFilesystemPermissionError。
 
 ```go
@@ -192,10 +202,21 @@ type SandboxFilesystemPermissionError struct {
 ```
 
 ## 沙箱超时错误
+
 当Sandbox操作超过允许的时间限制时，返回SandboxTimeoutError。
 
 ```go
 type SandboxTimeoutError struct {
+	Exception string
+}
+```
+
+## 快照创建错误
+
+当没有为 Sandbox 生成快照图像时，会返回 SnapshotCreationError。
+
+```go
+type SnapshotCreationError struct {
 	Exception string
 }
 ```

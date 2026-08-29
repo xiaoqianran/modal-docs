@@ -55,7 +55,7 @@ Modal 解析模型，选择兼容的配方，然后开始配置。
 如果省略 `name` 参数，Modal 会从模型中派生一个
 （`Qwen/Qwen3.5-4B` → `qwen3-5-4b`）。
 
-## 代理代币
+## 代理令牌
 
 默认情况下，端点经过身份验证。要呼叫一个，您需要一个
 [代理令牌](/docs/guide/webhook-proxy-auth) 对，您可以使用以下命令创建
@@ -105,7 +105,7 @@ Modal-Secret: ws-...
 ## 调用您的端点
 
 端点上线后，它会在以下位置提供 OpenAI Chat Completions API：
-端点 URL — 在仪表板中或使用 `modal endpoint list` 找到它。应用程序编程接口
+端点 URL - 显示在仪表板中。应用程序编程接口
 在 `/v1` 下提供服务，要传递的模型名称是基本模型存储库 ID（对于
 目录和卷模型）或您的自定义 Hugging Face 存储库 ID。
 
@@ -188,8 +188,8 @@ modal endpoint create \
   选择距离您的呼叫者最近的区域：`us-west`（默认）、`us-east`、
   `ca-central`、`eu-west` 或 `ap-south`。
 * **计算布局** (`--compute-region`, `--colocate-compute`) — 默认情况下，
-  莫代尔按可用性放置容器。通过`--compute-region`选择
-  容器独立于请求路由运行。您可以重复
+  莫代尔按可用性放置容器。通过`--compute-region`进行选择
+  其中容器独立于请求路由运行。您可以重复
   允许在多个区域进行调度的选项。或者，通过
   `--colocate-compute` 使用路由区域。
 

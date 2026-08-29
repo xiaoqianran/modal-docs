@@ -37,7 +37,8 @@ objects: EnvironmentManager
 ### 对象.create
 
 ```python
-create(self, name, *, restricted=False, experimental_options=None, client=None)
+create(self, name, *, restricted=False, default_role=None,
+    experimental_options=None, client=None)
 ```
 
 创建一个新环境。
@@ -90,7 +91,7 @@ roles: EnvironmentRolesManager
 ### 角色.list
 
 ```python
-list(self)
+list(self, *, exclude_default=False)
 ```
 
 枚举工作区中每个用户和服务用户的环境角色。
@@ -105,6 +106,10 @@ print(roles)
 #     "service_users": {"alice-bot": "contributor", "ops-bot": "viewer", "ci-bot": "no-access"},
 # }
 ```
+
+**参数**
+
+<Parameter name="exclude_default" type="bool" defaultValue="False" description="If ⟦T22⟧, only include roles that are directly assigned." />
 
 ### 角色.更新
 
@@ -176,7 +181,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T23⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T24⟧ to include all tags in the report." />
 
 **退货**
 
@@ -207,7 +212,7 @@ summary(self, cycle=None)
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T29⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T30⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 

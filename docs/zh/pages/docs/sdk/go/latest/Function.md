@@ -7,6 +7,7 @@
 ```go
 type Function struct {
 	FunctionID string
+	Logs       *FunctionLogsManager // Logs provides access to logs emitted by this Function.
 }
 ```
 
@@ -73,7 +74,7 @@ Spawn 开始在远程函数上运行单个输入。
 ## 更新自动缩放器
 
 ```go
-UpdateAutoscaler(ctx context.Context, params *FunctionUpdateAutoscalerParams) error
+UpdateAutoscaler(ctx context.Context, params *FunctionUpdateAutoscalerParams) (*FunctionAutoscalerSettings, error)
 ```
 
 UpdateAutoscaler 会覆盖此函数的当前自动缩放器行为。
@@ -85,7 +86,7 @@ FunctionUpdateAutoscalerParams 包含用于覆盖函数的自动缩放器行为�
 * `MinContainers` (`*uint32`)
 * `MaxContainers` (`*uint32`)
 * `BufferContainers` (`*uint32`)
-* `ScaledownWindow` (`*uint32`)
+* `ScaledownWindow` (`*time.Duration`)
 
 ## 带批处理
 
@@ -129,11 +130,75 @@ FunctionWithOptionsParams 表示模态函数的运行时选项。
 * `MemoryLimitMiB` (`*int`)
 * `GPU` (`*string`)
 * `Env` (`map[string]string`)
-* `Secrets` (`[]*Secret`)
-* `Volumes` (`map[string]*Volume`)
+* `Secrets` (`[]*Secret`)* `Volumes` (`map[string]*Volume`)
 * `Retries` (`*Retries`)
 * `MaxContainers` (`*int`)
 * `BufferContainers` (`*int`)
 * `ScaledownWindow` (`*time.Duration`)
 * `Timeout` (`*time.Duration`)
 * `RoutingRegion` (`*string`)
+
+## 函数.日志
+
+日志提供对此函数发出的日志的访问。
+
+### 获取
+
+```go
+Fetch(
+	ctx context.Context,
+	since time.Time,
+	params *FunctionLogFetchParams,
+) (iter.Seq2[LogEntry, error], error)
+```
+
+Fetch 获取与日期范围和过滤器相对应的功能日志。
+
+因为是时间范围的开始。 params.Until 默认为当前
+时间。该序列按时间顺序生成 `LogEntry` 值。
+
+**参数** (`FunctionLogFetchParams`)
+
+FunctionLogFetchParams 是用于获取函数日志的选项。
+
+* `Until` (`*time.Time`)：直到时间范围结束。它默认为当前时间。
+* `Source` (`LogSource`)：源按 stdout、stderr 或系统过滤日志。零值包括所有来源。
+* `SearchText` (`string`): SearchText 按搜索文本过滤功能日志。
+
+### 流
+
+```go
+Stream(
+	ctx context.Context,
+	params *LogStreamParams,
+) (iter.Seq2[LogEntry, error], error)
+```
+
+Stream 传输新的 Function 日志，直到达到超时。
+
+超时指定日志条目之间等待的时间
+终止流。默认情况下，流会阻塞，直到它被
+打断了。该序列在到达时会产生 `LogEntry` 值。
+
+**参数** (`LogStreamParams`)
+
+LogStreamParams 是流日志的选项。
+
+* `Timeout` (`*time.Duration`)：超时是终止流之前日志条目之间等待的持续时间。当 nil 时，流会阻塞直到被中断。
+
+### 尾巴
+
+```go
+Tail(ctx context.Context, params *LogTailParams) (iter.Seq2[LogEntry, error], error)
+```
+
+Tail 获取最新的函数日志。
+
+该序列按时间顺序生成 `LogEntry` 值。
+
+**参数** (`LogTailParams`)
+
+LogTailParams 是用于获取最新日志的选项。
+
+* `Entries` (`int`): Entries 是要返回的日志条目数。默认为 100。
+* `Source` (`LogSource`)：源按 stdout、stderr 或系统过滤日志。零值包括所有来源。
