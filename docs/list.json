@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-30T11:44:15.279Z",
+  "fetchedAt": "2026-08-31T13:23:42.809Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 306,
   "ok": 306,
@@ -858,7 +858,7 @@
       "source": "https://modal.com/docs/guide/data-residency.md",
       "finalUrl": "https://modal.com/docs/guide/data-residency.md",
       "path": "docs/guide/data-residency.md",
-      "bytes": 11863,
+      "bytes": 11782,
       "stub": false
     },
     {

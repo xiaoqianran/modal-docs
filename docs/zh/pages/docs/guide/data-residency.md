@@ -1,87 +1,77 @@
-<!-- modal-docs: translation failed; English fallback -->
+<!-- modal-docs: machine-translated zh-CN from English source -->
 
-# Data residency on Modal
+# Modal 上的数据驻留
 
-This page explains how to control where your Modal workloads run, under what circumstances customer data may leave your region, and when additional data containing customer data may be created and stored outside of your region. It also outlines general strategies for meeting your regional compliance requirements.
+本页介绍如何控制 Modal 工作负载的运行位置、在什么情况下客户数据可以离开您的区域，以及何时可以在您的区域之外创建和存储包含客户数据的其他数据。它还概述了满足您的区域合规要求的一般策略。
 
-## Region selection
+## 区域选择
 
-You can select the container and routing regions for most Modal services.
+您可以为大多数 Modal 服务选择容器和路由区域。
 
-* **Container region**‡ is where workload containers run and application code processes data.
-* **Routing region** is where requests enter Modal's network before being forwarded to your containers. As a general rule, we recommend choosing the routing region closest to your clients.
+* **容器区域**‡ 是工作负载容器运行和应用程序代码处理数据的地方。
+* **路由区域** 是请求在转发到容器之前进入 Modal 网络的地方。作为一般规则，我们建议选择最接近您的客户的路由区域。
 
-For a full list of available regions, please visit our [region selection documentation](/docs/guide/region-selection) page.
+有关可用区域的完整列表，请访问我们的[区域选择文档](/docs/guide/region-selection) 页面。
 
-‡ *Functions and Sandboxes set the container region with `region=`; Servers use `compute_region=`, and Endpoints use `--compute-region`.*
+‡ *函数和沙箱用`region=`设置容器区域；服务器使用`compute_region=`，端点使用`--compute-region`。*
 
-| **Service**                                    | **Selectable container region?**                                  | **Selectable routing region?**                       |
-| ---------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------- |
-| [Endpoints (Dedicated)](/docs/guide/endpoints) | [Yes](/docs/guide/endpoints#choosing-where-it-runs)               | [Yes](/docs/guide/endpoints#choosing-where-it-runs)  |
-| [Endpoints (Shared)](/docs/guide/endpoints)\*  | No                                                                | No                                                   |
-| [Functions](/docs/guide/functions)             | [Yes](/docs/guide/region-selection#specifying-a-container-region) | [Yes](/docs/guide/region-selection#regional-routing) |
-| [Sandboxes](/docs/guide/sandboxes)             | [Yes](/docs/guide/region-selection#specifying-a-container-region) | N/A†                                                 |
-| [Servers](/docs/guide/servers)                 | [Yes](/docs/guide/servers#request-routing)                        | [Yes](/docs/guide/servers#request-routing)           |
+| **服务** | **可选择的容器区域？** | **可选择路由区域？** |
+| ---------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [端点（专用）](/docs/guide/endpoints) | [是](/docs/guide/endpoints#choosing-where-it-runs) | [是](/docs/guide/endpoints#choosing-where-it-runs) |
+| [端点（共享）](/docs/guide/endpoints)\* |没有 |没有 || [函数](/docs/guide/functions) | [是](/docs/guide/region-selection#specifying-a-container-region) | [是](/docs/guide/region-selection#regional-routing) |
+| [沙箱](/docs/guide/sandboxes) | [是](/docs/guide/region-selection#specifying-a-container-region) |不适用† |
+| [服务器](/docs/guide/servers) | [是](/docs/guide/servers#request-routing) | [是](/docs/guide/servers#request-routing) |
 
-\* *Shared Endpoints route through `us-west`, and containers are distributed across Modal's global compute pool.*
+\* *共享端点通过`us-west`路由，容器分布在Modal的全局计算池中。*
+† *沙盒不使用路由区域：数据平面请求（包括加密隧道、沙盒连接令牌、`exec` 输入/输出）直接发送到所选区域中的容器。沙箱生命周期请求（例如创建和终止）通过`us-east`中的控制平面进行路由。*
 
-† *Sandboxes don't use a routing region: data-plane requests (including encrypted tunnels, Sandbox Connect Tokens, `exec` input/output) go directly to the container in your selected region. Sandbox lifecycle requests (e.g. create and terminate) are routed through our control plane in `us-east`.*
+### 区域固定很严格
 
-### Region pinning is strict
+固定到路由区域的工作负载仅通过该区域路由流量，固定到容器区域的工作负载仅在该区域的计算上运行；即使该地区的产能耗尽，也不会转移到其他地方。
 
-Workloads pinned to a routing region route traffic only through that region, and workloads pinned to a container region run only on compute in that region; neither is ever moved elsewhere, even if the region runs out of capacity.
+将容器固定到较少的区域可以让您确定工作负载的运行位置，但代价是可扩展的容量池较小。此外，固定容器区域将在我们的基本使用定价之上应用乘数；有关更多详细信息，请参阅[区域选择定价](/docs/guide/region-selection#pricing)。
 
-Pinning your containers to fewer regions gives you certainty about where your workloads run, but at the cost of a smaller pool of capacity to scale into. In addition, pinning a container region will apply a multiplier on top of our base usage pricing; see [region selection pricing](/docs/guide/region-selection#pricing) for more details.
+在固定容器区域之前，我们建议评估哪些工作负载需要严格的数据驻留。不支持的工作负载可以利用 Modal 的全局计算池来获得更高的可用性。
 
-Before pinning the region of your containers, we recommend assessing which workloads require strict data residency. Workloads that do not can take advantage of Modal's global pool of compute for higher availability.
+## 数据存储位置
+在本节中，我们将概述不同 Modal 产品的日志和其他数据的存储位置。有关保留政策，请参阅我们的[安全和隐私文档](/docs/guide/security#data-retention)中的数据保留表。
 
-## Where data is stored
+专用端点、共享端点和服务器不[存储请求和响应负载](/docs/guide/security#modal-inference-endpoints)。|产品 |数据类型 |哪里 |针对严格居住要求的建议控制措施 |
+| --------------------------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|函数、沙箱和服务器 |应用程序日志（`stderr`和`stdout`）|美国 |确保生产代码不会将敏感的客户数据写入应用程序日志。                                                                                                                                                                                                               |
+|功能|同步有效负载 2 MiB 或更小 |路由区域（`us-east`，如果未选择路由区域）|确保在创建函数时选择路由区域。                                                                                                                                                                                                                                 ||功能|有效负载超过 2 MiB，并生成任意大小的（异步）调用有效负载 |美国 |减少 Function I/O 的大小，或使用云存储桶挂载来读写输入和输出。                                                                                                                                                                                                     |
+|沙箱 |您显式创建的快照 |美国 |在引入客户数据之前创建快照。                                                                                                                                                                                                                                                    ||存储产品|写入卷、图像、字典、队列和机密的数据 |美国 |使用云存储桶安装作为卷的替代持久存储位置。对于字典和队列，请使用您所在区域托管的类似技术，例如托管键值存储或消息队列。避免将具有严格驻留要求的客户数据存储在图像或秘密中。 |
 
-In this section, we'll outline where logs and other data may be stored for different Modal products. For relevant retention policies, please refer to the data retention table in our [security and privacy documentation](/docs/guide/security#data-retention).
+### 持久存储产品中的静态数据
 
-Dedicated Endpoints, Shared Endpoints, and Servers do not [store request and response payloads](/docs/guide/security#modal-inference-endpoints).
+图像、卷、字典、队列和机密的持久存储位于位于美国的对象存储中。
+对于持久存储（例如卷），您可以选择通过 [云存储桶安装](/docs/guide/cloud-bucket-mounts) 自带存储，它支持您选择的区域中的各种云提供商存储桶。
 
-| Product                           | Data type                                                                 | Where                                                       | Recommended controls for strict residency requirements                                                                                                                                                                                                                                                |
-| --------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Functions, Sandboxes, and Servers | Application logs (`stderr` and `stdout`)                                  | United States                                               | Ensure that production code is not writing sensitive customer data to application logs.                                                                                                                                                                                                               |
-| Functions                         | Synchronous payloads 2 MiB or smaller                                     | Routing region (`us-east` if no routing region is selected) | Ensure that you select a routing region when creating your Functions.                                                                                                                                                                                                                                 |
-| Functions                         | Payloads over 2 MiB, and spawned (asynchronous) call payloads of any size | United States                                               | Reduce the size of Function I/O, or use Cloud bucket mounts to read and write inputs and outputs.                                                                                                                                                                                                     |
-| Sandboxes                         | Snapshots you explicitly create                                           | United States                                               | Create snapshots before introducing customer data.                                                                                                                                                                                                                                                    |
-| Storage products                  | Data written to Volumes, Images, Dicts, Queues, and Secrets               | United States                                               | Use Cloud bucket mounts as an alternative durable storage location for Volumes. For Dicts and Queues, use comparable technologies hosted in your own region, such as a managed key-value store or message queue. Avoid storing customer data with strict residency requirements in Images or Secrets. |
+## 合规性
 
-### Data at rest in durable storage products
+Modal 让您能够控制客户数据如何流经平台，从而满足您的区域数据驻留和隐私要求。这包括控制您的 Modal 工作负载运行的位置、在什么情况下您的客户数据可能会离开您的区域，以及何时可以在您的区域之外创建和存储包含客户数据的其他数据。
 
-Durable storage for Images, Volumes, Dicts, Queues, and Secrets resides in object storage located in the United States.
+根据我们的[共同责任模型](/docs/guide/security#shared-responsibility-model)，您有责任设置配置来履行您的义务，例如通用数据保护条例 (GDPR) 合规性。
 
-For durable storage, such as Volumes, you can opt to bring your own storage via [Cloud bucket mounts](/docs/guide/cloud-bucket-mounts), which support various cloud provider buckets in the region of your choice.
+有关更多信息，请参阅我们的安全门户：[trust.modal.com](https://trust.modal.com/)。
 
-## Compliance
+### 满足您的区域合规要求
+我们建议您首先了解与如何使用 Modal 相关的合规性要求。 GDPR 等法规的适用取决于您使用 Modal 的方式和地点，因此在设计工作负载之前确定您的数据存储、处理和传输义务非常重要，并向您的法律或合规团队询问这些义务如何映射到您的数据流。
 
-Modal allows you to meet your regional data residency and privacy requirements by giving you control over how your customer data flows through the platform. This includes controlling where your Modal workloads run, under what circumstances your customer data may leave your region, and when additional data containing customer data may be created and stored outside of your region.
+下面，我们概述了控制工作负载运行位置、哪些数据离开您所在区域以及创建哪些新客户数据的策略。
 
-Per our [shared responsibility model](/docs/guide/security#shared-responsibility-model), it is your responsibility to set the configuration to meet your obligations, such as General Data Protection Regulation (GDPR) compliance.
+### 控制工作负载的运行位置
 
-For more information, please see our Security Portal at [trust.modal.com](https://trust.modal.com/).
+* **当您有严格的驻留要求时，固定容器和路由区域。** 在创建时为受支持的产品选择容器和路由区域。区域选择非常严格：固定到某个区域的工作负载只能在该区域运行。有关容量和定价权衡，请参阅上面的[区域固定很严格](#region-pinning-is-strict)。
 
-### Meeting your regional compliance requirements
+### 控制哪些客户数据离开您所在的地区
+* **自带存储。** 您可以使用 [云存储桶挂载](/docs/guide/cloud-bucket-mounts) 将您自己的对象存储（例如您所在区域的 Amazon S3 存储桶）挂载到容器中。然后，静态数据将根据您自己的保留和访问策略保留在您所在的区域。
+* **使用同步调用并保持函数输入和输出 2 MiB 或更小，以便负载保留在路由区域中。** 在函数上，同步负载（通过 `.remote()` / `.map()` 或 Web Functions 发送的负载）在路由区域中保留 2 MiB 或更小。较大的有效负载以及所有生成的（异步）调用有效负载（无论大小）都保存在 Modal 的集中式美国存储中。
+  * 如果您需要有效负载保留在特定区域，我们建议传递引用（例如对象键）而不是数据本身，并通过您自己安装的存储读取和写入实际数据，如上所述。这使得输入和输出数据完全脱离区域数据存储和中央存储。
+* **如果您的用例需要静态出口 IP，请使用区域代理。** 如果您对静态出口 IP 使用 [模态代理](/docs/guide/proxy-ips)，则无论您的容器区域如何，流量都会通过代理区域进行路由。数据在传输过程中被加密。
+* **当隧道流量必须保留在您的区域时，请使用加密隧道。** 加密隧道直接从您选择的容器区域提供服务。未加密的隧道通过不同地理区域的中继服务器进行路由，因此对于有驻留要求的流量应避免使用它们。
 
-We recommend starting by understanding your compliance requirements in relation to how you use Modal. Regulations like GDPR apply based on how and where you use Modal, so it's important to work out your obligations for data storage, processing, and transfer before designing your workloads, and to ask your legal or compliance team how those obligations map to your data flows.
+### 控制创建哪些新客户数据
 
-Below, we outline strategies for controlling where your workloads run, what data leaves your region, and what new customer data is created.
-
-### Controlling where your workloads run
-
-* **Pin container and routing regions when you have strict residency requirements.** Select container and routing regions for supported products at creation time. Region selection is strict: workloads pinned to a region will only run there. For the capacity and pricing tradeoffs, see [Region pinning is strict](#region-pinning-is-strict) above.
-
-### Controlling what customer data leaves your region
-
-* **Bring your own storage.** You can mount your own object storage, such as an Amazon S3 bucket in your region, into your containers with a [Cloud bucket mount](/docs/guide/cloud-bucket-mounts). Data at rest then stays in your region, under your own retention and access policies.
-* **Use synchronous calls and keep Function inputs and outputs 2 MiB or smaller so payloads are persisted in your routing region.** On Functions, synchronous payloads (those sent via `.remote()` / `.map()` or Web Functions) 2 MiB or smaller stay in the routing region. Larger payloads, and all spawned (asynchronous) call payloads regardless of size, are kept in Modal's centralized US storage.
-  * If you need payloads to stay in a specific region, we recommend passing a reference (such as an object key) instead of the data itself, and reading and writing the actual data via your own mounted storage as described above. This keeps input and output data out of regional data stores and central storage entirely.
-* **Request regional proxies if your use case requires static egress IPs.** If you use [Modal Proxies](/docs/guide/proxy-ips) for static egress IPs, that traffic routes through `us-east` regardless of your container region. Data is encrypted in transit. If you need a region-specific proxy, please reach out to us at <support@modal.com>.
-* **Use encrypted tunnels when tunnel traffic must stay in your region.** Encrypted tunnels are served directly from your selected container region. Unencrypted tunnels route through relay servers in various geographical regions, so avoid them for traffic with residency requirements.
-
-### Controlling what new customer data gets created
-
-* **Sanitize sensitive data from logs.** Anything your code writes to `stdout`/`stderr` is stored as logs in Modal's centralized US data stores and retained based on our published data retention table. For applications processing customer data, ensure the data is never logged and never leaked through error handling. Unhandled exception tracebacks, for example, are written to `stderr` and end up in logs.
-* **Account for snapshots in your data flows.** Sandbox snapshots are only created when you explicitly request them, but when you do, they are stored in the United States regardless of where your workloads run. A memory snapshot captures a Sandbox's entire state, including any sensitive data held in memory at snapshot time. Filesystem snapshots are stored as Modal Images under the hood, so the same US-residency considerations apply to any Image used to boot Modal containers.
+* **清理日志中的敏感数据。** 您的代码写入`stdout`/`stderr` 的任何内容都将作为日志存储在 Modal 的集中式美国数据存储中，并根据我们发布的数据保留表进行保留。对于处理客户数据的应用程序，确保数据永远不会被记录，也不会通过错误处理而泄露。例如，未处理的异常回溯会写入`stderr`并最终记录在日志中。
+* **考虑数据流中的快照。** 沙盒快照仅在您明确请求时才会创建，但当您这样做时，无论您的工作负载在何处运行，它们都会存储在美国。内存快照捕获沙箱的整个状态，包括快照时内存中保存的任何敏感数据。文件系统快照在后台存储为模态映像，因此相同的美国驻留注意事项适用于用于启动模态容器的任何映像。

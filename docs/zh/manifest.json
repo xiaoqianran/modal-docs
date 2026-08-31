@@ -1499,11 +1499,9 @@
       "error": "HTTP 429"
     },
     "docs/guide/data-residency.md": {
-      "hash": "3833485c86227b83c09d7105ff2925b94b2651ef",
-      "translatedAt": "2026-08-28T18:29:59.220Z",
-      "bytes": 11863,
-      "fallback": true,
-      "error": "HTTP 429"
+      "hash": "c65a3397bb68859c94b08bcbac5c39b01f0b5e56",
+      "translatedAt": "2026-08-31T13:23:49.008Z",
+      "bytes": 9850
     },
     "docs/sdk/go/latest/FunctionAutoscalerSettings.md": {
       "hash": "abeacba83058eb325c3015c9df2c1a3050e2cc1c",
@@ -1581,10 +1579,10 @@
       "bytes": 4949
     }
   },
-  "updatedAt": "2026-08-30T11:44:15.393Z",
+  "updatedAt": "2026-08-31T13:23:49.008Z",
   "stats": {
-    "translated": 0,
-    "skipped": 311,
+    "translated": 1,
+    "skipped": 310,
     "failed": 0,
     "total": 311
   }
