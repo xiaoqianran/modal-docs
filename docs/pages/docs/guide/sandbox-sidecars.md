@@ -205,6 +205,57 @@ _ = sidecar
 
 {/snippet} </CodeTabs>
 
+### Filesystem snapshots
+
+You can snapshot a running Sidecar's filesystem into a reusable Image. The
+resulting Image can be used anywhere an existing Image is accepted; the example
+below uses it to start another Sidecar. The snapshot is scoped to that Sidecar;
+it does not include the main Sandbox filesystem or other Sidecars.
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sidecar.filesystem.write_text("ready", "/tmp/state")
+snapshot = sidecar.snapshot_filesystem()
+
+restored = sb._experimental_sidecars.create(
+    "sleep", "600", name="restored", image=snapshot
+)
+assert restored.filesystem.read_text("/tmp/state") == "ready"
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+await sidecar.filesystem.writeText("ready", "/tmp/state");
+const snapshot = await sidecar.snapshotFilesystem();
+
+const restored = await sb.experimentalSidecars.create("restored", snapshot, {
+  command: ["sleep", "600"],
+});
+console.assert((await restored.filesystem.readText("/tmp/state")) === "ready");
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+_ = sidecar.Filesystem.WriteText(ctx, "ready", "/tmp/state", nil)
+snapshot, _ := sidecar.SnapshotFilesystem(ctx, nil)
+
+restored, _ := sb.ExperimentalSidecars.Create(ctx, "restored", snapshot, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+state, _ := restored.Filesystem.ReadText(ctx, "/tmp/state", nil)
+fmt.Println(state) // "ready"
+```
+
+{/snippet} </CodeTabs>
+
 ## Resource configuration
 
 The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
@@ -239,7 +290,8 @@ for sidecars:
   by ID via `Image.from_id()` or name via `Image.from_name()`, or created from filesystem/directory snapshots. Lazy image
   building is not supported for sidecars. See also [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
 * **No Cloud Bucket Mount support**: Sidecar containers do not currently support attaching [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
-* **No snapshot support**: Sidecar container state is not captured in
+* **No memory snapshot support**: A Sidecar's filesystem can be snapshotted
+  independently, but Sidecar memory state is not captured in
   [Sandbox snapshots](/docs/guide/sandbox-snapshots).
 * **VM incompatibility**: Sidecars are not compatible with VM Sandboxes.
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.

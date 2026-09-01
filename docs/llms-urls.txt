@@ -38,6 +38,7 @@ https://modal.com/docs/examples/chatterbox_tts.md
 https://modal.com/docs/examples/claude-slack-gif-creator.md
 https://modal.com/docs/examples/computer_use_vnc.md
 https://modal.com/docs/examples/cron_datasette.md
+https://modal.com/docs/examples/cursor.md
 https://modal.com/docs/examples/db_to_sheet.md
 https://modal.com/docs/examples/dbt_duckdb.md
 https://modal.com/docs/examples/deepseek_v4_flash.md

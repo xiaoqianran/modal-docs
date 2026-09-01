@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "0dca5619a55c5b8ce135b8184eb2ddbe92411d28",
-      "translatedAt": "2026-08-29T12:35:57.222Z",
-      "bytes": 24609
+      "hash": "c7e10f5151cecd308c647397949b8f413bada9e9",
+      "translatedAt": "2026-09-01T11:30:04.973Z",
+      "bytes": 24690
     },
     "docs/cli/latest/config.md": {
       "hash": "85a6762c3598b9d8249f7fdf60d44396e195e0f4",
@@ -357,9 +357,9 @@
       "bytes": 7882
     },
     "docs/examples/miscellaneous.md": {
-      "hash": "779777d1bd67e2f181e82f18410044c2cf67afd3",
-      "translatedAt": "2026-08-19T06:55:15.453Z",
-      "bytes": 1641
+      "hash": "e629726a774d17c328389a1b70d976afa098d38b",
+      "translatedAt": "2026-09-01T11:30:03.027Z",
+      "bytes": 1695
     },
     "docs/examples/modal_tailscale.md": {
       "hash": "d2144062b263247b0bad630108cceb322320aeb6",
@@ -1492,11 +1492,9 @@
       "bytes": 59579
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "59178a0fd4a47a36d2847126b7f5c1fc3600e22f",
-      "translatedAt": "2026-08-25T06:59:24.403Z",
-      "bytes": 8025,
-      "fallback": true,
-      "error": "HTTP 429"
+      "hash": "94f4695b6247da13216c4bddf04da002176d5032",
+      "translatedAt": "2026-09-01T11:30:06.197Z",
+      "bytes": 8938
     },
     "docs/guide/data-residency.md": {
       "hash": "c65a3397bb68859c94b08bcbac5c39b01f0b5e56",
@@ -1577,13 +1575,18 @@
       "hash": "fd3e645675ff94c9286bd7720349514e7f51daea",
       "translatedAt": "2026-08-29T12:36:02.779Z",
       "bytes": 4949
+    },
+    "docs/examples/cursor.md": {
+      "hash": "4b52390bc0c54179290c118c30e3da75019c4db6",
+      "translatedAt": "2026-09-01T11:30:01.968Z",
+      "bytes": 9706
     }
   },
-  "updatedAt": "2026-08-31T13:23:49.008Z",
+  "updatedAt": "2026-09-01T11:30:06.197Z",
   "stats": {
-    "translated": 1,
-    "skipped": 310,
+    "translated": 4,
+    "skipped": 308,
     "failed": 0,
-    "total": 311
+    "total": 312
   }
 }

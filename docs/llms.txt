@@ -178,6 +178,7 @@ The docs are organized into three main sections:
   - [Build a protein-folding dashboard](https://modal.com/docs/examples/esm3.md)
   - [Fold proteins with Boltz-2](https://modal.com/docs/examples/boltz_predict.md)
 - Modal Sandboxes
+  - [Run Cursor Cloud Agents on Modal](https://modal.com/docs/examples/cursor.md)
   - [Run a background coding agent with OpenCode](https://modal.com/docs/examples/opencode_server.md)
   - [Build a scalable AI coding platform](https://modal.com/docs/examples/modal-vibe.md)
   - [Create GIFs from Slack using the Claude Agent SDK](https://modal.com/docs/examples/claude-slack-gif-creator.md)

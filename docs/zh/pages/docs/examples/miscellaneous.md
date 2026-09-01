@@ -19,10 +19,11 @@
 * [运行批量 Whisper 转录](/docs/examples/batched_whisper)
 * [在模态沙箱中运行 Claude 代码](/docs/examples/sandbox_agent)
 * [在 Modal 上运行持续集成 (CI) 测试](/docs/examples/ci-on-modal)
+* [在模态上运行光标云代理](/docs/examples/cursor)
 * [运行OpenAI的gpt-oss模型](/docs/examples/gpt_oss_inference)
 * [运行OpenCV检测人脸](/docs/examples/count_faces)
 * [运行 SAM 2 视频分割模型](/docs/examples/segment_anything)
-* [使用 Modal 服务器提供 Liquid AI 嵌入服务](/docs/examples/liquidai_embeddings_server)
+* [使用模态服务器提供 Liquid AI 嵌入](/docs/examples/liquidai_embeddings_server)
 * [以最大吞吐量服务 TensorRT-LLM](/docs/examples/trtllm_throughput)
 
 您可以在 [`modal-examples` GitHub 存储库](https://github.com/modal-labs/modal-examples) 上找到更多示例

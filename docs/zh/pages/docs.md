@@ -176,9 +176,10 @@
   - [构建蛋白质折叠仪表板](https://modal.com/docs/examples/esm3.md)
   - [用 Boltz-2 折叠蛋白质](https://modal.com/docs/examples/boltz_predict.md)
 - 模态沙箱
+  - [在模态上运行光标云代理](https://modal.com/docs/examples/cursor.md)
   - [使用 OpenCode 运行后台编码代理](https://modal.com/docs/examples/opencode_server.md)
-  - [构建可扩展的AI编码平台](https://modal.com/docs/examples/modal-vibe.md)
-  - [使用 Claude Agent SDK 从 Slack 创建 GIF](https://modal.com/docs/examples/claude-slack-gif-creator.md)- [在安全的 GPU 沙箱中运行 LangGraph 代理的代码](https://modal.com/docs/examples/agent.md)
+  - [构建可扩展的AI编码平台](https://modal.com/docs/examples/modal-vibe.md)- [使用 Claude Agent SDK 从 Slack 创建 GIF](https://modal.com/docs/examples/claude-slack-gif-creator.md)
+  - [在安全的 GPU 沙箱中运行 LangGraph 代理的代码](https://modal.com/docs/examples/agent.md)
   - [通过 VNC 观看计算机使用的代理实时工作](https://modal.com/docs/examples/computer_use_vnc.md)
   - [在模态沙箱上运行大规模并行评估](https://modal.com/docs/examples/harbor_evals.md)
   - [构建一个有状态的沙盒代码解释器](https://modal.com/docs/examples/simple_code_interpreter.md)
@@ -188,8 +189,8 @@
   - [使用 GRPO 和 verl 训练模型来解决数学问题](https://modal.com/docs/examples/grpo_verl.md)
   - [使用GRPO和TRL训练模型来解决编码问题](https://modal.com/docs/examples/grpo_trl.md)
 - 嵌入
-  - [使用 Modal 服务器提供 Liquid AI 嵌入服务](https://modal.com/docs/examples/liquidai_embeddings_server.md)
-- [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
+- [使用 Modal 服务器提供 Liquid AI 嵌入服务](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [使用TEI嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
   - [将卫星图像转为矢量并存储在MongoDB中](https://modal.com/docs/examples/mongodb-search.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
@@ -198,8 +199,8 @@
 - 从头开始训练模型
   - [通过超参数提前停止网格搜索来训练 SLM](https://modal.com/docs/examples/hp_sweep_gpt.md)
   - [长时间运行、可恢复的训练作业](https://modal.com/docs/examples/long-training.md)
-- 托管流行的图书馆
-  - [YOLO：微调并服务计算机视觉模型](https://modal.com/docs/examples/finetune_yolo.md)- [Blender：构建 3D 渲染农场](https://modal.com/docs/examples/blender_video.md)
+- 托管流行的图书馆- [YOLO：微调并服务计算机视觉模型](https://modal.com/docs/examples/finetune_yolo.md)
+  - [Blender：构建 3D 渲染农场](https://modal.com/docs/examples/blender_video.md)
   - [Streamlit：运行和部署 Streamlit 应用程序](https://modal.com/docs/examples/serve_streamlit.md)
   - [SQLite：使用 Datasette 发布可探索的数据](https://modal.com/docs/examples/cron_datasette.md)
   - [Algolia：用爬虫构建文档搜索](https://modal.com/docs/examples/algolia_indexer.md)

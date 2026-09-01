@@ -17,6 +17,7 @@ There's a guide for that:
 * [Run batched Whisper transcription](/docs/examples/batched_whisper)
 * [Run Claude Code in a Modal Sandbox](/docs/examples/sandbox_agent)
 * [Run continuous integration (CI) tests on Modal](/docs/examples/ci-on-modal)
+* [Run Cursor Cloud Agents on Modal](/docs/examples/cursor)
 * [Run OpenAI's gpt-oss model](/docs/examples/gpt_oss_inference)
 * [Run OpenCV to detect faces](/docs/examples/count_faces)
 * [Run SAM 2 video segmentation model](/docs/examples/segment_anything)

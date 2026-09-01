@@ -1,51 +1,49 @@
-<!-- modal-docs: translation failed; English fallback -->
+<!-- modal-docs: machine-translated zh-CN from English source -->
 
-# Sandbox Sidecars
+# 沙箱边车
 
 <Callout variant="alpha">
 
-There are currently several [known limitations](#limitations).
+目前存在一些[已知限制](#limitations)。
 
 </Callout>
 
-## Introduction
+## 简介
 
-Sandbox Sidecars let you run additional containers alongside your main
-Sandbox container, on the same host. A sandbox and its sidecars are connected
-via an internal bridge network, allowing low latency communication between
-containers over TCP/UDP, making them ideal for:
+沙箱边车让您可以在主容器旁边运行其他容器
+沙箱容器，位于同一主机上。沙箱和它的 sidecar 是相连的
+通过内部桥接网络，允许之间的低延迟通信
+基于 TCP/UDP 的容器，使其非常适合：
 
-* Separating an agent harness from its execution environment, by running the
-  agent in one container and its tool calls in another
-* Credentials injection, by running a proxy in a separate, trusted container
-  from the primary application, and letting that proxy inject credentials or
-  other secrets before passing on network calls to external services.
-  See the [secrets injection example](/docs/examples/sidecar_secrets_injection)
-  for a working demonstration
-* Splitting out complex multi-service applications over separate containers,
-  such as databases, caches or worker processes, similar to Docker Compose.
+* 通过运行将代理工具与其执行环境分离
+  一个容器中的代理及其工具在另一个容器中调用
+* 凭证注入，通过在单独的受信任容器中运行代理来实现
+  来自主应用程序，并让该代理注入凭据或
+  在将网络调用传递给外部服务之前的其他秘密。
+  请参阅[秘密注入示例](/docs/examples/sidecar_secrets_injection)
+  进行工作演示
+* 将复杂的多服务应用程序拆分到单独的容器上，
+  例如数据库、缓存或工作进程，类似于 Docker Compose。
 
-We're still discovering all the ways that Sandbox Sidecars can be used - if you
-come up with another use case, please let us know!
+我们仍在探索 Sandbox Sidecar 的所有使用方式 - 如果您
+想出另一个用例，请告诉我们！
+Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
+（Python 中的`_experimental_sidecars`，JS/Go 中的`experimentalSidecars`），
+它提供了创建、列出、获取和终止 Sidecar 容器的方法。
 
-Sidecars are managed through the sidecars interface on a Sandbox
-(`_experimental_sidecars` in Python, `experimentalSidecars` in JS/Go),
-which provides methods to create, list, get, and terminate Sidecar containers.
+每个 Sidecar 容器：
 
-Each Sidecar container:
+* 独立于主沙盒容器运行自己的映像。
+* 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
+* 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
+* 可以在沙箱的生命周期内动态创建、终止和替换。* 支持像主沙箱容器一样执行命令。
 
-* Runs its own image independently from the main Sandbox container.
-* Runs in a separate, sandboxed process isolated from the main Sandbox container and other Sidecar containers.
-* Can communicate over an internal bridge network with the main Sandbox container and other Sidecar containers.
-* Can be created, terminated, and replaced dynamically during the Sandbox's lifetime.
-* Supports executing commands just like the main Sandbox container.
+## 用法
 
-## Usage
+### 创建 Sidecar 容器
 
-### Creating a Sidecar container
-
-The main Sandbox container is resolvable as `main`, and each Sidecar container
-is resolvable by the `name` you give it at creation time.
+主 Sandbox 容器可解析为 `main`，每个 Sidecar 容器
+可以通过您在创建时给出的 `name` 来解析。
 
 <CodeTabs>
 {#snippet python()}
@@ -79,7 +77,7 @@ print(p.stdout.read())  # "200"
 sb.terminate()
 ```
 
-{/snippet}
+{/片段}
 
 {#snippet javascript()}
 
@@ -113,7 +111,7 @@ console.log(await p.stdout.readText()); // "200"
 await sb.terminate();
 ```
 
-{/snippet}
+{/片段}
 
 {#snippet go()}
 
@@ -159,17 +157,16 @@ func main() {
 }
 ```
 
-{/snippet} </CodeTabs>
+{/片段} </CodeTabs>
 
-Names are resolved using `/etc/hosts` which gets updated when a sidecar is created or terminated.
+名称使用 `/etc/hosts` 进行解析，当创建或终止 sidecar 时，它会更新。
 
-### Listing and retrieving sidecars
+### 列出和检索 sidecar
 
-You can list all running Sidecar containers or retrieve a specific one by name:
+您可以列出所有正在运行的 Sidecar 容器或按名称检索特定容器：
 
 <CodeTabs>
 {#snippet python()}
-
 ```python notest
 containers = sb._experimental_sidecars.list()
 for container in containers:
@@ -178,7 +175,7 @@ for container in containers:
 sidecar = sb._experimental_sidecars.get(name="web")
 ```
 
-{/snippet}
+{/片段}
 
 {#snippet javascript()}
 
@@ -191,7 +188,7 @@ for (const container of containers) {
 const sidecar = await sb.experimentalSidecars.get("web");
 ```
 
-{/snippet}
+{/片段}
 
 {#snippet go()}
 
@@ -205,44 +202,94 @@ sidecar, _ := sb.ExperimentalSidecars.Get(ctx, "web", nil)
 _ = sidecar
 ```
 
-{/snippet} </CodeTabs>
+{/片段} </CodeTabs>
 
-## Resource configuration
+### 文件系统快照
 
-The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
-and resources are configured only on the Sandbox. When planning your
-resource allocation, make sure the Sandbox is configured with enough CPU
-and memory for all containers combined.
-Bursting is still possible, see the [guide to Sandbox resources and
-pricing](/docs/guide/sandbox-resources) for more details.
+您可以将正在运行的 Sidecar 的文件系统快照为可重用的映像。的
+生成的图像可以在任何接受现有图像的地方使用；例子
+下面使用它来启动另一个 Sidecar。快照的范围仅限于该 Sidecar；
+它不包括主沙盒文件系统或其他 Sidecar。
 
-For example, if you want to run a Sandbox with two Sidecars, and you expect the main
-container to use 1 CPU core and 512 MiB of memory, Sidecar A to use 0.5 CPU and 256 MiB,
-and Sidecar B to use 0.5 CPU and 256 MiB, you should set the Sandbox's resources to at
-least 2 CPUs and 1024 MiB to accommodate all three containers.
+<CodeTabs>
+{#snippet python()}
 
-The maximum number of Sidecars you can create is also determined by the main Sandbox's
-resource reservation. Each container (including the main one) requires a minimum of
-32 mCPU and 32 MiB of memory, so the limit is:
+```python notest
+sidecar.filesystem.write_text("ready", "/tmp/state")
+snapshot = sidecar.snapshot_filesystem()
+
+restored = sb._experimental_sidecars.create(
+    "sleep", "600", name="restored", image=snapshot
+)
+assert restored.filesystem.read_text("/tmp/state") == "ready"
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+await sidecar.filesystem.writeText("ready", "/tmp/state");
+const snapshot = await sidecar.snapshotFilesystem();
+
+const restored = await sb.experimentalSidecars.create("restored", snapshot, {
+  command: ["sleep", "600"],
+});
+console.assert((await restored.filesystem.readText("/tmp/state")) === "ready");
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+_ = sidecar.Filesystem.WriteText(ctx, "ready", "/tmp/state", nil)
+snapshot, _ := sidecar.SnapshotFilesystem(ctx, nil)
+
+restored, _ := sb.ExperimentalSidecars.Create(ctx, "restored", snapshot, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+state, _ := restored.Filesystem.ReadText(ctx, "/tmp/state", nil)
+fmt.Println(state) // "ready"
+```
+
+{/片段} </CodeTabs>
+
+## 资源配置主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
+并且资源仅在沙箱上配置。当你规划你的
+资源分配，确保Sandbox配置了足够的CPU
+以及所有容器的内存组合。
+爆破还是有可能的，参见【沙盒资源指南和
+定价](/docs/guide/sandbox-resources) 了解更多详细信息。
+
+例如，如果您想运行具有两个 Sidecar 的沙盒，并且您期望主要
+容器使用 1 个 CPU 核心和 512 MiB 内存，Sidecar A 使用 0.5 个 CPU 和 256 MiB，
+和 Sidecar B 使用 0.5 CPU 和 256 MiB，您应该将沙箱的资源设置为
+至少 2 个 CPU 和 1024 MiB 来容纳所有三个容器。
+
+您可以创建的 Sidecar 的最大数量也取决于主沙箱的
+资源预留。每个容器（包括主容器）至少需要
+32 mCPU 和 32 MiB 内存，因此限制为：
 
 ```
 max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 ```
 
-There is also a hard limit of **250** concurrent sidecar containers per sandbox,
-regardless of the resource reservation.
+每个沙箱还存在 **250** 并发 sidecar 容器的硬性限制，
+与资源预留无关。
 
-## Limitations
+## 限制
 
-The main sandbox supports the same features as a regular sandbox, but some features are not yet supported
-for sidecars:
+主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
+对于边车：
 
-* **Pre-built images only**: Sidecar images must be pre-built using `image.build()`, referenced
-  by ID via `Image.from_id()` or name via `Image.from_name()`, or created from filesystem/directory snapshots. Lazy image
-  building is not supported for sidecars. See also [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
-* **No Cloud Bucket Mount support**: Sidecar containers do not currently support attaching [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
-* **No snapshot support**: Sidecar container state is not captured in
-  [Sandbox snapshots](/docs/guide/sandbox-snapshots).
-* **VM incompatibility**: Sidecars are not compatible with VM Sandboxes.
-* **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
-* **Maximum of 250 concurrent sidecars**: A sandbox can have at most 250 sidecar containers running at the same time.
+* **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
+  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
+  Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
+* **不支持云桶安装**：Sidecar 容器当前不支持附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
+* **不支持内存快照**：Sidecar 的文件系统可以进行快照
+  独立，但 Sidecar 内存状态不会被捕获
+  [沙盒快照](/docs/guide/sandbox-snapshots)。
+* **VM 不兼容**：Sidecar 与 VM Sandbox 不兼容。
+* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
+* **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
