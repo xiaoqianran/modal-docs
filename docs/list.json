@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-09-01T11:29:55.847Z",
+  "fetchedAt": "2026-09-02T11:04:44.243Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 307,
-  "ok": 307,
+  "totalUrls": 308,
+  "ok": 308,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 25167,
+      "bytes": 25252,
       "stub": false
     },
     {
@@ -802,7 +802,7 @@
       "source": "https://modal.com/docs/guide/budgets.md",
       "finalUrl": "https://modal.com/docs/guide/budgets.md",
       "path": "docs/guide/budgets.md",
-      "bytes": 3384,
+      "bytes": 3332,
       "stub": false
     },
     {
@@ -946,7 +946,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 8162,
+      "bytes": 8098,
       "stub": false
     },
     {
@@ -954,7 +954,7 @@
       "source": "https://modal.com/docs/guide/entra-sso.md",
       "finalUrl": "https://modal.com/docs/guide/entra-sso.md",
       "path": "docs/guide/entra-sso.md",
-      "bytes": 5486,
+      "bytes": 5460,
       "stub": false
     },
     {
@@ -1150,6 +1150,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/network-egress-billing.md",
+      "source": "https://modal.com/docs/guide/network-egress-billing.md",
+      "finalUrl": "https://modal.com/docs/guide/network-egress-billing.md",
+      "path": "docs/guide/network-egress-billing.md",
+      "bytes": 3216,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/notebooks.md",
       "source": "https://modal.com/docs/guide/notebooks.md",
       "finalUrl": "https://modal.com/docs/guide/notebooks.md",
@@ -1290,7 +1298,7 @@
       "source": "https://modal.com/docs/guide/sandbox-networking.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-networking.md",
       "path": "docs/guide/sandbox-networking.md",
-      "bytes": 17083,
+      "bytes": 17379,
       "stub": false
     },
     {
@@ -1306,7 +1314,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 9523,
+      "bytes": 12470,
       "stub": false
     },
     {
@@ -1346,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/scim.md",
       "finalUrl": "https://modal.com/docs/guide/scim.md",
       "path": "docs/guide/scim.md",
-      "bytes": 5140,
+      "bytes": 8615,
       "stub": false
     },
     {

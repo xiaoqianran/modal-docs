@@ -115,7 +115,7 @@ await sb.terminate();
 
 {#snippet go()}
 
-```go notest
+```go
 package main
 
 import (
@@ -204,6 +204,82 @@ _ = sidecar
 ```
 
 {/snippet} </CodeTabs>
+
+### Routing HTTPS traffic through a Sidecar
+
+Sidecars can be used to inspect the outgoing HTTPS traffic from the main Sandbox
+container in a different context, for example to perform more advanced request
+filtering, inspecting requests for logging, or injecting secrets that the main
+Sandbox container should not have access to.
+
+Normally, applications need to support explicit proxy configuration, such as
+respecting the `HTTPS_PROXY` environment variable, to route traffic through a Sidecar.
+To include HTTPS traffic (TCP on port 443) from **proxy-unaware** applications, you can
+set the experimental `proxy_traffic_via_sidecar` option that routes **all** outbound
+HTTPS traffic from the main Sandbox container through a Sidecar.
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    experimental_options={"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+)
+
+# Until this Sidecar is running, HTTPS from the main container is refused.
+sb._experimental_sidecars.create("python", "/proxy.py", name="my-proxy-sidecar", image=proxy_image)
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  experimentalOptions: { proxy_traffic_via_sidecar: "my-proxy-sidecar" },
+});
+
+// Until this Sidecar is running, HTTPS from the main container is refused.
+await sb.experimentalSidecars.create("my-proxy-sidecar", proxyImage, {
+  command: ["python", "/proxy.py"],
+});
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	ExperimentalOptions: map[string]any{"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+})
+// Until this Sidecar is running, HTTPS from the main container is refused.
+sb.ExperimentalSidecars.Create(ctx, "my-proxy-sidecar", proxyImage, &modal.SidecarCreateParams{
+	Command: []string{"python", "/proxy.py"},
+})
+```
+
+{/snippet} </CodeTabs>
+
+The Sidecar receives a raw TLS stream and must read the destination hostname
+from the `ClientHello`'s SNI. The original destination IP is not forwarded, so
+mechanisms such as `SO_ORIGINAL_DST` do not work. To read or rewrite HTTP
+requests, terminate TLS in the proxy using a certificate authority that the
+Sandbox trusts. See the [Sidecar traffic routing
+example](/docs/examples/sidecar_traffic_routing) for a complete mitmproxy-based
+request filter.
+
+Only TCP traffic to port 443 is relayed. This traffic is not subject to other
+egress controls on the Sandbox, such as `outbound_cidr_allowlist` or
+a [Proxy](/docs/guide/proxy-ips). Non-relayed traffic is still subject to
+the egress controls of the Sandbox. The option cannot be combined with setting
+`block_network` or `outbound_domain_allowlist` on the Sandbox.
 
 ### Filesystem snapshots
 
@@ -296,3 +372,4 @@ for sidecars:
 * **VM incompatibility**: Sidecars are not compatible with VM Sandboxes.
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
 * **Maximum of 250 concurrent sidecars**: A sandbox can have at most 250 sidecar containers running at the same time.
+* **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy.

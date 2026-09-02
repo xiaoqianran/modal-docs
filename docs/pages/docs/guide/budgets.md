@@ -38,10 +38,9 @@ The maximum budget you can set depends on prior successful charges for the Works
 
 ## Spend limits
 
-Starting **September 1st, 2026**, Modal also supports a Workspace **spend
-limit**: a monthly cap on net charges (what you pay out of pocket after
-credits are applied). This is separate from your Workspace budget, which caps
-usage.
+A Workspace **spend limit** is a monthly cap on net charges (what you pay out
+of pocket after credits are applied). This is separate from your Workspace
+budget, which caps usage.
 
 When the spend limit is reached, Modal stops workloads that would incur
 additional out-of-pocket charges. Workloads that can still be covered by

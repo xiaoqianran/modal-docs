@@ -120,6 +120,7 @@ The docs are organized into three main sections:
   - [Service users](https://modal.com/docs/guide/service-users.md)
   - [Role-Based Access Control (RBAC)](https://modal.com/docs/guide/rbac.md)
   - [Billing](https://modal.com/docs/guide/billing.md)
+  - [Network egress billing](https://modal.com/docs/guide/network-egress-billing.md)
   - [Budgets](https://modal.com/docs/guide/budgets.md)
 - Other topics
   - [Feature maturity](https://modal.com/docs/guide/feature-maturity.md)

@@ -14,41 +14,130 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users.
 
 ### Step 1: Generate a SCIM token
 
-1. Sign in to https://modal.com and visit your [Workspace Management](/settings/workspace-management/identity-and-provisioning) page's `Identity and Provisioning` tab. If SCIM is enabled for your Workspace, there will be a "SCIM Tokens" section on the page below the SSO configuration settings. If you do not see a section for SCIM tokens, contact Modal support about enabling SCIM support for your Workspace.
+1. Sign in to https://modal.com and visit your [Workspace Management](/settings/workspace-management/identity-and-provisioning) page's "Identity and Provisioning" tab. If SCIM is enabled for your Workspace, there will be a "SCIM Tokens" section on the page below the SSO configuration settings. If you do not see a section for SCIM tokens, contact Modal support about enabling SCIM support for your Workspace.
 2. Click on "New SCIM Token" then "Create Token".
 3. A new token will be generated and displayed to you. Copy the value from the "Token Secret" box and store it somewhere secure. You can also copy the exact url that the IdP will require to integrate with your Modal Workspace. Once you click "Done", you will not be able to view the token secret again and will have to generate a new one if you can't otherwise access it.
 
 ### Step 2: IdP Configuration
 
-Exact configuration steps will vary by IdP. Your IdP will require you to provide at least a SCIM url (Which will be of the form `https://modal.com/api/<your-workspace>/scim/v2`) and the token generated in step 1.
+#### Okta
 
-Settings for common IdP integration configuration fields are listed below.
+1. Create a private SCIM integration.
 
-| Configuration Setting                | Modal Supported | Value                                            | Notes                                      |
-| ------------------------------------ | --------------- | ------------------------------------------------ | ------------------------------------------ |
-| SCIM Version                         | Yes             | 2                                                |
-| SCIM Base URL                        | Yes             | `https://modal.com/api/<your-workspace>/scim/v2` |
-| Scim Authorization Method            | Yes             | Bearer Token                                     |
-| Supports Pagination                  | Yes             |                                                  |
-| Supports Groups                      | No              |                                                  | Group support will be added in the future. |
-| Create & Delete Groups               | No              |                                                  | Group support will be added in the future. |
-| Use PATCH to edit Groups             | No              |                                                  | Group support will be added in the future. |
-| Generate temporary password          | No              |                                                  |
-| Username to use for account creation | Yes             | Email address                                    |
+   The SCIM integration must be separate from the Modal catalog app used for
+   SAML SSO. Your existing Modal app can continue to handle SSO; do not add SSO
+   to the SCIM integration.
+
+   In the Okta Admin Console:
+
+   1. Go to "Applications > Applications".
+   2. Click "Create a new app integration".
+   3. Select "Okta Integration Wizard".
+   4. Choose "Provisioning" as the capability.
+   5. Choose "SCIM 2.0" as the provisioning method.
+
+2. Configure the integration with your Modal SCIM credentials.
+
+   In the wizard's provisioning settings, enter:
+
+   | Okta setting                      | Modal value                                           |
+   | --------------------------------- | ----------------------------------------------------- |
+   | SCIM connector base URL           | `https://modal.com/api/<your-workspace>/scim/v2`      |
+   | Unique identifier field for users | `userName`                                            |
+   | Authentication mode               | HTTP Header                                           |
+   | Authorization                     | The full SCIM token generated in step 1               |
+   | Supported provisioning actions    | Push New Users, Push Profile Updates, and Push Groups |
+
+   Test the API credentials, then review and deploy the integration. When
+   prompted, add an app instance from your organization's "Private apps"
+   catalog.
+
+   In the app instance's "Provisioning > To App" settings, enable "Create
+   Users", "Update User Attributes", and "Deactivate Users". Assign the
+   people and groups that Okta should provision to Modal.
+
+   For more information, see Okta's
+   [Okta Integration Wizard documentation](https://help.okta.com/en-us/Content/Topics/Apps/oiw/create-app-integration.htm).
+
+#### Microsoft Entra ID
+
+1. Create a custom non-gallery Enterprise Application.
+
+   In the [Microsoft Entra admin center](https://entra.microsoft.com/):
+
+   1. Go to "Entra ID > Enterprise apps".
+   2. Select "New application > Create your own application".
+   3. Enter a name such as `Modal SCIM`.
+   4. Select "Integrate any other application you don't find in the gallery
+      (Non-gallery)" and create the application.
+
+2. Configure the application with your Modal SCIM credentials.
+
+   Open the Enterprise Application, select "Provisioning > New configuration",
+   and enter:
+
+   | Entra setting | Modal value                                      |
+   | ------------- | ------------------------------------------------ |
+   | Tenant URL    | `https://modal.com/api/<your-workspace>/scim/v2` |
+   | Secret Token  | The full SCIM token generated in step 1          |
+
+   Select "Test Connection", then create the provisioning configuration.
+   Review the user attribute mappings and ensure that an email address is mapped
+   to `userName`. Assign the users and groups that Entra should provision, then
+   select "Start provisioning".
+
+   For more information, see Microsoft's
+   [SCIM provisioning documentation](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/use-scim-to-provision-users-and-groups#integrate-your-scim-endpoint-with-the-microsoft-entra-provisioning-service).
+
+#### Other IdPs
+
+1. Create a custom SCIM integration.
+
+   Create a custom or non-gallery application that supports outbound SCIM 2.0
+   provisioning. Name it something recognizable, such as `Modal SCIM`. An
+   existing SSO integration can continue to handle authentication; whether the
+   SCIM integration must be a separate app depends on your IdP.
+
+2. Configure the integration with your Modal SCIM credentials.
+
+   Find your IdP's equivalent settings and enter:
+
+   | Setting                | Modal value                                      |
+   | ---------------------- | ------------------------------------------------ |
+   | SCIM version           | 2.0                                              |
+   | SCIM base URL          | `https://modal.com/api/<your-workspace>/scim/v2` |
+   | Authorization method   | Bearer token                                     |
+   | Token                  | The full SCIM token generated in step 1          |
+   | Unique user identifier | Email address in `userName`                      |
+
+   Enable creating, updating, and deactivating users. You can also enable group
+   provisioning. Test the connection, assign the users and groups that your IdP
+   should provision, and start provisioning.
+
+Modal supports the following SCIM capabilities:
+
+| Capability                         | Supported | Notes                         |
+| ---------------------------------- | --------- | ----------------------------- |
+| SCIM 2.0                           | Yes       |                               |
+| Pagination                         | Yes       |                               |
+| Create, update, and remove users   | Yes       |                               |
+| Create, update, and delete groups  | Yes       |                               |
+| Update group membership with PATCH | Yes       |                               |
+| Generate temporary passwords       | No        | Modal authentication uses SSO |
 
 The IdP may also ask you to specify which user attributes are supported.
 
-| SCIM user attribute | Modal Supported | Notes                                      |
-| ------------------- | --------------- | ------------------------------------------ |
-| externalId          | Yes             |                                            |
-| userName            | Yes             |                                            |
-| displayName         | Yes             |                                            |
-| familyName          | Yes             |                                            |
-| givenName           | Yes             |                                            |
-| emails              | No              | Primary email is set in the userName field |
-| active              | Yes             |                                            |
-| addresses           | No              |                                            |
-| profileUrl          | No              |                                            |
+| SCIM user attribute | Modal support | Notes                                           |
+| ------------------- | ------------- | ----------------------------------------------- |
+| externalId          | Yes           |                                                 |
+| userName            | Yes           | Required; must contain the user's email address |
+| displayName         | Yes           |                                                 |
+| name.familyName     | Yes           |                                                 |
+| name.givenName      | Yes           |                                                 |
+| emails              | Read only     | The primary email is derived from `userName`    |
+| active              | Yes           |                                                 |
+| addresses           | No            |                                                 |
+| profileUrl          | No            |                                                 |
 
 ## Managing Tokens
 

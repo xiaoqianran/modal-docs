@@ -141,6 +141,7 @@ https://modal.com/docs/guide/modal-user-account-setup.md
 https://modal.com/docs/guide/model-weights.md
 https://modal.com/docs/guide/multi-node-training.md
 https://modal.com/docs/guide/named-images.md
+https://modal.com/docs/guide/network-egress-billing.md
 https://modal.com/docs/guide/notebooks.md
 https://modal.com/docs/guide/oidc-integration.md
 https://modal.com/docs/guide/okta-sso.md

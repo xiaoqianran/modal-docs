@@ -115,7 +115,7 @@ await sb.terminate();
 
 {#snippet go()}
 
-```go notest
+```go
 package main
 
 import (
@@ -204,6 +204,81 @@ _ = sidecar
 
 {/片段} </CodeTabs>
 
+### 通过 Sidecar 路由 HTTPS 流量
+
+Sidecars 可用于检查来自主沙箱的传出 HTTPS 流量
+不同上下文中的容器，例如执行更高级的请求
+过滤、检查日志请求或注入主要的秘密
+沙盒容器不应具有访问权限。
+
+通常，应用程序需要支持显式代理配置，例如尊重 `HTTPS_PROXY` 环境变量，通过 Sidecar 路由流量。
+要包含来自**代理不知道**应用程序的 HTTPS 流量（端口 443 上的 TCP），您可以
+设置路由 **所有** 出站的实验性 `proxy_traffic_via_sidecar` 选项
+来自主 Sandbox 容器的 HTTPS 流量通过 Sidecar。
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    experimental_options={"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+)
+
+# Until this Sidecar is running, HTTPS from the main container is refused.
+sb._experimental_sidecars.create("python", "/proxy.py", name="my-proxy-sidecar", image=proxy_image)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  experimentalOptions: { proxy_traffic_via_sidecar: "my-proxy-sidecar" },
+});
+
+// Until this Sidecar is running, HTTPS from the main container is refused.
+await sb.experimentalSidecars.create("my-proxy-sidecar", proxyImage, {
+  command: ["python", "/proxy.py"],
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	ExperimentalOptions: map[string]any{"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+})
+// Until this Sidecar is running, HTTPS from the main container is refused.
+sb.ExperimentalSidecars.Create(ctx, "my-proxy-sidecar", proxyImage, &modal.SidecarCreateParams{
+	Command: []string{"python", "/proxy.py"},
+})
+```
+
+{/片段} </CodeTabs>
+
+Sidecar 接收原始 TLS 流并且必须读取目标主机名
+来自`ClientHello`的SNI。原来的目的IP没有转发，所以
+诸如`SO_ORIGINAL_DST`之类的机制不起作用。读取或重写 HTTP
+请求，使用证书颁发机构终止代理中的 TLS
+沙盒信任。参见【Sidecar流量路由
+示例](/docs/examples/sidecar_traffic_routing) 完整的基于 mitmproxy
+请求过滤器。
+
+仅中继到端口 443 的 TCP 流量。此流量不受其他流量影响
+沙盒上的出口控制，例如 `outbound_cidr_allowlist` 或
+[代理](/docs/guide/proxy-ips)。非中继流量仍受
+沙箱的出口控制。该选项不能与设置结合使用
+沙盒上的`block_network`或`outbound_domain_allowlist`。
+
 ### 文件系统快照
 
 您可以将正在运行的 Sidecar 的文件系统快照为可重用的映像。的
@@ -255,7 +330,9 @@ fmt.Println(state) // "ready"
 
 {/片段} </CodeTabs>
 
-## 资源配置主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
+## 资源配置
+
+主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
 并且资源仅在沙箱上配置。当你规划你的
 资源分配，确保Sandbox配置了足够的CPU
 以及所有容器的内存组合。
@@ -282,14 +359,14 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
-
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
-  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
+  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 通过名称，或从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **不支持云桶安装**：Sidecar 容器当前不支持附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
   独立，但 Sidecar 内存状态不会被捕获
   [沙盒快照](/docs/guide/sandbox-snapshots)。
 * **VM 不兼容**：Sidecar 与 VM Sandbox 不兼容。
-* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
+* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
 * **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
+* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。

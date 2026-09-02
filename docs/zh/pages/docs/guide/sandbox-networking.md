@@ -17,6 +17,12 @@ Modal 提供三个级别的出站网络限制：
 
 `outbound_cidr_allowlist` 和 `outbound_domain_allowlist` 可以相加组合 - 满足任一条件的流量将被允许通过。
 
+对于高级 HTTPS 检查，实验性 `proxy_traffic_via_sidecar`
+选项将来自主容器的端口 443 上的出站 TCP 流量路由到
+边车。请参阅[通过
+Sidecar](/docs/guide/sandbox-sidecars#routing-https-traffic-through-a-sidecar)
+了解详情。
+
 ### 阻止所有网络访问
 
 设置`block_network=True`以防止沙箱进行任何出站
@@ -34,6 +40,7 @@ sb = modal.Sandbox.create(
 ```
 
 {/片段}
+
 {#snippet javascript()}
 
 ```javascript notest
@@ -61,8 +68,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 ### 按 IP 范围限制（CIDR 允许列表）
 
-使用`outbound_cidr_allowlist`将出站流量限制到一组IP
-范围。所有流向这些范围之外的 IP 的流量（`outbound_domain_allowlist` 允许的流量除外）都会被阻止。
+使用 `outbound_cidr_allowlist` 将出站流量限制到一组 IP范围。所有流向这些范围之外的 IP 的流量（`outbound_domain_allowlist` 允许的流量除外）都会被阻止。
 
 <CodeTabs>
   {#snippet python()}
@@ -101,7 +107,9 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 ### 按域名限制（域白名单）
 
-<Callout variant="beta" />使用 `outbound_domain_allowlist` 将出站 TLS 流量限制为一组
+<Callout variant="beta" />
+
+使用 `outbound_domain_allowlist` 将出站 TLS 流量限制为一组
 域名：
 
 <CodeTabs>
@@ -142,18 +150,17 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 设置域白名单后：
 
 * **TLS（端口 443）** 仅允许连接到列出的域。
-  与非白名单域的连接将被安全阻止并记录到
+与非白名单域的连接将被安全阻止并记录到
   沙箱的系统输出流。
 * **非 TLS 流量**（HTTP、原始 TCP、UDP）到不在 CIDR 上的 IP
   允许名单被**阻止**。
 
 以 `*.` 为前缀的条目与父域和任何子域匹配：
+
 |允许列表条目 |比赛|不匹配 |
 | ---------------- | ------------------------------------------------- | ----------------- |
 | `example.com` | `example.com` | `sub.example.com` |
-| `*.example.com` | `example.com`、`a.example.com`、`a.b.example.com` | `evilexample.com` |
-
-### 在运行时更新网络策略
+| `*.example.com` | `example.com`、`a.example.com`、`a.b.example.com` | `evilexample.com` |### 在运行时更新网络策略
 
 <Callout variant="alpha">
 
@@ -162,7 +169,8 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 </Callout>
 
-您可以替换正在运行的 Sandbox 的出站网络策略，而无需重新启动它。当代理的信任级别在会话中发生变化时，这非常有用 -
+您可以替换正在运行的 Sandbox 的出站网络策略，而无需
+重新启动它。当代理的信任级别在会话中发生变化时，这非常有用 -
 例如，在安装依赖项时从广泛访问开始，然后
 仅锁定工具需要的域。
 
@@ -259,7 +267,6 @@ err = sb.UpdateNetworkPolicy(ctx, &modal.SandboxUpdateNetworkPolicyParams{
 ```
 
 {/片段} </CodeTabs>
-
 新政策立即生效。建立了新的联系
 政策不再许可被终止。
 
@@ -267,7 +274,7 @@ err = sb.UpdateNetworkPolicy(ctx, &modal.SandboxUpdateNetworkPolicyParams{
 
 * 每个白名单类型必须在创建时设置才能稍后使用。至
   运行时更新`outbound_domain_allowlist`，必须创建沙箱
-与 `outbound_domain_allowlist`（例如 `["*"]`）。这同样适用于
+  与 `outbound_domain_allowlist`（例如 `["*"]`）。这同样适用于
   `outbound_cidr_allowlist` — 如果您愿意，可以使用 `["0.0.0.0/0"]` 创建
   稍后受 CIDR 限制。
 * `block_network=True` 与此 API 不兼容。使用空允许列表
@@ -275,8 +282,7 @@ err = sb.UpdateNetworkPolicy(ctx, &modal.SandboxUpdateNetworkPolicyParams{
 
 ## 入站访问控制
 
-使用`inbound_cidr_allowlist`限制哪些IP地址可以连接
-通过隧道和沙箱连接令牌**入站**到沙箱：
+使用`inbound_cidr_allowlist`限制哪些IP地址可以连接通过隧道和沙箱连接令牌**入站**到沙箱：
 
 <CodeTabs>
   {#snippet python()}
@@ -316,7 +322,9 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 {/片段} </CodeTabs>
 
-## 使用 HTTP 和 WebSocket 连接到沙箱您可以通过生成以下内容向沙箱发出经过身份验证的 HTTP 和 WebSocket 请求
+## 使用 HTTP 和 WebSocket 连接到沙箱
+
+您可以通过生成以下内容向沙箱发出经过身份验证的 HTTP 和 WebSocket 请求：
 沙箱连接令牌。他们的工作方式是这样的：
 
 <CodeTabs>
@@ -404,12 +412,12 @@ JSON 序列化元数据作为 `user_metadata` 传递到
 例如，确定访问控制。
 
 使用 Sandbox Connect 代币需要记住以下几点：
+
 1. 默认情况下，请求路由到容器中的8080端口。通行证`port`
-   至 `create_connect_token()` 路由至不同港口。
+   到 `create_connect_token()` 路由到不同的端口。
 2. 令牌可以在`Authorization`标头、`_modal_connect_token`中发送
    查询参数，或在 `_modal_connect_token` cookie 中。
-3. 如果`_modal_connect_token`设置为查询参数，则结果响应将
-   包含一个 `Set-Cookie` 标头，将其设置为 cookie。
+3. 如果`_modal_connect_token`设置为查询参数，则结果响应将包含一个 `Set-Cookie` 标头，将其设置为 cookie。
 4. `user_metadata`必须是JSON可序列化的并且必须小于512
    序列化后的字符。
 5. `user_metadata` 被编码到连接令牌本身中，因此它
@@ -422,7 +430,6 @@ JSON 序列化元数据作为 `user_metadata` 传递到
 到互联网的原始 TCP 端口。例如，如果您想运行
 沙箱内的服务器需要原始 TCP 连接并处理
 身份验证本身。
-
 使用 `Sandbox.create` 的 `encrypted_ports` 和 `unencrypted_ports` 参数
 指定要转发的端口。然后您可以访问隧道的公共 URL
 使用 [`Sandbox.tunnels`](/docs/sdk/py/latest/Sandbox#tunnels) 方法：
@@ -449,6 +456,7 @@ print(requests.get(tunnel.url, timeout=5).text)
 
 sb.detach()
 ```
+
 还可以通过 `h2_ports` 选项创建使用 `HTTP/2` 而不是 `HTTP/1.1` 的加密端口。这将返回
 您可以向其发出 H2 (HTTP/2 + TLS) 请求的 URL。如果您想在沙箱内运行 `HTTP/2` 服务器，此功能可能很有用。
 这是一个例子：
@@ -471,9 +479,7 @@ print(f"Tunnel URL: {tunnel.url}")
 sb.detach()
 ```
 
-有关隧道工作原理的更多详细信息，请参阅[隧道指南](/docs/guide/tunnels)。
-
-### 自定义域
+有关隧道工作原理的更多详细信息，请参阅[隧道指南](/docs/guide/tunnels)。### 自定义域
 
 <Callout variant="gated-feature">
 
@@ -483,7 +489,7 @@ sb.detach()
 
 <Callout variant="beta">
 
-基础设施是生产级的，但入职需要手动设置步骤。
+基础设施是生产级的，但加入需要手动设置步骤。
 
 </Callout>
 
@@ -496,6 +502,7 @@ sb.detach()
 `NS` 记录将域委托给 Modal 的名称服务器。
 
 **1.将（子）域委托给 Modal 的名称服务器。**
+
 将 `NS` 记录添加到指向 Modal 名称服务器的 DNS 区域。例如，
 要使用 `sandbox.example.com`，请在您的 DNS 提供商的 DNS 提供商的记录中添加以下记录
 控制面板：
@@ -505,16 +512,16 @@ sb.detach()
 | `sandbox.example.com` | NS | `w-ns-a.modal.host.` |
 | `sandbox.example.com` | NS | `w-ns-b.modal.host.` |
 | `sandbox.example.com` | NS | `w-ns-c.modal.host.` |
-| `sandbox.example.com` | NS | `w-ns-d.modal.host.` |
-
-您可以委托您喜欢的任何子域深度（例如`tunnels.a.b.c.example.com`）。
+| `sandbox.example.com` | NS | `w-ns-d.modal.host.` |您可以委托您喜欢的任何子域深度（例如`tunnels.a.b.c.example.com`）。
 
 **2.要求 Modal 设置域。**
 
 在 Slack 上联系我们并提供域名。我们将为您启用它
 工作区。
 
-**3.通过 `custom_domain` 到 `Sandbox.create`。**```python notest
+**3.通过`custom_domain`到`Sandbox.create`。**
+
+```python notest
 import modal
 
 app = modal.App.lookup("my-app", create_if_missing=True)
@@ -534,7 +541,7 @@ Modal 将自动提供 TLS 证书。生成的沙箱连接令牌
 
 ## 安全模型
 
-沙盒构建在容器运行时 [gVisor](https://gvisor.dev/) 之上
+沙箱构建在容器运行时 [gVisor](https://gvisor.dev/) 之上
 由 Google 提供，提供强大的隔离特性。 gVisor 有自定义逻辑
 防止沙箱进行恶意系统调用，为您提供更强的隔离
 比大多数其他容器运行时。

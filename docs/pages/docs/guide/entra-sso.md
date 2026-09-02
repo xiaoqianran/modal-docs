@@ -31,12 +31,12 @@ Microsoft Entra account before enabling.
 #### Step 1: Add Modal app to Microsoft Entra Applications
 
 1. Sign in to the [Microsoft Entra admin center](https://entra.microsoft.com/).
-2. Navigate to **Entra ID > Enterprise apps > All applications** and select
-   **New application**.
-3. Select **Create your own application**.
-4. Name the application `Modal`, select **Integrate any other application you
-   don't find in the gallery (Non-gallery)**, and create the application.
-5. Open **Single sign-on** for the application and select **SAML**.
+2. Navigate to "Entra ID > Enterprise apps > All applications" and select
+   "New application".
+3. Select "Create your own application".
+4. Name the application `Modal`, select "Integrate any other application you
+   don't find in the gallery (Non-gallery)", and create the application.
+5. Open "Single sign-on" for the application and select "SAML".
 
 For more information, see Microsoft's guides to
 [adding an enterprise application](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/add-application-portal)
@@ -45,7 +45,7 @@ and
 
 #### Step 2: Configure the Modal SAML settings
 
-In **Basic SAML Configuration**, enter the following values. Replace
+In "Basic SAML Configuration", enter the following values. Replace
 `<workspace>` with your Modal Workspace name.
 
 | Setting                            | Value                                               |
@@ -59,9 +59,9 @@ for the configured Workspace.
 
 #### Step 3: Configure SAML attributes and claims
 
-In **Attributes & Claims**, add or edit claims so the SAML assertion includes
+In "Attributes & Claims", add or edit claims so the SAML assertion includes
 the following attributes. Enter each attribute name exactly as shown and leave
-its **Namespace** blank.
+its "Namespace" blank.
 
 | Name      | Value          |
 | --------- | -------------- |
@@ -80,15 +80,15 @@ for details about configuring attributes and claims.
 #### Step 4: Link your Workspace to Microsoft Entra Modal application
 
 1. Navigate back to your Modal application in the Microsoft Entra admin center.
-2. In the application's SAML configuration, find **SAML
-   Certificates** and copy the **App Federation Metadata URL**.
-3. Sign in to https://modal.com and visit your [Workspace Management](/settings/workspace-management/identity-and-provisioning) page's `Identity and Provisioning` tab.
+2. In the application's SAML configuration, find "SAML
+   Certificates" and copy the "App Federation Metadata URL".
+3. Sign in to https://modal.com and visit your [Workspace Management](/settings/workspace-management/identity-and-provisioning) page's "Identity and Provisioning" tab.
 4. Paste the App Federation Metadata URL in the input and click "Save Changes".
 
 #### Step 5: Assign users / groups and test the integration
 
 1. Navigate back to your Modal application in the Microsoft Entra admin center.
-2. Open **Users and groups** and assign the appropriate people or groups. See
+2. Open "Users and groups" and assign the appropriate people or groups. See
    Microsoft's guide to
    [assigning users and groups](https://learn.microsoft.com/en-us/entra/identity/enterprise-apps/assign-user-or-group-access-portal)
    for detailed steps.
@@ -122,5 +122,5 @@ members of nested groups.
 
 ### Modal can't load the identity provider metadata
 
-Confirm that you copied the **App Federation Metadata URL**, rather than the
+Confirm that you copied the "App Federation Metadata URL", rather than the
 Login URL, Microsoft Entra Identifier, or a local certificate file.
