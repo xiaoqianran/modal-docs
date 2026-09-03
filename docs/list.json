@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-02T11:04:44.243Z",
+  "fetchedAt": "2026-09-03T11:02:08.648Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 308,
   "ok": 308,
@@ -330,7 +330,7 @@
       "source": "https://modal.com/docs/examples/cursor.md",
       "finalUrl": "https://modal.com/docs/examples/cursor.md",
       "path": "docs/examples/cursor.md",
-      "bytes": 10333,
+      "bytes": 10307,
       "stub": false
     },
     {
@@ -1354,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/scim.md",
       "finalUrl": "https://modal.com/docs/guide/scim.md",
       "path": "docs/guide/scim.md",
-      "bytes": 8615,
+      "bytes": 8842,
       "stub": false
     },
     {

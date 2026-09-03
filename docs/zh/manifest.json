@@ -757,9 +757,9 @@
       "bytes": 3557
     },
     "docs/guide/region-selection.md": {
-      "hash": "5de7ea4bb534acf21f14cd81d95cabf454b7cca8",
-      "translatedAt": "2026-08-21T06:57:52.399Z",
-      "bytes": 5421
+      "hash": "928ad2e8614f7f26943262c41d6c92065080c3be",
+      "translatedAt": "2026-09-03T11:02:14.472Z",
+      "bytes": 5415
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -827,9 +827,9 @@
       "bytes": 3840
     },
     "docs/guide/scim.md": {
-      "hash": "c0182ec74533bebfb587ae64a56cfb342a122a1f",
-      "translatedAt": "2026-09-02T11:05:13.446Z",
-      "bytes": 7342
+      "hash": "6fc57d866740affc667722cd68f2a67472225a87",
+      "translatedAt": "2026-09-03T11:02:25.169Z",
+      "bytes": 7563
     },
     "docs/guide/sandboxes.md": {
       "hash": "56841289f2aaf074a6a3a76ac6ae69ea18d8fa84",
@@ -1577,9 +1577,9 @@
       "bytes": 4975
     },
     "docs/examples/cursor.md": {
-      "hash": "4b52390bc0c54179290c118c30e3da75019c4db6",
-      "translatedAt": "2026-09-01T11:30:01.968Z",
-      "bytes": 9706
+      "hash": "713a1f986b0574c37823251ad655dcfd5c181469",
+      "translatedAt": "2026-09-03T11:02:21.624Z",
+      "bytes": 9667
     },
     "docs/guide/network-egress-billing.md": {
       "hash": "ecfdd765e6fee3094634f586273a03044d48e438",
@@ -1587,10 +1587,10 @@
       "bytes": 2927
     }
   },
-  "updatedAt": "2026-09-02T11:05:13.446Z",
+  "updatedAt": "2026-09-03T11:02:25.169Z",
   "stats": {
-    "translated": 8,
-    "skipped": 305,
+    "translated": 3,
+    "skipped": 310,
     "failed": 0,
     "total": 313
   }

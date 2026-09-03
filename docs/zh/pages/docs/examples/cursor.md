@@ -2,7 +2,7 @@
 
 # 在模态上运行光标云代理
 
-使用[光标自带机器 (BYOM) 池](https://cursor.com/docs/cloud-agent/bring-your-own-machine)
+使用【光标自主机】(https://cursor.com/docs/cloud-agent/self-hosted/pool)
 在 [Modal Sandboxes](https://modal.com/docs/guide/sandboxes) 中运行 Cursor Cloud Agent 工作线程。
 在Cursor中选择池，Modal Cursor为每个池启动一个Modal Sandbox
 云代理会话。
@@ -72,9 +72,9 @@ uvx modal-cursor doctor
 
 在 Cursor 中，打开云代理仪表板并使用
 您通常使用的工作流程。在会话的工作人员或机器选择器中，选择
-您在启动之前创建的 BYOM 池（在此示例中为 `gpu-training`）
-会议。部署完成且 Cursor 已收到后，将列出该池
-游泳池；如果不可用，请运行 `uvx modal-cursor doctor`。
+您在开始会话之前创建的池（在本例中为`gpu-training`）。
+部署完成后，Cursor 收到池后，会列出该池；
+如果不可用，请运行 `uvx modal-cursor doctor`。
 
 启动会话后，Cursor 将请求放入该池中。莫代尔
 Cursor 声明它，创建一个 Modal 沙箱，启动 Cursor 工作线程，然后等待
@@ -234,7 +234,7 @@ uvx modal-cursor destroy --yes
 5. 控制器轮询 Cursor，直到工作线程连接。
 
 当沙箱在连接之前退出或工作人员通过以下方式保持不可见时
-准备超时，配置失败，并且声明被释放以进行重试。此集成注册`workerReadyTimeoutSeconds=0`。工人们跑进来
+准备超时，配置失败，并且声明被释放以重试。此集成注册`workerReadyTimeoutSeconds=0`。工人们跑进来
 短暂的沙箱；快照/恢复休眠和非零重新连接窗口
 保持不可用状态。
 
@@ -243,8 +243,8 @@ uvx modal-cursor destroy --yes
 以下环境变量更改控制器的生命周期默认值
 和工人：
 
-|变量|目的|默认|
-| ---| ---| ---: |
+|变量|目的|默认 |
+| --- | --- | ---: |
 | `MODAL_CURSOR_SANDBOX_TIMEOUT_S` |最大沙箱生命周期 | `21600` |
 | `MODAL_CURSOR_IDLE_RELEASE_TIMEOUT_S` |发布前的空闲时间| `600` |
 | `MODAL_CURSOR_SPAWNER_READY_TIMEOUT_S` |工人登记等待| `120` |
@@ -262,7 +262,7 @@ OTLP/HTTP。仅当设置端点时，Instrumentation 才会导出遥测数据。
 `OTEL_SERVICE_NAME` 更改发出的服务名称。
 
 这些跨度包括池、请求、工作线程、沙箱和结果元数据。他们
-省略 Cursor API 密钥、Modal Secret 值以及完整的声明和机器
+省略 Cursor API 键、Modal Secret 值以及完整的声明和机器
 有效负载。
 
 ### 凭证

@@ -61,15 +61,18 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users.
 
 #### Microsoft Entra ID
 
-1. Create a custom non-gallery Enterprise Application.
+1. Create or select an Enterprise Application.
 
    In the [Microsoft Entra admin center](https://entra.microsoft.com/):
 
-   1. Go to "Entra ID > Enterprise apps".
-   2. Select "New application > Create your own application".
-   3. Enter a name such as `Modal SCIM`.
-   4. Select "Integrate any other application you don't find in the gallery
-      (Non-gallery)" and create the application.
+   * If you already have a Modal Enterprise Application that you use for SSO,
+     you can reuse it for SCIM provisioning. Go to "Entra ID > Enterprise apps"
+     and select the application.
+   * Otherwise, go to "Entra ID > Enterprise apps" and create an application:
+     1. Select "New application > Create your own application".
+     2. Enter a name such as `Modal SCIM`.
+     3. Select "Integrate any other application you don't find in the gallery
+        (Non-gallery)" and create the application.
 
 2. Configure the application with your Modal SCIM credentials.
 
