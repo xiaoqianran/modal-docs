@@ -43,11 +43,16 @@
   - [定价和资源](https://modal.com/docs/guide/sandbox-resources.md)
   - [虚拟机沙盒（测试版）](https://modal.com/docs/guide/vm-sandboxes.md)
   - [边车（Alpha）](https://modal.com/docs/guide/sandbox-sidecars.md)
-- 图片
-  - [定义图像](https://modal.com/docs/guide/images.md)
+- 端点
+  - [端点](https://modal.com/docs/guide/endpoints.md)
+  - [共享端点](https://modal.com/docs/guide/shared-endpoints.md)
+  - [专用端点](https://modal.com/docs/guide/dedicated-endpoints.md)
+  - [端点集成](https://modal.com/docs/guide/endpoint-integrations.md)
+- 图片- [定义图像](https://modal.com/docs/guide/images.md)
   - [使用现有容器镜像](https://modal.com/docs/guide/existing-images.md)
   - [命名图像](https://modal.com/docs/guide/named-images.md)
-  - [从注册表快速拉取](https://modal.com/docs/guide/fast-pull-from-registry.md)- GPU 和其他资源
+  - [从注册表快速拉取](https://modal.com/docs/guide/fast-pull-from-registry.md)
+- GPU 和其他资源
   - [GPU加速](https://modal.com/docs/guide/gpu.md)
   - [在 Modal 上使用 CUDA](https://modal.com/docs/guide/cuda.md)
   - [配置CPU、内存和磁盘](https://modal.com/docs/guide/resources.md)
@@ -62,12 +67,7 @@
   - [应用程序、功能和入口点](https://modal.com/docs/guide/apps.md)
   - [管理部署](https://modal.com/docs/guide/managing-deployments.md)
   - [持续部署](https://modal.com/docs/guide/continuous-deployment.md)
-  - [预定功能](https://modal.com/docs/guide/cron.md)
-- 端点
-  - [端点](https://modal.com/docs/guide/endpoints.md)
-  - [端点指标](https://modal.com/docs/guide/endpoint-metrics.md)
-  - [对端点进行基准测试](https://modal.com/docs/guide/endpoint-benchmarks.md)
-- [端点集成](https://modal.com/docs/guide/endpoint-integrations.md)
+- [预定功能](https://modal.com/docs/guide/cron.md)
 - HTTP 应用程序
   - [服务器](https://modal.com/docs/guide/servers.md)
   - [网页功能](https://modal.com/docs/guide/webhooks.md)

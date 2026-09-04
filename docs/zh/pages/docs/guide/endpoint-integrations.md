@@ -3,9 +3,9 @@
 # 端点集成
 
 兼容 OpenAI 的编码代理，例如 OpenCode 和 Codex，可以连接
-直接连接到您的共享端点。共享端点可通过
-`https://inference.us-west.modal.direct` 并在 OpenAI `model` 上路由
-字段，因此模型 ID 是端点的主机名，例如
+直接连接到您的[共享端点](/docs/guide/shared-endpoints)。他们是
+通过 `https://inference.us-west.modal.direct` 可用，并在
+OpenAI `model` 字段，因此模型 ID 是端点的主机名，例如
 `my-endpoint.us-west.modal.direct`。
 
 要查看令牌可以到达哪些共享端点，请列出所有模型 ID：

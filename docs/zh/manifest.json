@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "5b549b2e530f34ea3d17b8ecbdc9f840a5cb2bdf",
-      "translatedAt": "2026-09-02T11:04:59.707Z",
-      "bytes": 24757
+      "hash": "2313e3cd20a91614fbe09439f120571266af0803",
+      "translatedAt": "2026-09-04T11:03:38.772Z",
+      "bytes": 24740
     },
     "docs/cli/latest/config.md": {
       "hash": "85a6762c3598b9d8249f7fdf60d44396e195e0f4",
@@ -462,9 +462,9 @@
       "bytes": 10388
     },
     "docs/examples/webrtc_yolo.md": {
-      "hash": "fec02ea9db9b518d30d7f9ce2c024fba69cc4ff1",
-      "translatedAt": "2026-08-08T18:28:53.019Z",
-      "bytes": 24273
+      "hash": "30d98f9a57f73e7f0329774d2f81ce2db0adfc19",
+      "translatedAt": "2026-09-04T11:03:26.209Z",
+      "bytes": 24428
     },
     "docs/guide.md": {
       "hash": "820f77123a171b78c8e8204b0c0bc882a3c9e614",
@@ -572,9 +572,9 @@
       "bytes": 5894
     },
     "docs/guide/endpoint-integrations.md": {
-      "hash": "f84f1be3fa98934e65b11f9c5231f18b8fde0c96",
-      "translatedAt": "2026-08-08T18:29:11.340Z",
-      "bytes": 1722
+      "hash": "8fec6c7f60f8a3707e0e8a1a02ead754ae4284c3",
+      "translatedAt": "2026-09-04T11:03:41.292Z",
+      "bytes": 1748
     },
     "docs/guide/endpoint-metrics.md": {
       "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "fba17c98fa14a8facc97a1c68d066fbd353bc060",
-      "translatedAt": "2026-09-02T11:04:51.942Z",
-      "bytes": 7908
+      "hash": "9898e36003e500774c1f93a8f439d00a7cb23c48",
+      "translatedAt": "2026-09-04T11:03:43.745Z",
+      "bytes": 2727
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -1497,9 +1497,9 @@
       "bytes": 11665
     },
     "docs/guide/data-residency.md": {
-      "hash": "c65a3397bb68859c94b08bcbac5c39b01f0b5e56",
-      "translatedAt": "2026-08-31T13:23:49.008Z",
-      "bytes": 9850
+      "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
+      "translatedAt": "2026-09-04T11:03:40.386Z",
+      "bytes": 9955
     },
     "docs/sdk/go/latest/FunctionAutoscalerSettings.md": {
       "hash": "abeacba83058eb325c3015c9df2c1a3050e2cc1c",
@@ -1585,13 +1585,23 @@
       "hash": "ecfdd765e6fee3094634f586273a03044d48e438",
       "translatedAt": "2026-09-02T11:04:57.361Z",
       "bytes": 2927
+    },
+    "docs/guide/dedicated-endpoints.md": {
+      "hash": "2f6c0d3696473a94066b2ce8cbf6756d1c5f02ac",
+      "translatedAt": "2026-09-04T11:03:40.861Z",
+      "bytes": 3436
+    },
+    "docs/guide/shared-endpoints.md": {
+      "hash": "96da99287db46b75b58d7482850b42463f918058",
+      "translatedAt": "2026-09-04T11:03:42.605Z",
+      "bytes": 1330
     }
   },
-  "updatedAt": "2026-09-03T11:02:25.169Z",
+  "updatedAt": "2026-09-04T11:03:43.745Z",
   "stats": {
-    "translated": 3,
-    "skipped": 310,
+    "translated": 7,
+    "skipped": 308,
     "failed": 0,
-    "total": 313
+    "total": 315
   }
 }

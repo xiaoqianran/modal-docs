@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-03T11:02:08.648Z",
+  "fetchedAt": "2026-09-04T11:03:15.045Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 308,
   "ok": 308,
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 25252,
+      "bytes": 25250,
       "stub": false
     },
     {
@@ -738,7 +738,7 @@
       "source": "https://modal.com/docs/examples/webrtc_yolo.md",
       "finalUrl": "https://modal.com/docs/examples/webrtc_yolo.md",
       "path": "docs/examples/webrtc_yolo.md",
-      "bytes": 24733,
+      "bytes": 24876,
       "stub": false
     },
     {
@@ -866,7 +866,7 @@
       "source": "https://modal.com/docs/guide/data-residency.md",
       "finalUrl": "https://modal.com/docs/guide/data-residency.md",
       "path": "docs/guide/data-residency.md",
-      "bytes": 11782,
+      "bytes": 12027,
       "stub": false
     },
     {
@@ -883,6 +883,14 @@
       "finalUrl": "https://modal.com/docs/guide/dataset-ingestion.md",
       "path": "docs/guide/dataset-ingestion.md",
       "bytes": 5120,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/dedicated-endpoints.md",
+      "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
+      "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
+      "path": "docs/guide/dedicated-endpoints.md",
+      "bytes": 3723,
       "stub": false
     },
     {
@@ -918,27 +926,11 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/guide/endpoint-benchmarks.md",
-      "source": "https://modal.com/docs/guide/endpoint-benchmarks.md",
-      "finalUrl": "https://modal.com/docs/guide/endpoint-benchmarks.md",
-      "path": "docs/guide/endpoint-benchmarks.md",
-      "bytes": 2674,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/guide/endpoint-integrations.md",
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
       "path": "docs/guide/endpoint-integrations.md",
-      "bytes": 1742,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/endpoint-metrics.md",
-      "source": "https://modal.com/docs/guide/endpoint-metrics.md",
-      "finalUrl": "https://modal.com/docs/guide/endpoint-metrics.md",
-      "path": "docs/guide/endpoint-metrics.md",
-      "bytes": 2199,
+      "bytes": 1762,
       "stub": false
     },
     {
@@ -946,7 +938,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 8098,
+      "bytes": 3094,
       "stub": false
     },
     {
@@ -1395,6 +1387,14 @@
       "finalUrl": "https://modal.com/docs/guide/service-users.md",
       "path": "docs/guide/service-users.md",
       "bytes": 3086,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/shared-endpoints.md",
+      "source": "https://modal.com/docs/guide/shared-endpoints.md",
+      "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
+      "path": "docs/guide/shared-endpoints.md",
+      "bytes": 1487,
       "stub": false
     },
     {

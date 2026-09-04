@@ -108,13 +108,12 @@ https://modal.com/docs/guide/customer-supplied-encryption-keys.md
 https://modal.com/docs/guide/data-residency.md
 https://modal.com/docs/guide/datadog-integration.md
 https://modal.com/docs/guide/dataset-ingestion.md
+https://modal.com/docs/guide/dedicated-endpoints.md
 https://modal.com/docs/guide/developing-debugging.md
 https://modal.com/docs/guide/dicts.md
 https://modal.com/docs/guide/dynamic-batching.md
 https://modal.com/docs/guide/dynamic-function-config.md
-https://modal.com/docs/guide/endpoint-benchmarks.md
 https://modal.com/docs/guide/endpoint-integrations.md
-https://modal.com/docs/guide/endpoint-metrics.md
 https://modal.com/docs/guide/endpoints.md
 https://modal.com/docs/guide/entra-sso.md
 https://modal.com/docs/guide/environment_variables.md
@@ -172,6 +171,7 @@ https://modal.com/docs/guide/secrets.md
 https://modal.com/docs/guide/security.md
 https://modal.com/docs/guide/servers.md
 https://modal.com/docs/guide/service-users.md
+https://modal.com/docs/guide/shared-endpoints.md
 https://modal.com/docs/guide/slack-notifications.md
 https://modal.com/docs/guide/streaming-endpoints.md
 https://modal.com/docs/guide/timeouts.md

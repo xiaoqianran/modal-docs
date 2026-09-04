@@ -13,13 +13,13 @@ For a full list of available regions, please visit our [region selection documen
 
 ‡ *Functions and Sandboxes set the container region with `region=`; Servers use `compute_region=`, and Endpoints use `--compute-region`.*
 
-| **Service**                                    | **Selectable container region?**                                  | **Selectable routing region?**                       |
-| ---------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------- |
-| [Endpoints (Dedicated)](/docs/guide/endpoints) | [Yes](/docs/guide/endpoints#choosing-where-it-runs)               | [Yes](/docs/guide/endpoints#choosing-where-it-runs)  |
-| [Endpoints (Shared)](/docs/guide/endpoints)\*  | No                                                                | No                                                   |
-| [Functions](/docs/guide/functions)             | [Yes](/docs/guide/region-selection#specifying-a-container-region) | [Yes](/docs/guide/region-selection#regional-routing) |
-| [Sandboxes](/docs/guide/sandboxes)             | [Yes](/docs/guide/region-selection#specifying-a-container-region) | N/A†                                                 |
-| [Servers](/docs/guide/servers)                 | [Yes](/docs/guide/servers#request-routing)                        | [Yes](/docs/guide/servers#request-routing)           |
+| **Service**                                              | **Selectable container region?**                                        | **Selectable routing region?**                                          |
+| -------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| [Endpoints (Dedicated)](/docs/guide/dedicated-endpoints) | [Yes](/docs/guide/dedicated-endpoints#configure-capacity-and-placement) | [Yes](/docs/guide/dedicated-endpoints#configure-capacity-and-placement) |
+| [Endpoints (Shared)](/docs/guide/shared-endpoints)\*     | No                                                                      | No                                                                      |
+| [Functions](/docs/guide/functions)                       | [Yes](/docs/guide/region-selection#specifying-a-container-region)       | [Yes](/docs/guide/region-selection#regional-routing)                    |
+| [Sandboxes](/docs/guide/sandboxes)                       | [Yes](/docs/guide/region-selection#specifying-a-container-region)       | N/A†                                                                    |
+| [Servers](/docs/guide/servers)                           | [Yes](/docs/guide/servers#request-routing)                              | [Yes](/docs/guide/servers#request-routing)                              |
 
 \* *Shared Endpoints route through `us-west`, and containers are distributed across Modal's global compute pool.*
 

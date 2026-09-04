@@ -1,9 +1,9 @@
 # Endpoint integrations
 
 OpenAI-compatible coding agents, such as OpenCode and Codex, can connect
-directly to your Shared Endpoints. Shared Endpoints are available through
-`https://inference.us-west.modal.direct` and are routed on the OpenAI `model`
-field, so the model ID is the endpoint's hostname, for example
+directly to your [Shared Endpoints](/docs/guide/shared-endpoints). They are
+available through `https://inference.us-west.modal.direct` and are routed on the
+OpenAI `model` field, so the model ID is the endpoint's hostname, for example
 `my-endpoint.us-west.modal.direct`.
 
 To see which Shared Endpoints a token can reach, list all model IDs with:

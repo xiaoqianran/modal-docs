@@ -41,6 +41,11 @@ The docs are organized into three main sections:
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [VM Sandboxes (Beta)](https://modal.com/docs/guide/vm-sandboxes.md)
   - [Sidecars (Alpha)](https://modal.com/docs/guide/sandbox-sidecars.md)
+- Endpoints
+  - [Endpoints](https://modal.com/docs/guide/endpoints.md)
+  - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
+  - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
+  - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Images
   - [Defining Images](https://modal.com/docs/guide/images.md)
   - [Using existing container images](https://modal.com/docs/guide/existing-images.md)
@@ -62,11 +67,6 @@ The docs are organized into three main sections:
   - [Managing deployments](https://modal.com/docs/guide/managing-deployments.md)
   - [Continuous deployment](https://modal.com/docs/guide/continuous-deployment.md)
   - [Scheduled Functions](https://modal.com/docs/guide/cron.md)
-- Endpoints
-  - [Endpoints](https://modal.com/docs/guide/endpoints.md)
-  - [Endpoint metrics](https://modal.com/docs/guide/endpoint-metrics.md)
-  - [Benchmark an endpoint](https://modal.com/docs/guide/endpoint-benchmarks.md)
-  - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - HTTP Applications
   - [Servers](https://modal.com/docs/guide/servers.md)
   - [Web Functions](https://modal.com/docs/guide/webhooks.md)

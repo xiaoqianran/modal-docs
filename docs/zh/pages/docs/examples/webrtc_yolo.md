@@ -33,7 +33,7 @@
 然后，另一个对等方要么通过提供其自身功能的兼容描述来接受该要约，要么如果无法进行兼容配置则拒绝该要约。
 这个过程在WebRTC世界中被称为“信令”，有时也称为“协商”，而中介它的服务器通常被称为“信令服务器”。
 
-一旦同行就配置达成一致，就会有短暂的暂停来建立通信......然后您就可以开始工作了。
+一旦同行就配置达成一致，就会短暂暂停以建立通信......然后您就可以开始工作了。
 
 ![基本 WebRTC 架构](https://modal-cdn.com/cdnbot/just_webrtc-1oic3iems_a4a8e77c.webp) <small>基本 WebRTC 应用架构</small>
 
@@ -51,9 +51,9 @@ Modal 将 Python 代码转变为可扩展的云服务。
 当您的函数全部返回时，您将旋转至 0 个副本。
 
 使这成为可能的模态编程模型的核心约束是函数调用是无状态的和独立的。
-换句话说，正确编写的模态函数不会在运行之间将信息存储在内存中（尽管它们可能会将数据缓存到临时本地磁盘以提高效率），并且它们不会创建在函数调用返回后必须继续运行以使应用程序正确的进程或任务。
+换句话说，正确编写的模态函数不会在运行之间将信息存储在内存中（尽管它们可能会将数据缓存到临时本地磁盘以提高效率），并且它们不会创建在函数调用返回后必须继续运行才能使应用程序正确的进程或任务。
 
-另一方面，WebRTC 应用程序需要在多步骤协议中来回传递消息，并且 API 会生成多个“代理”（不，不涉及 AI，只是进程），它们在幕后工作，包括管理点对点 (P2P) 连接本身。
+另一方面，WebRTC 应用程序需要在多步骤协议中来回传递消息，并且 API 会生成多个“代理”（不，不涉及 AI，只是进程），这些“代理”在幕后工作，包括管理点对点 (P2P) 连接本身。
 这意味着当我们的函数中的应用程序逻辑完成时，流可能才刚刚开始。
 
 ![Modal 编程模型和 WebRTC 信令](https://modal-cdn.com/cdnbot/flow_comparisong6iibzq3_638bdd84.webp) <small>Modal 的无状态编程模型（左）和 WebRTC 的有状态信令（右）</small>
@@ -70,7 +70,7 @@ Modal 将 Python 代码转变为可扩展的云服务。
 我们[`.spawn`](https://modal.com/docs/reference/modal.Function#spawn)`/offer`端点内的云对等点
 并通过 [`modal.Dict`](https://modal.com/docs/reference/modal.Dict) 传递 SDP 报价。
 
-一旦 GPU 对等方发布 SDP *应答*，信令请求就会返回。
+一旦 GPU 对等方发布 SDP *答案*，信令请求就会返回。
 当 P2P 连接已“关闭”时，我们将从调用返回到云对等点。
 这样，我们的 WebRTC 应用程序就可以受益于 Modal 中内置的所有自动缩放和并发逻辑
 使用户能够交付高效的云应用程序。
@@ -90,7 +90,7 @@ Modal 将 Python 代码转变为可扩展的云服务。
 
 我们将从一个简单的容器 [Image](https://modal.com/docs/guide/images) 开始，然后
 
-* 将其设置为正确使用 TensorRT 和 ONNX 运行时，从而使延迟最小化，
+* 将其设置为正确使用 TensorRT 和 ONNX 运行时，从而将延迟降至最低，
 * 安装处理视频所需的库`opencv`和`ffmpeg`，以及
 * 安装 Pipecat 的 WebRTC 额外版本以及必要的 Python 包。
 
@@ -128,6 +128,7 @@ video_processing_image = (
     .env({"LD_LIBRARY_PATH": tensorrt_ld_path, "LANG": "en_US.UTF-8"})
     # install system dependencies
     .apt_install("python3-opencv", "ffmpeg")
+    .run_commands("printf 'onnxruntime\\n' > /tmp/onnxruntime-excludes.txt")
     # install Python dependencies
     .uv_pip_install(
         "pipecat-ai[webrtc]==1.5.0",
@@ -137,6 +138,7 @@ video_processing_image = (
         "opencv-python==4.11.0.86",
         "tensorrt==10.9.0.34",
         "torch==2.7.0",
+        extra_options="--excludes /tmp/onnxruntime-excludes.txt",
     )
 )
 
@@ -427,7 +429,7 @@ class WebcamObjDet:
 ### ICE 助手
 
 STUN 是一个公共 Google 服务器。 TURN 凭证来自 `turn-credentials` Secret
-通过一个小型 CPU 功能，因此信令 Cls 本身不需要知道 STUN 模式下的凭据。
+通过一个小型 CPU 功能，因此信号 Cls 本身不需要知道 STUN 模式下的凭据。
 
 ```python
 def ice_servers_for_mode(use_turn: bool) -> list[dict]:
