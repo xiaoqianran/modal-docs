@@ -169,6 +169,41 @@ Additionally, quickly provision a VM Sandbox with a PTY shell via the CLI using:
 modal shell --experimental-option vm_runtime=1
 ```
 
+## Running custom init systems
+
+By default, Modal runs and manages the init process (PID 1) inside the VM. Set the `vm_init`
+experimental option to an absolute path (typically, `/sbin/init`) to run a conventional init
+system such as [`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html) or
+[`openrc`](https://github.com/OpenRC/openrc) as PID 1 instead. Modal's agent runs alongside the
+`vm_init`-specified init process.
+
+```python fixture:sb_app
+image = modal.Image.from_registry("debian:bookworm-slim").dockerfile_commands(
+    "RUN apt-get update",
+    # udev is needed so that getty doesn't block for 90s waiting on device activation.
+    "RUN apt-get install -y systemd systemd-sysv dbus udev",
+    # An empty machine-id tells systemd to generate one at first boot.
+    # systemd won't start if the file is missing entirely.
+    "RUN rm -f /etc/machine-id && touch /etc/machine-id",
+)
+
+sb = modal.Sandbox.create(
+    app=sb_app,
+    image=image,
+    cpu=4,
+    memory=2048,
+    readiness_probe=modal.Probe.with_exec(
+        "systemctl", "is-system-running", interval_ms=250
+    ),
+    experimental_options={"vm_runtime": True, "vm_init": "/sbin/init"},
+)
+
+try:
+    sb.wait_until_ready()
+finally:
+    sb.terminate()
+```
+
 ## Improvements over gVisor sandboxes
 
 Docker workloads behave more like they do in a non-container environment. In particular:

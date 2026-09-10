@@ -18,7 +18,10 @@ Modal provides three levels of outbound network restriction:
 
 For advanced HTTPS inspection, the experimental `proxy_traffic_via_sidecar`
 option routes outbound TCP traffic on port 443 from the main container through
-a Sidecar. See [Routing HTTPS traffic through a
+a Sidecar. Relaying replaces the Sandbox's own controls on that traffic rather
+than adding to them: an `outbound_cidr_allowlist` continues to govern every
+other port, but stops applying to port 443, which is instead governed by the
+Sidecar's egress controls. See [Routing HTTPS traffic through a
 Sidecar](/docs/guide/sandbox-sidecars#routing-https-traffic-through-a-sidecar)
 for details.
 
@@ -149,9 +152,9 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 When a domain allowlist is set:
 
-* **TLS (port 443)** connections are allowed only to the listed domains.
-  Connections to non-allowlisted domains are securely blocked and logged to
-  the Sandbox's system output stream.
+* **TLS (port 443)** connections are allowed only to the listed domains, or to
+  IPs on a CIDR allowlist. Other connections are blocked and logged to the
+  Sandbox's system output stream.
 * **Non-TLS traffic** (HTTP, raw TCP, UDP) to IPs that are not on a CIDR
   allowlist is **blocked**.
 
@@ -161,6 +164,28 @@ Entries prefixed with `*.` match the parent domain and any subdomain:
 | --------------- | ------------------------------------------------- | ----------------- |
 | `example.com`   | `example.com`                                     | `sub.example.com` |
 | `*.example.com` | `example.com`, `a.example.com`, `a.b.example.com` | `evilexample.com` |
+
+#### How domain filtering works
+
+Domains are matched against the
+[SNI](https://en.wikipedia.org/wiki/Server_Name_Indication) in the TLS
+handshake, and Modal resolves that hostname itself rather than trusting the
+destination IP the Sandbox picked. TLS traffic is not decrypted, so the `Host`
+header, URL path, and body are never inspected.
+
+Encrypted Client Hello (ECH) is not supported. Modal only sees the outer public
+name, not the real hostname inside it, so an ECH connection is matched against
+that public name and is blocked unless the public name is on the allowlist.
+
+<Callout variant="warning">
+
+Two domains can share a TLS endpoint, such as two tenants of the same CDN. A
+Sandbox can reach a non-allowlisted domain there by sending an allowlisted SNI
+with the other name in the `Host` header, a technique called *domain fronting*.
+Many providers reject mismatched requests, but the allowlist itself does not
+prevent the mismatch.
+
+</Callout>
 
 ### Updating the network policy at runtime
 

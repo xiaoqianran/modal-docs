@@ -275,11 +275,19 @@ Sandbox trusts. See the [Sidecar traffic routing
 example](/docs/examples/sidecar_traffic_routing) for a complete mitmproxy-based
 request filter.
 
-Only TCP traffic to port 443 is relayed. This traffic is not subject to other
-egress controls on the Sandbox, such as `outbound_cidr_allowlist` or
-a [Proxy](/docs/guide/proxy-ips). Non-relayed traffic is still subject to
-the egress controls of the Sandbox. The option cannot be combined with setting
-`block_network` or `outbound_domain_allowlist` on the Sandbox.
+Only TCP traffic to port 443 is relayed. The Sandbox's own egress controls are
+set aside for it: an `outbound_cidr_allowlist` on the Sandbox still governs every
+other port, but relayed traffic passes regardless of what it lists. Non-relayed
+traffic is still subject to the egress controls of the Sandbox.
+
+Relayed traffic is instead governed by the egress controls of the Sidecar it is
+relayed into. A Sidecar's outbound network policy is independent of the main
+container's and defaults to open, so unless you pass `outbound_cidr_allowlist`
+or `outbound_domain_allowlist` to the Sidecar itself, relayed traffic reaches
+any destination the Sidecar chooses to connect to.
+
+The option cannot be combined with setting `block_network`,
+`outbound_domain_allowlist` or `proxy` on the Sandbox.
 
 ### Filesystem snapshots
 
@@ -372,4 +380,4 @@ for sidecars:
 * **VM incompatibility**: Sidecars are not compatible with VM Sandboxes.
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
 * **Maximum of 250 concurrent sidecars**: A sandbox can have at most 250 sidecar containers running at the same time.
-* **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy.
+* **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy. Because relayed traffic leaves from the Sidecar, a Sandbox cannot currently combine a Proxy with `proxy_traffic_via_sidecar`.

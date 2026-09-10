@@ -69,4 +69,4 @@ curl "<your-endpoint-url>/v1/chat/completions" \
 ```
 
 See [Endpoint integrations](/docs/guide/endpoint-integrations) for connecting
-coding agents like OpenCode and Codex to a Shared Endpoint.
+coding agents like OpenCode, Codex, and Claude Code to a Shared Endpoint.
