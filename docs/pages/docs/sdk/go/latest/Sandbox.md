@@ -59,7 +59,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready.
 * `Name` (`string`): Optional name for the Sandbox. Unique within an App.
 * `Tags` (`map[string]string`): Tags to attach to the Sandbox. Filterable via SandboxList.
-* `ExperimentalOptions` (`map[string]any`): Experimental options
+* `ExperimentalOptions` (`map[string]any`): Experimental options. Values must be bool or string. Set "enable\_exit\_snapshot" to true to capture a filesystem snapshot when the Sandbox exits, retrievable with Sandbox.ExperimentalGetExitSnapshot.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
@@ -122,7 +122,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready.
 * `Name` (`string`): Optional name for the Sandbox. Unique within an App.
 * `Tags` (`map[string]string`): Tags to attach to the Sandbox. Filterable via SandboxList.
-* `ExperimentalOptions` (`map[string]any`): Experimental options
+* `ExperimentalOptions` (`map[string]any`): Experimental options. Values must be bool or string. Set "enable\_exit\_snapshot" to true to capture a filesystem snapshot when the Sandbox exits, retrievable with Sandbox.ExperimentalGetExitSnapshot.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
@@ -266,6 +266,9 @@ Detach() error
 
 Detach disconnects from the running Sandbox
 
+It does not block on or interrupt ongoing reads or calls. Connection resources
+are closed promptly once those operations finish.
+
 ## Exec
 
 ```go
@@ -294,11 +297,23 @@ ExperimentalGetExitSnapshot(ctx context.Context, params *SandboxExperimentalGetE
 
 ExperimentalGetExitSnapshot gets the exit filesystem snapshot image.
 
-Returns InvalidError if the Timeout is negative, or if exit snapshot is not
-enabled for the Sandbox. Returns TimeoutError if the Timeout elapses before
-the snapshot reaches a terminal state. This includes a Timeout of 0 when the
-snapshot is still pending. Returns SnapshotCreationError if no exit snapshot
-image will be produced. Returns NotFoundError if the Sandbox does not exist.
+An exit snapshot captures the Sandbox filesystem when the Sandbox exits,
+whether its entrypoint finishes gracefully, abruptly, or it is stopped with
+Sandbox.Terminate. The resulting Image can be passed to
+SandboxService.Create to start a new Sandbox from the saved filesystem.
+
+Exit snapshots are opt-in: the Sandbox must have been created with
+SandboxCreateParams.ExperimentalOptions containing
+"enable\_exit\_snapshot": true. Calling this on a Sandbox created without
+that option returns InvalidError.
+
+Returns InvalidError if the Timeout is negative, or if exit snapshots were
+not enabled when the Sandbox was created.
+Returns TimeoutError if the Timeout elapses before the snapshot reaches a
+terminal state. This includes a Timeout of 0 when the snapshot is still pending.
+Returns SnapshotCreationError if the snapshot operation is done and failed.
+Polling again will not produce an Image; filesystem state is gone.
+Returns NotFoundError if the Sandbox does not exist.
 
 EXPERIMENTAL: the API is subject to change.
 

@@ -90,7 +90,7 @@ class RemoteError extends Error
 
 ## SandboxFilesystemDirectoryNotEmptyError
 
-目录预计为空，但实际并非如此。
+目录本应为空，但实际并非如此。
 
 ```typescript
 class SandboxFilesystemDirectoryNotEmptyError extends SandboxFilesystemError
@@ -161,7 +161,7 @@ class SandboxTimeoutError extends Error
 
 ## 快照创建错误
 
-不会为沙盒生成快照图像。
+快照操作已完成但失败。再次轮询不会产生图像；文件系统状态消失了。
 
 ```typescript
 class SnapshotCreationError extends Error

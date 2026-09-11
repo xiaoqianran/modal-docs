@@ -444,7 +444,8 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * Snapshotting a Sandbox will currently cause it to terminate. We intend to remove this limitation soon.
 * Sandboxes created with `_experimental_enable_snapshot=True` or restored from Snapshots cannot run with GPUs.
 * It is not possible to snapshot a Sandbox while a `Sandbox.exec` command is still running. Furthermore, any background processes launched by a call to `Sandbox.exec` will not be properly restored after a snapshot.
-* Sandbox memory snapshots can only be restored on the same exact instance type that the original Sandbox was run on. Given Modal's diverse fleet of capacity, this can sometimes lead to scheduling delays, especially when memory snapshots are combined with narrow region pinning.
+* A Sandbox created with `_experimental_enable_snapshot=True` can only be restored on the same exact instance type that the original Sandbox was run on. Given Modal's diverse fleet of capacity, this can sometimes lead to scheduling delays.
+* A Sandbox created with `_experimental_enable_snapshot=True` cannot pin its `region`, and a Sandbox restored from a Memory Snapshot is scheduled wherever the original instance type is available.
 
 ## Persisting Sandbox State
 

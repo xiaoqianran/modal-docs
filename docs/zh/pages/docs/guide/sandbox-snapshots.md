@@ -335,7 +335,7 @@ fmt.Println(strings.TrimSpace(string(stdout))) // "data"
 
 要卸载以前安装的映像，
 在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
-卸载后，该路径下的底层沙盒文件系统再次可见。
+卸载后，该路径下的底层沙箱文件系统再次可见。
 
 <CodeTabs>
   {#snippet python()}
@@ -437,10 +437,11 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 
 * 沙箱内存快照在创建后 7 天后过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
-* 对沙盒进行快照目前将导致其终止。 We intend to remove this limitation soon.
+* 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
-* 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
-* 沙盒内存快照只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于 Modal 具有多样化的容量，这有时会导致调度延迟，特别是当内存快照与窄区域固定相结合时。
+* 当 `Sandbox.exec` 命令仍在运行时，无法对沙盒进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
+* 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
+* 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
 
 ## 保持沙箱状态
 
@@ -449,7 +450,7 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 1. **触发快照。** 快照是从沙箱外部触发的，通常是在终止之前。一种常见的模式是在沙箱内运行 exec 进程并等待其退出。一旦完成，控制器就会拍摄快照并终止沙箱。
 2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。
 
-以下示例展示了这种模式。此代码通常在模态函数或您自己的后端中运行，编排沙箱：
+以下示例展示了这种模式。此代码通常会在模态函数或您自己的后端中运行，编排沙箱：
 
 ```python notest
 import modal

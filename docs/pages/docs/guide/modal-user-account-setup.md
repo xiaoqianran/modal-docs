@@ -6,7 +6,7 @@ account.
 You can visit the [signup](/signup) page to begin the process or execute
 [`modal setup`](/docs/cli/latest/setup#modal-setup) on the command line.
 
-Users can also be provisioned through [Okta SSO](/docs/guide/okta-sso), which is
+Users can also be provisioned through [SAML SSO](/docs/guide/saml-sso), which is
 an enterprise feature that you can request. For the typical user you'll sign-up
 using an existing GitHub account. If you're interested in authenticating with
 other identity providers let us know at <support@modal.com>.

@@ -60,7 +60,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox has become ready.
 * `name?` (`string`): Optional name for the Sandbox. Unique within an App.
 * `tags?` (`Record<string, string>`): Tags to attach to the Sandbox. Filterable via `client.sandboxes.list`.
-* `experimentalOptions?` (`Record<string, any>`): Optional experimental options.
+* `experimentalOptions?` (`Record<string, any>`): Optional experimental options. Values must be booleans or strings.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
@@ -131,7 +131,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox has become ready.
 * `name?` (`string`): Optional name for the Sandbox. Unique within an App.
 * `tags?` (`Record<string, string>`): Tags to attach to the Sandbox. Filterable via `client.sandboxes.list`.
-* `experimentalOptions?` (`Record<string, any>`): Optional experimental options.
+* `experimentalOptions?` (`Record<string, any>`): Optional experimental options. Values must be booleans or strings.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
@@ -307,6 +307,9 @@ Disconnect from the Sandbox, cleaning up local resources.
 The Sandbox continues running on Modal's infrastructure.
 After calling detach(), most operations on this Sandbox object will throw.
 
+This does not block on or interrupt ongoing reads or calls. Connection
+resources are closed promptly once those operations finish.
+
 ## exec
 
 ```typescript
@@ -343,7 +346,15 @@ async experimentalGetExitSnapshot(
 
 Get the exit filesystem snapshot image.
 
-EXPERIMENTAL: the API is subject to change.
+An exit snapshot captures the Sandbox filesystem when the Sandbox exits,
+whether its entrypoint finishes gracefully, abruptly, or it is stopped with
+`Sandbox.terminate`. The resulting `Image` can be passed to
+`client.sandboxes.create()` to start a new
+Sandbox from the saved filesystem.
+
+Exit snapshots are opt-in: the Sandbox must have been created with
+`experimentalOptions: { enable_exit_snapshot: true }`. Calling this on a
+Sandbox created without that option throws an `InvalidError`.
 
 **Parameters** (`SandboxExperimentalGetExitSnapshotParams`)
 
@@ -355,7 +366,22 @@ Optional parameters for Sandbox.experimentalGetExitSnapshot().
 
 **Raises:**
 
+* `InvalidError`: If `timeoutMs` is negative, or if exit snapshots were not enabled when the Sandbox was created.
 * `TimeoutError`: If `timeoutMs` elapses before the snapshot reaches a terminal state. This includes `timeoutMs = 0` when the snapshot is still pending.
+* `SnapshotCreationError`: Snapshot operation is done and failed. Polling again will not produce an Image; filesystem state is gone.
+* `NotFoundError`: If the Sandbox does not exist.
+
+```ts
+const sb = await modal.sandboxes.create(app, image, {
+  experimentalOptions: { enable_exit_snapshot: true },
+});
+// ... use the Sandbox ...
+await sb.terminate();
+const image = await sb.experimentalGetExitSnapshot();
+const sb2 = await modal.sandboxes.create(app, image);
+```
+
+EXPERIMENTAL: the API is subject to change.
 
 ## experimentalSetName
 

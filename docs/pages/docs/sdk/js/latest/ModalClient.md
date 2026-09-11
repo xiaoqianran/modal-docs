@@ -45,6 +45,10 @@ new ModalClient(params?: ModalClientParams)
 
 * `tokenId?` (`string`)
 * `tokenSecret?` (`string`)
+* `oauthRefreshToken?` (`string`): OAuth refresh token returned by Modal's token endpoint.
+* `oauthClientId?` (`string`): Modal-issued OAuth client ID, with an `oc-` prefix.
+* `oauthClientSecret?` (`string`): Modal-issued OAuth client secret, with an `ov-` prefix.
+* `oauthJwtKey?` (`string`): Unencrypted RSA private key encoded as PEM, with literal or escaped newlines.
 * `environment?` (`string`)
 * `endpoint?` (`string`)
 * `timeoutMs?` (`number`)

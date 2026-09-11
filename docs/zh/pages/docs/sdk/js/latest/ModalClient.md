@@ -47,13 +47,17 @@ new ModalClient(params?: ModalClientParams)
 
 * `tokenId?` (`string`)
 * `tokenSecret?` (`string`)
+* `oauthRefreshToken?` (`string`)：Modal 令牌端点返回的 OAuth 刷新令牌。
+* `oauthClientId?` (`string`)：模态颁发的 OAuth 客户端 ID，带有 `oc-` 前缀。
+* `oauthClientSecret?` (`string`)：模态颁发的 OAuth 客户端密钥，带有 `ov-` 前缀。* `oauthJwtKey?` (`string`)：编码为 PEM 的未加密 RSA 私钥，带有文字或转义换行符。
 * `environment?` (`string`)
 * `endpoint?` (`string`)
 * `timeoutMs?` (`number`)
 * `maxRetries?` (`number`)
 * `maxThrottleWaitSecs?` (`number`)
 * `logger?` (`Logger`)
-* `logLevel?` (`LogLevel`)* `grpcMiddleware?` (`ClientMiddleware[]`)：应用于所有 API 调用的自定义 gRPC 中间件。这些中间件附加在 Modal 的内置中间件（身份验证、重试逻辑和超时）之后，允许您添加遥测、跟踪或其他可观察性功能。请注意，Modal gRPC API 不被视为公共 API，并且可以在没有警告的情况下进行更改。
+* `logLevel?` (`LogLevel`)
+* `grpcMiddleware?` (`ClientMiddleware[]`)：应用于所有 API 调用的自定义 gRPC 中间件。这些中间件附加在 Modal 的内置中间件（身份验证、重试逻辑和超时）之后，允许您添加遥测、跟踪或其他可观察性功能。请注意，Modal gRPC API 不被视为公共 API，并且可以在没有警告的情况下进行更改。
 
 ## 关闭
 
@@ -66,7 +70,6 @@ close(): void
 ```typescript
 environmentName(environment?: string): string
 ```
-
 ## 获取ImageBuilder版本
 
 ```typescript
@@ -77,7 +80,7 @@ async getImageBuilderVersion(environmentName?: string): Promise<string>
 优先。
 
 映像生成器版本是环境范围内的服务器设置，因此请传递环境
-图像将被内置（例如应用程序的环境）以获取正确的版本。什么时候
+图像将被内置（例如应用程序的环境）以获取正确的版本。当
 省略，则使用配置文件的默认环境。
 
 ## 版本

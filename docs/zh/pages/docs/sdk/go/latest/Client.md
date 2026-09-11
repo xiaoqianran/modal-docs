@@ -44,6 +44,7 @@ ClientParams 定义用于初始化 Modal 客户端的凭据和选项。
 
 * `TokenID` (`string`)
 * `TokenSecret` (`string`)
+* `OAuthCredentials` (`*OAuthCredentialsParams`)：OAuthCredentials 当非零时覆盖配置文件凭据。它必须包含刷新令牌、客户端 ID 以及客户端密钥或 JWT 密钥之一。
 * `Environment` (`string`)
 * `Config` (`*config`)
 * `Logger` (`*slog.Logger`)

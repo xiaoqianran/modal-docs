@@ -30,6 +30,22 @@ SidecarExecParams holds options for `SidecarContainer.Exec`.
 * `Secrets` (`[]*Secret`): Secrets to inject as environment variables for the command.
 * `PTY` (`bool`): PTY defines whether to enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty.
 
+## MountImage
+
+```go
+MountImage(ctx context.Context, path string, image *Image, params *SidecarMountImageParams) error
+```
+
+MountImage mounts an Image at a path in this Sidecar container's filesystem.
+
+If image is nil, mounts an empty directory.
+
+**Parameters** (`SidecarMountImageParams`)
+
+SidecarMountImageParams holds options for `SidecarContainer.MountImage`.
+
+* `ExperimentalEncryptionKey` (`[]byte`): ExperimentalEncryptionKey is a customer-supplied encryption key used to decrypt the image. Use the same key that encrypted the snapshot.
+
 ## Poll
 
 ```go
@@ -62,6 +78,44 @@ SidecarReloadVolumesParams are options for `SidecarContainer.ReloadVolumes`.
 
 * `Timeout` (`time.Duration`): Timeout bounds how long the call waits. Defaults to 55 seconds.
 
+## SnapshotDirectory
+
+```go
+SnapshotDirectory(ctx context.Context, path string, params *SidecarSnapshotDirectoryParams) (*Image, error)
+```
+
+SnapshotDirectory snapshots and creates a new Image from a directory in the running Sidecar container.
+
+The Image can be used anywhere an Image is accepted, including as a mount or
+as the base filesystem for another container.
+
+If params is nil, the resulting Image is retained for 30 days as a hard
+cutoff measured from creation, and the call has a 55-second timeout.
+See `SidecarSnapshotDirectoryParams` for control over both.
+
+**Parameters** (`SidecarSnapshotDirectoryParams`)
+
+SidecarSnapshotDirectoryParams holds options for `SidecarContainer.SnapshotDirectory`.
+
+* `Timeout` (`time.Duration`): Timeout is the overall budget for the snapshot call. Zero means the default (55 seconds). If it elapses before a snapshot completes, a TimeoutError is returned.
+* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero (or omitted) means use the default of 30 days, as a hard cutoff measured from creation. A positive value sets a custom lifetime; sub-second values are rejected. Pass `NoExpiryTTL` to retain the image indefinitely. See `NoExpiryTTL`.
+* `ExperimentalEncryptionKey` (`[]byte`): ExperimentalEncryptionKey is a customer-supplied encryption key used to encrypt the resulting snapshot. The same key is required when mounting the image. Modal does not persist the key.
+
+## SnapshotFilesystem
+
+```go
+SnapshotFilesystem(ctx context.Context, params *SidecarSnapshotFilesystemParams) (*Image, error)
+```
+
+SnapshotFilesystem snapshots this Sidecar container's filesystem into an Image.
+
+**Parameters** (`SidecarSnapshotFilesystemParams`)
+
+SidecarSnapshotFilesystemParams configures a `SidecarContainer.SnapshotFilesystem` call.
+
+* `Timeout` (`time.Duration`): Timeout is the overall budget for the snapshot call. Zero means the default (55 seconds).
+* `TTL` (`time.Duration`): TTL is the lifetime of the resulting image. Zero means 30 days; pass `NoExpiryTTL` to retain the image indefinitely.
+
 ## Terminate
 
 ```go
@@ -77,6 +131,20 @@ The returned exit code is only meaningful when Wait is true.
 SidecarTerminateParams holds options for `SidecarContainer.Terminate`.
 
 * `Wait` (`bool`): Wait, when true, will wait for the sidecar container to terminate.
+
+## UnmountImage
+
+```go
+UnmountImage(ctx context.Context, path string, _ *SidecarUnmountImageParams) error
+```
+
+UnmountImage removes an Image mount from a path in this Sidecar container's filesystem.
+
+**Parameters** (`SidecarUnmountImageParams`)
+
+SidecarUnmountImageParams holds options for `SidecarContainer.UnmountImage`.
+
+*No configurable options.*
 
 ## Wait
 

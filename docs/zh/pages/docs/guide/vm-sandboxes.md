@@ -54,9 +54,7 @@ VM 沙箱也是在沙箱中运行 Docker 的推荐方法。为了尝试这个，
 将以下程序复制到例如`docker_in_modal_demo.py`，然后运行它
 `python docker_in_modal_demo.py`。
 
-<Collapsible title="Docker-in-Sandbox demo">
-
-<!-- 使下面的代码块与synthetic_monitoring/benchmarks/docker_in_modal.py保持同步。
+<Collapsible title="Docker-in-Sandbox demo"><!-- 使下面的代码块与synthetic_monitoring/benchmarks/docker_in_modal.py保持同步。
 下面的“标记”注释用于区分此代码与 synmon 中的代码。不要改变它们。 -->
 
 <!-- synmon-sync:docker_in_modal:begin -->
@@ -171,6 +169,41 @@ if __name__ == "__main__":
 modal shell --experimental-option vm_runtime=1
 ```
 
+## 运行自定义初始化系统
+
+默认情况下，Modal 运行并管理虚拟机内的 init 进程（PID 1）。设置`vm_init`
+绝对路径的实验选项（通常为`/sbin/init`）来运行传统的 init
+系统如 [`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html) 或
+[`openrc`](https://github.com/OpenRC/openrc) 改为 PID 1。莫代尔的经纪人与
+`vm_init`——指定的init进程。
+
+```python fixture:sb_app
+image = modal.Image.from_registry("debian:bookworm-slim").dockerfile_commands(
+    "RUN apt-get update",
+    # udev is needed so that getty doesn't block for 90s waiting on device activation.
+    "RUN apt-get install -y systemd systemd-sysv dbus udev",
+    # An empty machine-id tells systemd to generate one at first boot.
+    # systemd won't start if the file is missing entirely.
+    "RUN rm -f /etc/machine-id && touch /etc/machine-id",
+)
+
+sb = modal.Sandbox.create(
+    app=sb_app,
+    image=image,
+    cpu=4,
+    memory=2048,
+    readiness_probe=modal.Probe.with_exec(
+        "systemctl", "is-system-running", interval_ms=250
+    ),
+    experimental_options={"vm_runtime": True, "vm_init": "/sbin/init"},
+)
+
+try:
+    sb.wait_until_ready()
+finally:
+    sb.terminate()
+```
+
 ## 对 gVisor 沙箱的改进
 
 Docker 工作负载的行为更像是在非容器环境中的行为。特别是：
@@ -180,10 +213,10 @@ Docker 工作负载的行为更像是在非容器环境中的行为。特别是�
 
 现在可以使用只有在真正的 Linux 环境中才有意义的功能：
 
-* 支持自定义[https://arxiv.org/pdf/0706.2748](如[`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html))
+* 支持自定义[初始化系统](https://arxiv.org/pdf/0706.2748)（如[`systemd`](https://man7.org/linux/man-pages/man1/systemd.1.html)）
 * 支持[eBPF](https://ebpf.io/)
 * 支持[FUSE](https://www.kernel.org/doc/html/latest/filesystems/fuse.html)安装座
-* 支持通过 [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html) 沙盒内的资源隔离
+* 支持沙箱内通过[cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)进行资源隔离
 
 最后，对于大多数工作负载，根文件系统在 VM 沙箱上的性能比在 gVisor 沙箱中的性能更好。
 
@@ -191,11 +224,10 @@ Docker 工作负载的行为更像是在非容器环境中的行为。特别是�
 
 与其他运行时中的[资源配置](/docs/guide/resources)不同，
 VM 沙箱的内存配置是**静态**：您获得的内存量完全相同
-RAM 根据您的请求通过 `memory` 参数传递给 `Sandbox.create`。默认情况下，虚拟机
+RAM 根据您通过 `memory` 参数请求的`Sandbox.create` 的要求。默认情况下，虚拟机
 沙箱有 1GiB RAM。
 
 然而，CPU 配置是有弹性的。您可以突破您要求的金额。
-
 两种资源的成本根据请求量、使用量、
 沙盒执行的持续时间，以及[我们的`cpu`和`memory`费率](/定价)。
 

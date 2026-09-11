@@ -26,10 +26,25 @@ SidecarExecParams 保存 `SidecarContainer.Exec` 的选项。
 
 * `Stdout` (`StdioBehavior`): Stdout 定义是否通过管道传输或忽略标准输出。
 * `Stderr` (`StdioBehavior`): Stderr 定义是管道还是忽略标准错误。
-* `Workdir` (`string`): Workdir 是运行命令的工作目录。
-* `Timeout` (`time.Duration`): Timeout是命令执行的超时时间。默认为 0（无超时）。* `Env` (`map[string]string`): 为命令设置的环境变量。
+* `Workdir` (`string`): Workdir 是运行命令的工作目录。* `Timeout` (`time.Duration`): Timeout是命令执行的超时时间。默认为 0（无超时）。
+* `Env` (`map[string]string`): 为命令设置的环境变量。
 * `Secrets` (`[]*Secret`)：作为命令的环境变量注入的秘密。
 * `PTY` (`bool`): PTY 定义是否为命令启用 PTY。启用后，所有输出（进程中的 stdout 和 stderr）都会多路复用到 stdout，并且 stderr 流实际上为空。
+
+## 挂载图像
+
+```go
+MountImage(ctx context.Context, path string, image *Image, params *SidecarMountImageParams) error
+```
+
+MountImage 在此 Sidecar 容器的文件系统中的路径上安装 Image。
+
+如果 image 为零，则安装一个空目录。
+
+**参数** (`SidecarMountImageParams`)
+
+SidecarMountImageParams 包含 `SidecarContainer.MountImage` 的选项。
+* `ExperimentalEncryptionKey` (`[]byte`)：ExperimentalEncryptionKey 是客户提供的用于解密图像的加密密钥。使用加密快照的相同密钥。
 
 ## 民意调查
 
@@ -51,6 +66,7 @@ SidecarPollParams 保存 `SidecarContainer.Poll` 的选项。
 ```go
 ReloadVolumes(ctx context.Context, params *SidecarReloadVolumesParams) error
 ```
+
 ReloadVolumes 重新加载此 sidecar 容器中安装的所有卷。
 
 阻塞直到重新加载完成，或者在超时时返回 TimeoutError （
@@ -62,6 +78,44 @@ SidecarReloadVolumesParams 是 `SidecarContainer.ReloadVolumes` 的选项。
 
 * `Timeout` (`time.Duration`)：超时限制调用等待的时间。默认为 55 秒。
 
+## 快照目录
+
+```go
+SnapshotDirectory(ctx context.Context, path string, params *SidecarSnapshotDirectoryParams) (*Image, error)
+```
+
+SnapshotDirectory 从正在运行的 Sidecar 容器中的目录创建快照并创建新的 Image。
+
+该图像可以在任何接受图像的地方使用，包括作为安装或
+作为另一个容器的基础文件系统。
+
+如果 params 为零，则生成的图像将作为硬图像保留 30 天
+截止时间是从创建开始测量的，并且调用有 55 秒的超时时间。
+有关两者的控制，请参阅`SidecarSnapshotDirectoryParams`。
+
+**参数** (`SidecarSnapshotDirectoryParams`)
+
+SidecarSnapshotDirectoryParams 包含 `SidecarContainer.SnapshotDirectory` 的选项。
+
+* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。如果在快照完成之前时间已过，则返回 TimeoutError。
+* `TTL` (`time.Duration`)：TTL 是结果图像的生命周期。零（或省略）表示使用默认的 30 天，作为从创建开始测量的硬截止时间。正值设置自定义生命周期；亚秒值被拒绝。通过`NoExpiryTTL`无限期保留图像。参见`NoExpiryTTL`。
+* `ExperimentalEncryptionKey` (`[]byte`)：ExperimentalEncryptionKey 是客户提供的加密密钥，用于加密生成的快照。安装映像时需要相同的密钥。 Modal 不保留密钥。
+
+## 快照文件系统
+
+```go
+SnapshotFilesystem(ctx context.Context, params *SidecarSnapshotFilesystemParams) (*Image, error)
+```
+
+SnapshotFilesystem 将此 Sidecar 容器的文件系统快照到镜像中。
+
+**参数** (`SidecarSnapshotFilesystemParams`)
+
+SidecarSnapshotFilesystemParams 配置`SidecarContainer.SnapshotFilesystem` 调用。
+
+* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。
+* `TTL` (`time.Duration`)：TTL 是结果图像的生命周期。零表示 30 天；通过`NoExpiryTTL`无限期保留图像。
+
 ## 终止
 
 ```go
@@ -70,11 +124,25 @@ Terminate(ctx context.Context, params *SidecarTerminateParams) (int, error)
 
 Terminate 停止 sidecar 容器。
 
-返回的退出代码仅当 Wait 为 true 时才有意义。
+返回的退出代码仅在 Wait 为 true 时才有意义。
 
 **参数** (`SidecarTerminateParams`)
 
-SidecarTerminateParams 包含 `SidecarContainer.Terminate` 的选项。* `Wait` (`bool`): 等待，当为true时，将等待sidecar容器终止。
+SidecarTerminateParams 包含 `SidecarContainer.Terminate` 的选项。
+
+* `Wait` (`bool`): 等待，当为true时，将等待sidecar容器终止。
+
+## 卸载图像
+
+```go
+UnmountImage(ctx context.Context, path string, _ *SidecarUnmountImageParams) error
+```
+
+UnmountImage 从此 Sidecar 容器的文件系统中的路径中删除镜像挂载。
+
+**参数** (`SidecarUnmountImageParams`)
+
+SidecarUnmountImageParams 保存 `SidecarContainer.UnmountImage` 的选项。*没有可配置选项。*
 
 ## 等等
 
@@ -106,9 +174,9 @@ RemotePath 必须是沙盒中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
 
-如果父组件为 则返回 `SandboxFilesystemNotADirectoryError`
+如果父组件为 `SandboxFilesystemNotADirectoryError`，则返回
 RemotePath 不是目录， `SandboxFilesystemIsADirectoryError` 如果
-RemotePath 指向一个目录， `SandboxFilesystemPermissionError` if
+RemotePath 指向一个目录，`SandboxFilesystemPermissionError` if
 写入权限被拒绝，或者如果 localPath 不存在，则出现 \*os.PathError
 存在、是目录或无法读取。
 
@@ -147,7 +215,7 @@ ListFiles(ctx context.Context, remotePath string, params *SandboxFilesystemListF
 
 ListFiles 列出 Sandbox 目录中的文件和目录。
 
-RemotePath 必须是沙盒中目录的绝对路径。
+RemotePath 必须是沙箱中目录的绝对路径。
 返回按名称排序的 `FileInfo` 对象切片。
 
 如果路径不存在则返回`SandboxFilesystemNotFoundError`，
@@ -168,7 +236,7 @@ MakeDirectory(ctx context.Context, remotePath string, params *SandboxFilesystemM
 
 MakeDirectory 在沙箱中创建一个新目录。
 
-RemotePath 必须是沙箱中的绝对路径。
+RemotePath 必须是沙盒中的绝对路径。
 
 当 params.CreateParents 为 true 时（params 为 nil 时默认），任何
 创建了缺少的父目录并且调用是幂等的（成功
@@ -234,7 +302,7 @@ Remove(ctx context.Context, remotePath string, params *SandboxFilesystemRemovePa
 
 删除沙箱中的文件或目录。
 
-RemotePath 必须是沙箱中的绝对路径。当remotePath是一个
+RemotePath 必须是沙盒中的绝对路径。当remotePath是一个
 目录和 params.Recursive 为 false（当 params 为 nil 时默认），
 仅当它为空时才会被删除。当 Recursive 为 true 时，目录和所有
 其内容被删除。并非所有安装都支持递归删除。
@@ -258,7 +326,7 @@ Stat(ctx context.Context, remotePath string, params *SandboxFilesystemStatParams
 
 Stat 返回沙箱中单个文件、目录或符号链接的元数据。
 
-RemotePath 必须是沙箱中的绝对路径。如果remotePath是符号链接，返回的 `FileInfo` 描述了符号链接本身，而不是
+RemotePath 必须是沙盒中的绝对路径。如果remotePath是符号链接，返回的 `FileInfo` 描述了符号链接本身，而不是
 它指向的目标。
 
 如果路径不存在则返回`SandboxFilesystemNotFoundError`，
@@ -284,11 +352,11 @@ Watch(
 
 观察沙盒中的路径以了解文件系统更改。
 
-RemotePath 必须是沙箱中的绝对路径。如果它指向一个
+RemotePath 必须是沙盒中的绝对路径。如果它指向一个
 文件，报告该文件的事件。如果它指向一个目录，
 报告直接位于其中的条目的事件。设置params.Recursive
 还接收所有嵌套子目录的事件。如果remotePath是
-符号链接，它遵循已解析的事件参考路径
+符号链接，它遵循已解析下的事件引用路径
 目标。
 
 当发生变化时，返回的 `iter.Seq2` 会产生 `FileWatchEvent` 值，
@@ -347,7 +415,7 @@ SandboxFilesystemWriteParams 保存 `SandboxFilesystem.WriteBytes` 和 `SandboxF
 WriteText(ctx context.Context, data string, remotePath string, params *SandboxFilesystemWriteParams) error
 ```
 
-WriteText 将 UTF-8 文本写入沙盒中的文件。
+WriteText 将 UTF-8 文本写入沙箱中的文件。
 
 RemotePath 必须是沙盒中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖

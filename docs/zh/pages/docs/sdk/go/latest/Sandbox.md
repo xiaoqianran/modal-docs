@@ -36,7 +36,7 @@ SandboxCreateParams 是用于创建模态沙箱的选项。
 * `MemoryMiB` (`int`)：MiB 中的内存请求。
 * `MemoryLimitMiB` (`int`)：MiB 中的硬内存限制。零意味着没有限制。
 * `GPU` (`string`)：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
-* `Timeout` (`time.Duration`)：沙箱的最长生命周期。默认为 5 分钟。如果您通过零，您将获得默认的 5 分钟。
+* `Timeout` (`time.Duration`)：沙盒的最长生命周期。默认为 5 分钟。如果您通过零，您将获得默认的 5 分钟。
 * `IdleTimeout` (`time.Duration`)：沙箱在终止之前可以空闲的时间。
 * `Workdir` (`string`)：沙盒的工作目录。
 * `Command` (`[]string`)：启动时在沙盒中运行的命令。
@@ -45,7 +45,7 @@ SandboxCreateParams 是用于创建模态沙箱的选项。
 * `Volumes` (`map[string]*Volume`)：卷的挂载点。
 * `CloudBucketMounts` (`map[string]*CloudBucketMount`)：云桶挂载点。
 * `PTY` (`bool`)：为沙盒入口点命令启用 PTY。启用后，所有输出（进程中的 stdout 和 stderr）都会多路复用到 stdout，并且 stderr 流实际上为空。
-* `EncryptedPorts` (`[]int`)：通过 TLS 加密隧道进入沙盒的加密端口列表。* `H2Ports` (`[]int`)：使用 HTTP/2 隧道进入沙箱的加密端口列表。
+* `EncryptedPorts` (`[]int`)：通过 TLS 加密隧道进入沙箱的加密端口列表。* `H2Ports` (`[]int`)：使用 HTTP/2 隧道进入沙箱的加密端口列表。
 * `UnencryptedPorts` (`[]int`)：无需加密即可隧道进入沙箱的端口列表。
 * `BlockNetwork` (`bool`): 是否阻止沙箱的所有网络访问。
 * `OutboundCIDRAllowlist` (`*Allowlist`): 允许沙箱访问的CIDR。非 nil 启用白名单模式； nil 表示开放访问。不能与 BlockNetwork 一起使用。
@@ -54,12 +54,13 @@ SandboxCreateParams 是用于创建模态沙箱的选项。
 * `I6PN` (`bool`)：启用私有 IPv6 网络 (i6pn)，以便同一工作区中的沙箱可以通过其 i6pn.modal.local 地址相互访问。将组中的每个沙箱固定到同一特定区域。不能与 BlockNetwork 一起使用。
 * `Cloud` (`string`)：运行沙箱的云提供商。
 * `Regions` (`[]string`)：运行沙盒的区域。
-* `Verbose` (`bool`)：启用详细日志记录。* `Proxy` (`*Proxy`)：引用在此沙箱前面使用的模态代理。
+* `Verbose` (`bool`)：启用详细日志记录。
+* `Proxy` (`*Proxy`)：引用在此沙箱前面使用的模态代理。
 * `ReadinessProbe` (`*Probe`)：用于确定沙盒何时准备就绪的探针。
 * `Name` (`string`)：沙箱的可选名称。在应用程序中是独一无二的。
 * `Tags` (`map[string]string`)：附加到沙箱的标签。可通过 SandboxList 进行过滤。
-* `ExperimentalOptions` (`map[string]any`): 实验选项
-* `CustomDomain` (`string`): 如果非空，则到此沙箱的连接将是此域的子域而不是默认的。这需要 Modal 事先手动设置，并且仅适用于企业客户。
+* `ExperimentalOptions` (`map[string]any`)：实验选项。值必须是布尔值或字符串。将“enable\_exit\_snapshot”设置为 true 可在沙箱退出时捕获文件系统快照，并可使用 Sandbox.ExperimentalGetExitSnapshot 进行检索。
+* `CustomDomain` (`string`)：如果非空，则到此沙盒的连接将是此域的子域而不是默认的。这需要 Modal 事先手动设置，并且仅适用于企业客户。
 * `IncludeOidcIdentityToken` (`bool`)：如果为 true，沙箱将收到一个 MODAL\_IDENTITY\_TOKEN env var，用于基于 OIDC 的身份验证（例如到 AWS、GCP）。
 * `ExperimentalEnableSnapshot` (`bool`): 启用内存快照。
 
@@ -80,7 +81,7 @@ CPU和内存配置、区域放置、卷、云存储桶
 允许通过该父域的子域连接到沙箱
 而不是默认的模态域；需要 Modal 事先设置）。
 
-设置ExperimentalEnableSnapshot来创建一个可以快照的Sandbox
+设置ExperimentalEnableSnapshot以创建可以快照的Sandbox
 与`Sandbox.ExperimentalSnapshot`。网络文件系统等功能
 不支持 GPU。
 
@@ -96,35 +97,37 @@ SandboxCreateParams 是用于创建模态沙箱的选项。
 * `CPULimit` (`float64`)：分数物理 CPU 核心的硬限制。零意味着没有限制。
 * `MemoryMiB` (`int`)：MiB 中的内存请求。
 * `MemoryLimitMiB` (`int`)：MiB 中的硬内存限制。零意味着没有限制。
-* `GPU` (`string`)：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
-* `Timeout` (`time.Duration`)：沙箱的最长生命周期。默认为 5 分钟。如果您通过零，您将获得默认的 5 分钟。
-* `IdleTimeout` (`time.Duration`)：沙箱在终止之前可以空闲的时间。
+* `GPU` (`string`)：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。* `Timeout` (`time.Duration`)：沙箱的最长生命周期。默认为 5 分钟。如果您通过零，您将获得默认的 5 分钟。
+* `IdleTimeout` (`time.Duration`)：沙盒在终止之前可以空闲的时间。
 * `Workdir` (`string`)：沙盒的工作目录。
-* `Command` (`[]string`)：启动时在沙盒中运行的命令。* `Env` (`map[string]string`): 在沙盒中设置的环境变量。
+* `Command` (`[]string`)：启动时在沙盒中运行的命令。
+* `Env` (`map[string]string`): 在沙盒中设置的环境变量。
 * `Secrets` (`[]*Secret`)：作为环境变量注入沙箱的秘密。
 * `Volumes` (`map[string]*Volume`)：卷的挂载点。
 * `CloudBucketMounts` (`map[string]*CloudBucketMount`)：云存储桶的挂载点。
 * `PTY` (`bool`)：为沙盒入口点命令启用 PTY。启用后，所有输出（进程中的 stdout 和 stderr）都会多路复用到 stdout，并且 stderr 流实际上为空。
 * `EncryptedPorts` (`[]int`)：通过 TLS 加密隧道进入沙箱的加密端口列表。
-* `H2Ports` (`[]int`)：使用 HTTP/2 隧道进入沙箱的加密端口列表。
+* `H2Ports` (`[]int`)：使用 HTTP/2 隧道进入沙盒的加密端口列表。
 * `UnencryptedPorts` (`[]int`)：在不加密的情况下隧道进入沙箱的端口列表。
 * `BlockNetwork` (`bool`): 是否阻止沙箱的所有网络访问。
 * `OutboundCIDRAllowlist` (`*Allowlist`): 允许沙箱访问的CIDR。非 nil 启用白名单模式； nil 表示开放访问。不能与 BlockNetwork 一起使用。
-* `OutboundDomainAllowlist` (`*Allowlist`): 允许沙箱访问的域名（支持通配符前缀，如\*.example.com）。非 nil 启用白名单模式； nil 表示开放访问。不能与 BlockNetwork 一起使用。* `InboundCIDRAllowlist` (`[]string`)：允许入站连接到沙盒的 CIDR 列表（隧道和连接令牌）。如果为空，则允许所有 IP。
+* `OutboundDomainAllowlist` (`*Allowlist`): 允许沙箱访问的域名（支持通配符前缀，如\*.example.com）。非 nil 启用白名单模式； nil 表示开放访问。不能与 BlockNetwork 一起使用。
+* `InboundCIDRAllowlist` (`[]string`)：允许入站连接到沙盒的 CIDR 列表（隧道和连接令牌）。如果为空，则允许所有 IP。
 * `I6PN` (`bool`)：启用私有 IPv6 网络 (i6pn)，以便同一工作区中的沙箱可以通过其 i6pn.modal.local 地址相互访问。将组中的每个沙箱固定到同一特定区域。不能与 BlockNetwork 一起使用。
 * `Cloud` (`string`)：运行沙箱的云提供商。
 * `Regions` (`[]string`)：运行沙盒的区域。
 * `Verbose` (`bool`)：启用详细日志记录。
 * `Proxy` (`*Proxy`)：引用在此沙箱前面使用的模态代理。
-* `ReadinessProbe` (`*Probe`)：用于确定沙盒何时准备就绪的探针。
-* `Name` (`string`)：沙盒的可选名称。在应用程序中是独一无二的。
+* `ReadinessProbe` (`*Probe`)：用于确定沙盒何时准备就绪的探针。* `Name` (`string`)：沙箱的可选名称。在应用程序中是独一无二的。
 * `Tags` (`map[string]string`)：附加到沙箱的标签。可通过 SandboxList 进行过滤。
-* `ExperimentalOptions` (`map[string]any`): 实验选项
+* `ExperimentalOptions` (`map[string]any`)：实验选项。值必须是布尔值或字符串。将“enable\_exit\_snapshot”设置为 true 可在沙箱退出时捕获文件系统快照，并可使用 Sandbox.ExperimentalGetExitSnapshot 进行检索。
 * `CustomDomain` (`string`): 如果非空，则到此沙箱的连接将是此域的子域而不是默认的。这需要 Modal 事先手动设置，并且仅适用于企业客户。
 * `IncludeOidcIdentityToken` (`bool`)：如果为 true，沙箱将收到一个 MODAL\_IDENTITY\_TOKEN env var，用于基于 OIDC 的身份验证（例如到 AWS、GCP）。
 * `ExperimentalEnableSnapshot` (`bool`): 启用内存快照。
 
-## 来自 ID*通过`client.Sandboxes`访问*
+## 来自ID
+
+*通过`client.Sandboxes`访问*
 
 ```go
 FromID(ctx context.Context, sandboxID string, params *SandboxFromIDParams) (*Sandbox, error)
@@ -148,8 +151,7 @@ FromName(ctx context.Context, appName, name string, params *SandboxFromNameParam
 
 FromName 从已部署的应用程序中按名称获取正在运行的沙箱。
 
-如果未找到具有给定名称的正在运行的沙箱，则引发 NotFoundError。
-沙箱的名称是传递给 `App.CreateSandbox` 的 `Name` 参数。
+如果未找到具有给定名称的正在运行的沙箱，则引发 NotFoundError。沙箱的名称是传递给 `App.CreateSandbox` 的 `Name` 参数。
 
 **参数** (`SandboxFromNameParams`)
 
@@ -164,6 +166,7 @@ SandboxFromNameParams 是用于按名称查找已部署的 Sandbox 对象的选�
 ```go
 ExperimentalFromName(ctx context.Context, appName, name string, params *SandboxExperimentalFromNameParams) (*Sandbox, error)
 ```
+
 ExperimentalFromName 从已部署的应用程序中按名称获取正在运行的 V2 沙箱，
 即通过 ExperimentalCreate 创建的沙箱。
 
@@ -182,7 +185,6 @@ SandboxExperimentalFromNameParams 是 SandboxService.ExperimentalFromName 的选
 ```go
 ExperimentalFromSnapshot(ctx context.Context, snapshot *SandboxSnapshot, params *SandboxExperimentalFromSnapshotParams) (*Sandbox, error)
 ```
-
 ExperimentalFromSnapshot 从内存快照恢复沙箱。
 
 恢复的目标是从中获取快照的同一后端。一个V1
@@ -196,9 +198,7 @@ SandboxExperimentalFromSnapshotParams 是 SandboxService.ExperimentalFromSnapsho
 
 * `Name` (`*string`)：恢复的沙箱的名称。 Nil 重用原始沙箱的名称，指向空字符串的指针使其未命名，指向非空字符串的指针将覆盖它。
 
-## 列表
-
-*通过`client.Sandboxes`访问*
+＃＃ 列表*通过`client.Sandboxes`访问*
 
 ```go
 List(ctx context.Context, params *SandboxListParams) (iter.Seq2[*Sandbox, error], error)
@@ -231,7 +231,9 @@ ExperimentalList 列出了所有沙箱（v1 和 v2）。
 
 **参数** (`SandboxExperimentalListParams`)
 
-SandboxExperimentalListParams 是 SandboxService.ExperimentalList 的选项。* `AppID` (`string`): 用于列出沙箱的应用程序。省略在整个环境中列出（已弃用）。
+SandboxExperimentalListParams 是 SandboxService.ExperimentalList 的选项。
+
+* `AppID` (`string`): 用于列出沙箱的应用程序。省略在整个环境中列出（已弃用）。
 * `Tags` (`map[string]string`)：仅包含具有所有这些标签的沙箱。
 * `Environment` (`string`)：覆盖此请求的环境（仅当AppID为空时使用）。
 
@@ -247,7 +249,7 @@ CreateConnectToken 创建一个用于与沙箱建立 HTTP 连接的令牌。
 
 SandboxCreateConnectTokenParams 是 CreateConnectToken 的可选参数。
 
-* `UserMetadata` (`string`): Optional user-provided metadata string that will be added to the headers by the proxy when forwarding requests to the Sandbox.
+* `UserMetadata` (`string`)：可选的用户提供的元数据字符串，在将请求转发到沙箱时将由代理添加到标头中。
 * `Port` (`int`)：使用此令牌时请求路由到的容器端口。默认为 8080。
 
 ## 分离
@@ -258,12 +260,14 @@ Detach() error
 
 Detach 断开与正在运行的沙箱的连接
 
+它不会阻塞或中断正在进行的读取或调用。连接资源
+一旦这些操作完成，就会立即关闭。
+
 ## 执行
 
 ```go
 Exec(ctx context.Context, command []string, params *SandboxExecParams) (*ContainerProcess, error)
 ```
-
 Exec 在沙箱中运行命令并返回进程句柄。
 
 **参数** (`SandboxExecParams`)
@@ -271,7 +275,8 @@ Exec 在沙箱中运行命令并返回进程句柄。
 SandboxExecParams 定义在沙箱中执行命令的选项。
 
 * `Stdout` (`StdioBehavior`): Stdout 定义是否通过管道传输或忽略标准输出。
-* `Stderr` (`StdioBehavior`): Stderr 定义是管道还是忽略标准错误。* `Workdir` (`string`): Workdir 是运行命令的工作目录。
+* `Stderr` (`StdioBehavior`): Stderr 定义是管道还是忽略标准错误。
+* `Workdir` (`string`): Workdir 是运行命令的工作目录。
 * `Timeout` (`time.Duration`): Timeout是命令执行的超时时间。默认为 0（无超时）。
 * `Env` (`map[string]string`): 为命令设置的环境变量。
 * `Secrets` (`[]*Secret`)：作为命令的环境变量注入的秘密。
@@ -284,11 +289,24 @@ ExperimentalGetExitSnapshot(ctx context.Context, params *SandboxExperimentalGetE
 ```
 
 ExperimentalGetExitSnapshot 获取退出文件系统快照图像。
-如果超时为负数，或者退出快照不是负数，则返回 InvalidError
-为沙箱启用。如果超时之前已过，则返回 TimeoutError
-快照达到最终状态。这包括超时为 0，当
-快照仍待处理。如果没有退出快照，则返回 SnapshotCreationError
-将生成图像。如果沙箱不存在，则返回 NotFoundError。
+
+当沙箱退出时，退出快照会捕获沙箱文件系统，
+它的入口点是否优雅地、突然地结束，或者停止
+沙箱。终止。生成的图像可以传递到
+SandboxService.Create 从保存的文件系统启动一个新的沙箱。
+
+退出快照是可选的：沙箱必须是使用以下命令创建的
+SandboxCreateParams.ExperimentalOptions 包含
+“启用\_退出\_快照”：true。在没有创建的沙箱上调用它
+该选项返回 InvalidError。
+
+如果超时为负数，或者退出快照为负数，则返回 InvalidError
+创建沙箱时未启用。
+如果在快照到达之前超时已过，则返回 TimeoutError
+终端状态。当快照仍处于挂起状态时，这包括超时 0。
+如果快照操作完成但失败，则返回 SnapshotCreationError。
+再次轮询不会产生图像；文件系统状态消失了。
+如果沙箱不存在，则返回 NotFoundError。
 
 实验性：API 可能会发生变化。
 
@@ -297,7 +315,6 @@ ExperimentalGetExitSnapshot 获取退出文件系统快照图像。
 SandboxExperimentalGetExitSnapshotParams 是 Sandbox.ExperimentalGetExitSnapshot 的选项。
 
 * `Timeout` (`*time.Duration`)：超时是等待的总时间，分布在每次最多 exitSnapshotLongPollTimeout 的重复长轮询中。 nil（默认值）等待快照达到最终状态。 0 立即执行检查，无需等待。
-
 ## 实验集名称
 
 ```go
@@ -310,6 +327,7 @@ ExperimentalSetName 为创建的正在运行的 V2 沙箱分配名称
 可以通过 ExperimentalFromName 进行查找。名称在应用程序内必须是唯一的。
 
 实验性：API 可能会发生变化。
+
 **参数** (`SandboxExperimentalSetNameParams`)
 
 SandboxExperimentalSetNameParams 是 Sandbox.ExperimentalSetName 的选项。
@@ -345,7 +363,6 @@ GetTags(ctx context.Context, params *SandboxGetTagsParams) (map[string]string, e
 GetTags 从服务器获取当前附加到此沙箱的任何标签（键值对）。
 
 **参数** (`SandboxGetTagsParams`)
-
 SandboxGetTagsParams 是 Sandbox.GetTags 的选项。
 
 *没有可配置选项。*
@@ -356,13 +373,14 @@ SandboxGetTagsParams 是 Sandbox.GetTags 的选项。
 MountImage(ctx context.Context, path string, image *Image, params *SandboxMountImageParams) error
 ```
 
-MountImage 在沙箱文件系统中的路径上安装图像。
+MountImage 在沙盒文件系统中的路径上安装图像。
 
 如果 image 为零，则安装一个空目录。
 
 **参数** (`SandboxMountImageParams`)
 
 SandboxMountImageParams 是 Sandbox.MountImage 的选项。
+
 * `ExperimentalEncryptionKey` (`[]byte`)：ExperimentalEncryptionKey 是客户提供的用于解密图像的加密密钥。使用加密快照的相同密钥。
 
 ## 民意调查
@@ -404,7 +422,6 @@ SetTags(ctx context.Context, tags map[string]string, params *SandboxSetTagsParam
 ```
 
 SetTags 在沙盒上设置键值标签。标签可用于过滤 SandboxList 中的结果。
-
 **参数** (`SandboxSetTagsParams`)
 
 SandboxSetTagsParams 是 Sandbox.SetTags 的选项。
@@ -425,10 +442,8 @@ SnapshotDirectory 从正在运行的沙箱中的目录创建快照并创建新�
 
 **参数** (`SandboxSnapshotDirectoryParams`)
 
-SandboxSnapshotDirectoryParams 配置 `Sandbox.SnapshotDirectory` 调用。
-
-* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。如果在快照完成之前超时，则会返回 TimeoutError。
-* `TTL` (`time.Duration`)：TTL 是生成图像的生命周期。零（或省略）表示使用默认的 30 天，作为从创建开始测量的硬截止时间。正值设置自定义生命周期；亚秒值被拒绝。通过`NoExpiryTTL`无限期保留图像。参见`NoExpiryTTL`。
+SandboxSnapshotDirectoryParams 配置 `Sandbox.SnapshotDirectory` 调用。* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。如果在快照完成之前时间已过，则返回 TimeoutError。
+* `TTL` (`time.Duration`)：TTL 是结果图像的生命周期。零（或省略）表示使用默认的 30 天，作为从创建开始测量的硬截止时间。正值设置自定义生命周期；亚秒值被拒绝。通过`NoExpiryTTL`无限期保留图像。参见`NoExpiryTTL`。
 * `ExperimentalEncryptionKey` (`[]byte`)：ExperimentalEncryptionKey 是客户提供的加密密钥，用于加密生成的快照。安装映像时需要相同的密钥。 Modal 不保留密钥。
 
 ## 快照文件系统
@@ -436,7 +451,6 @@ SandboxSnapshotDirectoryParams 配置 `Sandbox.SnapshotDirectory` 调用。
 ```go
 SnapshotFilesystem(ctx context.Context, params *SandboxSnapshotFilesystemParams) (*Image, error)
 ```
-
 SnapshotFilesystem 拍摄沙盒文件系统的快照。
 返回一个 Image 对象，该对象可用于生成具有相同文件系统的新 Sandbox。
 
@@ -446,9 +460,8 @@ SnapshotFilesystem 拍摄沙盒文件系统的快照。
 
 **参数** (`SandboxSnapshotFilesystemParams`)
 
-SandboxSnapshotFilesystemParams 配置 `Sandbox.SnapshotFilesystem` 调用。
-
-* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。如果在快照完成之前超时，则会返回 TimeoutError。* `TTL` (`time.Duration`)：TTL 是结果图像的生命周期。零（或省略）表示使用默认的 30 天，作为从创建开始测量的硬截止时间。正值设置自定义生命周期；亚秒值被拒绝。通过`NoExpiryTTL`无限期保留图像。参见`NoExpiryTTL`。
+SandboxSnapshotFilesystemParams 配置 `Sandbox.SnapshotFilesystem` 调用。* `Timeout` (`time.Duration`)：超时是快照调用的总体预算。零表示默认值（55 秒）。如果在快照完成之前时间已过，则返回 TimeoutError。
+* `TTL` (`time.Duration`)：TTL 是结果图像的生命周期。零（或省略）表示使用默认的 30 天，作为从创建开始测量的硬截止时间。正值设置自定义生命周期；亚秒值被拒绝。通过`NoExpiryTTL`无限期保留图像。参见`NoExpiryTTL`。
 
 ## 终止
 
@@ -460,9 +473,9 @@ Terminate(ctx context.Context, params *SandboxTerminateParams) (int, error)
 
 **参数** (`SandboxTerminateParams`)
 
-SandboxTerminateParams 是终止选项。
+SandboxTerminateParams 是终止的选项。
 
-* `Wait` (`bool`): Wait，为true时，将等待Sandbox终止并返回退出代码。
+* `Wait` (`bool`): Wait，当为true时，将等待Sandbox终止并返回退出代码。
 
 ## 隧道
 
@@ -485,6 +498,7 @@ SandboxTunnelsParams 是 Sandbox.Tunnels 的选项。
 ```go
 UnmountImage(ctx context.Context, path string, params *SandboxUnmountImageParams) error
 ```
+
 UnmountImage 从 Sandbox 文件系统中的路径中删除映像挂载。
 
 **参数** (`SandboxUnmountImageParams`)
@@ -508,7 +522,7 @@ UpdateNetworkPolicy 更新正在运行的沙箱的出站网络策略。
 SandboxUpdateNetworkPolicyParams 是 Sandbox.UpdateNetworkPolicy 的选项。
 
 每个维度都是独立的： nil *Allowlist 离开该维度
-不变，而非零值取代它（空条目会阻止所有
+不变，而非零值替换它（空条目会阻止所有
 出口；允许所有条目（例如“0.0.0.0/0”或“*”允许所有内容）。
 
 目前，必须提供两个维度（底层传输不
@@ -523,7 +537,6 @@ SandboxUpdateNetworkPolicyParams 是 Sandbox.UpdateNetworkPolicy 的选项。
 ```go
 Wait(ctx context.Context, params *SandboxWaitParams) (int, error)
 ```
-
 Wait 阻塞，直到沙箱退出，并返回其退出代码。
 
 **参数** (`SandboxWaitParams`)
@@ -532,13 +545,14 @@ SandboxWaitParams 是 Sandbox.Wait 的选项。
 
 *没有可配置选项。*
 
-## 等待准备就绪
+## 等待直到就绪
 
 ```go
 WaitUntilReady(ctx context.Context, timeout time.Duration, params *SandboxWaitUntilReadyParams) error
 ```
 
 WaitUntilReady 会阻塞，直到沙箱就绪探针报告就绪。
+
 **参数** (`SandboxWaitUntilReadyParams`)
 
 SandboxWaitUntilReadyParams 是 Sandbox.WaitUntilReady 的选项。
@@ -594,7 +608,9 @@ List(ctx context.Context, params *SidecarListParams) ([]*SidecarContainer, error
 
 List 返回所有 sidecar 容器（不包括主容器）。
 
-**参数** (`SidecarListParams`)SidecarListParams 包含列出 sidecar 的选项。
+**参数** (`SidecarListParams`)
+
+SidecarListParams 包含列出 sidecar 的选项。
 
 * `IncludeTerminated` (`bool`)
 
@@ -632,15 +648,14 @@ SandboxFilesystemCopyFromLocalParams 保存 `SandboxFilesystem.CopyFromLocal` �
 CopyToLocal(ctx context.Context, remotePath, localPath string, params *SandboxFilesystemCopyToLocalParams) (retErr error)
 ```
 
-CopyToLocal 将文件从沙盒复制到本地路径。
-
-RemotePath 必须是沙盒中文件的绝对路径。
+CopyToLocal 将文件从沙盒复制到本地路径。RemotePath 必须是沙盒中文件的绝对路径。
 如果需要，将创建 localPath 的父目录。本地文件是
 如果已经存在则覆盖。
 
 如果远程路径不存在则返回`SandboxFilesystemNotFoundError`，
 `SandboxFilesystemIsADirectoryError` 如果远程路径指向一个目录，
-`SandboxFilesystemFileTooLargeError` 如果文件超出读取大小限制，或 `SandboxFilesystemPermissionError` 如果读取权限被拒绝。
+`SandboxFilesystemFileTooLargeError` 如果文件超出读取大小限制，
+或 `SandboxFilesystemPermissionError` 如果读取权限被拒绝。
 
 **参数** (`SandboxFilesystemCopyToLocalParams`)
 
@@ -656,7 +671,7 @@ ListFiles(ctx context.Context, remotePath string, params *SandboxFilesystemListF
 
 ListFiles 列出 Sandbox 目录中的文件和目录。
 
-RemotePath 必须是沙盒中目录的绝对路径。
+RemotePath 必须是沙箱中目录的绝对路径。
 返回按名称排序的 `FileInfo` 对象切片。
 
 如果路径不存在则返回`SandboxFilesystemNotFoundError`，
@@ -668,6 +683,7 @@ RemotePath 必须是沙盒中目录的绝对路径。
 SandboxFilesystemListFilesParams 保存 `SandboxFilesystem.ListFiles` 的可选参数。
 
 *没有可配置选项。*
+
 ### 建立目录
 
 ```go
@@ -676,17 +692,17 @@ MakeDirectory(ctx context.Context, remotePath string, params *SandboxFilesystemM
 
 MakeDirectory 在沙箱中创建一个新目录。
 
-RemotePath 必须是沙箱中的绝对路径。
+RemotePath 必须是沙盒中的绝对路径。
 
 当 params.CreateParents 为 true 时（params 为 nil 时默认），任何
-创建了缺少的父目录并且调用是幂等的（成功
-如果该目录已经存在）。如果为 false，则直接父级必须
+创建了缺少的父目录并且调用是幂等的（成功如果该目录已经存在）。如果为 false，则直接父级必须
 已存在且路径不得已存在。
 
 如果父级不存在则返回 `SandboxFilesystemNotFoundError` 并且
 CreateParents 为 false，`SandboxFilesystemPathAlreadyExistsError` 如果
 路径已存在，`SandboxFilesystemNotADirectoryError` 如果路径
-组件不是目录，`SandboxFilesystemPermissionError`如果不允许创建，或者 `InvalidError` 如果安装不允许
+组件不是目录，`SandboxFilesystemPermissionError`如果
+不允许创建，或者 `InvalidError` 如果安装不允许
 支持这个操作。
 
 **参数** (`SandboxFilesystemMakeDirectoryParams`)
@@ -696,7 +712,6 @@ SandboxFilesystemMakeDirectoryParams 保存 `SandboxFilesystem.MakeDirectory` �
 * `CreateParents` (`*bool`): CreateParents 控制是否自动创建缺失的父目录。当 nil 时默认为 true。
 
 ### 读取字节
-
 ```go
 ReadBytes(ctx context.Context, remotePath string, params *SandboxFilesystemReadParams) ([]byte, error)
 ```
@@ -722,16 +737,16 @@ SandboxFilesystemReadParams 保存 `SandboxFilesystem.ReadBytes` 和 `SandboxFil
 ReadText(ctx context.Context, remotePath string, params *SandboxFilesystemReadParams) (string, error)
 ```
 
-ReadText 从沙盒中读取文件并以 UTF-8 字符串形式返回其内容。
-
-RemotePath 必须是沙盒中文件的绝对路径。
+ReadText 从沙盒中读取文件并以 UTF-8 字符串形式返回其内容。RemotePath 必须是沙盒中文件的绝对路径。
 
 如果路径不存在则返回`SandboxFilesystemNotFoundError`，
 `SandboxFilesystemIsADirectoryError` 如果路径指向一个目录，
 `SandboxFilesystemFileTooLargeError` 如果文件超出读取大小限制，
 或 `SandboxFilesystemPermissionError` 如果读取权限被拒绝。
 
-**参数** (`SandboxFilesystemReadParams`)SandboxFilesystemReadParams 保存 `SandboxFilesystem.ReadBytes` 和 `SandboxFilesystem.ReadText` 的可选参数。
+**参数** (`SandboxFilesystemReadParams`)
+
+SandboxFilesystemReadParams 保存 `SandboxFilesystem.ReadBytes` 和 `SandboxFilesystem.ReadText` 的可选参数。
 
 *没有可配置选项。*
 
@@ -743,7 +758,7 @@ Remove(ctx context.Context, remotePath string, params *SandboxFilesystemRemovePa
 
 删除沙箱中的文件或目录。
 
-RemotePath 必须是沙箱中的绝对路径。当remotePath是一个
+RemotePath 必须是沙盒中的绝对路径。当remotePath是一个
 目录和 params.Recursive 为 false（当 params 为 nil 时默认），
 仅当它为空时才会被删除。当 Recursive 为 true 时，目录和所有
 其内容被删除。并非所有安装都支持递归删除。
@@ -759,17 +774,17 @@ SandboxFilesystemRemoveParams 保存 `SandboxFilesystem.Remove` 的可选参数�
 
 * `Recursive` (`bool`): Recurisve 控制是否递归删除已删除目录的内容。当 nil 时默认为 false。
 
-### 统计
-
-```go
+### 统计```go
 Stat(ctx context.Context, remotePath string, params *SandboxFilesystemStatParams) (*FileInfo, error)
 ```
 
 Stat 返回沙箱中单个文件、目录或符号链接的元数据。
 
-RemotePath 必须是沙箱中的绝对路径。如果remotePath是
+RemotePath 必须是沙盒中的绝对路径。如果remotePath是
 符号链接，返回的 `FileInfo` 描述了符号链接本身，而不是
-它指向的目标。如果路径不存在则返回`SandboxFilesystemNotFoundError`，
+它指向的目标。
+
+如果路径不存在则返回`SandboxFilesystemNotFoundError`，
 `SandboxFilesystemNotADirectoryError` 如果路径的非叶组件
 不是目录，或者 `SandboxFilesystemPermissionError` 如果是路径
 组件不可搜索。
@@ -791,12 +806,11 @@ Watch(
 ```
 
 观察沙盒中的路径以了解文件系统更改。
-
-RemotePath 必须是沙箱中的绝对路径。如果它指向一个
+RemotePath 必须是沙盒中的绝对路径。如果它指向一个
 文件，报告该文件的事件。如果它指向一个目录，
 报告直接位于其中的条目的事件。设置params.Recursive
 还接收所有嵌套子目录的事件。如果remotePath是
-符号链接，它遵循已解析的事件参考路径
+符号链接，它遵循已解析下的事件引用路径
 目标。
 
 当发生变化时，返回的 `iter.Seq2` 会产生 `FileWatchEvent` 值，
@@ -835,12 +849,12 @@ WriteBytes(ctx context.Context, data []byte, remotePath string, params *SandboxF
 
 WriteBytes 将二进制内容写入沙箱中的文件。
 
-RemotePath 必须是沙盒中文件的绝对路径。
-如果需要，将创建父目录。远程文件被覆盖
+RemotePath 必须是沙盒中文件的绝对路径。如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
 
 如果父组件为 则返回 `SandboxFilesystemNotADirectoryError`
-RemotePath 不是目录， `SandboxFilesystemIsADirectoryError` 如果RemotePath 指向一个目录，或者`SandboxFilesystemPermissionError`
+RemotePath 不是目录， `SandboxFilesystemIsADirectoryError` 如果
+RemotePath 指向一个目录，或者`SandboxFilesystemPermissionError`
 如果写权限被拒绝。
 
 **参数** (`SandboxFilesystemWriteParams`)
@@ -855,18 +869,18 @@ SandboxFilesystemWriteParams 保存 `SandboxFilesystem.WriteBytes` 和 `SandboxF
 WriteText(ctx context.Context, data string, remotePath string, params *SandboxFilesystemWriteParams) error
 ```
 
-WriteText 将 UTF-8 文本写入沙盒中的文件。
+WriteText 将 UTF-8 文本写入沙箱中的文件。
 
 RemotePath 必须是沙盒中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
-
 如果父组件为 `SandboxFilesystemNotADirectoryError`，则返回
 RemotePath 不是目录， `SandboxFilesystemIsADirectoryError` 如果
 RemotePath 指向一个目录，或者`SandboxFilesystemPermissionError`
 如果写权限被拒绝。
 
 **参数** (`SandboxFilesystemWriteParams`)
+
 SandboxFilesystemWriteParams 保存 `SandboxFilesystem.WriteBytes` 和 `SandboxFilesystem.WriteText` 的可选参数。
 
 *没有可配置选项。*

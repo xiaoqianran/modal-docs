@@ -162,7 +162,7 @@ class SandboxTimeoutError extends Error
 
 ## SnapshotCreationError
 
-No snapshot image will be produced for a Sandbox.
+Snapshot operation is done and failed. Polling again will not produce an Image; filesystem state is gone.
 
 ```typescript
 class SnapshotCreationError extends Error

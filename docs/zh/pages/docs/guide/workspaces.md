@@ -34,7 +34,7 @@ Modal 资源的主要组织单位
 [设置](/settings/workspaces) 页面。
 
 <Callout variant="info">
-如果您的 Modal 帐户是通过 Okta 配置的，您将无法选择创建新的工作区。您的工作区由组织的 Okta 配置管理。如果您需要新的工作区，请联系您组织的 Okta 管理员。
+如果您的 Modal 帐户是通过 SAML SSO 配置的，您将无法选择创建新的工作区。您的工作区由您组织的身份提供商配置管理。如果您需要新的工作区，请联系您组织的身份提供商管理员。
 
 </Callout>
 
@@ -44,8 +44,8 @@ Modal 资源的主要组织单位
 
 2. 从头开始​​创建。您可以邀请任何人加入您的工作区。
 
-如果您有兴趣拥有与您的 Okta 关联的工作区
-组织，然后查看我们的 [Okta SSO 文档](/docs/guide/okta-sso)。
+如果您有兴趣为工作区配置 SSO，请参阅我们的
+[SAML SSO 文档](/docs/guide/saml-sso)。
 
 要通过 Google 或其他提供商使用 SSO，请通过 <support@modal.com> 联系我们。
 
@@ -56,8 +56,8 @@ Modal 资源的主要组织单位
 如果用户是与工作区关联的 GitHub 组织的成员，则可以在其[工作区设置页面](/settings/workspaces) 上自动加入该工作区。
 
 要关闭此功能，工作区管理员可以在其工作区设置页面的 **工作区管理** 选项卡上禁用它。
-## 邀请新的工作区成员
 
+## 邀请新的工作区成员
 要邀请新的 Workspace 成员，您可以访问[设置](/settings) 页面
 并导航至相应工作区的“成员”选项卡。
 
@@ -123,7 +123,6 @@ Modal 资源的主要组织单位
 [设置](/settings/workspace-management) 中的 `Workspace Management` 选项卡上的成员。
 
 <Callout variant="info">
-
 Modal 支持[基于角色的访问控制 (RBAC)](/docs/guide/rbac)，以便对工作区和环境级别的权限进行更精细的控制。
 
 </Callout>

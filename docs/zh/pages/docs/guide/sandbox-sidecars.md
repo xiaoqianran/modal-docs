@@ -273,11 +273,19 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 示例](/docs/examples/sidecar_traffic_routing) 完整的基于 mitmproxy
 请求过滤器。
 
-仅中继到端口 443 的 TCP 流量。此流量不受其他流量影响
-沙盒上的出口控制，例如 `outbound_cidr_allowlist` 或
-[代理](/docs/guide/proxy-ips)。非中继流量仍受
-沙箱的出口控制。该选项不能与设置结合使用
-沙盒上的`block_network`或`outbound_domain_allowlist`。
+仅中继到端口 443 的 TCP 流量。沙盒自己的出口控制是
+为此预留：沙箱上的`outbound_cidr_allowlist`仍然控制着每一个
+其他端口，但无论其列出什么，中继流量都会通过。非中继
+流量仍然受到沙箱的出口控制。
+
+相反，中继流量由 Sidecar 的出口控制控制。
+转发到. Sidecar的出站网络策略独立于main
+容器的并且默认是打开的，所以除非你通过 `outbound_cidr_allowlist`
+或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
+Sidecar 选择连接到的任何目的地。
+
+该选项不能与设置`block_network`结合使用，
+沙盒上的`outbound_domain_allowlist`或`proxy`。
 
 ### 文件系统快照
 
@@ -347,7 +355,6 @@ fmt.Println(state) // "ready"
 您可以创建的 Sidecar 的最大数量也取决于主沙箱的
 资源预留。每个容器（包括主容器）至少需要
 32 mCPU 和 32 MiB 内存，因此限制为：
-
 ```
 max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 ```
@@ -359,8 +366,9 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
+
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
-  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 通过名称，或从文件系统/目录快照创建。懒惰的形象
+  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **不支持云桶安装**：Sidecar 容器当前不支持附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
@@ -369,4 +377,4 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 * **VM 不兼容**：Sidecar 与 VM Sandbox 不兼容。
 * **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
 * **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
-* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。
+* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

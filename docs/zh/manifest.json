@@ -547,9 +547,9 @@
       "bytes": 4412
     },
     "docs/guide/audit-logs.md": {
-      "hash": "18c14d4631235c3ac648252665d8800007b5b2c6",
-      "translatedAt": "2026-09-05T10:26:02.642Z",
-      "bytes": 20173
+      "hash": "93a68d1e14153b7f1ef3b80c6b65ac77f41fa29d",
+      "translatedAt": "2026-09-11T11:03:39.374Z",
+      "bytes": 21753
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -572,9 +572,9 @@
       "bytes": 5894
     },
     "docs/guide/endpoint-integrations.md": {
-      "hash": "8fec6c7f60f8a3707e0e8a1a02ead754ae4284c3",
-      "translatedAt": "2026-09-04T11:03:41.292Z",
-      "bytes": 1748
+      "hash": "29d7ab8b9ef5722a8d9908ab899f9c4ebb823ad7",
+      "translatedAt": "2026-09-11T11:02:44.671Z",
+      "bytes": 2407
     },
     "docs/guide/endpoint-metrics.md": {
       "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "9898e36003e500774c1f93a8f439d00a7cb23c48",
-      "translatedAt": "2026-09-04T11:03:43.745Z",
-      "bytes": 2727
+      "hash": "f0ac1410f3251098e902e4ff60f2f06817589c4a",
+      "translatedAt": "2026-09-11T11:02:46.975Z",
+      "bytes": 2754
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -672,8 +672,8 @@
       "bytes": 6410
     },
     "docs/guide/modal-user-account-setup.md": {
-      "hash": "afd0de13fd27902ea1a8c2d42a8ba43d92d9896a",
-      "translatedAt": "2026-08-08T18:29:28.614Z",
+      "hash": "7cb24324ee0f21b548ebfaa069e6a75fa80d4c8e",
+      "translatedAt": "2026-09-11T11:02:47.821Z",
       "bytes": 1083
     },
     "docs/guide/memory-snapshots.md": {
@@ -737,9 +737,9 @@
       "bytes": 2411
     },
     "docs/guide/proxy-ips.md": {
-      "hash": "3032409651d2ea5ae11b320cc6d4a2a7ebdae73b",
-      "translatedAt": "2026-08-27T17:33:18.898Z",
-      "bytes": 3441
+      "hash": "c618b7b5d230505a8364e20b0858b5cbb53699b0",
+      "translatedAt": "2026-09-11T11:02:49.567Z",
+      "bytes": 3684
     },
     "docs/guide/project-structure.md": {
       "hash": "ba2f072bda1e6c1d41df003feb2f2d5e99689f70",
@@ -802,14 +802,14 @@
       "bytes": 3934
     },
     "docs/guide/sandbox-networking.md": {
-      "hash": "87ec4f884f93f3b2b68d7d06b0d7571a4cb80c3c",
-      "translatedAt": "2026-09-02T11:05:09.546Z",
-      "bytes": 16469
+      "hash": "ef2210d610758a154e912c0c8c013a7bfbe11cf0",
+      "translatedAt": "2026-09-11T11:03:01.560Z",
+      "bytes": 17572
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "2b14c70c159f26b8c5f9f69b5999e5b8e466c14a",
-      "translatedAt": "2026-08-29T12:36:17.061Z",
-      "bytes": 18675
+      "hash": "01a1bad64576dff9ac4469c8ab8da2e3b35c4c0c",
+      "translatedAt": "2026-09-11T11:03:20.878Z",
+      "bytes": 18831
     },
     "docs/guide/scale.md": {
       "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
@@ -882,9 +882,9 @@
       "bytes": 9556
     },
     "docs/guide/vm-sandboxes.md": {
-      "hash": "7652dc03601bf02454785dd00dda0fc1818f56ec",
-      "translatedAt": "2026-08-21T06:57:50.273Z",
-      "bytes": 7514
+      "hash": "540162a8864c1c91ccfce03357b7cfa300120997",
+      "translatedAt": "2026-09-11T11:03:25.668Z",
+      "bytes": 8750
     },
     "docs/guide/webhook-timeouts.md": {
       "hash": "3ce8a509c5c149cf62d0143d7f36b5b7d8a03779",
@@ -922,9 +922,9 @@
       "bytes": 15471
     },
     "docs/guide/workspaces.md": {
-      "hash": "ab0ec44670791a683d4889d926422e566940b74e",
-      "translatedAt": "2026-08-08T18:30:14.256Z",
-      "bytes": 5014
+      "hash": "92a0d2d2731efab27912431ec94d84b2f5661867",
+      "translatedAt": "2026-09-11T11:03:31.374Z",
+      "bytes": 5011
     },
     "docs/sdk/go/latest/CloudBucketMount.md": {
       "hash": "295dfc449a1b611601c168c2fede1a970df19732",
@@ -932,9 +932,9 @@
       "bytes": 768
     },
     "docs/sdk/go/latest/Client.md": {
-      "hash": "9343034f703a461dfe940ea5f6b401224931616a",
-      "translatedAt": "2026-08-29T12:36:19.103Z",
-      "bytes": 2557
+      "hash": "4d327baebdf5fce21dbaec161115b505a1072882",
+      "translatedAt": "2026-09-11T11:03:33.728Z",
+      "bytes": 2752
     },
     "docs/sdk/go/latest/ClsInstance.md": {
       "hash": "20ec68a6f983d146c1cca3642129f08f9609f5cb",
@@ -962,9 +962,9 @@
       "bytes": 1969
     },
     "docs/sdk/go/latest/Errors.md": {
-      "hash": "80f50d13b6b34427ce5a940f02d179c6a5b6db94",
-      "translatedAt": "2026-08-29T12:36:22.775Z",
-      "bytes": 3943
+      "hash": "54d7bba93074e74e9ef3c180b38efbc99ff8c431",
+      "translatedAt": "2026-09-11T11:03:36.933Z",
+      "bytes": 3998
     },
     "docs/sdk/go/latest/FileWatchEvent.md": {
       "hash": "3fc7df2dddf812f63c937ba0176dbba139a14c0d",
@@ -992,9 +992,9 @@
       "bytes": 493
     },
     "docs/sdk/go/latest/Profile.md": {
-      "hash": "888921bfc18d50f6b478001b614503ab9e923854",
-      "translatedAt": "2026-08-08T18:30:17.186Z",
-      "bytes": 482
+      "hash": "902cef2f416120536361f2fcca79ceafb8996662",
+      "translatedAt": "2026-09-11T11:03:37.399Z",
+      "bytes": 1071
     },
     "docs/sdk/go/latest/Function.md": {
       "hash": "5d9ee750ae3177d8b9c995c6401e148d543511ed",
@@ -1067,9 +1067,9 @@
       "bytes": 665
     },
     "docs/sdk/go/latest/SidecarContainer.md": {
-      "hash": "5af87caafd4315a2aaf71f5e8d1135c8d7cbe9d2",
-      "translatedAt": "2026-08-29T12:36:57.483Z",
-      "bytes": 12982
+      "hash": "64d0cd92080c5747e208a72ef11a3202307a46d8",
+      "translatedAt": "2026-09-11T11:03:55.609Z",
+      "bytes": 15820
     },
     "docs/sdk/js/latest/ClsInstance.md": {
       "hash": "0a7561f5b7aa425570cc9ce3d2f2d2e5aafb8079",
@@ -1097,9 +1097,9 @@
       "bytes": 115
     },
     "docs/sdk/js/latest/Errors.md": {
-      "hash": "d4684727255775dfc9ad38e406739dc4e3e6ee0b",
-      "translatedAt": "2026-08-29T12:37:07.623Z",
-      "bytes": 2975
+      "hash": "570da644b9f40f30cf2ba93f2eb43323846fd5d0",
+      "translatedAt": "2026-09-11T11:04:16.058Z",
+      "bytes": 3035
     },
     "docs/sdk/js/latest/FileWatchEventType.md": {
       "hash": "5d1dff97d46ba0667569aca22abe147952a22180",
@@ -1142,9 +1142,9 @@
       "bytes": 3695
     },
     "docs/sdk/js/latest/ModalClient.md": {
-      "hash": "e4c4434ca959b0ac9102a302a030eb01c56c31d0",
-      "translatedAt": "2026-08-29T12:37:26.072Z",
-      "bytes": 2400
+      "hash": "a47be5704d8f0cbcd31565f7527aa7270b150a0c",
+      "translatedAt": "2026-09-11T11:04:18.850Z",
+      "bytes": 2771
     },
     "docs/sdk/js/latest/ModalReadStream.md": {
       "hash": "dd8fd315e48209985876b5ac6ec1b92c6eb39750",
@@ -1162,9 +1162,9 @@
       "bytes": 520
     },
     "docs/sdk/js/latest/Profile.md": {
-      "hash": "c53a05a006fe7300cb451d911dbe90964f9ffccb",
-      "translatedAt": "2026-08-08T18:30:31.809Z",
-      "bytes": 342
+      "hash": "5484a03d6e07c3c26df316696ee1fc8fe0cf3b50",
+      "translatedAt": "2026-09-11T11:04:19.115Z",
+      "bytes": 841
     },
     "docs/sdk/js/latest/Proxy.md": {
       "hash": "ea14beff250c661d9c5a809a8de6bce981636fc3",
@@ -1177,9 +1177,9 @@
       "bytes": 387
     },
     "docs/sdk/go/latest/Sandbox.md": {
-      "hash": "0be4512106b2a98d22aff3a8fa826da3d95fac4c",
-      "translatedAt": "2026-08-29T12:37:23.091Z",
-      "bytes": 34823
+      "hash": "e996aa7981199b0ba86fdf2d0776ff108ae6307b",
+      "translatedAt": "2026-09-11T11:04:13.813Z",
+      "bytes": 35888
     },
     "docs/sdk/js/latest/SandboxCreateConnectCredentials.md": {
       "hash": "3a241f9c55b1cc27ef8fb24efac48822d5a5c243",
@@ -1222,9 +1222,9 @@
       "bytes": 4402
     },
     "docs/sdk/js/latest/SidecarContainer.md": {
-      "hash": "6350918bf2554ac15d3c57e1f209acf5ab062100",
-      "translatedAt": "2026-08-29T12:37:46.338Z",
-      "bytes": 10737
+      "hash": "5db03495b14a6cf156d25dbbe9abd846b130e46a",
+      "translatedAt": "2026-09-11T11:04:40.010Z",
+      "bytes": 13579
     },
     "docs/sdk/py/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -1257,9 +1257,9 @@
       "bytes": 1120
     },
     "docs/sdk/js/latest/Sandbox.md": {
-      "hash": "ebe61eebea368ffe6693b16d9941a0e45b3d8b02",
-      "translatedAt": "2026-08-29T12:38:22.410Z",
-      "bytes": 31916
+      "hash": "f649fda090aa2f5d07c62f9ee0ff74d39936ce56",
+      "translatedAt": "2026-09-11T11:04:51.184Z",
+      "bytes": 33122
     },
     "docs/sdk/py/latest/Environment.md": {
       "hash": "51ea8ae30f2f7d08b5166947759d1701d7d0f4f2",
@@ -1492,9 +1492,9 @@
       "bytes": 59579
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "952df9133fedbaf2228c09fd8bfb79979aea8a24",
-      "translatedAt": "2026-09-02T11:05:04.748Z",
-      "bytes": 11665
+      "hash": "fe10731945e98b5fe8286ea23057419aefcb2f6a",
+      "translatedAt": "2026-09-11T11:03:10.391Z",
+      "bytes": 12153
     },
     "docs/guide/data-residency.md": {
       "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
@@ -1530,11 +1530,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/go/releases.md": {
-      "hash": "bf77f6e973d4ba17f2417527ade712ca3e2523bd",
-      "translatedAt": "2026-08-28T18:31:46.483Z",
-      "bytes": 26992,
-      "fallback": true,
-      "error": "HTTP 429"
+      "hash": "c7f5974d1ef0bbd13277af897600ebbbf468d614",
+      "translatedAt": "2026-09-11T11:04:24.818Z",
+      "bytes": 26742
     },
     "docs/sdk/js/latest/FunctionAutoscalerSettings.md": {
       "hash": "4d2ac7408bf7821f8ff2fe04159b66c6d5143a6a",
@@ -1565,11 +1563,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/js/releases.md": {
-      "hash": "a5cc42433514afa7b3b5e12368402ac5831d3a33",
-      "translatedAt": "2026-08-28T18:33:06.862Z",
-      "bytes": 24639,
-      "fallback": true,
-      "error": "HTTP 429"
+      "hash": "f018921509b81ac23f4003e555d8312897557efb",
+      "translatedAt": "2026-09-11T11:05:04.718Z",
+      "bytes": 24562
     },
     "docs/guide/entra-sso.md": {
       "hash": "348075049b7be28016dcc96f9aa7dc109fe11c8c",
@@ -1597,11 +1593,11 @@
       "bytes": 1330
     }
   },
-  "updatedAt": "2026-09-10T11:05:13.873Z",
+  "updatedAt": "2026-09-11T11:05:04.718Z",
   "stats": {
-    "translated": 0,
-    "skipped": 308,
-    "failed": 7,
+    "translated": 22,
+    "skipped": 293,
+    "failed": 0,
     "total": 315
   }
 }

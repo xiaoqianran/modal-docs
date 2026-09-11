@@ -213,7 +213,8 @@ type SandboxTimeoutError struct {
 
 ## 快照创建错误
 
-当没有为 Sandbox 生成快照图像时，会返回 SnapshotCreationError。
+当快照操作完成但失败时，会返回 SnapshotCreationError。
+再次轮询不会产生图像；文件系统状态消失了。
 
 ```go
 type SnapshotCreationError struct {

@@ -41,6 +41,26 @@ async exec(
 * `secrets?` (`Secret[]`): `Secret` 作为命令的环境变量注入。
 * `pty?` (`boolean`): 为命令启用 PTY。启用后，所有输出（进程中的 stdout 和 stderr）都会多路复用到 stdout，并且 stderr 流实际上为空。
 
+##挂载图像
+
+```typescript
+async mountImage(
+  path: string,
+  image?: Image,
+  params?: SidecarMountImageParams,
+): Promise<void>
+```
+
+在此 Sidecar 容器的文件系统中的路径上挂载 `Image`。
+
+* `path`：目录应挂载的路径
+* `image`：可选安装`Image`。如果未定义，则安装一个空目录。
+
+**参数** (`SidecarMountImageParams`)
+
+`SidecarContainer.mountImage()` 的可选参数。
+* `experimentalEncryptionKey?` (`Uint8Array`)：用于解密图像的实验性客户提供的加密密钥。使用加密快照的相同密钥。
+
 ## 民意调查
 
 ```typescript
@@ -58,14 +78,62 @@ async reloadVolumes(params?: SidecarReloadVolumesParams): Promise<void>
 ```
 
 重新加载安装在该 sidecar 容器中的所有卷。
+
 阻塞直到重新加载完成，或者超时抛出 `TimeoutError`
 （重新加载可能仍会在后台完成）。
 
 **参数** (`SidecarReloadVolumesParams`)
 
-`SidecarContainer.reloadVolumes()` 的可选参数。
+`SidecarContainer.reloadVolumes()` 的可选参数。* `timeoutMs?` (`number`)：总体预算（以毫秒为单位）。默认为 55000。
 
-* `timeoutMs?` (`number`)：总体预算（以毫秒为单位）。默认为 55000。
+## 快照目录
+
+```typescript
+async snapshotDirectory(
+  path: string,
+  params?: SidecarSnapshotDirectoryParams,
+): Promise<Image>
+```
+
+从正在运行的 Sidecar 容器中的目录创建快照并创建新的 `Image`。
+
+生成的图像保留`ttlMs`（默认：30 天），
+作为从创建开始衡量的硬性界限——使用不会扩展
+一生。通过`ttlMs: null`无限期保留。
+
+该呼叫的总体预算为 `timeoutMs`（默认值：55000）。如果它
+在快照完成之前经过，调用被取消并且
+抛出错误。
+
+该图像可以在任何接受图像的地方使用，包括作为支架
+或作为另一个容器的基本文件系统。
+* `path`: 快照目录路径
+
+**参数** (`SidecarSnapshotDirectoryParams`)
+
+`SidecarContainer.snapshotDirectory()` 的可选参数。
+
+* `timeoutMs?` (`number`)：快照调用的总体预算，以毫秒为单位。默认为 55000。如果在快照完成之前就过去了，则调用将被取消并引发错误。
+* `ttlMs?` (`number | null`)：生成图像的生命周期（以毫秒为单位），作为从创建时测量的硬截止。默认为 30 天。通过`null`可无限期保留图像。* `experimentalEncryptionKey?` (`Uint8Array`)：实验性客户提供的加密密钥，用于加密生成的快照。安装映像时需要相同的密钥。 Modal 不保留密钥。
+
+**返回：** 解析为 `Image` 的 Promise
+
+## 快照文件系统
+
+```typescript
+async snapshotFilesystem(
+  params?: SidecarSnapshotFilesystemParams,
+): Promise<Image>
+```
+
+将此 Sidecar 容器的文件系统快照到镜像中。
+
+**参数** (`SidecarSnapshotFilesystemParams`)
+
+`SidecarContainer.snapshotFilesystem()` 的可选参数。
+
+* `timeoutMs?` (`number`)：快照调用的总体预算，以毫秒为单位。默认为 55000。
+* `ttlMs?` (`number | null`)：生成图像的生命周期（以毫秒为单位）。默认为 30 天。通过`null`无期限。
 
 ## 终止
 
@@ -81,8 +149,26 @@ async terminate(params: { wait: true }): Promise<number>
 **参数** (`SidecarTerminateParams`)
 
 `SidecarContainer.terminate()` 的选项。
-
 * `wait?` (`boolean`): 如果为 true，则等待 sidecar 容器终止。
+
+## 卸载图片
+
+```typescript
+async unmountImage(
+  path: string,
+  _params?: SidecarUnmountImageParams,
+): Promise<void>
+```
+
+卸载之前安装在此 Sidecar 容器文件系统中的路径上的 `Image`。
+
+* `path`：要卸载的挂载路径
+
+**参数** (`SidecarUnmountImageParams`)
+
+`SidecarContainer.unmountImage()` 的可选参数。
+
+*没有可配置选项。*
 
 ## 等待
 
@@ -92,7 +178,9 @@ async wait(): Promise<number>
 
 阻塞直到 sidecar 容器退出，并返回其退出代码。
 
-## SidecarContainer.文件系统文件系统 API 的命名空间仅限于此 sidecar 容器。
+## SidecarContainer.文件系统
+
+文件系统 API 的命名空间仅限于此 sidecar 容器。
 
 ### 从本地复制
 
@@ -100,9 +188,7 @@ async wait(): Promise<number>
 async copyFromLocal(localPath: string, remotePath: string): Promise<void>
 ```
 
-将本地文件复制到沙箱中。
-
-`remotePath` 必须是沙盒中文件的绝对路径。
+将本地文件复制到沙箱中。`remotePath` 必须是沙盒中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
 
@@ -110,18 +196,19 @@ async copyFromLocal(localPath: string, remotePath: string): Promise<void>
 
 * `SandboxFilesystemNotADirectoryError`：`remotePath`的父组件不是目录。
 * `SandboxFilesystemIsADirectoryError`: `remotePath` 指向一个目录。
-* `SandboxFilesystemPermissionError`：沙箱中的写入权限被拒绝。
+* `SandboxFilesystemPermissionError`：沙盒中的写入权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
-* `Error`: `localPath`不存在、是目录或无法读取(`ENOENT`、`EISDIR`、`EACCES`)。
+* `Error`：`localPath`不存在、是目录或无法读取（`ENOENT`、`EISDIR`、`EACCES`）。
 
 ### 复制到本地
 
 ```typescript
 async copyToLocal(remotePath: string, localPath: string): Promise<void>
 ```
-将文件从沙盒复制到本地路径。
 
-`remotePath` 必须是沙盒中文件的绝对路径。
+将文件从沙箱复制到本地路径。
+
+`remotePath` 必须是沙箱中文件的绝对路径。
 如果需要，会创建 `localPath` 的父目录。本地文件
 如果已经存在则被覆盖。
 
@@ -138,14 +225,14 @@ async copyToLocal(remotePath: string, localPath: string): Promise<void>
 
 ```typescript
 async listFiles(remotePath: string): Promise<FileInfo[]>
-```列出 Sandbox 目录中的文件和目录。
+```
+
+列出 Sandbox 目录中的文件和目录。
 
 `remotePath` 必须是沙盒中目录的绝对路径。
 返回按名称排序的 `FileInfo` 对象数组。
 
-**加薪：**
-
-* `SandboxFilesystemNotFoundError`: 路径不存在。
+**加薪：*** `SandboxFilesystemNotFoundError`：路径不存在。
 * `SandboxFilesystemNotADirectoryError`：路径不是目录。
 * `SandboxFilesystemPermissionError`：读取权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -170,11 +257,11 @@ async makeDirectory(
 
 **加薪：**
 
-* `SandboxFilesystemNotFoundError`：父级不存在且`createParents`为`false`。
-* `SandboxFilesystemPathAlreadyExistsError`：路径已经存在，且`createParents`为`false`。
+* `SandboxFilesystemNotFoundError`：父级不存在，`createParents`是`false`。
+* `SandboxFilesystemPathAlreadyExistsError`：路径已存在，`createParents`为`false`。
 * `SandboxFilesystemNotADirectoryError`：路径组件不是目录。
 * `SandboxFilesystemPermissionError`：不允许创建。
-* `InvalidError`：挂载不支持该操作。
+* `InvalidError`：安装座不支持该操作。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
 
 ### 读取字节
@@ -185,14 +272,14 @@ async readBytes(remotePath: string): Promise<Uint8Array>
 
 从沙盒中读取文件并以字节形式返回其内容。
 
-`remotePath` 必须是沙箱中文件的绝对路径。
+`remotePath` 必须是沙盒中文件的绝对路径。
 
 **加薪：**
 
-* `SandboxFilesystemNotFoundError`：路径不存在。* `SandboxFilesystemIsADirectoryError`：路径指向一个目录。
+* `SandboxFilesystemNotFoundError`：路径不存在。
+* `SandboxFilesystemIsADirectoryError`：路径指向一个目录。
 * `SandboxFilesystemFileTooLargeError`：文件超出读取大小限制。
-* `SandboxFilesystemPermissionError`：读取权限被拒绝。
-* `SandboxFilesystemError`：命令因任何其他原因失败。
+* `SandboxFilesystemPermissionError`：读取权限被拒绝。* `SandboxFilesystemError`：命令因任何其他原因失败。
 
 ### 读取文本
 
@@ -206,7 +293,7 @@ async readText(remotePath: string): Promise<string>
 
 **加薪：**
 
-* `SandboxFilesystemNotFoundError`: 路径不存在。
+* `SandboxFilesystemNotFoundError`：路径不存在。
 * `SandboxFilesystemIsADirectoryError`：路径指向一个目录。
 * `SandboxFilesystemFileTooLargeError`：文件超出读取大小限制。
 * `SandboxFilesystemPermissionError`：读取权限被拒绝。
@@ -222,33 +309,35 @@ async remove(
 ```
 
 删除沙箱中的文件或目录。
+
 `remotePath` 必须是沙盒中的绝对路径。当`remotePath`
 是一个目录，`recursive`是`false`（默认），它被删除
-仅当为空时。当`recursive`为`true`时，该目录及其所有内容
+仅当为空时。当`recursive`为`true`时，目录及其所有内容
 内容被删除。并非所有安装都支持递归删除 -
-`CloudBucketMount` 不支持。
+`CloudBucketMount`不支持。
 
 **加薪：**
 
-* `SandboxFilesystemNotFoundError`：路径不存在。
-* `SandboxFilesystemDirectoryNotEmptyError`: `recursive` 为 `false` 并且目录不为空。
-* `SandboxFilesystemPermissionError`：不允许移除。
-* `InvalidError`：挂载不支持该操作。
+* `SandboxFilesystemNotFoundError`: 路径不存在。
+* `SandboxFilesystemDirectoryNotEmptyError`: `recursive` 是 `false` 并且目录不为空。
+* `SandboxFilesystemPermissionError`：不允许拆除。
+* `InvalidError`：安装座不支持该操作。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
 
 ### 统计
 
 ```typescript
 async stat(remotePath: string): Promise<FileInfo>
-```返回沙箱中单个文件、目录或符号链接的元数据。
+```
 
-`remotePath` 必须是沙盒中的绝对路径。如果 `remotePath` 是
-符号链接，返回的 `FileInfo` 描述符号链接本身，而不是
+返回沙盒中单个文件、目录或符号链接的元数据。
+
+`remotePath` 必须是沙盒中的绝对路径。如果 `remotePath` 是符号链接，返回的 `FileInfo` 描述符号链接本身，而不是
 它指向的目标。
 
 **加薪：**
 
-* `SandboxFilesystemNotFoundError`：路径不存在。
+* `SandboxFilesystemNotFoundError`: 路径不存在。
 * `SandboxFilesystemNotADirectoryError`：路径的非叶组件不是目录。
 * `SandboxFilesystemPermissionError`：路径组件不可搜索。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -282,11 +371,10 @@ async *watch(
 `filter`。未定义的 `filter` 允许所有类型；传递一个空数组
 抑制所有事件。
 
-`timeoutMs` 被截断为整秒。省略它即可无限期观看。当超时结束时，迭代器将停止而不引发异常。
+`timeoutMs` 被截断为整秒。省略它即可无限期观看。
+当超时结束时，迭代器将停止而不引发异常。
 
-**加薪：**
-
-* `SandboxFilesystemNotFoundError`: `remotePath` 不存在。
+**加薪：*** `SandboxFilesystemNotFoundError`: `remotePath` 不存在。
 * `SandboxFilesystemPermissionError`：手表访问被拒绝。
 * `InvalidError`：文件系统不支持观看。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -302,7 +390,7 @@ async writeBytes(
 
 将二进制内容写入沙箱中的文件。
 
-`remotePath` 必须是沙盒中文件的绝对路径。
+`remotePath` 必须是沙箱中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
 
@@ -322,7 +410,7 @@ async writeText(data: string, remotePath: string): Promise<void>
 
 将 UTF-8 文本写入沙箱中的文件。
 
-`remotePath` 必须是沙箱中文件的绝对路径。
+`remotePath` 必须是沙盒中文件的绝对路径。
 如果需要，将创建父目录。远程文件被覆盖
 如果它已经存在。
 

@@ -40,6 +40,27 @@ Options for `SidecarContainer.exec()`.
 * `secrets?` (`Secret[]`): `Secret`s to inject as environment variables for the commmand.
 * `pty?` (`boolean`): Enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty.
 
+## mountImage
+
+```typescript
+async mountImage(
+  path: string,
+  image?: Image,
+  params?: SidecarMountImageParams,
+): Promise<void>
+```
+
+Mount an `Image` at a path in this Sidecar container's filesystem.
+
+* `path`: The path where the directory should be mounted
+* `image`: Optional `Image` to mount. If undefined, mounts an empty directory.
+
+**Parameters** (`SidecarMountImageParams`)
+
+Optional parameters for `SidecarContainer.mountImage()`.
+
+* `experimentalEncryptionKey?` (`Uint8Array`): Experimental customer-supplied encryption key used to decrypt the image. Use the same key that encrypted the snapshot.
+
 ## poll
 
 ```typescript
@@ -67,6 +88,57 @@ Optional parameters for `SidecarContainer.reloadVolumes()`.
 
 * `timeoutMs?` (`number`): Overall budget in milliseconds. Defaults to 55000.
 
+## snapshotDirectory
+
+```typescript
+async snapshotDirectory(
+  path: string,
+  params?: SidecarSnapshotDirectoryParams,
+): Promise<Image>
+```
+
+Snapshots and creates a new `Image` from a directory in the running Sidecar container.
+
+The resulting Image is retained for `ttlMs` (default: 30 days),
+as a hard cutoff measured from creation — usage does not extend
+the lifetime. Pass `ttlMs: null` to retain indefinitely.
+
+The call has an overall `timeoutMs` budget (default: 55000). If it
+elapses before a snapshot completes, the call is cancelled and an
+error is thrown.
+
+The Image can be used anywhere an Image is accepted, including as a mount
+or as the base filesystem for another container.
+
+* `path`: The path of the directory to snapshot
+
+**Parameters** (`SidecarSnapshotDirectoryParams`)
+
+Optional parameters for `SidecarContainer.snapshotDirectory()`.
+
+* `timeoutMs?` (`number`): Overall budget for the snapshot call, in milliseconds. Defaults to 55000. If it elapses before a snapshot completes, the call is cancelled and an error is thrown.
+* `ttlMs?` (`number | null`): Lifetime of the resulting image in milliseconds, as a hard cutoff measured from creation. Defaults to 30 days. Pass `null` to retain the image indefinitely.
+* `experimentalEncryptionKey?` (`Uint8Array`): Experimental customer-supplied encryption key used to encrypt the resulting snapshot. The same key is required when mounting the image. Modal does not persist the key.
+
+**Returns:** Promise that resolves to an `Image`
+
+## snapshotFilesystem
+
+```typescript
+async snapshotFilesystem(
+  params?: SidecarSnapshotFilesystemParams,
+): Promise<Image>
+```
+
+Snapshot this Sidecar container's filesystem into an Image.
+
+**Parameters** (`SidecarSnapshotFilesystemParams`)
+
+Optional parameters for `SidecarContainer.snapshotFilesystem()`.
+
+* `timeoutMs?` (`number`): Overall budget for the snapshot call, in milliseconds. Defaults to 55000.
+* `ttlMs?` (`number | null`): Lifetime of the resulting image in milliseconds. Defaults to 30 days. Pass `null` for no expiry.
+
 ## terminate
 
 ```typescript
@@ -83,6 +155,25 @@ The returned exit code is only meaningful when `wait` is true.
 Options for `SidecarContainer.terminate()`.
 
 * `wait?` (`boolean`): If true, wait for the sidecar container to terminate.
+
+## unmountImage
+
+```typescript
+async unmountImage(
+  path: string,
+  _params?: SidecarUnmountImageParams,
+): Promise<void>
+```
+
+Unmounts an `Image` previously mounted at a path in this Sidecar container's filesystem.
+
+* `path`: The mount path to unmount
+
+**Parameters** (`SidecarUnmountImageParams`)
+
+Optional parameters for `SidecarContainer.unmountImage()`.
+
+*No configurable options.*
 
 ## wait
 

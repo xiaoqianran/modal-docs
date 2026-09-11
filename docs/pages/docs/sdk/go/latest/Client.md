@@ -42,6 +42,7 @@ ClientParams defines credentials and options for initializing the Modal client.
 
 * `TokenID` (`string`)
 * `TokenSecret` (`string`)
+* `OAuthCredentials` (`*OAuthCredentialsParams`): OAuthCredentials overrides profile credentials when non-nil. It must contain a refresh token, client ID, and exactly one of client secret or JWT key.
 * `Environment` (`string`)
 * `Config` (`*config`)
 * `Logger` (`*slog.Logger`)

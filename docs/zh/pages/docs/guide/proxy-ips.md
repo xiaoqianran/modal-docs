@@ -104,3 +104,8 @@ sb.terminate()
 
 与我们的 Function 实现类似，这个 Sandbox 程序将
 始终打印相同的 IP 地址。
+
+代理覆盖沙箱的主容器。流量来自
+[Sidecar](/docs/guide/sandbox-sidecars) 当前不通过它退出，因此
+代理不能与实验性`proxy_traffic_via_sidecar`结合使用
+选项，它将通过 Sidecar 中继主容器的 HTTPS。

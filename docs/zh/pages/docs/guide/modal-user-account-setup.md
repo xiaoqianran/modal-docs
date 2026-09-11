@@ -8,7 +8,7 @@
 您可以访问[注册](/signup)页面开始该过程或执行
 [`modal setup`](/docs/cli/latest/setup#modal-setup) 在命令行上。
 
-还可以通过 [Okta SSO](/docs/guide/okta-sso) 配置用户，即
+还可以通过 [SAML SSO](/docs/guide/saml-sso) 配置用户，即
 您可以请求的企业功能。对于典型用户，您需要注册
 使用现有的 GitHub 帐户。如果您有兴趣通过以下方式进行身份验证
 其他身份提供商通过 <support@modal.com> 通知我们。

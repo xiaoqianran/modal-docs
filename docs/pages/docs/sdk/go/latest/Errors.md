@@ -213,7 +213,8 @@ type SandboxTimeoutError struct {
 
 ## SnapshotCreationError
 
-SnapshotCreationError is returned when no snapshot image will be produced for a Sandbox.
+SnapshotCreationError is returned when a snapshot operation is done and failed.
+Polling again will not produce an Image; filesystem state is gone.
 
 ```go
 type SnapshotCreationError struct {
