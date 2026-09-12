@@ -178,6 +178,7 @@ https://modal.com/docs/guide/timeouts.md
 https://modal.com/docs/guide/trigger-deployed-functions.md
 https://modal.com/docs/guide/troubleshooting.md
 https://modal.com/docs/guide/tunnels.md
+https://modal.com/docs/guide/user-groups.md
 https://modal.com/docs/guide/vm-sandboxes.md
 https://modal.com/docs/guide/volumes.md
 https://modal.com/docs/guide/webhook-proxy-auth.md

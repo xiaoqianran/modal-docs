@@ -118,12 +118,13 @@
   - [环境](https://modal.com/docs/guide/environments.md)
   - [模态用户帐户设置](https://modal.com/docs/guide/modal-user-account-setup.md)
   - [服务使用者](https://modal.com/docs/guide/service-users.md)
+  - [用户组（测试版）](https://modal.com/docs/guide/user-groups.md)
   - [基于角色的访问控制（RBAC）](https://modal.com/docs/guide/rbac.md)
-  - [账单](https://modal.com/docs/guide/billing.md)
+  - [计费](https://modal.com/docs/guide/billing.md)
   - [网络出口计费](https://modal.com/docs/guide/network-egress-billing.md)
-  - [预算](https://modal.com/docs/guide/budgets.md)
-- 其他主题- [功能成熟度](https://modal.com/docs/guide/feature-maturity.md)
-  - [笔记本](https://modal.com/docs/guide/notebooks.md)
+  - [预算](https://modal.com/docs/guide/budgets.md)- 其他主题
+  - [功能成熟度](https://modal.com/docs/guide/feature-maturity.md)
+  - [笔记本电脑](https://modal.com/docs/guide/notebooks.md)
   - [限制功能](https://modal.com/docs/guide/restricted-access.md)
   - [JavaScript/Go SDK（测试版）](https://modal.com/docs/guide/sdk-javascript-go.md)
   - [Modal 1.0迁移指南](https://modal.com/docs/guide/modal-1-0-migration.md)
@@ -140,7 +141,7 @@
 - [精选](https://modal.com/docs/examples)
 - 开始使用
   - [你好，世界](https://modal.com/docs/examples/hello_world.md)
-  - [简单的网络抓取](https://modal.com/docs/examples/webscraper.md)
+  - [简单的网络抓取工具](https://modal.com/docs/examples/webscraper.md)
   - [服务网络功能](https://modal.com/docs/examples/basic_web.md)
 - 大型语言模型（LLM）
 - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
@@ -157,7 +158,7 @@
   - [使用 Flux Kontext 编辑图像](https://modal.com/docs/examples/image_to_image.md)
   - [微调你脸上的Wan2.1视频模型](https://modal.com/docs/examples/music-video-gen.md)
   - [使用 torch.compile 快速运行 Flux](https://modal.com/docs/examples/flux.md)
-  - [使用LoRA微调通量](https://modal.com/docs/examples/diffusers_lora_finetune.md)
+  - [使用 LoRA 微调 Flux](https://modal.com/docs/examples/diffusers_lora_finetune.md)
   - [使用 LTX-Video 制作动画图像](https://modal.com/docs/examples/image_to_video.md)
   - [使用LTX-Video生成视频剪辑](https://modal.com/docs/examples/ltx.md)
   - [使用 CLI、API 和 Web UI 运行稳定的扩散](https://modal.com/docs/examples/text_to_image.md)
@@ -191,7 +192,7 @@
 - [使用GRPO和TRL训练模型来解决编码问题](https://modal.com/docs/examples/grpo_trl.md)
 - 嵌入
   - [使用 Modal 服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
-  - [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
+  - [使用TEI嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
   - [将卫星图像转为矢量并存储在MongoDB中](https://modal.com/docs/examples/mongodb-search.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)

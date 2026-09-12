@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "2313e3cd20a91614fbe09439f120571266af0803",
-      "translatedAt": "2026-09-04T11:03:38.772Z",
-      "bytes": 24740
+      "hash": "353214c4eb93c98c70f22a5e0bee8b3f6b67bc9f",
+      "translatedAt": "2026-09-12T10:32:09.728Z",
+      "bytes": 24829
     },
     "docs/cli/latest/config.md": {
       "hash": "85a6762c3598b9d8249f7fdf60d44396e195e0f4",
@@ -547,9 +547,9 @@
       "bytes": 4412
     },
     "docs/guide/audit-logs.md": {
-      "hash": "93a68d1e14153b7f1ef3b80c6b65ac77f41fa29d",
-      "translatedAt": "2026-09-11T11:03:39.374Z",
-      "bytes": 21753
+      "hash": "c53f377a335ee2a8dce4df224883e8b00cc09d04",
+      "translatedAt": "2026-09-12T10:32:35.584Z",
+      "bytes": 22422
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -757,9 +757,9 @@
       "bytes": 3557
     },
     "docs/guide/region-selection.md": {
-      "hash": "928ad2e8614f7f26943262c41d6c92065080c3be",
-      "translatedAt": "2026-09-03T11:02:14.472Z",
-      "bytes": 5415
+      "hash": "b2dc7ea7c067ad4e95d3789eb55fa84d643ea4ca",
+      "translatedAt": "2026-09-12T10:32:14.433Z",
+      "bytes": 5465
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -787,9 +787,9 @@
       "bytes": 13237
     },
     "docs/guide/sandbox-resources.md": {
-      "hash": "8f3f8e3af13569eebd911e55c877fe80945b2b7c",
-      "translatedAt": "2026-08-08T18:29:47.535Z",
-      "bytes": 4278
+      "hash": "cb6c3e681770e438a98942e03e22e9c14fb3690e",
+      "translatedAt": "2026-09-12T10:32:19.093Z",
+      "bytes": 5061
     },
     "docs/guide/rbac.md": {
       "hash": "2b5fef0234da08d4f11dd24bc676fe0fadf981ad",
@@ -847,9 +847,9 @@
       "bytes": 2318
     },
     "docs/guide/servers.md": {
-      "hash": "f0f10ca1160508483f6b36955ad7b2fec6a3cbd7",
-      "translatedAt": "2026-08-20T06:57:06.489Z",
-      "bytes": 7902
+      "hash": "9d876eaef058a7bb0f7faacdd0d13d9537654924",
+      "translatedAt": "2026-09-12T10:32:28.641Z",
+      "bytes": 7843
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -1591,13 +1591,18 @@
       "hash": "96da99287db46b75b58d7482850b42463f918058",
       "translatedAt": "2026-09-04T11:03:42.605Z",
       "bytes": 1330
+    },
+    "docs/guide/user-groups.md": {
+      "hash": "8a3b71ca9ad57eeee3be0e4fd5fee9864e8291f9",
+      "translatedAt": "2026-09-12T10:32:32.954Z",
+      "bytes": 4331
     }
   },
-  "updatedAt": "2026-09-11T11:05:04.718Z",
+  "updatedAt": "2026-09-12T10:32:35.584Z",
   "stats": {
-    "translated": 22,
-    "skipped": 293,
+    "translated": 6,
+    "skipped": 310,
     "failed": 0,
-    "total": 315
+    "total": 316
   }
 }

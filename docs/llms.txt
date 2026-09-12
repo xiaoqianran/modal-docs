@@ -118,6 +118,7 @@ The docs are organized into three main sections:
   - [Environments](https://modal.com/docs/guide/environments.md)
   - [Modal user account setup](https://modal.com/docs/guide/modal-user-account-setup.md)
   - [Service users](https://modal.com/docs/guide/service-users.md)
+  - [User groups (Beta)](https://modal.com/docs/guide/user-groups.md)
   - [Role-Based Access Control (RBAC)](https://modal.com/docs/guide/rbac.md)
   - [Billing](https://modal.com/docs/guide/billing.md)
   - [Network egress billing](https://modal.com/docs/guide/network-egress-billing.md)
