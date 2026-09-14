@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-13T11:34:43.339Z",
+  "fetchedAt": "2026-09-14T12:28:36.436Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 309,
   "ok": 309,
@@ -1242,7 +1242,7 @@
       "source": "https://modal.com/docs/guide/region-selection.md",
       "finalUrl": "https://modal.com/docs/guide/region-selection.md",
       "path": "docs/guide/region-selection.md",
-      "bytes": 5869,
+      "bytes": 5796,
       "stub": false
     },
     {

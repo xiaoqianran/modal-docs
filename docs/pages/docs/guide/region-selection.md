@@ -96,10 +96,8 @@ The valid options for `routing_region=` are:
 
 * `us-east` (Virginia, USA)
 * `us-west` (Oregon, USA)
-* `ca-central` (Montreal, Canada)
 * `eu-west` (Dublin, Ireland)
 * `ap-south` (Mumbai, India)
-* `ap-southeast-2` (Sydney, Australia)
 
 ### Current restrictions
 
