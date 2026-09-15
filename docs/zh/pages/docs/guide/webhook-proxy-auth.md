@@ -72,3 +72,14 @@ curl -H "Authorization: Bearer $TOKEN_ID.$TOKEN_SECRET" \
 ## 环境范围
 
 在启用 RBAC 的工作区上，令牌的范围仅限于特定环境。有关更多信息，请参阅 [RBAC 指南](/docs/guide/rbac#proxy-tokens)。
+
+## 阻止未经身份验证的 URL
+
+工作区管理器可以防止环境中的部署暴露未经身份验证的 URL — 使用 `--unauthenticated` 创建的端点、使用 `unauthenticated=True` 创建的服务器以及不使用 `requires_proxy_auth=True` 的 Web 功能。
+
+该控件位于[设置→环境](/settings/workspace-management/environments)：
+
+* **工作空间默认值** 设置适用于每个环境的默认值，除非环境覆盖它。
+* 每个环境都可以**继承**工作区默认值，或显式**阻止**或**允许**未经身份验证的 URL。
+
+当阻止生效时，如果不需要代理身份验证，`modal deploy`、`modal endpoint create` 或通过仪表板创建端点将失败。

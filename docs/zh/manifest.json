@@ -757,9 +757,9 @@
       "bytes": 3557
     },
     "docs/guide/region-selection.md": {
-      "hash": "b2dc7ea7c067ad4e95d3789eb55fa84d643ea4ca",
-      "translatedAt": "2026-09-12T10:32:14.433Z",
-      "bytes": 5465
+      "hash": "43fcee56a179ef2fbad8d6824a671689e162596e",
+      "translatedAt": "2026-09-15T11:32:23.311Z",
+      "bytes": 5367
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -892,9 +892,9 @@
       "bytes": 2741
     },
     "docs/guide/webhook-proxy-auth.md": {
-      "hash": "a60f0b5b42521141f90e44abcdbbe65e6e263f7d",
-      "translatedAt": "2026-08-08T18:30:08.309Z",
-      "bytes": 2701
+      "hash": "27aef173330e3ea01b003e612f5c8512eda8d9e3",
+      "translatedAt": "2026-09-15T11:32:24.072Z",
+      "bytes": 3411
     },
     "docs/guide/webhook-urls.md": {
       "hash": "402c30bb9cc4ecf82e14f7f81a8686947160444e",
@@ -1598,11 +1598,11 @@
       "bytes": 4331
     }
   },
-  "updatedAt": "2026-09-14T12:28:50.034Z",
+  "updatedAt": "2026-09-15T11:32:24.072Z",
   "stats": {
-    "translated": 0,
-    "skipped": 315,
-    "failed": 1,
+    "translated": 2,
+    "skipped": 314,
+    "failed": 0,
     "total": 316
   }
 }
