@@ -185,6 +185,11 @@ with the other name in the `Host` header, a technique called *domain fronting*.
 Many providers reject mismatched requests, but the allowlist itself does not
 prevent the mismatch.
 
+If you need protection against domain fronting, consider using a
+[Sidecar](/docs/guide/sandbox-sidecars) as a proxy.
+[This example](/docs/examples/sidecar_traffic_routing) shows how to configure a
+Sidecar as a domain allowlist.
+
 </Callout>
 
 ### Updating the network policy at runtime

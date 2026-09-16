@@ -238,8 +238,8 @@ RAM 根据您通过 `memory` 参数请求的`Sandbox.create` 的要求。默认�
 * **不支持 GPU。** VM 沙盒当前仅支持 CPU 工作负载。
 * **[Sandbox 文件系统 API](/docs/guide/sandbox-files#filesystem-api-beta) 仅在新的 SDK 版本中可用**。对于Python SDK，它需要版本≥ 1.4.0，对于JS/TS/Go SDK，它需要版本≥ 0.7.6。
 * **不支持[`Sandbox.reload_volumes()`](/docs/sdk/py/latest/Sandbox#reload_volumes)。** VM Sandbox 目前不支持在运行时重新加载卷。
+* **默认情况下禁用嵌套 KVM 虚拟化。** 如果您想访问，请联系我们。
 * **[VM 内存快照](/docs/guide/vm-memory-snapshots) 仅适用于一组已启用的客户。**
   如果您想提前访问，请联系我们。
 * **不支持 ≥ 512 GiB 的根映像。** VM 根文件系统当前限制为 512 GiB。从超过此大小的容器映像创建的沙箱将无法启动。
-
 如果您遇到此处未列出的问题，请通过 [Slack](/slack) 联系我们或发送电子邮件至 <support@modal.com>。

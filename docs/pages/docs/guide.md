@@ -14,6 +14,8 @@ Notably, there’s zero configuration in Modal - everything, including [containe
 
 Here's a complete, minimal example of LLM inference running on Modal:
 
+Using a GPU requires having a valid payment method on file.
+
 ```python
 from pathlib import Path
 

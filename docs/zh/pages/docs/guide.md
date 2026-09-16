@@ -12,9 +12,11 @@ Modal 是一个 AI 基础设施平台，可让您：
 
 您可以获得[完整的无服务器执行和定价](/pricing)，因为我们托管所有内容并按秒使用收费。
 
-值得注意的是，Modal 中的配置为零 - 一切，包括[容器环境](/docs/guide/images) 和[GPU 规范](/docs/guide/gpu)，都是代码。呼吸一下新鲜空气，感受一下没有 YAML 的味道有多好。
+值得注意的是，Modal 中的配置为零——一切，包括[容器环境](/docs/guide/images) 和[GPU 规范](/docs/guide/gpu)，都是代码。呼吸一下新鲜空气，感受一下没有 YAML 的味道有多好。
 
 这是在 Modal 上运行的 LLM 推理的完整、最小示例：
+
+使用 GPU 需要存档有效的付款方式。
 
 ```python
 from pathlib import Path
@@ -77,4 +79,4 @@ Python 是构建 Modal 应用程序和实现 Modal 函数的主要语言，但�
 * [S3 上 Parquet 文件的并行处理](/docs/examples/s3_bucket_mount)
 * [在模态笔记本中使用dots.ocr解析文档](https://modal.com/notebooks/modal-labs/_/nb-8wvXoGoAcba8sRF8VkVg18)
 
-您还可以通过我们的[代码游乐场](/playground) 交互式地学习 Modal，而无需安装任何东西。
+您还可以通过我们的[代码游乐场](/playground) 以交互方式学习 Modal，而无需安装任何东西。

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-15T11:32:20.344Z",
+  "fetchedAt": "2026-09-16T11:18:45.991Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 309,
   "ok": 309,
@@ -754,7 +754,7 @@
       "source": "https://modal.com/docs/guide",
       "finalUrl": "https://modal.com/docs/guide.md",
       "path": "docs/guide.md",
-      "bytes": 4017,
+      "bytes": 4078,
       "stub": false
     },
     {
@@ -1034,7 +1034,7 @@
       "source": "https://modal.com/docs/guide/gpu.md",
       "finalUrl": "https://modal.com/docs/guide/gpu.md",
       "path": "docs/guide/gpu.md",
-      "bytes": 7884,
+      "bytes": 7945,
       "stub": false
     },
     {
@@ -1290,7 +1290,7 @@
       "source": "https://modal.com/docs/guide/sandbox-networking.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-networking.md",
       "path": "docs/guide/sandbox-networking.md",
-      "bytes": 18581,
+      "bytes": 18810,
       "stub": false
     },
     {
@@ -1458,7 +1458,7 @@
       "source": "https://modal.com/docs/guide/vm-sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/vm-sandboxes.md",
       "path": "docs/guide/vm-sandboxes.md",
-      "bytes": 8934,
+      "bytes": 9035,
       "stub": false
     },
     {

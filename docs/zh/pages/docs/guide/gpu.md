@@ -4,6 +4,8 @@
 
 Modal 使您可以轻松地在 [GPU](/gpu-glossary/readme) 上运行代码。
 
+使用 GPU 需要存档有效的付款方式。
+
 ## 快速入门
 
 以下是在 Modal 中 A100 上运行的函数的简单示例：
@@ -40,11 +42,11 @@ Modal 支持此参数的以下值：
 * `B200`/`B200+`
 * `B300`
 
-例如，要使用 B200，您可以使用 `@app.function(gpu="B200")`。
+例如，要使用 B200，您可以使用 `@app.function(gpu="B200")`。请参阅我们的[定价页面](/pricing)，了解每种 GPU 类型的最新定价。
 
-请参阅我们的[定价页面](/pricing)，了解每种 GPU 类型的最新定价。
+## 指定 GPU 数量
 
-## 指定 GPU 数量您可以通过将 `:n` 附加到 GPU 来为每个容器指定超过 1 个 GPU
+您可以通过将 `:n` 附加到 GPU 来为每个容器指定超过 1 个 GPU
 论点。例如，要运行具有八个 H100 的函数：
 
 ```python
@@ -60,7 +62,6 @@ A10 实例最多支持 4 个 GPU（最高 96 GB GPU RAM）。请注意，请求
 GPU 始终连接到同一台物理机器。
 
 ## 选择 GPU
-
 对于运行（而不是训练）神经网络，我们建议从
 与[L40S](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413)，
 它提供了成本和性能的完美平衡以及 48 GB GPU
@@ -74,8 +75,7 @@ RAM 用于存储模型权重和激活。
 
 ## B300 GPU
 
-[B300s](https://www.nvidia.com/en-us/data-center/dgx-b300/) 是 NVIDIA
-Blackwell Ultra GPU，基于 Blackwell [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
+[B300s](https://www.nvidia.com/en-us/data-center/dgx-b300/) 是 NVIDIABlackwell Ultra GPU，基于 Blackwell [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
 
 要请求 B300，请将 `gpu` 参数设置为 `"B300"`：
 
@@ -102,7 +102,6 @@ def run_deepseek():
 ```
 
 查看[此示例](/docs/examples/llm_inference)，了解如何使用 B200 最大限度地发挥 LLaMA 3.1-8B 的 vLLM 服务性能。
-
 在选择这款强大的 GPU 之前，请确保您了解瓶颈在哪里
 都在你的计算中。例如，运行小批量的语言模型
 （例如一次一个提示）会导致[内存瓶颈，而不是算术瓶颈](https://kipp.ly/transformer-inference-arithmetic/)。
@@ -113,16 +112,17 @@ def run_deepseek():
 ### 选择升级到 B300
 
 使用 `gpu="B200+"` 允许 Modal 在 B200 或 B300 GPU 上运行请求。
-无论使用哪种 GPU，B200+ 的计费方式都是 B200。仅使用此选项
+无论使用哪种 GPU，B200+ 都按 B200 进行计费。仅使用此选项
 如果您的代码与这两种类型的 GPU 兼容。 B300需要CUDA版本
 13.1+。使用此功能可以自动访问更大的容量池。
 
 ## H200 和 H100 GPU
 
 [H200s](https://www.nvidia.com/en-us/data-center/h200/) 和 [H100s](https://www.nvidia.com/en-us/data-center/h100/) 是之前的
-NVIDIA 的新一代顶级数据中心芯片，基于 Hopper [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
+NVIDIA 基于 Hopper [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture) 的新一代顶级数据中心芯片。
 这些 GPU 比 Blackwell GPU 具有更好的软件支持（例如，流行的库包括 Hopper 的预编译内核，但不包括 Blackwell），
-而且它们通常能够以具有竞争力的成本完成工作，因此无论是在 Modal 还是非 Modal，它们都是加速器的常见选择。
+而且他们通常以具有竞争力的成本完成工作，因此无论是在 Modal 还是非 Modal，它们都是加速器的常见选择。
+
 Modal 平台上的所有 H100 和 H200 GPU 都是 SXM 变体，这可以通过检查
 [功耗](/docs/guide/gpu-metrics) 在仪表板中或使用 `nvidia-smi`。
 
@@ -143,6 +143,7 @@ H200 的 [HBM3e 内存](/gpu-glossary/device-hardware/gpu-ram)
 
 [A100s](https://www.nvidia.com/en-us/data-center/a100/) 基于 NVIDIA 的 Ampere [架构](/gpu-glossary/device-hardware/streaming-multiprocessor-architecture)。
 Modal 提供两个版本的 A100：一个具有 40 GB RAM，另一个具有 80 GB RAM。
+
 要请求具有 40 GB [GPU 内存](/gpu-glossary/device-hardware/gpu-ram) 的 A100，请使用 `gpu="A100"`：
 
 ```python

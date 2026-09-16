@@ -467,9 +467,9 @@
       "bytes": 24428
     },
     "docs/guide.md": {
-      "hash": "820f77123a171b78c8e8204b0c0bc882a3c9e614",
-      "translatedAt": "2026-08-08T18:28:53.085Z",
-      "bytes": 3849
+      "hash": "3d2f80b4cbb0dbf059a7c5d27e3266f2aaee6744",
+      "translatedAt": "2026-09-16T11:18:49.582Z",
+      "bytes": 3904
     },
     "docs/examples/vllm_throughput.md": {
       "hash": "5d2c3d7a100277131ad5ec7b2112ac2e95bb403f",
@@ -547,9 +547,9 @@
       "bytes": 4412
     },
     "docs/guide/audit-logs.md": {
-      "hash": "c53f377a335ee2a8dce4df224883e8b00cc09d04",
-      "translatedAt": "2026-09-12T10:32:35.584Z",
-      "bytes": 22422
+      "hash": "0b0abdfe06a48167745704884b627ecef7fd4244",
+      "translatedAt": "2026-09-16T11:19:28.620Z",
+      "bytes": 22346
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -632,9 +632,9 @@
       "bytes": 2143
     },
     "docs/guide/gpu.md": {
-      "hash": "08cdd726991de24391f6d784935cfe14532d86b9",
-      "translatedAt": "2026-08-12T07:42:20.862Z",
-      "bytes": 7431
+      "hash": "d97228b3ab7e2de94e92a7329d033746198d0c22",
+      "translatedAt": "2026-09-16T11:18:56.290Z",
+      "bytes": 7469
     },
     "docs/guide/job-queue.md": {
       "hash": "7a5152e855ad73ba499f402f707b41ff962e9e69",
@@ -802,9 +802,9 @@
       "bytes": 3934
     },
     "docs/guide/sandbox-networking.md": {
-      "hash": "ef2210d610758a154e912c0c8c013a7bfbe11cf0",
-      "translatedAt": "2026-09-11T11:03:01.560Z",
-      "bytes": 17572
+      "hash": "d4270fdd3cff86d9fc0d8a8ce884726008d37cc9",
+      "translatedAt": "2026-09-16T11:19:13.384Z",
+      "bytes": 17800
     },
     "docs/guide/sandbox-snapshots.md": {
       "hash": "01a1bad64576dff9ac4469c8ab8da2e3b35c4c0c",
@@ -882,9 +882,9 @@
       "bytes": 9556
     },
     "docs/guide/vm-sandboxes.md": {
-      "hash": "540162a8864c1c91ccfce03357b7cfa300120997",
-      "translatedAt": "2026-09-11T11:03:25.668Z",
-      "bytes": 8750
+      "hash": "316c5a1b6f47ae3ba9c88d13bd92c42b42ff5747",
+      "translatedAt": "2026-09-16T11:19:17.287Z",
+      "bytes": 8840
     },
     "docs/guide/webhook-timeouts.md": {
       "hash": "3ce8a509c5c149cf62d0143d7f36b5b7d8a03779",
@@ -1598,10 +1598,10 @@
       "bytes": 4331
     }
   },
-  "updatedAt": "2026-09-15T11:32:24.072Z",
+  "updatedAt": "2026-09-16T11:19:28.620Z",
   "stats": {
-    "translated": 2,
-    "skipped": 314,
+    "translated": 5,
+    "skipped": 311,
     "failed": 0,
     "total": 316
   }
