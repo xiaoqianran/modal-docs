@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-16T11:18:45.991Z",
+  "fetchedAt": "2026-09-17T11:27:07.678Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 309,
   "ok": 309,
@@ -890,7 +890,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 3723,
+      "bytes": 4097,
       "stub": false
     },
     {
@@ -938,7 +938,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 3108,
+      "bytes": 4484,
       "stub": false
     },
     {
@@ -1378,7 +1378,7 @@
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 8906,
+      "bytes": 8940,
       "stub": false
     },
     {
@@ -1394,7 +1394,7 @@
       "source": "https://modal.com/docs/guide/shared-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
       "path": "docs/guide/shared-endpoints.md",
-      "bytes": 1487,
+      "bytes": 1861,
       "stub": false
     },
     {

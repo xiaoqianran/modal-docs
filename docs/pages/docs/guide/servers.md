@@ -52,7 +52,7 @@ Server containers are not considered ready until the Server process is listening
 
 While a Server container is active, Modal will send health checks to verify that its port is still listening. If the container fails too many consecutive health checks, it will be terminated and replaced.
 
-When containers are scaled down, they will stop receiving new requests, but they may continue processing any inflight requests for up to `exit_grace_period=` seconds. Subsequently, the container will be sent a SIGTERM to gracefully terminate all running processes and run any exit handlers (`@modal.exit()`). The process termination and exit handlers are given an additional 30s to complete, after which the container will receive a hard SIGKILL signal if it is still running.
+When containers are scaled down, they will stop receiving new requests, but they may continue processing any inflight requests for up to `exit_grace_period=` seconds (maximum 3600 seconds, or 1 hour). Subsequently, the container will be sent a SIGTERM to gracefully terminate all running processes and run any exit handlers (`@modal.exit()`). The process termination and exit handlers are given an additional 30s to complete, after which the container will receive a hard SIGKILL signal if it is still running.
 
 ## Request authentication
 

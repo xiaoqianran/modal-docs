@@ -70,3 +70,37 @@ curl "<your-endpoint-url>/v1/chat/completions" \
 
 See [Endpoint integrations](/docs/guide/endpoint-integrations) for connecting
 coding agents like OpenCode, Codex, and Claude Code to a Shared Endpoint.
+
+## Session affinity
+
+LLM serving engines cache the KV state of a prompt prefix, so a request that
+reuses the prefix of an earlier request is fastest when it lands on the same
+container. Multi-turn conversations and agent loops, where each request repeats
+the previous turns, benefit the most.
+
+To keep the requests of one conversation together, send the same
+`Modal-Session-Id` header on each of them. The value is an arbitrary string;
+use one per conversation, task, or agent run.
+
+```bash
+curl "<your-endpoint-url>/v1/chat/completions" \
+  -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \
+  -H "Modal-Session-Id: $CUSTOM_CONVERSATION_ID" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "<model-name>",
+    "messages": [{ "role": "user", "content": "Hello!" }]
+  }'
+```
+
+Choose the session ID to match the shared prefix:
+
+* **One ID per conversation**, not per user or application. A single ID shared
+  by many unrelated conversations concentrates all of that traffic on one
+  container.
+* **Start a new ID when the prefix changes**, for example after compacting or
+  summarizing a long context. The cached prefix no longer applies, and a new ID
+  lets the request move to a container with free capacity.
+
+Note that requests may be routed to a different container when the Endpoint
+scales or a container is replaced or overloaded.

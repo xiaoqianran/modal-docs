@@ -74,6 +74,15 @@ Use `--colocate-compute` instead to run compute in the routing region. Pinning
 compute to a region incurs a
 [region selection multiplier](/docs/guide/region-selection#pricing).
 
+## Request routing
+
+Dedicated Endpoints inherit the
+[sticky-session routing](/docs/guide/servers#request-routing) of Servers:
+requests that share a `Modal-Session-Id` header are handled by the same
+container, which keeps a conversation's prompt prefix in that container's cache.
+See [Session affinity](/docs/guide/endpoints#session-affinity) for how to choose
+session IDs.
+
 ## Metrics
 
 The **Activity** view shows request volume over time. Use **Responses** to inspect

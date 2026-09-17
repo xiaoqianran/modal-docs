@@ -26,6 +26,15 @@ with exponential backoff and jitter.
 Use a [Dedicated Endpoint](/docs/guide/dedicated-endpoints) when you need
 isolated or configurable capacity.
 
+## Request routing
+
+Shared Endpoints route each request to the container most likely to have its
+prompt prefix cached. For multi-turn conversations and agent loops, send a
+`Modal-Session-Id` header with every request of a conversation so its requests
+stay on the same container. See
+[Session affinity](/docs/guide/endpoints#session-affinity) for how to choose
+session IDs.
+
 ## Pricing
 
 Token rates are shown when you create an Endpoint and in its Usage view. Credits
