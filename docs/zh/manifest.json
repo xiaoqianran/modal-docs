@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "f0ac1410f3251098e902e4ff60f2f06817589c4a",
-      "translatedAt": "2026-09-11T11:02:46.975Z",
-      "bytes": 2754
+      "hash": "e1919e7b66f77ada4908ab634cd5078bb1f893c0",
+      "translatedAt": "2026-09-18T11:00:35.445Z",
+      "bytes": 3955
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -847,9 +847,9 @@
       "bytes": 2318
     },
     "docs/guide/servers.md": {
-      "hash": "9d876eaef058a7bb0f7faacdd0d13d9537654924",
-      "translatedAt": "2026-09-12T10:32:28.641Z",
-      "bytes": 7843
+      "hash": "8f2e52ffcf7da4b273e43f89f7a5214462fa1661",
+      "translatedAt": "2026-09-18T11:00:44.347Z",
+      "bytes": 7876
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -1492,9 +1492,9 @@
       "bytes": 59579
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "fe10731945e98b5fe8286ea23057419aefcb2f6a",
-      "translatedAt": "2026-09-11T11:03:10.391Z",
-      "bytes": 12153
+      "hash": "78b8f505cc4558fc49382c327f644adca54c52f3",
+      "translatedAt": "2026-09-18T11:00:43.921Z",
+      "bytes": 12238
     },
     "docs/guide/data-residency.md": {
       "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
@@ -1583,14 +1583,14 @@
       "bytes": 2927
     },
     "docs/guide/dedicated-endpoints.md": {
-      "hash": "2f6c0d3696473a94066b2ce8cbf6756d1c5f02ac",
-      "translatedAt": "2026-09-04T11:03:40.861Z",
-      "bytes": 3436
+      "hash": "5259ce7a5527beccb89878b6ab3d308cf0ea74d4",
+      "translatedAt": "2026-09-18T11:00:32.207Z",
+      "bytes": 3770
     },
     "docs/guide/shared-endpoints.md": {
-      "hash": "96da99287db46b75b58d7482850b42463f918058",
-      "translatedAt": "2026-09-04T11:03:42.605Z",
-      "bytes": 1330
+      "hash": "0de1877a91cd58e5af6183715faf720aa2f60e05",
+      "translatedAt": "2026-09-18T11:00:46.392Z",
+      "bytes": 1682
     },
     "docs/guide/user-groups.md": {
       "hash": "8a3b71ca9ad57eeee3be0e4fd5fee9864e8291f9",
@@ -1598,11 +1598,11 @@
       "bytes": 4331
     }
   },
-  "updatedAt": "2026-09-17T11:27:34.554Z",
+  "updatedAt": "2026-09-18T11:00:46.392Z",
   "stats": {
-    "translated": 0,
-    "skipped": 312,
-    "failed": 4,
+    "translated": 5,
+    "skipped": 311,
+    "failed": 0,
     "total": 316
   }
 }

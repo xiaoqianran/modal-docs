@@ -17,7 +17,7 @@
 有两种服务模式可供选择：
 
 |              | [共享端点](/docs/guide/shared-endpoints) | [专用端点](/docs/guide/dedicated-endpoints) |
-| ------------ | ------------------------------------------------ | ------------------------------------------------------------------ |
+| ------------ | ------------------------------------------------ | ------------------------------------------------------ |
 | **最适合** |快速、完全托管的推理 |隔离容量和定制模型|
 | **型号** |模态库中选定的模型 |所有模态库模型，以及自定义权重 |
 | **计费** |每个代币 |计算资源|
@@ -71,3 +71,37 @@ curl "<your-endpoint-url>/v1/chat/completions" \
 
 请参阅[端点集成](/docs/guide/endpoint-integrations)进行连接
 将 OpenCode、Codex 和 Claude Code 等编码代理连接到共享端点。
+
+## 会话关联性
+
+LLM 服务引擎缓存提示前缀的 KV 状态，因此请求
+当它到达相同的位置时，重用早期请求的前缀是最快的
+容器。多轮对话和代理循环，每个请求重复
+前几轮，受益最大。
+
+要将一个对话的请求放在一起，请发送相同的请求
+每个都有 `Modal-Session-Id` 标题。值为任意字符串；
+每次对话、任务或代理运行时使用一个。
+
+```bash
+curl "<your-endpoint-url>/v1/chat/completions" \
+  -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \
+  -H "Modal-Session-Id: $CUSTOM_CONVERSATION_ID" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "<model-name>",
+    "messages": [{ "role": "user", "content": "Hello!" }]
+  }'
+```
+
+选择与共享前缀匹配的会话 ID：
+
+* **每个会话一个 ID**，而不是每个用户或应用程序。共享一个ID
+  由许多不相关的对话将所有流量集中到一个
+  容器。
+* **当前缀更改时开始新的 ID**，例如在压缩或
+  总结了一个很长的背景。缓存的前缀不再适用，并且新的 ID
+让请求移动到具有可用容量的容器。
+
+请注意，当端点
+秤或容器被更换或超载。

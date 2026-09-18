@@ -373,6 +373,7 @@ for sidecars:
 * **Pre-built images only**: Sidecar images must be pre-built using `image.build()`, referenced
   by ID via `Image.from_id()` or name via `Image.from_name()`, or created from filesystem/directory snapshots. Lazy image
   building is not supported for sidecars. See also [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
+* **No GPU support**: Sidecar containers cannot access GPUs, even when the Sandbox is configured with one.
 * **No Cloud Bucket Mount support**: Sidecar containers do not currently support attaching [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
 * **No memory snapshot support**: A Sidecar's filesystem can be snapshotted
   independently, but Sidecar memory state is not captured in

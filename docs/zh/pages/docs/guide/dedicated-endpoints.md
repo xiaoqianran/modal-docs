@@ -3,7 +3,7 @@
 # 专用端点
 
 专用端点运行任何模型
-[模态库](https://modal.com/library)，或自定义权重，在隔离、
+[模态库](https://modal.com/library)，或自定义权重，在孤立的、
 自动缩放容器。当您需要控制自动缩放和
 区域或专用容量。
 
@@ -75,11 +75,19 @@ modal endpoint create \
 计算到一个区域会产生
 [区域选择乘数](/docs/guide/region-selection#pricing)。
 
+## 请求路由
+
+专用端点继承
+服务器的[粘性会话路由](/docs/guide/servers#request-routing)：
+共享 `Modal-Session-Id` 标头的请求由相同的处理
+容器，它将对话的提示前缀保留在该容器的缓存中。
+如何选择请参见[Sessionaffinity](/docs/guide/endpoints#session-affinity)
+会话 ID。
+
 ## 指标
 
 **活动**视图显示随时间变化的请求量。使用**响应**进行检查
 个人请求和**容器**检查为其提供服务的容器。
-
 对于文本生成模型，**指标**将**推理指标**—延迟、
 吞吐量、正在运行和排队的请求、缓存使用情况和推测
 解码——来自**服务器指标**，例如自动缩放和CPU、内存、网络、

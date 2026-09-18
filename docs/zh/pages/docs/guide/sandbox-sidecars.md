@@ -36,7 +36,7 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 * 独立于主沙盒容器运行自己的映像。
 * 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
 * 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
-* 可以在沙箱的生命周期内动态创建、终止和替换。* 支持像主沙箱容器一样执行命令。
+* 可以在沙盒的生命周期内动态创建、终止和替换。* 支持像主沙箱容器一样执行命令。
 
 ## 用法
 
@@ -370,6 +370,7 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
   通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
+* **无 GPU 支持**：Sidecar 容器无法访问 GPU，即使沙箱配置了 GPU。
 * **不支持云桶安装**：Sidecar 容器当前不支持附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
   独立，但 Sidecar 内存状态不会被捕获
