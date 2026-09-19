@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-18T11:00:29.741Z",
+  "fetchedAt": "2026-09-19T10:43:40.697Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 309,
   "ok": 309,
@@ -1066,7 +1066,7 @@
       "source": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "finalUrl": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "path": "docs/guide/jupyter-notebooks.md",
-      "bytes": 2388,
+      "bytes": 1967,
       "stub": false
     },
     {
