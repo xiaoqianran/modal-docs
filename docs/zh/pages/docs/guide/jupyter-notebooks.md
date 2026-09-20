@@ -54,21 +54,6 @@ with modal.enable_output():
 我们正在努力消除这些已知问题，以便编写模态应用程序
 在笔记本中感觉就像在常规 Python 模块和脚本中进行开发一样。
 
-## Modal 中的 Jupyter
-
-您可以使用 `modal launch` 命令在 Modal 中运行 Jupyter。例如：
-
-```
-$ modal launch jupyter --gpu a10g
-```
-
-这将启动一个连接了 A10G GPU 的 Jupyter 实例。你将能够
-通过以下方式访问该应用程序
-[模态隧道 URL](https://modal.com/docs/guide/tunnels)。朱皮特
-每当您在终端中停止 Modal 调用时，它将停止运行。
-
-有关其他选项，请参阅`--help`。
-
 ## 更多示例
 
 * [在笔记本中运行Modal的基本演示](https://github.com/modal-labs/modal-examples/blob/main/11_notebooks/basic.ipynb)

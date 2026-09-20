@@ -647,9 +647,9 @@
       "bytes": 15053
     },
     "docs/guide/jupyter-notebooks.md": {
-      "hash": "1c5bbbf6bd5450a067ddff88b4a106b36ca35fbe",
-      "translatedAt": "2026-08-08T18:29:24.336Z",
-      "bytes": 2334
+      "hash": "1de0a15788a7c0408194badf248266be06ac6735",
+      "translatedAt": "2026-09-20T11:06:54.917Z",
+      "bytes": 1896
     },
     "docs/guide/images.md": {
       "hash": "b51638021b9bb3aaced9545b355d4c74ff8101bc",
@@ -1598,11 +1598,11 @@
       "bytes": 4331
     }
   },
-  "updatedAt": "2026-09-19T10:43:54.019Z",
+  "updatedAt": "2026-09-20T11:06:54.917Z",
   "stats": {
-    "translated": 0,
+    "translated": 1,
     "skipped": 315,
-    "failed": 1,
+    "failed": 0,
     "total": 316
   }
 }
