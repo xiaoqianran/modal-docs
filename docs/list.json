@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-09-21T12:35:06.130Z",
+  "fetchedAt": "2026-09-22T11:22:29.919Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 309,
-  "ok": 309,
+  "totalUrls": 310,
+  "ok": 310,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 25320,
+      "bytes": 25330,
       "stub": false
     },
     {
@@ -954,7 +954,7 @@
       "source": "https://modal.com/docs/guide/environment_variables.md",
       "finalUrl": "https://modal.com/docs/guide/environment_variables.md",
       "path": "docs/guide/environment_variables.md",
-      "bytes": 2459,
+      "bytes": 2265,
       "stub": false
     },
     {
@@ -1006,6 +1006,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/getting-started.md",
+      "source": "https://modal.com/docs/guide/getting-started.md",
+      "finalUrl": "https://modal.com/docs/guide/getting-started.md",
+      "path": "docs/guide/getting-started.md",
+      "bytes": 3092,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/global-variables.md",
       "source": "https://modal.com/docs/guide/global-variables.md",
       "finalUrl": "https://modal.com/docs/guide/global-variables.md",
@@ -1051,6 +1059,14 @@
       "finalUrl": "https://modal.com/docs/guide/images.md",
       "path": "docs/guide/images.md",
       "bytes": 14706,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/intro.md",
+      "source": "https://modal.com/docs/guide/intro.md",
+      "finalUrl": "https://modal.com/docs/guide/intro.md",
+      "path": "docs/guide/intro.md",
+      "bytes": 4078,
       "stub": false
     },
     {
@@ -1107,14 +1123,6 @@
       "finalUrl": "https://modal.com/docs/guide/modal-1-0-migration.md",
       "path": "docs/guide/modal-1-0-migration.md",
       "bytes": 15264,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/modal-user-account-setup.md",
-      "source": "https://modal.com/docs/guide/modal-user-account-setup.md",
-      "finalUrl": "https://modal.com/docs/guide/modal-user-account-setup.md",
-      "path": "docs/guide/modal-user-account-setup.md",
-      "bytes": 1104,
       "stub": false
     },
     {

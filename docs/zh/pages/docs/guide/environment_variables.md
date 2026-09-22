@@ -18,18 +18,18 @@ Modal 运行时在初始化期间设置几个环境变量。的
   [OCI](https://www.oracle.com/cloud/))。该变量指定哪个云Modal 容器在其中运行的提供者。
 * **`MODAL_IMAGE_ID`** — 的 ID
   Modal 容器使用的 [`modal.Image`](/docs/sdk/py/latest/Image)。
-* **`MODAL_REGION`** — 这将对应于来自的地理区域标识符
-  与 Modal 容器关联的云提供商（见上文）。对于 AWS 来说，
-  标识符是一个“区域”。对于 GCP 来说，它是一个“区域”，对于 OCI 来说，它是一个
-  “可用域”。示例值为 `us-east-1` (AWS)、`us-central1`
-  （GCP），`us-ashburn-1`（OCI）。请参阅[此处的完整列表](/docs/guide/region-selection#container-region-options)。
+* **`MODAL_REGION`** — A
+  [容器区域](/docs/guide/region-selection#container-region-options)
+  name：存在时的窄选项（例如 `us-east`、`uk`）以及
+  否则为广泛选项（例如`us`、`eu`）。
 * **`MODAL_TASK_ID`** — 运行模态函数或沙箱的容器的 ID。
+
 ## 函数运行时环境变量
 
 运行模态函数的容器中存在以下变量：
 
 * **`MODAL_ENVIRONMENT`** — 的名称
-  [模态环境](/docs/guide/environments) 容器正在其中运行。
+[模态环境](/docs/guide/environments) 容器正在其中运行。
 * **`MODAL_IS_REMOTE`** - 设置为“1”表示模态函数代码正在运行
   一个远程容器。
 * **`MODAL_IDENTITY_TOKEN`** — [OIDC 代币](/docs/guide/oidc-integration)
@@ -47,7 +47,7 @@ Modal 运行时在初始化期间设置几个环境变量。的
 环境变量。这些变量将出现在容器的运行时中
 环境。例如，
 [`debian_slim`](/docs/sdk/py/latest/Image#debian_slim) 图像设置
-`GPG_KEY` 可变。
+`GPG_KEY` 变量。
 
 要覆盖图像变量或设置新变量，请使用
 [`.env`](https://modal.com/docs/sdk/py/latest/Image#env) 提供的方法

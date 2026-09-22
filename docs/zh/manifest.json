@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "353214c4eb93c98c70f22a5e0bee8b3f6b67bc9f",
-      "translatedAt": "2026-09-12T10:32:09.728Z",
-      "bytes": 24829
+      "hash": "9e1549b04a55cd5a3e480da152228cb5baf30c67",
+      "translatedAt": "2026-09-22T11:22:52.177Z",
+      "bytes": 24835
     },
     "docs/cli/latest/config.md": {
       "hash": "85a6762c3598b9d8249f7fdf60d44396e195e0f4",
@@ -587,9 +587,9 @@
       "bytes": 2379
     },
     "docs/guide/environment_variables.md": {
-      "hash": "b74c060063e14579e96ce4656cf7e9ca132ae79e",
-      "translatedAt": "2026-08-08T18:29:13.864Z",
-      "bytes": 2151
+      "hash": "3b5640bb0e21bfc2c5b47404cb20c2e77d36dd44",
+      "translatedAt": "2026-09-22T11:22:31.863Z",
+      "bytes": 1903
     },
     "docs/guide/environments.md": {
       "hash": "f05be64522a32612737278425f1e78df436303b2",
@@ -1596,13 +1596,23 @@
       "hash": "8a3b71ca9ad57eeee3be0e4fd5fee9864e8291f9",
       "translatedAt": "2026-09-12T10:32:32.954Z",
       "bytes": 4331
+    },
+    "docs/guide/getting-started.md": {
+      "hash": "e609bcf69c16d4e0c279138f715763f36e43865b",
+      "translatedAt": "2026-09-22T11:22:35.205Z",
+      "bytes": 2921
+    },
+    "docs/guide/intro.md": {
+      "hash": "3d2f80b4cbb0dbf059a7c5d27e3266f2aaee6744",
+      "translatedAt": "2026-09-22T11:22:38.354Z",
+      "bytes": 3904
     }
   },
-  "updatedAt": "2026-09-21T12:35:06.244Z",
+  "updatedAt": "2026-09-22T11:22:52.177Z",
   "stats": {
-    "translated": 0,
-    "skipped": 316,
+    "translated": 4,
+    "skipped": 314,
     "failed": 0,
-    "total": 316
+    "total": 318
   }
 }

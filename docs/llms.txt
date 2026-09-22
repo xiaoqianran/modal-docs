@@ -24,7 +24,9 @@ The docs are organized into three main sections:
 
 ## Guide
 
-- [Introduction](https://modal.com/docs/guide)
+- Guide
+  - [Introduction to Modal](https://modal.com/docs/guide/intro.md)
+  - [Getting started](https://modal.com/docs/guide/getting-started.md)
 - Functions
   - [Functions](https://modal.com/docs/guide/functions.md)
   - [Invocation methods](https://modal.com/docs/guide/function-invocation-methods.md)
@@ -116,7 +118,6 @@ The docs are organized into three main sections:
 - Workspace & account settings
   - [Workspaces](https://modal.com/docs/guide/workspaces.md)
   - [Environments](https://modal.com/docs/guide/environments.md)
-  - [Modal user account setup](https://modal.com/docs/guide/modal-user-account-setup.md)
   - [Service users](https://modal.com/docs/guide/service-users.md)
   - [User groups (Beta)](https://modal.com/docs/guide/user-groups.md)
   - [Role-Based Access Control (RBAC)](https://modal.com/docs/guide/rbac.md)

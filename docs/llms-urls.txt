@@ -123,12 +123,14 @@ https://modal.com/docs/guide/fast-pull-from-registry.md
 https://modal.com/docs/guide/feature-maturity.md
 https://modal.com/docs/guide/function-invocation-methods.md
 https://modal.com/docs/guide/functions.md
+https://modal.com/docs/guide/getting-started.md
 https://modal.com/docs/guide/global-variables.md
 https://modal.com/docs/guide/gpu-health.md
 https://modal.com/docs/guide/gpu-metrics.md
 https://modal.com/docs/guide/gpu.md
 https://modal.com/docs/guide/high-performance-llm-inference.md
 https://modal.com/docs/guide/images.md
+https://modal.com/docs/guide/intro.md
 https://modal.com/docs/guide/job-queue.md
 https://modal.com/docs/guide/jupyter-notebooks.md
 https://modal.com/docs/guide/lifecycle-functions.md
@@ -136,7 +138,6 @@ https://modal.com/docs/guide/local-data.md
 https://modal.com/docs/guide/managing-deployments.md
 https://modal.com/docs/guide/memory-snapshots.md
 https://modal.com/docs/guide/modal-1-0-migration.md
-https://modal.com/docs/guide/modal-user-account-setup.md
 https://modal.com/docs/guide/model-weights.md
 https://modal.com/docs/guide/multi-node-training.md
 https://modal.com/docs/guide/named-images.md
