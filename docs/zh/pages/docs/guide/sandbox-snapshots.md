@@ -21,7 +21,7 @@ Modal 目前支持三种不同类型的 Sandbox 快照：
 
 不同的快照类型有不同的保留策略：
 
-|快照类型|默认保留期限 |
+|快照类型 |默认保留期限 |
 | ------------------- | ------------------------ |
 |文件系统快照 |创建后 30 天 |
 |目录快照 |创建后 30 天 |
@@ -104,9 +104,8 @@ snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirect
 
 ## 文件系统快照
 
-文件系统快照是沙箱文件系统在给定时间点的副本。
-这些快照是[图像](/docs/sdk/py/latest/Image)，可用于创建
-新沙箱。
+文件系统快照是沙箱根文件系统在给定时间点的副本。
+这些快照是[图像](/docs/sdk/py/latest/Image)，可用于创建新的沙箱。
 
 要创建文件系统快照，您可以使用
 [`Sandbox.snapshot_filesystem()`](/docs/sdk/py/latest/Sandbox#snapshot_filesystem) 方法：
@@ -132,6 +131,10 @@ assert p2.stdout.read().strip() == "test"
 来自您的基础映像，因此仅存储修改后的文件。恢复文件系统快照
 利用与我们为沙盒快速冷启动相同的基础设施。
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
+
+请注意，文件系统快照仅涵盖沙箱的根文件系统。
+此快照不涵盖任何已安装的[卷](/docs/guide/volumes)
+并且不会包含在生成的图像中。
 
 ### 分叉
 
@@ -217,7 +220,6 @@ fmt.Println(strings.TrimSpace(string(stdout3))) // "setup done"
 ## 目录快照
 
 目录快照允许您对正在运行的沙箱中的特定目录进行快照。生成的快照是一个图像，然后可以将其安装到另一个已经运行的沙箱中（通常在稍后的时间），这可用于：
-
 * **独立于应用程序代码更新系统依赖项**：可以通过从更新的基础映像启动新的沙箱，然后安装到之前快照的应用程序代码中来更新基础依赖项。
 * **将热池与快照结合使用**：对于受益于沙盒的[热池](/docs/examples/sandbox_pool) 来减少启动延迟的用例，第一次初始化现在可以在热池中进行，而不会失去在以后某个时间点恢复特定于应用程序的代码的能力。
 * **加快先前会话的恢复速度**：当容器加载文件时，已安装映像中的文件会被优先考虑，因此与从完整文件系统映像启动相比，安装目录可以加快沙盒恢复速度。
@@ -328,14 +330,13 @@ p2, _ := sb2.Exec(ctx, []string{"cat", "/project/file.txt"}, nil)
 stdout, _ := io.ReadAll(p2.Stdout)
 fmt.Println(strings.TrimSpace(string(stdout))) // "data"
 ```
-
 {/片段} </CodeTabs>
 
-### 卸载已安装的镜像
+### 卸载已安装的映像
 
 要卸载以前安装的映像，
 在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
-卸载后，该路径下的底层沙箱文件系统再次可见。
+卸载后，该路径下的底层沙盒文件系统再次可见。
 
 <CodeTabs>
   {#snippet python()}
@@ -366,9 +367,9 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 目前存在许多已知的[限制](#limitations)。
 
-</Callout>
+</Callout>沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
 
-沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。要对 Sandbox 进行快照，请创建它并将 `_experimental_enable_snapshot` 设置为 `True`，然后使用 `_experimental_snapshot` 方法，该方法返回一个 `SandboxSnapshot` 对象：
+要对 Sandbox 进行快照，请创建它并将 `_experimental_enable_snapshot` 设置为 `True`，然后使用 `_experimental_snapshot` 方法，该方法返回一个 `SandboxSnapshot` 对象：
 
 ```python notest
 image = modal.Image.debian_slim().apt_install("curl", "procps")
@@ -401,7 +402,6 @@ print(reply)  # <!DOCTYPE HTML><html lang...
 ```
 
 新沙箱将是原始沙箱的副本。所有正在运行的进程仍将运行，处于与快照时相同的状态，并且对文件系统所做的任何更改都将可见。
-
 您可以使用 `snapshot.object_id` 检索任何沙盒快照的 ID。要按 ID 从快照恢复，请首先使用 `SandboxSnapshot.from_id` 对快照进行再水合，然后从中恢复：
 
 ```python notest
@@ -413,6 +413,7 @@ sandbox = modal.Sandbox._experimental_from_snapshot(snapshot)
 ```
 
 请注意，这些方法是*实验性的*，我们将来可能会更改它们。
+
 ### 重新快照
 
 当从“本身”从内存快照创建的沙箱创建新的内存快照时，新快照将继承原始快照的到期日期。
@@ -439,7 +440,7 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
 * 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
-* 当 `Sandbox.exec` 命令仍在运行时，无法对沙盒进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
+* 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
 
@@ -477,6 +478,7 @@ sb.terminate()
 ```
 
 ## 删除快照
+
 由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除 API 删除它们。这对于管理存储或遵守数据保留策略很有用。
 
 <Callout variant="warning">

@@ -104,9 +104,8 @@ To manage storage for long-lived snapshots, you can delete them programmatically
 
 ## Filesystem Snapshots
 
-Filesystem Snapshots are copies of the Sandbox's filesystem at a given point in time.
-These Snapshots are [Images](/docs/sdk/py/latest/Image) and can be used to create
-new Sandboxes.
+Filesystem Snapshots are copies of the Sandbox's root filesystem at a given point in time.
+These Snapshots are [Images](/docs/sdk/py/latest/Image) and can be used to create new Sandboxes.
 
 To create a Filesystem Snapshot, you can use the
 [`Sandbox.snapshot_filesystem()`](/docs/sdk/py/latest/Sandbox#snapshot_filesystem) method:
@@ -133,6 +132,10 @@ from your base image, so only modified files are stored. Restoring a Filesystem 
 utilizes the same infrastructure we use to get fast cold starts for your Sandboxes.
 
 See [Snapshot Retention](#snapshot-retention) for TTL configuration options and [Deleting Snapshots](#deleting-snapshots) to learn how to manage snapshot storage.
+
+Note that a Filesystem Snapshot only covers the Sandbox's root filesystem.
+Any mounted [Volumes](/docs/guide/volumes) are not covered by this Snapshot
+and will not be included in the resulting Image.
 
 ### Forking
 
