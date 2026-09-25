@@ -22,13 +22,16 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users.
 
 #### Okta
 
-1. Create a private SCIM integration.
+1. Create a new SCIM integration or select your existing custom app.
 
-   The SCIM integration must be separate from the Modal catalog app used for
-   SAML SSO. Your existing Modal app can continue to handle SSO; do not add SSO
-   to the SCIM integration.
+   If you use the [Modal catalog app](https://www.okta.com/integrations/modal/)
+   for SAML SSO, create a separate private SCIM integration. Your existing Modal
+   app can continue to handle SSO; do not add SSO to the new SCIM integration.
 
-   In the Okta Admin Console:
+   If you use a custom app for SSO, you can reuse it for SCIM provisioning.
+   Select your existing app in the Okta Admin Console and continue to step 2.
+
+   To create a new integration in the Okta Admin Console:
 
    1. Go to "Applications > Applications".
    2. Click "Create a new app integration".
@@ -38,7 +41,8 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users.
 
 2. Configure the integration with your Modal SCIM credentials.
 
-   In the wizard's provisioning settings, enter:
+   In the new integration wizard or your existing custom app's provisioning
+   settings, enter:
 
    | Okta setting                      | Modal value                                           |
    | --------------------------------- | ----------------------------------------------------- |
@@ -48,9 +52,9 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users.
    | Authorization                     | The full SCIM token generated in step 1               |
    | Supported provisioning actions    | Push New Users, Push Profile Updates, and Push Groups |
 
-   Test the API credentials, then review and deploy the integration. When
-   prompted, add an app instance from your organization's "Private apps"
-   catalog.
+   Test the API credentials. If you created a new integration, review and
+   deploy it. When prompted, add an app instance from your organization's
+   "Private apps" catalog.
 
    In the app instance's "Provisioning > To App" settings, enable "Create
    Users", "Update User Attributes", and "Deactivate Users". Assign the

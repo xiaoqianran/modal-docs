@@ -827,9 +827,9 @@
       "bytes": 3840
     },
     "docs/guide/scim.md": {
-      "hash": "6fc57d866740affc667722cd68f2a67472225a87",
-      "translatedAt": "2026-09-03T11:02:25.169Z",
-      "bytes": 7563
+      "hash": "f591a8e5264eee6964b84f94534f7a871ec2caad",
+      "translatedAt": "2026-09-25T11:38:27.129Z",
+      "bytes": 7983
     },
     "docs/guide/sandboxes.md": {
       "hash": "56841289f2aaf074a6a3a76ac6ae69ea18d8fa84",
@@ -1608,7 +1608,7 @@
       "bytes": 3904
     }
   },
-  "updatedAt": "2026-09-24T11:32:27.308Z",
+  "updatedAt": "2026-09-25T11:38:27.130Z",
   "stats": {
     "translated": 1,
     "skipped": 317,
