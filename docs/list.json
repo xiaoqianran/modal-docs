@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-09-25T11:38:12.956Z",
+  "fetchedAt": "2026-09-26T11:12:04.314Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 310,
   "ok": 310,
@@ -778,7 +778,7 @@
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 26331,
+      "bytes": 26642,
       "stub": false
     },
     {
