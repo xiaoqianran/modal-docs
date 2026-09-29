@@ -88,6 +88,14 @@ Modal 服务器上的错误，或 Python 异常。
 class RemoteError extends Error
 ```
 
+## 资源耗尽错误
+
+服务器端资源已耗尽，例如容量、配额或速率限制。
+
+```typescript
+class ResourceExhaustedError extends Error
+```
+
 ## SandboxFilesystemDirectoryNotEmptyError
 
 目录本应为空，但实际并非如此。
@@ -111,7 +119,6 @@ class SandboxFilesystemError extends Error
 ```typescript
 class SandboxFilesystemFileTooLargeError extends SandboxFilesystemError
 ```
-
 ## SandboxFilesystemIsADirectoryError
 
 尝试对解析为目录的路径进行文件操作。
@@ -119,6 +126,7 @@ class SandboxFilesystemFileTooLargeError extends SandboxFilesystemError
 ```typescript
 class SandboxFilesystemIsADirectoryError extends SandboxFilesystemError
 ```
+
 ## SandboxFilesystemNotADirectoryError
 
 目录操作遇到了不是目录的路径组件。

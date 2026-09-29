@@ -121,6 +121,17 @@ type RemoteError struct {
 }
 ```
 
+## ResourceExhaustedError
+
+ResourceExhaustedError is returned when a server-side resource has been
+exhausted, such as capacity, a quota, or a rate limit.
+
+```go
+type ResourceExhaustedError struct {
+	Exception string
+}
+```
+
 ## SandboxFilesystemDirectoryNotEmptyError
 
 SandboxFilesystemDirectoryNotEmptyError is returned when a non-recursive remove operation targets a non-empty directory.

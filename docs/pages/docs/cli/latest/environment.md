@@ -1,15 +1,15 @@
 # `modal environment`
 
-Create and interact with Environments
+Create and interact with Environments.
 
-Environments are sub-divisions of workspaces, allowing you to deploy the same app
-in different namespaces. Each environment has their own set of Secrets and any
-lookups performed from an app in an environment will by default look for entities
-in the same environment.
+Environments are sub-divisions of Workspaces, allowing you to deploy the same App
+in different namespaces. Each Environment has their own set of Secrets and any
+lookups performed from an App in an Environment will by default look for entities
+in the same Environment.
 
-Typical use cases for environments include having one for development and one for
-production, to prevent overwriting production apps when developing new features
-while still being able to deploy changes to a live environment.
+Typical use cases for Environments include having one for development and one for
+production, to prevent overwriting production Apps when developing new features
+while still being able to deploy changes to a live Environment.
 
 **Usage**:
 
@@ -24,11 +24,11 @@ modal environment [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 * `billing`: View billing and usage info for the given Environment.
-* `create`: Create a new environment in the current workspace.
-* `delete`: Delete an environment in the current workspace.
-* `list`: List all environments in the current workspace.
+* `create`: Create a new Environment in the current Workspace.
+* `delete`: Delete an Environment in the current Workspace.
+* `list`: List all Environments in the current Workspace.
 * `roles`: Manage the Environment Roles of users and service users.
-* `update`: Update environment-level settings.
+* `update`: Update Environment-level settings.
 
 ## `modal environment billing`
 
@@ -110,7 +110,7 @@ modal environment billing report [OPTIONS] [ENVIRONMENT_NAME]
 Generate a billing summary for the specified Environment.
 
 If no argument for `environment_name` is passed, the method returns a summary for the default
-environment.
+Environment.
 
 The summary range can be provided by setting `--for` (e.g `--for 'last month'`). If not
 provided, `--for` defaults to "this month".
@@ -146,7 +146,7 @@ modal environment billing summary [OPTIONS] [ENVIRONMENT_NAME]
 
 ## `modal environment create`
 
-Create a new environment in the current workspace.
+Create a new Environment in the current Workspace.
 
 **Usage**:
 
@@ -156,15 +156,15 @@ modal environment create [OPTIONS] NAME
 
 **Options**:
 
-* `--restricted`: Enable RBAC restrictions on the new environment
+* `--restricted`: Enable RBAC restrictions on the new Environment.
 * `--default-role TEXT`: Default member Role for the Restricted Environment
 * `--help`: Show this message and exit.
 
 ## `modal environment delete`
 
-Delete an environment in the current workspace.
+Delete an Environment in the current Workspace.
 
-Deletes all apps in the selected environment and deletes the environment irrevocably.
+Deletes all Apps in the selected Environment and deletes the Environment irrevocably.
 
 **Usage**:
 
@@ -179,7 +179,7 @@ modal environment delete [OPTIONS] NAME
 
 ## `modal environment list`
 
-List all environments in the current workspace.
+List all Environments in the current Workspace.
 
 **Usage**:
 
@@ -213,12 +213,12 @@ modal environment roles [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
-* `list`: List the roles of each user and service user in an Environment
-* `update`: Update a user's or service user's role in an Environment
+* `list`: List the roles of each user and service user in an Environment.
+* `update`: Update a user's or service user's role in an Environment.
 
 ### `modal environment roles list`
 
-List the roles of each user and service user in an Environment
+List the roles of each user and service user in an Environment.
 
 **Usage**:
 
@@ -234,7 +234,7 @@ modal environment roles list [OPTIONS] ENVIRONMENT
 
 ### `modal environment roles update`
 
-Update a user's or service user's role in an Environment
+Update a user's or service user's role in an Environment.
 
 **Usage**:
 
@@ -250,7 +250,7 @@ modal environment roles update [OPTIONS] ENVIRONMENT PRINCIPAL
 
 ## `modal environment update`
 
-Update environment-level settings.
+Update Environment-level settings.
 
 **Usage**:
 
@@ -260,6 +260,6 @@ modal environment update [OPTIONS] CURRENT_NAME
 
 **Options**:
 
-* `--set-name TEXT`: New name of the environment
-* `--set-web-suffix TEXT`: New web suffix of environment (empty string is no suffix)
+* `--set-name TEXT`: New name of the Environment.
+* `--set-web-suffix TEXT`: New web suffix of the Environment (empty string is no suffix).
 * `--help`: Show this message and exit.

@@ -85,7 +85,7 @@ modal queue len [OPTIONS] NAME
 
 **选项**：
 
-* `-p, --partition TEXT`：要使用的分区的名称，否则使用默认（匿名）分区。* `-t, --total`：计算所有分区的队列长度之和
+* `-p, --partition TEXT`：要使用的分区的名称，否则使用默认（匿名）分区。* `-t, --total`：计算所有分区的队列长度总和
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 

@@ -140,14 +140,6 @@ class ExecutionError(modal.exception.Error)
 
 Raised when something unexpected happened during runtime.
 
-## FilesystemExecutionError
-
-```python
-class FilesystemExecutionError(modal.exception.Error)
-```
-
-Raised when an unknown error is thrown during a container filesystem operation.
-
 ## FunctionTimeoutError
 
 ```python
@@ -185,6 +177,14 @@ class InteractiveTimeoutError(modal.exception.TimeoutError)
 ```
 
 Raised when interactive frontends time out while trying to connect to a container.
+
+## InternalAPIWarning
+
+```python
+class InternalAPIWarning(UserWarning)
+```
+
+Warning emitted when user code directly accesses Modal's internal gRPC API.
 
 ## InternalError
 
@@ -390,7 +390,7 @@ Raised when an error occurs in basic client/server communication.
 class SnapshotCreationError(modal.exception.Error)
 ```
 
-Raised when a Sandbox fails to create an exit snapshot.
+Snapshot operation is done and failed. Polling again will not produce an Image; filesystem state is gone.
 
 ## TimeoutError
 

@@ -24,7 +24,7 @@ interface Profile {
   sandboxChannelIdleTimeoutMs: number;
   /**
    * Set by the MODAL_SANDBOX_V2 environment variable or the sandbox_v2
-   * profile key in .modal.toml.
+   * profile key in .modal.toml. Defaults to true when neither is set.
    */
   sandboxV2: boolean;
 }

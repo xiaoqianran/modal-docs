@@ -12,7 +12,7 @@ class Workspace(modal.object.Object)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时
@@ -57,7 +57,7 @@ from_context(*, client=None)
 
 这将返回活动模态凭据进行身份验证的工作空间
 （即您的活动配置文件或 `MODAL_TOKEN_ID` / `MODAL_TOKEN_SECRET` 环境
-变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作区
+变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作空间
 容器正在运行。
 
 ## 计费
@@ -74,7 +74,7 @@ Workspace 计费 API 的命名空间。
 rates(self)
 ```
 
-返回给定工作区的当前定价。
+返回给定工作区的当前定价率。
 
 **退货**
 
@@ -92,7 +92,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T31⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T33⟧ to include all tags in the report." />
 
 **退货**
 
@@ -119,7 +119,7 @@ summary(self, cycle=None)
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T36⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T38⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 
@@ -155,16 +155,42 @@ proxy_tokens: WorkspaceProxyTokenManager
 ### proxy\_tokens.create
 
 ```python
-create(self)
+create(self, name="")
 ```
 
 为工作区创建新的代理令牌。
 
+**参数**
+
+<Parameter name="name" type="str" defaultValue="&quot;&quot;" description="An optional name to help identify the token." />
+
 **使用**
 
 ```python notest
-token = modal.Workspace.from_context().proxy_tokens.create()
+token = modal.Workspace.from_context().proxy_tokens.create(name="production-webhooks")
 print(token.token_id, token.token_secret)
+```
+
+### proxy\_tokens.update
+
+```python
+update(self, proxy_token_id, *, name)
+```
+
+更新工作区中的代理令牌。
+
+空名称会删除令牌的名称。
+
+**参数**
+
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T49⟧) to update." />
+<Parameter name="name" type="str" description="The updated name for the token." />
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.proxy_tokens.update(token_id, name="production-webhooks")
 ```
 
 ### proxy\_tokens.list
@@ -199,10 +225,9 @@ allow(self, proxy_token_id, environment_name)
 ```
 
 允许代理令牌对给定环境的请求进行身份验证。
-
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T47⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T50⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to allow access to." />
 
 **使用**
@@ -220,12 +245,13 @@ revoke(self, proxy_token_id, environment_name)
 ```
 
 撤销代理令牌对给定环境的访问权限。
+
 代理令牌不会被删除，它将继续对任何请求进行身份验证
 与其关联的其他环境。
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T48⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T51⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to revoke access from." />
 
 **使用**
@@ -248,7 +274,7 @@ delete(self, proxy_token_id)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T49⟧) to delete." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T52⟧) to delete." />
 
 **使用**
 
@@ -260,9 +286,7 @@ modal.Workspace.from_context().proxy_tokens.delete(token_id)
 
 ```python
 settings: WorkspaceSettingsManager
-```
-
-工作区设置 API 的命名空间。
+```工作区设置 API 的命名空间。
 
 ### settings.valid\_settings
 

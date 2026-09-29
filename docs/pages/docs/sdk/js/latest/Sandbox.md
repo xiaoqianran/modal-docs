@@ -8,6 +8,7 @@ class Sandbox {
   get stdin(): ModalWriteStream<string>;
   get stdout(): ModalReadStream<string>;
   get stderr(): ModalReadStream<string>;
+  get logs(): SandboxLogsManager; // Access persisted entrypoint logs emitted by this Sandbox. Use `fetch()` to read logs from a UTC time range and `tail()` to read the most recent logs. This is separate from `stdout` and `stderr`, which expose the Sandbox's live output streams.
   get filesystem(): SandboxFilesystem;
   get experimentalSidecars(): SidecarService; // Operations for managing sidecar containers that run alongside the Sandbox's main container. EXPERIMENTAL: the API is subject to change.
 }
@@ -35,6 +36,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `cpuLimit?` (`number`): Hard limit of physical CPU cores for the Sandbox, can be fractional.
 * `memoryMiB?` (`number`): Reservation of memory in MiB.
 * `memoryLimitMiB?` (`number`): Hard limit of memory in MiB.
+* `runtime?` (`SandboxRuntime`): Runtime under which the Sandbox executes, or undefined to let Modal pick.
 * `gpu?` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
 * `timeoutMs?` (`number`): Maximum lifetime of the Sandbox in milliseconds. Defaults to 5 minutes.
 * `idleTimeoutMs?` (`number`): The amount of time in milliseconds that a Sandbox can be idle before being terminated.
@@ -51,6 +53,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `blockNetwork?` (`boolean`): Whether to block all network access from the Sandbox.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the Sandbox is allowed to access. If not set, all CIDRs are allowed. Cannot be used with blockNetwork.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the Sandbox is allowed to access. Supports wildcard prefixes (`*.example.com`). Cannot be used with blockNetwork.
+* `experimentalOutboundPolicy?` (`ExperimentalOutboundPolicy`): Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload. See `ExperimentalOutboundPolicy`. EXPERIMENTAL: the API is subject to change.
 * `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
 * `i6pn?` (`boolean`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can address each other directly at their `i6pn.modal.local` address. Pin every Sandbox in the group to the same specific region (e.g. `regions: ["us-east-1"]`). Cannot be used with blockNetwork.
 * `cloud?` (`string`): Cloud provider to run the Sandbox on.
@@ -106,6 +109,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `cpuLimit?` (`number`): Hard limit of physical CPU cores for the Sandbox, can be fractional.
 * `memoryMiB?` (`number`): Reservation of memory in MiB.
 * `memoryLimitMiB?` (`number`): Hard limit of memory in MiB.
+* `runtime?` (`SandboxRuntime`): Runtime under which the Sandbox executes, or undefined to let Modal pick.
 * `gpu?` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
 * `timeoutMs?` (`number`): Maximum lifetime of the Sandbox in milliseconds. Defaults to 5 minutes.
 * `idleTimeoutMs?` (`number`): The amount of time in milliseconds that a Sandbox can be idle before being terminated.
@@ -122,6 +126,7 @@ Optional parameters for `client.sandboxes.create()`.
 * `blockNetwork?` (`boolean`): Whether to block all network access from the Sandbox.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the Sandbox is allowed to access. If not set, all CIDRs are allowed. Cannot be used with blockNetwork.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the Sandbox is allowed to access. Supports wildcard prefixes (`*.example.com`). Cannot be used with blockNetwork.
+* `experimentalOutboundPolicy?` (`ExperimentalOutboundPolicy`): Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload. See `ExperimentalOutboundPolicy`. EXPERIMENTAL: the API is subject to change.
 * `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
 * `i6pn?` (`boolean`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can address each other directly at their `i6pn.modal.local` address. Pin every Sandbox in the group to the same specific region (e.g. `regions: ["us-east-1"]`). Cannot be used with blockNetwork.
 * `cloud?` (`string`): Cloud provider to run the Sandbox on.
@@ -422,6 +427,25 @@ The Sandbox must have been created with `experimentalEnableSnapshot: true`.
 
 EXPERIMENTAL: the API is subject to change.
 
+## experimentalUpdateOutboundPolicy
+
+```typescript
+async experimentalUpdateOutboundPolicy(
+  outboundPolicy: ExperimentalOutboundPolicy,
+): Promise<void>
+```
+
+Replace the outbound policy of a running Sandbox.
+
+EXPERIMENTAL: the API is subject to change.
+
+The new policy replaces all existing policy configuration on the
+Sandbox; build a policy including any existing rules you want to keep.
+
+Only Sandboxes created with an `experimentalOutboundPolicy` can be updated this
+way; for Sandboxes created without one this fails, since header
+replacement is only set up at creation time.
+
 ## getTags
 
 ```typescript
@@ -659,9 +683,12 @@ Options for `SidecarService.create()`.
 * `env?` (`Record<string, string>`): Environment variables to set in the sidecar container.
 * `secrets?` (`Secret[]`): `Secret`s to inject into the sidecar container as environment variables.
 * `workdir?` (`string`): Working directory of the sidecar container.
+* `volumes?` (`Record<string, Volume>`): Mount points for Modal `Volume`s.
+* `cloudBucketMounts?` (`Record<string, CloudBucketMount>`): Mount points for Modal `CloudBucketMount`s. Not supported for GPU Sandboxes.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the sidecar is allowed to access. Independent of the main container; if not set, all CIDRs are allowed. An empty list blocks all external egress while preserving connectivity to the main container.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the sidecar is allowed to access. Supports wildcard prefixes (`*.example.com`). Independent of the main container.
 * `pty?` (`boolean`): Enable a PTY for the sidecar.
+* `experimentalMemoryReserveConsumeMiB?` (`number`): Memory, in MiB, the sidecar consumes from the Sandbox's sidecar memory reserve (the `vm_sidecar_memory_reserve_mib` experimental option); unset consumes whatever is left of it. Ignored by Sandboxes without a reserve. Experimental.
 
 ### get
 
@@ -945,3 +972,77 @@ if it already exists.
 * `SandboxFilesystemIsADirectoryError`: `remotePath` points to a directory.
 * `SandboxFilesystemPermissionError`: write permission is denied.
 * `SandboxFilesystemError`: the command fails for any other reason.
+
+## Sandbox.logs
+
+Access persisted entrypoint logs emitted by this Sandbox.
+
+Use `fetch()` to read logs from a UTC time
+range and `tail()` to read the most recent
+logs.
+
+This is separate from `stdout` and
+`stderr`, which expose the Sandbox's live output
+streams.
+
+### fetch
+
+```typescript
+async *fetch(params: SandboxLogFetchParams): AsyncIterable<LogEntry>
+```
+
+Fetch Sandbox entrypoint logs corresponding to a UTC time range and
+optional filters.
+
+Entries are returned in chronological order.
+
+**Parameters** (`SandboxLogFetchParams`)
+
+* `since` (`Date`): Start of the UTC time range.
+* `until?` (`Date`): End of the UTC time range. Defaults to the current time.
+* `source?` (`LogSource`): Filter by source: `stdout`, `stderr`, or `system`.
+* `searchText?` (`string`): Filter by text contained in the log message.
+
+**Returns:** An async iterable of `LogEntry` objects.
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const sandbox = await modal.sandboxes.fromId("sb-...");
+
+for await (const entry of sandbox.logs.fetch({
+  since: new Date(Date.now() - 60 * 60 * 1_000),
+  source: "stdout",
+})) {
+  process.stdout.write(entry.message);
+}
+```
+
+### tail
+
+```typescript
+async *tail(params: SandboxLogTailParams = {}): AsyncIterable<LogEntry>
+```
+
+Fetch the most recent Sandbox entrypoint logs.
+
+Entries are returned in chronological order.
+
+**Parameters** (`SandboxLogTailParams`)
+
+* `entries?` (`number`): Number of log entries to return. Defaults to 100.
+* `source?` (`LogSource`): Filter by source: `stdout`, `stderr`, or `system`.
+
+**Returns:** An async iterable of `LogEntry` objects.
+
+```typescript
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const sandbox = await modal.sandboxes.fromId("sb-...");
+
+for await (const entry of sandbox.logs.tail({ entries: 20 })) {
+  process.stdout.write(entry.message);
+}
+```

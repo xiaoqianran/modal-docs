@@ -340,6 +340,80 @@ fmt.Println(state) // "ready"
 
 {/snippet} </CodeTabs>
 
+### Cloud Bucket Mounts
+
+A Sidecar can mount [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts),
+configured the same way as on a Sandbox. Each container gets its own mount:
+a bucket mounted in a Sidecar is not visible in the main Sandbox container or
+in other Sidecars, so mount it in every container that needs it. Cloud Bucket
+Mounts are not supported in Sidecars of GPU Sandboxes.
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+bucket = modal.CloudBucketMount(
+    "my-bucket",
+    secret=modal.Secret.from_name("my-aws-secret"),
+    read_only=True,
+)
+
+reader = sb._experimental_sidecars.create(
+    "sleep", "600", name="reader", image=image, volumes={"/mnt/bucket": bucket}
+)
+p = reader.exec("ls", "/mnt/bucket")
+p.wait()
+print(p.stdout.read())
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const secret = await modal.secrets.fromName("my-aws-secret");
+
+const reader = await sb.experimentalSidecars.create("reader", image, {
+  command: ["sleep", "600"],
+  cloudBucketMounts: {
+    "/mnt/bucket": modal.cloudBucketMounts.create("my-bucket", {
+      secret,
+      readOnly: true,
+    }),
+  },
+});
+const p = await reader.exec(["ls", "/mnt/bucket"]);
+await p.wait();
+console.log(await p.stdout.readText());
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+secret, _ := mc.Secrets.FromName(ctx, "my-aws-secret", nil)
+bucket, _ := mc.CloudBucketMounts.New("my-bucket", &modal.CloudBucketMountParams{
+	Secret:   secret,
+	ReadOnly: true,
+})
+
+reader, _ := sb.ExperimentalSidecars.Create(ctx, "reader", image, &modal.SidecarCreateParams{
+	Command:           []string{"sleep", "600"},
+	CloudBucketMounts: map[string]*modal.CloudBucketMount{"/mnt/bucket": bucket},
+})
+p, _ := reader.Exec(ctx, []string{"ls", "/mnt/bucket"}, nil)
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout))
+```
+
+{/snippet} </CodeTabs>
+
+With [OIDC authentication](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens),
+the identity token is issued for the Sidecar container, so its `container_id`
+claim differs from the main container's. An IAM trust policy that matches on
+the full subject must allow the Sidecar's container ID as well.
+
 ## Resource configuration
 
 The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
@@ -374,7 +448,7 @@ for sidecars:
   by ID via `Image.from_id()` or name via `Image.from_name()`, or created from filesystem/directory snapshots. Lazy image
   building is not supported for sidecars. See also [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
 * **No GPU support**: Sidecar containers cannot access GPUs, even when the Sandbox is configured with one.
-* **No Cloud Bucket Mount support**: Sidecar containers do not currently support attaching [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
+* **No Cloud Bucket Mounts in GPU Sandboxes**: Sidecars of a GPU Sandbox cannot attach [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
 * **No memory snapshot support**: A Sidecar's filesystem can be snapshotted
   independently, but Sidecar memory state is not captured in
   [Sandbox snapshots](/docs/guide/sandbox-snapshots).

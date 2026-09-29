@@ -1,7 +1,6 @@
 https://modal.com/docs
 https://modal.com/docs/cli/latest/app.md
 https://modal.com/docs/cli/latest/billing.md
-https://modal.com/docs/cli/latest/bootstrap.md
 https://modal.com/docs/cli/latest/changelog.md
 https://modal.com/docs/cli/latest/config.md
 https://modal.com/docs/cli/latest/container.md
@@ -11,6 +10,7 @@ https://modal.com/docs/cli/latest/deploy.md
 https://modal.com/docs/cli/latest/dict.md
 https://modal.com/docs/cli/latest/endpoint.md
 https://modal.com/docs/cli/latest/environment.md
+https://modal.com/docs/cli/latest/function.md
 https://modal.com/docs/cli/latest/image.md
 https://modal.com/docs/cli/latest/intro.md
 https://modal.com/docs/cli/latest/profile.md
@@ -18,6 +18,7 @@ https://modal.com/docs/cli/latest/queue.md
 https://modal.com/docs/cli/latest/run.md
 https://modal.com/docs/cli/latest/secret.md
 https://modal.com/docs/cli/latest/serve.md
+https://modal.com/docs/cli/latest/server.md
 https://modal.com/docs/cli/latest/setup.md
 https://modal.com/docs/cli/latest/shell.md
 https://modal.com/docs/cli/latest/skills.md
@@ -139,7 +140,7 @@ https://modal.com/docs/guide/managing-deployments.md
 https://modal.com/docs/guide/memory-snapshots.md
 https://modal.com/docs/guide/modal-1-0-migration.md
 https://modal.com/docs/guide/model-weights.md
-https://modal.com/docs/guide/multi-node-training.md
+https://modal.com/docs/guide/multi-node-clusters.md
 https://modal.com/docs/guide/named-images.md
 https://modal.com/docs/guide/network-egress-billing.md
 https://modal.com/docs/guide/notebooks.md
@@ -195,6 +196,8 @@ https://modal.com/docs/sdk/go/latest/Cls.md
 https://modal.com/docs/sdk/go/latest/ClsInstance.md
 https://modal.com/docs/sdk/go/latest/ContainerProcess.md
 https://modal.com/docs/sdk/go/latest/Errors.md
+https://modal.com/docs/sdk/go/latest/ExperimentalOutboundPolicy.md
+https://modal.com/docs/sdk/go/latest/ExperimentalOutboundPolicyHeaderReplacement.md
 https://modal.com/docs/sdk/go/latest/FileInfo.md
 https://modal.com/docs/sdk/go/latest/FileType.md
 https://modal.com/docs/sdk/go/latest/FileWatchEvent.md
@@ -202,7 +205,7 @@ https://modal.com/docs/sdk/go/latest/FileWatchEventType.md
 https://modal.com/docs/sdk/go/latest/Function.md
 https://modal.com/docs/sdk/go/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/go/latest/FunctionCall.md
-https://modal.com/docs/sdk/go/latest/FunctionStats.md
+https://modal.com/docs/sdk/go/latest/FunctionCurrentStats.md
 https://modal.com/docs/sdk/go/latest/Image.md
 https://modal.com/docs/sdk/go/latest/LogEntry.md
 https://modal.com/docs/sdk/go/latest/LogSource.md
@@ -213,6 +216,7 @@ https://modal.com/docs/sdk/go/latest/Queue.md
 https://modal.com/docs/sdk/go/latest/Retries.md
 https://modal.com/docs/sdk/go/latest/Sandbox.md
 https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/go/latest/SandboxRuntime.md
 https://modal.com/docs/sdk/go/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/go/latest/Secret.md
 https://modal.com/docs/sdk/go/latest/SidecarContainer.md
@@ -227,6 +231,7 @@ https://modal.com/docs/sdk/js/latest/Cls.md
 https://modal.com/docs/sdk/js/latest/ClsInstance.md
 https://modal.com/docs/sdk/js/latest/ContainerProcess.md
 https://modal.com/docs/sdk/js/latest/Errors.md
+https://modal.com/docs/sdk/js/latest/ExperimentalOutboundPolicy.md
 https://modal.com/docs/sdk/js/latest/FileInfo.md
 https://modal.com/docs/sdk/js/latest/FileType.md
 https://modal.com/docs/sdk/js/latest/FileWatchEvent.md
@@ -234,7 +239,7 @@ https://modal.com/docs/sdk/js/latest/FileWatchEventType.md
 https://modal.com/docs/sdk/js/latest/Function.md
 https://modal.com/docs/sdk/js/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/js/latest/FunctionCall.md
-https://modal.com/docs/sdk/js/latest/FunctionStats.md
+https://modal.com/docs/sdk/js/latest/FunctionCurrentStats.md
 https://modal.com/docs/sdk/js/latest/Image.md
 https://modal.com/docs/sdk/js/latest/LogEntry.md
 https://modal.com/docs/sdk/js/latest/LogLevel.md
@@ -250,6 +255,7 @@ https://modal.com/docs/sdk/js/latest/Queue.md
 https://modal.com/docs/sdk/js/latest/Retries.md
 https://modal.com/docs/sdk/js/latest/Sandbox.md
 https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/js/latest/SandboxRuntime.md
 https://modal.com/docs/sdk/js/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/js/latest/Secret.md
 https://modal.com/docs/sdk/js/latest/SidecarContainer.md
@@ -263,6 +269,7 @@ https://modal.com/docs/sdk/py/latest/App.md
 https://modal.com/docs/sdk/py/latest/Client.md
 https://modal.com/docs/sdk/py/latest/CloudBucketMount.md
 https://modal.com/docs/sdk/py/latest/Cls.md
+https://modal.com/docs/sdk/py/latest/Cluster.md
 https://modal.com/docs/sdk/py/latest/Cron.md
 https://modal.com/docs/sdk/py/latest/Dict.md
 https://modal.com/docs/sdk/py/latest/Environment.md
@@ -286,6 +293,7 @@ https://modal.com/docs/sdk/py/latest/Workspace.md
 https://modal.com/docs/sdk/py/latest/asgi_app.md
 https://modal.com/docs/sdk/py/latest/batched.md
 https://modal.com/docs/sdk/py/latest/billing.md
+https://modal.com/docs/sdk/py/latest/clustered.md
 https://modal.com/docs/sdk/py/latest/concurrent.md
 https://modal.com/docs/sdk/py/latest/config.md
 https://modal.com/docs/sdk/py/latest/container_process.md
@@ -296,7 +304,6 @@ https://modal.com/docs/sdk/py/latest/enter.md
 https://modal.com/docs/sdk/py/latest/exception.md
 https://modal.com/docs/sdk/py/latest/exit.md
 https://modal.com/docs/sdk/py/latest/fastapi_endpoint.md
-https://modal.com/docs/sdk/py/latest/file_io.md
 https://modal.com/docs/sdk/py/latest/forward.md
 https://modal.com/docs/sdk/py/latest/interact.md
 https://modal.com/docs/sdk/py/latest/intro.md
@@ -304,6 +311,7 @@ https://modal.com/docs/sdk/py/latest/io_streams.md
 https://modal.com/docs/sdk/py/latest/is_local.md
 https://modal.com/docs/sdk/py/latest/method.md
 https://modal.com/docs/sdk/py/latest/parameter.md
+https://modal.com/docs/sdk/py/latest/sessioned.md
 https://modal.com/docs/sdk/py/latest/types.md
 https://modal.com/docs/sdk/py/latest/web_server.md
 https://modal.com/docs/sdk/py/latest/wsgi_app.md

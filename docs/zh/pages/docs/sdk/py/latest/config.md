@@ -135,7 +135,7 @@ override_locally(self, key, value)
 ### 到\_dict
 
 ```python
-to_dict(self)
+to_dict(self, *, include_internal=False)
 ```
 
 ## 配置\_配置文件

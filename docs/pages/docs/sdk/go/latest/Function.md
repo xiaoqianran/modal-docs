@@ -29,10 +29,10 @@ FunctionFromNameParams are options for client.Functions.FromName.
 ## GetCurrentStats
 
 ```go
-GetCurrentStats(ctx context.Context, params *FunctionGetCurrentStatsParams) (*FunctionStats, error)
+GetCurrentStats(ctx context.Context, params *FunctionGetCurrentStatsParams) (*FunctionCurrentStats, error)
 ```
 
-GetCurrentStats returns a FunctionStats object with statistics about the Function.
+GetCurrentStats returns a FunctionCurrentStats object with statistics about the Function.
 
 **Parameters** (`FunctionGetCurrentStatsParams`)
 

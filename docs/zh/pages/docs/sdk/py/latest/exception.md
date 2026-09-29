@@ -4,7 +4,7 @@
 
 特定于模态的异常类型。
 
-**关于`grpclib.GRPCError`迁移的注释**
+**关于`grpclib.GRPCError`迁移的注意事项**
 
 从历史上看，Modal SDK 可以传播 `grpclib.GRPCError` 异常
 到用户代码。  从 v1.3 开始，我们正在优雅地迁移到
@@ -138,13 +138,7 @@ class ExecTimeoutError(modal.exception.TimeoutError)
 class ExecutionError(modal.exception.Error)
 ```
 
-当运行时发生意外情况时引发。## 文件系统执行错误
-
-```python
-class FilesystemExecutionError(modal.exception.Error)
-```
-
-在容器文件系统操作期间引发未知错误时引发。
+当运行时发生意外情况时引发。
 
 ## 函数超时错误
 
@@ -181,8 +175,15 @@ class InputCancellation(BaseException)
 ```python
 class InteractiveTimeoutError(modal.exception.TimeoutError)
 ```
-
 当交互式前端尝试连接到容器时超时时引发。
+
+## 内部API警告
+
+```python
+class InternalAPIWarning(UserWarning)
+```
+
+当用户代码直接访问 Modal 的内部 gRPC API 时发出警告。
 
 ## 内部错误
 
@@ -228,13 +229,13 @@ class ModuleNotMountable(Exception)
 class MountUploadTimeoutError(modal.exception.TimeoutError)
 ```
 
-当装载上传超时时引发。
-
-## 未发现错误
+当装载上传超时时引发。## 未发现错误
 
 ```python
 class NotFoundError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
-```当未找到请求的资源时引发。
+```
+
+当未找到请求的资源时引发。
 
 ## 输出过期错误
 
@@ -275,12 +276,12 @@ class ResourceExhaustedError(modal.exception.Error, modal.exception._GRPCErrorWr
 ```
 
 当服务器端资源耗尽时引发，例如配额或速率限制。
-
 ## SandboxFilesystemDirectoryNotEmptyError
 
 ```python
 class SandboxFilesystemDirectoryNotEmptyError(modal.exception.SandboxFilesystemError)
 ```
+
 当目录不为空时引发。
 
 ## Sandbox文件系统错误
@@ -360,10 +361,10 @@ class SandboxTimeoutError(modal.exception.TimeoutError)
 ```python
 class SerializationError(modal.exception.Error)
 ```
-
 当序列化过程中遇到错误时，提出该错误以提供更多上下文。
 
 ## 服务器警告
+
 ```python
 class ServerWarning(UserWarning)
 ```
@@ -376,7 +377,7 @@ class ServerWarning(UserWarning)
 class ServiceError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 ```
 
-当基本客户端/服务器通信中发生错误时引发。
+当基本客户端/服务器通信发生错误时引发。
 
 ## 快照创建错误
 
@@ -384,7 +385,7 @@ class ServiceError(modal.exception.Error, modal.exception._GRPCErrorWrapper)
 class SnapshotCreationError(modal.exception.Error)
 ```
 
-当沙盒无法创建退出快照时引发。
+快照操作已完成但失败。再次轮询不会产生图像；文件系统状态消失了。
 
 ## 超时错误
 
@@ -406,9 +407,7 @@ class UnimplementedError(modal.exception.Error, modal.exception._GRPCErrorWrappe
 
 ```python
 class VersionError(modal.exception.Error)
-```
-
-当当前的 Modal 客户端版本不受支持时引发。
+```当当前的 Modal 客户端版本不受支持时引发。
 
 ## 卷上传超时错误
 
@@ -453,6 +452,5 @@ except KeyboardInterrupt:
     print("got preempted") # Handle interrupt
     raise
 ```
-
 有关抢占的更多详细信息，请参阅https://modal.com/docs/guide/preemption
 处理。

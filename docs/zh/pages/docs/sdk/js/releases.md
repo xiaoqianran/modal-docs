@@ -4,6 +4,17 @@
 
 ## 最新
 
+### 0.11.0 (2026-09-28)
+
+* 沙箱现在使用我们的[下一代后端](/blog/秒内缩放至 100 万并发沙箱)，为 CPU 沙箱提供更高的创建率和并发限制。不需要更改代码，但需要注意一些语义差异：
+  * [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create) 方法现在会阻塞，直到调度 Sandbox，而不是立即返回。
+  * 如果无法安排沙箱（例如，由于无法满足资源或放置请求），创建将超时并引发 [`ResourceExhaustedError`](/docs/sdk/js/latest/Errors#resourceexhaustederror.)。
+* 沙箱现在可以使用完整的虚拟机作为运行时，为运行 Docker 等工作流程提供更好的支持：
+  * 在 [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create) 的参数中设置`runtime: "vm"`以启用。
+  * 要强制继续使用 gVisor 运行时，请设置 `runtime="gvisor"`。这是当前的默认行为，但默认行为将来可能会发生变化。
+* 我们添加了一个 [`Sandbox.logs`](/docs/sdk/js/latest/Sandbox#sandboxlogs) 命名空间，其中包含从沙箱入口点进程获取日志的方法。
+
+## 0.10
 ### 0.10.1 (2026-09-10)
 
 * 现在可以通过在 `.modal.toml` 中设置 `MODAL_SANDBOX_V2=1` 环境变量或 `sandbox_v2 = true` 配置文件配置来选择[性能更佳的沙箱后端](/blog/scaling-to-1-million-concurrent-sandboxes-in-seconds)。然后，沙箱将使用新的后端，无需更改任何代码。这将成为即将发布的版本中的默认行为；设置标志可以让您提前选择加入。
@@ -21,8 +32,8 @@
 ### 0.9.0 (2026-07-09)
 
 * [`client.functions.fromName`](/docs/sdk/js/latest/Function#fromname) 和 [`client.cls.fromName`](/docs/sdk/js/latest/Cls#fromname) 现在接受可选的 `version` 参数来查找版本固定的 Function 或 Cls。
-* [`client.secrets.fromObject`](/docs/sdk/js/latest/Secret#fromobject) 现在是惰性的，因此返回的 `Secret` 在第一次使用之前有一个空的 `secretId`。通过将机密直接发送到沙箱并避免机密创建限制，可以改善 [`Sandbox.experimentalCreate`](/docs/sdk/js/latest/Sandbox#experimentalcreate) 和 [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 的延迟。
-* [`Function_.withOptions`](/docs/sdk/js/latest/Function#withoptions) 和 [`Cls.withOptions`](/docs/sdk/js/latest/Cls#withoptions) 现在接受 `routingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由经过的区域。
+* [`client.secrets.fromObject`](/docs/sdk/js/latest/Secret#fromobject) 现在是惰性的，因此返回的 `Secret` 在第一次使用之前有一个空的 `secretId`。通过将机密直接发送到沙箱并避免机密创建限制，[`Sandbox.experimentalCreate`](/docs/sdk/js/latest/Sandbox#experimentalcreate) 和 [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 的延迟得到了改善。
+* [`Function_.withOptions`](/docs/sdk/js/latest/Function#withoptions) 和 [`Cls.withOptions`](/docs/sdk/js/latest/Cls#withoptions) 现在接受 `routingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由通过的区域。
 * 添加了 [`Sandbox.filesystem.watch`](/docs/sdk/js/latest/Sandbox#filesystemwatch) 以监视沙箱中文件系统更改的路径。它生成 [`FileWatchEvent`](/docs/sdk/js/latest/FileWatchEvent) 对象并支持 `recursive`、事件类型 `filter` 和 `timeoutMs` 绑定。
 * **中断：** [`Sandbox.reloadVolumes`](/docs/sdk/js/latest/Sandbox#reloadvolumes) 现在会阻塞，直到重新加载卷为止，并受到可通过 `SandboxReloadVolumesParams.timeoutMs` 配置的新超时（默认为 55 秒）的限制。如果重新加载未在该窗口内完成，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。
 * **中断：** 将 `VolumeMountOptions` 类型重命名为 `VolumeMountOptionsParams`。相应地更新任何 [`withMountOptions`](/docs/sdk/js/latest/Volume#withmountoptions) 类型注释。
@@ -31,7 +42,7 @@
 
 ### 0.8.2 (2026-06-29)
 
-* 添加了 [`Sandbox.updateNetworkPolicy`](/docs/sdk/js/latest/Sandbox#updatenetworkpolicy) 以更新正在运行的 Sandbox 的出站网络策略。必须同时提供 `outboundCidrAllowlist` 和 `outboundDomainAllowlist`。
+* 添加了 [`Sandbox.updateNetworkPolicy`](/docs/sdk/js/latest/Sandbox#updatenetworkpolicy) 以更新正在运行的 Sandbox 的出站网络策略。 `outboundCidrAllowlist` 和 `outboundDomainAllowlist` 都必须提供。
 
 ### 0.8.1 (2026-06-25)
 
@@ -46,15 +57,15 @@
 * 添加了对 Functions 动态配置的支持：[`Function_.withOptions`](/docs/sdk/js/latest/Function#withoptions)、[`Function_.withConcurrency`](/docs/sdk/js/latest/Function#withconcurrency)、[`Function_.withBatching`](/docs/sdk/js/latest/Function#withbatching) 和[`Function_.instance`](/docs/sdk/js/latest/Function#instance)。
 * 提高了为函数调用上传或下载大数据负载时的可靠性。
 * 修复了向加载了 [`Image.fromId`](/docs/sdk/js/latest/Image#fromid) 的镜像添加 Dockerfile 命令可能无法使用解析后的镜像作为基础的错误。
-* [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/js/latest/Errors#invaliderror) 拒绝相对的 `workdir` 客户端。空字符串 `workdir` 也会被拒绝（通过 `undefined` 使用图像默认值）。
-* **突破：** JS SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，JS SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙箱工作流程的改进。因此，固定的 `ModalClient.imageBuilderVersion` 属性已被删除，取而代之的是 [`ModalClient.getImageBuilderVersion`](/docs/sdk/js/latest/ModalClient#getimagebuilderversion)。
+* [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/js/latest/Errors#invaliderror) 拒绝相对的 `workdir` 客户端。空字符串 `workdir` 也会被拒绝（传递 `undefined` 以使用图像默认值）。
+* **突破：** JS SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，JS SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙盒工作流程的改进。因此，固定的 `ModalClient.imageBuilderVersion` 属性已被删除，取而代之的是 [`ModalClient.getImageBuilderVersion`](/docs/sdk/js/latest/ModalClient#getimagebuilderversion)。
 * **突破：** [`Sandbox.snapshotFilesystem`](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 不再采用位置 `timeoutMs` 参数。超时现在作为 `timeoutMs?: number` 存在于 params 对象上，使该方法与 [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 同等。将 `sb.snapshotFilesystem(30000, params)` 迁移到 `sb.snapshotFilesystem({ timeoutMs: 30000, ...params })`。
-* **突破：** [`Sandbox.snapshotFilesystem`](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 和 [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其 params 对象上接受显式 `ttlMs` 字段（以毫秒为单位），控制结果图像的保留时间。两种方法均默认为 30 天。这是 `snapshotFilesystem` 的默认更改，之前它无限期地保留图像。通过`ttlMs: null`选择退出到期。* **突破：** [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其 params 对象上也有一个 `timeoutMs` 字段，默认值为 55 秒，这使其与文件系统快照相同。如果快照未在该窗口内返回，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。超时可以设置为任意高，以保留不超时的旧行为。
+* **突破：** [`Sandbox.snapshotFilesystem`](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 和 [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其参数对象上接受显式 `ttlMs` 字段（以毫秒为单位），控制生成的图像保留的时间。两种方法均默认为 30 天。这是 `snapshotFilesystem` 的默认更改，之前它无限期地保留图像。通过`ttlMs: null`选择退出到期。* **突破：** [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其 params 对象上也有一个 `timeoutMs` 字段，默认值为 55 秒，这使其与文件系统快照相同。如果快照未在该窗口内返回，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。超时可以设置为任意高，以保留不超时的旧行为。
 * **中断：** [`Sandbox.fromId`](/docs/sdk/js/latest/Sandbox#fromid) 不再检查沙箱 ID 是否存在。您可以运行 [`poll`](/docs/sdk/js/latest/Sandbox#poll) 来获取沙箱的状态。
 * **重大突破：** 删除了已弃用的低级文件句柄 API：`sandbox.open` 和 `SandboxFile`。请使用 [Sandbox 文件系统 API](/docs/sdk/js/latest/Sandbox#sandboxfilesystem)：`sandbox.filesystem`。
 * **中断：** 删除了已弃用的 `volume.readOnly` 和 `volume.isReadOnly`。请改用 [`withMountOptions({ readOnly: true })`](/docs/sdk/js/latest/Volume#withmountoptions)。
-* **中断：** 从 [`sandboxes.create`](/docs/sdk/js/latest/Sandbox#create) 中删除了已弃用的 `cidrAllowlist` 参数。请改用`outboundCidrAllowlist`。* **突破：** 删除了整个已弃用的 v0.5.0 向后兼容表面：全局 `initializeClient()` / `close()` 函数和 `ClientOptions` 类型；已弃用的静态工厂 `App.lookup`、`Function_.lookup`、`Cls.lookup`、`Queue.lookup` / `Queue.ephemeral` / `Queue.delete`、`Volume.fromName` / `Volume.ephemeral`、`Secret.fromName` / `Secret.fromObject`、 `Sandbox.fromId` / `Sandbox.fromName` / `Sandbox.list`、`Image.fromId` / `Image.fromRegistry` / `Image.fromAwsEcr` / `Image.fromGcpArtifactRegistry` / `Image.delete`、`Proxy.fromName`，以及`FunctionCall.fromId`；实例垫片 `app.createSandbox`、`app.imageFromRegistry` / `imageFromAwsEcr` / `imageFromGcpArtifactRegistry`、公共 `CloudBucketMount` 构造函数以及已弃用的 `LookupOptions` / ⟦T1
-16⟧ / `EphemeralOptions` 类型别名。请参阅 [`MIGRATION-GUIDE.md`](../MIGRATION-GUIDE.md)。
+* **中断：** 从 [`sandboxes.create`](/docs/sdk/js/latest/Sandbox#create) 中删除了已弃用的 `cidrAllowlist` 参数。请改用`outboundCidrAllowlist`。* **突破：** 删除了整个已弃用的 v0.5.0 向后兼容表面：全局 `initializeClient()` / `close()` 函数和 `ClientOptions` 类型；已弃用的静态工厂 `App.lookup`、`Function_.lookup`、`Cls.lookup`、`Queue.lookup` / `Queue.ephemeral` / `Queue.delete`、`Volume.fromName` / `Volume.ephemeral`、`Secret.fromName` / `Secret.fromObject`、`Sandbox.fromId` / `Sandbox.fromName` / `Sandbox.list`、`Image.fromId` / `Image.fromRegistry` / `Image.fromAwsEcr` / `Image.fromGcpArtifactRegistry` / `Image.delete`、 `Proxy.fromName`、`FunctionCall.fromId`；实例垫片 `app.createSandbox`、`app.imageFromRegistry` / `imageFromAwsEcr` / `imageFromGcpArtifactRegistry`、公共 `CloudBucketMount` 构造函数和已弃用的 `LookupOptions` /
+`DeleteOptions` / `EphemeralOptions` 类型别名。请参阅 [`MIGRATION-GUIDE.md`](../MIGRATION-GUIDE.md)。
 
 ## 0.7
 
@@ -91,7 +102,7 @@
 
 ### 0.7.3 (2026-03-12)
 
-* 将 SDK 从 `github.com/modal-labs/libmodal` 迁移到 `github.com/modal-labs/modal-client`。
+* 将 SDK 从`github.com/modal-labs/libmodal`迁移到`github.com/modal-labs/modal-client`。
 
 ### 0.7.2 (2026-02-26)
 * 更新了 `Sandbox` 方法以等待新创建的沙箱准备就绪，并且在尚不可用时不会立即出错。
@@ -133,7 +144,7 @@
 
 **重大变更：**
 
-* 更改Sandbox参数默认与Python SDK一致：
+* 更改Sandbox参数默认值与Python SDK一致：
   * 将默认沙箱超时设置为 5 分钟（之前为 10 分钟）。
   * 默认情况下将沙箱入口点参数保留为空（之前是`["sleep", "48h"]`）。
 
@@ -167,13 +178,13 @@
 
 ### 0.5.0 (2025-10-28)
 
-Modal SDK for JS 的第一个测试版（从 alpha 版毕业）。有关重大更改的详细列表，请参阅[迁移指南](../MIGRATION-GUIDE.md)。
+Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大更改的详细列表，请参阅[迁移指南](../MIGRATION-GUIDE.md)。
 
 * SDK 现在公开一个中央 [`ModalClient`](/docs/sdk/js/latest/ModalClient) 对象作为与 Modal 资源交互的主要入口点。
 * 使用 Modal 对象实例（函数、沙箱、图像等）的界面与以前基本相同，但有一些命名更改。
 * 调用已部署的函数和类现在使用新的有效负载序列化协议，这要求已部署的应用程序使用 Modal Python SDK 1.2 或更高版本。
 * 在内部删除了全局客户端（以及全局范围内的配置/配置文件数据），将所有内容移至客户端类型。
-* JS 和 Go SDK 中一致的参数命名：所有`Options`接口重命名为`Params`。
+* JS 和 Go SDK 之间的参数命名一致：所有`Options`接口重命名为`Params`。
 * 为所有表示持续时间（以毫秒为单位，后缀为`Ms`）或内存量（以MiB为单位，后缀为`MiB`）的参数添加了明确的单位后缀。
 
 其他新功能：
@@ -222,12 +233,12 @@ Modal SDK for JS 的第一个测试版（从 alpha 版毕业）。有关重大�
 
 ### 0.3.17 (2025-08-22)
 
-* 在[`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create)中添加了对更多参数的支持：
+* 添加了对更多参数的支持 [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create):
   * `blockNetwork`：是否阻止沙箱的所有网络访问。
   * `cidrAllowlist`：允许沙箱访问的CIDR列表。
-  * `gpu`：沙盒的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
+  * `gpu`：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
   * `cloud`：运行沙箱的云提供商。
-  * `regions`: Region(s) to run the Sandbox on.
+  * `regions`：运行沙盒的区域。
 * `verbose`：启用详细日志记录。
   * `proxy`：将模态代理连接到沙箱。
   * `workdir`：设置工作目录。
@@ -287,7 +298,7 @@ Modal SDK for JS 的第一个测试版（从 alpha 版毕业）。有关重大�
 
 * 添加了对使用 `App.imageFromAwsEcr()` 从 AWS ECR 创建映像的支持。
 * 添加了对使用 `Secret.fromName()` 访问模态机密的支持。
-* 修复了一些 pickled 对象的序列化（负整数、字典）。
+* 修复了一些 pickle 对象（负整数、字典）的序列化。
 
 ### 0.3.6 (2025-06-09)
 

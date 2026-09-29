@@ -2,16 +2,16 @@
 
 #`modal environment`
 
-创建环境并与环境交互
+创建环境并与环境交互。
 
-环境是工作区的细分，允许您部署相同的应用程序
+环境是工作空间的细分，允许您部署相同的应用程序
 在不同的命名空间中。每个环境都有自己的一套秘密和任何
 默认情况下，从环境中的应用程序执行的查找将查找实体
-在相同的环境下。
+在相同的环境中。
 
 环境的典型用例包括一个用于开发，一个用于
 生产，以防止在开发新功能时覆盖生产应用程序
-同时仍然能够将更改部署到实时环境。
+同时仍然能够将更改部署到实时环境中。
 
 **用法**：
 
@@ -24,7 +24,7 @@ modal environment [OPTIONS] COMMAND [ARGS]...
 **命令**：
 
 * `billing`：查看给定环境的账单和使用信息。
-* `create`：在当前工作空间中创建一个新环境。
+* `create`：在当前工作空间中创建一个新的环境。
 * `delete`：删除当前工作空间中的环境。
 * `list`：列出当前工作空间中的所有环境。
 * `roles`：管理用户和服务用户的环境角色。
@@ -151,13 +151,13 @@ modal environment create [OPTIONS] NAME
 
 **选项**：
 
-* `--restricted`：在新环境上启用RBAC限制
+* `--restricted`：在新环境上启用 RBAC 限制。
 * `--default-role TEXT`：受限环境的默认成员角色
 * `--help`：显示此消息并退出。
 
 ## `modal environment delete`
 
-删除当前工作区中的环境。
+删除当前工作空间中的环境。
 
 删除所选环境中的所有应用程序并不可撤销地删除该环境。
 
@@ -206,11 +206,11 @@ modal environment roles [OPTIONS] COMMAND [ARGS]...
 
 **命令**：
 
-* `list`：列出环境中每个用户和服务用户的角色
-* `update`：更新环境中用户或服务用户的角色
+* `list`：列出环境中每个用户和服务用户的角色。
+* `update`：更新环境中用户或服务用户的角色。
 
 ### `modal environment roles list`
-列出环境中每个用户和服务用户的角色
+列出环境中每个用户和服务用户的角色。
 
 **用法**：
 
@@ -226,7 +226,7 @@ modal environment roles list [OPTIONS] ENVIRONMENT
 
 ### `modal environment roles update`
 
-更新环境中用户或服务用户的角色
+更新环境中用户或服务用户的角色。
 
 **用法**：
 
@@ -252,6 +252,6 @@ modal environment update [OPTIONS] CURRENT_NAME
 
 **选项**：
 
-* `--set-name TEXT`：环境的新名称
-* `--set-web-suffix TEXT`: 新增环境web后缀（空字符串无后缀）
+* `--set-name TEXT`：环境的新名称。
+* `--set-web-suffix TEXT`：环境的新网络后缀（空字符串没有后缀）。
 * `--help`：显示此消息并退出。

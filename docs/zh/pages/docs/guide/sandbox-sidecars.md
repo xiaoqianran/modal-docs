@@ -33,10 +33,10 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 
 每个 Sidecar 容器：
 
-* 独立于主沙盒容器运行自己的映像。
+* 独立于主沙箱容器运行自己的映像。
 * 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
 * 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
-* 可以在沙盒的生命周期内动态创建、终止和替换。* 支持像主沙箱容器一样执行命令。
+* 可以在沙盒的生命周期内动态创建、终止和替换。* 支持像主沙盒容器一样执行命令。
 
 ## 用法
 
@@ -274,7 +274,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 请求过滤器。
 
 仅中继到端口 443 的 TCP 流量。沙盒自己的出口控制是
-为此预留：沙箱上的`outbound_cidr_allowlist`仍然控制着每一个
+为此预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
 其他端口，但无论其列出什么，中继流量都会通过。非中继
 流量仍然受到沙箱的出口控制。
 
@@ -284,7 +284,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
 Sidecar 选择连接到的任何目的地。
 
-该选项不能与设置`block_network`结合使用，
+该选项不能与设置`block_network`组合使用，
 沙盒上的`outbound_domain_allowlist`或`proxy`。
 
 ### 文件系统快照
@@ -338,6 +338,79 @@ fmt.Println(state) // "ready"
 
 {/片段} </CodeTabs>
 
+### 云桶安装座
+
+Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
+配置方式与沙盒上相同。每个容器都有自己的挂载：
+安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
+在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶GPU 沙盒的 Sidecar 不支持挂载。
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+bucket = modal.CloudBucketMount(
+    "my-bucket",
+    secret=modal.Secret.from_name("my-aws-secret"),
+    read_only=True,
+)
+
+reader = sb._experimental_sidecars.create(
+    "sleep", "600", name="reader", image=image, volumes={"/mnt/bucket": bucket}
+)
+p = reader.exec("ls", "/mnt/bucket")
+p.wait()
+print(p.stdout.read())
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const secret = await modal.secrets.fromName("my-aws-secret");
+
+const reader = await sb.experimentalSidecars.create("reader", image, {
+  command: ["sleep", "600"],
+  cloudBucketMounts: {
+    "/mnt/bucket": modal.cloudBucketMounts.create("my-bucket", {
+      secret,
+      readOnly: true,
+    }),
+  },
+});
+const p = await reader.exec(["ls", "/mnt/bucket"]);
+await p.wait();
+console.log(await p.stdout.readText());
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+secret, _ := mc.Secrets.FromName(ctx, "my-aws-secret", nil)
+bucket, _ := mc.CloudBucketMounts.New("my-bucket", &modal.CloudBucketMountParams{
+	Secret:   secret,
+	ReadOnly: true,
+})
+
+reader, _ := sb.ExperimentalSidecars.Create(ctx, "reader", image, &modal.SidecarCreateParams{
+	Command:           []string{"sleep", "600"},
+	CloudBucketMounts: map[string]*modal.CloudBucketMount{"/mnt/bucket": bucket},
+})
+p, _ := reader.Exec(ctx, []string{"ls", "/mnt/bucket"}, nil)
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout))
+```
+
+{/片段} </CodeTabs>
+
+使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
+身份令牌是为 Sidecar 容器颁发的，因此它的 `container_id`
+声明与主容器的声明不同。匹配的 IAM 信任策略
+完整主题还必须允许 Sidecar 的容器 ID。
+
 ## 资源配置
 
 主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
@@ -355,6 +428,7 @@ fmt.Println(state) // "ready"
 您可以创建的 Sidecar 的最大数量也取决于主沙箱的
 资源预留。每个容器（包括主容器）至少需要
 32 mCPU 和 32 MiB 内存，因此限制为：
+
 ```
 max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 ```
@@ -366,16 +440,15 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
-
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
   通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **无 GPU 支持**：Sidecar 容器无法访问 GPU，即使沙箱配置了 GPU。
-* **不支持云桶安装**：Sidecar 容器当前不支持附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
+* **GPU 沙箱中没有云桶安装**：GPU 沙箱的 Sidecar 无法附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
   独立，但 Sidecar 内存状态不会被捕获
   [沙盒快照](/docs/guide/sandbox-snapshots)。
 * **VM 不兼容**：Sidecar 与 VM Sandbox 不兼容。
-* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
+* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
 * **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
 * **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

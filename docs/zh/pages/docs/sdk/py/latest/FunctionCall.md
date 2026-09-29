@@ -21,7 +21,7 @@ class FunctionCall(typing.Generic, modal.object.Object)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时
@@ -211,7 +211,8 @@ get_call_graph(self)
 获取有关此 FunctionCall 所属输入图的信息。
 
 注意：调用图数据不是实时填充的，它的捕获是尽力而为的。
-我们不建议在关键用例中依赖此方法。
+大型调用图可能会被截断。我们不建议依赖此方法
+对于关键用例。
 
 有关信息，请参阅 [`modal.types`](/docs/sdk/py/latest/types) 参考
 关于返回值。
@@ -233,10 +234,10 @@ cancel(self, terminate_containers=False)
 <Parameter name="terminate_containers" type="bool" defaultValue="False" description="If True, terminate the containers running the cancelled inputs. Any other inputs running concurrently on those containers will be rescheduled." />
 
 ## 来自\_id
-
 ```python
 from_id(cls, function_call_id, client=None)
 ```
+
 从现有 ID 实例化 FunctionCall 对象。
 
 注意，此方法只需重新实例化`FunctionCall`即可

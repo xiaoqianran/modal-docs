@@ -31,10 +31,10 @@ FunctionFromNameParams 是 client.Functions.FromName 的选项。
 ## 获取当前统计信息
 
 ```go
-GetCurrentStats(ctx context.Context, params *FunctionGetCurrentStatsParams) (*FunctionStats, error)
+GetCurrentStats(ctx context.Context, params *FunctionGetCurrentStatsParams) (*FunctionCurrentStats, error)
 ```
 
-GetCurrentStats 返回一个 FunctionStats 对象，其中包含有关该函数的统计信息。
+GetCurrentStats 返回一个 FunctionCurrentStats 对象，其中包含有关该函数的统计信息。
 
 **参数** (`FunctionGetCurrentStatsParams`)
 
@@ -129,8 +129,8 @@ FunctionWithOptionsParams 表示模态函数的运行时选项。
 * `MemoryMiB` (`*int`)
 * `MemoryLimitMiB` (`*int`)
 * `GPU` (`*string`)
-* `Env` (`map[string]string`)
-* `Secrets` (`[]*Secret`)* `Volumes` (`map[string]*Volume`)
+* `Env` (`map[string]string`)* `Secrets` (`[]*Secret`)
+* `Volumes` (`map[string]*Volume`)
 * `Retries` (`*Retries`)
 * `MaxContainers` (`*int`)
 * `BufferContainers` (`*int`)

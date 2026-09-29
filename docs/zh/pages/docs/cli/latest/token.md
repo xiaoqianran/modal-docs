@@ -46,6 +46,7 @@ modal token new [OPTIONS]
 
 **选项**：* `--activate / --no-activate`：创建后激活包含此令牌的配置文件。
 * `--verify / --no-verify`：发出测试请求以验证新凭据。
+* `--expires-in TEXT`：新代币的生命周期，例如12小时、7天或90天。默认为工作区允许的最长生命周期。
 * `--help`：显示此消息并退出。
 
 ## `modal token set`

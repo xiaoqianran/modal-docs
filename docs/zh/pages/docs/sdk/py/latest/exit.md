@@ -3,7 +3,7 @@
 # 退出
 
 ```python
-exit(_warn_parentheses_missing=None)
+exit()
 ```
 
 容器即将退出时应执行的方法的装饰器。

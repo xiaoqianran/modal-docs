@@ -4,6 +4,17 @@
 
 ## 最新
 
+### 0.11.0 (2026-09-28)
+
+* 沙箱现在使用我们的[下一代后端](/blog/秒内缩放至 100 万并发沙箱)，为 CPU 沙箱提供更高的创建率和并发限制。不需要更改代码，但需要注意一些语义差异：
+  * [`Sandboxes.Create()`](/docs/sdk/go/latest/Sandbox#create) 方法现在会阻塞，直到调度 Sandbox，而不是立即返回。
+  * 如果沙​​箱无法调度（例如，由于资源或放置请求无法满足），创建将超时并返回 [`ResourceExhaustedError`](/docs/sdk/go/latest/Errors#resourceexhaustederror)。
+* 沙箱现在可以使用完整的虚拟机作为运行时，为运行 Docker 等工作流程提供更好的支持：
+  * 在传递给[`Sandboxes.Create()`](/docs/sdk/go/latest/Sandbox#create)的`SandboxCreateParams`中设置`Runtime: modal.SandboxRuntimeVM`以启用。
+  * 要强制继续使用 gVisor 运行时，请设置 `Runtime: modal.SandboxRuntimeGVisor`。这是当前的默认行为，但默认行为将来可能会发生变化。
+* 我们添加了一个 [`Sandbox.Logs`](/docs/sdk/go/latest/Sandbox#sandboxlogs) 命名空间，其中包含从沙箱入口点进程获取日志的方法。
+
+## 0.10
 ### 0.10.1 (2026-09-10)
 
 * 现在可以通过在 `.modal.toml` 中设置 `MODAL_SANDBOX_V2=1` 环境变量或 `sandbox_v2 = true` 配置文件配置来选择[性能更佳的沙箱后端](/blog/scaling-to-1-million-concurrent-sandboxes-in-seconds)。然后，沙箱将使用新的后端，无需更改任何代码。这将成为即将发布的版本中的默认行为；设置标志可以让您提前选择加入。
@@ -11,10 +22,10 @@
 
 ### 0.10.0 (2026-08-27)
 
-* 添加了 [`Function.Logs`](/docs/sdk/go/latest/Function#functionlogs) 和 [`FunctionCall.Logs`](/docs/sdk/go/latest/FunctionCall#functioncalllogs) API，用于获取该对象生成的当前和历史日志。 `Logs`命名空间公开了三种方法：使用 [`Fetch`](/docs/sdk/go/latest/Function#fetch) 进行基于时间的查询，使用 [`Tail`](/docs/sdk/go/latest/Function#tail) 返回最近的条目，或者[`Stream`](/docs/sdk/go/latest/Function#stream) 用于在条目到达时生成条目。
+* 添加了 [`Function.Logs`](/docs/sdk/go/latest/Function#functionlogs) 和 [`FunctionCall.Logs`](/docs/sdk/go/latest/FunctionCall#functioncalllogs) API，用于获取该对象生成的当前和历史日志。 `Logs`命名空间公开了三种方法：使用[`Fetch`](/docs/sdk/go/latest/Function#fetch)进行基于时间的查询，使用[`Tail`](/docs/sdk/go/latest/Function#tail)返回最近的条目，或者[`Stream`](/docs/sdk/go/latest/Function#stream) 用于在条目到达时生成条目。
 * [`Sandbox.Filesystem.CopyFromLocal`](/docs/sdk/go/latest/Sandbox#copyfromlocal) / [`WriteBytes`](/docs/sdk/go/latest/Sandbox#writebytes) / [`WriteText`](/docs/sdk/go/latest/Sandbox#filesystemwritetext) 现在将数据流式传输到沙箱，而不是针对每个块发出请求，从而使数据变得很大写入速度快约 2.5 倍。
 * [`Function.UpdateAutoscaler`](/docs/sdk/go/latest/Function#updateautoscaler) 现在在应用更改后立即返回包含当前自动缩放器设置的结构。
-* **中断：** 未导出的 `AuthTokenManager`、`NewAuthTokenManager`、`TokenAndExpiry` 和 `ValidateExecArgs`，它们本来不应该成为公共 API 的一部分。* **中断：** `FunctionUpdateAutoscalerParams.ScaledownWindow` 现在输入为 `*time.Duration`，而不是 `*uint32`。
+* **中断：** 未导出的 `AuthTokenManager`、`NewAuthTokenManager`、`TokenAndExpiry` 和 `ValidateExecArgs`，它们本来不应该成为公共 API 的一部分。* **中断：** `FunctionUpdateAutoscalerParams.ScaledownWindow` 现在输入为 `*time.Duration` 而不是 `*uint32`。
 
 ## 0.9
 
@@ -22,7 +33,7 @@
 
 * [`Functions.FromName`](/docs/sdk/go/latest/Function#fromname) 和 [`Cls.FromName`](/docs/sdk/go/latest/Cls#fromname) 现在接受可选的 `Version` 参数来查找版本固定的 Function 或 Cls。
 * [`Secrets.FromMap`](/docs/sdk/go/latest/Secret#frommap) 现在是惰性的，因此返回的 `Secret` 在第一次使用之前有一个空的 `SecretID`。通过将机密直接发送到沙箱并避免机密创建限制，可以改善 [`Sandbox.ExperimentalCreate`](/docs/sdk/go/latest/Sandbox#experimentalcreate) 和 [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 的延迟。
-* [`Function.WithOptions`](/docs/sdk/go/latest/Function#withoptions) 和 [`Cls.WithOptions`](/docs/sdk/go/latest/Cls#withoptions) 现在接受 `RoutingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由经过的区域。
+* [`Function.WithOptions`](/docs/sdk/go/latest/Function#withoptions) 和 [`Cls.WithOptions`](/docs/sdk/go/latest/Cls#withoptions) 现在接受 `RoutingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由通过的区域。
 * 添加了 [`Sandbox.Filesystem.Watch`](/docs/sdk/go/latest/Sandbox#filesystemwatch) 以监视沙箱中文件系统更改的路径。它生成 [`FileWatchEvent`](/docs/sdk/go/latest/FileWatchEvent) 对象并支持 `Recursive`、事件类型 `Filter` 和 `Timeout` 绑定。* **突破：** [`Sandbox.ReloadVolumes`](/docs/sdk/go/latest/Sandbox#reloadvolumes) 现在会阻塞，直到重新加载卷为止，并受到可通过 `SandboxReloadVolumesParams.Timeout` 配置的新超时（默认为 55 秒）的限制。如果重新加载未在该窗口内完成，则会引发 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)。
 * **突破：** 将 `VolumeMountOptions` 类型重命名为 `VolumeMountOptionsParams`。相应地更新 [`WithMountOptions(&VolumeMountOptions{...})`](/docs/sdk/go/latest/Volume#withmountoptions) 调用站点。
 * **中断：** 将 `SandboxCreateParams` 中的 `OutboundCIDRAllowlist` 和 `OutboundDomainAllowlist` 从 `[]string` 更改为 [`*Allowlist`](/docs/sdk/go/latest/Allowlist)。非零 `*Allowlist` 启用白名单模式（即使`Entries`为空，也会阻止该类型的所有流量）； `nil` 表示开放获取。将 `OutboundCIDRAllowlist: []string{"10.0.0.0/8"}` 迁移到 `OutboundCIDRAllowlist: &Allowlist{Entries: []string{"10.0.0.0/8"}}`。
@@ -45,14 +56,14 @@
 * 修复了向加载了 [`Image.FromID`](/docs/sdk/go/latest/Image#fromid) 的镜像添加 Dockerfile 命令可能无法使用解析后的镜像作为基础的错误。
 * [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/go/latest/Errors#invaliderror) 拒绝相对的 `Workdir` 客户端。
 * [`Sandbox.Create`](/docs/sdk/go/latest/Sandbox#create) 和 [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 现在，如果任何 `Secrets` 条目为零，则返回 [`InvalidError`](/docs/sdk/go/latest/Errors#invaliderror)。
-* **突破：** Go SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，Go SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙箱工作流程的改进。
+* **突破：** Go SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，Go SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙盒工作流程的改进。
 * **突破：** [`Sandbox.SnapshotFilesystem`](/docs/sdk/go/latest/Sandbox#snapshotfilesystem) 不再采用位置 `timeout` 参数。超时现在作为 `Timeout time.Duration` 存在于 params 结构中，使该方法与 [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 同等。将 `sb.SnapshotFilesystem(ctx, 30*time.Second, params)` 迁移到 `sb.SnapshotFilesystem(ctx, &SandboxSnapshotFilesystemParams{Timeout: 30*time.Second, ...})`。
 * **突破：** [`Sandbox.SnapshotFilesystem`](/docs/sdk/go/latest/Sandbox#snapshotfilesystem) 和 [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 现在在其参数结构上接受显式 `TTL` 字段（`time.Duration`），控制如何保留生成的图像很长时间。两种方法均默认为 30 天。这是 `SnapshotFilesystem` 的默认更改，之前它无限期地保留图像。通过`TTL: modal.NoExpiryTTL`选择退出到期。
 * **突破：** [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 现在在其 params 结构上也有一个 `Timeout` 字段，默认值为 55 秒，这使其与文件系统快照相同。如果快照未在该窗口内返回，则会引发 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)。超时可以设置为任意高，以保留不超时的旧行为。
-* **突破：** [`Sandbox.Filesystem`](/docs/sdk/go/latest/Sandbox#sandboxfilesystem) 现在是一个字段而不是一个方法。将 `sb.Filesystem().ReadText(...)` 迁移到 `sb.Filesystem.ReadText(...)`。
+* **突破：** [`Sandbox.Filesystem`](/docs/sdk/go/latest/Sandbox#sandboxfilesystem) 现在是一个字段而不是一个方法。将`sb.Filesystem().ReadText(...)`迁移到`sb.Filesystem.ReadText(...)`。
 * **中断：** [`Sandbox.FromID`](/docs/sdk/go/latest/Sandbox#fromid) 不再检查沙箱 ID 是否存在。您可以运行 [`Poll`](/docs/sdk/go/latest/Sandbox#poll) 来获取沙箱的状态。
 * **重大突破：** 删除了已弃用的低级文件句柄 API：`Sandbox.Open` 和 `SandboxFile`。请使用 [Sandbox 文件系统 API](/docs/sdk/go/latest/Sandbox#sandboxfilesystem)：`sandbox.Filesystem`。* **中断：** 删除了已弃用的 `Volume.ReadOnly` 和 `Volume.IsReadOnly`。请改用 [`WithMountOptions(&VolumeMountOptions{ReadOnly: &t})`](/docs/sdk/go/latest/Volume#withmountoptions)。
-* **突破：** 所有公共方法现在都以 `*XxxParams` 指针参数结尾，从而无需额外的签名改动即可实现未来选项的前向兼容性。通过 `nil` 接受默认值。受影响的方法：
+* **突破性：** 所有公共方法现在都以 `*XxxParams` 指针参数结尾，从而无需额外的签名改动即可实现未来选项的前向兼容性。通过 `nil` 接受默认值。受影响的方法：
   * [`FunctionCall.FromID`](/docs/sdk/go/latest/FunctionCall#fromid) → `FromID(ctx, id, *FunctionCallFromIDParams)`
   * [`Image.FromID`](/docs/sdk/go/latest/Image#fromid) → `FromID(ctx, id, *ImageFromIDParams)`
   * [`Image.FromRegistry`](/docs/sdk/go/latest/Image#fromregistry) → `FromRegistry(tag, *ImageFromRegistryParams)`，`*Secret`字段保留在`ImageFromRegistryParams`内（签名不变）
@@ -79,10 +90,10 @@
   * [`fs.WriteText`](/docs/sdk/go/latest/Sandbox#filesystemwritetext)：将 UTF-8 写入沙盒中的文件。
   * [`fs.WriteBytes`](/docs/sdk/go/latest/Sandbox#filesystemwritebytes)：将二进制内容写入沙箱中的文件。
   * [`fs.ReadText`](/docs/sdk/go/latest/Sandbox#filesystemreadtext)：从沙箱中读取文件并将其内容作为 UTF-8 字符串返回。
-  * [`fs.ReadBytes`](/docs/sdk/go/latest/Sandbox#filesystemreadbytes): 从沙箱中读取文件并以字节形式返回其内容。
+  * [`fs.ReadBytes`](/docs/sdk/go/latest/Sandbox#filesystemreadbytes)：从沙箱中读取文件并以字节形式返回其内容。
   * [`fs.MakeDirectory`](/docs/sdk/go/latest/Sandbox#filesystemmakedirectory): 在沙箱中创建一个新目录。
   * [`fs.ListFiles`](/docs/sdk/go/latest/Sandbox#filesystemlistfiles): 列出 Sandbox 目录中的文件和目录。
-  * [`fs.Stat`](/docs/sdk/go/latest/Sandbox#filesystemstat): 返回沙箱中单个文件、目录或符号链接的元数据。
+  * [`fs.Stat`](/docs/sdk/go/latest/Sandbox#filesystemstat)：返回沙箱中单个文件、目录或符号链接的元数据。
   * [`fs.CopyFromLocal`](/docs/sdk/go/latest/Sandbox#filesystemcopyfromlocal): 将本地文件复制到沙箱中。
   * [`fs.CopyToLocal`](/docs/sdk/go/latest/Sandbox#filesystemcopytolocal): 将文件从 Sandbox 复制到本地路径。
 * [`fs.Remove`](/docs/sdk/go/latest/Sandbox#filesystemremove): 删除沙箱中的文件或目录。
@@ -104,7 +115,7 @@
 
 ### 0.7.3 (2026-03-12)
 
-* 将 SDK 从`github.com/modal-labs/libmodal`迁移到`github.com/modal-labs/modal-client`。
+* 将 SDK 从 `github.com/modal-labs/libmodal` 迁移到 `github.com/modal-labs/modal-client`。
 ### 0.7.2 (2026-02-26)
 
 * 更新了 `Sandbox` 方法以等待新创建的沙箱准备就绪，并且在尚不可用时不会立即出错。
@@ -125,7 +136,7 @@
 **重大变更：**
 
 * 更改了`Sandbox.Terminate`，现在返回`(int, error)`。 `int`是传入`&SandboxTerminateParams{Wait: true}`时的返回码。
-* 添加了`Sandbox.Detach`来断开客户端与沙箱的连接并清理与该连接相关的所有资源。我们**强烈建议**在您与沙箱交互完成后致电`Detach`。
+* 添加了 `Sandbox.Detach` 来断开客户端与沙箱的连接并清理与该连接相关的所有资源。我们**强烈建议**在您与沙箱交互完成后致电`Detach`。
 
 ## 0.6
 
@@ -185,7 +196,7 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
 * 使用 Modal 对象实例（函数、沙箱、图像等）的界面与以前基本相同，但有一些命名更改。
 * 调用已部署的函数和类现在使用新的有效负载序列化协议，这要求已部署的应用程序使用 Modal Python SDK 1.2 或更高版本。
 * 在内部删除了全局客户端（以及全局范围内的配置/配置文件数据），将所有内容移至客户端类型。
-* Go 和 JS SDK 中一致的参数命名：所有`Options`结构重命名为`Params`。
+* Go 和 JS SDK 中一致的参数命名：所有 `Options` 结构体均重命名为 `Params`。
 * 更改了上下文传递的方式，因此上下文现在仅影响当前操作，不用于创建资源的生命周期管理。
 * 所有 `Params` 结构现在都作为指针传递，以保持一致性并支持可选参数。
 * 字段名称遵循 Go 大小写约定（例如，`Id` → `ID`、`Url` → `URL`、`TokenId` → `TokenID`）。
@@ -239,7 +250,7 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
   * `CIDRAllowlist`：允许沙箱访问的CIDR列表。
   * `GPU`：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
   * `Cloud`：运行沙箱的云提供商。
-* `Regions`：运行沙箱的区域。
+* `Regions`：运行沙盒的区域。
   * `Verbose`：启用详细日志记录。
   * `Proxy`：将模态代理连接到沙箱。
   * `Workdir`：设置工作目录。

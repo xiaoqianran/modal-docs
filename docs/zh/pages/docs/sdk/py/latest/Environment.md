@@ -12,7 +12,7 @@ class Environment(modal.object.Object)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时
@@ -109,7 +109,7 @@ print(roles)
 
 **参数**
 
-<Parameter name="exclude_default" type="bool" defaultValue="False" description="If ⟦T22⟧, only include roles that are directly assigned." />
+<Parameter name="exclude_default" type="bool" defaultValue="False" description="If ⟦T25⟧, only include roles that are directly assigned." />
 
 ### 角色.更新
 
@@ -132,7 +132,35 @@ env.roles.update(
 )
 ```
 
-## 来自\_context
+## 应用程序
+
+```python
+apps: EnvironmentAppsManager
+```
+
+用于访问此环境中部署的应用程序的命名空间。
+
+### 应用程序列表
+
+```python
+list(self)
+```
+
+返回此环境中实时应用程序的句柄。
+
+返回的句柄引用现有的远程应用程序，并且可以与 API 一起使用，例如
+[`App.info()`](https://modal.com/docs/sdk/py/latest/App#info),
+[`App.logs`](https://modal.com/docs/sdk/py/latest/App#logs)，以及
+[`Sandbox.create()`](https://modal.com/docs/sdk/py/latest/Sandbox#create)。列出应用程序不会创建
+应用程序。
+
+**使用**
+
+```python notest
+environment = modal.Environment.from_name("prod")
+apps = environment.apps.list()
+print([app.name for app in apps])
+```## 来自\_context
 
 ```python
 from_context(*, client=None)
@@ -173,7 +201,6 @@ MDMD：忽略
 ```python
 report(self, *, start, end=None, resolution="d", tag_names=None)
 ```
-
 返回环境使用的成本报告，按对象和时间细分。
 
 **参数**
@@ -181,7 +208,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T24⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T30⟧ to include all tags in the report." />
 
 **退货**
 
@@ -207,17 +234,17 @@ summary(self, cycle=None)
 
 返回由 `cycle` 确定的单个计费周期内的环境成本摘要。
 
-与类似的 `Workspace.billing.summary()` 不同，此 API 仅发出计量成本信息。这是因为由于积分、免费存储等而导致的账单调整是
+与类似的 `Workspace.billing.summary()` 不同，此 API 仅发出计量成本
+信息。这是因为由于积分、免费存储等而导致的账单调整是
 应用在工作空间级别，因此不能归因于各个环境。
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T30⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T36⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 
 包含以下字段的单个`EnvironmentBillingSummary`数据类：
-
 * `metered_cost` 代表调整前的成本，以及
 * `metered_cost_breakdown` 包含按 Modal 资源划分的成本明细
   产生它的。确切的键可能会随着 Modal 的计费而变化
@@ -230,4 +257,4 @@ summary(self, cycle=None)
 * [`modal environment billing summary`](https://modal.com/docs/cli/latest/billing#modal-environment-billing-summary):
   环境摘要 CLI，具有相对时间范围查询的便利功能。
 * [`Environment.billing.report()`](https://modal.com/docs/sdk/py/latest/Environment#billingreport):
-仅限于特定环境的类似报告 API。
+  仅限于特定环境的类似报告 API。

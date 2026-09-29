@@ -38,6 +38,12 @@ modal shell hello_world.py --cmd=python
 modal shell hello_world.py -c 'uv pip list' > env.txt
 ```
 
+在虚拟机内启动 shell：
+
+```
+modal shell --runtime vm
+```
+
 通过 ID 连接到正在运行的沙箱：
 
 ```
@@ -48,11 +54,10 @@ modal shell sb-abc123xyz
 
 ```shell
 modal shell [OPTIONS] [REF]
-```
+```**选项**：
 
-**选项**：
-
-* `-c, --cmd TEXT`：在模态图像内运行的命令。* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-c, --cmd TEXT`：在模态图像内运行的命令。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--image TEXT`：shell 内部的容器镜像标签（如果不使用 REF）。
 * `--add-python TEXT`：将Python添加到图像中（如果不使用REF）。
 * `--volume TEXT`：模态名称。要安装在 shell 内 /mnt/`{name}` 的体积（如果不使用 REF）。可以多次使用。
@@ -63,6 +68,7 @@ modal shell [OPTIONS] [REF]
 * `--gpu TEXT`：请求 shell 的 GPU（如果有）。例如 `any`、`a10g`、`a100:4`（如果不使用 REF）。
 * `--cloud TEXT`：运行 shell 的云提供商。可能的值为 `aws`、`gcp`、`oci`、`auto`（如果不使用 REF）。
 * `--region TEXT`：运行容器的区域。可以是单个区域或逗号分隔的列表以供选择（如果不使用 REF）。
+* `--runtime [gvisor|vm]`：运行 shell 的运行时。如果未设置，Modal 将选择运行时。
 * `--pty / --no-pty`：使用 PTY 运行命令。
 * `-m`：将参数解释为 Python 模块路径而不是文件/脚本路径
 * `--help`：显示此消息并退出。

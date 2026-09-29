@@ -36,7 +36,7 @@ async fromName(
 ## 获取当前统计信息
 
 ```typescript
-async getCurrentStats(): Promise<FunctionStats>
+async getCurrentStats(): Promise<FunctionCurrentStats>
 ```
 
 ## 获取WebUrl

@@ -96,9 +96,17 @@ modal workspace proxy-tokens [OPTIONS] COMMAND [ARGS]...
 * `create`：在当前工作空间中创建代理令牌。
 * `delete`：从当前工作空间中删除代理令牌。
 * `list`：列出当前Workspace的代理代币。
-* `revoke`：撤销代理令牌对环境的访问权限。
+* `revoke`：撤销代理令牌对环境的访问权限。* `update`：更新当前工作区中的代理令牌。
 
-### `modal workspace proxy-tokens allow`允许代理令牌对环境进行身份验证。
+### `modal workspace proxy-tokens allow`
+
+允许代理令牌对环境进行身份验证。
+
+示例：
+
+```
+modal workspace proxy-tokens allow wk-123 prod
+```
 
 **用法**：
 
@@ -114,6 +122,16 @@ modal workspace proxy-tokens allow [OPTIONS] TOKEN_ID ENVIRONMENT_NAME
 
 在当前工作区中创建代理令牌。
 
+新令牌的 ID 和密钥将打印到 stdout。秘密只是
+在创建时显示，以后无法检索。
+
+示例：
+
+```
+modal workspace proxy-tokens create --name production-webhooks
+modal workspace proxy-tokens create --json
+```
+
 **用法**：
 
 ```shell
@@ -122,6 +140,7 @@ modal workspace proxy-tokens create [OPTIONS]
 
 **选项**：
 
+* `--name TEXT`：帮助识别令牌的名称。
 * `--json`
 * `--help`：显示此消息并退出。
 
@@ -129,12 +148,17 @@ modal workspace proxy-tokens create [OPTIONS]
 
 从当前工作区中删除代理令牌。
 
+示例：
+
+```
+modal workspace proxy-tokens delete wk-123
+```
+
 **用法**：
 
 ```shell
 modal workspace proxy-tokens delete [OPTIONS] TOKEN_ID
 ```
-
 **选项**：
 
 * `-y, --yes`：运行时不暂停确认。
@@ -143,6 +167,14 @@ modal workspace proxy-tokens delete [OPTIONS] TOKEN_ID
 ### `modal workspace proxy-tokens list`
 
 列出当前工作区的代理令牌。
+
+示例：
+
+```
+modal workspace proxy-tokens list
+modal workspace proxy-tokens list --environment prod
+modal workspace proxy-tokens list --json
+```
 
 **用法**：
 
@@ -160,10 +192,38 @@ modal workspace proxy-tokens list [OPTIONS]
 
 撤销代理令牌对环境的访问权限。
 
+示例：
+
+```
+modal workspace proxy-tokens revoke wk-123 prod
+```
+
 **用法**：
 
 ```shell
 modal workspace proxy-tokens revoke [OPTIONS] TOKEN_ID ENVIRONMENT_NAME
+```
+
+**选项**：
+
+* `--help`：显示此消息并退出。
+
+### `modal workspace proxy-tokens update`
+
+更新当前工作区中的代理令牌。可以更新以下设置：
+
+* `name`：帮助识别令牌的名称。传递一个空值将其删除。
+
+示例：
+
+```
+modal workspace proxy-tokens update wk-123 name production-webhooks
+```
+
+**用法**：
+
+```shell
+modal workspace proxy-tokens update [OPTIONS] TOKEN_ID SETTING VALUE
 ```
 
 **选项**：
@@ -205,7 +265,6 @@ modal workspace settings list [OPTIONS]
 * `--help`：显示此消息并退出。
 
 ### `modal workspace settings set`
-
 更新工作区设置。必须是工作区经理或所有者。
 
 可以更新以下设置：

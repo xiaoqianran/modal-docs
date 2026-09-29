@@ -17,7 +17,7 @@ class Function(typing.Generic, modal.object.Object)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时
@@ -140,9 +140,10 @@ update_autoscaler(self, *, min_containers=None, max_containers=None,
 **参数**
 
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running." />
-<Parameter name="max_containers" type="int | None" defaultValue="None" description="Maximum concurrent containers." />
-<Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to keep warm beyond current demand." />
-<Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />**退货**
+<Parameter name="max_containers" type="int | None" defaultValue="None" description="Maximum concurrent containers." /><Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to keep warm beyond current demand." />
+<Parameter name="scaledown_window" type="int | None" defaultValue="None" description="Maximum duration (in seconds) idle containers wait before scaling down." />
+
+**退货**
 
 包含当前自动缩放器设置的`FunctionAutoscalerSettings`数据类
 调用后此函数的。
@@ -162,6 +163,33 @@ f.update_autoscaler(max_containers=5)
 f.update_autoscaler(scaledown_window=300)
 ```
 
+## 来自\_id
+
+```python
+from_id(cls, function_id, *, client=None)
+```
+
+通过 ID 从已部署或正在运行的应用程序引用函数。
+
+这是一种延迟对局部进行补水的惰性方法
+具有来自 Modal 服务器的元数据的对象，直到第一个
+实际使用的时间。
+
+**参数**
+
+<Parameter name="function_id" type="str" description="ID of the function." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T49⟧ when omitted." />
+
+**退货**
+
+懒惰的`Function`手柄。
+
+**使用**
+
+```python
+f = modal.Function.from_id("fu-123")
+```
+
 ## 来自\_name
 
 ```python
@@ -171,20 +199,20 @@ from_name(cls, app_name, name, *, version=None, environment_name=None,
 
 通过名称引用已部署应用程序中的函数。
 
-这是一种延迟给局部补水的惰性方法
+这是一种延迟对局部进行补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
 **参数**
 
 <Parameter name="app_name" type="str" description="Name of the deployed App." />
-<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T46⟧ instead." />
+<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T51⟧ instead." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Environment to look up the App in; defaults to the active environment." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T47⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T52⟧ when omitted." />
 
 **退货**
 
-懒惰的 `Function` 手柄。
+懒惰的`Function`手柄。
 
 **使用**
 
@@ -198,6 +226,25 @@ f = modal.Function.from_name("other-app", "function")
 f_v3 = modal.Function.from_name("other-app", "function", version=3)
 ```
 
+## 信息
+
+```python
+info(self, *, refresh=False)
+```
+
+获取函数的资源请求、关联挂载等的概述。
+
+如果函数句柄是，则此方法执行网络请求来填充此信息
+尚未获取其信息的远程查找（例如来自`Function.from_name(...)`），
+或者如果`refresh=True`。
+
+**参数**
+
+<Parameter name="refresh" type="bool" defaultValue="False" description="Always perform a network request. Pass ⟦T57⟧ to ensure that this method returns the most up to date information." />
+
+**退货**这将返回 [`modal.types.FunctionInfo`](https://modal.com/docs/sdk/py/latest/types#FunctionInfo)
+数据类。
+
 ## 获取\_web\_url
 
 ```python
@@ -207,6 +254,7 @@ get_web_url(self)
 用于通过 HTTP 寻址 Web 功能的 URL。
 
 **退货**
+
 Web 端点的 HTTPS URL，如果此函数不是 Web 端点，则为 `None`。
 
 ## 带有\_选项
@@ -223,7 +271,6 @@ with_options(self, *, cpu=None, memory=None, gpu=None, env=None, secrets=None,
 此方法返回一个具有动态配置的新 Function 实例。的调用
 新函数将在不同的容器池中运行，并独立于
 基本功能（以及其他动态配置）。
-
 请注意，无法使用此方法“取消设置”选项（即，如果在
 `@app.cls()`装饰器，在这里传递`gpu=None`不会创建仅CPU实例）。
 此外，像 `volumes` 和 `secrets` 这样的容器参数将*替换*基础
@@ -279,7 +326,6 @@ remote(self, *args, **kwargs)
 ```
 
 远程调用该函数，使用给定参数执行该函数并返回执行结果。
-
 **参数**
 
 <Parameter name="*args" type="P.args" description="Positional arguments forwarded to the deployed function." />
@@ -314,8 +360,7 @@ local(self, *args, **kwargs)
 
 在本地调用该函数，使用给定参数执行该函数并返回执行结果。
 
-该函数将在与调用者相同的环境中执行，就像调用底层函数一样
-直接用Python。特别是，只有调用者环境中可用的秘密才可用
+该函数将在与调用者相同的环境中执行，就像调用底层函数一样直接用Python。特别是，只有调用者环境中可用的秘密才可用
 通过环境变量。
 
 **参数**
@@ -324,6 +369,7 @@ local(self, *args, **kwargs)
 <Parameter name="**kwargs" type="P.kwargs" description="Keyword arguments passed to the underlying Python callable." />
 
 **退货**
+
 本地调用（或异步函数的协程）的返回值。
 
 ## 生成
@@ -347,27 +393,37 @@ spawn(self, *args, **kwargs)
 稍后可以轮询或等待使用
 [`.get(timeout=...)`](https://modal.com/docs/sdk/py/latest/FunctionCall#get)。
 
-## 获取\_raw\_f
-
-```python
-get_raw_f(self)
-```
-
-返回此模态函数包装的内部 Python 对象。
-
-**退货**
-
-注册到Modal的原始函数对象。
-
 ## 获取当前统计信息
 
 ```python
 get_current_stats(self)
-```返回一个 `FunctionStats` 对象，描述当前函数的队列和运行程序计数。
+```
+
+返回函数当前输入和容器状态的快照。
+
+**退货**
+包含实时输入和容器计数的 `FunctionCurrentStats` 对象。
+
+## 统计数据
+
+```python
+stats(self, *, since=None, until=None, container=None, all_variants=False)
+```
+
+返回模态函数的统计信息。
+
+默认时间范围是最近一小时。最大时间范围为 7 天。
+
+**参数**
+
+<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T70⟧. Values without a timezone are interpeted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive. If omitted, this defaults to current time. Values without a timezone are interpeted as local time." />
+<Parameter name="container" type="str | None" defaultValue="None" description="If passed in, the stats are computed for only this container. Default None." />
+<Parameter name="all_variants" type="bool" defaultValue="False" description="If True, aggregate the base Function and its variants." />
 
 **退货**
 
-积压、运行者和运行输入的快照计数。
+一个`FunctionStats`对象
 
 ## 地图
 
@@ -381,8 +437,7 @@ map(self, *input_iterators, kwargs={}, order_outputs=True,
 为基础函数的每个位置参数传递一个可迭代对象。结果产生为
 可迭代（同步）或异步迭代器（`map.aio`）。
 
-如果应用于 `@app.function`，`map()` 每个输入和输出顺序匹配都会返回一个结果
-默认输入顺序。设置 `order_outputs=False` 按完成顺序发出结果。
+如果应用于 `@app.function`，`map()` 每个输入和输出顺序匹配都会返回一个结果默认输入顺序。设置 `order_outputs=False` 按完成顺序发出结果。
 
 `return_exceptions` 可以将失败聚合到结果流中而不是引发。
 
@@ -419,6 +474,7 @@ def my_func(a):
 def main():
     print(list(my_func.map(range(3), return_exceptions=True)))
 ```
+
 ## 星图
 
 ```python
@@ -459,7 +515,6 @@ for_each(self, *input_iterators, kwargs={}, ignore_exceptions=False)
 ```
 
 对所有输入执行该函数并等待完成，丢弃返回值。
-
 与 `.map()` 类似，但您不需要迭代结果来驱动工作 - Modal 会处理每个输入。
 
 **参数**

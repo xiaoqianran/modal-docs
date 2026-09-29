@@ -18,7 +18,7 @@ modal config [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 * `set-environment`: Set the default Modal environment for the active profile
-* `show`: Show current configuration values (debugging command).
+* `show`: Show current configuration values.
 
 ## `modal config set-environment`
 
@@ -41,7 +41,7 @@ modal config set-environment [OPTIONS] ENVIRONMENT_NAME
 
 ## `modal config show`
 
-Show current configuration values (debugging command).
+Show current configuration values.
 
 **Usage**:
 
@@ -52,4 +52,5 @@ modal config show [OPTIONS]
 **Options**:
 
 * `--redact / --no-redact`: Redact secret credential values.
+* `--json`
 * `--help`: Show this message and exit.

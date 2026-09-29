@@ -11,8 +11,9 @@ type Sandbox struct {
 	Stdin                io.WriteCloser
 	Stdout               io.ReadCloser
 	Stderr               io.ReadCloser
-	Filesystem           *SandboxFilesystem // Filesystem provides high-level filesystem operations for this Sandbox.
-	ExperimentalSidecars SidecarService     // ExperimentalSidecars provides operations on Sandbox Sidecar containers. EXPERIMENTAL: the API is subject to change.
+	Filesystem           *SandboxFilesystem  // Filesystem provides high-level filesystem operations for this Sandbox.
+	ExperimentalSidecars SidecarService      // ExperimentalSidecars provides operations on Sandbox Sidecar containers. EXPERIMENTAL: the API is subject to change.
+	Logs                 *SandboxLogsManager // Logs provides access to entrypoint logs emitted by this Sandbox.
 }
 ```
 
@@ -34,6 +35,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `CPULimit` (`float64`): Hard limit in fractional, physical CPU cores. Zero means no limit.
 * `MemoryMiB` (`int`): Memory request in MiB.
 * `MemoryLimitMiB` (`int`): Hard memory limit in MiB. Zero means no limit.
+* `Runtime` (`SandboxRuntime`): Runtime under which the Sandbox executes, or unset to let Modal pick.
 * `GPU` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
 * `Timeout` (`time.Duration`): Maximum lifetime of the Sandbox. Defaults to 5 minutes. If you pass zero you get the default 5 minutes.
 * `IdleTimeout` (`time.Duration`): The amount of time that a Sandbox can be idle before being terminated.
@@ -63,6 +65,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
+* `ExperimentalOutboundPolicy` (`*ExperimentalOutboundPolicy`): EXPERIMENTAL: the API is subject to change. Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload.
 
 ## ExperimentalCreate
 
@@ -97,6 +100,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `CPULimit` (`float64`): Hard limit in fractional, physical CPU cores. Zero means no limit.
 * `MemoryMiB` (`int`): Memory request in MiB.
 * `MemoryLimitMiB` (`int`): Hard memory limit in MiB. Zero means no limit.
+* `Runtime` (`SandboxRuntime`): Runtime under which the Sandbox executes, or unset to let Modal pick.
 * `GPU` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
 * `Timeout` (`time.Duration`): Maximum lifetime of the Sandbox. Defaults to 5 minutes. If you pass zero you get the default 5 minutes.
 * `IdleTimeout` (`time.Duration`): The amount of time that a Sandbox can be idle before being terminated.
@@ -126,6 +130,7 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
+* `ExperimentalOutboundPolicy` (`*ExperimentalOutboundPolicy`): EXPERIMENTAL: the API is subject to change. Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload.
 
 ## FromID
 
@@ -361,6 +366,21 @@ EXPERIMENTAL: the API is subject to change.
 SandboxExperimentalSnapshotParams are options for Sandbox.ExperimentalSnapshot.
 
 *No configurable options.*
+
+## ExperimentalUpdateOutboundPolicy
+
+```go
+ExperimentalUpdateOutboundPolicy(ctx context.Context, policy *ExperimentalOutboundPolicy) error
+```
+
+ExperimentalUpdateOutboundPolicy replaces the outbound policy of a running Sandbox.
+
+EXPERIMENTAL: the API is subject to change.
+
+The new policy replaces all existing policy configuration on the Sandbox;
+build a policy including any existing rules you want to keep.
+
+Only Sandboxes created with an ExperimentalOutboundPolicy can be updated this way.
 
 ## GetTags
 
@@ -598,9 +618,12 @@ SidecarCreateParams holds options for creating a sidecar container.
 * `Env` (`map[string]string`): Env are environment variables to set in the sidecar container.
 * `Secrets` (`[]*Secret`): Secrets to inject into the sidecar container as environment variables.
 * `Workdir` (`string`): Workdir sets the working directory of the sidecar container.
+* `Volumes` (`map[string]*Volume`): Volumes to mount in the sidecar container, keyed by mount path.
+* `CloudBucketMounts` (`map[string]*CloudBucketMount`): CloudBucketMounts to mount in the sidecar container, keyed by mount path. Not supported for GPU Sandboxes.
 * `OutboundCIDRAllowlist` (`*Allowlist`): OutboundCIDRAllowlist restricts the sidecar's outbound traffic to these CIDRs. Independent of the main container; nil means all CIDRs are allowed. A non-nil allowlist with empty Entries blocks all external egress while preserving connectivity to the main container.
 * `OutboundDomainAllowlist` (`*Allowlist`): OutboundDomainAllowlist restricts the sidecar's outbound TLS connections (port 443) to these SNI domains. Supports wildcard prefixes (\*.example.com). Independent of the main container.
 * `PTY` (`bool`): PTY sets whether to enable a PTY for the sidecar container.
+* `ExperimentalMemoryReserveConsumeMiB` (`int`): ExperimentalMemoryReserveConsumeMiB is the memory, in MiB, the sidecar consumes from the Sandbox's sidecar memory reserve (the vm\_sidecar\_memory\_reserve\_mib experimental option); zero consumes whatever is left of it. Ignored by Sandboxes without a reserve. Experimental.
 
 ### Get
 
@@ -911,3 +934,47 @@ if write permission is denied.
 SandboxFilesystemWriteParams holds optional parameters for `SandboxFilesystem.WriteBytes` and `SandboxFilesystem.WriteText`.
 
 *No configurable options.*
+
+## Sandbox.Logs
+
+Logs provides access to entrypoint logs emitted by this Sandbox.
+
+### Fetch
+
+```go
+Fetch(
+	ctx context.Context,
+	since time.Time,
+	params *SandboxLogFetchParams,
+) (iter.Seq2[LogEntry, error], error)
+```
+
+Fetch fetches Sandbox entrypoint logs corresponding to the date range and filters.
+
+since is the start of the time range. params.Until defaults to the current
+time. The sequence yields `LogEntry` values in chronological order.
+
+**Parameters** (`SandboxLogFetchParams`)
+
+SandboxLogFetchParams are options for fetching Sandbox logs.
+
+* `Until` (`*time.Time`): Until is the end of the time range. It defaults to the current time.
+* `Source` (`LogSource`): Source filters logs by stdout, stderr, or system. The zero value includes all sources.
+* `SearchText` (`string`): SearchText filters Sandbox logs by search text.
+
+### Tail
+
+```go
+Tail(ctx context.Context, params *LogTailParams) (iter.Seq2[LogEntry, error], error)
+```
+
+Tail fetches the most recent Sandbox entrypoint logs.
+
+The sequence yields `LogEntry` values in chronological order.
+
+**Parameters** (`LogTailParams`)
+
+LogTailParams are options for fetching the most recent logs.
+
+* `Entries` (`int`): Entries is the number of log entries to return. It defaults to 100.
+* `Source` (`LogSource`): Source filters logs by stdout, stderr, or system. The zero value includes all sources.

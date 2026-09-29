@@ -2,10 +2,6 @@
 
 # 云桶安装
 
-```python
-class CloudBucketMount(object)
-```
-
 将云存储桶安装到您的容器。目前支持 AWS S3 存储桶。
 
 S3 存储桶使用 [AWS S3 Mountpoint](https://github.com/awslabs/mountpoint-s3) 挂载。
@@ -42,7 +38,7 @@ def f():
 
 R2：
 
-Cloudflare R2 [S3 兼容](https://developers.cloudflare.com/r2/api/s3/api/)，因此其设置看起来
+Cloudflare R2 是 [S3 兼容](https://developers.cloudflare.com/r2/api/s3/api/)，所以它的设置看起来
 与S3非常相似。但此外还必须传递 `bucket_endpoint_url` 参数。
 
 ```python
@@ -96,8 +92,13 @@ def f():
     subprocess.run(["ls", "/my-mount"], check=True)
 ```
 
-```python
-__init__(self, bucket_name, bucket_endpoint_url=None, key_prefix=None,
-    secret=None, oidc_auth_role_arn=None, read_only=False, requester_pays=False,
-    force_path_style=False)
-```
+**属性**
+
+<Parameter name="bucket_name" type="str" description="Name of the cloud bucket to mount." />
+<Parameter name="bucket_endpoint_url" type="str | None" defaultValue="None" description="Endpoint URL of the bucket. Required for Cloudflare R2 and Google Cloud Storage buckets, which are identified by their endpoint hostname." />
+<Parameter name="key_prefix" type="str | None" defaultValue="None" description="Prefix prepended to every object path in the bucket. Must end in ⟦T4⟧." />
+<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Credentials used to access the bucket. A private bucket requires a secret containing ⟦T5⟧ and ⟦T6⟧; a publicly accessible bucket needs none." />
+<Parameter name="oidc_auth_role_arn" type="str | None" defaultValue="None" description="Role ARN to assume when accessing the bucket with OIDC authentication instead of static credentials." />
+<Parameter name="read_only" type="bool" defaultValue="False" description="Mount the bucket read-only." />
+<Parameter name="requester_pays" type="bool" defaultValue="False" description="Whether the bucket is configured as Requester Pays, so that the caller is billed for requests. Requires ⟦T7⟧." />
+<Parameter name="force_path_style" type="bool" defaultValue="False" description="Address objects as ⟦T8⟧ rather than using virtual-hosted-style bucket subdomains." />

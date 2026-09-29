@@ -34,7 +34,7 @@ Optional parameters for `client.functions.fromName()`.
 ## getCurrentStats
 
 ```typescript
-async getCurrentStats(): Promise<FunctionStats>
+async getCurrentStats(): Promise<FunctionCurrentStats>
 ```
 
 ## getWebUrl

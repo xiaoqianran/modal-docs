@@ -66,6 +66,17 @@ that group after the change syncs to Modal. Deactivating or removing the user
 through SCIM also removes their Workspace access according to your SCIM
 configuration.
 
+### Group name conflicts
+
+Group names must be unique within a Workspace, ignoring case, across both
+custom and SCIM groups. If your IdP pushes a group whose name matches an
+existing custom group, Modal rejects the push and your IdP reports an error.
+For example, an Okta group push for `Engineering` fails if a custom group
+named `engineering` already exists.
+
+To resolve the conflict, rename either the custom group in Modal or the group
+in your IdP, then retry the push.
+
 ## Assign an Environment Role to a group
 
 User groups work with [Role-Based Access Control

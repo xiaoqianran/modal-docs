@@ -95,7 +95,7 @@ type NotFoundError struct {
 
 ## 队列空错误
 
-当尝试对空队列执行操作时，将返回 QueueEmptyError。
+当尝试对空队列进行操作时，将返回 QueueEmptyError。
 
 ```go
 type QueueEmptyError struct {
@@ -118,6 +118,17 @@ RemoteError 表示 Modal 服务器上的错误，或 Python 异常。
 
 ```go
 type RemoteError struct {
+	Exception string
+}
+```
+
+## 资源耗尽错误
+
+当服务器端资源被耗尽时，返回ResourceExhaustedError
+已耗尽，例如容量、配额或速率限制。
+
+```go
+type ResourceExhaustedError struct {
 	Exception string
 }
 ```
@@ -183,7 +194,6 @@ type SandboxFilesystemNotFoundError struct {
 ```
 
 ## SandboxFilesystemPathAlreadyExistsError
-
 当创建操作针对现有路径时，会返回 SandboxFilesystemPathAlreadyExistsError。
 
 ```go
@@ -193,6 +203,7 @@ type SandboxFilesystemPathAlreadyExistsError struct {
 ```
 
 ## Sandbox文件系统权限错误
+
 当沙箱文件系统拒绝访问时，返回 SandboxFilesystemPermissionError。
 
 ```go

@@ -137,7 +137,7 @@ override_locally(self, key, value)
 ### to\_dict
 
 ```python
-to_dict(self)
+to_dict(self, *, include_internal=False)
 ```
 
 ## config\_profiles

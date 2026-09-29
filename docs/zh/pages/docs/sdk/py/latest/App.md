@@ -33,7 +33,7 @@ def foo():
     pass
 ```
 
-在此示例中，秘密和时间表已注册到应用程序中。
+在此示例中，秘密和时间表已注册到应用程序。
 
 ```python
 __init__(self, name=None, *, tags=None, image=None, secrets=[], volumes={},
@@ -46,7 +46,7 @@ __init__(self, name=None, *, tags=None, image=None, secrets=[], volumes={},
 
 <Parameter name="name" type="str | None" defaultValue="None" description="Optional app name used for registration and lookup." />
 <Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="Additional metadata to set on the App." />
-<Parameter name="image" type="_Image | None" defaultValue="None" description="Default image for the App (otherwise defaults to ⟦T42⟧)." />
+<Parameter name="image" type="_Image | None" defaultValue="None" description="Default image for the App (otherwise defaults to ⟦T43⟧)." />
 <Parameter name="secrets" type="Sequence[_Secret]" defaultValue="[]" description="Secrets to add for all Functions in the App." />
 <Parameter name="volumes" type="dict[str | PurePosixPath, _Volume]" defaultValue="&#123;&#125;" description="Volume mounts to use for all Functions." />
 <Parameter name="include_source" type="bool" defaultValue="True" description="Default for whether Function source files are added to the Modal container (per-function override possible)." />
@@ -110,7 +110,7 @@ lookup(name, *, client=None, environment_name=None, create_if_missing=False)
 **参数**
 
 <Parameter name="name" type="str" description="App name to resolve or create." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T44⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T45⟧ when omitted." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name; defaults to the configured environment." />
 <Parameter name="create_if_missing" type="bool" defaultValue="False" description="If True, create the app when it does not already exist." />
 
@@ -213,7 +213,7 @@ deploy(self, *, name=None, environment_name=None, tag="", client=None,
 已部署的应用程序将可用于查找或基于 Web 的调用，直到它们停止为止。
 与`App.run`不同，此方法将在部署完成后立即返回。
 
-此方法是 `modal deploy` CLI 命令的编程替代方法。
+此方法是`modal deploy` CLI 命令的编程替代方法。
 
 与`App.run`不同的是，函数日志在执行后不会流回本地客户端。
 应用程序已部署。
@@ -228,7 +228,7 @@ script，保护此调用，使其仅在直接执行文件时运行。
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Environment to deploy the App in." />
 <Parameter name="tag" type="str" defaultValue="&quot;&quot;" description="Optional metadata that is specific to this deployment." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Alternate client to use for communication with the server." />
-<Parameter name="strategy" type="str" defaultValue="&quot;rolling&quot;" description="Deployment strategy. `⟦T52⟧⟦T53⟧⟦T54⟧` terminates all running containers as part of the deployment before new work starts." />
+<Parameter name="strategy" type="str" defaultValue="&quot;rolling&quot;" description="Deployment strategy. `⟦T53⟧⟦T54⟧⟦T55⟧` terminates all running containers as part of the deployment before new work starts." />
 
 **退货**
 
@@ -269,7 +269,7 @@ python app_module.py
 ## 本地\_入口点
 
 ```python
-local_entrypoint(self, _warn_parentheses_missing=None, *, name=None)
+local_entrypoint(self, *, name=None)
 ```
 
 装饰一个函数，用作模态应用程序的 CLI 入口点。
@@ -280,7 +280,7 @@ local_entrypoint(self, _warn_parentheses_missing=None, *, name=None)
 这些功能直接远程执行。
 
 请注意，不需要显式的 [`app.run()`](https://modal.com/docs/sdk/py/latest/App#run)，因为
-[应用程序](https://modal.com/docs/guide/apps) 会自动为您创建。
+[app](https://modal.com/docs/guide/apps) 会自动为您创建。
 
 **参数**
 
@@ -316,7 +316,7 @@ modal run app_module.py::app.some_other_function
 
 **解析参数**
 
-如果您的入口函数采用原始类型的参数，则 `modal run` 自动将它们解析为 CLI 选项。例如，可以使用以下函数调用
+如果您的入口点函数采用原始类型的参数，则 `modal run` 自动将它们解析为 CLI 选项。例如，可以使用以下函数调用
 `modal run app_module.py --foo 1 --bar "hello"`：
 
 ```python
@@ -365,7 +365,7 @@ function(self, *, image=None, schedule=None, env=None, secrets=None, gpu=None,
 <Parameter name="proxy" type="_Proxy | None" defaultValue="None" description="Reference to a Modal Proxy to use in front of this function." />
 <Parameter name="retries" type="int | Retries | None" defaultValue="None" description="Number of times to retry each input in case of failure." />
 <Parameter name="timeout" type="int" defaultValue="300" description="Maximum execution time for inputs and startup time in seconds." />
-<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T70⟧." />
+<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T71⟧." />
 <Parameter name="name" type="str | None" defaultValue="None" description="Sets the Modal name of the function within the app." />
 <Parameter name="is_generator" type="None | bool" defaultValue="None" description="Set this to True if it&#x27;s a non-generator function returning a sync or async generator object." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider to run the function on. Possible values are aws, gcp, oci, auto." />
@@ -380,7 +380,7 @@ function(self, *, image=None, schedule=None, env=None, secrets=None, gpu=None,
 <Parameter name="include_source" type="bool | None" defaultValue="None" description="Whether the file or directory containing the Function&#x27;s source should automatically be included in the container. When unset, falls back to the App-level configuration, or is otherwise True by default." />
 <Parameter name="experimental_options" type="dict[str, Any] | None" defaultValue="None" description="Experimental options for the function." />
 <Parameter name="_experimental_restrict_output" type="bool" defaultValue="False" description="Experimental; do not use pickle for return values." />
-<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T71⟧." />
+<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T72⟧." />
 
 **退货**
 
@@ -421,7 +421,7 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 <Parameter name="proxy" type="_Proxy | None" defaultValue="None" description="Reference to a Modal Proxy to use in front of this function." />
 <Parameter name="retries" type="int | Retries | None" defaultValue="None" description="Number of times to retry each input in case of failure." />
 <Parameter name="timeout" type="int" defaultValue="300" description="Maximum execution time for inputs and startup time in seconds." />
-<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T73⟧." />
+<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T74⟧." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider to run the function on. Possible values are aws, gcp, oci, auto." />
 <Parameter name="region" type="str | Sequence[str] | None" defaultValue="None" description="Region or regions to run the function on." />
 <Parameter name="routing_region" type="str | None" defaultValue="None" description="Region to route inputs to the function through." />
@@ -431,10 +431,10 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 <Parameter name="restrict_modal_access" type="bool" defaultValue="False" description="Whether to allow this class access to other Modal resources." />
 <Parameter name="single_use_containers" type="bool" defaultValue="False" description="When True, containers will shut down after handling a single input." />
 <Parameter name="i6pn" type="bool | None" defaultValue="None" description="Whether to enable IPv6 container networking within the region." />
-<Parameter name="include_source" type="bool | None" defaultValue="None" description="When `⟦T74⟧`, don&#x27;t automatically add the App source to the container." />
+<Parameter name="include_source" type="bool | None" defaultValue="None" description="When `⟦T75⟧`, don&#x27;t automatically add the App source to the container." />
 <Parameter name="experimental_options" type="dict[str, Any] | None" defaultValue="None" description="Experimental options for the class service." />
 <Parameter name="_experimental_restrict_output" type="bool" defaultValue="False" description="Experimental; do not use pickle for return values." />
-<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T75⟧." />
+<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T76⟧." />
 
 **退货**
 
@@ -445,19 +445,19 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 ```python
 server(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
     volumes={}, cpu=None, memory=None, ephemeral_disk=None,
-    target_concurrency=None, min_containers=None, max_containers=None,
-    buffer_containers=None, scaleup_window=None, scaledown_window=None,
-    startup_timeout=30, name=None, port=8000, unauthenticated=False,
-    h2_enabled=False, exit_grace_period=0, routing_region="us-east",
-    compute_region=None, cloud=None, nonpreemptible=False, proxy=None,
-    i6pn=None, enable_memory_snapshot=False, include_source=None,
-    experimental_options=None)
+    target_concurrency=None, max_concurrency=None, min_containers=None,
+    max_containers=None, buffer_containers=None, scaleup_window=None,
+    scaledown_window=None, startup_timeout=30, name=None, port=8000,
+    unauthenticated=False, h2_enabled=False, exit_grace_period=0,
+    routing_region="us-east", compute_region=None, cloud=None,
+    nonpreemptible=False, proxy=None, i6pn=None, enable_memory_snapshot=False,
+    include_source=None, experimental_options=None)
 ```
 
 装饰器用这个应用程序注册一个新的模态服务器。
 
-服务器运行以 `@modal.enter()` 方法启动的 HTTP 服务器。与 `@app.cls()` 不同，服务器仅公开 HTTP 端点，而不公开
-支持`.remote()`方法调用。
+服务器运行以 `@modal.enter()` 方法启动的 HTTP 服务器。
+与 `@app.cls()` 不同，服务器仅公开 HTTP 端点，而不公开支持`.remote()`方法调用。
 
 更多信息请参阅[指南](https://modal.com/docs/guide/servers)。
 
@@ -475,6 +475,7 @@ server(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 <Parameter name="memory" type="int | tuple[int, int] | None" defaultValue="None" description="Specify, in MiB, a memory request which is the minimum memory required. Or, pass (request, limit) to additionally specify a hard limit in MiB." />
 <Parameter name="ephemeral_disk" type="int | None" defaultValue="None" description="Specify, in MiB, the ephemeral disk size for the server." />
 <Parameter name="target_concurrency" type="float | None" defaultValue="None" description="Target number of concurrent requests per container; 0 disables autoscaling. May be fractional, e.g. 1.5 to target three concurrent requests per two containers." />
+<Parameter name="max_concurrency" type="int | None" defaultValue="None" description="Maximum number of concurrent requests per container. Requests above this limit receive a 503 response. If set to 0 or unset, request concurrency is unlimited." />
 <Parameter name="min_containers" type="int | None" defaultValue="None" description="Minimum number of containers to keep running regardless of demand." />
 <Parameter name="max_containers" type="int | None" defaultValue="None" description="Limit on the number of containers that can be concurrently running." />
 <Parameter name="buffer_containers" type="int | None" defaultValue="None" description="Extra containers to scale up beyond current demand." />
@@ -525,7 +526,7 @@ include(self, /, other_app, inherit_tags=True)
 **参数**
 
 <Parameter name="other_app" type="&quot;_App&quot;" description="App whose registered functions and classes are merged into this app." />
-<Parameter name="inherit_tags" type="bool" defaultValue="True" description="If True, merge tags from ⟦T81⟧ into this app (this app wins on conflicts)." />
+<Parameter name="inherit_tags" type="bool" defaultValue="True" description="If True, merge tags from ⟦T82⟧ into this app (this app wins on conflicts)." />
 
 **退货**
 
@@ -684,3 +685,26 @@ app = modal.App.lookup("my-app")
 for entry in app.logs.stream(timeout=60):
     print(entry.message, end="")
 ```
+
+## 信息
+
+```python
+info(self, refresh=False)
+```
+
+返回模态 `App` 的信息。
+
+返回的信息包括App的ID、成员函数和服务器，
+以及基本的生命周期信息，例如谁创建了该应用程序以及何时创建的。
+
+**参数**
+
+<Parameter name="refresh" type="bool" defaultValue="False" description="Whether to fetch the latest info. By default, false, so the info corresponds the App state at the time of the previous lookup." />
+
+**退货**
+
+`AppInfo` 对象。
+
+**另见**
+
+* [`AppInfo`](https://modal.com/docs/sdk/py/latest/types#appinfo)

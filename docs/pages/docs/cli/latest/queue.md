@@ -14,7 +14,7 @@ modal queue [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
-* `clear`: Clear the contents of a queue by removing all of its data.
+* `clear`: Clear the contents of a Queue by removing all of its data.
 * `create`: Create a named Queue.
 * `delete`: Delete a named Queue and all of its data.
 * `len`: Print the length of the queue or one of its partitions.
@@ -23,7 +23,7 @@ modal queue [OPTIONS] COMMAND [ARGS]...
 
 ## `modal queue clear`
 
-Clear the contents of a queue by removing all of its data.
+Clear the contents of a Queue by removing all of its data.
 
 **Usage**:
 

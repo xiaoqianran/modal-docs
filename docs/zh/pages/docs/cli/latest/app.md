@@ -14,15 +14,15 @@ modal app [OPTIONS] COMMAND [ARGS]...
 
 * `--help`：显示此消息并退出。
 
-**Commands**:
+**命令**：
 
 * `dashboard`：在网络浏览器中打开应用程序的仪表板页面。
 * `history`：显示应用程序的部署历史记录。
+* `info`：显示应用程序的生命周期、功能和服务器。
 * `list`：列出正在运行、部署或最近停止的应用程序。
 * `logs`：获取或流式传输应用程序日志。
 * `rollback`：重新部署以前版本的应用程序。
-* `rollover`：重新部署应用程序以获取新容器，无需更改代码。
-* `stop`：永久停止应用程序并终止其正在运行的容器。
+* `rollover`：重新部署应用程序以获取新容器，无需更改代码。* `stop`：永久停止应用程序并终止其正在运行的容器。
 
 ## `modal app dashboard`
 
@@ -71,39 +71,83 @@ modal app history ap-123456
 modal app history my-app
 ```
 
-**Usage**:
+**用法**：
 
 ```shell
 modal app history [OPTIONS] APP_IDENTIFIER
 ```
 
-**Options**:
+**选项**：
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `--json`
+* `--help`：显示此消息并退出。
+
+## `modal app info`
+
+显示应用程序的生命周期、功能和服务器。
+
+示例：
+
+根据App ID获取信息：
+
+```
+modal app info ap-123456
+```
+
+根据名称获取当前部署的应用程序的信息：
+
+```
+modal app info my-app
+```
+
+**用法**：
+
+```shell
+modal app info [OPTIONS] APP_IDENTIFIER
+```
+
+**选项**：
 
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--json`
-* `--help`：显示此消息并退出。
+* `--no-color`：禁用输出中的颜色。* `--help`：显示此消息并退出。
 
 ## `modal app list`
 
 列出正在运行、部署或最近停止的应用程序。
 
-**Usage**:
+示例：
+
+将输出限制为 30 个应用程序：
+
+```
+modal app list --limit 30
+```
+
+以 JSON 格式显示输出：
+
+```
+modal app list --json
+```
+
+**用法**：
 
 ```shell
 modal app list [OPTIONS]
 ```
 
-**Options**:
+**选项**：
 
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--json`
+* `--json`：输出为 JSON。
+* `--limit INTEGER`：最多显示N个结果。使用 0 列出每个结果。默认值为 0。
 * `--help`：显示此消息并退出。
 
 ## `modal app logs`
 
 获取或流式传输应用程序日志。
 
-默认情况下，此命令获取最后 100 个日志条目并退出。 Use `-f` to
+默认情况下，此命令获取最后 100 个日志条目并退出。使用 `-f` 来
 而是从正在运行的应用程序实时传输日志。获取和跟随是互斥的。
 
 示例：
@@ -156,15 +200,13 @@ modal app logs my-app --source stderr --function fu-abc123
 modal app logs my-app --timestamps --show-function-id --show-container-id
 ```
 
-**Usage**:
+**用法**：
 
 ```shell
 modal app logs [OPTIONS] APP_IDENTIFIER
 ```
 
-**Options**:
-
-* `-f, --follow`：流式传输日志输出直到应用程序停止
+**选项**：* `-f, --follow`：流式传输日志输出直到应用程序停止
 * `--since TEXT`：时间范围的开始。接受 ISO 8601 日期时间或相对时间，例如“1d”（1 天前）、“2h”、“30m”等。
 * `--until TEXT`：时间范围结束；接受与 --since 相同的参数类型
 * `-n, --tail INTEGER`：仅显示最后N条日志条目
@@ -173,11 +215,11 @@ modal app logs [OPTIONS] APP_IDENTIFIER
 * `--function-call TEXT`: 按 FunctionCall ID 过滤 (fc-\*)
 * `--container TEXT`: 按容器 ID 过滤 (ta-\*)
 * `-s, --source TEXT`：按源过滤：'stdout'、'stderr' 或 'system'
-* `--timestamps`：在每一行前面加上时间戳作为前缀
+* `--timestamps`：在每行前面加上时间戳作为前缀
 * `--show-function-id`：在每行前面加上其功能 ID 前缀
 * `--show-function-call-id`：在每一行前面加上其 FunctionCall ID 前缀
 * `--show-container-id`：在每行前面加上容器 ID 前缀
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 
 ## `modal app rollback`
@@ -200,24 +242,23 @@ modal app rollback my-app
 
 ```
 modal app rollback my-app v3
-```
-
-使用应用程序 ID 而不是名称来回滚应用程序：
+```使用应用程序 ID 而不是名称来回滚应用程序：
 
 ```
 modal app rollback ap-abcdefghABCDEFGH123456
 ```
 
-**Usage**:
+**用法**：
+
 ```shell
 modal app rollback [OPTIONS] APP_IDENTIFIER [VERSION]
 ```
 
 **选项**：
 
-* `--strategy [rolling|recreate]`: Strategy for rollback
-* `-e, --env TEXT`: Environment to interact with.如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--help`: Show this message and exit.
+* `--strategy [rolling|recreate]`：回滚策略
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `--help`：显示此消息并退出。
 
 ## `modal app rollover`
 
@@ -226,10 +267,9 @@ modal app rollback [OPTIONS] APP_IDENTIFIER [VERSION]
 翻转将现有容器替换为由相同容器构建的新容器
 应用程序版本 - 对于刷新容器而不更改代码非常有用。
 滚动显示为应用程序部署历史记录中的新条目。
-
 示例：
 
-Rollover an App using a rolling deployment. Running containers are now considered
+使用滚动部署来滚动应用程序。现在考虑运行容器
 过时的，将被新的优雅地取代。
 
 ```
@@ -251,9 +291,9 @@ modal app rollover [OPTIONS] APP_IDENTIFIER
 
 **选项**：
 
-* `--strategy [rolling|recreate]`: Strategy for rollover
-* `-e, --env TEXT`: Environment to interact with.如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--help`: Show this message and exit.
+* `--strategy [rolling|recreate]`：展期策略
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `--help`：显示此消息并退出。
 
 ## `modal app stop`
 
@@ -267,6 +307,6 @@ modal app stop [OPTIONS] APP_IDENTIFIER
 
 **选项**：
 
-* `-y, --yes`：运行时无需暂停确认。
-* `-e, --env TEXT`: Environment to interact with.如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--help`: Show this message and exit.
+* `-y, --yes`：运行时不暂停确认。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `--help`：显示此消息并退出。

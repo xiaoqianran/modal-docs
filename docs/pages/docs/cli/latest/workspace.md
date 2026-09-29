@@ -98,10 +98,17 @@ modal workspace proxy-tokens [OPTIONS] COMMAND [ARGS]...
 * `delete`: Delete a proxy token from the current Workspace.
 * `list`: List the proxy tokens of the current Workspace.
 * `revoke`: Revoke a proxy token's access to an environment.
+* `update`: Update a proxy token in the current Workspace.
 
 ### `modal workspace proxy-tokens allow`
 
 Allow a proxy token to authenticate to an environment.
+
+Example:
+
+```
+modal workspace proxy-tokens allow wk-123 prod
+```
 
 **Usage**:
 
@@ -117,6 +124,16 @@ modal workspace proxy-tokens allow [OPTIONS] TOKEN_ID ENVIRONMENT_NAME
 
 Create a proxy token in the current Workspace.
 
+The new token's ID and secret will be printed to stdout. The secret is only
+shown at creation time and cannot be retrieved later.
+
+Examples:
+
+```
+modal workspace proxy-tokens create --name production-webhooks
+modal workspace proxy-tokens create --json
+```
+
 **Usage**:
 
 ```shell
@@ -125,12 +142,19 @@ modal workspace proxy-tokens create [OPTIONS]
 
 **Options**:
 
+* `--name TEXT`: Name to help identify the token.
 * `--json`
 * `--help`: Show this message and exit.
 
 ### `modal workspace proxy-tokens delete`
 
 Delete a proxy token from the current Workspace.
+
+Example:
+
+```
+modal workspace proxy-tokens delete wk-123
+```
 
 **Usage**:
 
@@ -146,6 +170,14 @@ modal workspace proxy-tokens delete [OPTIONS] TOKEN_ID
 ### `modal workspace proxy-tokens list`
 
 List the proxy tokens of the current Workspace.
+
+Examples:
+
+```
+modal workspace proxy-tokens list
+modal workspace proxy-tokens list --environment prod
+modal workspace proxy-tokens list --json
+```
 
 **Usage**:
 
@@ -163,10 +195,40 @@ modal workspace proxy-tokens list [OPTIONS]
 
 Revoke a proxy token's access to an environment.
 
+Example:
+
+```
+modal workspace proxy-tokens revoke wk-123 prod
+```
+
 **Usage**:
 
 ```shell
 modal workspace proxy-tokens revoke [OPTIONS] TOKEN_ID ENVIRONMENT_NAME
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+### `modal workspace proxy-tokens update`
+
+Update a proxy token in the current Workspace.
+
+The following settings can be updated:
+
+* `name`: A name to help identify the token. Pass an empty value to remove it.
+
+Example:
+
+```
+modal workspace proxy-tokens update wk-123 name production-webhooks
+```
+
+**Usage**:
+
+```shell
+modal workspace proxy-tokens update [OPTIONS] TOKEN_ID SETTING VALUE
 ```
 
 **Options**:

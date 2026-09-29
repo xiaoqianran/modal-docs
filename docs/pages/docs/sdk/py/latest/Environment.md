@@ -133,6 +133,36 @@ env.roles.update(
 )
 ```
 
+## apps
+
+```python
+apps: EnvironmentAppsManager
+```
+
+Namespace for accessing Apps deployed in this Environment.
+
+### apps.list
+
+```python
+list(self)
+```
+
+Return handles for live Apps in this Environment.
+
+The returned handles reference existing remote Apps and can be used with APIs such as
+[`App.info()`](https://modal.com/docs/sdk/py/latest/App#info),
+[`App.logs`](https://modal.com/docs/sdk/py/latest/App#logs), and
+[`Sandbox.create()`](https://modal.com/docs/sdk/py/latest/Sandbox#create). Listing Apps does not create
+Apps.
+
+**Usage**
+
+```python notest
+environment = modal.Environment.from_name("prod")
+apps = environment.apps.list()
+print([app.name for app in apps])
+```
+
 ## from\_context
 
 ```python

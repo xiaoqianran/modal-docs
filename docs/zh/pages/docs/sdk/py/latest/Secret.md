@@ -20,7 +20,7 @@ Secrets 提供了图像环境变量的字典。
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时访问对象元数据，例如其 ID。
@@ -213,8 +213,8 @@ from_dotenv(path=None, *, filename=".env", client=None)
 
 **参数**
 
-<Parameter name="path" type="" defaultValue="None" description="File or directory to search from; omit to search from the process cwd." />
-<Parameter name="filename" type="" defaultValue="&quot;.env&quot;" description="Name of the env file to find (default `⟦T42⟧`)." />
+<Parameter name="path" type="str | Path | None" defaultValue="None" description="File or directory to search from; omit to search from the process cwd." />
+<Parameter name="filename" type="str" defaultValue="&quot;.env&quot;" description="Name of the env file to find (default `⟦T42⟧`)." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client used when hydrating the Secret." />
 
 **退货**

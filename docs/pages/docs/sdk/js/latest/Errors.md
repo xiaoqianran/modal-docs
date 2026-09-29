@@ -88,6 +88,14 @@ An error on the Modal server, or a Python exception.
 class RemoteError extends Error
 ```
 
+## ResourceExhaustedError
+
+A server-side resource has been exhausted, such as capacity, a quota, or a rate limit.
+
+```typescript
+class ResourceExhaustedError extends Error
+```
+
 ## SandboxFilesystemDirectoryNotEmptyError
 
 A directory was expected to be empty but is not.

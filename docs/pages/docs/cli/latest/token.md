@@ -46,6 +46,7 @@ modal token new [OPTIONS]
 
 * `--activate / --no-activate`: Activate the profile containing this token after creation.
 * `--verify / --no-verify`: Make a test request to verify the new credentials.
+* `--expires-in TEXT`: Lifetime of the new token, e.g. 12h, 7d, or 90d. Defaults to the workspace's maximum allowed lifetime.
 * `--help`: Show this message and exit.
 
 ## `modal token set`

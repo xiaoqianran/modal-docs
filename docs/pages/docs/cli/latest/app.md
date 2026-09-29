@@ -1,6 +1,6 @@
 # `modal app`
 
-Manage deployed and running apps.
+Manage deployed and running Apps.
 
 **Usage**:
 
@@ -16,6 +16,7 @@ modal app [OPTIONS] COMMAND [ARGS]...
 
 * `dashboard`: Open an App's dashboard page in your web browser.
 * `history`: Show an App's deployment history.
+* `info`: Show an App's lifecycle, Functions, and Servers.
 * `list`: List Apps that are running, deployed or recently stopped.
 * `logs`: Fetch or stream App logs.
 * `rollback`: Redeploy a previous version of an App.
@@ -81,9 +82,54 @@ modal app history [OPTIONS] APP_IDENTIFIER
 * `--json`
 * `--help`: Show this message and exit.
 
+## `modal app info`
+
+Show an App's lifecycle, Functions, and Servers.
+
+Examples:
+
+Get info based on an App ID:
+
+```
+modal app info ap-123456
+```
+
+Get info for a currently deployed App based on its name:
+
+```
+modal app info my-app
+```
+
+**Usage**:
+
+```shell
+modal app info [OPTIONS] APP_IDENTIFIER
+```
+
+**Options**:
+
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--json`
+* `--no-color`: Disable colors in the output.
+* `--help`: Show this message and exit.
+
 ## `modal app list`
 
 List Apps that are running, deployed or recently stopped.
+
+Examples:
+
+Limit output to 30 apps:
+
+```
+modal app list --limit 30
+```
+
+Display output in JSON:
+
+```
+modal app list --json
+```
 
 **Usage**:
 
@@ -94,7 +140,8 @@ modal app list [OPTIONS]
 **Options**:
 
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
-* `--json`
+* `--json`: Output as JSON.
+* `--limit INTEGER`: Show at most N results. Use 0 to list every result. Default is 0.
 * `--help`: Show this message and exit.
 
 ## `modal app logs`
