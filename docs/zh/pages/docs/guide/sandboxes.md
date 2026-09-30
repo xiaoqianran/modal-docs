@@ -20,6 +20,7 @@
 * 创建隔离环境来运行不受信任的代码。
 * 检查 git 存储库并对其运行命令，例如测试套件，或者
   `npm lint`。
+* 针对完整的 Docker 堆栈运行测试或 CI 管道。
 * 运行具有任意依赖项和设置脚本的容器。
 
 每个单独的作业称为**沙箱**，可以使用
@@ -41,7 +42,6 @@ for line in p.stdout:
     print(line, end="")
 
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -61,7 +61,6 @@ async for line in p.stdout:
     print(line, end="")
 
 await sb.terminate.aio()
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -142,7 +141,7 @@ func main() {
 
 沙盒从外部生成时需要传递 [`App`](/docs/guide/apps)
 模态容器的。您可以传入一个常规的 `App` 对象，或者通过名称查找一个
-[`App.lookup`](/docs/sdk/py/latest/App#lookup)。 `App.lookup` 上的 `create_if_missing` 标志
+[`App.lookup`](/docs/sdk/py/latest/App#lookup)。 `App.lookup` 上的`create_if_missing` 旗帜
 如果不存在，将创建一个具有给定名称的 `App` 。
 
 ## 生命周期
@@ -156,15 +155,15 @@ func main() {
 生命周期事件按顺序为：
 
 1. **已创建** — 已向 Modal 请求并注册沙盒。在此
-   指出 Sandbox 对象存在并具有 ID，但尚未使用任何计算资源
+   指出 Sandbox 对象存在并具有 ID，但没有计算资源
    尚未分配。这是调用`Sandbox.create`后的初始状态。
 
-2. **已安排** — 沙箱已安排给特定工作人员。的
-   工作人员现在正在配置沙箱所需的资源（CPU、内存、GPU、
+2. **已安排** — 沙盒已安排给特定工作人员。的
+   工作人员现在正在配置沙盒所需的资源（CPU、内存、GPU、
 卷等）并准备容器环境。沙盒将
    容器完全初始化后，过渡到 **Started**。
 
-3. **开始** — 沙箱的容器已在工作人员上启动，并且
+3. **开始** — 沙盒的容器已在工作人员上启动，并且
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
@@ -176,17 +175,17 @@ func main() {
    在处理请求之前需要预热时间。如果就绪探针是
    未配置，将跳过此事件。
 
-5. **完成** — 沙箱已停止运行。这可能会发生在几个人身上
+5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上
    原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
-commands can be executed inside the Sandbox. You can learn more about why a Sandbox
+可以在沙箱内执行命令。您可以详细了解为什么沙盒
    在仪表板中停止运行或通过检查从返回的退出代码
    `sandbox.poll()`。
 
 ### 超时
 
-沙箱的默认最长生命周期为 5 分钟。 You can change this by passing
+沙箱的默认最长生命周期为 5 分钟。您可以通过传递来更改此设置
 `timeout` 长达 24 小时的 `Sandbox.create(...)` 功能。
 
 <CodeTabs>
@@ -194,7 +193,6 @@ commands can be executed inside the Sandbox. You can learn more about why a Sand
 
 ```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app, timeout=10*60)  # 10 minutes
-sb.detach()
 ```
 
 {/片段}
@@ -203,7 +201,6 @@ sb.detach()
 
 ```python fixture:sb_app
 sb = await modal.Sandbox.create.aio(app=sb_app, timeout=10*60)  # 10 minutes
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -214,7 +211,6 @@ await sb.detach.aio()
 const sb = await modal.sandboxes.create(app, image, {
   timeoutMs: 10 * 60 * 1000, // 10 minutes
 });
-sb.detach();
 ```
 
 {/片段}
@@ -225,7 +221,6 @@ sb.detach();
 sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 	Timeout: 10 * time.Minute,
 })
-defer sb.Detach()
 ```
 
 {/片段} </CodeTabs>如果您需要沙盒运行超过 24 小时，我们建议使用
@@ -236,7 +231,7 @@ defer sb.Detach()
 
 沙箱也可以在一段时间不活动后自动终止 - 您可以通过设置 `idle_timeout` 参数来做到这一点。如果满足以下任一条件，则沙盒被视为处于活动状态：
 
-1.它有一个活动的[命令](/docs/guide/sandbox-spawn)正在运行（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
+1.它有一个正在运行的活动[命令](/docs/guide/sandbox-spawn)（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
 2.它的标准输入正在被写入（通过[`sb.stdin.write()`](/docs/sdk/py/latest/Sandbox#stdin)）
 3. 它在其中一个[隧道](/docs/guide/tunnels) 上有一个开放的 TCP 连接
 
@@ -285,7 +280,6 @@ sb.wait_until_ready()
 
 # The server is now ready — interact with it via tunnels, exec, etc.
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -304,7 +298,6 @@ await sb.wait_until_ready.aio()
 
 # The server is now ready — interact with it via tunnels, exec, etc.
 await sb.terminate.aio()
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -358,7 +351,6 @@ func main() {
 		Command:        []string{"python3", "-m", "http.server", "8080"},
 		ReadinessProbe: probe,
 	})
-	defer sb.Detach()
 
 	// Blocks until port 8080 is accepting connections
 	sb.WaitUntilReady(ctx, 5*time.Minute)
@@ -392,7 +384,6 @@ sb.wait_until_ready()
 # The sandbox is now ready
 p = sb.exec("cat", "/tmp/ready")
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -415,7 +406,6 @@ await sb.wait_until_ready.aio()
 # The sandbox is now ready
 p = await sb.exec.aio("cat", "/tmp/ready")
 await sb.terminate.aio()
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -474,7 +464,6 @@ func main() {
 		Command:        []string{"bash", "-c", "sleep 5 && touch /tmp/ready && sleep 3600"},
 		ReadinessProbe: probe,
 	})
-	defer sb.Detach()
 
 	// Blocks until "test -f /tmp/ready" exits with code 0
 	sb.WaitUntilReady(ctx, 5*time.Minute)
@@ -489,7 +478,7 @@ func main() {
 **注意：** 就绪探针最多运行 5 分钟。如果探头没有
 在该窗口内成功，`wait_until_ready()`将提高
 `modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
-内置`TimeoutError`，所以裸露的`except TimeoutError`无法捕获它。探头
+内置 `TimeoutError`，因此裸露的 `except TimeoutError` 无法捕获它。探头
 超时不会自动终止沙盒 - 您可能想要捕获
 如果从未准备就绪，则会出现错误并显式终止沙箱：
 
@@ -502,7 +491,6 @@ try:
 except modal.exception.TimeoutError:
     print("Sandbox failed to become ready")
     sb.terminate()
-    sb.detach()
 ```
 
 {/片段}
@@ -515,7 +503,6 @@ try:
 except modal.exception.TimeoutError:
     print("Sandbox failed to become ready")
     await sb.terminate.aio()
-    await sb.detach.aio()
 ```
 
 {/片段}
@@ -544,9 +531,9 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 {/片段} </CodeTabs>
 
-如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
+如果您在未配置就绪状态的沙盒上调用 `wait_until_ready()`
 探针，将引发错误。同样，在沙箱结束后调用它
-终止会引发错误。然而，在沙箱之后调用`wait_until_ready()`已经准备好立即返回。
+终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`已经准备好立即返回。
 
 ## 返回代码
 
@@ -631,7 +618,7 @@ fmt.Println(returnCodeSb) // 137
 
 ## 配置
 
-沙箱支持常规 `modal.Function` 中的几乎所有配置选项。
+沙箱支持常规`modal.Function`中的几乎所有配置选项。
 请参阅 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create) 了解更多文档
 关于沙盒配置。
 
@@ -646,7 +633,6 @@ sb = modal.Sandbox.create(
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
-sb.detach()
 ```
 
 {/片段}
@@ -659,7 +645,6 @@ sb = await modal.Sandbox.create.aio(
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -673,7 +658,6 @@ const sb = await modal.sandboxes.create(app, image, {
   volumes: { "/data": volume },
   workdir: "/repo",
 });
-sb.detach();
 ```
 
 {/片段}
@@ -687,10 +671,91 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Volumes: map[string]*modal.Volume{"/data": volume},
   Workdir: "/repo",
 })
-defer sb.Detach()
 ```
 
 {/片段} </CodeTabs>
+
+## 运行时
+
+沙箱在两个运行时之一上运行：* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，
+  提供强大的隔离性，适合大多数工作负载。
+* **虚拟机** 在具有自己的 Linux 内核的虚拟机中运行沙箱。使用
+  适用于需要完整 Linux 环境的工作负载的 VM 运行时，例如
+  在沙箱内运行 Docker，安装
+  [FUSE](https://man7.org/linux/man-pages/man4/fuse.4.html) 文件系统，或
+  使用嵌套管理资源
+  [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。嵌套
+  虚拟化也可用于
+  [团队和企业计划](/定价)；要请求访问权限，请通过以下方式联系
+  [Slack](/slack) 或发送电子邮件至 <support@modal.com>。
+通过 `runtime` 参数切换运行时，或者保持未设置状态，让 Modal 为您选择。
+
+<CodeTabs>
+  {#snippet python()}
+
+```python fixture:sb_app
+sb = modal.Sandbox.create(app=sb_app, runtime="vm")  # or: runtime="gvisor"
+p = sb.exec("uname", "-srn")
+print(p.stdout.read()) # Linux modal 7.2.6
+sb.terminate()
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, { runtime: "vm" });
+
+const p = await sb.exec(["uname", "-srn"]);
+console.log(await p.stdout.readText()); // Linux modal 7.2.6
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Runtime: modal.SandboxRuntimeVM,
+})
+p, err := sb.Exec(ctx, []string{"uname", "-srn"}, nil)
+stdout, err := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout)) // Linux modal 7.2.6
+```
+
+{/片段} </CodeTabs>
+
+[GPU](/docs/guide/gpu) 沙箱仅支持 `runtime="gvisor"`。
+
+### 在沙箱中运行 Docker
+
+使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙箱
+入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
+可以互相到达，并且`/var/lib/docker`包含在[文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
+
+```python notest
+image = (
+    modal.Image.from_registry("ubuntu:24.04")
+    .env({"DEBIAN_FRONTEND": "noninteractive"})
+    .apt_install("docker.io")
+)
+
+sb = modal.Sandbox.create(
+    "dockerd",
+    app=sb_app,
+    image=image,
+    runtime="vm",
+    readiness_probe=modal.Probe.with_exec("docker", "info", interval_ms=500),
+)
+sb.wait_until_ready()
+
+p = sb.exec("docker", "run", "--rm", "alpine", "echo", "hello from Docker")
+p.wait()
+print(p.stdout.read())
+
+sb.terminate()
+```
 
 ## 环境
 
@@ -710,7 +775,6 @@ sb = modal.Sandbox.create(
 )
 p = sb.exec("bash", "-c", "echo $MY_SECRET")
 print(p.stdout.read())
-sb.detach()
 ```
 
 {/片段}
@@ -726,7 +790,6 @@ sb = await modal.Sandbox.create.aio(
 )
 p = await sb.exec.aio("bash", "-c", "echo $MY_SECRET")
 print(await p.stdout.read.aio())
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -742,7 +805,6 @@ const sb = await modal.sandboxes.create(app, image, {
 });
 const p = await sb.exec(["bash", "-c", "echo $MY_SECRET"]);
 console.log(await p.stdout.readText());
-sb.detach();
 ```
 
 {/片段}
@@ -756,7 +818,6 @@ image := mc.Images.FromRegistry("python:3.13-slim", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Secrets: []*modal.Secret{secret},
 })
-defer sb.Detach()
 p, err := sb.Exec(ctx, []string{"bash", "-c", "echo $MY_SECRET"}, nil)
 stdout, err := io.ReadAll(p.Stdout)
 fmt.Println(string(stdout))
@@ -885,13 +946,12 @@ app, err = mc.Apps.FromName(ctx, "sandbox-app", &modal.AppFromNameParams{
 
 image, err = mc.Images.FromName(ctx, "sandbox-runtime", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 ```
 
 {/片段} </CodeTabs>
 
 <Callout variant="info">
-* **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
+* **Modal 在拉取后将外部图像标签视为不可变。** 对于[外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
 </Callout>
@@ -908,7 +968,6 @@ image = modal.Image.debian_slim().pip_install("pandas", "numpy")
 
 with modal.enable_output():
     sb = modal.Sandbox.create(image=image, app=sb_app)
-sb.detach()
 ```
 
 {/片段}
@@ -920,7 +979,6 @@ image = modal.Image.debian_slim().pip_install("pandas", "numpy")
 
 with modal.enable_output():
     sb = await modal.Sandbox.create.aio(image=image, app=sb_app)
-await sb.detach.aio()
 ```
 
 {/片段}{#snippet javascript()}
@@ -931,7 +989,6 @@ const image = modal.images
   .dockerfileCommands(["RUN pip install pandas numpy"]);
 
 const sb = await modal.sandboxes.create(app, image);
-sb.detach();
 ```
 
 {/片段}
@@ -944,7 +1001,6 @@ image := mc.Images.FromRegistry("python:3.13-slim", nil).
 
 // Note: Image build logs are automatically streamed in Go
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 ```
 
 {/片段} </CodeTabs>
@@ -963,7 +1019,6 @@ defer sb.Detach()
 sb = modal.Sandbox.create("python", "-m", "http.server", "8080", app=sb_app, timeout=10)
 for line in sb.stdout:
     print(line, end="")
-sb.detach()
 ```
 
 {/片段}
@@ -974,7 +1029,6 @@ sb.detach()
 sb = await modal.Sandbox.create.aio("python", "-m", "http.server", "8080", app=sb_app, timeout=10)
 async for line in sb.stdout:
     print(line, end="")
-await sb.detach.aio()
 ```
 
 {/片段}
@@ -986,7 +1040,6 @@ const sb = await modal.sandboxes.create(app, image, {
   command: ["python", "-m", "http.server", "8080"],
   timeoutMs: 10 * 1000,
 });
-sb.detach();
 ```
 
 {/片段}
@@ -998,7 +1051,6 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Command: []string{"python", "-m", "http.server", "8080"},
   Timeout: 10 * time.Second,
 })
-sb.Detach()
 ```
 
 {/片段} </CodeTabs>
@@ -1016,7 +1068,6 @@ sb.Detach()
 ```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app)
 sb_id = sb.object_id
-sb.detach()
 
 # ... later in the program ...
 
@@ -1024,7 +1075,6 @@ sb2 = modal.Sandbox.from_id(sb_id)
 p = sb2.exec("echo", "hello")
 print(p.stdout.read())
 sb2.terminate()
-sb2.detach()
 ```
 
 {/片段}
@@ -1034,7 +1084,6 @@ sb2.detach()
 ```python fixture:sb_app
 sb = await modal.Sandbox.create.aio(app=sb_app)
 sb_id = sb.object_id
-await sb.detach.aio()
 
 # ... later in the program ...
 
@@ -1042,7 +1091,6 @@ sb2 = await modal.Sandbox.from_id.aio(sb_id)
 p = await sb2.exec.aio("echo", "hello")
 print(await p.stdout.read.aio())
 await sb2.terminate.aio()
-await sb2.detach.aio()
 ```
 
 {/片段}
@@ -1052,7 +1100,6 @@ await sb2.detach.aio()
 ```javascript notest
 const sb = await modal.sandboxes.create(app, image);
 const sbId = sb.sandboxId;
-await sb.detach();
 
 // ... later in the program ...
 
@@ -1068,7 +1115,6 @@ await sb2.terminate();
 
 ```go notest
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 sbId := sb.SandboxID
 
 // ... later in the program ...
@@ -1154,8 +1200,6 @@ sb1 = modal.Sandbox.create(app=sb_app, name="my-name")
 # deployed App named "my-app".
 sb2 = modal.Sandbox.from_name("my-app", "my-name")
 assert sb1.object_id == sb2.object_id # sb1 and sb2 refer to the same Sandbox
-sb1.detach()
-sb2.detach()
 ```
 
 {/片段}
@@ -1169,8 +1213,6 @@ sb1 = await modal.Sandbox.create.aio(app=sb_app, name="my-name")
 # deployed App named "my-app".
 sb2 = await modal.Sandbox.from_name.aio("my-app", "my-name")
 assert sb1.object_id == sb2.object_id # sb1 and sb2 refer to the same Sandbox
-await sb1.detach.aio()
-await sb2.detach.aio()
 ```
 
 {/片段}{#snippet javascript()}
@@ -1182,8 +1224,6 @@ const sb1 = await modal.sandboxes.create(app, image, { name: "my-name" });
 // deployed App named "my-app".
 const sb2 = await modal.sandboxes.fromName("my-app", "my-name");
 console.assert(sb1.sandboxId === sb2.sandboxId); // sb1 and sb2 refer to the same Sandbox
-sb1.detach();
-sb2.detach();
 ```
 
 {/片段}
@@ -1202,8 +1242,6 @@ sb1, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 sb2, err := mc.Sandboxes.FromName(ctx, "my-app", "my-name", nil)
 // sb1 and sb2 refer to the same Sandbox
 fmt.Println(sb1.SandboxID == sb2.SandboxID)
-defer sb1.Detach()
-defer sb2.Detach()
 ```
 
 {/片段} </CodeTabs>
@@ -1240,9 +1278,6 @@ for sandbox in modal.Sandbox.list(
     tags={"major_version": "1", "minor_version": "2"},
 ):  # Just the latest sandbox.
     print(sandbox.object_id)
-
-sandbox_v1_1.detach()
-sandbox_v1_2.detach()
 ```
 
 {/片段}
@@ -1270,9 +1305,6 @@ async for sandbox in modal.Sandbox.list.aio(
     tags={"major_version": "1", "minor_version": "2"},
 ):  # Just the latest sandbox.
     print(sandbox.object_id)
-
-await sandbox_v1_1.detach.aio()
-await sandbox_v1_2.detach.aio()
 ```
 
 {/片段}
@@ -1310,8 +1342,6 @@ for await (const sandbox of modal.sandboxes.list({
 })) {
   console.log(sandbox.sandboxId);
 }
-sandboxV1_1.detach();
-sandboxV1_2.detach();
 ```
 
 {/片段}
@@ -1325,8 +1355,6 @@ sandboxV1_1, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreatePar
 sandboxV1_2, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Command: []string{"sleep", "20"},
 })
-defer sandboxV1_1.Detach()
-defer sandboxV1_2.Detach()
 
 sandboxV1_1.SetTags(ctx, map[string]string{"major_version": "1", "minor_version": "1"})
 sandboxV1_2.SetTags(ctx, map[string]string{"major_version": "1", "minor_version": "2"})
@@ -1360,11 +1388,18 @@ for sandbox := range it {
 
 {/片段} </CodeTabs>
 
-## 清理客户端连接
-与其他模态对象不同，本地沙箱将直接连接到
-它的计算基板。虽然这个连接应该自动关闭
-在垃圾收集期间，我们建议显式清理资源
-一旦您通过调用沙箱的 `detach()` 方法完成与沙箱的交互：
+## 清理客户端资源
+当您使用 SDK 中的沙箱句柄与沙箱交互时（例如，
+调用`exec()`），它打开与远程沙箱的直接连接并保持
+它为后续命令打开。此连接和相关资源是
+一旦它们闲置一段时间就会自动清理，所以你通常
+不需要自己管理它们。
+
+但是，如果您的客户管理大量沙箱，您可以释放
+通过在沙盒上调用`detach()`来急切地获取这些资源。这永久
+关闭该句柄的所有连接并阻止它打开新的连接。
+分离不会终止或以其他方式影响远程沙箱；仅此而已
+清理客户端资源。
 
 <CodeTabs>
   {#snippet python()}
@@ -1402,10 +1437,3 @@ defer sb.Detach()
 ```
 
 {/片段} </CodeTabs>
-
-调用`detach`后，任何使用Sandbox对象的操作都不能保证
-工作。如果您想继续与正在运行的沙箱交互，请使用 `Sandbox.from_id`
-获取引用原始 Sandbox 的新 Sandbox 对象。在Python SDK中，
-`terminate` 会保留您的沙箱，因此我们建议您在完成后致电 `detach`
-已终止的沙箱已完成。在Go/JS SDK中，`Terminate`也会分离
-你的沙箱。

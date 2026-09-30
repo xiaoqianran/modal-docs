@@ -414,6 +414,78 @@ the identity token is issued for the Sidecar container, so its `container_id`
 claim differs from the main container's. An IAM trust policy that matches on
 the full subject must allow the Sidecar's container ID as well.
 
+### Directory mounts and snapshots
+
+You can mount an Image at an absolute path in a running Sidecar and unmount it
+later. You can also snapshot a Sidecar directory into a new Image. The resulting
+Image can be used anywhere an existing Image is accepted, including as a mount
+or as the filesystem for a new container.
+
+The example below uses a mounted `/workspace` as session state, snapshots it,
+terminates the original Sidecar, and mounts the snapshot in a replacement
+Sidecar:
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sidecar.mount_image("/workspace", modal.Image.from_scratch())
+sidecar.filesystem.write_text("ready", "/workspace/state")
+
+workspace = sidecar.snapshot_directory("/workspace")
+sidecar.terminate(wait=True)
+
+replacement = sb._experimental_sidecars.create(
+    "sleep", "600", name="replacement", image=image
+)
+replacement.mount_image("/workspace", workspace)
+assert replacement.filesystem.read_text("/workspace/state") == "ready"
+replacement.unmount_image("/workspace")
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+await sidecar.mountImage("/workspace");
+await sidecar.filesystem.writeText("ready", "/workspace/state");
+
+const workspace = await sidecar.snapshotDirectory("/workspace");
+await sidecar.terminate({ wait: true });
+
+const replacement = await sb.experimentalSidecars.create("replacement", image, {
+  command: ["sleep", "600"],
+});
+await replacement.mountImage("/workspace", workspace);
+console.assert(
+  (await replacement.filesystem.readText("/workspace/state")) === "ready",
+);
+await replacement.unmountImage("/workspace");
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+_ = sidecar.MountImage(ctx, "/workspace", nil, nil)
+_ = sidecar.Filesystem.WriteText(ctx, "ready", "/workspace/state", nil)
+
+workspace, _ := sidecar.SnapshotDirectory(ctx, "/workspace", nil)
+_, _ = sidecar.Terminate(ctx, &modal.SidecarTerminateParams{Wait: true})
+
+replacement, _ := sb.ExperimentalSidecars.Create(ctx, "replacement", image, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+_ = replacement.MountImage(ctx, "/workspace", workspace, nil)
+state, _ := replacement.Filesystem.ReadText(ctx, "/workspace/state", nil)
+fmt.Println(state) // "ready"
+_ = replacement.UnmountImage(ctx, "/workspace", nil)
+```
+
+{/snippet} </CodeTabs>
+
 ## Resource configuration
 
 The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
@@ -452,7 +524,7 @@ for sidecars:
 * **No memory snapshot support**: A Sidecar's filesystem can be snapshotted
   independently, but Sidecar memory state is not captured in
   [Sandbox snapshots](/docs/guide/sandbox-snapshots).
-* **VM incompatibility**: Sidecars are not compatible with VM Sandboxes.
+* **VM incompatibility**: Sidecars are not compatible with the VM runtime.
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
 * **Maximum of 250 concurrent sidecars**: A sandbox can have at most 250 sidecar containers running at the same time.
 * **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy. Because relayed traffic leaves from the Sidecar, a Sandbox cannot currently combine a Proxy with `proxy_traffic_via_sidecar`.

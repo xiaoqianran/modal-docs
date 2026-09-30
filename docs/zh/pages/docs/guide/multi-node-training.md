@@ -1,163 +1,165 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 多节点集群
+# 多节点训练
 
-<Callout variant="beta" />
+当您需要最大程度地控制训练循环和基础设施时，可以使用[集群函数](/docs/guide/multi-node-clusters)。
 
-Modal 支持跨多个协调容器运行训练作业。每个容器都可以使其主机（也称为节点）上的可用 GPU 设备饱和，并与执行相同操作的对等容器进行通信。通过将训练作业从单个 GPU 扩展到 16 个 GPU，您可以将训练时间缩短近 16 倍。
+本指南介绍了如何为基于 [torchrun](https://docs.pytorch.org/docs/2.14/elastic/run.html) 或 [Ray](https://docs.ray.io/en/latest/index.html) 的框架启动一个框架，
+它支持 [RDMA](/docs/guide/multi-node-clusters#rdma)。请参阅[此处](/docs/examples/miles_grpo) 了解执行此操作的示例。
 
-### 集群计算能力
+## 火炬运行
 
-模态集群提供：
-
-* 50 Gbps [IPv6 专用网络](https://modal.com/docs/guide/private-networking)，用于编排、数据集下载等。
-* 3,200 Gbps RDMA 横向扩展网络 ([RoCE](https://en.wikipedia.org/wiki/RDMA_over_Converged_Ethernet))。
-* 最多 64 个设备。
-* 每个节点至少 1 TB RAM 和 4 TB 本地 NVMe SSD。
-* 深度老化测试。
-* 与所有 Modal 平台功能的互操作性（[Volumes](/docs/guide/volumes)、[Dicts](/docs/guide/dicts)、[Tunnels](/docs/guide/tunnels) 等）。
-
-该指南将引导您了解 Modal 客户端库如何支持多节点训练并与 `torchrun` 集成。
-
-### `@clustered`
-
-与标准模态函数容器不同，多节点训练作业中的容器必须能够：
-
-1. 彼此之间进行快速、直接的网络通信。
-2. 同时安排在一起，要么全有，要么全无。
-`@clustered` 装饰器支持这种行为。
+要在 Modal 上使用基于 torchrun 的框架，首先创建一个具有[必要的依赖项](/docs/guide/multi-node-clusters#rdma) 的容器映像并[添加您的训练脚本](/docs/guide/images#add-local-files-with-add_local_dir-and-add_local_file)：
 
 ```python
-import modal.experimental
+LOCAL_CODE_DIR = "train"
+REMOTE_CODE_DIR = "/root/train"
+REMOTE_BENCH_SCRIPT_PATH = f"{REMOTE_CODE_DIR}/benchmark.py"
 
-@app.function(
-    gpu="H100:8",
-    timeout=60 * 60 * 24,
-    retries=modal.Retries(initial_delay=0.0, max_retries=10),
+cuda_version = "12.4.0"  # should be no greater than host CUDA version
+flavor = "devel"  #  includes full CUDA toolkit
+operating_sys = "ubuntu22.04"
+tag = f"{cuda_version}-{flavor}-{operating_sys}"
+
+image = (
+    modal.Image.from_registry(f"nvidia/cuda:{tag}", add_python="3.12")
+    .apt_install("libibverbs1")
+    .uv_pip_install("torch")
+    .add_local_dir(
+        LOCAL_CODE_DIR,
+        remote_path=REMOTE_CODE_DIR,
+    )
 )
-@modal.experimental.clustered(size=4)
-def train_model():
-    cluster_info = modal.experimental.get_cluster_info()
-
-    container_rank = cluster_info.rank
-    world_size = len(cluster_info.container_ips)
-    main_addr = cluster_info.container_ips[0]
-    is_main = "(main)" if container_rank == 0 else ""
-
-    print(f"{container_rank=} {is_main} {world_size=} {main_addr=}")
-    ...
 ```
 
-在 `@app.function` 下应用此装饰器会修改 Function，以便对它的远程调用由多节点容器组提供服务。上述配置创建了一组四个容器，每个容器有 8 个 H100 GPU 设备，总共 32 个设备。
+然后，创建一个配置了 RDMA 的集群函数，并使用训练脚本启动 `torchrun`。在此示例中，我们创建一个两节点集群，每个节点有 8 个 H100：
+
+```python continuation
+N_NODES = 2
+N_GPUS_PER_NODE = 8
+
+@app.function(
+    gpu=f"H100:{N_GPUS_PER_NODE}",
+    image=image,
+    timeout=60 * 60,
+)
+@modal.clustered(size=N_NODES, rdma=True)
+def run():
+    from torch.distributed.run import parse_args, run
+
+    cluster = modal.Cluster.from_context()
+    args = [
+        f"--nnodes={N_NODES}",
+        f"--nproc-per-node={N_GPUS_PER_NODE}",
+        f"--node-rank={cluster.container_rank()}",
+        f"--master-addr={cluster.container_ips()[0]}",
+        REMOTE_BENCH_SCRIPT_PATH,
+    ]
+
+    run(parse_args(args))
+```
+
+请务必为您的工作负载设置适当的 [GPU 类型](/docs/guide/gpu) 和 [超时](/docs/guide/timeouts)。
+集群必须使用[每个节点的 GPU 设备的完整数量](/docs/guide/gpu#specifying-gpu-count)。
+
+##雷
+
+要在集群功能上设置 [Ray 集群](https://docs.ray.io/en/latest/index.html)，请从 `modal.Cluster.from_context()` 收集有关集群和 IPv4 地址的信息。
+然后，在 0 级上启动一个头节点，在其他级上启动一个工作节点：
+
+```python continuation
+N_NODES = 2
+N_GPUS_PER_NODE = 8
+
+@app.function(
+    gpu=f"H100:{N_GPUS_PER_NODE}",
+    image=image,
+    timeout=24 * 60 * 60,
+)
+@modal.clustered(size=N_NODES, rdma=True)
+async def train():
+    cluster = modal.Cluster.from_context()
+    ips = cluster.container_ips(family="ipv4")
+    rank = cluster.container_rank()
+
+    my_ip = ips[rank]
+    head_ip = ips[0]
+
+    # Set any environment variables needed for Ray itself here...
+    os.environ["HOST_IP"] = my_ip
+
+    if rank == 0:
+        await run_head(my_ip)
+    else:
+        await run_worker(my_ip, head_ip)
+```
 
 <Callout variant="info">
 
-从 2026 年 5 月 31 日开始，集群函数必须使用每个节点的全部 GPU 设备数量（例如，`H100:4` 无效，但 `H100:8` 有效）。集群功能需要 GPU，不支持仅 CPU 功能。如果您有不属于上述范围的特殊情况，并且想要使用集群功能，请联系<support@modal.com>。
+Ray 仅适用于 IPv4。当您请求容器的 IP 地址时，请务必设置`family="ipv4"`。
 
 </Callout>
 
-## 调度
-
-`modal.experimental.clustered` 函数在我们云中的多个节点上运行，但执行方式与普通函数调用类似。例如，所有节点都一起调度（[组调度](https://en.wikipedia.org/wiki/Gang_scheduling)），以便您的代码在所有请求的硬件上运行或根本不运行。
-
-传统上，这种集群和调度管理将由 SLURM、Kubernetes 或手动处理。但对于 Modal，这一切都是通过 Python 装饰器以无服务器方式提供的！
-
-### 排名和输入广播
-
-![图](https://modal-cdn.com/cdnbot/multinodepmgnla70_4b57a155.webp)
-您可能会注意到，上面单个 `.remote` 函数调用创建了三个输入执行，但仅返回一个输出。这就是 Modal 上多节点训练作业的输入输出结构。函数调用的参数被复制到每个容器，但仅将零级容器的参数返回给调用者。
-
-容器的等级是多节点作业中的关键概念。零级是“领导”级别，通常负责协调工作。零级也称为“主”容器。等级 0 的输出将始终是多节点训练运行的输出。
-
-## 网络
-
-函数容器通常无法与其他函数容器建立直接网络连接，但这是多节点训练通信的要求。因此，与群组调度一起，`@clustered`装饰器启用了 Modal 的工作区私有容器间网络，称为 [i6pn](https://www.notion.so/Multi-node-docs-1281e7f16949806f966adedfe8b2cb74?pvs=21)。
-
-[集群网络指南](/docs/guide/private-networking) 对 i6pn 进行了更详细的介绍，但结果是集群中的每个容器都知道集群中所有其他容器的网络地址，使它们能够通过 [TCP](https://pytorch.org/docs/stable/elastic/rendezvous.html) 快速相互通信。
-### RDMA（无限带宽）
-
-集群配备了 Infiniband，为节点间通信提供高达 3,200 Gbps 的横向扩展带宽。
-RDMA 横向扩展网络通过`rdma` 参数`modal.experimental.clustered` 启用。
-
-```python notest
-@modal.experimental.clustered(size=2, rdma=True)
-def train():
-    ...
-```
-
-要运行简单的 Infiniband RDMA 性能测试，请参阅[此示例代码](https://github.com/modal-labs/multinode-training-guide/tree/main/benchmark)。
-
-## 集群信息
-
-`modal.experimental.get_cluster_info()`公开了有关集群的以下信息：
-
-* `rank: int`是当前容器在集群中的顺序，从leader`0`开始。
-* `cluster_id: str` 是集群的唯一标识符。
-* `container_ips: list[str]` 包含集群中每个容器的 IPv6 地址，按排名排序。
-* `container_ipv4_ips: list[str]` 包含集群中每个容器的 IPv4 地址，按排名排序。
-
-## 容错
-
-对于集群函数，输入和容器中的故障的处理方式不同。
-
-如果任何容器上的输入失败，该失败**不会传播**到集群中的其他容器。容器负责检测和响应其他容器上的输入故障。
-只有排名 0 的输出才重要：如果输入在领导容器（排名 0）上失败，则输入将被标记为失败，即使输入在另一个容器上成功。同样，如果输入在领导容器上成功但在另一个容器上失败，则输入仍将被标记为成功。
-
-如果集群中的容器被抢占，或者领导者容器（rank 0）失败，Modal 将终止集群中所有剩余的容器，并重试输入。
-
-### 输入同步
-
-***重要提示：***同步与单次训练运行无关，主要适用于推理用例。
-
-Modal 不会跨容器同步输入执行。容器负责确保它们处理输入的速度不会比集群中的其他容器更快。
-
-特别重要的是，领导容器（等级 0）仅在所有其他容器完成处理当前输入后才开始处理下一个输入。
-
-## 示例
-
-要亲自进行多节点训练，您可以跳入 [`Modal Training Gym`](https://gym.modal.dev)、[`multinode-training-guide` 存储库](https://github.com/modal-labs/multinode-training-guide) 或 [`modal-examples` 存储库](https://github.com/modal-labs/modal-examples/tree/main/14_clusters) 和 `modal run` 等内容！
-* [简单的“hello world”4 x 1 H100 火炬集群示例](https://github.com/modal-labs/modal-examples/blob/main/14_clusters/simple_torch_cluster.py)
-* [Infiniband RDMA性能测试](https://github.com/modal-labs/multinode-training-guide/tree/main/benchmark)
-* [使用 2 x 8 H100 在 ImageNet 数据集上训练 ResNet50 模型](https://github.com/modal-labs/multinode-training-guide/tree/main/resnet50)
-* [使用 modded-nanogpt 进行 Speedrun GPT-2 训练](https://github.com/modal-labs/multinode-training-guide/tree/main/nanoGPT)
-
-<!-- - 使用 2 x 8 H100 在 LLaMA 3.1 405B 上以 16 位精度运行多节点_inference_。 **[待办事项]** -->
-
-### 火炬运行示例
+Rank 0 应该启动 Ray 头节点并等待其启动。一旦完成，它就可以构建一个训练命令并将其提交到集群，然后在转发日志时保持自身活动：
 
 ```python
-import modal
-import modal.experimental
+async def run_head(my_ip):
+    import ray
+    from ray.job_submission import JobSubmissionClient
 
-image = (
-    modal.Image.debian_slim(python_version="3.12")
-    .pip_install("torch~=2.5.1", "numpy~=2.2.1")
-    .add_local_dir(
-        "training", remote_path="/root/training"
+    subprocess.Popen(
+        [
+            "ray",
+            "start",
+            "--head",
+            f"--node-ip-address={my_ip}",
+            "--dashboard-host=0.0.0.0",
+        ]
     )
-)
-app = modal.App("example-simple-torch-cluster", image=image)
 
-n_nodes = 4
+    # Wait for the Ray head to start up
+    for _ in range(30):
+        try:
+            ray.init(address="auto")
+            break
+        except Exception:
+            await asyncio.sleep(1)
+    else:
+        raise RuntimeError("Failed to connect to Ray head")
 
-@app.function(gpu=f"H100:8", timeout=60 * 60 * 24)
-@modal.experimental.clustered(size=n_nodes, rdma=True)
-def launch_torchrun():
-    # import the 'torchrun' interface directly.
-    from torch.distributed.run import parse_args, run
+    cmd = build_train_cmd()
+    runtime_env = {
+        "env_vars": {
+            "no_proxy": f"127.0.0.1,{my_ip}",
+            "MASTER_ADDR": my_ip,
+            # Any other environment variables for your workload...
+        }
+    }
 
-    cluster_info = modal.experimental.get_cluster_info()
+    client = JobSubmissionClient("http://127.0.0.1:8265")
+    job_id = client.submit_job(entrypoint=cmd, runtime_env=runtime_env)
 
-    run(
-        parse_args(
-            [
-                f"--nnodes={n_nodes}",
-                f"--node-rank={cluster_info.rank}",
-                f"--master-addr={cluster_info.container_ips[0]}",
-                "--nproc-per-node=8",
-                "--master-port=1234",
-                "training/train.py",
-            ]
-        )
+    # Forward logs to the Modal dashboard
+    async with modal.forward(8265) as tunnel:
+        print(f"Ray dashboard: {tunnel.url}")
+        async for line in client.tail_job_logs(job_id):
+            print(line, end="", flush=True)
+```
+
+其他rank只是将Ray启动为工作节点并为其提供头节点的IP。然后，它们会在作业运行时循环以保持自身活力：
+
+```python
+async def run_worker(my_ip, head_ip):
+    subprocess.Popen(
+        [
+            "ray",
+            "start",
+            f"--node-ip-address={my_ip}",
+            "--address",
+            f"{head_ip}:6379",
+        ]
     )
+
+    while True:
+        await asyncio.sleep(10)
 ```

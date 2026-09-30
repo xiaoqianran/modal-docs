@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "1d67600159cd794fb214133f68b0c477f2deb6ac",
-      "translatedAt": "2026-09-29T12:36:07.960Z",
-      "bytes": 25551
+      "hash": "d6ae1a54d173f3ae3af14249bb824ff31cab6f1a",
+      "translatedAt": "2026-09-30T12:21:22.811Z",
+      "bytes": 25702
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -187,9 +187,9 @@
       "bytes": 16281
     },
     "docs/examples/computer_use_vnc.md": {
-      "hash": "7153a2424276b09df6aaa6d0c9b0b35e98ea279f",
-      "translatedAt": "2026-08-08T18:28:05.243Z",
-      "bytes": 13787
+      "hash": "6b2a3c2e66507a913d714d3631afa64fe1956cfd",
+      "translatedAt": "2026-09-30T12:21:10.696Z",
+      "bytes": 13522
     },
     "docs/cli/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -427,9 +427,9 @@
       "bytes": 4195
     },
     "docs/examples/sandbox_pool.md": {
-      "hash": "e5ef293564e6af47c024debc24a1fa30f81f6f31",
-      "translatedAt": "2026-08-08T18:28:44.368Z",
-      "bytes": 13990
+      "hash": "a13b5861caaf9bb57bda3c310f0c8df291576544",
+      "translatedAt": "2026-09-30T12:21:22.427Z",
+      "bytes": 13944
     },
     "docs/examples/streaming_kyutai_stt.md": {
       "hash": "d0e6df12813659d7cf67897561a5581da238b175",
@@ -652,9 +652,9 @@
       "bytes": 1896
     },
     "docs/guide/images.md": {
-      "hash": "b51638021b9bb3aaced9545b355d4c74ff8101bc",
-      "translatedAt": "2026-08-08T18:29:24.787Z",
-      "bytes": 13684
+      "hash": "a081d3c64689195aee986f668595875fa696dbe5",
+      "translatedAt": "2026-09-30T12:21:33.769Z",
+      "bytes": 13195
     },
     "docs/guide/local-data.md": {
       "hash": "e28be65e806b94e4dc6d425dbe9233d2efed43a5",
@@ -692,14 +692,14 @@
       "bytes": 13862
     },
     "docs/guide/named-images.md": {
-      "hash": "d05c2af21eeb996f2a47970154088126d0dd7f5d",
-      "translatedAt": "2026-08-08T18:29:31.274Z",
-      "bytes": 4594
+      "hash": "eca8afc06271d7817a74e125646b261fa3c60bea",
+      "translatedAt": "2026-09-30T12:21:31.094Z",
+      "bytes": 4563
     },
     "docs/guide/multi-node-training.md": {
-      "hash": "853e01f2f73ac5a972efe715d5f2a0fb2daea923",
-      "translatedAt": "2026-08-13T07:45:14.475Z",
-      "bytes": 7930
+      "hash": "0b1cebb2ea36e307f06e5b28be818c3918d84fcb",
+      "translatedAt": "2026-09-30T12:21:28.814Z",
+      "bytes": 5032
     },
     "docs/guide/oidc-integration.md": {
       "hash": "a1a2de775193c51640f31acb089376d6d5b40caa",
@@ -782,14 +782,14 @@
       "bytes": 2681
     },
     "docs/guide/sandbox-files.md": {
-      "hash": "7d090bf6a4806c6fdcb4961b775baa1bd6412eab",
-      "translatedAt": "2026-08-14T07:42:10.692Z",
-      "bytes": 13237
+      "hash": "a0da02c21be8defe7d715c21ea202cb291216564",
+      "translatedAt": "2026-09-30T12:21:34.076Z",
+      "bytes": 13154
     },
     "docs/guide/sandbox-resources.md": {
-      "hash": "cb6c3e681770e438a98942e03e22e9c14fb3690e",
-      "translatedAt": "2026-09-12T10:32:19.093Z",
-      "bytes": 5061
+      "hash": "cf43815a53a33c2f36464cbd603bc13a34b8e285",
+      "translatedAt": "2026-09-30T12:21:36.417Z",
+      "bytes": 5363
     },
     "docs/guide/rbac.md": {
       "hash": "2b5fef0234da08d4f11dd24bc676fe0fadf981ad",
@@ -797,19 +797,19 @@
       "bytes": 12063
     },
     "docs/guide/sandbox-spawn.md": {
-      "hash": "9f8363b13ca21589a166dfa7878364e7702083c4",
-      "translatedAt": "2026-08-08T18:29:49.071Z",
-      "bytes": 3934
+      "hash": "f0f220838d4e5d82d8ca60344ec1c4e269e5dfec",
+      "translatedAt": "2026-09-30T12:21:46.045Z",
+      "bytes": 3822
     },
     "docs/guide/sandbox-networking.md": {
-      "hash": "d4270fdd3cff86d9fc0d8a8ce884726008d37cc9",
-      "translatedAt": "2026-09-16T11:19:13.384Z",
-      "bytes": 17800
+      "hash": "e982eea7c2be7c5ed1b895808d1fa80bb7b5a6e5",
+      "translatedAt": "2026-09-30T12:21:43.431Z",
+      "bytes": 18184
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "33d355619e6bc341b0138cc1c5bd2745efbce7fe",
-      "translatedAt": "2026-09-23T11:18:28.904Z",
-      "bytes": 19010
+      "hash": "81199f7399f51f0ddf14f5bbda7bf5cbfe784f65",
+      "translatedAt": "2026-09-30T12:21:53.218Z",
+      "bytes": 19023
     },
     "docs/guide/scale.md": {
       "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
@@ -832,9 +832,9 @@
       "bytes": 8689
     },
     "docs/guide/sandboxes.md": {
-      "hash": "56841289f2aaf074a6a3a76ac6ae69ea18d8fa84",
-      "translatedAt": "2026-08-29T12:36:29.920Z",
-      "bytes": 37162
+      "hash": "774cab17990df64c19d10b46d18e49fce30dc855",
+      "translatedAt": "2026-09-30T12:22:05.889Z",
+      "bytes": 38645
     },
     "docs/guide/service-users.md": {
       "hash": "c519f4226284b3071ce9563a38b74cd82144d08b",
@@ -847,9 +847,9 @@
       "bytes": 2318
     },
     "docs/guide/servers.md": {
-      "hash": "8f2e52ffcf7da4b273e43f89f7a5214462fa1661",
-      "translatedAt": "2026-09-18T11:00:44.347Z",
-      "bytes": 7876
+      "hash": "3b858948e0d45ce2269a78761e523c94119b781a",
+      "translatedAt": "2026-09-30T12:22:15.620Z",
+      "bytes": 8263
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "c8e198367150ca62e168df2c7c4cf6024df25ffe",
-      "translatedAt": "2026-08-11T07:18:59.218Z",
-      "bytes": 9277
+      "hash": "c2f05890f2d0b04ccfe65a4ac16dcc1803c71871",
+      "translatedAt": "2026-09-30T12:22:07.443Z",
+      "bytes": 9380
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -872,9 +872,9 @@
       "bytes": 5713
     },
     "docs/guide/troubleshooting.md": {
-      "hash": "daac3a9c18e118987068d90dee6c6f544bc1750a",
-      "translatedAt": "2026-08-08T18:30:05.556Z",
-      "bytes": 5536
+      "hash": "b2d376f4e06e7ad0388249f983a8a6aac3d11e42",
+      "translatedAt": "2026-09-30T12:22:14.258Z",
+      "bytes": 5660
     },
     "docs/guide/trigger-deployed-functions.md": {
       "hash": "56c90aa1cb0fe67695688b2f99cf04a3e019ec32",
@@ -1492,9 +1492,9 @@
       "bytes": 65158
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "c3b060454959eef2b12f0b6aad44d9e99d10b4e1",
-      "translatedAt": "2026-09-29T12:36:32.207Z",
-      "bytes": 14335
+      "hash": "81760f01946906ac94038620ecfbbb60b67451e4",
+      "translatedAt": "2026-09-30T12:21:42.556Z",
+      "bytes": 16609
     },
     "docs/guide/data-residency.md": {
       "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
@@ -1671,13 +1671,38 @@
       "hash": "568efdf8d9c76199cb4564a7ec9f96c050ab36bf",
       "translatedAt": "2026-09-29T12:38:20.834Z",
       "bytes": 1121
+    },
+    "docs/examples/miles_grpo.md": {
+      "hash": "90525e5516fa16cbf23b6eeab7029d996458adc5",
+      "translatedAt": "2026-09-30T12:21:15.050Z",
+      "bytes": 15200
+    },
+    "docs/examples/paint_flowers.md": {
+      "hash": "6957a955dd4d9fb1b82dcceff7c7f926bcb0cab0",
+      "translatedAt": "2026-09-30T12:21:16.848Z",
+      "bytes": 8159
+    },
+    "docs/guide/dojo.md": {
+      "hash": "dbbe64236282fecf5cd8406d40429ca955869388",
+      "translatedAt": "2026-09-30T12:21:24.138Z",
+      "bytes": 2029
+    },
+    "docs/examples/swe_gym.md": {
+      "hash": "68fbc69cca82071d64d48f5b960380b97435593e",
+      "translatedAt": "2026-09-30T12:21:27.325Z",
+      "bytes": 14052
+    },
+    "docs/guide/spindle.md": {
+      "hash": "991c76b2e16431401f6afd94296b145c345a0e7c",
+      "translatedAt": "2026-09-30T12:22:10.922Z",
+      "bytes": 6351
     }
   },
-  "updatedAt": "2026-09-29T12:39:04.493Z",
+  "updatedAt": "2026-09-30T12:22:15.620Z",
   "stats": {
-    "translated": 50,
-    "skipped": 281,
+    "translated": 21,
+    "skipped": 315,
     "failed": 0,
-    "total": 331
+    "total": 336
   }
 }

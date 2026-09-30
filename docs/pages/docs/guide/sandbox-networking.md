@@ -383,8 +383,6 @@ url = f"{creds.url}/?_modal_connect_token={creds.token}"
 ws_url = url.replace("https://", "wss://")
 with websockets.connect(ws_url) as socket:
     socket.send("Hello world!")
-
-sb.detach()
 ```
 
 {/snippet}
@@ -408,8 +406,6 @@ const creds = await sb.createConnectToken({
 const response = await fetch(creds.url, {
   headers: { Authorization: `Bearer ${creds.token}` },
 });
-
-sb.detach();
 ```
 
 {/snippet}
@@ -433,8 +429,6 @@ creds, err := sb.CreateConnectToken(ctx, &modal.SandboxCreateConnectTokenParams{
 req, _ := http.NewRequestWithContext(ctx, "GET", creds.URL, nil)
 req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", creds.Token))
 resp, _ := http.DefaultClient.Do(req)
-
-sb.Detach()
 ```
 
 {/snippet} </CodeTabs>
@@ -489,8 +483,6 @@ time.sleep(1)  # Wait for server to start.
 
 print(f"Connecting to {tunnel.url}...")
 print(requests.get(tunnel.url, timeout=5).text)
-
-sb.detach()
 ```
 
 It is also possible to create an encrypted port that uses `HTTP/2` rather than `HTTP/1.1` with the `h2_ports` option. This will return
@@ -511,8 +503,6 @@ p = sb.exec("python", "my_http2_server.py")
 tunnel = sb.tunnels()[port]
 time.sleep(1)
 print(f"Tunnel URL: {tunnel.url}")
-
-sb.detach()
 ```
 
 For more details on how tunnels work, see the [tunnels guide](/docs/guide/tunnels).
@@ -581,12 +571,21 @@ for this sandbox will also use the custom domain.
 
 ## Security model
 
-Sandboxes are built on top of [gVisor](https://gvisor.dev/), a container runtime
-by Google that provides strong isolation properties. gVisor has custom logic to
-prevent Sandboxes from making malicious system calls, giving you stronger isolation
-than most other container runtimes.
+Modal Sandboxes are isolated from the host and from other workloads by one of the two
+[runtimes](/docs/guide/sandboxes#runtimes) we offer:
+
+* **gVisor**: [gVisor](https://gvisor.dev/) is a container runtime developed by Google
+  that implements the Linux system call interface in userspace. System calls from
+  the Sandbox are handled by gVisor instead of the host kernel, giving stronger
+  isolation than normal container runtimes.
+* **VMs**: the Sandbox runs in its own virtual machine with its own Linux
+  kernel, isolated by the CPU's hardware virtualization through the Linux
+  [KVM](https://docs.kernel.org/virt/kvm/index.html) hypervisor.
+
+The [network access controls](#outbound-access-control) on this page apply to
+both runtimes.
 
 Additionally, Sandboxes are not authorized to access other resources in your Modal
 workspace the way that Modal Functions are [by default](/docs/guide/restricted-access).
 As a result, the blast radius of any malicious code will be limited to the Sandbox
-container itself.
+itself.

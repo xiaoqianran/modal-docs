@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 维护一个健康的、准备好服务请求的温暖沙盒池
+# 维护一个健康的、准备好服务请求的温暖沙箱池
 
 这个例子演示了如何构建一个“暖”池
 [模态沙箱](https://modal.com/docs/guide/sandbox)，并部署一个
@@ -65,7 +65,7 @@ READINESS_PROBE_TIMEOUT_SECONDS = 10
 ```
 
 在此示例中，沙箱存在 5 分钟，我们假设它们用于
-2 分钟，这意味着如果沙箱剩余时间少于 2 分钟，则将被视为
+2 分钟，这意味着如果沙箱剩余时间少于 2 分钟，则视为
 过期太快，将被终止。
 
 您需要根据您的用例调整这些值。我们不设定`idle_timeout`：根据定义，池化沙箱是空闲的，因此它将终止它们
@@ -144,7 +144,7 @@ def is_still_good(sr: SandboxReference, check_health: bool) -> bool:
 
 ```
 
-### 将沙盒添加到池中
+### 将沙箱添加到池中
 
 此函数创建一个新的沙箱并将其添加到池中。它等待着
 沙箱的准备就绪探测在添加之前通过，确保服务器处于正常状态
@@ -191,7 +191,6 @@ def add_sandbox_to_queue() -> None:
     finally:
         if not pooled:
             sb.terminate()
-        sb.detach()
 
 
 ```
@@ -205,7 +204,6 @@ def terminate_sandboxes(sandbox_ids: list[str]) -> int:
     for id in sandbox_ids:
         sb = modal.Sandbox.from_id(id)
         sb.terminate()
-        sb.detach()
         num_terminated += 1
 
     print(f"Terminated {num_terminated} Sandboxes")
@@ -362,7 +360,7 @@ def check():
 
 ```
 
-### 从池中声明沙箱并打印其 URL
+### 从池中获取沙箱并打印其 URL
 
 其实现方式就像您想从 Python 后端调用该函数一样
 使用 Modal SDK 的应用程序，即使用 `.from_name()` 获取 Function 等。

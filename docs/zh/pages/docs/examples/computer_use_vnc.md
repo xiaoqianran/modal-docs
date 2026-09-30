@@ -9,8 +9,8 @@
 本示例使用[浏览器使用](https://docs.browser-use.com/)构建一个。
 由 Modal 提供的开放权重模型
 [端点](https://modal.com/docs/guide/endpoints) 为代理提供动力。代理
-在 Modal 中驱动 Chromium
-[虚拟机沙盒](https://modal.com/docs/guide/vm-sandboxes),
+在 Modal Sandbox 中驱动 Chromium
+[VM](https://modal.com/docs/guide/sandboxes#runtimes),
 而小型 Web UI 嵌入了 noVNC 桌面，因此您可以实时观看它的工作情况。
 
 ## 运行示例
@@ -294,9 +294,6 @@ async def start_session(task: str):
         if sandbox is not None:
             await sandbox.terminate.aio()
         raise
-    finally:
-        if sandbox is not None:
-            await sandbox.detach.aio()
 
 
 ```
@@ -332,14 +329,11 @@ async def session_status(sandbox_id: str):
     except modal.exception.NotFoundError as exc:
         raise fastapi.HTTPException(404, "Session not found.") from exc
 
-    try:
-        returncode = await sandbox.poll.aio()
-        if returncode is None:
-            return {"state": "running"}
-        stdout = await sandbox.stdout.read.aio()
-        stderr = await sandbox.stderr.read.aio()
-    finally:
-        await sandbox.detach.aio()
+    returncode = await sandbox.poll.aio()
+    if returncode is None:
+        return {"state": "running"}
+    stdout = await sandbox.stdout.read.aio()
+    stderr = await sandbox.stderr.read.aio()
 
     if returncode == 0:
         result = None
@@ -414,10 +408,7 @@ def test_session(
         raise RuntimeError(f"Unexpected session state: {status}")
 
     sandbox = modal.Sandbox.from_id(sandbox_id)
-    try:
-        sandbox.terminate()
-    finally:
-        sandbox.detach()
+    sandbox.terminate()
     print("session start ok")
 
 
@@ -427,8 +418,7 @@ def test_session(
 
 每个沙箱都使用代理进程作为其入口点，因此当
 任务完成或超时。启动失败终止它
-立即，每个代码路径都会分离其本地沙箱句柄。
-`test_session` 还会在 API 检查后终止沙箱。
+立即，并且 `test_session` 在 API 检查后终止沙箱。
 
 与 `Ctrl-C` 停止`modal serve`。空闲时共享端点缩放为零，
 但仍可用于以后的提示。完成后将其关闭：

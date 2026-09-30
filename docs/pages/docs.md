@@ -41,13 +41,16 @@ The docs are organized into three main sections:
   - [File access](https://modal.com/docs/guide/sandbox-files.md)
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
-  - [VM Sandboxes (Beta)](https://modal.com/docs/guide/vm-sandboxes.md)
   - [Sidecars (Alpha)](https://modal.com/docs/guide/sandbox-sidecars.md)
 - Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
   - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
   - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
+- Training
+  - [Getting started](https://modal.com/docs/guide/dojo.md)
+  - [Tinker-compatible API](https://modal.com/docs/guide/spindle.md)
+  - [Multi-node training](https://modal.com/docs/guide/multi-node-training.md)
 - Images
   - [Defining Images](https://modal.com/docs/guide/images.md)
   - [Using existing container images](https://modal.com/docs/guide/existing-images.md)
@@ -192,8 +195,9 @@ The docs are organized into three main sections:
   - [Run Node.js, Ruby, and more in a Sandbox](https://modal.com/docs/examples/safe_code_execution.md)
   - [Speed up Sandbox starts with warm pools](https://modal.com/docs/examples/sandbox_pool.md)
 - Reinforcement Learning
-  - [Train a model to solve math problems using GRPO and verl](https://modal.com/docs/examples/grpo_verl.md)
-  - [Train a model to solve coding problems using GRPO and TRL](https://modal.com/docs/examples/grpo_trl.md)
+  - [Paint flowers with code](https://modal.com/docs/examples/paint_flowers.md)
+  - [Train coding agents](https://modal.com/docs/examples/swe_gym.md)
+  - [Make LLMs better at math](https://modal.com/docs/examples/miles_grpo.md)
 - Embeddings
   - [Serve Liquid AI embeddings with Modal Servers](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [Embed millions of documents with TEI](https://modal.com/docs/examples/amazon_embeddings.md)

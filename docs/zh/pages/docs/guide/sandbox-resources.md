@@ -137,6 +137,13 @@ sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 有关详细信息，请参阅[资源限制](/docs/guide/resources#resource-limits)
 CPU 和内存限制的行为方式。
 
+### 磁盘
+
+沙盒具有相同的[磁盘限制](/docs/guide/resources#disk-limits)
+其他 Modal 容器，其磁盘大小无法增加。上
+[VM运行时](/docs/guide/sandboxes#runtimes)，根文件系统是固定的
+512 GiB。
+
 ## 调整你的请求
 
 我们建议您的资源请求基于观察到的使用百分位数，而不是
@@ -148,7 +155,7 @@ CPU 和内存限制的行为方式。
 **每个沙箱的 CPU**、**每个沙箱的内存**、**每个沙箱的 CPU 压力**以及
 **退出原因**。
 
-![沙盒指标选项卡上的资源大小图表](https://modal-cdn.com/cdnbot/resource-sizing-chartswb81a46v_6e4fd1b8.webp)
+![沙箱指标选项卡上的资源大小图表](https://modal-cdn.com/cdnbot/resource-sizing-chartswb81a46v_6e4fd1b8.webp)
 
 每个沙箱的 CPU 和每个沙箱的内存显示 CPU 和内存的百分位数
 您的沙箱实际使用的内存。每个沙箱的 CPU 压力和退出原因
@@ -170,8 +177,8 @@ CPU 和内存限制的行为方式。
 ## GPU 沙箱
 
 您还可以使用 GPU 运行沙箱。请参阅 [GPU 加速](/docs/guide/gpu) 了解可用的
-GPU 类型和配置。
-
+GPU 类型和配置。 GPU 沙箱仅支持
+[`runtime="gvisor"`](/docs/guide/sandboxes#runtimes)。
 与 CPU 沙箱不同，GPU 沙箱受到[抢占](/docs/guide/preemption) 的影响。
 设计您的 GPU 工作负载以优雅地处理中断。
 

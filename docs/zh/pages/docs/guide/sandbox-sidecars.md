@@ -36,7 +36,7 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 * 独立于主沙箱容器运行自己的映像。
 * 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
 * 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
-* 可以在沙盒的生命周期内动态创建、终止和替换。* 支持像主沙盒容器一样执行命令。
+* 可以在沙箱的生命周期内动态创建、终止和替换。* 支持像主沙盒容器一样执行命令。
 
 ## 用法
 
@@ -274,7 +274,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 请求过滤器。
 
 仅中继到端口 443 的 TCP 流量。沙盒自己的出口控制是
-为此预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
+为其预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
 其他端口，但无论其列出什么，中继流量都会通过。非中继
 流量仍然受到沙箱的出口控制。
 
@@ -284,7 +284,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
 Sidecar 选择连接到的任何目的地。
 
-该选项不能与设置`block_network`组合使用，
+该选项不能与设置`block_network`结合使用，
 沙盒上的`outbound_domain_allowlist`或`proxy`。
 
 ### 文件系统快照
@@ -343,7 +343,8 @@ fmt.Println(state) // "ready"
 Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
 配置方式与沙盒上相同。每个容器都有自己的挂载：
 安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
-在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶GPU 沙盒的 Sidecar 不支持挂载。
+在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶
+GPU 沙盒的 Sidecar 不支持挂载。
 
 <CodeTabs>
 {#snippet python()}
@@ -411,6 +412,78 @@ fmt.Println(string(stdout))
 声明与主容器的声明不同。匹配的 IAM 信任策略
 完整主题还必须允许 Sidecar 的容器 ID。
 
+### 目录挂载和快照
+
+您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它
+之后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
+图像可以在任何接受现有图像的地方使用，包括作为安装
+或作为新容器的文件系统。
+
+下面的示例使用已安装的 `/workspace` 作为会话状态，对其进行快照，
+终止原始 Sidecar，并将快照挂载到替换的 Sidecar 中
+边车：
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sidecar.mount_image("/workspace", modal.Image.from_scratch())
+sidecar.filesystem.write_text("ready", "/workspace/state")
+
+workspace = sidecar.snapshot_directory("/workspace")
+sidecar.terminate(wait=True)
+
+replacement = sb._experimental_sidecars.create(
+    "sleep", "600", name="replacement", image=image
+)
+replacement.mount_image("/workspace", workspace)
+assert replacement.filesystem.read_text("/workspace/state") == "ready"
+replacement.unmount_image("/workspace")
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+await sidecar.mountImage("/workspace");
+await sidecar.filesystem.writeText("ready", "/workspace/state");
+
+const workspace = await sidecar.snapshotDirectory("/workspace");
+await sidecar.terminate({ wait: true });
+
+const replacement = await sb.experimentalSidecars.create("replacement", image, {
+  command: ["sleep", "600"],
+});
+await replacement.mountImage("/workspace", workspace);
+console.assert(
+  (await replacement.filesystem.readText("/workspace/state")) === "ready",
+);
+await replacement.unmountImage("/workspace");
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+_ = sidecar.MountImage(ctx, "/workspace", nil, nil)
+_ = sidecar.Filesystem.WriteText(ctx, "ready", "/workspace/state", nil)
+
+workspace, _ := sidecar.SnapshotDirectory(ctx, "/workspace", nil)
+_, _ = sidecar.Terminate(ctx, &modal.SidecarTerminateParams{Wait: true})
+
+replacement, _ := sb.ExperimentalSidecars.Create(ctx, "replacement", image, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+_ = replacement.MountImage(ctx, "/workspace", workspace, nil)
+state, _ := replacement.Filesystem.ReadText(ctx, "/workspace/state", nil)
+fmt.Println(state) // "ready"
+_ = replacement.UnmountImage(ctx, "/workspace", nil)
+```
+
+{/片段} </CodeTabs>
+
 ## 资源配置
 
 主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
@@ -422,7 +495,7 @@ fmt.Println(string(stdout))
 
 例如，如果您想运行具有两个 Sidecar 的沙盒，并且您期望主要
 容器使用 1 个 CPU 核心和 512 MiB 内存，Sidecar A 使用 0.5 个 CPU 和 256 MiB，
-和 Sidecar B 使用 0.5 CPU 和 256 MiB，您应该将沙箱的资源设置为
+和 Sidecar B 使用 0.5 CPU 和 256 MiB，您应该将 Sandbox 的资源设置为
 至少 2 个 CPU 和 1024 MiB 来容纳所有三个容器。
 
 您可以创建的 Sidecar 的最大数量也取决于主沙箱的
@@ -440,6 +513,7 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
+
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
   通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
@@ -448,7 +522,7 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
   独立，但 Sidecar 内存状态不会被捕获
   [沙盒快照](/docs/guide/sandbox-snapshots)。
-* **VM 不兼容**：Sidecar 与 VM Sandbox 不兼容。
-* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
+* **VM 不兼容**：Sidecar 与 VM 运行时不兼容。
+* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
 * **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
-* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。
+* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙盒目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

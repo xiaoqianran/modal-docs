@@ -27,22 +27,11 @@ image = (
 
 ## 什么是图像？
 
-Modal 上的代码在*容器*中运行。容器就像轻量级的
-虚拟机——容器引擎的使用
-[操作系统技巧](https://earthly.dev/blog/chroot/)隔离程序
-彼此分离（“包含”它们），使它们像它们一样工作
-使用自己的文件系统在自己的硬件上运行。这使得执行
-环境更具可重复性，例如通过防止意外
-同一台机器上的环境交叉污染。为了增加安全性，
-Modal 使用沙盒运行容器
-[gVisor 容器运行时](https://cloud.google.com/blog/products/identity-security/open-sourcing-gvisor-a-sandboxed-container-runtime)。
-
-容器从其文件系统状态的存储“快照”启动
-称为*图像*。为容器生成镜像称为“构建”
-图像。
+*图像*是 Modal 用于启动的文件系统状态的存储“快照”
+代码运行的环境。生成图像称为“构建”它。
 
 默认情况下，模态函数和沙箱运行在
-[Debian Linux](https://en.wikipedia.org/wiki/Debian) 具有基本功能的容器
+[Debian Linux](https://en.wikipedia.org/wiki/Debian)环境具备基本的
 Python 安装与本地 Python 相同的次要版本 `v3.x`
 口译员。
 
@@ -53,13 +42,14 @@ Python 安装与本地 Python 相同的次要版本 `v3.x`
 `RUN` 和 `ENV` 等功能。我们将在本指南中介绍每一个内容，
 以及使用每个工具时有效构建图像的提示和技巧。
 
+请注意，图像构建器在 Modal 的 [gVisor 运行时](/docs/guide/sandboxes#runtimes) 之上运行。
+
 ## 添加Python包
 
 最简单最常见的图片修改就是添加第三方
 Python 包，如 [`pandas`](https://pandas.pydata.org/)。
 
-您可以通过传递所有您想要的包来将 Python 包添加到环境中。
-需要 [`Image.uv_pip_install`](/docs/sdk/py/latest/Image#uv_pip_install) 方法，
+您可以通过传递所有您想要的包来将 Python 包添加到环境中。需要 [`Image.uv_pip_install`](/docs/sdk/py/latest/Image#uv_pip_install) 方法，
 它安装带有 [`uv`](https://docs.astral.sh/uv/) 的软件包：
 
 ```python
@@ -138,7 +128,6 @@ def f():
 
     local_module.do_stuff()
 ```
-
 与`add_local_dir`的区别在于`add_local_python_source`以模块名称作为参数
 而不是文件系统路径，并通过 Python 的导入查找本地包或模块的位置
 机制。然后将这些文件添加到目录中，使它们可以导入到以下容器中：
@@ -160,7 +149,8 @@ def f():
 相反，正如您在上面所看到的。这意味着`pandas`仅在以下情况下导入：
 在安装了 `pandas` 的远程 Modal 容器内运行。
 
-请注意从具有不同功能的模态函数返回的内容安装的软件包比您本地安装的软件包好！模态函数返回 Python
+请注意从具有不同功能的模态函数返回的内容
+安装的软件包比您本地安装的软件包好！模态函数返回 Python
 对象，例如 `pandas.DataFrame`s，并且如果您的本地计算机没有
 安装了`pandas`，它将无法处理`pandas`对象（错误
 您看到的消息会提到
@@ -184,9 +174,7 @@ with pandas_image.imports():
 def my_function():
     df = pd.DataFrame()
     ...
-```
-
-因为这些导入发生在新容器处理其第一个输入之前，
+```因为这些导入发生在新容器处理其第一个输入之前，
 您可以将此上下文管理器与[内存快照](/docs/guide/memory-snapshots)结合起来
 提高[冷启动性能](/docs/guide/cold-start#share-initialization-work-across-cold-starts-with-memory-snapshots)
 对于经常扩展的功能。
@@ -203,7 +191,8 @@ image = modal.Image.debian_slim().apt_install("git", "curl")
 ## 使用`.env`设置环境变量
 
 您可以更改代码看到的环境变量
-（例如，[`os.environ`](https://docs.python.org/3/library/os.html#os.environ)）通过将字典传递给 [`Image.env`](/docs/sdk/py/latest/Image#env)：
+（例如，[`os.environ`](https://docs.python.org/3/library/os.html#os.environ)）
+通过将字典传递给 [`Image.env`](/docs/sdk/py/latest/Image#env)：
 
 ```python
 image = modal.Image.debian_slim().env({"PORT": "6443"})
@@ -259,13 +248,14 @@ image = (
 有关在 Modal 上存储模型权重的详细信息，请参阅
 [本指南](/docs/guide/model-weights)。
 
-本质上，这相当于运行一个模态函数并对
+本质上，这相当于运行模态函数并拍摄快照
 生成的文件系统作为新映像。 [`@app.function`](/docs/sdk/py/latest/App#function) 接受的任何 kwargs
 （[`Volume`s](/docs/guide/volumes)、[`Secret`s](/docs/guide/secrets)，规范
 可以在此处提供诸如 [GPU](/docs/guide/gpu)) 之类的资源。
 
 每当您更改图像的其他功能时，例如基本图像或
-Python 包的版本，图像将在下一个版本中自动重建使用时间。当更改内容时，这有点复杂
+Python 包的版本，图像将在下一个版本中自动重建
+使用时间。当更改内容时，这有点复杂
 功能。请参阅
 [参考文档](/docs/sdk/py/latest/Image#run_function) 了解详细信息。
 
@@ -284,8 +274,7 @@ image = (
 
 ## 使用`mamba`代替`pip`和`micromamba_install`
 
-`pip` 安装 Python 包，但某些 Python 工作负载需要
-还协调了系统软件包的安装。 `mamba` 包管理器
+`pip` 安装 Python 包，但某些 Python 工作负载需要还协调了系统软件包的安装。 `mamba` 包管理器
 可以两者都安装。 Modal 提供了一个预构建的
 [微曼巴](https://mamba.readthedocs.io/en/latest/user_guide/micromamba.html)
 基础镜像可以让您轻松使用 `micromamba`：

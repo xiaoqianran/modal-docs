@@ -2,10 +2,10 @@
 
 # 文件系统访问
 
-有多种选项可用于将文件上传到沙盒并访问它们
+有多种选项可用于将文件上传到沙箱并访问它们
 从沙箱外部。
 
-## 文件系统API
+## 文件系统 API
 
 在沙箱中传入和传出数据的最便捷方式
 执行是使用我们的文件系统API：
@@ -28,7 +28,6 @@ contents = sb.filesystem.read_text("/tmp/test.txt")
 print(contents)
 
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -119,7 +118,6 @@ sb.filesystem.copy_to_local("/tmp/file-in-sandbox.txt", "local-file-copy.txt")
 print(Path("local-file-copy.txt").read_text())
 
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -204,7 +202,6 @@ if info.size > 0:
 sb.filesystem.remove("/tmp/project", recursive=True)
 
 sb.terminate()
-sb.detach()
 ```
 
 {/片段}
@@ -312,7 +309,6 @@ p.wait()
 p = sb.exec("bash", "-c", "echo foo > /cache/a.txt")
 p.wait()
 sb.terminate(wait=True)
-sb.detach()
 
 # Access the Volume file from outside the Sandbox.
 for data in vol.read_file("a.txt"):
@@ -352,7 +348,6 @@ sb = modal.Sandbox.create(
 p = sb.exec("bash", "-c", "echo hello > /data/output.txt")
 p.wait()
 sb.terminate(wait=True)
-sb.detach()
 ```
 
 {/片段}
@@ -435,7 +430,6 @@ if p.returncode != 0:
 
 # Changes are now persisted and visible to other containers
 sb.terminate()
-sb.detach()
 ```
 
 这对于您想要长期运行的沙箱特别有用
@@ -469,5 +463,4 @@ sb = modal.Sandbox.create(app=my_app, image=image)
 p = sb.exec("ls", "/app")
 print(p.stdout.read())
 p.wait()
-sb.detach()
 ```

@@ -281,7 +281,6 @@ const snapshot = await sb.snapshotDirectory("/project");
 
 // Ok to throw away the old Sandbox at this point
 await sb.terminate();
-sb.detach();
 
 // Mount the snapshot in a new Sandbox
 const sb2 = await modal.sandboxes.create(app, image);
@@ -296,7 +295,6 @@ try {
 // The Sandbox now has access to the previous project state
 const p2 = await sb2.exec(["cat", "/project/file.txt"]);
 console.assert((await p2.stdout.readText()).trim() === "data");
-sb2.detach();
 ```
 
 {/snippet}
@@ -304,7 +302,6 @@ sb2.detach();
 
 ```go notest
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 
 // Write some dummy data
 p, _ := sb.Exec(ctx, []string{"bash", "-c", "mkdir /project && echo 'data' > /project/file.txt"}, nil)
@@ -318,7 +315,6 @@ sb.Terminate(ctx, nil)
 
 // Mount the snapshot in a new Sandbox
 sb2, _ := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb2.Detach()
 
 if err := sb2.MountImage(ctx, "/project", snapshot, nil); err != nil {
   var notFound modal.NotFoundError
@@ -369,6 +365,8 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 <Callout variant="alpha">
 
 A number of known [limitations](#limitations) currently apply.
+
+Access to [VM Memory Snapshots](/docs/guide/vm-memory-snapshots) is available on request.
 
 </Callout>
 

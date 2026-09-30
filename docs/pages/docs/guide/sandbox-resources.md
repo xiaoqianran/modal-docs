@@ -136,6 +136,13 @@ sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 See [Resource limits](/docs/guide/resources#resource-limits) for details on
 how CPU and memory limits behave.
 
+### Disk
+
+Sandboxes have the same [disk limits](/docs/guide/resources#disk-limits) as
+other Modal containers, and their disk size cannot be increased. On the
+[VM runtime](/docs/guide/sandboxes#runtimes), the root filesystem is a fixed
+512 GiB.
+
 ## Tuning your requests
 
 We recommend basing your resource requests on observed usage percentiles rather
@@ -169,7 +176,8 @@ exceeding their memory request.
 ## GPU Sandboxes
 
 You can also run Sandboxes with GPUs. See [GPU acceleration](/docs/guide/gpu) for available
-GPU types and configuration.
+GPU types and configuration. GPU Sandboxes are only supported with
+[`runtime="gvisor"`](/docs/guide/sandboxes#runtimes).
 
 Unlike CPU Sandboxes, GPU Sandboxes are subject to [preemption](/docs/guide/preemption).
 Design your GPU workloads to handle interruptions gracefully.

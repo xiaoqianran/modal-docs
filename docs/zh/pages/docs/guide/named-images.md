@@ -124,7 +124,6 @@ const p = await sb.exec([
   "import pandas, sklearn; print('ready')",
 ]);
 console.log(await p.stdout.readText());
-sb.detach();
 ```
 
 {/片段}
@@ -135,7 +134,6 @@ sb.detach();
 // sandbox_launcher.go
 image, err := mc.Images.FromName(ctx, "analytics-runtime", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 
 p, err := sb.Exec(ctx, []string{
 	"python",

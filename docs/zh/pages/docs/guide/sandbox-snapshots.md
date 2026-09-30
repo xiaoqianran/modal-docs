@@ -132,7 +132,7 @@ assert p2.stdout.read().strip() == "test"
 利用与我们为沙盒快速冷启动相同的基础设施。
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
-请注意，文件系统快照仅涵盖沙箱的根文件系统。
+请注意，文件系统快照仅涵盖沙盒的根文件系统。
 此快照不涵盖任何已安装的[卷](/docs/guide/volumes)
 并且不会包含在生成的图像中。
 
@@ -279,7 +279,6 @@ const snapshot = await sb.snapshotDirectory("/project");
 
 // Ok to throw away the old Sandbox at this point
 await sb.terminate();
-sb.detach();
 
 // Mount the snapshot in a new Sandbox
 const sb2 = await modal.sandboxes.create(app, image);
@@ -294,7 +293,6 @@ try {
 // The Sandbox now has access to the previous project state
 const p2 = await sb2.exec(["cat", "/project/file.txt"]);
 console.assert((await p2.stdout.readText()).trim() === "data");
-sb2.detach();
 ```
 
 {/片段}
@@ -302,7 +300,6 @@ sb2.detach();
 
 ```go notest
 sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb.Detach()
 
 // Write some dummy data
 p, _ := sb.Exec(ctx, []string{"bash", "-c", "mkdir /project && echo 'data' > /project/file.txt"}, nil)
@@ -316,7 +313,6 @@ sb.Terminate(ctx, nil)
 
 // Mount the snapshot in a new Sandbox
 sb2, _ := mc.Sandboxes.Create(ctx, app, image, nil)
-defer sb2.Detach()
 
 if err := sb2.MountImage(ctx, "/project", snapshot, nil); err != nil {
   var notFound modal.NotFoundError
@@ -366,6 +362,8 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 <Callout variant="alpha">
 
 目前存在许多已知的[限制](#limitations)。
+
+可根据要求访问 [VM 内存快照](/docs/guide/vm-memory-snapshots)。
 
 </Callout>沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
 
@@ -436,13 +434,13 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 
 ### 限制
 
-* 沙箱内存快照在创建后 7 天后过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
+* 沙盒内存快照将在创建后 7 天过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
 * 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
 * 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
-* 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
+* 使用 `_experimental_enable_snapshot=True` 创建的沙箱无法固定其 `region`，并且从内存快照恢复的沙箱会安排在原始实例类型可用的任何位置。
 
 ## 保持沙箱状态
 

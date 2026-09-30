@@ -10,7 +10,7 @@
 默认情况下，沙箱可以与任何公共 IP 地址建立出站连接。
 Modal 提供三个级别的出站网络限制：
 
-|水平|参数|它控制什么 || -------------------------------------- | ------------------------ | | -------------------------------------------------------------------------- |
+|水平|参数|它控制什么 || -------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------------- |
 | **全块** | `block_network=True` |丢弃所有出站流量。                                    |
 | **IP 范围白名单** | `outbound_cidr_allowlist` |仅允许流向列出的 CIDR 范围（任何协议）的流量。  |
 | **域允许列表** *（测试版）* | `outbound_domain_allowlist` |仅允许 TLS 流量（端口 443）发送至列出的域名。 |
@@ -158,7 +158,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 以 `*.` 为前缀的条目与父域和任何子域匹配：
 
-|允许列表条目 |比赛|不匹配 || ---------------- | ------------------------------------------------- | ----------------- |
+|允许列表条目 |比赛|不匹配|| ---------------- | ------------------------------------------------- | ----------------- |
 | `example.com` | `example.com` | `sub.example.com` |
 | `*.example.com` | `example.com`、`a.example.com`、`a.b.example.com` | `evilexample.com` |
 
@@ -166,7 +166,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 域与
 TLS 中的 [SNI](https://en.wikipedia.org/wiki/Server_Name_Indication)
-握手，Modal 解析该主机名本身，而不是信任
+握手，Modal 解析主机名本身而不是信任主机名
 沙盒选择的目标 IP。 TLS 流量未解密，因此 `Host`
 header、URL 路径和正文永远不会被检查。
 
@@ -177,9 +177,9 @@ header、URL 路径和正文永远不会被检查。
 <Callout variant="warning">
 
 两个域可以共享一个 TLS 端点，例如同一 CDN 的两个租户。一个
-沙箱可以通过发送列入白名单的 SNI 到达非白名单域
+沙盒可以通过发送列入白名单的 SNI 到达非白名单域
 在 `Host` 标头中使用另一个名称，一种称为“域前置”的技术。
-许多提供商会拒绝不匹配的请求，但许可名单本身不会拒绝
+许多提供商拒绝不匹配的请求，但白名单本身并不拒绝
 防止不匹配。
 
 如果您需要针对域名前置的保护，请考虑使用
@@ -377,8 +377,6 @@ url = f"{creds.url}/?_modal_connect_token={creds.token}"
 ws_url = url.replace("https://", "wss://")
 with websockets.connect(ws_url) as socket:
     socket.send("Hello world!")
-
-sb.detach()
 ```
 
 {/片段}
@@ -402,8 +400,6 @@ const creds = await sb.createConnectToken({
 const response = await fetch(creds.url, {
   headers: { Authorization: `Bearer ${creds.token}` },
 });
-
-sb.detach();
 ```
 
 {/片段}
@@ -427,8 +423,6 @@ creds, err := sb.CreateConnectToken(ctx, &modal.SandboxCreateConnectTokenParams{
 req, _ := http.NewRequestWithContext(ctx, "GET", creds.URL, nil)
 req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", creds.Token))
 resp, _ := http.DefaultClient.Do(req)
-
-sb.Detach()
 ```
 
 {/片段} </CodeTabs>
@@ -481,8 +475,6 @@ time.sleep(1)  # Wait for server to start.
 
 print(f"Connecting to {tunnel.url}...")
 print(requests.get(tunnel.url, timeout=5).text)
-
-sb.detach()
 ```
 
 还可以通过 `h2_ports` 选项创建使用 `HTTP/2` 而不是 `HTTP/1.1` 的加密端口。这将返回
@@ -501,8 +493,6 @@ p = sb.exec("python", "my_http2_server.py")
 tunnel = sb.tunnels()[port]
 time.sleep(1)
 print(f"Tunnel URL: {tunnel.url}")
-
-sb.detach()
 ```
 
 有关隧道工作原理的更多详细信息，请参阅[隧道指南](/docs/guide/tunnels)。
@@ -511,7 +501,7 @@ sb.detach()
 
 <Callout variant="gated-feature">
 
-<a href="/pricing">团队和企业计划</a>提供了沙箱隧道的自定义域。访问<a href="/settings/plans">工作空间设置</a>进行升级。
+<a href="/pricing">团队和企业计划</a>提供了沙盒隧道的自定义域。访问<a href="/settings/plans">工作空间设置</a>进行升级。
 
 </Callout>
 
@@ -569,12 +559,20 @@ Modal 将自动提供 TLS 证书。生成的沙箱连接令牌
 
 ## 安全模型
 
-沙盒构建在容器运行时 [gVisor](https://gvisor.dev/) 之上
-由 Google 提供，提供强大的隔离特性。 gVisor 有自定义逻辑
-防止沙箱进行恶意系统调用，为您提供更强的隔离
-比大多数其他容器运行时。
+模态沙箱通过两者之一与主机和其他工作负载隔离
+[运行时](/docs/guide/sandboxes#runtimes) 我们提供：
+* **gVisor**：[gVisor](https://gvisor.dev/) 是 Google 开发的容器运行时
+  在用户空间实现Linux系统调用接口。系统调用来自
+  沙箱由 gVisor 而不是主机内核处理，提供更强大的
+  比普通容器运行时隔离。
+* **虚拟机**：沙箱在其自己的虚拟机中运行，并具有自己的 Linux
+  内核，通过Linux由CPU的硬件虚拟化隔离
+  [KVM](https://docs.kernel.org/virt/kvm/index.html) 虚拟机管理程序。
+
+此页面上的[网络访问控制](#outbound-access-control) 适用于
+两个运行时。
 
 此外，沙盒无权访问您的 Modal 中的其他资源
 工作区的方式与模态函数的方式[默认](/docs/guide/restricted-access)相同。
 因此，任何恶意代码的传播半径都将被限制在沙箱内
-容器本身。
+本身。
