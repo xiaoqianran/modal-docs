@@ -179,6 +179,7 @@ https://modal.com/docs/guide/service-users.md
 https://modal.com/docs/guide/shared-endpoints.md
 https://modal.com/docs/guide/slack-notifications.md
 https://modal.com/docs/guide/spindle.md
+https://modal.com/docs/guide/sticky-sessions.md
 https://modal.com/docs/guide/streaming-endpoints.md
 https://modal.com/docs/guide/timeouts.md
 https://modal.com/docs/guide/trigger-deployed-functions.md

@@ -4,7 +4,7 @@
 
 i6pn（IPv6私有网络）是Modal的私有容器到容器网络解决方案。它允许用户创建 Modal 容器集群，这些集群可以以低延迟和高带宽（≥ 50Gbps）相互发送网络流量。
 
-通常，`modal.Function`容器可以发起到互联网的出站网络连接，但其他容器不能直接寻址它们。另一方面，支持 i6pn 的容器可以直接连接到其他支持 i6pn 的容器，这是 Modal Beta `@modal.experimental.clustered` 功能的关键推动因素。
+通常，`modal.Function`容器可以发起到互联网的出站网络连接，但其他容器不能直接寻址它们。另一方面，支持 i6pn 的容器可以直接连接到其他支持 i6pn 的容器，这是 [Modal Clusters](/docs/guide/multi-node-clusters) 的关键推动因素。
 
 您可以在任何 `modal.Function` 上启用 i6pn：
 
@@ -36,9 +36,9 @@ def hello_private_network():
 
 Modal 运营着一个[全球舰队](/docs/guide/region-selection)，并允许容器在多个云提供商和多个区域上运行。然而，i6pn 网络是区域范围的功能，这意味着只有同一区域中启用 i6pn 的容器才能执行网络通信。
 
-Modal 支持 i6pn 的原语（例如`@modal.experimental.clustered`）会自动限制容器地理位置和云放置，以确保容器间的连接。
+Modal 的支持 i6pn 的原语（例如 `@modal.clustered`）会自动限制容器地理位置和云放置，以确保容器间的连接。
 
 ## 公网访问集群组网
 
-对于需要公开访问的集群网络容器，您需要使用 [modal.Tunnel](/docs/guide/tunnels) 公开端口，因为 i6pn 地址不公开。
+对于需要公开访问的集群联网容器，您需要使用 [modal.Tunnel](/docs/guide/tunnels) 公开端口，因为 i6pn 地址不公开。
 考虑让容器设置一个隧道并充当专用集群网络的网关。

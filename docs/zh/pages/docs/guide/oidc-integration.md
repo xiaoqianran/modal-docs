@@ -27,7 +27,7 @@ OIDC 集成有两个组件：发现文档和生成的
 生成的令牌由 Modal 使用中描述的密钥进行签名 [JWT](https://jwt.io/)
 发现文档。这些令牌包含函数的完整身份
 在 `sub` 声明中，他们使用自定义声明来使此信息更加详细
-交通方便。请参阅我们的[发现文档](https://oidc.modal.com/.well-known/openid-configuration)
+交通便利。请参阅我们的[发现文档](https://oidc.modal.com/.well-known/openid-configuration)
 获取完整的索赔清单。
 
 生成的令牌会通过 `MODAL_IDENTITY_TOKEN` 自动注入到函数的容器中
@@ -52,18 +52,19 @@ OIDC 集成有两个组件：发现文档和生成的
 }
 ```
 
-### 沙箱
+### 沙盒
 
-与函数不同，[沙盒](/docs/guide/sandboxes) 不会收到身份
-默认情况下的令牌。要选择加入，请在以下情况下传递 `include_oidc_identity_token=True`
-创建沙箱：
+与函数不同，[Sandboxes](/docs/guide/sandboxes) 及其 [Sidecars](/docs/guide/sandbox-sidecars)
+默认情况下不会收到身份令牌。要选择加入，请在以下情况下传递 `include_oidc_identity_token=True`
+创建沙箱或边车：
 
 ```python notest
 sb = modal.Sandbox.create(app=app, include_oidc_identity_token=True)
 ```
 
-然后，该令牌可通过相同的方式在沙箱内使用
-`MODAL_IDENTITY_TOKEN`环境变量。
+然后，该代币可通过相同的 `MODAL_IDENTITY_TOKEN` 环境在沙箱或 Sidecar 中使用
+变量。 Sidecar的身份令牌是为其容器颁发的，因此它的`container_id`
+声明与相应的沙盒不同。
 
 ### 应用名称格式
 
@@ -72,11 +73,11 @@ OIDC，App名称有更严格的字符集。具体来说，必须是64
 字符或更少，并且只能包含字母数字字符、破折号、句点、
 和下划线。如果违反这些限制，OIDC 代币将不会被
 注入容器中。
-
 请注意，这些约束与应用于[已部署的应用程序](/docs/guide/managing-deployments) 的约束相同。
 这意味着如果应用程序是可部署的，它也将与 OIDC 兼容。
 
 ## AWS S3 的演示使用
+
 要了解如何使用 OIDC 代币，我们将演示一个简单的函数，其中列出了
 S3 存储桶中的对象。
 
@@ -129,7 +130,8 @@ $ modal run oidc-token-test.py
 
 ### 步骤 1：配置 AWS 以信任 Modal 的 OIDC 提供商
 
-我们需要让 AWS 接受 Modal 身份令牌。为此，我们需要添加Modal 的 OIDC 提供商作为我们 AWS 账户中的可信实体。
+我们需要让 AWS 接受 Modal 身份令牌。为此，我们需要添加
+Modal 的 OIDC 提供商作为我们 AWS 账户中的可信实体。
 
 ```bash
 aws iam create-open-id-connect-provider \
@@ -157,10 +159,9 @@ aws iam create-open-id-connect-provider \
   ]
 }
 ```
-
 ### 步骤 3：创建可由 Modal Functions 代入的 IAM 角色
 
-现在，我们可以创建一个使用此策略的 IAM 角色。访问 IAM 控制台
+现在，我们可以创建使用此策略的 IAM 角色。访问 IAM 控制台
 创建这个角色。如果您使用 CLI 添加此策略，请更新
 OIDC 提供商 ARN 与 [第 1 步](#step-1-configure-aws-to-trust-modals-oidc-provider) 中创建的 ARN 相匹配。
 请务必将工作区 ID 占位符替换为您自己的占位符。您可以找到您的工作区 ID
@@ -249,12 +250,12 @@ $ modal run oidc-token-test.py
 ```
 
 ## AWS Elastic Container Registry (ECR) 的演示使用
-
 您还可以使用 OIDC 在 AWS 上对 [Private Registries](/docs/guide/existing-images) 进行身份验证。
 
 ### 先决条件
 
 1. 将 AWS 配置为信任 Modal 的 OIDC 提供商（[上述步骤 1](#step-1-configure-aws-to-trust-modals-oidc-provider)）
+
 2. [创建具有只读 ECR 访问权限的 AWS 策略](/docs/guide/existing-images#elastic-container-registry-ecr)
 
 3. 创建使用此策略的 IAM 角色（[上述步骤 3](#step-3-create-an-iam-role-that-can-be-assumed-by-modal-functions)）

@@ -43,7 +43,7 @@
   - [文件访问](https://modal.com/docs/guide/sandbox-files.md)
   - [快照](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [定价和资源](https://modal.com/docs/guide/sandbox-resources.md)
-  - [边车（Alpha）](https://modal.com/docs/guide/sandbox-sidecars.md)
+  - [Sidecars（测试版）](https://modal.com/docs/guide/sandbox-sidecars.md)
 - 端点
   - [端点](https://modal.com/docs/guide/endpoints.md)
   - [共享端点](https://modal.com/docs/guide/shared-endpoints.md)
@@ -75,6 +75,7 @@
   - [预定功能](https://modal.com/docs/guide/cron.md)
 - HTTP 应用程序
   - [服务器](https://modal.com/docs/guide/servers.md)
+  - [粘性会话](https://modal.com/docs/guide/sticky-sessions.md)
   - [网页功能](https://modal.com/docs/guide/webhooks.md)
   - [流媒体端点](https://modal.com/docs/guide/streaming-endpoints.md)
   - [Web 功能 URL](https://modal.com/docs/guide/webhook-urls.md)
@@ -86,8 +87,8 @@
   - [集群网络](https://modal.com/docs/guide/private-networking.md)
 - 数据共享和存储
   - [传递本地数据](https://modal.com/docs/guide/local-data.md)
-  - [卷](https://modal.com/docs/guide/volumes.md)
-  - [存储模型权重](https://modal.com/docs/guide/model-weights.md)- [云桶坐骑](https://modal.com/docs/guide/cloud-bucket-mounts.md)
+  - [卷](https://modal.com/docs/guide/volumes.md)- [存储模型权重](https://modal.com/docs/guide/model-weights.md)
+  - [云桶支架](https://modal.com/docs/guide/cloud-bucket-mounts.md)
   - [词典](https://modal.com/docs/guide/dicts.md)
   - [队列](https://modal.com/docs/guide/queues.md)
   - [数据集摄取](https://modal.com/docs/guide/dataset-ingestion.md)
@@ -121,9 +122,9 @@
 - 工作区和帐户设置
   - [工作空间](https://modal.com/docs/guide/workspaces.md)
   - [环境](https://modal.com/docs/guide/environments.md)
-  - [服务使用者](https://modal.com/docs/guide/service-users.md)
+  - [服务用户](https://modal.com/docs/guide/service-users.md)
   - [用户组（测试版）](https://modal.com/docs/guide/user-groups.md)- [基于角色的访问控制（RBAC）](https://modal.com/docs/guide/rbac.md)
-  - [计费](https://modal.com/docs/guide/billing.md)
+  - [账单](https://modal.com/docs/guide/billing.md)
   - [网络出口计费](https://modal.com/docs/guide/network-egress-billing.md)
   - [预算](https://modal.com/docs/guide/budgets.md)
 - 其他主题
@@ -138,7 +139,7 @@
   - [异步API使用](https://modal.com/docs/guide/async.md)
   - [全局变量](https://modal.com/docs/guide/global-variables.md)
   - [区域选择](https://modal.com/docs/guide/region-selection.md)
-  - [GPU 指标](https://modal.com/docs/guide/gpu-metrics.md)
+  - [GPU指标](https://modal.com/docs/guide/gpu-metrics.md)
 
 ## 示例
 
@@ -157,12 +158,12 @@
   - [服务DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
   - [高效的LLM微调与Unsloth](https://modal.com/docs/examples/unsloth_finetune.md)- [运行多模式 RAG 聊天机器人来回答有关 PDF 的问题](https://modal.com/docs/examples/chat_with_pdf_vision.md)
   - [微调LLM来取代你的CEO](https://modal.com/docs/examples/llm-finetuning.md)
-  - [使用 FastMCP 部署无状态 MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
+  - [使用FastMCP部署无状态MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
 - 图像、视频和 3D
   - [使用 Flux Kontext 编辑图像](https://modal.com/docs/examples/image_to_image.md)
   - [微调你脸上的Wan2.1视频模型](https://modal.com/docs/examples/music-video-gen.md)
   - [使用 torch.compile 快速运行 Flux](https://modal.com/docs/examples/flux.md)
-  - [使用 LoRA 微调 Flux](https://modal.com/docs/examples/diffusers_lora_finetune.md)
+  - [使用LoRA微调通量](https://modal.com/docs/examples/diffusers_lora_finetune.md)
   - [使用 LTX-Video 制作动画图像](https://modal.com/docs/examples/image_to_video.md)
   - [使用LTX-Video生成视频剪辑](https://modal.com/docs/examples/ltx.md)
   - [使用 CLI、API 和 Web UI 运行稳定的扩散](https://modal.com/docs/examples/text_to_image.md)
@@ -203,7 +204,7 @@
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
   - [运行文档 OCR 作业队列](https://modal.com/docs/examples/doc_ocr_jobs.md)
   - [提供文档 OCR Web 应用程序](https://modal.com/docs/examples/doc_ocr_webapp.md)
-- 从头开始训练模型- [通过超参数提前停止网格搜索来训练 SLM](https://modal.com/docs/examples/hp_sweep_gpt.md)
+- 从头开始训练模型- [通过提前停止超参数网格搜索来训练 SLM](https://modal.com/docs/examples/hp_sweep_gpt.md)
   - [长时间运行、可恢复的训练作业](https://modal.com/docs/examples/long-training.md)
 - 托管流行的图书馆
   - [YOLO：微调并服务计算机视觉模型](https://modal.com/docs/examples/finetune_yolo.md)
@@ -218,7 +219,7 @@
 - [Tailscale：将模态应用程序添加到您的 VPN](https://modal.com/docs/examples/modal_tailscale.md)
   - [Prometheus：使用 Pushgateway 发布自定义指标](https://modal.com/docs/examples/pushgateway.md)
 - 管理数据
-  - [在模态应用程序中挂载S3存储桶](https://modal.com/docs/examples/s3_bucket_mount.md)
+  - [在模态应用程序中挂载 S3 存储桶](https://modal.com/docs/examples/s3_bucket_mount.md)
   - [使用 DuckDB、dbt 和 Modal 构建自己的数据仓库](https://modal.com/docs/examples/dbt_duckdb.md)
 - [其他](https://modal.com/docs/examples/miscellaneous)
 

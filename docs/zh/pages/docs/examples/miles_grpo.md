@@ -7,8 +7,8 @@
 [里程](https://github.com/radixark/miles) 和团体相关政策
 优化（GRPO）。
 
-我们使用[聚集函数](https://modal.com/docs/guide/multi-node-training)
-在两个节点上运行分布式训练，每个节点有八个 H100 GPU。
+我们使用【集群函数进行分布式训练】(https://modal.com/docs/guide/multi-node-training)
+在两个节点上，每个节点有八个 H100 GPU。
 
 ![100 次更新中的训练奖励、AIME 正确性、步数计时和响应截断](https://modal-cdn.com/cdnbot/qwen3-4b-fsdp-8k-100-updates-labeled_4c365b52.png)
 
@@ -43,9 +43,9 @@ RESULTS = Path("/results")
 MILES = Path("/opt/miles")
 MILES_COMMIT = "2806267d060d51b1d3b62f85a1f9b145047aeef9"  # v0.1.1
 
-```## 下载模型和数据集
+```
 
-我们在训练之前下载模型和数据集，这样就不会浪费
+## 下载模型和数据集我们在训练之前下载模型和数据集，这样就不会浪费
 GPU 时间。 [模态卷](https://modal.com/docs/guide/volumes) 缓存它们
 用于后续运行。 FSDP 直接加载 Hugging Face 检查点。
 数学验证者需要一个盒装的最终答案。 DAPO 提示请求此
@@ -351,7 +351,7 @@ uvx tensorboard --logdir /tmp/miles-grpo/RUN_ID
 共享 30 道题，因此它们不是 120 道独立测试题。
 
 |已完成更新 |艾梅正确答案 |回复在 8K 时中断 |
-| --- | --- | --- |
+| ---| ---| ---|
 | 0 | 42/120 (35.0%) | 87/120 (72.5%) |
 | 10 | 10 41/120 (34.2%) | 88/120 (73.3%) |
 | 20 | 49/120 (40.8%) | 86/120 (71.7%) |

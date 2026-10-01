@@ -2,7 +2,7 @@
 
 # 沙箱边车
 
-<Callout variant="alpha">
+<Callout variant="beta">
 
 目前存在一些[已知限制](#limitations)。
 
@@ -16,17 +16,20 @@
 基于 TCP/UDP 的容器，使其非常适合：
 
 * 通过运行将代理工具与其执行环境分离
-  一个容器中的代理及其工具在另一个容器中调用
+  代理在一个容器中，其工具在另一个容器中调用。请参阅[代理示例](/docs/examples/sidecar_agent)
+  对于一般形状。
 * 凭证注入，通过在单独的受信任容器中运行代理来实现
-  来自主应用程序，并让该代理注入凭据或
-  在将网络调用传递给外部服务之前的其他秘密。
-  请参阅[秘密注入示例](/docs/examples/sidecar_secrets_injection)
-  进行工作演示
+  来自主应用程序，并让该代理注入凭据
+  或其他秘密，然后再将网络调用传递给外部服务。的
+  [凭证代理示例](/docs/examples/sidecar_secrets_injection) 使用
+  仅在 sidecar 中注入的模态 [Secret](/docs/guide/secrets)。
 * 将复杂的多服务应用程序拆分到单独的容器上，
-  例如数据库、缓存或工作进程，类似于 Docker Compose。
+  例如数据库、缓存或工作进程，类似于 Docker Compose。这
+[Redis 示例](/docs/examples/sidecar_redis) 显示了该模式。
 
 我们仍在探索 Sandbox Sidecar 的所有使用方式 - 如果您
 想出另一个用例，请告诉我们！
+
 Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 （Python 中的`_experimental_sidecars`，JS/Go 中的`experimentalSidecars`），
 它提供了创建、列出、获取和终止 Sidecar 容器的方法。
@@ -36,14 +39,16 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 * 独立于主沙箱容器运行自己的映像。
 * 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
 * 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
-* 可以在沙箱的生命周期内动态创建、终止和替换。* 支持像主沙盒容器一样执行命令。
+* 可以在沙箱的生命周期内动态创建、终止和替换。
+* 支持像主沙盒容器一样执行命令。
 
 ## 用法
 
 ### 创建 Sidecar 容器
 
 主 Sandbox 容器可解析为 `main`，每个 Sidecar 容器
-可以通过您在创建时给出的 `name` 来解析。
+可以通过您在创建时给出的 `name` 来解析。使用 `/etc/hosts` 解析名称，得到
+当 sidecar 创建或终止时更新。
 
 <CodeTabs>
 {#snippet python()}
@@ -110,7 +115,6 @@ console.log(await p.stdout.readText()); // "200"
 
 await sb.terminate();
 ```
-
 {/片段}
 
 {#snippet go()}
@@ -159,7 +163,98 @@ func main() {
 
 {/片段} </CodeTabs>
 
-名称使用 `/etc/hosts` 进行解析，当创建或终止 sidecar 时，它会更新。
+Sidecar 使用与主沙箱相同的[运行时](/docs/guide/sandboxes#runtimes)。在VM运行时，您需要
+当您启动沙盒时，为任何 sidecar 保留内存。该保留与 VM 内存爆发不兼容，
+因此沙箱必须设置相等的内存请求和限制。每次 Sidecar 启动时，您都可以指定
+用于该 Sidecar 的储备，或将该选项留空以使用全部剩余储备：
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    timeout=300,
+    runtime="vm",
+    memory=(8192, 8192),
+    experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
+)
+
+sidecar = sb._experimental_sidecars.create(
+    "python",
+    "-m",
+    "http.server",
+    "8080",
+    name="web",
+    image=image,
+    experimental_memory_reserve_consume_mib=512,
+)
+
+# Omit experimental_memory_reserve_consume_mib to give this sidecar
+# the remaining reserve (512 MiB here).
+worker = sb._experimental_sidecars.create(
+    "sleep", "600", name="worker", image=image
+)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  timeoutMs: 300 * 1000,
+  runtime: "vm",
+  memoryMiB: 8192,
+  memoryLimitMiB: 8192,
+  experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
+});
+
+const sidecar = await sb.experimentalSidecars.create("web", image, {
+  command: ["python", "-m", "http.server", "8080"],
+  experimentalMemoryReserveConsumeMiB: 512,
+});
+
+// Omit experimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+const worker = await sb.experimentalSidecars.create("worker", image, {
+  command: ["sleep", "600"],
+});
+```{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	Timeout:             5 * time.Minute,
+	Runtime:             modal.SandboxRuntimeVM,
+	MemoryMiB:           8192,
+	MemoryLimitMiB:      8192,
+	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
+})
+
+sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "web", image, &modal.SidecarCreateParams{
+	Command:                             []string{"python", "-m", "http.server", "8080"},
+	ExperimentalMemoryReserveConsumeMiB: 512,
+})
+_ = sidecar
+
+// Omit ExperimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+worker, _ := sb.ExperimentalSidecars.Create(ctx, "worker", image, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+_ = worker
+```
+
+{/片段} </CodeTabs>
+
+终止的 VM Sidecar 将返回其预留空间，以供新 Sidecar 重用。
 
 ### 列出和检索 sidecar
 
@@ -167,6 +262,7 @@ func main() {
 
 <CodeTabs>
 {#snippet python()}
+
 ```python notest
 containers = sb._experimental_sidecars.list()
 for container in containers:
@@ -211,7 +307,8 @@ Sidecars 可用于检查来自主沙箱的传出 HTTPS 流量
 过滤、检查日志请求或注入主要的秘密
 沙盒容器不应具有访问权限。
 
-通常，应用程序需要支持显式代理配置，例如尊重 `HTTPS_PROXY` 环境变量，通过 Sidecar 路由流量。
+通常，应用程序需要支持显式代理配置，例如
+尊重 `HTTPS_PROXY` 环境变量，通过 Sidecar 路由流量。
 要包含来自**代理不知道**应用程序的 HTTPS 流量（端口 443 上的 TCP），您可以
 设置路由 **所有** 出站的实验性 `proxy_traffic_via_sidecar` 选项
 来自主 Sandbox 容器的 HTTPS 流量通过 Sidecar。
@@ -274,18 +371,26 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 请求过滤器。
 
 仅中继到端口 443 的 TCP 流量。沙盒自己的出口控制是
-为其预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
+为此预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
 其他端口，但无论其列出什么，中继流量都会通过。非中继
 流量仍然受到沙箱的出口控制。
 
 相反，中继流量由 Sidecar 的出口控制控制。
 转发到. Sidecar的出站网络策略独立于main
-容器的并且默认是打开的，所以除非你通过 `outbound_cidr_allowlist`
+容器的并且默认打开，所以除非你通过 `outbound_cidr_allowlist`
 或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
 Sidecar 选择连接到的任何目的地。
 
-该选项不能与设置`block_network`结合使用，
+该选项不能与设置`block_network`组合使用，
 沙盒上的`outbound_domain_allowlist`或`proxy`。
+
+### OIDC 代币
+
+与沙箱一样，Sidecar 不会收到 [OIDC](/docs/guide/oidc-integration)
+默认情况下的令牌。要选择加入，请在创建时传递 `include_oidc_identity_token=True`
+边车。然后，该令牌可通过以下方式在 Sidecar 内使用：
+`MODAL_IDENTITY_TOKEN`环境变量。 Sidecar的身份令牌已发行
+对于其容器，因此其 `container_id` 声明与相应的 Sandbox 不同。
 
 ### 文件系统快照
 
@@ -338,6 +443,17 @@ fmt.Println(state) // "ready"
 
 {/片段} </CodeTabs>
 
+### 目录快照
+
+[目录快照](/docs/guide/sandbox-snapshots#directory-snapshots) 工作
+在 Sidecars 上的方式与沙箱相同。
+
+### 卷
+
+Sidecar 可以挂载 [Volumes](/docs/guide/volumes)，配置方式与
+在沙盒上。每个容器都有自己的挂载：挂载在 Sidecar 中的 Volume在主 Sandbox 容器或其他 Sidecar 中不可见，除非您
+也在那里安装相同的卷。
+
 ### 云桶安装座
 
 Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
@@ -388,7 +504,6 @@ console.log(await p.stdout.readText());
 {/片段}
 
 {#snippet go()}
-
 ```go notest
 secret, _ := mc.Secrets.FromName(ctx, "my-aws-secret", nil)
 bucket, _ := mc.CloudBucketMounts.New("my-bucket", &modal.CloudBucketMountParams{
@@ -408,14 +523,14 @@ fmt.Println(string(stdout))
 {/片段} </CodeTabs>
 
 使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
-身份令牌是为 Sidecar 容器颁发的，因此它的 `container_id`
+身份令牌是为 Sidecar 容器颁发的，因此其`container_id`
 声明与主容器的声明不同。匹配的 IAM 信任策略
 完整主题还必须允许 Sidecar 的容器 ID。
 
 ### 目录挂载和快照
 
 您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它
-之后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
+稍后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
 图像可以在任何接受现有图像的地方使用，包括作为安装
 或作为新容器的文件系统。
 
@@ -490,8 +605,9 @@ _ = replacement.UnmountImage(ctx, "/workspace", nil)
 并且资源仅在沙箱上配置。当你规划你的
 资源分配，确保Sandbox配置了足够的CPU
 以及所有容器的内存组合。
-爆破还是有可能的，参见【沙盒资源指南和
-定价](/docs/guide/sandbox-resources) 了解更多详细信息。
+在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
+定价](/docs/guide/sandbox-resources) 了解更多详细信息。在VM运行时，Sidecars不能
+与记忆爆发相结合。
 
 例如，如果您想运行具有两个 Sidecar 的沙盒，并且您期望主要
 容器使用 1 个 CPU 核心和 512 MiB 内存，Sidecar A 使用 0.5 个 CPU 和 256 MiB，
@@ -513,16 +629,16 @@ max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
-
 * **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
   通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
+* **无 stdin/stdout**：Sidecar 的入口点不公开 stdin、stdout 或 stderr 流。
+* **无 VM 内存爆发**：VM 运行时上的 Sidecar 不能与 VM 内存爆发相结合。设置相等的内存请求和限制，例如`memory=(8192, 8192)`。
 * **无 GPU 支持**：Sidecar 容器无法访问 GPU，即使沙箱配置了 GPU。
 * **GPU 沙箱中没有云桶安装**：GPU 沙箱的 Sidecar 无法附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar 的文件系统可以进行快照
   独立，但 Sidecar 内存状态不会被捕获
   [沙盒快照](/docs/guide/sandbox-snapshots)。
-* **VM 不兼容**：Sidecar 与 VM 运行时不兼容。
-* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
+* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
 * **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
-* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙盒目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。
+* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

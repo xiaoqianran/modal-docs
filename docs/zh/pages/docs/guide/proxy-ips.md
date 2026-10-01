@@ -109,3 +109,5 @@ sb.terminate()
 [Sidecar](/docs/guide/sandbox-sidecars) 当前不通过它退出，因此
 代理不能与实验性`proxy_traffic_via_sidecar`结合使用
 选项，它将通过 Sidecar 中继主容器的 HTTPS。
+同样，[`CloudBucketMount`](/docs/guide/cloud-bucket-mounts) 流量也不会
+通过函数代理或沙箱退出。

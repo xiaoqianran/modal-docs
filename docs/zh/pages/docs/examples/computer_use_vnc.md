@@ -182,7 +182,7 @@ AGENT_SCRIPT = textwrap.dedent(
 
 ```
 
-## 创建共享端点
+## 创建专用端点
 
 端点可能需要一些时间才能准备就绪，因为它的容器会缩放为零。
 启动在两个地方等待：
@@ -420,7 +420,7 @@ def test_session(
 任务完成或超时。启动失败终止它
 立即，并且 `test_session` 在 API 检查后终止沙箱。
 
-与 `Ctrl-C` 停止`modal serve`。空闲时共享端点缩放为零，
+与 `Ctrl-C` 停止`modal serve`。专用端点在空闲时缩放为零，
 但仍可用于以后的提示。完成后将其关闭：
 
 ```bash

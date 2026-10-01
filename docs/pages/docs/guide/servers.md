@@ -14,7 +14,7 @@ class Server:
 
 The Modal Server primitive provides the underlying infrastructure for [Endpoints](/docs/guide/endpoints). They can also be deployed directly with fully customized application logic.
 
-Modal Servers share many features with [Modal Functions](/docs/guide/functions). They are members of a Modal App and are [deployed](/docs/guide/managing-deployments) through the normal [`modal deploy`](/docs/cli/latest/deploy) workflow. Server resource configuration has the same [baseline request + burst semantics](/docs/guide/resources) as Functions, and of course they can use [GPUs](/docs/guide/gpu) too. Server containers can [run anywhere](/docs/guide/region-selection) in our global fleet, using [fully customized](/docs/guide/images) Images, and they benefit from the same snappy cold boot performance (including [memory snapshots](/docs/guide/memory-snapshots)). They can mount [Secrets](/docs/guide/secrets) and [Volumes](/docs/guide/volumes) and have a stable [outbound IP address](/docs/guide/proxy-ips).
+Modal Servers share many features with [Modal Functions](/docs/guide/functions). They are members of a Modal App and are [deployed](/docs/guide/managing-deployments) through the normal [`modal deploy`](/docs/cli/latest/deploy) workflow. Server resource configuration has the same [baseline request + burst semantics](/docs/guide/resources) as Functions, and of course they can use [GPUs](/docs/guide/gpu) too. With [`@modal.clustered`](/docs/guide/multi-node-clusters), Servers can run across multiple GPU nodes. Server containers can [run anywhere](/docs/guide/region-selection) in our global fleet, using [fully customized](/docs/guide/images) Images, and they benefit from the same snappy cold boot performance (including [memory snapshots](/docs/guide/memory-snapshots)). They can mount [Secrets](/docs/guide/secrets) and [Volumes](/docs/guide/volumes) and have a stable [outbound IP address](/docs/guide/proxy-ips).
 
 This is a high-level guide to Modal Servers. For reference documentation, see the [`@app.server()`](/docs/sdk/py/latest/App#server) decorator and [`modal.Server`](/docs/sdk/py/latest/Server) object reference pages.
 
@@ -68,7 +68,7 @@ For Workspaces with [RBAC](/docs/guide/rbac) enabled, the Proxy Tokens must addi
 
 The Server configuration includes a region specification for the proxy that routes requests to containers (`routing_region=`). The following routing regions are supported: `us-east` (default), `us-west`, `ca-central`, `eu-west`, `ap-south`, and `ap-southeast-2`. As a general rule, select the routing region that will be closest to your clients. It’s also possible to constrain container scheduling within the same region using `compute_region=`, although note that this incurs a [cost multiplier](/docs/guide/region-selection#pricing).
 
-The routing proxy additionally supports “sticky sessions”. If requests include a `Modal-Session-ID` header (which can be an arbitrary string), distinct requests that share a session ID will be handled by the same container.
+The routing proxy additionally supports “affinity routing”. Requests that include a `Modal-Session-ID` header (which can be an arbitrary string) and share the routing header's value will be handled by the same container. This is best-effort, as request affinity may change e.g. in the event of a container scale-down or rollover. For strong request-container affinity, see [Sticky Sessions](/docs/guide/sticky-sessions).
 
 ## Operational features
 

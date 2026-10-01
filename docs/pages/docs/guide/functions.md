@@ -36,6 +36,8 @@ def f():
     ...
 ```
 
+To run a Function across multiple GPU nodes, use [`@modal.clustered`](/docs/guide/multi-node-clusters).
+
 Functions execute within arbitrary container environments, as defined by the Function's [Image](/docs/guide/images). Each Function in the App can have its own Image. Images can include resources including Python libraries from PyPI or private repositories, binary dependencies like FFmpeg or OpenCV, and data copied from your local system:
 
 ```python

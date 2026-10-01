@@ -106,7 +106,7 @@ If RBAC is disabled on a workspace, scoped tokens fall back to workspace-wide ac
 
 Restricted Environments prevent app and task identities in other Environments from accessing resources inside the restricted Environment. For more detail, see [Cross-Environment Lookups](/docs/guide/environments#cross-environment-lookups).
 
-In practice, this means a task can access objects in its own Environment and other unrestricted Environments, but code running in another Environment cannot use APIs such as `modal.App.lookup()`, `Secret.from_name()`, or `Volume.lookup()` to reach into a restricted Environment.
+In practice, this means a task can access objects in its own Environment and other unrestricted Environments, but code running in another Environment cannot use APIs such as `modal.App.lookup()` or `Secret.from_name()` to reach into a restricted Environment.
 
 This prevents privilege escalation from a less trusted Environment into a more sensitive one.
 

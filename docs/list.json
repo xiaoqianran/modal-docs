@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-09-30T12:21:08.412Z",
+  "fetchedAt": "2026-10-01T12:56:21.055Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 321,
-  "ok": 321,
+  "totalUrls": 322,
+  "ok": 322,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 26211,
+      "bytes": 26281,
       "stub": false
     },
     {
@@ -322,7 +322,7 @@
       "source": "https://modal.com/docs/examples/computer_use_vnc.md",
       "finalUrl": "https://modal.com/docs/examples/computer_use_vnc.md",
       "path": "docs/examples/computer_use_vnc.md",
-      "bytes": 13684,
+      "bytes": 13690,
       "stub": false
     },
     {
@@ -570,7 +570,7 @@
       "source": "https://modal.com/docs/examples/miles_grpo.md",
       "finalUrl": "https://modal.com/docs/examples/miles_grpo.md",
       "path": "docs/examples/miles_grpo.md",
-      "bytes": 15546,
+      "bytes": 15543,
       "stub": false
     },
     {
@@ -810,7 +810,7 @@
       "source": "https://modal.com/docs/guide/billing.md",
       "finalUrl": "https://modal.com/docs/guide/billing.md",
       "path": "docs/guide/billing.md",
-      "bytes": 3619,
+      "bytes": 3702,
       "stub": false
     },
     {
@@ -818,7 +818,7 @@
       "source": "https://modal.com/docs/guide/budgets.md",
       "finalUrl": "https://modal.com/docs/guide/budgets.md",
       "path": "docs/guide/budgets.md",
-      "bytes": 3332,
+      "bytes": 3349,
       "stub": false
     },
     {
@@ -826,7 +826,7 @@
       "source": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "finalUrl": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "path": "docs/guide/cloud-bucket-mounts.md",
-      "bytes": 10825,
+      "bytes": 10898,
       "stub": false
     },
     {
@@ -1026,7 +1026,7 @@
       "source": "https://modal.com/docs/guide/functions.md",
       "finalUrl": "https://modal.com/docs/guide/functions.md",
       "path": "docs/guide/functions.md",
-      "bytes": 18374,
+      "bytes": 18479,
       "stub": false
     },
     {
@@ -1162,7 +1162,7 @@
       "source": "https://modal.com/docs/guide/multi-node-clusters.md",
       "finalUrl": "https://modal.com/docs/guide/multi-node-clusters.md",
       "path": "docs/guide/multi-node-clusters.md",
-      "bytes": 7932,
+      "bytes": 9108,
       "stub": false
     },
     {
@@ -1186,7 +1186,7 @@
       "source": "https://modal.com/docs/guide/network-egress-billing.md",
       "finalUrl": "https://modal.com/docs/guide/network-egress-billing.md",
       "path": "docs/guide/network-egress-billing.md",
-      "bytes": 3216,
+      "bytes": 3861,
       "stub": false
     },
     {
@@ -1202,7 +1202,7 @@
       "source": "https://modal.com/docs/guide/oidc-integration.md",
       "finalUrl": "https://modal.com/docs/guide/oidc-integration.md",
       "path": "docs/guide/oidc-integration.md",
-      "bytes": 10938,
+      "bytes": 11139,
       "stub": false
     },
     {
@@ -1242,7 +1242,7 @@
       "source": "https://modal.com/docs/guide/private-networking.md",
       "finalUrl": "https://modal.com/docs/guide/private-networking.md",
       "path": "docs/guide/private-networking.md",
-      "bytes": 2732,
+      "bytes": 2710,
       "stub": false
     },
     {
@@ -1258,7 +1258,7 @@
       "source": "https://modal.com/docs/guide/proxy-ips.md",
       "finalUrl": "https://modal.com/docs/guide/proxy-ips.md",
       "path": "docs/guide/proxy-ips.md",
-      "bytes": 3903,
+      "bytes": 4033,
       "stub": false
     },
     {
@@ -1274,7 +1274,7 @@
       "source": "https://modal.com/docs/guide/rbac.md",
       "finalUrl": "https://modal.com/docs/guide/rbac.md",
       "path": "docs/guide/rbac.md",
-      "bytes": 14995,
+      "bytes": 14975,
       "stub": false
     },
     {
@@ -1346,7 +1346,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 17552,
+      "bytes": 21634,
       "stub": false
     },
     {
@@ -1418,7 +1418,7 @@
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 9382,
+      "bytes": 9682,
       "stub": false
     },
     {
@@ -1451,6 +1451,14 @@
       "finalUrl": "https://modal.com/docs/guide/spindle.md",
       "path": "docs/guide/spindle.md",
       "bytes": 6561,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/sticky-sessions.md",
+      "source": "https://modal.com/docs/guide/sticky-sessions.md",
+      "finalUrl": "https://modal.com/docs/guide/sticky-sessions.md",
+      "path": "docs/guide/sticky-sessions.md",
+      "bytes": 6466,
       "stub": false
     },
     {

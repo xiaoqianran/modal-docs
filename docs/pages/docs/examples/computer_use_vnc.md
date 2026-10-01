@@ -180,7 +180,7 @@ AGENT_SCRIPT = textwrap.dedent(
 
 ```
 
-## Creating the shared Endpoint
+## Creating the dedicated Endpoint
 
 The Endpoint can take time to become ready because its containers scale to zero.
 Startup waits in two places:
@@ -418,7 +418,7 @@ Each Sandbox uses the agent process as its entrypoint, so it stops when the
 task finishes or its timeout expires. Startup failures terminate it
 immediately, and `test_session` terminates the Sandbox after the API check.
 
-Stop `modal serve` with `Ctrl-C`. The shared Endpoint scales to zero when idle,
+Stop `modal serve` with `Ctrl-C`. The dedicated Endpoint scales to zero when idle,
 but remains available for later prompts. Shut it down when you are done:
 
 ```bash

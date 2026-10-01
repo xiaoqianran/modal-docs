@@ -108,3 +108,5 @@ A Proxy covers the Sandbox's main container. Traffic from a
 [Sidecar](/docs/guide/sandbox-sidecars) does not currently exit through it, so a
 Proxy cannot be combined with the experimental `proxy_traffic_via_sidecar`
 option, which would relay the main container's HTTPS out through a Sidecar.
+Likewise, [`CloudBucketMount`](/docs/guide/cloud-bucket-mounts) traffic does not
+exit through a Proxy for Functions or Sandboxes.

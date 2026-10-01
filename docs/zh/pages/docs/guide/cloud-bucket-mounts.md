@@ -20,7 +20,7 @@ R2 和 S3 非常相似。参见
 获取使用说明。
 
 创建用于挂载的 R2 API 令牌时，您需要拥有
-能够读取、写入和列出您将挂载的特定存储桶中的对象。
+能够读取、写入和列出您将安装的特定存储桶中的对象。
 您*不需要*需要管理员权限，并且您不应该*使用“客户端IP地址
 过滤”。
 
@@ -60,7 +60,7 @@ def f():
 
 ### 指定S3存储桶区域
 
-Amazon S3 存储桶与单个 AWS 区域关联。 [`Mountpoint`](https://github.com/awslabs/mountpoint-s3) 尝试在启动时自动检测 S3 存储桶的区域，并将所有 S3 请求定向到该区域。但是，在某些情况下，例如您的容器在某个区域的 AWS 工作线程上运行，而您的存储桶位于不同的区域，则此自动检测可能会失败。
+Amazon S3 存储桶与单个 AWS 区域关联。 [`Mountpoint`](https://github.com/awslabs/mountpoint-s3) 尝试在启动时自动检测 S3 存储桶的区域，并将所有 S3 请求定向到该区域。但是，在某些情况下，例如您的容器在某个区域的 AWS 工作线程上运行，而您的存储桶位于不同区域，则此自动检测可能会失败。
 
 为了避免此问题，您可以通过向 Modal Secret 添加 `AWS_REGION` 键来指定 S3 存储桶的区域，如上面的代码示例所示。
 
@@ -219,6 +219,7 @@ def f():
 * 文件无法以附加模式打开。
 * 文件不能以任意偏移量写入，即 `seek` 和写入不支持同时使用。
 * 要写入文件，您必须以`truncate`模式打开它。
+* 存储桶流量不会通过[代理](/docs/guide/proxy-ips) 退出。
 
 这些操作通常会导致 `PermissionError: [Errno 1] Operation not permitted` 错误。
 
@@ -226,7 +227,9 @@ def f():
 并且愿意为您的存储桶支付额外费用，您也许可以使用[S3 Express](https://aws.amazon.com/s3/storage-classes/express-one-zone/)。
 如果您有兴趣使用 S3 Express，请联系我们 [在 Slack 中](https://modal.com/slack)。
 
-### 以附加模式写入文件如果您使用的库必须以追加模式打开文件，最好写入临时文件
+### 以附加模式写入文件
+
+如果您使用的库必须以追加模式打开文件，最好写入临时文件
 然后将其移动到存储桶的安装路径。可以使用类似的方法以任意偏移量写入文件。
 
 ```python notest
@@ -278,7 +281,7 @@ with open(dest, "wb") as f:
 ### Torchtune 写入检查点文件
 
 旧版本的[Torchtune](https://github.com/pytorch/torchtune)与云桶支架不兼容。
-升级到大于或等于`0.6.1`的版本，以确保检查点可以写入存储桶。
+升级到大于或等于`0.6.1`的版本，以确保检查点可以写入桶中。
 
 ### 使用 TensorBoard `SummaryWriter`
 

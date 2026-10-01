@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "d6ae1a54d173f3ae3af14249bb824ff31cab6f1a",
-      "translatedAt": "2026-09-30T12:21:22.811Z",
-      "bytes": 25702
+      "hash": "1e7fcfd7831c6dc0fa2c40265df5b3943a5971bf",
+      "translatedAt": "2026-10-01T12:56:41.804Z",
+      "bytes": 25770
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -187,9 +187,9 @@
       "bytes": 16281
     },
     "docs/examples/computer_use_vnc.md": {
-      "hash": "6b2a3c2e66507a913d714d3631afa64fe1956cfd",
-      "translatedAt": "2026-09-30T12:21:10.696Z",
-      "bytes": 13522
+      "hash": "cc7a5b7f9359143478a746225d5a11c8e6e7ad17",
+      "translatedAt": "2026-10-01T12:56:23.090Z",
+      "bytes": 13525
     },
     "docs/cli/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -492,19 +492,19 @@
       "bytes": 4911
     },
     "docs/guide/budgets.md": {
-      "hash": "f7784419e4c428efe341c601c1dba9756085f4e2",
-      "translatedAt": "2026-09-02T11:04:45.776Z",
-      "bytes": 3130
+      "hash": "2a1067afc706e726ca25ecbceee9b157f71ad1da",
+      "translatedAt": "2026-10-01T12:56:34.666Z",
+      "bytes": 3145
     },
     "docs/guide/billing.md": {
-      "hash": "9a4d3231aca49544b7efce10d135464cc4ccd144",
-      "translatedAt": "2026-08-08T18:28:57.139Z",
-      "bytes": 3272
+      "hash": "8958447ce75176f7cebcdc12514303f736ab9800",
+      "translatedAt": "2026-10-01T12:56:31.834Z",
+      "bytes": 3346
     },
     "docs/guide/cloud-bucket-mounts.md": {
-      "hash": "52af4d0cf3334217b8b6704ef1be793c167ec52e",
-      "translatedAt": "2026-08-08T18:28:59.718Z",
-      "bytes": 10091
+      "hash": "c1ca2ff73f4f4f0765676dbfd927993f27b263e9",
+      "translatedAt": "2026-10-01T12:56:40.273Z",
+      "bytes": 10158
     },
     "docs/guide/cold-start.md": {
       "hash": "d52d21dc31d276ebab77c376cbf5410456ecee22",
@@ -702,9 +702,9 @@
       "bytes": 5032
     },
     "docs/guide/oidc-integration.md": {
-      "hash": "a1a2de775193c51640f31acb089376d6d5b40caa",
-      "translatedAt": "2026-08-29T12:36:05.238Z",
-      "bytes": 10815
+      "hash": "258486fcd479be084e222adc2d9261e5cd45c872",
+      "translatedAt": "2026-10-01T12:56:57.040Z",
+      "bytes": 10983
     },
     "docs/guide/okta-sso.md": {
       "hash": "5e3a993072512703ec954a19cfd3548092f6fa40",
@@ -732,14 +732,14 @@
       "bytes": 11688
     },
     "docs/guide/private-networking.md": {
-      "hash": "a12130b9883c250ed6256cc9f5cd845a3e266f74",
-      "translatedAt": "2026-08-08T18:29:37.245Z",
-      "bytes": 2411
+      "hash": "d5a68e40339091a8a94854cef28db2571e5f3699",
+      "translatedAt": "2026-10-01T12:56:55.966Z",
+      "bytes": 2403
     },
     "docs/guide/proxy-ips.md": {
-      "hash": "c618b7b5d230505a8364e20b0858b5cbb53699b0",
-      "translatedAt": "2026-09-11T11:02:49.567Z",
-      "bytes": 3684
+      "hash": "3338997669dda13e8770a518c99522246626326f",
+      "translatedAt": "2026-10-01T12:56:59.077Z",
+      "bytes": 3800
     },
     "docs/guide/project-structure.md": {
       "hash": "ba2f072bda1e6c1d41df003feb2f2d5e99689f70",
@@ -792,9 +792,9 @@
       "bytes": 5363
     },
     "docs/guide/rbac.md": {
-      "hash": "2b5fef0234da08d4f11dd24bc676fe0fadf981ad",
-      "translatedAt": "2026-08-19T06:55:28.002Z",
-      "bytes": 12063
+      "hash": "50cbb1634a6cea5915b386a06320e5699cdaac5c",
+      "translatedAt": "2026-10-01T12:57:16.026Z",
+      "bytes": 12079
     },
     "docs/guide/sandbox-spawn.md": {
       "hash": "f0f220838d4e5d82d8ca60344ec1c4e269e5dfec",
@@ -847,9 +847,9 @@
       "bytes": 2318
     },
     "docs/guide/servers.md": {
-      "hash": "3b858948e0d45ce2269a78761e523c94119b781a",
-      "translatedAt": "2026-09-30T12:22:15.620Z",
-      "bytes": 8263
+      "hash": "2072bdd83824018424969bebe7700751a2497359",
+      "translatedAt": "2026-10-01T12:57:14.500Z",
+      "bytes": 8555
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -1482,19 +1482,19 @@
       "bytes": 8367
     },
     "docs/guide/functions.md": {
-      "hash": "193f4a3906ea5a87aba2c9e6434b97820c2d081e",
-      "translatedAt": "2026-08-20T06:56:56.445Z",
-      "bytes": 16617
+      "hash": "a261d09381181b6a434038aa2fa2b47b087d8fb3",
+      "translatedAt": "2026-10-01T12:56:52.682Z",
+      "bytes": 16725
     },
     "docs/sdk/py/releases.md": {
-      "hash": "3ea3b594692a8c92e898dd9259a4d4707bc337f3",
-      "translatedAt": "2026-09-29T12:39:04.493Z",
-      "bytes": 65158
+      "hash": "f21a184b4fa34a03982f7943d6d14ec071e1e6d2",
+      "translatedAt": "2026-10-01T12:58:29.198Z",
+      "bytes": 65114
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "81760f01946906ac94038620ecfbbb60b67451e4",
-      "translatedAt": "2026-09-30T12:21:42.556Z",
-      "bytes": 16609
+      "hash": "320c274024a3a15d176020906b283fa9162ad63d",
+      "translatedAt": "2026-10-01T12:57:10.040Z",
+      "bytes": 20581
     },
     "docs/guide/data-residency.md": {
       "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
@@ -1578,9 +1578,9 @@
       "bytes": 9667
     },
     "docs/guide/network-egress-billing.md": {
-      "hash": "ecfdd765e6fee3094634f586273a03044d48e438",
-      "translatedAt": "2026-09-02T11:04:57.361Z",
-      "bytes": 2927
+      "hash": "a46c3be4eb361cf6d4b81fb8956ca665db39db0a",
+      "translatedAt": "2026-10-01T12:56:51.611Z",
+      "bytes": 3537
     },
     "docs/guide/dedicated-endpoints.md": {
       "hash": "5259ce7a5527beccb89878b6ab3d308cf0ea74d4",
@@ -1618,9 +1618,9 @@
       "bytes": 5939
     },
     "docs/guide/multi-node-clusters.md": {
-      "hash": "30ebf13f856b74c824e060ec9396dcd3d34212ed",
-      "translatedAt": "2026-09-29T12:36:25.234Z",
-      "bytes": 7249
+      "hash": "5da92beb84ffc993a482886e7e1449c317fcc699",
+      "translatedAt": "2026-10-01T12:56:48.724Z",
+      "bytes": 8349
     },
     "docs/sdk/go/latest/ExperimentalOutboundPolicy.md": {
       "hash": "6e6ea06d038cea78892c709bdf47a435af850f20",
@@ -1673,9 +1673,9 @@
       "bytes": 1121
     },
     "docs/examples/miles_grpo.md": {
-      "hash": "90525e5516fa16cbf23b6eeab7029d996458adc5",
-      "translatedAt": "2026-09-30T12:21:15.050Z",
-      "bytes": 15200
+      "hash": "a7280bc9874a114bd7a95973938e9798aa24420d",
+      "translatedAt": "2026-10-01T12:56:27.222Z",
+      "bytes": 15201
     },
     "docs/examples/paint_flowers.md": {
       "hash": "6957a955dd4d9fb1b82dcceff7c7f926bcb0cab0",
@@ -1696,13 +1696,18 @@
       "hash": "991c76b2e16431401f6afd94296b145c345a0e7c",
       "translatedAt": "2026-09-30T12:22:10.922Z",
       "bytes": 6351
+    },
+    "docs/guide/sticky-sessions.md": {
+      "hash": "d87ce1a4149b54e902ae4a2f462ad5f19bb05035",
+      "translatedAt": "2026-10-01T12:57:19.729Z",
+      "bytes": 6080
     }
   },
-  "updatedAt": "2026-09-30T12:22:15.620Z",
+  "updatedAt": "2026-10-01T12:58:29.199Z",
   "stats": {
-    "translated": 21,
-    "skipped": 315,
+    "translated": 17,
+    "skipped": 320,
     "failed": 0,
-    "total": 336
+    "total": 337
   }
 }

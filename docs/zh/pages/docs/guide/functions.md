@@ -37,6 +37,8 @@ def f():
     ...
 ```
 
+要跨多个 GPU 节点运行函数，请使用 [`@modal.clustered`](/docs/guide/multi-node-clusters)。
+
 函数在任意容器环境中执行，如函数的 [Image](/docs/guide/images) 所定义。应用程序中的每个功能都可以有自己的图像。图像可以包含资源，包括来自 PyPI 或私有存储库的 Python 库、FFmpeg 或 OpenCV 等二进制依赖项以及从本地系统复制的数据：
 
 ```python
@@ -51,8 +53,8 @@ image  = (
 def f():
     ...
 ```
-
 如果该函数配备了 GPU，则会自动包含 [CUDA 驱动程序](/docs/guide/cuda)。
+
 默认情况下，Modal 在容器中包含 Function 的源。根据[项目结构](/docs/guide/project-struct)，这将是定义函数实现的脚本文件或整个包。因此，函数不需要是独立的，并且可以引用其模块中的其他资源。
 
 可以使用 Modal [Volume](/docs/guide/volumes) 或 [CloudBucketMount](/docs/guide/cloud-bucket-mounts) 将较大的数据集（例如模型权重）安装到容器中：
@@ -92,14 +94,14 @@ def g() -> str:
 def main():
     print(g.remote())
 ```
-
 可以使用应用程序和函数名称从另一个应用程序或在 [lookup](/docs/guide/trigger-deployed-functions) 后从 Modal 外部调用函数：
 
 ```python notest
 f = modal.Function.from_name("prod-app", "f")
 result = f.remote()
 ```
-远程查找和调用还可以通过我们的 [JavaScript](/docs/sdk/js/latest) 和 [Go](/docs/sdk/go/latest) SDK 执行，允许您在用其他语言编写的应用程序中执行利用 Python 人工智能生态系统的代码：
+
+远程查找和调用也可以通过我们的 [JavaScript](/docs/sdk/js/latest) 和 [Go](/docs/sdk/go/latest) SDK 执行，允许您在用其他语言编写的应用程序中执行利用 Python 人工智能生态系统的代码：
 
 <CodeTabs>
   {#snippet javascript()}
@@ -144,9 +146,9 @@ def f():
 ```
 
 ## 执行语义
-
 模态函数抽象了可靠的云计算编排的几个原则，以呈现一个看起来像本地 Python 函数调用的输入/输出接口。
-函数调用将通过您的 Modal 令牌/秘密凭证自动进行身份验证，并根据您的 [RBAC](/docs/guide/rbac) 配置进行授权。 Function实现不需要进行访问控制。
+
+函数调用将通过您的 Modal 令牌/秘密凭证自动进行身份验证，并根据您的 [RBAC](/docs/guide/rbac) 配置进行授权。 Function 实现不需要执行访问控制。
 
 Modal 负责调度容器并将输入路由到它们。默认情况下，函数容器可以在我们的全球队列中的任何位置启动，从而最大限度地提高可用性并最大限度地减少调度延迟。限制容器调度，例如为了合规性，[配置计算和路由区域](/docs/guide/region-selection)：
 
@@ -157,7 +159,7 @@ def f():
 ```
 
 请注意，计算区域选择会产生[定价乘数](/docs/guide/region-selection#pricing)；路由区域选择则不然。区域选择还限制了计算池，尤其是与特定 GPU 或大型资源请求结合使用时，这可能会影响调度延迟。
-由于容器调度会对输入负载做出反应，因此容器在调用时可能不可用。输入将在 Modal 的 I/O 系统中排队，直到可以分发到可用容器。如果输入入队太快或队列已满，它们将被拒绝并显示 [`ResourceExhaustedError`](/docs/sdk/py/latest/exception#resourceexhaustederror)。对于批量工作负载，更喜欢持久的 [`f.spawn()`](/docs/sdk/py/latest/Function#spawn) 方法，它支持更高的调用率和更深的输入队列。
+由于容器调度会对输入负载做出反应，因此容器在调用时可能不可用。输入将在 Modal 的 I/O 系统中排队，直到它们可以分发到可用容器。如果输入入队太快或队列已满，它们将被拒绝并显示 [`ResourceExhaustedError`](/docs/sdk/py/latest/exception#resourceexhaustederror)。对于批处理工作负载，更喜欢持久的 [`f.spawn()`](/docs/sdk/py/latest/Function#spawn) 方法，它支持更高的调用率和更深的输入队列。
 
 Modal 对每次调用应用输入超时；不需要在调用上下文中设置超时。默认情况下超时很短（5 分钟），但对于模型训练等长时间运行的流程，超时可以延长至 24 小时：
 
@@ -174,7 +176,7 @@ def f():
 def f():
     ...
 ```
-源自 Function 实现的异常不会自动重试，但可以启用输入 [retries](/docs/guide/retries)：
+源自函数实现的异常不会自动重试，但可以启用输入 [retries](/docs/guide/retries)：
 
 ```python
 @app.function(retries=3)
@@ -241,7 +243,7 @@ results = await asyncio.gather(*coros)
 
 ## 容器生命周期管理
 
-虽然 Modal 容器启动时间不到一秒，但您的应用程序逻辑可能需要昂贵的额外设置，例如从磁盘加载模型权重。通过将 Function 的代码构建为类并使用 [`@app.cls()`](/docs/sdk/py/latest/App#cls) 装饰器，您可以将启动逻辑与输入处理分开：
+虽然 Modal 容器启动时间不到一秒，但您的应用程序逻辑可能需要昂贵的额外设置，例如从磁盘加载模型权重。通过将 Function 的代码构造为类并使用 [`@app.cls()`](/docs/sdk/py/latest/App#cls) 装饰器，您可以将启动逻辑与输入处理分开：
 
 ```python
 @app.cls()
@@ -267,7 +269,7 @@ result = InferenceEngine().predict.remote(text)  # Refer to a Cls via a lookup
 
 将代码构建为类还可以让您在用 [`@modal.exit()`](/docs/sdk/py/latest/exit) 装饰器包装的方法中定义容器拆卸逻辑。这对于清理操作非常有用，例如优雅地关闭与数据库的连接。退出处理程序还可用于使您的应用程序对[容器抢占](/docs/guide/preemption) 更具弹性。
 
-写入`self`命名空间的任何状态都将在单个容器处理的调用中持续存在，但当容器终止时它将被丢弃。状态可以使用 Modal 的分布式 [Dict](/docs/guide/dicts) 或 [Queue](/docs/guide/queues) 原语在容器之间共享。
+写入 `self` 命名空间的任何状态都将在单个容器处理的调用中持续存在，但当容器终止时它将被丢弃。状态可以使用 Modal 的分布式 [Dict](/docs/guide/dicts) 或 [Queue](/docs/guide/queues) 原语在容器之间共享。
 
 如果函数生成不应在输入之间泄漏的本地状态，您可以设置 `single_use_containers=True`。这会导致每个容器在处理输入后终止。请注意，一次性容器会增加一些延迟和成本，因为它们无法从通过多个输入分摊容器启动中受益。
 
@@ -314,7 +316,7 @@ result = InferenceEngineH200(model_name="tts-xlarge").predict.remote(text)
 
 与参数化函数一样（但与自动缩放器配置的更新不同），每组不同的动态选项对应一个独立的容器池。如果动态配置 CPU 或内存，请使用一组粗略的值来从容器重用中受益。
 
-## Concurrency and batching
+## 并发和批处理
 
 默认情况下，每个函数容器一次处理一个输入。函数支持两种不同的模式来处理多个输入。
 

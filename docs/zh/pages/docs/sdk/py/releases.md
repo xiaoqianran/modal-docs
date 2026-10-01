@@ -11,7 +11,7 @@
 * [`modal.Sandbox.create()`](/docs/sdk/py/latest/Sandbox#create) 方法现在会阻塞，直到调度 Sandbox，而不是立即返回。
 * 如果无法调度沙盒（例如，由于资源或放置请求无法满足），创建将超时并引发 [`ResourceExhaustedError`](/docs/sdk/py/latest/exception#resourceexhaustederror)。
 
-函数和服务器现在可以在[临时多节点集群](/docs/guide/multi-node-training)上运行，以进行大规模训练或推理工作负载：
+函数和服务器现在可以在[临时多节点集群](/docs/guide/multi-node-clusters)上运行，以进行大规模训练或推理工作负载：
 
 * 将 [`@modal.clustered()`](/docs/sdk/py/latest/clustered) 装饰器添加到您的函数或类中。
 * 在每个进程中使用新的 [`modal.Cluster`](/docs/sdk/py/latest/Cluster) 对象来确定集群中容器的排名和私有 IP。
@@ -29,7 +29,7 @@
 沙箱现在可以使用完整的虚拟机作为运行时，为运行 Docker 等工作流程提供更好的支持：
 
 * 在[`modal.Sandbox.create()`](/docs/sdk/py/latest/Sandbox#create)中设置`runtime="vm"`以启用。
-* 要强制继续使用 gVisor 运行时，请设置 `runtime="gvisor"`。这是当前的默认行为，但默认行为将来可能会发生变化。
+* 要强制继续使用 gVisor 运行时，请设置 `runtime="gvisor"`。这是当前的默认行为，但默认行为将来可能会更改。
 * [`modal shell`](/docs/cli/latest/shell) 命令现在还支持 `--runtime` 选项。
 
 此版本包括许多其他增强功能：
@@ -138,8 +138,8 @@
 * 现在可以使用 `Function.with_options()`、`Function.with_concurrency()` 和 `Function.with_batching()` 动态配置 `modal.Function` 行为。
 * 新的`modal.Volume.with_mount_options()`方法允许您将卷挂载配置为只读（`read_only=True`）和/或限制挂载到卷的子目录（`sub_path="/some/path"`）。
 * 现在可以使用 `modal run`/`modal serve` 中的 `--name` 选项或通过在 `App.run()` 中设置 `name=` 为临时应用程序传递自定义应用程序名称。
-* 我们在 `modal.Sandbox` [文件系统 API](https://modal.com/docs/guide/sandbox-files) 中添加了两个新方法：* `sandbox.filesystem.list_files(path)` 列出沙箱文件系统上给定目录中的条目（带有元数据）。这取代了 alpha `modal.Sandbox.ls` 方法。
-  * `sandbox.filesystem.stat(path)` 返回沙盒文件系统上特定文件/符号链接/目录的元数据。
+* 我们在 `modal.Sandbox` [文件系统 API](https://modal.com/docs/guide/sandbox-files) 中添加了两个新方法：* `sandbox.filesystem.list_files(path)` 列出沙盒文件系统上给定目录中的条目（带有元数据）。这取代了 alpha `modal.Sandbox.ls` 方法。
+  * `sandbox.filesystem.stat(path)` 返回沙箱文件系统上特定文件/符号链接/目录的元数据。
 * 现在可以通过在`modal.Sandbox.create()`中设置`inbound_cidr_allowlist=[...]`来限制*入站*沙箱连接。我们还添加了新的 `outbound_cidr_allowlist=[...]` 参数并弃用现有的 `cidr_allowlist=[...]` 以避免混淆。
 * 我们提高了`modal.Sandbox.snapshot_filesystem()`操作的可靠性，特别是对于大型快照，我们现在支持在必要时设置大于55秒的`timeout=`。
 * `modal.Sandbox.snapshot_directory()` 返回的图像现在可以传递到 `modal.Sandbox.create()` 用作新沙箱的根文件系统。
@@ -155,7 +155,7 @@
 * 我们在新的 Sandbox 文件系统 API 中添加了两种方法：
   * `sandbox.filesystem.make_directory()` 在沙箱文件系统上创建一个新目录
 * `sandbox.filesystem.remove()` 从沙箱文件系统中删除文件或目录
-* 新的沙箱文件系统方法取代了 `modal.Sandbox.mkdir` 和 `modal.Sandbox.rm` 方法，这些方法现已弃用。
+* 新的沙盒文件系统方法取代了 `modal.Sandbox.mkdir` 和 `modal.Sandbox.rm` 方法，这些方法现已弃用。
 * 沙箱现在还支持 `sb.unmount_image(path)` 从路径中删除先前安装的映像并再次显示底层沙箱文件系统。
 * `modal app stop` 和 `modal container stop` CLI 命令现在提示确认（通过 `--yes` 跳过）。
 * 其他几个`modal app` CLI 命令现在会将基于名称的参数映射到最近停止的使用该名称的应用程序。这对于例如在应用程序停止后从应用程序获取日志等很有用。
@@ -235,7 +235,7 @@
   sb2 = modal.Sandbox.create(app=app)
   sb2.mount_image("/project", snapshot)
   ```
-  此功能可用于将沙箱主映像中的应用程序代码的生命周期与每个沙箱会话中更改的项目代码分开。已装载快照中的文件还受益于多项优化，可以更快地读取它们。更多信息请参见【沙盒快照指南】(https://modal.com/docs/guide/sandbox-snapshots)。
+  此功能可用于将沙箱主映像中的应用程序代码的生命周期与每个沙箱会话中更改的项目代码分开。已安装快照中的文件还受益于多项优化，可以更快地读取它们。更多信息请参见【沙盒快照指南】(https://modal.com/docs/guide/sandbox-snapshots)。
 * 我们添加了一个新的 `modal.Sandbox.detach()` 方法，建议您在与沙箱交互完成后调用该方法。此方法会断开本地客户端与沙箱的连接，并清理与该连接关联的资源。调用 `detach` 后，沙盒对象上的操作可能会引发，否则不保证正常工作。
 * `modal.Sandbox.terminate()` 方法现在接受 `wait` 参数。使用`wait=True`，`terminate`将阻塞，直到沙箱完成并返回退出代码。默认的 `wait=False` 保持以前的行为。
 * 写入 `modal.Sandbox.exec` 进程的 `stdin` 的吞吐量已增加 8 倍。
@@ -282,7 +282,7 @@
 * 我们添加了一个新的 `modal token info` CLI 命令来检索有关当前正在使用的凭据的信息。
 * 我们向多个 CLI 入口点（`modal run`、`modal serve`、`modal deploy` 和 `modal container logs`）添加了 `--timestamps` 标志，以在日志记录输出中显示时间戳。
 * `modal run` 入口点的自动 CLI 创建现在支持 `Literal` 类型注释，前提是文字类型包含所有 `str` 或所有 `int` 值。
-* 我们修复了一个错误，当应用程序配置错误时，该错误可能会导致应用程序构建失败并显示无信息的`CancelledError`。
+* 我们修复了一个错误，当应用程序配置错误时，该错误可能会导致应用程序构建失败，并显示无信息的`CancelledError`。
 * 我们改进了运行`modal.Sandbox.exec`时的客户端资源管理，这避免了罕见的线程竞争情况。
 
 ### 1.3.0 (2025-12-19)
@@ -321,9 +321,9 @@ Modal 现在支持 Python 3.14。 Python 3.14t（自由线程构建）支持目�
 
 * 现在可以通过在 `@app.function()` 或 `@app.cls()` 装饰器中设置 `nonpreemptible=True` 将 CPU 函数配置为在不可抢占容量上运行。当请求 GPU 时，此功能当前不可用。请注意，非抢占性会导致 CPU 和内存定价成 3 倍。有关抢占的更多信息，请参阅[指南](https://modal.com/docs/guide/preemption)。
 * Modal 客户端现在可以通过后退和自动重试来更优雅地响应服务器限制（例如，速率限制）。可以使用新的 `MODAL_MAX_THROTTLE_WAIT` 配置变量来控制此行为。将配置设置为`0`将保留以前的行为并将速率限制视为例外；将其设置为非零数字（单位为秒）将允许有限的重试持续时间。
-* The `modal.Sandbox.exec` implementation has been rewritten to be more reliable and efficient.
+* `modal.Sandbox.exec` 实现已被重写，更加可靠和高效。
 * 为 `modal shell` 添加了新的 `--add-local` 标志，允许本地文件和目录包含在 shell 的容器中。
-* 修复了 v1.2.2 中引入的错误，其中某些模态对象（例如，`modal.FunctionCall`）在内存快照中捕获后不可用。 The bug would result in a `has no loader function` error when the object was used.
+* 修复了 v1.2.2 中引入的错误，其中某些模态对象（例如，`modal.FunctionCall`）在内存快照中捕获后不可用。当使用该对象时，该错误会导致`has no loader function`错误。
 
 ### 1.2.2 (2025-11-10)
 
@@ -398,7 +398,7 @@ app = modal.App("llm-inference-server", tags={"team": "genai-platform"})
 * 我们在许多配置 Function、Sandbox 或 Image 执行的方法中添加了 `env` 参数。此参数接受字典并将内容作为环境变量添加到相关的 Modal 容器中。与使用 `modal.Secret` 相比，这可以更简单地包含非敏感信息。
 * 现在可以将 `modal.CloudBucketMount` 实例传递给 `modal.Cls.with_options` 的 `volumes=` 参数（之前仅支持动态添加 `modal.Volume` 挂载点）。
 
-* 新的`modal.Sandbox.get_tags()`方法将获取沙箱当前使用的标签（即调用`modal.Sandbox.set_tags()`之后）。请注意，沙盒标签与应用程序标签的新概念不同。
+* 新的`modal.Sandbox.get_tags()`方法将获取沙盒当前使用的标签（即调用`modal.Sandbox.set_tags()`之后）。请注意，沙盒标签与应用程序标签的新概念不同。
 
 * `modal.Dict.pop()` 现在接受可选的 `default` 参数，类似于 Python 的 `dict.pop()`。
 
@@ -506,7 +506,7 @@ image = modal.Image.debian_slim().uv_sync()
 最后，此版本引入了少量弃用和潜在的破坏性更改：
 
 * 我们现在在所有 Modal 对象查找失败的情况下都会引发 `modal.exception.NotFoundError` ；以前，某些方法可能会泄漏具有 `NOT_FOUND` 状态的内部 `GRPCError`。* 我们正在对 `modal.build`、`modal.Image.copy_local_file` 和 `modal.Image.copy_local_dir` 强制执行 1.0 之前的弃用。
-* 我们将弃用 `modal.Sandbox.create()` 中的 `environment_name` 参数。沙箱的环境关联现在将由其父应用程序确定。这不应该对用户产生任何影响。
+* 我们将弃用 `modal.Sandbox.create()` 中的 `environment_name` 参数。沙盒的环境关联现在将由其父应用程序确定。这不应该对用户产生任何影响。
 * 我们已弃用 `Function`、`Cls`、`Dict`、`Queue`、`Volume`、`NetworkFileSystem` 的 `.from_name` 方法中的 `namespace` 参数，以及`Secret`，以及`modal.runner.deploy_app`。这些对象类型没有不同的命名空间的概念。
 
 ## 1.0
@@ -538,7 +538,7 @@ image = modal.Image.debian_slim().uv_sync()
 
 * 将参数化函数从显式构造函数迁移到`modal.parameter()`注释的重新部署现在将更优雅地处理来自过时客户端的请求，避免新容器因反序列化错误而崩溃的问题。
 
-* Modal 客户端现在将重试与 Modal 服务器的初始连接，从而提高不稳定网络上的稳定性。
+* Modal 客户端现在将重试与 Modal 服务器的初始连接，从而提高不稳定网络的稳定性。
 
 ### 1.0.4 (2025-06-13)
 * 当在同一实例上多次调用 `modal.Cls.with_options` 时，覆盖现在将被合并。例如，以下配置将使用 H100 GPU 并请求 16 个 CPU 核心：
@@ -621,7 +621,7 @@ image = modal.Image.debian_slim().uv_sync()
   f = modal.Function.from_name("my-app", tag="f")  # No longer supported! Will raise an error!
   f = modal.Function.from_name("my-app", "f")  # Preferred spelling
   ```
-* 不再可以使用 `Function.spawn` 调用生成器函数；之前这个警告，现在它提出了`InvalidError`。此外，`FunctionCall.get_gen`方法已被删除，并且在使用`FunctionCall.from_id`时不再可能设置`is_generator`。
+* 不再可以使用 `Function.spawn` 调用生成器函数；之前有警告，现在它提出了`InvalidError`。此外，`FunctionCall.get_gen`方法已被删除，并且在使用`FunctionCall.from_id`时不再可能设置`is_generator`。
 * 删除了 Modal 对象上的 `.resolve()` 方法。该方法尚未公开记录，但在使用时可以直接用`.hydrate()`替换。请注意，显式水合很少是必要的：在大多数情况下，您可以依赖惰性水合语义（即，当调用第一个需要服务器元数据的方法时，对象将被水合）。
 * 用 `@modal.asgi_app` 或 `@modal.wsgi_app` 修饰的函数现在要求为 null。之前，我们警告过使用具有默认参数的参数定义函数的情况。
 * 引用已弃用的 `modal.Stub` 对象现在将引发 `AttributeError`，而之前它是 `modal.App` 的别名。这是一个简单的名称更改。

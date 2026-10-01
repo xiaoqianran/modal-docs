@@ -6,7 +6,7 @@ Modal Clusters provide:
 
 * A [secure private network](https://modal.com/docs/guide/private-networking) for orchestration.
 * A 6,400 Gbps (B300) or 3,200 Gbps (other GPUs) RDMA scale-out network ([RoCE](https://en.wikipedia.org/wiki/RDMA_over_Converged_Ethernet), [InfiniBand](https://en.wikipedia.org/wiki/InfiniBand), or [EFA](https://aws.amazon.com/hpc/efa/)).
-* Up to 256 devices. [Contact us](mailto:support@modal.com) for even larger clusters.
+* Up to 32 nodes and 256 GPUs per cluster. [Contact us](mailto:support@modal.com) for even larger clusters.
 * Deep burn-in testing and [continuous GPU and network health monitoring](https://modal.com/blog/gpu-health).
 * Interoperability with all Modal platform functionality ([Volumes](/docs/guide/volumes), [Dicts](/docs/guide/dicts), [Tunnels](/docs/guide/tunnels), etc.).
 
@@ -29,8 +29,9 @@ def train_model():
     cluster = modal.Cluster.from_context()
 
     container_rank = cluster.container_rank()
-    world_size = len(cluster.container_ips())
-    main_addr = cluster.container_ips()[0]
+    container_ips = cluster.container_ips()
+    world_size = len(container_ips)
+    main_addr = container_ips[0]
     is_main = "(main)" if container_rank == 0 else ""
 
     print(f"{container_rank=} {is_main} {world_size=} {main_addr=}")
@@ -48,11 +49,21 @@ Clustered functions must use the [full number of GPUs per node](https://modal.co
 
 </Callout>
 
+The `@modal.clustered` decorator also supports [Functions defined as a class](https://modal.com/docs/guide/lifecycle-functions) using `@app.cls()`, provided the class exposes exactly one method.
+
+Web Functions are not supported. For HTTP workloads, use a [Server](https://modal.com/docs/guide/servers).
+
+## Autoscaling
+
+Modal's [autoscaler](https://modal.com/docs/guide/scale) handles scaling up and scaling down by entire clusters at a time. As with typical Functions, you can [configure this behavior](https://modal.com/docs/guide/scale#configuring-autoscaling-behavior) to control how many clusters can run at a given time.
+
+`min_containers`, `max_containers`, and `buffer_containers` count **individual nodes** and must be multiples of the cluster size. For example, if you declare a four-node cluster, `min_containers=8` would tell the autoscaler to keep a minimum of two clusters running, for a total of eight containers.
+
 ## Rank & input broadcast
 
 Each container in a multi-node cluster is assigned a rank. Rank zero is the "leader" rank, or head node, and typically coordinates the job.
 
-To determine the current container's rank, use the `modal.Cluster` API:
+To get the current container's rank:
 
 ```python notest
 cluster = modal.Cluster.from_context()
@@ -71,9 +82,9 @@ Only rank zero's output is returned to the caller; i.e., outputs from other rank
 
 ## Networking
 
-In addition to gang scheduling, the `@clustered` decorator enables [i6pn](/docs/guide/private-networking), Modal’s workspace-private inter-container networking, so that containers in a cluster can communicate with each other over TCP or UDP. You can then use protocols such as [Torch Distributed Elastic](https://docs.pytorch.org/docs/2.14/elastic/rendezvous.html) on top of Modal’s networking stack.
+In addition to gang scheduling, the `@clustered` decorator enables [i6pn](/docs/guide/private-networking), Modal’s workspace-private inter-container networking, so that containers in a cluster can communicate with each other over TCP or UDP. You can then use protocols such as [Torch Distributed Elastic](https://docs.pytorch.org/docs/2.14/elastic/rendezvous.html) on top of Modal’s networking stack. Private networking is available whether or not [RDMA](#rdma) is enabled.
 
-To get the list of IPs for each container in a cluster:
+[`Cluster.container_ips()`](/docs/sdk/py/latest/Cluster#container_ips) returns one IP address per container, ordered by rank, for intra-cluster communication.
 
 ```python notest
 cluster = modal.Cluster.from_context()
@@ -81,7 +92,7 @@ container_ips = cluster.container_ips()
 print(f"The main container's IP is {container_ips[0]}")
 ```
 
-By default, `container_ips` will return IPv6 addresses. For workloads that require IPv4 (such as Ray-based frameworks), pass in the `family` parameter:
+By default, `container_ips()` returns IPv6 addresses. For workloads that require IPv4 (such as Ray-based frameworks), pass in the `family` parameter:
 
 ```python notest
 cluster = modal.Cluster.from_context()
@@ -94,6 +105,8 @@ For more on what you can do with inter-container networking, see the [cluster ne
 ## RDMA
 
 For even higher inter-node bandwidth, you can enable RDMA. The exact bandwidth depends on GPU type: B300 clusters have 6,400 Gbps networking, while other GPU types have 3,200 Gbps.
+
+RDMA is supported on H100, H200, B200, B300, and GB200 GPUs.
 
 To use RDMA, make sure your container image contains the necessary dependencies, typically a copy of `libcudart.so`, `libibverbs.so.1`, and `libmlx5.so.1`. The easiest way to do this is to [use a CUDA base image](/docs/guide/cuda#for-more-complex-setups-use-an-officially-supported-cuda-image), then `.apt_install` the InfiniBand library:
 

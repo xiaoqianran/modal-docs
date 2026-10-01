@@ -41,7 +41,7 @@ The docs are organized into three main sections:
   - [File access](https://modal.com/docs/guide/sandbox-files.md)
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
-  - [Sidecars (Alpha)](https://modal.com/docs/guide/sandbox-sidecars.md)
+  - [Sidecars (Beta)](https://modal.com/docs/guide/sandbox-sidecars.md)
 - Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
@@ -74,6 +74,7 @@ The docs are organized into three main sections:
   - [Scheduled Functions](https://modal.com/docs/guide/cron.md)
 - HTTP Applications
   - [Servers](https://modal.com/docs/guide/servers.md)
+  - [Sticky Sessions](https://modal.com/docs/guide/sticky-sessions.md)
   - [Web Functions](https://modal.com/docs/guide/webhooks.md)
   - [Streaming endpoints](https://modal.com/docs/guide/streaming-endpoints.md)
   - [Web Function URLs](https://modal.com/docs/guide/webhook-urls.md)
