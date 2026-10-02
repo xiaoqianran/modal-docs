@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "1e7fcfd7831c6dc0fa2c40265df5b3943a5971bf",
-      "translatedAt": "2026-10-01T12:56:41.804Z",
-      "bytes": 25770
+      "hash": "c55b8a9f72d262b14896ef61a01cbc4f79a080f7",
+      "translatedAt": "2026-10-02T12:19:10.747Z",
+      "bytes": 25935
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -407,9 +407,9 @@
       "bytes": 7113
     },
     "docs/examples/nemotron_inference.md": {
-      "hash": "4492234811e9d341eba3aa913394a12be76d50ed",
-      "translatedAt": "2026-08-08T18:28:40.215Z",
-      "bytes": 17173
+      "hash": "105ea72a1d7f5f70376ec1799cfa7f8b2bded12d",
+      "translatedAt": "2026-10-02T12:19:04.616Z",
+      "bytes": 17170
     },
     "docs/examples/safe_code_execution.md": {
       "hash": "536845dd5cbb9d8cca1a093be4c199a848d6bc72",
@@ -432,9 +432,9 @@
       "bytes": 13944
     },
     "docs/examples/streaming_kyutai_stt.md": {
-      "hash": "d0e6df12813659d7cf67897561a5581da238b175",
-      "translatedAt": "2026-08-08T18:28:44.858Z",
-      "bytes": 18030
+      "hash": "6025ad7209ab4d09091558f4a4e8e1d518964652",
+      "translatedAt": "2026-10-02T12:19:13.158Z",
+      "bytes": 20305
     },
     "docs/examples/text_to_image.md": {
       "hash": "f4ae896e489bf5444bdac19d11cd73188e30febc",
@@ -452,8 +452,8 @@
       "bytes": 12874
     },
     "docs/examples/sglang_low_latency.md": {
-      "hash": "636988df6f839cd3ff7ea3141e9bd36366c9bbc9",
-      "translatedAt": "2026-08-08T18:28:47.411Z",
+      "hash": "748a4ffb8992dc3059d5c36b8f0979f3d5125972",
+      "translatedAt": "2026-10-02T12:19:15.356Z",
       "bytes": 22664
     },
     "docs/examples/webscraper.md": {
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "e1919e7b66f77ada4908ab634cd5078bb1f893c0",
-      "translatedAt": "2026-09-18T11:00:35.445Z",
-      "bytes": 3955
+      "hash": "ef31fbd1ea03dca577c087f9aba6e25b7a90a138",
+      "translatedAt": "2026-10-02T12:19:18.009Z",
+      "bytes": 3998
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -807,9 +807,9 @@
       "bytes": 18184
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "81199f7399f51f0ddf14f5bbda7bf5cbfe784f65",
-      "translatedAt": "2026-09-30T12:21:53.218Z",
-      "bytes": 19023
+      "hash": "a39ee2e8c6e7f71577d57cdc1891e502cfd4b8d1",
+      "translatedAt": "2026-10-02T12:19:29.387Z",
+      "bytes": 19238
     },
     "docs/guide/scale.md": {
       "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
@@ -1492,9 +1492,9 @@
       "bytes": 65114
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "320c274024a3a15d176020906b283fa9162ad63d",
-      "translatedAt": "2026-10-01T12:57:10.040Z",
-      "bytes": 20581
+      "hash": "be1c7d2e7f0321dd7c1fe3ecbde42ff87b0f254b",
+      "translatedAt": "2026-10-02T12:19:25.802Z",
+      "bytes": 20274
     },
     "docs/guide/data-residency.md": {
       "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
@@ -1583,14 +1583,14 @@
       "bytes": 3537
     },
     "docs/guide/dedicated-endpoints.md": {
-      "hash": "5259ce7a5527beccb89878b6ab3d308cf0ea74d4",
-      "translatedAt": "2026-09-18T11:00:32.207Z",
-      "bytes": 3770
+      "hash": "3e32922f47aae73cee9f2d73fefa8b8c3ecab305",
+      "translatedAt": "2026-10-02T12:19:14.639Z",
+      "bytes": 3786
     },
     "docs/guide/shared-endpoints.md": {
-      "hash": "0de1877a91cd58e5af6183715faf720aa2f60e05",
-      "translatedAt": "2026-09-18T11:00:46.392Z",
-      "bytes": 1682
+      "hash": "be05823a22f7bdd09d66102df479635c2e78f8f8",
+      "translatedAt": "2026-10-02T12:19:27.273Z",
+      "bytes": 1679
     },
     "docs/guide/user-groups.md": {
       "hash": "ae26d1b60bdeeb4896f0788f179c4bd5e3db3759",
@@ -1701,13 +1701,23 @@
       "hash": "d87ce1a4149b54e902ae4a2f462ad5f19bb05035",
       "translatedAt": "2026-10-01T12:57:19.729Z",
       "bytes": 6080
+    },
+    "docs/examples/sandbox_secret_injection.md": {
+      "hash": "dd536a0249671c7fb854a047181603bf7238654e",
+      "translatedAt": "2026-10-02T12:19:05.766Z",
+      "bytes": 4507
+    },
+    "docs/guide/sandbox-secret-injection.md": {
+      "hash": "507af106af567d677965d1c42ab5bb739f9e934e",
+      "translatedAt": "2026-10-02T12:19:20.303Z",
+      "bytes": 8678
     }
   },
-  "updatedAt": "2026-10-01T12:58:29.199Z",
+  "updatedAt": "2026-10-02T12:19:29.387Z",
   "stats": {
-    "translated": 17,
-    "skipped": 320,
+    "translated": 11,
+    "skipped": 328,
     "failed": 0,
-    "total": 337
+    "total": 339
   }
 }

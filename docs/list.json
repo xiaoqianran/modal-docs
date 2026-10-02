@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-01T12:56:21.055Z",
+  "fetchedAt": "2026-10-02T12:18:57.474Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 322,
-  "ok": 322,
+  "totalUrls": 324,
+  "ok": 324,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 26281,
+      "bytes": 26474,
       "stub": false
     },
     {
@@ -626,7 +626,7 @@
       "source": "https://modal.com/docs/examples/nemotron_inference.md",
       "finalUrl": "https://modal.com/docs/examples/nemotron_inference.md",
       "path": "docs/examples/nemotron_inference.md",
-      "bytes": 17896,
+      "bytes": 17898,
       "stub": false
     },
     {
@@ -686,6 +686,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/examples/sandbox_secret_injection.md",
+      "source": "https://modal.com/docs/examples/sandbox_secret_injection.md",
+      "finalUrl": "https://modal.com/docs/examples/sandbox_secret_injection.md",
+      "path": "docs/examples/sandbox_secret_injection.md",
+      "bytes": 4631,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/examples/serve_streamlit.md",
       "source": "https://modal.com/docs/examples/serve_streamlit.md",
       "finalUrl": "https://modal.com/docs/examples/serve_streamlit.md",
@@ -698,7 +706,7 @@
       "source": "https://modal.com/docs/examples/sglang_low_latency.md",
       "finalUrl": "https://modal.com/docs/examples/sglang_low_latency.md",
       "path": "docs/examples/sglang_low_latency.md",
-      "bytes": 23951,
+      "bytes": 23953,
       "stub": false
     },
     {
@@ -714,7 +722,7 @@
       "source": "https://modal.com/docs/examples/streaming_kyutai_stt.md",
       "finalUrl": "https://modal.com/docs/examples/streaming_kyutai_stt.md",
       "path": "docs/examples/streaming_kyutai_stt.md",
-      "bytes": 18128,
+      "bytes": 20423,
       "stub": false
     },
     {
@@ -906,7 +914,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 4097,
+      "bytes": 4118,
       "stub": false
     },
     {
@@ -962,7 +970,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 4484,
+      "bytes": 4512,
       "stub": false
     },
     {
@@ -1342,11 +1350,19 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/sandbox-secret-injection.md",
+      "source": "https://modal.com/docs/guide/sandbox-secret-injection.md",
+      "finalUrl": "https://modal.com/docs/guide/sandbox-secret-injection.md",
+      "path": "docs/guide/sandbox-secret-injection.md",
+      "bytes": 9502,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 21634,
+      "bytes": 21322,
       "stub": false
     },
     {
@@ -1354,7 +1370,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 20148,
+      "bytes": 20373,
       "stub": false
     },
     {
@@ -1434,7 +1450,7 @@
       "source": "https://modal.com/docs/guide/shared-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
       "path": "docs/guide/shared-endpoints.md",
-      "bytes": 1861,
+      "bytes": 1866,
       "stub": false
     },
     {

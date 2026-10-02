@@ -77,11 +77,12 @@ compute to a region incurs a
 ## Request routing
 
 Dedicated Endpoints inherit the
-[sticky-session routing](/docs/guide/servers#request-routing) of Servers:
-requests that share a `Modal-Session-Id` header are handled by the same
-container, which keeps a conversation's prompt prefix in that container's cache.
-See [Session affinity](/docs/guide/endpoints#session-affinity) for how to choose
-session IDs.
+[affinity routing](/docs/guide/servers#request-routing) of Servers:
+requests that share a `Modal-Session-Id` header are routed to the same container
+on a best-effort basis, which keeps a conversation's prompt prefix in that
+container's cache. See
+[Affinity routing](/docs/guide/endpoints#affinity-routing) for how to choose the
+header value.
 
 ## Metrics
 

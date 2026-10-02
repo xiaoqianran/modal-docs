@@ -83,6 +83,7 @@ https://modal.com/docs/examples/pushgateway.md
 https://modal.com/docs/examples/s3_bucket_mount.md
 https://modal.com/docs/examples/safe_code_execution.md
 https://modal.com/docs/examples/sandbox_pool.md
+https://modal.com/docs/examples/sandbox_secret_injection.md
 https://modal.com/docs/examples/serve_streamlit.md
 https://modal.com/docs/examples/sglang_low_latency.md
 https://modal.com/docs/examples/simple_code_interpreter.md
@@ -165,6 +166,7 @@ https://modal.com/docs/guide/saml-sso.md
 https://modal.com/docs/guide/sandbox-files.md
 https://modal.com/docs/guide/sandbox-networking.md
 https://modal.com/docs/guide/sandbox-resources.md
+https://modal.com/docs/guide/sandbox-secret-injection.md
 https://modal.com/docs/guide/sandbox-sidecars.md
 https://modal.com/docs/guide/sandbox-snapshots.md
 https://modal.com/docs/guide/sandbox-spawn.md

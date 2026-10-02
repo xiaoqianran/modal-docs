@@ -36,11 +36,11 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 
 每个 Sidecar 容器：
 
-* 独立于主沙箱容器运行自己的映像。
+* 独立于主沙盒容器运行自己的映像。
 * 在与主 Sandbox 容器和其他 Sidecar 容器隔离的单独沙盒进程中运行。
 * 可以通过内部桥接网络与主 Sandbox 容器和其他 Sidecar 容器进行通信。
-* 可以在沙箱的生命周期内动态创建、终止和替换。
-* 支持像主沙盒容器一样执行命令。
+* 可以在沙盒的生命周期内动态创建、终止和替换。
+* 支持像主沙箱容器一样执行命令。
 
 ## 用法
 
@@ -163,98 +163,7 @@ func main() {
 
 {/片段} </CodeTabs>
 
-Sidecar 使用与主沙箱相同的[运行时](/docs/guide/sandboxes#runtimes)。在VM运行时，您需要
-当您启动沙盒时，为任何 sidecar 保留内存。该保留与 VM 内存爆发不兼容，
-因此沙箱必须设置相等的内存请求和限制。每次 Sidecar 启动时，您都可以指定
-用于该 Sidecar 的储备，或将该选项留空以使用全部剩余储备：
-
-<CodeTabs>
-{#snippet python()}
-
-```python notest
-sb = modal.Sandbox.create(
-    "sleep",
-    "600",
-    app=app,
-    image=image,
-    timeout=300,
-    runtime="vm",
-    memory=(8192, 8192),
-    experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
-)
-
-sidecar = sb._experimental_sidecars.create(
-    "python",
-    "-m",
-    "http.server",
-    "8080",
-    name="web",
-    image=image,
-    experimental_memory_reserve_consume_mib=512,
-)
-
-# Omit experimental_memory_reserve_consume_mib to give this sidecar
-# the remaining reserve (512 MiB here).
-worker = sb._experimental_sidecars.create(
-    "sleep", "600", name="worker", image=image
-)
-```
-
-{/片段}
-
-{#snippet javascript()}
-
-```javascript notest
-const sb = await modal.sandboxes.create(app, image, {
-  command: ["sleep", "600"],
-  timeoutMs: 300 * 1000,
-  runtime: "vm",
-  memoryMiB: 8192,
-  memoryLimitMiB: 8192,
-  experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
-});
-
-const sidecar = await sb.experimentalSidecars.create("web", image, {
-  command: ["python", "-m", "http.server", "8080"],
-  experimentalMemoryReserveConsumeMiB: 512,
-});
-
-// Omit experimentalMemoryReserveConsumeMiB to give this sidecar
-// the remaining reserve (512 MiB here).
-const worker = await sb.experimentalSidecars.create("worker", image, {
-  command: ["sleep", "600"],
-});
-```{/片段}
-
-{#snippet go()}
-
-```go notest
-sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-	Command:             []string{"sleep", "600"},
-	Timeout:             5 * time.Minute,
-	Runtime:             modal.SandboxRuntimeVM,
-	MemoryMiB:           8192,
-	MemoryLimitMiB:      8192,
-	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
-})
-
-sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "web", image, &modal.SidecarCreateParams{
-	Command:                             []string{"python", "-m", "http.server", "8080"},
-	ExperimentalMemoryReserveConsumeMiB: 512,
-})
-_ = sidecar
-
-// Omit ExperimentalMemoryReserveConsumeMiB to give this sidecar
-// the remaining reserve (512 MiB here).
-worker, _ := sb.ExperimentalSidecars.Create(ctx, "worker", image, &modal.SidecarCreateParams{
-	Command: []string{"sleep", "600"},
-})
-_ = worker
-```
-
-{/片段} </CodeTabs>
-
-终止的 VM Sidecar 将返回其预留空间，以供新 Sidecar 重用。
+Sidecar 使用与主沙箱相同的[运行时](/docs/guide/sandboxes#runtimes)。
 
 ### 列出和检索 sidecar
 
@@ -303,8 +212,7 @@ _ = sidecar
 ### 通过 Sidecar 路由 HTTPS 流量
 
 Sidecars 可用于检查来自主沙箱的传出 HTTPS 流量
-不同上下文中的容器，例如执行更高级的请求
-过滤、检查日志请求或注入主要的秘密
+不同上下文中的容器，例如执行更高级的请求过滤、检查日志请求或注入主要的秘密
 沙盒容器不应具有访问权限。
 
 通常，应用程序需要支持显式代理配置，例如
@@ -359,7 +267,6 @@ sb.ExperimentalSidecars.Create(ctx, "my-proxy-sidecar", proxyImage, &modal.Sidec
 	Command: []string{"python", "/proxy.py"},
 })
 ```
-
 {/片段} </CodeTabs>
 
 Sidecar 接收原始 TLS 流并且必须读取目标主机名
@@ -377,15 +284,14 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 
 相反，中继流量由 Sidecar 的出口控制控制。
 转发到. Sidecar的出站网络策略独立于main
-容器的并且默认打开，所以除非你通过 `outbound_cidr_allowlist`
+容器的并且默认是打开的，所以除非你通过 `outbound_cidr_allowlist`
 或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
 Sidecar 选择连接到的任何目的地。
 
-该选项不能与设置`block_network`组合使用，
+该选项不能与设置`block_network`结合使用，
 沙盒上的`outbound_domain_allowlist`或`proxy`。
 
 ### OIDC 代币
-
 与沙箱一样，Sidecar 不会收到 [OIDC](/docs/guide/oidc-integration)
 默认情况下的令牌。要选择加入，请在创建时传递 `include_oidc_identity_token=True`
 边车。然后，该令牌可通过以下方式在 Sidecar 内使用：
@@ -443,97 +349,12 @@ fmt.Println(state) // "ready"
 
 {/片段} </CodeTabs>
 
-### 目录快照
-
-[目录快照](/docs/guide/sandbox-snapshots#directory-snapshots) 工作
-在 Sidecars 上的方式与沙箱相同。
-
-### 卷
-
-Sidecar 可以挂载 [Volumes](/docs/guide/volumes)，配置方式与
-在沙盒上。每个容器都有自己的挂载：挂载在 Sidecar 中的 Volume在主 Sandbox 容器或其他 Sidecar 中不可见，除非您
-也在那里安装相同的卷。
-
-### 云桶安装座
-
-Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
-配置方式与沙盒上相同。每个容器都有自己的挂载：
-安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
-在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶
-GPU 沙盒的 Sidecar 不支持挂载。
-
-<CodeTabs>
-{#snippet python()}
-
-```python notest
-bucket = modal.CloudBucketMount(
-    "my-bucket",
-    secret=modal.Secret.from_name("my-aws-secret"),
-    read_only=True,
-)
-
-reader = sb._experimental_sidecars.create(
-    "sleep", "600", name="reader", image=image, volumes={"/mnt/bucket": bucket}
-)
-p = reader.exec("ls", "/mnt/bucket")
-p.wait()
-print(p.stdout.read())
-```
-
-{/片段}
-
-{#snippet javascript()}
-
-```javascript notest
-const secret = await modal.secrets.fromName("my-aws-secret");
-
-const reader = await sb.experimentalSidecars.create("reader", image, {
-  command: ["sleep", "600"],
-  cloudBucketMounts: {
-    "/mnt/bucket": modal.cloudBucketMounts.create("my-bucket", {
-      secret,
-      readOnly: true,
-    }),
-  },
-});
-const p = await reader.exec(["ls", "/mnt/bucket"]);
-await p.wait();
-console.log(await p.stdout.readText());
-```
-
-{/片段}
-
-{#snippet go()}
-```go notest
-secret, _ := mc.Secrets.FromName(ctx, "my-aws-secret", nil)
-bucket, _ := mc.CloudBucketMounts.New("my-bucket", &modal.CloudBucketMountParams{
-	Secret:   secret,
-	ReadOnly: true,
-})
-
-reader, _ := sb.ExperimentalSidecars.Create(ctx, "reader", image, &modal.SidecarCreateParams{
-	Command:           []string{"sleep", "600"},
-	CloudBucketMounts: map[string]*modal.CloudBucketMount{"/mnt/bucket": bucket},
-})
-p, _ := reader.Exec(ctx, []string{"ls", "/mnt/bucket"}, nil)
-stdout, _ := io.ReadAll(p.Stdout)
-fmt.Println(string(stdout))
-```
-
-{/片段} </CodeTabs>
-
-使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
-身份令牌是为 Sidecar 容器颁发的，因此其`container_id`
-声明与主容器的声明不同。匹配的 IAM 信任策略
-完整主题还必须允许 Sidecar 的容器 ID。
-
 ### 目录挂载和快照
 
 您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它
-稍后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
+稍后。您还可以将 Sidecar 目录快照到新镜像中。由此产生的
 图像可以在任何接受现有图像的地方使用，包括作为安装
 或作为新容器的文件系统。
-
 下面的示例使用已安装的 `/workspace` 作为会话状态，对其进行快照，
 终止原始 Sidecar，并将快照挂载到替换的 Sidecar 中
 边车：
@@ -599,46 +420,210 @@ _ = replacement.UnmountImage(ctx, "/workspace", nil)
 
 {/片段} </CodeTabs>
 
+### 卷
+
+Sidecar 可以挂载 [Volumes](/docs/guide/volumes)，配置方式与
+在沙盒上。每个容器都有自己的安装座。您可以安装相同的卷
+在主沙盒和其他 Sidecar 中共享数据。
+
+### 云桶安装座Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
+配置方式与沙盒上相同。每个容器都有自己的挂载：
+安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
+在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶
+GPU 沙盒的 Sidecar 不支持挂载。
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+bucket = modal.CloudBucketMount(
+    "my-bucket",
+    secret=modal.Secret.from_name("my-aws-secret"),
+    read_only=True,
+)
+
+reader = sb._experimental_sidecars.create(
+    "sleep", "600", name="reader", image=image, volumes={"/mnt/bucket": bucket}
+)
+p = reader.exec("ls", "/mnt/bucket")
+p.wait()
+print(p.stdout.read())
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const secret = await modal.secrets.fromName("my-aws-secret");
+
+const reader = await sb.experimentalSidecars.create("reader", image, {
+  command: ["sleep", "600"],
+  cloudBucketMounts: {
+    "/mnt/bucket": modal.cloudBucketMounts.create("my-bucket", {
+      secret,
+      readOnly: true,
+    }),
+  },
+});
+const p = await reader.exec(["ls", "/mnt/bucket"]);
+await p.wait();
+console.log(await p.stdout.readText());
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+secret, _ := mc.Secrets.FromName(ctx, "my-aws-secret", nil)
+bucket, _ := mc.CloudBucketMounts.New("my-bucket", &modal.CloudBucketMountParams{
+	Secret:   secret,
+	ReadOnly: true,
+})
+
+reader, _ := sb.ExperimentalSidecars.Create(ctx, "reader", image, &modal.SidecarCreateParams{
+	Command:           []string{"sleep", "600"},
+	CloudBucketMounts: map[string]*modal.CloudBucketMount{"/mnt/bucket": bucket},
+})
+p, _ := reader.Exec(ctx, []string{"ls", "/mnt/bucket"}, nil)
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout))
+```
+
+{/片段} </CodeTabs>
+
+使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
+身份令牌是为 Sidecar 容器颁发的，因此其`container_id`
+声明与主容器的声明不同。匹配的 IAM 信任策略
+完整的主题也必须允许 Sidecar 的容器 ID。
+
 ## 资源配置
 
 主Sandbox容器和Sidecar容器共享Sandbox的资源分配（CPU和内存），
 并且资源仅在沙箱上配置。当你规划你的
 资源分配，确保Sandbox配置了足够的CPU
 以及所有容器的内存组合。
-在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
-定价](/docs/guide/sandbox-resources) 了解更多详细信息。在VM运行时，Sidecars不能
-与记忆爆发相结合。
 
 例如，如果您想运行具有两个 Sidecar 的沙盒，并且您期望主要
 容器使用 1 个 CPU 核心和 512 MiB 内存，Sidecar A 使用 0.5 个 CPU 和 256 MiB，
-和 Sidecar B 使用 0.5 CPU 和 256 MiB，您应该将 Sandbox 的资源设置为
+和 Sidecar B 使用 0.5 CPU 和 256 MiB，您应该将沙箱的资源设置为
 至少 2 个 CPU 和 1024 MiB 来容纳所有三个容器。
 
-您可以创建的 Sidecar 的最大数量也取决于主沙箱的
-资源预留。每个容器（包括主容器）至少需要
-32 mCPU 和 32 MiB 内存，因此限制为：
-
-```
-max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
-```
-
-每个沙箱还存在 **250** 并发 sidecar 容器的硬性限制，
+每个沙箱有 **250** 并发 sidecar 容器的硬性限制，
 与资源预留无关。
+
+在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
+定价](/docs/guide/sandbox-resources) 了解更多详细信息。
+在VM运行时，Sidecar不能与内存爆发结合起来。相反，您需要
+当您启动沙盒时，为任何 Sidecar 保留内存。该保留与 VM 内存爆发不兼容，
+因此沙箱必须设置相等的内存请求和限制。每次 Sidecar 启动时，您都可以指定
+用于该 Sidecar 的储备，或将该选项留空以使用全部剩余储备：
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    timeout=300,
+    runtime="vm",
+    memory=(8192, 8192),
+    experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
+)
+
+sidecar = sb._experimental_sidecars.create(
+    "python",
+    "-m",
+    "http.server",
+    "8080",
+    name="web",
+    image=image,
+    experimental_memory_reserve_consume_mib=512,
+)
+
+# Omit experimental_memory_reserve_consume_mib to give this sidecar
+# the remaining reserve (512 MiB here).
+worker = sb._experimental_sidecars.create(
+    "sleep", "600", name="worker", image=image
+)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  timeoutMs: 300 * 1000,
+  runtime: "vm",
+  memoryMiB: 8192,
+  memoryLimitMiB: 8192,
+  experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
+});
+
+const sidecar = await sb.experimentalSidecars.create("web", image, {
+  command: ["python", "-m", "http.server", "8080"],
+  experimentalMemoryReserveConsumeMiB: 512,
+});
+
+// Omit experimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+const worker = await sb.experimentalSidecars.create("worker", image, {
+  command: ["sleep", "600"],
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	Timeout:             5 * time.Minute,
+	Runtime:             modal.SandboxRuntimeVM,
+	MemoryMiB:           8192,
+	MemoryLimitMiB:      8192,
+	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
+})
+
+sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "web", image, &modal.SidecarCreateParams{
+	Command:                             []string{"python", "-m", "http.server", "8080"},
+	ExperimentalMemoryReserveConsumeMiB: 512,
+})
+_ = sidecar
+
+// Omit ExperimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+worker, _ := sb.ExperimentalSidecars.Create(ctx, "worker", image, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+_ = worker
+```
+
+{/片段} </CodeTabs>
+
+终止的 VM Sidecar 将返回其预留空间，以供新 Sidecar 重用。
 
 ## 限制
 
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
-* **仅预构建图像**：Sidecar 图像必须使用 `image.build()` 预构建，参考
-  通过 `Image.from_id()` 通过 ID 或通过 `Image.from_name()` 命名，或者从文件系统/目录快照创建。懒惰的形象
-  Sidecar 不支持构建。另请参阅[将映像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
+
+* **仅预构建图像**：Sidecar 图像必须已存在：使用 `image.build()` 预构建，a
+  [命名图像](/docs/guide/named-images) 通过 `Image.from_name()`，
+  通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
+  Sidecar 不支持构建。参见
+[将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **无 stdin/stdout**：Sidecar 的入口点不公开 stdin、stdout 或 stderr 流。
 * **无 VM 内存爆发**：VM 运行时上的 Sidecar 不能与 VM 内存爆发相结合。设置相等的内存请求和限制，例如`memory=(8192, 8192)`。
-* **无 GPU 支持**：Sidecar 容器无法访问 GPU，即使沙箱配置了 GPU。
-* **GPU 沙箱中没有云桶安装**：GPU 沙箱的 Sidecar 无法附加 [云桶安装](/docs/guide/cloud-bucket-mounts)。
-* **不支持内存快照**：Sidecar 的文件系统可以进行快照
-  独立，但 Sidecar 内存状态不会被捕获
-  [沙盒快照](/docs/guide/sandbox-snapshots)。
+* **GPU 沙箱的限制**：您可以将 Sidecar 连接到具有 GPU 的沙箱，但 Sidecar 仅限 CPU，无法连接 [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts)。
+* **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[单个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
+  [内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。
 * **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
-* **最多 250 个并发 sidecar**：一个沙箱最多可以同时运行 250 个 sidecar 容器。
 * **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

@@ -162,100 +162,7 @@ func main() {
 
 {/snippet} </CodeTabs>
 
-Sidecars use the same [runtime](/docs/guide/sandboxes#runtimes) as the main Sandbox. On the VM runtime, you need to
-reserve memory for any sidecars when you launch the Sandbox. That reserve is incompatible with VM memory bursting,
-so the Sandbox must set an equal memory request and limit. With every Sidecar launch, you either specify how much of
-the reserve to use for that Sidecar, or leave the option empty to use the entire remaining reserve:
-
-<CodeTabs>
-{#snippet python()}
-
-```python notest
-sb = modal.Sandbox.create(
-    "sleep",
-    "600",
-    app=app,
-    image=image,
-    timeout=300,
-    runtime="vm",
-    memory=(8192, 8192),
-    experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
-)
-
-sidecar = sb._experimental_sidecars.create(
-    "python",
-    "-m",
-    "http.server",
-    "8080",
-    name="web",
-    image=image,
-    experimental_memory_reserve_consume_mib=512,
-)
-
-# Omit experimental_memory_reserve_consume_mib to give this sidecar
-# the remaining reserve (512 MiB here).
-worker = sb._experimental_sidecars.create(
-    "sleep", "600", name="worker", image=image
-)
-```
-
-{/snippet}
-
-{#snippet javascript()}
-
-```javascript notest
-const sb = await modal.sandboxes.create(app, image, {
-  command: ["sleep", "600"],
-  timeoutMs: 300 * 1000,
-  runtime: "vm",
-  memoryMiB: 8192,
-  memoryLimitMiB: 8192,
-  experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
-});
-
-const sidecar = await sb.experimentalSidecars.create("web", image, {
-  command: ["python", "-m", "http.server", "8080"],
-  experimentalMemoryReserveConsumeMiB: 512,
-});
-
-// Omit experimentalMemoryReserveConsumeMiB to give this sidecar
-// the remaining reserve (512 MiB here).
-const worker = await sb.experimentalSidecars.create("worker", image, {
-  command: ["sleep", "600"],
-});
-```
-
-{/snippet}
-
-{#snippet go()}
-
-```go notest
-sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-	Command:             []string{"sleep", "600"},
-	Timeout:             5 * time.Minute,
-	Runtime:             modal.SandboxRuntimeVM,
-	MemoryMiB:           8192,
-	MemoryLimitMiB:      8192,
-	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
-})
-
-sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "web", image, &modal.SidecarCreateParams{
-	Command:                             []string{"python", "-m", "http.server", "8080"},
-	ExperimentalMemoryReserveConsumeMiB: 512,
-})
-_ = sidecar
-
-// Omit ExperimentalMemoryReserveConsumeMiB to give this sidecar
-// the remaining reserve (512 MiB here).
-worker, _ := sb.ExperimentalSidecars.Create(ctx, "worker", image, &modal.SidecarCreateParams{
-	Command: []string{"sleep", "600"},
-})
-_ = worker
-```
-
-{/snippet} </CodeTabs>
-
-Terminated VM Sidecars return their reserve for reuse by new Sidecars.
+Sidecars use the same [runtime](/docs/guide/sandboxes#runtimes) as the main Sandbox.
 
 ### Listing and retrieving sidecars
 
@@ -444,17 +351,83 @@ fmt.Println(state) // "ready"
 
 {/snippet} </CodeTabs>
 
-### Directory snapshots
+### Directory mounts and snapshots
 
-[Directory Snapshots](/docs/guide/sandbox-snapshots#directory-snapshots) work
-on Sidecars the same way as a Sandbox.
+You can mount an Image at an absolute path in a running Sidecar and unmount it
+later. You can also [snapshot a Sidecar directory](/docs/guide/sandbox-snapshots#directory-snapshots) into a new Image. The resulting
+Image can be used anywhere an existing Image is accepted, including as a mount
+or as the filesystem for a new container.
+
+The example below uses a mounted `/workspace` as session state, snapshots it,
+terminates the original Sidecar, and mounts the snapshot in a replacement
+Sidecar:
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sidecar.mount_image("/workspace", modal.Image.from_scratch())
+sidecar.filesystem.write_text("ready", "/workspace/state")
+
+workspace = sidecar.snapshot_directory("/workspace")
+sidecar.terminate(wait=True)
+
+replacement = sb._experimental_sidecars.create(
+    "sleep", "600", name="replacement", image=image
+)
+replacement.mount_image("/workspace", workspace)
+assert replacement.filesystem.read_text("/workspace/state") == "ready"
+replacement.unmount_image("/workspace")
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+await sidecar.mountImage("/workspace");
+await sidecar.filesystem.writeText("ready", "/workspace/state");
+
+const workspace = await sidecar.snapshotDirectory("/workspace");
+await sidecar.terminate({ wait: true });
+
+const replacement = await sb.experimentalSidecars.create("replacement", image, {
+  command: ["sleep", "600"],
+});
+await replacement.mountImage("/workspace", workspace);
+console.assert(
+  (await replacement.filesystem.readText("/workspace/state")) === "ready",
+);
+await replacement.unmountImage("/workspace");
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+_ = sidecar.MountImage(ctx, "/workspace", nil, nil)
+_ = sidecar.Filesystem.WriteText(ctx, "ready", "/workspace/state", nil)
+
+workspace, _ := sidecar.SnapshotDirectory(ctx, "/workspace", nil)
+_, _ = sidecar.Terminate(ctx, &modal.SidecarTerminateParams{Wait: true})
+
+replacement, _ := sb.ExperimentalSidecars.Create(ctx, "replacement", image, &modal.SidecarCreateParams{
+	Command: []string{"sleep", "600"},
+})
+_ = replacement.MountImage(ctx, "/workspace", workspace, nil)
+state, _ := replacement.Filesystem.ReadText(ctx, "/workspace/state", nil)
+fmt.Println(state) // "ready"
+_ = replacement.UnmountImage(ctx, "/workspace", nil)
+```
+
+{/snippet} </CodeTabs>
 
 ### Volumes
 
 A Sidecar can mount [Volumes](/docs/guide/volumes), configured the same way as
-on a Sandbox. Each container gets its own mount: a Volume mounted in a Sidecar
-is not visible in the main Sandbox container or in other Sidecars unless you
-mount the same Volume there too.
+on a Sandbox. Each container gets its own mount. You can mount the same Volume
+in the main Sandbox and in other Sidecars to share data between them.
 
 ### Cloud Bucket Mounts
 
@@ -530,33 +503,59 @@ the identity token is issued for the Sidecar container, so its `container_id`
 claim differs from the main container's. An IAM trust policy that matches on
 the full subject must allow the Sidecar's container ID as well.
 
-### Directory mounts and snapshots
+## Resource configuration
 
-You can mount an Image at an absolute path in a running Sidecar and unmount it
-later. You can also snapshot a Sidecar directory into a new Image. The resulting
-Image can be used anywhere an existing Image is accepted, including as a mount
-or as the filesystem for a new container.
+The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
+and resources are configured only on the Sandbox. When planning your
+resource allocation, make sure the Sandbox is configured with enough CPU
+and memory for all containers combined.
 
-The example below uses a mounted `/workspace` as session state, snapshots it,
-terminates the original Sidecar, and mounts the snapshot in a replacement
-Sidecar:
+For example, if you want to run a Sandbox with two Sidecars, and you expect the main
+container to use 1 CPU core and 512 MiB of memory, Sidecar A to use 0.5 CPU and 256 MiB,
+and Sidecar B to use 0.5 CPU and 256 MiB, you should set the Sandbox's resources to at
+least 2 CPUs and 1024 MiB to accommodate all three containers.
+
+There is a hard limit of **250** concurrent sidecar containers per sandbox,
+regardless of the resource reservation.
+
+On the gVisor runtime, bursting is still possible; see the [guide to Sandbox resources and
+pricing](/docs/guide/sandbox-resources) for more details.
+
+On the VM runtime, Sidecars cannot be combined with memory bursting. Instead, you need to
+reserve memory for any Sidecars when you launch the Sandbox. That reserve is incompatible with VM memory bursting,
+so the Sandbox must set an equal memory request and limit. With every Sidecar launch, you either specify how much of
+the reserve to use for that Sidecar, or leave the option empty to use the entire remaining reserve:
 
 <CodeTabs>
 {#snippet python()}
 
 ```python notest
-sidecar.mount_image("/workspace", modal.Image.from_scratch())
-sidecar.filesystem.write_text("ready", "/workspace/state")
-
-workspace = sidecar.snapshot_directory("/workspace")
-sidecar.terminate(wait=True)
-
-replacement = sb._experimental_sidecars.create(
-    "sleep", "600", name="replacement", image=image
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    timeout=300,
+    runtime="vm",
+    memory=(8192, 8192),
+    experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
 )
-replacement.mount_image("/workspace", workspace)
-assert replacement.filesystem.read_text("/workspace/state") == "ready"
-replacement.unmount_image("/workspace")
+
+sidecar = sb._experimental_sidecars.create(
+    "python",
+    "-m",
+    "http.server",
+    "8080",
+    name="web",
+    image=image,
+    experimental_memory_reserve_consume_mib=512,
+)
+
+# Omit experimental_memory_reserve_consume_mib to give this sidecar
+# the remaining reserve (512 MiB here).
+worker = sb._experimental_sidecars.create(
+    "sleep", "600", name="worker", image=image
+)
 ```
 
 {/snippet}
@@ -564,20 +563,25 @@ replacement.unmount_image("/workspace")
 {#snippet javascript()}
 
 ```javascript notest
-await sidecar.mountImage("/workspace");
-await sidecar.filesystem.writeText("ready", "/workspace/state");
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  timeoutMs: 300 * 1000,
+  runtime: "vm",
+  memoryMiB: 8192,
+  memoryLimitMiB: 8192,
+  experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
+});
 
-const workspace = await sidecar.snapshotDirectory("/workspace");
-await sidecar.terminate({ wait: true });
+const sidecar = await sb.experimentalSidecars.create("web", image, {
+  command: ["python", "-m", "http.server", "8080"],
+  experimentalMemoryReserveConsumeMiB: 512,
+});
 
-const replacement = await sb.experimentalSidecars.create("replacement", image, {
+// Omit experimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+const worker = await sb.experimentalSidecars.create("worker", image, {
   command: ["sleep", "600"],
 });
-await replacement.mountImage("/workspace", workspace);
-console.assert(
-  (await replacement.filesystem.readText("/workspace/state")) === "ready",
-);
-await replacement.unmountImage("/workspace");
 ```
 
 {/snippet}
@@ -585,64 +589,47 @@ await replacement.unmountImage("/workspace");
 {#snippet go()}
 
 ```go notest
-_ = sidecar.MountImage(ctx, "/workspace", nil, nil)
-_ = sidecar.Filesystem.WriteText(ctx, "ready", "/workspace/state", nil)
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	Timeout:             5 * time.Minute,
+	Runtime:             modal.SandboxRuntimeVM,
+	MemoryMiB:           8192,
+	MemoryLimitMiB:      8192,
+	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
+})
 
-workspace, _ := sidecar.SnapshotDirectory(ctx, "/workspace", nil)
-_, _ = sidecar.Terminate(ctx, &modal.SidecarTerminateParams{Wait: true})
+sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "web", image, &modal.SidecarCreateParams{
+	Command:                             []string{"python", "-m", "http.server", "8080"},
+	ExperimentalMemoryReserveConsumeMiB: 512,
+})
+_ = sidecar
 
-replacement, _ := sb.ExperimentalSidecars.Create(ctx, "replacement", image, &modal.SidecarCreateParams{
+// Omit ExperimentalMemoryReserveConsumeMiB to give this sidecar
+// the remaining reserve (512 MiB here).
+worker, _ := sb.ExperimentalSidecars.Create(ctx, "worker", image, &modal.SidecarCreateParams{
 	Command: []string{"sleep", "600"},
 })
-_ = replacement.MountImage(ctx, "/workspace", workspace, nil)
-state, _ := replacement.Filesystem.ReadText(ctx, "/workspace/state", nil)
-fmt.Println(state) // "ready"
-_ = replacement.UnmountImage(ctx, "/workspace", nil)
+_ = worker
 ```
 
 {/snippet} </CodeTabs>
 
-## Resource configuration
-
-The main Sandbox container and the Sidecar containers share the resource allocation (CPU and memory) of the Sandbox,
-and resources are configured only on the Sandbox. When planning your
-resource allocation, make sure the Sandbox is configured with enough CPU
-and memory for all containers combined.
-On the gVisor runtime, bursting is still possible; see the [guide to Sandbox resources and
-pricing](/docs/guide/sandbox-resources) for more details. On the VM runtime, Sidecars cannot
-be combined with memory bursting.
-
-For example, if you want to run a Sandbox with two Sidecars, and you expect the main
-container to use 1 CPU core and 512 MiB of memory, Sidecar A to use 0.5 CPU and 256 MiB,
-and Sidecar B to use 0.5 CPU and 256 MiB, you should set the Sandbox's resources to at
-least 2 CPUs and 1024 MiB to accommodate all three containers.
-
-The maximum number of Sidecars you can create is also determined by the main Sandbox's
-resource reservation. Each container (including the main one) requires a minimum of
-32 mCPU and 32 MiB of memory, so the limit is:
-
-```
-max containers = min(cpu_in_milli / 32, memory_in_mib / 32)
-```
-
-There is also a hard limit of **250** concurrent sidecar containers per sandbox,
-regardless of the resource reservation.
+Terminated VM Sidecars return their reserve for reuse by new Sidecars.
 
 ## Limitations
 
 The main sandbox supports the same features as a regular sandbox, but some features are not yet supported
 for sidecars:
 
-* **Pre-built images only**: Sidecar images must be pre-built using `image.build()`, referenced
-  by ID via `Image.from_id()` or name via `Image.from_name()`, or created from filesystem/directory snapshots. Lazy image
-  building is not supported for sidecars. See also [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
+* **Pre-built images only**: Sidecar images must already exist: pre-built with `image.build()`, a
+  [named image](/docs/guide/named-images) via `Image.from_name()`, an
+  ID via `Image.from_id()`, or created from [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[directory](/docs/guide/sandbox-snapshots#directory-snapshots) snapshots. Lazy image
+  building is not supported for sidecars. See also
+  [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
 * **No stdin/stdout**: A Sidecar's entrypoint does not expose stdin, stdout, or stderr streams.
 * **No VM memory bursting**: Sidecars on the VM runtime cannot be combined with VM memory bursting. Set an equal memory request and limit, e.g. `memory=(8192, 8192)`.
-* **No GPU support**: Sidecar containers cannot access GPUs, even when the Sandbox is configured with one.
-* **No Cloud Bucket Mounts in GPU Sandboxes**: Sidecars of a GPU Sandbox cannot attach [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
-* **No memory snapshot support**: A Sidecar's filesystem can be snapshotted
-  independently, but Sidecar memory state is not captured in
-  [Sandbox snapshots](/docs/guide/sandbox-snapshots).
+* **Limitations on GPU Sandboxes**: You can attach Sidecars to Sandboxes with GPUs, but the Sidecar is CPU-only and cannot attach [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
+* **No memory snapshot support**: A Sidecar's [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots) and [individual directories](/docs/guide/sandbox-snapshots#directory-snapshots) can be independently snapshotted, but Sidecar memory state can not be captured with a
+  [memory snapshot](/docs/guide/sandbox-snapshots#memory-snapshots).
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
-* **Maximum of 250 concurrent sidecars**: A sandbox can have at most 250 sidecar containers running at the same time.
 * **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy. Because relayed traffic leaves from the Sidecar, a Sandbox cannot currently combine a Proxy with `proxy_traffic_via_sidecar`.

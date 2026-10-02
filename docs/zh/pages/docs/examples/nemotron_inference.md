@@ -144,7 +144,7 @@ ROUTING_REGION = "us-west"
 KV缓存存储在[GPU RAM](https://modal.com/gpu-glossary/device-hardware/gpu-ram)中，
 因此它们不会在副本之间共享。
 为了提高缓存命中率，模态服务器
-包括基于客户端提供的标头的粘性路由。
+包括基于客户端提供的标头的关联路由。
 详情请参阅下面的客户端代码。
 
 对于生产规模的LLM推理服务，通常有
@@ -180,7 +180,7 @@ TARGET_INPUTS = 32
 ```
 
 一般来说，这种选择需要作为
-[LLM推理引擎基准测试](https://modal.com/llm-almanac/how-to-benchmark)。
+[LLM推理机基准测试](https://modal.com/llm-almanac/how-to-benchmark)。
 
 ### 使用`modal.Server`控制容器生命周期
 
@@ -249,7 +249,7 @@ def warmup():
 
 ### 额外配置
 
-我们添加了一些额外的配置变量以提高性能。
+我们添加了一些额外的配置变量来提高性能。
 
 ```python
 sglang_image = sglang_image.env(
@@ -407,7 +407,7 @@ async def test(test_timeout=10 * MINUTES, prompt=None, twice=True):
 副本时可能发生的两种类型的错误
 正在启动——客户端超时，服务器响应 5XX。
 Modal 返回 [503 服务不可用状态](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/503)
-当模态服务器没有实时副本时。
+当模态服务器没有活动副本时。
 
 我们在每个请求中包含一个标头——
 `Modal-Session-ID`。

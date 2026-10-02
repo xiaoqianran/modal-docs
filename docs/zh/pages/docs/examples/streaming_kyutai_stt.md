@@ -24,7 +24,11 @@ import modal
 
 然后我们定义一个模态应用程序和一个
 [图片](https://modal.com/docs/guide/images)
-与我们的语音到文本系统的依赖性。
+与我们的语音到文本系统和我们与之一起服务的本地前端的依赖关系。
+
+我们确实使用了一些 JS 来在浏览器中进行音频处理。
+我们使用 `add_local_dir` 将其添加到服务器镜像中。
+您可以在[此处](https://github.com/modal-labs/modal-examples/tree/main/06_gpu_and_ml/speech-to-text/streaming-kyutai-stt-frontend)找到前端文件。
 
 ```python
 app = modal.App(name="example-streaming-kyutai-stt")
@@ -32,9 +36,16 @@ app = modal.App(name="example-streaming-kyutai-stt")
 stt_image = (
     modal.Image.debian_slim(python_version="3.12")
     .uv_pip_install(
-        "moshi==0.2.9", "fastapi==0.116.1", "huggingface-hub==0.33.5", "julius==0.2.7"
+        "moshi==0.2.9",
+        "fastapi[standard]==0.116.1",
+        "huggingface-hub==0.33.5",
+        "julius==0.2.7",
+        "python-fasthtml==0.12.50",
     )
     .env({"HF_XET_HIGH_PERFORMANCE": "1"})
+    .add_local_dir(
+        Path(__file__).parent / "streaming-kyutai-stt-frontend", "/root/frontend"
+    )
 )
 
 ```
@@ -58,34 +69,49 @@ volumes = {hf_cache_vol_path: hf_cache_vol}
 ```
 
 ## 在 Modal 上运行 Kyutai STT 推理
-
 现在我们准备添加运行语音转文本模型的代码。
 
-我们使用模态 [Cls](https://modal.com/docs/guide/lifecycle-functions)
-这样我们就可以从推理中分离出模型加载和设置代码。
-有关 Clses 生命周期管理和 Modal 冷启动惩罚减少的更多信息，请参阅
+我们使用模态[服务器](https://modal.com/docs/guide/servers)
+这样我们就可以将模型加载和设置代码与服务代码分开。
+
+请注意，流式传输转录是有状态的，因为音频流的模型解码器状态
+是在记忆中。为了支持这一点，我们使用[粘性会话](https://modal.com/docs/guide/sticky-sessions)
+以便路由每个客户端的音频流
+保存其解码器状态的容器。
+
+有关 Modal 上的生命周期管理和冷启动惩罚减少的更多信息，请参阅
 [本指南](https://modal.com/docs/guide/cold-start)。
 
-我们还定义了多种访问底层流STT服务的方式——
+我们还定义了如何访问底层的流媒体STT服务
 通过 [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)，
-对于浏览器等 Web 客户端，
-并通过模态 [队列](https://modal.com/docs/guide/queues)
-对于 Python 客户端。
+适用于浏览器和 Python 客户端等 Web 客户端。
 
 再加上用于操作音频字节流和输出文本的代码
 导致一个相当大的班级！但这里并没有什么太复杂的事情。
 
 ```python
 MINUTES = 60
+PORT = 8000
 
 
-@app.cls(image=stt_image, gpu="l40s", volumes=volumes, timeout=10 * MINUTES)
+@app.server(
+    image=stt_image,
+    gpu="a10g",
+    volumes=volumes,
+    port=PORT,
+    startup_timeout=60,
+    max_concurrency=1,  # one session per container to avoid sharing decoder state
+)
+@modal.sessioned()
 class STT:
     BATCH_SIZE = 1
 
     @modal.enter()
     def enter(self):
+        import threading
+
         import torch
+        import uvicorn
         from huggingface_hub import snapshot_download
         from moshi.models import LMGen, loaders
 
@@ -130,6 +156,14 @@ class STT:
         torch.cuda.synchronize()
 
         print(f"Model loaded in {round((time.monotonic_ns() - start_time) / 1e9, 2)}s")
+
+        web_app = self._build_app()
+        self.server_thread = threading.Thread(
+            target=uvicorn.run,
+            kwargs={"app": web_app, "host": "0.0.0.0", "port": PORT},
+            daemon=True,
+        )
+        self.server_thread.start()
 
     def reset_state(self):
         # reset llm chat history for this input
@@ -198,8 +232,18 @@ class STT:
 
         yield all_pcm_data
 
-    @modal.asgi_app()
-    def api(self):
+    def decode_mp3(self, data: bytes):
+        import tempfile
+
+        import sphn
+
+        with tempfile.NamedTemporaryFile(suffix=".mp3") as tmp:
+            tmp.write(data)
+            tmp.flush()
+            pcm, _ = sphn.read(tmp.name, sample_rate=self.mimi.sample_rate)
+        return pcm.squeeze(0)
+
+    def _build_app(self):
         import sphn
         from fastapi import FastAPI, Response, WebSocket, WebSocketDisconnect
 
@@ -213,8 +257,11 @@ class STT:
         async def transcribe_websocket(ws: WebSocket):
             await ws.accept()
 
+            audio_format = ws.query_params.get("format", "opus")
             opus_stream_inbound = sphn.OpusStreamReader(self.mimi.sample_rate)
+            mp3_pcm_chunks = []
             transcription_queue = asyncio.Queue()
+            audio_ended = False
 
             print("Session started")
             tasks = []
@@ -222,9 +269,9 @@ class STT:
             # asyncio to run multiple loops concurrently within single websocket connection
             async def recv_loop():
                 """
-                Receives Opus stream across websocket, appends into inbound queue.
+                Receives audio across websocket, appends into inbound queue.
                 """
-                nonlocal opus_stream_inbound
+                nonlocal opus_stream_inbound, audio_ended
                 while True:
                     data = await ws.receive_bytes()
 
@@ -232,9 +279,12 @@ class STT:
                         print("received non-bytes message")
                         continue
                     if len(data) == 0:
-                        print("received empty message")
+                        audio_ended = True
                         continue
-                    opus_stream_inbound.append_bytes(data)
+                    if audio_format == "mp3":
+                        mp3_pcm_chunks.append(self.decode_mp3(data))
+                    else:
+                        opus_stream_inbound.append_bytes(data)
 
             async def inference_loop():
                 """
@@ -246,7 +296,16 @@ class STT:
                 while True:
                     await asyncio.sleep(0.001)
 
-                    pcm = opus_stream_inbound.read_pcm()
+                    if audio_format == "mp3":
+                        pcm = mp3_pcm_chunks.pop(0) if mp3_pcm_chunks else None
+                        audio_drained = audio_ended and pcm is None
+                    else:
+                        # read_pcm returns an empty array when nothing is buffered
+                        pcm = opus_stream_inbound.read_pcm()
+                        audio_drained = audio_ended and pcm.shape[-1] == 0
+                    if audio_drained:
+                        transcription_queue.put_nowait(None)  # end of transcription
+                        return
                     async for msg in self.transcribe(pcm, all_pcm_data):
                         if isinstance(msg, str):
                             transcription_queue.put_nowait(msg)
@@ -261,13 +320,12 @@ class STT:
                 while True:
                     data = await transcription_queue.get()
 
-                    if data is None:
-                        continue
-
-                    msg = b"\x01" + bytes(
-                        data, encoding="utf8"
-                    )  # prepend "\x01" as a tag to indicate text
-                    await ws.send_bytes(msg)
+                    tag = b"\x00"  # EOS tag
+                    payload = b""
+                    if data is not None:
+                        tag = b"\x01"  # tag to indicate text
+                        payload = bytes(data, encoding="utf8")
+                    await ws.send_bytes(tag + payload)
 
             # run all loops concurrently
             try:
@@ -280,7 +338,6 @@ class STT:
 
             except WebSocketDisconnect:
                 print("WebSocket disconnected")
-                await ws.close(code=1000)
             except Exception as e:
                 print("Exception:", e)
                 await ws.close(code=1011)  # internal error
@@ -291,34 +348,9 @@ class STT:
                 await asyncio.gather(*tasks, return_exceptions=True)
                 self.reset_state()
 
+        web_app.mount("/", frontend_app())
+
         return web_app
-
-    @modal.method()
-    async def transcribe_queue(self, q: modal.Queue):
-        import tempfile
-
-        import sphn
-
-        all_pcm_data = None
-
-        while True:
-            chunk = await q.get.aio(partition="audio")
-            if chunk is None:
-                await q.put.aio(None, partition="transcription")
-                break
-
-            # to avoid having to encode the audio and retrieve with OpusStreamReader:
-            with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as tmp:
-                tmp.write(chunk)
-                tmp.flush()
-                pcm, _ = sphn.read(tmp.name)
-                pcm = pcm.squeeze(0)
-
-            async for msg in self.transcribe(pcm, all_pcm_data):
-                if isinstance(msg, str):
-                    await q.put.aio(msg, partition="transcription")
-                else:
-                    all_pcm_data = msg
 
 
 ```
@@ -329,9 +361,7 @@ class STT:
 我们将通过编写一个快速的 `local_entrypoint` 进行测试来部署它。
 
 我们只需要一些辅助函数来控制音频字节流
-并从本地 Python 转录文本。
-
-它们使用模态队列与已部署的函数进行异步通信。
+并通过该 WebSocket 转录文本。
 
 ```python
 async def chunk_audio(data: bytes, chunk_size: int):
@@ -339,20 +369,25 @@ async def chunk_audio(data: bytes, chunk_size: int):
         yield data[i : i + chunk_size]
 
 
-async def send_audio(audio_bytes: bytes, q: modal.Queue, chunk_size: int, rtf: int):
+async def send_audio(ws, audio_bytes: bytes, chunk_size: int, rtf: int):
     async for chunk in chunk_audio(audio_bytes, chunk_size):
-        await q.put.aio(chunk, partition="audio")
+        await ws.send_bytes(chunk)
         await asyncio.sleep(chunk_size / chunk_size / rtf)
-    await q.put.aio(None, partition="audio")
 
 
-async def receive_text(q: modal.Queue):
+async def receive_text(ws):
+    import aiohttp
+
     break_counter, break_every = 0, 20
-    while True:
-        data = await q.get.aio(partition="transcription")
-        if data is None:
+    async for msg in ws:
+        if msg.type != aiohttp.WSMsgType.BINARY:
+            continue
+        tag, payload = msg.data[:1], msg.data[1:]
+        if tag == b"\x00":  # end of stream tag
             break
-        print(data, end="")
+        if tag != b"\x01":  # text tag
+            continue
+        print(payload.decode("utf8"), end="")
         break_counter += 1
         if break_counter >= break_every:
             print()
@@ -360,9 +395,8 @@ async def receive_text(q: modal.Queue):
 
 
 ```
-
 现在我们编写快速测试，从 URL 加载音频
-然后通过a将其传递给远程函数
+然后通过会话验证的 WebSocket 将其流式传输到部署的服务器。
 
 如果您运行此示例
 
@@ -375,7 +409,8 @@ modal run streaming_kyutai_stt.py
 1.在Modal上部署最新版本的代码
 2. 启动新的 GPU 来处理转录
 3. 从 Hugging Face 或 Modal Volume 缓存加载模型
-4. 将音频发送到新的 GPU 容器，进行转录，并在本地接收并打印。
+4.启动会话并连接到新GPU容器的WebSocket
+5.发送要转录的音频，并接收要打印的转录
 
 对于除了 Modal 之外没有任何依赖项的单个 Python 文件来说，这还不错！
 
@@ -388,17 +423,27 @@ async def test(
 ):
     from urllib.request import urlopen
 
+    import aiohttp
+
     print(f"Downloading audio file from {audio_url}")
     audio_bytes = urlopen(audio_url).read()
     print(f"Downloaded {len(audio_bytes)} bytes")
 
+    ws_url = (await STT.get_url.aio()).replace("https://", "wss://") + "/ws?format=mp3"
+
+    print("Starting session")
+    session = await STT.sessions.start.aio(idle_timeout=1 * MINUTES)
+    headers = {"Modal-Authorization": f"Bearer {session.token}"}
+
     print("Starting transcription")
     start_time = time.monotonic_ns()
-    async with modal.Queue.ephemeral() as q:
-        await STT().transcribe_queue.spawn.aio(q)
-        send = asyncio.create_task(send_audio(audio_bytes, q, chunk_size, rtf))
-        recv = asyncio.create_task(receive_text(q))
-        await asyncio.gather(send, recv)
+    async with aiohttp.ClientSession(headers=headers) as http_session:
+        async with http_session.ws_connect(ws_url) as ws:
+            recv = asyncio.create_task(receive_text(ws))
+            await send_audio(ws, audio_bytes, chunk_size, rtf)
+            await ws.send_bytes(b"")  # signal the end of the audio
+            await recv
+    await STT.sessions.terminate.aio(session.token)
     print(
         f"\nTranscription complete in {round((time.monotonic_ns() - start_time) / 1e9, 2)}s"
     )
@@ -409,40 +454,15 @@ async def test(
 ## 在 Web 上部署流式 STT 服务
 
 我们已经为我们的流 STT 服务编写了一个 Web 后端 --
-这就是上面模态 Cl 中带有 WebSocket 的 FastAPI API。
+这就是上面模态服务器中带有 WebSocket 的 FastAPI API。
 
-我们还可以部署 Web 前端。为了保持几乎完全“纯Python”，
-我们这里使用 [FastHTML](https://www.fastht.ml/) 库，
-但您也可以部署带有 FastAPI 或 Node 后端的 JavaScript 前端。
-
-我们确实使用了一些 JS 来在浏览器中进行音频处理。
-我们使用 `add_local_dir` 将其添加到模态图像中。
-您可以在[此处](https://github.com/modal-labs/modal-examples/tree/main/06_gpu_and_ml/speech-to-text/streaming-kyutai-stt-frontend)找到前端文件。
+我们还从同一台服务器提供 Web 前端服务。
+为了保持几乎完全“纯Python”，
+我们使用 [FastHTML](https://www.fastht.ml/) 库，
+但您也可以部署 JavaScript 前端和 FastAPI 后端。
 
 ```python
-web_image = (
-    modal.Image.debian_slim(python_version="3.12")
-    .uv_pip_install("python-fasthtml==0.12.20")
-    .add_local_dir(
-        Path(__file__).parent / "streaming-kyutai-stt-frontend", "/root/frontend"
-    )
-)
-
-```
-
-您可以使用以下方式部署此前端
-
-```bash
-modal deploy streaming_kyutai_stt.py
-```
-
-然后通过打印的 `ui` URL 与其进行交互。
-
-```python
-@app.function(image=web_image, timeout=10 * MINUTES)
-@modal.concurrent(max_inputs=100)
-@modal.asgi_app()
-def ui():
+def frontend_app():
     import fasthtml.common as fh
 
     modal_logo_svg = open("/root/frontend/modal-logo.svg").read()
@@ -531,5 +551,46 @@ def ui():
         )
 
     return fast_app
+
+
+```
+
+对于每个页面访问，Web 应用程序都会启动一个会话并将浏览器重定向到服务器
+使用 `modal_session_token` 查询参数中的会话令牌。
+Modal 将令牌交换为会话 cookie 并重定向到同一页面，
+如[粘性会话指南](https://modal.com/docs/guide/sticky-sessions#authentication)中所述。
+
+您可以使用以下命令部署整个应用程序
+
+```bash
+modal deploy streaming_kyutai_stt.py
+```
+
+然后通过打印的 `ui` URL 与其进行交互。
+
+```python
+launcher_image = modal.Image.debian_slim(python_version="3.12").uv_pip_install(
+    "fastapi[standard]==0.116.1"
+)
+
+
+@app.function(image=launcher_image)
+@modal.concurrent(max_inputs=100)
+@modal.asgi_app()
+def ui():
+    from fastapi import FastAPI
+    from fastapi.responses import RedirectResponse
+
+    web_app = FastAPI()
+
+    @web_app.get("/")
+    async def launch():
+        session = await STT.sessions.start.aio(idle_timeout=1 * MINUTES)
+        url = await STT.get_url.aio()
+        return RedirectResponse(
+            f"{url}/?modal_session_token={session.token}", status_code=303
+        )
+
+    return web_app
 
 ```

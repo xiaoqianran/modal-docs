@@ -366,8 +366,6 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 A number of known [limitations](#limitations) currently apply.
 
-Access to [VM Memory Snapshots](/docs/guide/vm-memory-snapshots) is available on request.
-
 </Callout>
 
 Sandbox memory snapshots are copies of a Sandbox’s entire state, both in memory and on the filesystem. These Snapshots can be restored later to create a new Sandbox, which is an exact clone of the original Sandbox.
@@ -447,6 +445,8 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * It is not possible to snapshot a Sandbox while a `Sandbox.exec` command is still running. Furthermore, any background processes launched by a call to `Sandbox.exec` will not be properly restored after a snapshot.
 * A Sandbox created with `_experimental_enable_snapshot=True` can only be restored on the same exact instance type that the original Sandbox was run on. Given Modal's diverse fleet of capacity, this can sometimes lead to scheduling delays.
 * A Sandbox created with `_experimental_enable_snapshot=True` cannot pin its `region`, and a Sandbox restored from a Memory Snapshot is scheduled wherever the original instance type is available.
+* Memory Snapshots for Sandboxes that specify `runtime="vm"` are only available to a set of enabled customers. If you're interested, reach out via [Slack](/slack) or email us at <support@modal.com>.
+* Sandboxes that specify `runtime="vm"` cannot mount Volumes when created with `_experimental_enable_snapshot=True`.
 
 ## Persisting Sandbox State
 

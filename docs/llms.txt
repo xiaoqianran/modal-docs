@@ -42,6 +42,7 @@ The docs are organized into three main sections:
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [Sidecars (Beta)](https://modal.com/docs/guide/sandbox-sidecars.md)
+  - [Secret injection (Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
 - Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
@@ -195,6 +196,7 @@ The docs are organized into three main sections:
   - [Build a stateful, sandboxed code interpreter](https://modal.com/docs/examples/simple_code_interpreter.md)
   - [Run Node.js, Ruby, and more in a Sandbox](https://modal.com/docs/examples/safe_code_execution.md)
   - [Speed up Sandbox starts with warm pools](https://modal.com/docs/examples/sandbox_pool.md)
+  - [Inject secrets into outbound requests](https://modal.com/docs/examples/sandbox_secret_injection.md)
 - Reinforcement Learning
   - [Paint flowers with code](https://modal.com/docs/examples/paint_flowers.md)
   - [Train coding agents](https://modal.com/docs/examples/swe_gym.md)

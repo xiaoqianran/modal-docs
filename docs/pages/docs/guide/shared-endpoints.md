@@ -32,8 +32,8 @@ Shared Endpoints route each request to the container most likely to have its
 prompt prefix cached. For multi-turn conversations and agent loops, send a
 `Modal-Session-Id` header with every request of a conversation so its requests
 stay on the same container. See
-[Session affinity](/docs/guide/endpoints#session-affinity) for how to choose
-session IDs.
+[Affinity routing](/docs/guide/endpoints#affinity-routing) for how to choose the
+header value.
 
 ## Pricing
 

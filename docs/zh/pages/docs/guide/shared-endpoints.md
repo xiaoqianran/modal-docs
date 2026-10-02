@@ -34,8 +34,8 @@
 提示前缀已缓存。对于多轮对话和代理循环，请发送
 `Modal-Session-Id` 会话的每个请求的标头，因此其请求
 留在同一个容器中。参见
-[会话亲和力](/docs/guide/endpoints#session-affinity)了解如何选择
-会话 ID。
+[亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择
+标头值。
 
 ## 定价
 
