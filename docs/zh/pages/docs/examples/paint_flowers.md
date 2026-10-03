@@ -8,7 +8,7 @@
 并使用法官对参考图像池进行成对比较
 为奖励函数。
 
-在本教程中，我们将使用[Modal Dojo](https://modal.com/docs/guide/dojo)来训练
+在本教程中，我们将使用[Modal Dojo](https://modal.com/docs/guide/training-quickstart)来训练
 [Qwen3.5-4B](https://huggingface.co/Qwen/Qwen3.5-4B)并使用
 [HuggingEnvs/水彩参考池](https://huggingface.co/datasets/HuggingEnvs/watercolour-reference-pool)
 作为参考池。在每次推出期间，草图都会以 PNG 格式呈现

@@ -539,7 +539,7 @@ Modal 返回 [503 服务不可用状态](https://developer.mozilla.org/en-US/doc
 当模态服务器没有活动副本时。
 
 我们在每个请求中包含一个标头——
-`Modal-Session-ID`。
+`Modal-Routing-Affinity-Key`。
 这是模态服务器的客户端使用的标头
 确定哪些请求应路由到同一个容器
 （注意事项如下所述）。
@@ -563,7 +563,7 @@ async def probe(url, messages=None, timeout=5 * MINUTES):
 
     client_id = str(0)  # set this to some string per multi-turn interaction
     # often a UUID per "conversation"
-    headers = {"Modal-Session-ID": client_id}
+    headers = {"Modal-Routing-Affinity-Key": client_id}
     deadline = time.time() + timeout
     async with aiohttp.ClientSession(base_url=url, headers=headers) as session:
         while time.time() < deadline:

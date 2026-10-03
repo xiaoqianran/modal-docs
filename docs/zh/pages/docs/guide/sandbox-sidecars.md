@@ -291,7 +291,13 @@ Sidecar 选择连接到的任何目的地。
 该选项不能与设置`block_network`结合使用，
 沙盒上的`outbound_domain_allowlist`或`proxy`。
 
+### 模态代理
+您可以指定来自 Sidecar 的流量应通过
+[Proxy](/docs/guide/proxy-ips) 通过在创建 Sidecar 时传递 `proxy` ，就像
+对于沙箱。
+
 ### OIDC 代币
+
 与沙箱一样，Sidecar 不会收到 [OIDC](/docs/guide/oidc-integration)
 默认情况下的令牌。要选择加入，请在创建时传递 `include_oidc_identity_token=True`
 边车。然后，该令牌可通过以下方式在 Sidecar 内使用：
@@ -352,9 +358,10 @@ fmt.Println(state) // "ready"
 ### 目录挂载和快照
 
 您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它
-稍后。您还可以将 Sidecar 目录快照到新镜像中。由此产生的
+之后。您还可以将 Sidecar 目录快照到新镜像中。由此产生的
 图像可以在任何接受现有图像的地方使用，包括作为安装
 或作为新容器的文件系统。
+
 下面的示例使用已安装的 `/workspace` 作为会话状态，对其进行快照，
 终止原始 Sidecar，并将快照挂载到替换的 Sidecar 中
 边车：
@@ -420,13 +427,13 @@ _ = replacement.UnmountImage(ctx, "/workspace", nil)
 
 {/片段} </CodeTabs>
 
-### 卷
-
-Sidecar 可以挂载 [Volumes](/docs/guide/volumes)，配置方式与
+### 卷Sidecar 可以挂载 [Volumes](/docs/guide/volumes)，配置方式与
 在沙盒上。每个容器都有自己的安装座。您可以安装相同的卷
 在主沙盒和其他 Sidecar 中共享数据。
 
-### 云桶安装座Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
+### 云桶安装座
+
+Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
 配置方式与沙盒上相同。每个容器都有自己的挂载：
 安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
 在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶
@@ -434,7 +441,6 @@ GPU 沙盒的 Sidecar 不支持挂载。
 
 <CodeTabs>
 {#snippet python()}
-
 ```python notest
 bucket = modal.CloudBucketMount(
     "my-bucket",
@@ -512,9 +518,9 @@ fmt.Println(string(stdout))
 
 每个沙箱有 **250** 并发 sidecar 容器的硬性限制，
 与资源预留无关。
-
 在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
 定价](/docs/guide/sandbox-resources) 了解更多详细信息。
+
 在VM运行时，Sidecar不能与内存爆发结合起来。相反，您需要
 当您启动沙盒时，为任何 Sidecar 保留内存。该保留与 VM 内存爆发不兼容，
 因此沙箱必须设置相等的内存请求和限制。每次 Sidecar 启动时，您都可以指定
@@ -617,13 +623,12 @@ _ = worker
 
 * **仅预构建图像**：Sidecar 图像必须已存在：使用 `image.build()` 预构建，a
   [命名图像](/docs/guide/named-images) 通过 `Image.from_name()`，
-  通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
-  Sidecar 不支持构建。参见
-[将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
+通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
+  Sidecar 不支持构建。另请参阅
+  [将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **无 stdin/stdout**：Sidecar 的入口点不公开 stdin、stdout 或 stderr 流。
 * **无 VM 内存爆发**：VM 运行时上的 Sidecar 不能与 VM 内存爆发相结合。设置相等的内存请求和限制，例如`memory=(8192, 8192)`。
 * **GPU 沙箱的限制**：您可以将 Sidecar 连接到具有 GPU 的沙箱，但 Sidecar 仅限 CPU，无法连接 [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts)。
 * **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[单个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
   [内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。
 * **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
-* **不支持 [Proxy](/docs/guide/proxy-ips)**：来自 Sidecar 的流量不会通过代理退出。由于中继流量从 Sidecar 发出，因此沙箱目前无法将代理与 `proxy_traffic_via_sidecar` 结合起来。

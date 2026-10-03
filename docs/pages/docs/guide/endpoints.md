@@ -79,13 +79,13 @@ container. Multi-turn conversations and agent loops, where each request repeats
 the previous turns, benefit the most.
 
 To keep the requests of one conversation together, send the same routing key in
-the `Modal-Session-Id` header on each of them. The routing key is an arbitrary
-string; use one per conversation, task, or agent run.
+the `Modal-Routing-Affinity-Key` header on each of them. The routing key is an
+arbitrary string; use one per conversation, task, or agent run.
 
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \
-  -H "Modal-Session-Id: $CUSTOM_CONVERSATION_ID" \
+  -H "Modal-Routing-Affinity-Key: $CUSTOM_CONVERSATION_ID" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "<model-name>",

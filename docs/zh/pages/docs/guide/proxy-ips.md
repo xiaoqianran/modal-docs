@@ -84,7 +84,8 @@ def main():
 
 ## 代理和沙箱
 
-代理也可以与[沙箱](/docs/guide/sandboxes) 一起使用。例如：
+代理也可以与 [Sandboxes](/docs/guide/sandboxes) 及其
+[Sidecars](/docs/guide/sandbox-sidecars)。例如：
 
 ```python notest
 import modal
@@ -105,9 +106,7 @@ sb.terminate()
 与我们的 Function 实现类似，这个 Sandbox 程序将
 始终打印相同的 IP 地址。
 
-代理覆盖沙箱的主容器。流量来自
-[Sidecar](/docs/guide/sandbox-sidecars) 当前不通过它退出，因此
-代理不能与实验性`proxy_traffic_via_sidecar`结合使用
-选项，它将通过 Sidecar 中继主容器的 HTTPS。
+创建沙箱时指定的代理覆盖主沙箱，并且不会被其继承
+边车。在每个 Sidecar 创建时指定相同的代理以覆盖它们。
 同样，[`CloudBucketMount`](/docs/guide/cloud-bucket-mounts) 流量也不会
 通过函数代理或沙箱退出。

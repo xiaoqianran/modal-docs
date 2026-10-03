@@ -49,7 +49,7 @@ The docs are organized into three main sections:
   - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
   - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Training
-  - [Getting started](https://modal.com/docs/guide/dojo.md)
+  - [Quickstart](https://modal.com/docs/guide/training-quickstart.md)
   - [Tinker-compatible API](https://modal.com/docs/guide/spindle.md)
   - [Multi-node training](https://modal.com/docs/guide/multi-node-training.md)
 - Images

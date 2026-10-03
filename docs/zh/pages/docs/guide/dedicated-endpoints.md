@@ -79,7 +79,7 @@ modal endpoint create \
 
 专用端点继承
 服务器的[亲和性路由](/docs/guide/servers#request-routing)：
-共享 `Modal-Session-Id` 标头的请求将被路由到同一个容器
+共享 `Modal-Routing-Affinity-Key` 标头的请求将被路由到同一个容器
 尽最大努力，将对话的提示前缀保留在其中
 容器的缓存。参见
 [亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择

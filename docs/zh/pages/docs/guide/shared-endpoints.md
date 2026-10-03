@@ -32,7 +32,7 @@
 
 共享端点将每个请求路由到最有可能拥有其资源的容器
 提示前缀已缓存。对于多轮对话和代理循环，请发送
-`Modal-Session-Id` 会话的每个请求的标头，因此其请求
+`Modal-Routing-Affinity-Key` 会话的每个请求的标头，因此其请求
 留在同一个容器中。参见
 [亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择
 标头值。

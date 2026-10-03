@@ -78,7 +78,7 @@ compute to a region incurs a
 
 Dedicated Endpoints inherit the
 [affinity routing](/docs/guide/servers#request-routing) of Servers:
-requests that share a `Modal-Session-Id` header are routed to the same container
+requests that share a `Modal-Routing-Affinity-Key` header are routed to the same container
 on a best-effort basis, which keeps a conversation's prompt prefix in that
 container's cache. See
 [Affinity routing](/docs/guide/endpoints#affinity-routing) for how to choose the

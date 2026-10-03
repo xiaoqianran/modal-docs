@@ -292,6 +292,12 @@ any destination the Sidecar chooses to connect to.
 The option cannot be combined with setting `block_network`,
 `outbound_domain_allowlist` or `proxy` on the Sandbox.
 
+### Modal Proxy
+
+You can specify that traffic from a Sidecar should exit through a
+[Proxy](/docs/guide/proxy-ips) by passing a `proxy` at Sidecar creation, just as
+for a Sandbox.
+
 ### OIDC tokens
 
 Like Sandboxes, Sidecars do not receive an [OIDC](/docs/guide/oidc-integration)
@@ -632,4 +638,3 @@ for sidecars:
 * **No memory snapshot support**: A Sidecar's [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots) and [individual directories](/docs/guide/sandbox-snapshots#directory-snapshots) can be independently snapshotted, but Sidecar memory state can not be captured with a
   [memory snapshot](/docs/guide/sandbox-snapshots#memory-snapshots).
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.
-* **No [Proxy](/docs/guide/proxy-ips) support**: Traffic from a Sidecar does not exit through a Proxy. Because relayed traffic leaves from the Sidecar, a Sandbox cannot currently combine a Proxy with `proxy_traffic_via_sidecar`.

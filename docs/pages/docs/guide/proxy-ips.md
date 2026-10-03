@@ -83,7 +83,8 @@ If a Proxy has multiple IPs, Modal will randomly pick one when running your Func
 
 ## Proxies and Sandboxes
 
-Proxies can also be used with [Sandboxes](/docs/guide/sandboxes). For example:
+Proxies can also be used with [Sandboxes](/docs/guide/sandboxes) and their
+[Sidecars](/docs/guide/sandbox-sidecars). For example:
 
 ```python notest
 import modal
@@ -104,9 +105,7 @@ sb.terminate()
 Similarly to our Function implementation, this Sandbox program will
 always print the same IP address.
 
-A Proxy covers the Sandbox's main container. Traffic from a
-[Sidecar](/docs/guide/sandbox-sidecars) does not currently exit through it, so a
-Proxy cannot be combined with the experimental `proxy_traffic_via_sidecar`
-option, which would relay the main container's HTTPS out through a Sidecar.
+A Proxy specified at Sandbox creation covers the main Sandbox, and is not inherited by its
+Sidecars. Specify the same Proxy at each Sidecar creation to also cover them.
 Likewise, [`CloudBucketMount`](/docs/guide/cloud-bucket-mounts) traffic does not
 exit through a Proxy for Functions or Sandboxes.

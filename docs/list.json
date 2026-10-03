@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-02T12:18:57.474Z",
+  "fetchedAt": "2026-10-03T11:29:00.146Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 26474,
+      "bytes": 26484,
       "stub": false
     },
     {
@@ -626,7 +626,7 @@
       "source": "https://modal.com/docs/examples/nemotron_inference.md",
       "finalUrl": "https://modal.com/docs/examples/nemotron_inference.md",
       "path": "docs/examples/nemotron_inference.md",
-      "bytes": 17898,
+      "bytes": 17918,
       "stub": false
     },
     {
@@ -642,7 +642,7 @@
       "source": "https://modal.com/docs/examples/paint_flowers.md",
       "finalUrl": "https://modal.com/docs/examples/paint_flowers.md",
       "path": "docs/examples/paint_flowers.md",
-      "bytes": 8340,
+      "bytes": 8355,
       "stub": false
     },
     {
@@ -706,7 +706,7 @@
       "source": "https://modal.com/docs/examples/sglang_low_latency.md",
       "finalUrl": "https://modal.com/docs/examples/sglang_low_latency.md",
       "path": "docs/examples/sglang_low_latency.md",
-      "bytes": 23953,
+      "bytes": 23973,
       "stub": false
     },
     {
@@ -914,7 +914,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 4118,
+      "bytes": 4128,
       "stub": false
     },
     {
@@ -931,14 +931,6 @@
       "finalUrl": "https://modal.com/docs/guide/dicts.md",
       "path": "docs/guide/dicts.md",
       "bytes": 3831,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/dojo.md",
-      "source": "https://modal.com/docs/guide/dojo.md",
-      "finalUrl": "https://modal.com/docs/guide/dojo.md",
-      "path": "docs/guide/dojo.md",
-      "bytes": 2085,
       "stub": false
     },
     {
@@ -970,7 +962,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 4512,
+      "bytes": 4532,
       "stub": false
     },
     {
@@ -1266,7 +1258,7 @@
       "source": "https://modal.com/docs/guide/proxy-ips.md",
       "finalUrl": "https://modal.com/docs/guide/proxy-ips.md",
       "path": "docs/guide/proxy-ips.md",
-      "bytes": 4033,
+      "bytes": 3961,
       "stub": false
     },
     {
@@ -1362,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 21322,
+      "bytes": 21273,
       "stub": false
     },
     {
@@ -1434,7 +1426,7 @@
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 9682,
+      "bytes": 9692,
       "stub": false
     },
     {
@@ -1450,7 +1442,7 @@
       "source": "https://modal.com/docs/guide/shared-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
       "path": "docs/guide/shared-endpoints.md",
-      "bytes": 1866,
+      "bytes": 1876,
       "stub": false
     },
     {
@@ -1474,7 +1466,7 @@
       "source": "https://modal.com/docs/guide/sticky-sessions.md",
       "finalUrl": "https://modal.com/docs/guide/sticky-sessions.md",
       "path": "docs/guide/sticky-sessions.md",
-      "bytes": 6466,
+      "bytes": 6476,
       "stub": false
     },
     {
@@ -1491,6 +1483,14 @@
       "finalUrl": "https://modal.com/docs/guide/timeouts.md",
       "path": "docs/guide/timeouts.md",
       "bytes": 2296,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/training-quickstart.md",
+      "source": "https://modal.com/docs/guide/training-quickstart.md",
+      "finalUrl": "https://modal.com/docs/guide/training-quickstart.md",
+      "path": "docs/guide/training-quickstart.md",
+      "bytes": 2125,
       "stub": false
     },
     {

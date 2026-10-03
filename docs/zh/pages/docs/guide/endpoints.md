@@ -80,13 +80,13 @@ LLM 服务引擎缓存提示前缀的 KV 状态，因此请求
 前几轮，受益最大。
 
 要将一个对话的请求放在一起，请发送相同的路由密钥
-每个文件上的 `Modal-Session-Id` 标头。路由密钥是任意的
-字符串；每次对话、任务或代理运行时使用一个。
+每个文件上的 `Modal-Routing-Affinity-Key` 标头。路由键是
+任意字符串；每次对话、任务或代理运行时使用一个。
 
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \
-  -H "Modal-Session-Id: $CUSTOM_CONVERSATION_ID" \
+  -H "Modal-Routing-Affinity-Key: $CUSTOM_CONVERSATION_ID" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "<model-name>",

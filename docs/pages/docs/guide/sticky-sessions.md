@@ -4,7 +4,7 @@ Sticky Sessions enable [Server](/docs/guide/servers) workloads requiring strong 
 
 A client can then start one or more sessions on a Server container. All requests made to a session will be routed to the same container for the session's lifetime. A session is active until explicitly terminated or if it has had no requests in-flight for `idle_timeout` seconds (600s by default). A container remains alive as long as it hosts an active session up until the container's max runtime.
 
-In contrast, the affinity routing built into [Modal Servers](/docs/guide/servers#request-routing) is a best-effort hint: the routing proxy hashes a `Modal-Session-ID` header to bias requests toward a container, but that container can still be scaled down or replaced at any time.
+In contrast, the affinity routing built into [Modal Servers](/docs/guide/servers#request-routing) is a best-effort hint: the routing proxy hashes a `Modal-Routing-Affinity-Key` header to bias requests toward a container, but that container can still be scaled down or replaced at any time.
 
 ## Defining a Server with Sticky Sessions
 

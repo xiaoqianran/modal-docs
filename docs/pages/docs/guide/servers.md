@@ -68,7 +68,7 @@ For Workspaces with [RBAC](/docs/guide/rbac) enabled, the Proxy Tokens must addi
 
 The Server configuration includes a region specification for the proxy that routes requests to containers (`routing_region=`). The following routing regions are supported: `us-east` (default), `us-west`, `ca-central`, `eu-west`, `ap-south`, and `ap-southeast-2`. As a general rule, select the routing region that will be closest to your clients. It’s also possible to constrain container scheduling within the same region using `compute_region=`, although note that this incurs a [cost multiplier](/docs/guide/region-selection#pricing).
 
-The routing proxy additionally supports “affinity routing”. Requests that include a `Modal-Session-ID` header (which can be an arbitrary string) and share the routing header's value will be handled by the same container. This is best-effort, as request affinity may change e.g. in the event of a container scale-down or rollover. For strong request-container affinity, see [Sticky Sessions](/docs/guide/sticky-sessions).
+The routing proxy additionally supports “affinity routing”. Requests that include a `Modal-Routing-Affinity-Key` header (which can be an arbitrary string) and share the routing header's value will be handled by the same container. This is best-effort, as request affinity may change e.g. in the event of a container scale-down or rollover. For strong request-container affinity, see [Sticky Sessions](/docs/guide/sticky-sessions).
 
 ## Operational features
 
