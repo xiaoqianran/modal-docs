@@ -308,6 +308,7 @@ Historical Function statistics for a time range.
 <Parameter name="container_error_count" type="int" description="" />
 <Parameter name="container_creating_at_end_count" type="int" description="" />
 <Parameter name="container_percentile_stats" type="dict[str, StatsPercentileDistribution]" description="" />
+<Parameter name="container_total_count" type="int" description="" />
 <Parameter name="variant_count" type="int" description="" />
 <Parameter name="all_variants" type="bool" description="" />
 
@@ -485,6 +486,7 @@ Historical Server statistics for a time range.
 <Parameter name="container_started_count" type="int" description="" />
 <Parameter name="container_error_count" type="int" description="" />
 <Parameter name="container_creating_at_end_count" type="int" description="" />
+<Parameter name="container_total_count" type="int" description="" />
 <Parameter name="container_percentile_stats" type="dict[str, StatsPercentileDistribution]" description="" />
 <Parameter name="inference" type="InferenceStats | None" description="">
 

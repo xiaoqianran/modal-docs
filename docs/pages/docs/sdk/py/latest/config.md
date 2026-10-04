@@ -128,6 +128,10 @@ Resolution order (highest priority first):
 
 The transformed configuration value (type depends on the setting).
 
+**Raises**
+
+* `KeyError`: If `key` is not the name of a setting.
+
 ### override\_locally
 
 ```python
@@ -138,6 +142,18 @@ override_locally(self, key, value)
 
 ```python
 to_dict(self, *, include_internal=False)
+```
+
+Return every public setting along with its current value.
+
+## config
+
+The process-wide `Config` instance the Modal client reads its settings from.
+
+```python
+from modal.config import config
+
+log_level = config.get("loglevel")
 ```
 
 ## config\_profiles

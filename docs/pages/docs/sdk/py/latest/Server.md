@@ -147,6 +147,10 @@ Requests to the server URL that carry the returned token are routed to the same 
 session has had no connections for `idle_timeout` seconds or is terminated. A container won't be scaled down
 for as long as it holds a live session.
 
+If no container has room for the session, the call waits for additional capacity. It will block for
+up to 25 minutes before giving up. To control the wait per call, use the HTTP API and apply your own retry
+policy.
+
 **Parameters**
 
 <Parameter name="idle_timeout" type="int" defaultValue="600" description="Seconds without an in-flight request before the session ends." />

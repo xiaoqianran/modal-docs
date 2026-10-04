@@ -57,9 +57,9 @@
       "bytes": 3119
     },
     "docs/cli/latest/endpoint.md": {
-      "hash": "c734cb2df221db7b9220e97762c8287040edefd8",
-      "translatedAt": "2026-08-08T18:27:42.595Z",
-      "bytes": 3510
+      "hash": "d2ea1c03af264c981b0120545040af5ba51034c5",
+      "translatedAt": "2026-10-04T12:10:31.884Z",
+      "bytes": 7999
     },
     "docs/cli/latest/image.md": {
       "hash": "74678df36d4e2815b93db4f0f80f7a6995b9dd14",
@@ -1332,9 +1332,9 @@
       "bytes": 49050
     },
     "docs/sdk/py/latest/Server.md": {
-      "hash": "ab94af4dd19b944032bc8ba845ce07d4ded8160d",
-      "translatedAt": "2026-09-29T12:38:06.685Z",
-      "bytes": 9854
+      "hash": "00fddba6e81bcd4bf636d31875255b92718fe9ad",
+      "translatedAt": "2026-10-04T12:10:28.914Z",
+      "bytes": 10066
     },
     "docs/sdk/py/latest/Tunnel.md": {
       "hash": "d9e581d44f98f73ca895d1ecfc99bcfbf4d795f6",
@@ -1362,9 +1362,9 @@
       "bytes": 870
     },
     "docs/sdk/py/latest/Volume.md": {
-      "hash": "0ed10d42bc06e987f721c1f12e0ef758f6060b8c",
-      "translatedAt": "2026-08-08T18:31:09.941Z",
-      "bytes": 14786
+      "hash": "2e298c945f96aaa342ab6f713c339fd50f1f3f6f",
+      "translatedAt": "2026-10-04T12:10:37.019Z",
+      "bytes": 14868
     },
     "docs/sdk/py/latest/concurrent.md": {
       "hash": "9137ba6e24b11920e318fae61458c8db9f5b41c4",
@@ -1407,9 +1407,9 @@
       "bytes": 197
     },
     "docs/sdk/py/latest/config.md": {
-      "hash": "ffc61595bff26d5af3359b946c95e9aef7731cc5",
-      "translatedAt": "2026-09-29T12:38:19.945Z",
-      "bytes": 5349
+      "hash": "80dff9dc9ed3851a6f7726a5b636b9263cc0547e",
+      "translatedAt": "2026-10-04T12:10:37.150Z",
+      "bytes": 5627
     },
     "docs/sdk/py/latest/fastapi_endpoint.md": {
       "hash": "c69ca66ddd0b8c493059ec6dae3c79b385e7b618",
@@ -1472,9 +1472,9 @@
       "bytes": 769
     },
     "docs/sdk/py/latest/types.md": {
-      "hash": "826ef4c8201aaa818cef0efd435a5f9ca2d52784",
-      "translatedAt": "2026-09-29T12:38:29.288Z",
-      "bytes": 18714
+      "hash": "d835d2f9d83acb3e7da4fc2488663d7061a84105",
+      "translatedAt": "2026-10-04T12:10:46.703Z",
+      "bytes": 18852
     },
     "docs/guide/function-invocation-methods.md": {
       "hash": "71733471918e68c0584de211907560d93f2c455a",
@@ -1487,9 +1487,9 @@
       "bytes": 16725
     },
     "docs/sdk/py/releases.md": {
-      "hash": "f21a184b4fa34a03982f7943d6d14ec071e1e6d2",
-      "translatedAt": "2026-10-01T12:58:29.198Z",
-      "bytes": 65114
+      "hash": "557cf9f7006d334e4d6cf11fe8bbec215ebfc939",
+      "translatedAt": "2026-10-04T12:11:39.994Z",
+      "bytes": 66129
     },
     "docs/guide/sandbox-sidecars.md": {
       "hash": "742f08eee31b3a8a61c94d032a2d3909f88f38b6",
@@ -1718,10 +1718,10 @@
       "bytes": 2072
     }
   },
-  "updatedAt": "2026-10-03T11:29:24.184Z",
+  "updatedAt": "2026-10-04T12:11:39.994Z",
   "stats": {
-    "translated": 12,
-    "skipped": 328,
+    "translated": 6,
+    "skipped": 334,
     "failed": 0,
     "total": 340
   }

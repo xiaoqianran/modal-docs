@@ -73,7 +73,7 @@ modal token set \
   默认为 False。允许在意外的 CLI 上打印完整的回溯
   错误，这对于调试客户端问题很有用。
 * `log_pattern`（在 .toml 文件中）/`MODAL_LOG_PATTERN`（作为环境变量）。
-  默认为`"[modal-client] %(asctime)s %(message)s"`
+  默认为 `"[modal-client] %(asctime)s %(message)s"`
   模式客户端本身将使用的日志格式模式。
   请参阅https://docs.python.org/3/library/logging.html#logrecord-attributes了解可用信息
   日志属性。
@@ -86,7 +86,7 @@ modal token set \
 一些“元选项”仅使用环境变量设置：
 
 * `MODAL_CONFIG_PATH` 允许您覆盖 .toml 文件的位置，
-  默认`~/.modal.toml`。
+  默认为`~/.modal.toml`。
 * `MODAL_PROFILE` 允许您使用 .toml 文件中的多个部分
   并在它们之间切换。它默认为“默认”。
 
@@ -118,13 +118,17 @@ get(self, key, *, profile=None, use_env=True)
 
 **参数**
 
-<Parameter name="key" type="str" description="Setting name (for example `⟦T50⟧⟦T51⟧⟦T52⟧⟦T53⟧⟦T54⟧` module docs." />
+<Parameter name="key" type="str" description="Setting name (for example `⟦T51⟧⟦T52⟧⟦T53⟧⟦T54⟧⟦T55⟧` module docs." />
 <Parameter name="profile" type="str | None" defaultValue="None" description="Profile section to read from the TOML file; defaults to the active profile." />
 <Parameter name="use_env" type="bool" defaultValue="True" description="When False, skip environment variables and read only from the file or defaults." />
 
 **退货**
 
 转换后的配置值（类型取决于设置）。
+
+**加薪**
+
+* `KeyError`：如果`key`不是设置名称。
 
 ### 本地覆盖\_
 
@@ -136,6 +140,18 @@ override_locally(self, key, value)
 
 ```python
 to_dict(self, *, include_internal=False)
+```
+
+返回每个公共设置及其当前值。
+
+## 配置
+
+Modal 客户端从中读取其设置的进程范围的 `Config` 实例。
+
+```python
+from modal.config import config
+
+log_level = config.get("loglevel")
 ```
 
 ## 配置\_配置文件

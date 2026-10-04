@@ -146,6 +146,10 @@ start(self, idle_timeout=600)
 会话在 `idle_timeout` 秒内没有连接或已终止。容器不会缩小
 只要它举行现场会议。
 
+如果没有容器有空间容纳会话，则调用将等待额外的容量。它将阻止
+放弃前最多 25 分钟。要控制每次调用的等待时间，请使用 HTTP API 并应用您自己的重试
+政策。
+
 **参数**
 
 <Parameter name="idle_timeout" type="int" defaultValue="600" description="Seconds without an in-flight request before the session ends." />
@@ -167,9 +171,7 @@ server.sessions.terminate(session.token)
 
 ```python
 terminate(self, token)
-```
-
-终止粘性会话。
+```终止粘性会话。
 
 对其提出的新请求将被拒绝。该容器继续为其他会话提供服务。
 
@@ -195,7 +197,7 @@ info(self, *, refresh=False)
 获取服务器资源请求、关联安装、http 配置等的概述。
 
 如果服务器句柄是，则此方法执行网络请求来填充此信息
-尚未获取其信息的远程查找（例如来自`Server.from_name(...)`），
+尚未获取信息的远程查找（例如来自`Server.from_name(...)`），
 或者如果`refresh=True`。
 
 **参数**
@@ -222,7 +224,6 @@ update_autoscaler(self, *, target_concurrency=None, min_containers=None,
     max_containers=None, buffer_containers=None, scaleup_window=None,
     scaledown_window=None)
 ```
-
 覆盖此服务器当前的自动缩放程序行为。
 
 未指定的参数将保留其当前值，即静态值
@@ -275,9 +276,10 @@ server.update_autoscaler(target_concurrency=0)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的身份同步。
+将本地对象与其在 Modal 服务器上的标识同步。
 
-很少需要显式调用此方法，因为大多数操作都会需要时懒洋洋地补充水分。主要用例是当您需要访问对象时
+很少需要显式调用此方法，因为大多数操作都会
+需要时懒洋洋地补充水分。主要用例是当您需要访问对象时
 元数据，例如其 ID。
 
 ## 来自\_name
@@ -322,6 +324,7 @@ stats(self, *, since=None, until=None, container=None)
 ```
 
 返回模式服务器的统计信息。
+
 默认时间范围是最近一小时。最大时间范围为 7 天。
 
 **参数**

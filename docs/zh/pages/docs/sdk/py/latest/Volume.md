@@ -280,9 +280,9 @@ from_id(volume_id, client=None)
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
-可以使用 `.object_id` 访问 Volume 对象的 ID。
+可以使用 `.object_id` 访问 Volume 对象的 ID。**参数**
 
-**参数**<Parameter name="volume_id" type="str" description="Volume object ID to attach to." />
+<Parameter name="volume_id" type="str" description="Volume object ID to attach to." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for loading; defaults to ⟦T51⟧ when omitted." />
 
 **退货**
@@ -348,6 +348,8 @@ commit(self)
 
 提交对已安装卷的更改。
 
+必须在安装卷的容器内调用。
+
 如果成功，所做的更改现在将持久保存在持久存储中，并可供其他容器访问
 音量。
 
@@ -356,8 +358,10 @@ commit(self)
 ```python
 reload(self)
 ```
-
 使卷的最新提交状态在运行的容器中可用。
+
+必须在安装卷的容器内调用。
+
 任何未提交的卷更改（例如新文件或修改的文件）可能会在以下情况下隐式提交：
 重新加载。
 
@@ -379,9 +383,9 @@ iterdir(self, path, *, recursive=True)
 
 ```python
 listdir(self, path, *, recursive=False)
-```
+```列出 modal.Volume 中路径前缀下的所有文件。
 
-列出 modal.Volume 中路径前缀下的所有文件。传递目录路径会列出该目录中的所有文件。对于文件路径，仅返回该路径
+传递目录路径会列出该目录中的所有文件。对于文件路径，仅返回该路径
 文件的描述。如果`recursive`设置为True，则列出该路径下的所有文件和文件夹
 递归地。
 
@@ -424,9 +428,9 @@ remove_file(self, path, recursive=False)
 ```python
 copy_files(self, src_paths, dst_path, recursive=False)
 ```
-
 将卷内的文件从 src\_paths 复制到 dst\_path。
 复制操作的语义遵循 UNIX cp 命令的语义。
+
 `src_paths`参数是一个列表。如果你想复制单个文件，你应该传递一个带有
 单一元素。
 

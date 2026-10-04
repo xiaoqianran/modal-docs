@@ -290,9 +290,9 @@ class FileWatchEventType(enum.Enum)
 
 ## 函数统计
 
-某个时间范围内的历史函数统计数据。**属性**
+某个时间范围内的历史函数统计数据。
 
-<Parameter name="since" type="datetime" description="" />
+**属性**<Parameter name="since" type="datetime" description="" />
 <Parameter name="until" type="datetime" description="" />
 <Parameter name="input_success_count" type="int" description="" />
 <Parameter name="input_failure_count" type="int" description="" />
@@ -303,6 +303,7 @@ class FileWatchEventType(enum.Enum)
 <Parameter name="container_error_count" type="int" description="" />
 <Parameter name="container_creating_at_end_count" type="int" description="" />
 <Parameter name="container_percentile_stats" type="dict[str, StatsPercentileDistribution]" description="" />
+<Parameter name="container_total_count" type="int" description="" />
 <Parameter name="variant_count" type="int" description="" />
 <Parameter name="all_variants" type="bool" description="" />
 
@@ -478,6 +479,7 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 <Parameter name="container_started_count" type="int" description="" />
 <Parameter name="container_error_count" type="int" description="" />
 <Parameter name="container_creating_at_end_count" type="int" description="" />
+<Parameter name="container_total_count" type="int" description="" />
 <Parameter name="container_percentile_stats" type="dict[str, StatsPercentileDistribution]" description="" />
 <Parameter name="inference" type="InferenceStats | None" description="">
 

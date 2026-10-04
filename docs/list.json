@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-03T11:29:00.146Z",
+  "fetchedAt": "2026-10-04T12:10:24.836Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -90,7 +90,7 @@
       "source": "https://modal.com/docs/cli/latest/endpoint.md",
       "finalUrl": "https://modal.com/docs/cli/latest/endpoint.md",
       "path": "docs/cli/latest/endpoint.md",
-      "bytes": 3675,
+      "bytes": 8130,
       "stub": false
     },
     {
@@ -2274,7 +2274,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/config.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/config.md",
       "path": "docs/sdk/py/latest/config.md",
-      "bytes": 5538,
+      "bytes": 5835,
       "stub": false
     },
     {
@@ -2530,7 +2530,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Server.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Server.md",
       "path": "docs/sdk/py/latest/Server.md",
-      "bytes": 10050,
+      "bytes": 10266,
       "stub": false
     },
     {
@@ -2554,7 +2554,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/types.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/types.md",
       "path": "docs/sdk/py/latest/types.md",
-      "bytes": 18980,
+      "bytes": 19118,
       "stub": false
     },
     {
@@ -2562,7 +2562,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Volume.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Volume.md",
       "path": "docs/sdk/py/latest/Volume.md",
-      "bytes": 15432,
+      "bytes": 15550,
       "stub": false
     },
     {
@@ -2594,7 +2594,7 @@
       "source": "https://modal.com/docs/sdk/py/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/py/releases.md",
       "path": "docs/sdk/py/releases.md",
-      "bytes": 70257,
+      "bytes": 71309,
       "stub": false
     }
   ],
