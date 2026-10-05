@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙盒
+# 沙箱
 
 此页面是沙箱的高级指南，
 用于在 Modal 上执行不受信任的用户或代理代码的安全容器。
@@ -144,6 +144,64 @@ func main() {
 [`App.lookup`](/docs/sdk/py/latest/App#lookup)。 `App.lookup` 上的`create_if_missing` 旗帜
 如果不存在，将创建一个具有给定名称的 `App` 。
 
+## 配置
+
+沙箱支持常规 `modal.Function` 中的几乎所有配置选项。请参阅 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create) 了解更多文档
+关于沙盒配置。
+
+例如，图像和卷可以像函数一样使用：
+
+<CodeTabs>
+  {#snippet python()}
+
+```python fixture:sb_app
+sb = modal.Sandbox.create(
+    image=modal.Image.debian_slim().pip_install("pandas"),
+    volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
+    app=sb_app,
+)
+```
+
+{/片段}
+
+{#snippet python\_async()}
+
+```python fixture:sb_app
+sb = await modal.Sandbox.create.aio(
+    image=modal.Image.debian_slim().pip_install("pandas"),
+    volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
+    app=sb_app,
+)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const image = modal.images.fromRegistry("python:3.13-slim");
+const volume = modal.volumes.fromName("my-volume");
+const sb = await modal.sandboxes.create(app, image, {
+  volumes: { "/data": volume },
+  workdir: "/repo",
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+image := mc.Images.FromRegistry("python:3.13-slim", nil)
+volume := mc.Volumes.FromName("my-volume", nil)
+sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+  Volumes: map[string]*modal.Volume{"/data": volume},
+  Workdir: "/repo",
+})
+```
+
+{/片段} </CodeTabs>
+
 ## 生命周期
 
 ### 活动
@@ -151,7 +209,6 @@ func main() {
 每个沙箱都会经历一系列生命周期事件，因为它从
 创作到完成。了解这些事件对于监控很有用，
 调试以及构建对沙箱状态变化做出反应的自动化。
-
 生命周期事件按顺序为：
 
 1. **已创建** — 已向 Modal 请求并注册沙盒。在此
@@ -160,27 +217,26 @@ func main() {
 
 2. **已安排** — 沙盒已安排给特定工作人员。的
    工作人员现在正在配置沙盒所需的资源（CPU、内存、GPU、
-卷等）并准备容器环境。沙盒将
+   卷等）并准备容器环境。沙盒将
    容器完全初始化后，过渡到 **Started**。
 
-3. **开始** — 沙盒的容器已在工作人员上启动，并且
+3. **开始** — 沙箱的容器已在工作人员上启动，并且
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
 
-4. **准备就绪** — 如果[就绪探针](/docs/guide/sandboxes#readiness-probes)
-   为沙盒启用，一旦探测成功，就会触发此事件，表明
+4. **准备就绪** — 如果 [就绪探针](/docs/guide/sandboxes#readiness-probes)
+   为沙盒启用，一旦探测成功就会触发此事件，表明
    沙箱内的服务已完全初始化并准备好接受流量。
    这对于运行 Web 服务器或其他服务的沙箱特别有用
-   在处理请求之前需要预热时间。如果就绪探针是
+在处理请求之前需要预热时间。如果就绪探针是
    未配置，将跳过此事件。
 
-5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上
+5. **完成** — 沙箱已停止运行。这可能会发生在几个人身上
    原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
-可以在沙箱内执行命令。您可以详细了解为什么沙盒
-   在仪表板中停止运行或通过检查从返回的退出代码
+   可以在沙箱内执行命令。您可以详细了解为什么沙盒在仪表板中停止运行或通过检查从返回的退出代码
    `sandbox.poll()`。
 
 ### 超时
@@ -223,15 +279,16 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 })
 ```
 
-{/片段} </CodeTabs>如果您需要沙盒运行超过 24 小时，我们建议使用
+{/片段} </CodeTabs>
+
+如果您需要沙盒运行超过 24 小时，我们建议使用
 [文件系统快照](/docs/guide/sandbox-snapshots) 保留其状态，
 然后使用后续沙箱从该快照恢复。
 
 ### 空闲超时
-
 沙箱也可以在一段时间不活动后自动终止 - 您可以通过设置 `idle_timeout` 参数来做到这一点。如果满足以下任一条件，则沙盒被视为处于活动状态：
 
-1.它有一个正在运行的活动[命令](/docs/guide/sandbox-spawn)（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
+1.它有一个活跃的[命令](/docs/guide/sandbox-spawn)正在运行（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
 2.它的标准输入正在被写入（通过[`sb.stdin.write()`](/docs/sdk/py/latest/Sandbox#stdin)）
 3. 它在其中一个[隧道](/docs/guide/tunnels) 上有一个开放的 TCP 连接
 
@@ -249,18 +306,15 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 成功了。
 
 有两种类型的就绪探针：
-
 * **TCP 探测** — 检查沙箱内的 TCP 端口是否正在接受连接。
   当您的启动逻辑包括启动服务器时，这是最常见的选择。
 * **Execprobe** — 在沙箱内运行任意命令，并在以下情况下成功：
   命令退出，状态代码为 0。将此用于任何其他就绪条件：检查
-文件存在，验证安装脚本是否已完成，确认依赖关系
+  文件存在，验证安装脚本是否已完成，确认依赖关系
   安装等
 
 两种探头类型都接受一个`interval_ms`参数（默认值：100ms）来控制如何
-通常会重试该检查，直到成功为止。
-
-#### TCP 就绪探测
+通常会重试该检查，直到成功为止。#### TCP 就绪探测
 
 当您的 Sandbox 启动服务器并且您想要等到
 它正在监听一个端口：
@@ -362,7 +416,9 @@ func main() {
 
 {/片段} </CodeTabs>
 
-#### 执行就绪探测当准备情况取决于 TCP 端口以外的其他因素时，请使用 exec 探针 — 例如
+#### 执行就绪探测
+
+当准备情况取决于 TCP 端口以外的其他因素时，请使用 exec 探针 — 例如
 例如，等待文件创建或安装脚本完成：
 
 <CodeTabs>
@@ -409,7 +465,6 @@ await sb.terminate.aio()
 ```
 
 {/片段}
-
 {#snippet javascript()}
 
 ```javascript notest
@@ -478,7 +533,7 @@ func main() {
 **注意：** 就绪探针最多运行 5 分钟。如果探头没有
 在该窗口内成功，`wait_until_ready()`将提高
 `modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
-内置 `TimeoutError`，因此裸露的 `except TimeoutError` 无法捕获它。探头
+内置`TimeoutError`，所以裸露的`except TimeoutError`无法捕获它。探头
 超时不会自动终止沙盒 - 您可能想要捕获
 如果从未准备就绪，则会出现错误并显式终止沙箱：
 
@@ -493,9 +548,7 @@ except modal.exception.TimeoutError:
     sb.terminate()
 ```
 
-{/片段}
-
-{#snippet python\_async()}
+{/片段}{#snippet python\_async()}
 
 ```python notest
 try:
@@ -531,16 +584,16 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 {/片段} </CodeTabs>
 
-如果您在未配置就绪状态的沙盒上调用 `wait_until_ready()`
+如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
 探针，将引发错误。同样，在沙箱结束后调用它
-终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`已经准备好立即返回。
+终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`
+已经准备好立即返回。
 
 ## 返回代码
 
 提供[Unix风格的退出代码](https://tldp.org/LDP/abs/html/exitcodes.html)来帮助诊断成功、手动终止或内存不足等情况。
 
 它们可用于以下两者：
-
 * 沙箱中的进程（通过 [`ContainerProcess.returncode`](/docs/sdk/py/latest/container_process#returncode) / [`ContainerProcess.poll()`](/docs/sdk/py/latest/container_process#poll))
 * 沙箱本身（通过 [`Sandbox.returncode`](/docs/sdk/py/latest/Sandbox#returncode) / [`Sandbox.poll()`](/docs/sdk/py/latest/Sandbox#poll))
 
@@ -598,6 +651,7 @@ console.log(returnCodeSb); // 137
 ```
 
 {/片段}
+
 {#snippet go()}
 
 ```go notest
@@ -616,69 +670,11 @@ fmt.Println(returnCodeSb) // 137
 
 {/片段} </CodeTabs>
 
-## 配置
-
-沙箱支持常规`modal.Function`中的几乎所有配置选项。
-请参阅 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create) 了解更多文档
-关于沙盒配置。
-
-例如，图像和卷可以像函数一样使用：
-
-<CodeTabs>
-  {#snippet python()}
-
-```python fixture:sb_app
-sb = modal.Sandbox.create(
-    image=modal.Image.debian_slim().pip_install("pandas"),
-    volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
-    app=sb_app,
-)
-```
-
-{/片段}
-
-{#snippet python\_async()}
-
-```python fixture:sb_app
-sb = await modal.Sandbox.create.aio(
-    image=modal.Image.debian_slim().pip_install("pandas"),
-    volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
-    app=sb_app,
-)
-```
-
-{/片段}
-
-{#snippet javascript()}
-
-```javascript notest
-const image = modal.images.fromRegistry("python:3.13-slim");
-const volume = modal.volumes.fromName("my-volume");
-const sb = await modal.sandboxes.create(app, image, {
-  volumes: { "/data": volume },
-  workdir: "/repo",
-});
-```
-
-{/片段}
-
-{#snippet go()}
-
-```go notest
-image := mc.Images.FromRegistry("python:3.13-slim", nil)
-volume := mc.Volumes.FromName("my-volume", nil)
-sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-  Volumes: map[string]*modal.Volume{"/data": volume},
-  Workdir: "/repo",
-})
-```
-
-{/片段} </CodeTabs>
-
 ## 运行时
 
-沙箱在两个运行时之一上运行：* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，
-  提供强大的隔离性，适合大多数工作负载。
+沙箱在两个运行时之一上运行：
+
+* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，提供强隔离，适合大多数工作负载。
 * **虚拟机** 在具有自己的 Linux 内核的虚拟机中运行沙箱。使用
   适用于需要完整 Linux 环境的工作负载的 VM 运行时，例如
   在沙箱内运行 Docker，安装
@@ -688,11 +684,11 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   虚拟化也可用于
   [团队和企业计划](/定价)；要请求访问权限，请通过以下方式联系
   [Slack](/slack) 或发送电子邮件至 <support@modal.com>。
+
 通过 `runtime` 参数切换运行时，或者保持未设置状态，让 Modal 为您选择。
 
 <CodeTabs>
   {#snippet python()}
-
 ```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app, runtime="vm")  # or: runtime="gvisor"
 p = sb.exec("uname", "-srn")
@@ -730,9 +726,10 @@ fmt.Println(string(stdout)) // Linux modal 7.2.6
 
 ### 在沙箱中运行 Docker
 
-使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙箱
+使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙盒
 入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
-可以互相到达，并且`/var/lib/docker`包含在[文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
+可以互相到达，`/var/lib/docker`包含在
+[文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
 
 ```python notest
 image = (
