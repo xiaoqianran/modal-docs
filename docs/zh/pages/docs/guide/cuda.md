@@ -2,7 +2,7 @@
 
 # 在 Modal 上使用 CUDA
 
-Modal 可让您使用数据中心级 NVIDIA GPU 轻松加速工作负载。
+Modal 可以利用数据中心级 NVIDIA GPU 轻松加速您的工作负载。
 
 要利用硬件，您需要使用匹配的软件：CUDA 堆栈。
 本指南解释了该堆栈的组件以及如何在 Modal 上安装它们。
@@ -15,7 +15,7 @@ Modal 可让您使用数据中心级 NVIDIA GPU 轻松加速工作负载。
 这是 tl;dr：
 
 * [适用于 Linux-x86\_64 的 NVIDIA 加速显卡驱动程序](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#driver-installation)，版本 580.95.05，
-  和 [CUDA 驱动 API](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-driver-api/index.html) 版本 13.0 已安装。
+  和 [CUDA Driver API](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-driver-api/index.html) 版本 13.0 已安装。
   您可以调用 `nvidia-smi` 或从任何可访问 GPU 的模态函数运行已编译的 CUDA 程序。
 * 这意味着您可以安装许多流行的库，例如 `torch`，它们捆绑了其他 CUDA 依赖项 [使用简单的 `pip_install`](#install-gpu-accelerated-torch-and-transformers-with-pip_install)。
 * 对于像`flash-attn`这样的前沿库，您可能需要手动安装CUDA依赖项。
@@ -68,9 +68,9 @@ app = modal.App()
 def check_nvidia_smi():
     import subprocess
     output = subprocess.check_output(["nvidia-smi"], text=True)
-    assert "Driver Version:" in output
-    assert "CUDA Version:" in output
     print(output)
+    assert "Driver Version:" in output or "KMD Version:" in output
+    assert "CUDA Version:" in output or "CUDA UMD Version:" in output
     return output
 ```
 
@@ -79,7 +79,7 @@ def check_nvidia_smi():
 包装 CUDA 驱动程序 API 的是 [CUDA Runtime API](/gpu-glossary/host-software/cuda-runtime-api)，即 `libcudart.so` 共享库。
 该 API 包括 [`cudaLaunchKernel`](https://docs.nvidia.com/cuda/archive/12.8.0/cuda-runtime-api/group__CUDART__HIGHLEVEL.html#group__CUDART__HIGHLEVEL_1g7656391f2e52f569214adbfc19689eb3) 等函数
 并且在 CUDA 程序中更常用（请参阅[此 HackerNews 评论](https://news.ycombinator.com/item?id=20616385) 了解原因的彩色评论）。
-默认情况下，Modal 上“未”安装此共享库。
+默认情况下，Modal 上*未*安装此共享库。
 CUDA Runtime API 通常作为更大的 [NVIDIA CUDA Toolkit](https://docs.nvidia.com/cuda/index.html) 的一部分安装，
 其中包括 [NVIDIA CUDA 编译器驱动程序](/gpu-glossary/host-software/nvcc) (`nvcc`) 及其工具链
 以及许多用于编写和调试 CUDA 程序的 [有用的东西](/gpu-glossary/host-software/cuda-binary-utilities)（`cuobjdump`、`cudnn`、分析器等）。
@@ -176,7 +176,7 @@ def run_tiny_model():
     return output.outputs[0].text
 ```
 确保选择的 CUDA 版本不高于主机提供的版本。
-`12.*`和`13.*`系列中的旧版本保证与主机驱动程序兼容，
+`12.*`和`13.*`系列中的旧版本保证与主机的驱动程序兼容，
 但较旧的主要版本（`11.*`、`10.*`等）可能不是。
 
 ## 接下来怎么办？
@@ -188,4 +188,4 @@ def run_tiny_model():
 
 * [大型 GPU 上的快速 LLM 推理](/docs/examples/llm_inference)
 * [为您的宠物微调角色 LoRA](/docs/examples/diffusers_lora_finetune)
-* [优化通量推断](/docs/examples/flux)
+* [优化的通量推断](/docs/examples/flux)

@@ -2,6 +2,8 @@
 
 # Tinker 兼容的 API
 
+<Callout variant="beta" />
+
 [Spindle](https://github.com/modal-projects/spindle) 是一个开源的 Tinker 兼容 API，支持
 [多租户LoRA训练](https://github.com/modal-projects/spindle/blob/main/docs/multi-lora.md)和
 【单租户全参数训练】(https://github.com/modal-projects/spindle/blob/main/docs/full-fine-tunes.md)。
@@ -11,7 +13,8 @@
 [拥有](https://modal.com/blog/introducing-auto-endpoints) 你的训练堆栈非常有价值，特别是如果
 您不必管理底层基础设施。
 
-我们提供开箱即用的默认值，适用于绝大多数用例。但是当您需要将自定义分叉合并到后端/训练器层时，调整计算参数以获得最佳价格和性能，甚至控制整个训练/调度运行时间，您有能力这样做。
+我们提供开箱即用的默认值，适用于绝大多数用例。但是当您需要将自定义分叉合并到后端/训练器层时，
+调整计算参数以获得最佳价格和性能，甚至控制整个训练/调度运行时间，您有能力这样做。
 
 下面，我们详细介绍如何设置您自己的 Spindle 服务器。有关完整示例，请参阅[此处](/docs/examples/swe_gym)。
 
@@ -52,8 +55,8 @@ modal secret create spindle-proxy \
 ```bash
 spindle deploy
 ```
-
 您需要保存上述部署输出中的 `server` URL。
+
 单个部署可以为跨不同基础模型、训练参数化和实验规模的多个并发独立训练作业提供服务。
 GPU 是根据第一个训练/推理请求按需分配的，因此第一步可能会导致更长的冷启动和模型编译时间。
 
@@ -205,5 +208,4 @@ config = Config()
 ```bash
 spindle deploy config.py
 ```
-
 有关采样、检查点、全参数训练和更多高级功能的更多信息，请参阅[主轴文档](https://github.com/modal-projects/spindle)。

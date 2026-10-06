@@ -50,7 +50,7 @@ The docs are organized into three main sections:
   - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Training
   - [Quickstart](https://modal.com/docs/guide/training-quickstart.md)
-  - [Tinker-compatible API](https://modal.com/docs/guide/spindle.md)
+  - [Tinker-compatible API (Beta)](https://modal.com/docs/guide/spindle.md)
   - [Multi-node training](https://modal.com/docs/guide/multi-node-training.md)
 - Images
   - [Defining Images](https://modal.com/docs/guide/images.md)
@@ -118,13 +118,13 @@ The docs are organized into three main sections:
   - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
   - [Microsoft Entra SSO](https://modal.com/docs/guide/entra-sso.md)
   - [Custom SAML SSO](https://modal.com/docs/guide/saml-sso.md)
-  - [SCIM Integration (Beta)](https://modal.com/docs/guide/scim.md)
+  - [SCIM Integration](https://modal.com/docs/guide/scim.md)
   - [Slack notifications (Beta)](https://modal.com/docs/guide/slack-notifications.md)
 - Workspace & account settings
   - [Workspaces](https://modal.com/docs/guide/workspaces.md)
   - [Environments](https://modal.com/docs/guide/environments.md)
   - [Service users](https://modal.com/docs/guide/service-users.md)
-  - [User groups (Beta)](https://modal.com/docs/guide/user-groups.md)
+  - [User groups](https://modal.com/docs/guide/user-groups.md)
   - [Role-Based Access Control (RBAC)](https://modal.com/docs/guide/rbac.md)
   - [Billing](https://modal.com/docs/guide/billing.md)
   - [Network egress billing](https://modal.com/docs/guide/network-egress-billing.md)

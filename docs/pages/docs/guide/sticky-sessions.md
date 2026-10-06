@@ -98,4 +98,4 @@ The other Server autoscaling controls e.g. scaleup/scaledown window, buffer cont
 
 ## Queuing
 
-Unlike a request to a non-sessioned Server which is rejected immediately if it can't be routed to a container, session creation queues for capacity for up to 60 seconds. Queuing only applies to session starts.
+Unlike a request to a non-sessioned Server which is rejected immediately if it can't be routed to a container, session creation queues for capacity for up to 5 minutes. Queuing only applies to session starts.

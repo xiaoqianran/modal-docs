@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "35901c9efe37c9a6475ad3ee5749765bdea1896c",
-      "translatedAt": "2026-10-03T11:29:03.373Z",
-      "bytes": 25968
+      "hash": "dc79a98d11342db2d65b28c0cc842740110c50c0",
+      "translatedAt": "2026-10-06T13:10:55.182Z",
+      "bytes": 25937
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -532,9 +532,9 @@
       "bytes": 7599
     },
     "docs/guide/cuda.md": {
-      "hash": "f7f48e3af0fc9ff10c05c869e52491ab5dfd0b42",
-      "translatedAt": "2026-08-08T18:29:04.951Z",
-      "bytes": 9688
+      "hash": "8cfe7a947a5978a33e441f2c40f4ecaf61e0f4dd",
+      "translatedAt": "2026-10-06T13:10:43.914Z",
+      "bytes": 9754
     },
     "docs/guide/dataset-ingestion.md": {
       "hash": "fe6d87ce5d46d1c1a550a94276464d6518fa8604",
@@ -827,9 +827,9 @@
       "bytes": 3840
     },
     "docs/guide/scim.md": {
-      "hash": "6437ac35cef047671486d908536f102f89140c3f",
-      "translatedAt": "2026-09-29T12:36:33.733Z",
-      "bytes": 8689
+      "hash": "47d071a42a8f0499b94f9c2683d160b9aef73fd9",
+      "translatedAt": "2026-10-06T13:10:57.353Z",
+      "bytes": 8673
     },
     "docs/guide/sandboxes.md": {
       "hash": "4d324fcafee922de9f55422aa70f6925e4da26cd",
@@ -1593,9 +1593,9 @@
       "bytes": 1689
     },
     "docs/guide/user-groups.md": {
-      "hash": "ae26d1b60bdeeb4896f0788f179c4bd5e3db3759",
-      "translatedAt": "2026-09-29T12:36:35.572Z",
-      "bytes": 4711
+      "hash": "53c14adbf1a518816ebbc1f787edc545ad19374e",
+      "translatedAt": "2026-10-06T13:11:02.239Z",
+      "bytes": 4682
     },
     "docs/guide/getting-started.md": {
       "hash": "e609bcf69c16d4e0c279138f715763f36e43865b",
@@ -1693,14 +1693,14 @@
       "bytes": 14052
     },
     "docs/guide/spindle.md": {
-      "hash": "991c76b2e16431401f6afd94296b145c345a0e7c",
-      "translatedAt": "2026-09-30T12:22:10.922Z",
-      "bytes": 6351
+      "hash": "2eba1fc6397f78a4542f6ac3ca147bca3855f9b4",
+      "translatedAt": "2026-10-06T13:10:57.126Z",
+      "bytes": 6379
     },
     "docs/guide/sticky-sessions.md": {
-      "hash": "e0932116ba52014b2cf2884676c7ca8f160fbf94",
-      "translatedAt": "2026-10-03T11:29:23.876Z",
-      "bytes": 6090
+      "hash": "433fa4d82364e1a1504adcb903bed8ef705eaf86",
+      "translatedAt": "2026-10-06T13:11:03.232Z",
+      "bytes": 6095
     },
     "docs/examples/sandbox_secret_injection.md": {
       "hash": "dd536a0249671c7fb854a047181603bf7238654e",
@@ -1713,15 +1713,15 @@
       "bytes": 8678
     },
     "docs/guide/training-quickstart.md": {
-      "hash": "fe56afa404835cad1c9d7ede56eb7cc3456fd0a7",
-      "translatedAt": "2026-10-03T11:29:24.184Z",
-      "bytes": 2072
+      "hash": "9bbddc156d5212641c12d47748ebda41ce0a78f2",
+      "translatedAt": "2026-10-06T13:10:58.448Z",
+      "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-05T14:19:18.027Z",
+  "updatedAt": "2026-10-06T13:11:03.232Z",
   "stats": {
-    "translated": 1,
-    "skipped": 339,
+    "translated": 7,
+    "skipped": 333,
     "failed": 0,
     "total": 340
   }

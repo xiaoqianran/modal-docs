@@ -1,14 +1,16 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 训练快速入门
+# LLM 培训快速入门
 
 Modal 提供了多种开始训练的方法。
 
 最简单的方法是使用 [Modal Dojo](https://dojo.modal.dev)，一个为您提供构建块的开源库，
-调整默认值和可观察性，轻松进行生产级 LLM 培训。
+调整默认值和可观测性，以实现简单的生产级 SFT 和 RL。
 
 对于 Tinker 兼容的 API，您可以部署 [Spindle](/docs/guide/spindle)
-服务器。当您需要最大限度地控制堆栈时，您可以将现有的训练代码和基础设施引入
+服务器。
+
+当您需要最大限度地控制堆栈时，您可以将现有的训练代码和基础设施引入
 [集群函数](/docs/guide/multi-node-training)。
 
 在这里，我们将介绍如何开始使用 Modal Dojo 进行训练。有关更成熟的示例，请参阅[此处](/docs/examples/paint_flowers)。

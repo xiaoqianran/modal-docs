@@ -8,8 +8,6 @@ Workspace Manager Role. Visit <a href="/settings/plans">Workspace settings</a>
 to upgrade.
 </Callout>
 
-<Callout variant="beta" />
-
 User groups let you manage access for multiple Workspace Members at once. Add
 members to a group, then assign the group an Environment Role in each
 [Restricted Environment](/docs/guide/rbac#setting-up-restricted-environments)

@@ -51,7 +51,7 @@
   - [端点集成](https://modal.com/docs/guide/endpoint-integrations.md)
 - 培训
   - [快速入门](https://modal.com/docs/guide/training-quickstart.md)
-  - [Tinker 兼容 API](https://modal.com/docs/guide/spindle.md)
+  - [Tinker 兼容 API (Beta)](https://modal.com/docs/guide/spindle.md)
   - [多节点训练](https://modal.com/docs/guide/multi-node-training.md)
 - 图片
   - [定义图像](https://modal.com/docs/guide/images.md)
@@ -67,8 +67,8 @@
   - [输入并发](https://modal.com/docs/guide/concurrent-inputs.md)
   - [批量处理](https://modal.com/docs/guide/batch-processing.md)
   - [作业队列](https://modal.com/docs/guide/job-queue.md)
-  - [动态批处理](https://modal.com/docs/guide/dynamic-batching.md)
-- [多节点集群](https://modal.com/docs/guide/multi-node-clusters.md)
+- [动态批处理](https://modal.com/docs/guide/dynamic-batching.md)
+  - [多节点集群](https://modal.com/docs/guide/multi-node-clusters.md)
 - 部署
   - [应用程序、功能和入口点](https://modal.com/docs/guide/apps.md)
   - [管理部署](https://modal.com/docs/guide/managing-deployments.md)
@@ -86,29 +86,29 @@
   - [隧道](https://modal.com/docs/guide/tunnels.md)
   - [代理（测试版）](https://modal.com/docs/guide/proxy-ips.md)
   - [集群网络](https://modal.com/docs/guide/private-networking.md)
-- 数据共享和存储
-  - [传递本地数据](https://modal.com/docs/guide/local-data.md)- [卷](https://modal.com/docs/guide/volumes.md)
+- 数据共享和存储- [传递本地数据](https://modal.com/docs/guide/local-data.md)
+  - [Volumes](https://modal.com/docs/guide/volumes.md)
   - [存储模型权重](https://modal.com/docs/guide/model-weights.md)
   - [云桶坐骑](https://modal.com/docs/guide/cloud-bucket-mounts.md)
   - [词典](https://modal.com/docs/guide/dicts.md)
-  - [队列](https://modal.com/docs/guide/queues.md)
+  - [Queues](https://modal.com/docs/guide/queues.md)
   - [数据集摄取](https://modal.com/docs/guide/dataset-ingestion.md)
 - 秘密和环境变量
-  - [秘密](https://modal.com/docs/guide/secrets.md)
+  - [Secrets](https://modal.com/docs/guide/secrets.md)
   - [环境变量](https://modal.com/docs/guide/environment_variables.md)
-- 性能
+- Performance
   - [冷启动性能](https://modal.com/docs/guide/cold-start.md)
   - [内存快照](https://modal.com/docs/guide/memory-snapshots.md)
   - [高性能LLM推理](https://modal.com/docs/guide/high-performance-llm-inference.md)
 - 可靠性和稳健性
   - [失败和重试](https://modal.com/docs/guide/retries.md)
   - [抢占](https://modal.com/docs/guide/preemption.md)
-  - [超时](https://modal.com/docs/guide/timeouts.md)
+  - [Timeouts](https://modal.com/docs/guide/timeouts.md)
   - [GPU 健康状况](https://modal.com/docs/guide/gpu-health.md)
   - [疑难解答](https://modal.com/docs/guide/troubleshooting.md)
 - 安全和隐私
-  - [安全与隐私](https://modal.com/docs/guide/security.md)
-- [数据驻留](https://modal.com/docs/guide/data-residency.md)
+- [安全与隐私](https://modal.com/docs/guide/security.md)
+  - [数据驻留](https://modal.com/docs/guide/data-residency.md)
   - [客户提供的加密密钥 (Alpha)](https://modal.com/docs/guide/customer-supplied-encryption-keys.md)
   - [审核日志](https://modal.com/docs/guide/audit-logs.md)
 - 集成
@@ -118,12 +118,12 @@
   - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
   - [微软 Entra SSO](https://modal.com/docs/guide/entra-sso.md)
   - [自定义 SAML SSO](https://modal.com/docs/guide/saml-sso.md)
-  - [SCIM 集成（测试版）](https://modal.com/docs/guide/scim.md)
+  - [SCIM 集成](https://modal.com/docs/guide/scim.md)
   - [Slack 通知（测试版）](https://modal.com/docs/guide/slack-notifications.md)
 - 工作区和帐户设置
   - [工作空间](https://modal.com/docs/guide/workspaces.md)
-  - [环境](https://modal.com/docs/guide/environments.md)
-  - [服务使用者](https://modal.com/docs/guide/service-users.md)- [用户组（测试版）](https://modal.com/docs/guide/user-groups.md)
+  - [环境](https://modal.com/docs/guide/environments.md)- [服务使用者](https://modal.com/docs/guide/service-users.md)
+  - [用户组](https://modal.com/docs/guide/user-groups.md)
   - [基于角色的访问控制（RBAC）](https://modal.com/docs/guide/rbac.md)
   - [计费](https://modal.com/docs/guide/billing.md)
   - [网络出口计费](https://modal.com/docs/guide/network-egress-billing.md)
@@ -139,11 +139,10 @@
   - [Jupyter 笔记本](https://modal.com/docs/guide/jupyter-notebooks.md)
   - [异步API使用](https://modal.com/docs/guide/async.md)
   - [全局变量](https://modal.com/docs/guide/global-variables.md)
-  - [区域选择](https://modal.com/docs/guide/region-selection.md)
+  - [地区选择](https://modal.com/docs/guide/region-selection.md)
   - [GPU 指标](https://modal.com/docs/guide/gpu-metrics.md)
 
 ## 示例
-
 - [精选](https://modal.com/docs/examples)
 - 开始使用
   - [你好，世界](https://modal.com/docs/examples/hello_world.md)
@@ -156,20 +155,20 @@
   - [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
   - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
   - [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
-  - [服务DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
-  - 【LLM高效微调，Unsloth】(https://modal.com/docs/examples/unsloth_finetune.md)- [运行多模式 RAG 聊天机器人来回答有关 PDF 的问题](https://modal.com/docs/examples/chat_with_pdf_vision.md)
+  - [服务DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)- 【LLM高效微调，Unsloth】(https://modal.com/docs/examples/unsloth_finetune.md)
+  - [运行多模式 RAG 聊天机器人来回答有关 PDF 的问题](https://modal.com/docs/examples/chat_with_pdf_vision.md)
   - [微调LLM来取代你的CEO](https://modal.com/docs/examples/llm-finetuning.md)
   - [使用 FastMCP 部署无状态 MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
 - 图像、视频和 3D
-  - [使用 Flux Kontext 编辑图像](https://modal.com/docs/examples/image_to_image.md)
+  - [Edit images with Flux Kontext](https://modal.com/docs/examples/image_to_image.md)
   - [微调你脸上的Wan2.1视频模型](https://modal.com/docs/examples/music-video-gen.md)
-  - [使用 torch.compile 快速运行 Flux](https://modal.com/docs/examples/flux.md)
-  - [使用LoRA微调通量](https://modal.com/docs/examples/diffusers_lora_finetune.md)
-  - [使用 LTX-Video 制作动画图像](https://modal.com/docs/examples/image_to_video.md)
+  - [Run Flux fast with torch.compile](https://modal.com/docs/examples/flux.md)
+  - [Fine-tune Flux with LoRA](https://modal.com/docs/examples/diffusers_lora_finetune.md)
+  - [Animate images with LTX-Video](https://modal.com/docs/examples/image_to_video.md)
   - [使用LTX-Video生成视频剪辑](https://modal.com/docs/examples/ltx.md)
   - [使用 CLI、API 和 Web UI 运行稳定的扩散](https://modal.com/docs/examples/text_to_image.md)
 - 音频
-  - [部署 Moshi 语音聊天机器人](https://modal.com/docs/examples/llm-voice-chat.md)
+  - [Deploy a Moshi voice chatbot](https://modal.com/docs/examples/llm-voice-chat.md)
 - [使用 Kyutai STT 以语音速度传输文字记录](https://modal.com/docs/examples/streaming_kyutai_stt.md)
   - [使用 ACE-Step 制作音乐](https://modal.com/docs/examples/generate_music.md)
   - [用Chatterbox生成语音](https://modal.com/docs/examples/chatterbox_tts.md)

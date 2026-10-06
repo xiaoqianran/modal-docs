@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-05T14:18:55.216Z",
+  "fetchedAt": "2026-10-06T13:10:37.814Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 26484,
+      "bytes": 26477,
       "stub": false
     },
     {
@@ -874,7 +874,7 @@
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10154,
+      "bytes": 10215,
       "stub": false
     },
     {
@@ -1394,7 +1394,7 @@
       "source": "https://modal.com/docs/guide/scim.md",
       "finalUrl": "https://modal.com/docs/guide/scim.md",
       "path": "docs/guide/scim.md",
-      "bytes": 9740,
+      "bytes": 9712,
       "stub": false
     },
     {
@@ -1458,7 +1458,7 @@
       "source": "https://modal.com/docs/guide/spindle.md",
       "finalUrl": "https://modal.com/docs/guide/spindle.md",
       "path": "docs/guide/spindle.md",
-      "bytes": 6561,
+      "bytes": 6589,
       "stub": false
     },
     {
@@ -1466,7 +1466,7 @@
       "source": "https://modal.com/docs/guide/sticky-sessions.md",
       "finalUrl": "https://modal.com/docs/guide/sticky-sessions.md",
       "path": "docs/guide/sticky-sessions.md",
-      "bytes": 6476,
+      "bytes": 6475,
       "stub": false
     },
     {
@@ -1490,7 +1490,7 @@
       "source": "https://modal.com/docs/guide/training-quickstart.md",
       "finalUrl": "https://modal.com/docs/guide/training-quickstart.md",
       "path": "docs/guide/training-quickstart.md",
-      "bytes": 2125,
+      "bytes": 2128,
       "stub": false
     },
     {
@@ -1522,7 +1522,7 @@
       "source": "https://modal.com/docs/guide/user-groups.md",
       "finalUrl": "https://modal.com/docs/guide/user-groups.md",
       "path": "docs/guide/user-groups.md",
-      "bytes": 5169,
+      "bytes": 5141,
       "stub": false
     },
     {
