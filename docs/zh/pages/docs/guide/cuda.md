@@ -69,8 +69,6 @@ def check_nvidia_smi():
     import subprocess
     output = subprocess.check_output(["nvidia-smi"], text=True)
     print(output)
-    assert "Driver Version:" in output or "KMD Version:" in output
-    assert "CUDA Version:" in output or "CUDA UMD Version:" in output
     return output
 ```
 

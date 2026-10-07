@@ -502,9 +502,9 @@
       "bytes": 3346
     },
     "docs/guide/cloud-bucket-mounts.md": {
-      "hash": "c1ca2ff73f4f4f0765676dbfd927993f27b263e9",
-      "translatedAt": "2026-10-01T12:56:40.273Z",
-      "bytes": 10158
+      "hash": "ac493c1750884ea8a774d80d2ac2cc1231932a70",
+      "translatedAt": "2026-10-07T13:06:58.316Z",
+      "bytes": 10477
     },
     "docs/guide/cold-start.md": {
       "hash": "d52d21dc31d276ebab77c376cbf5410456ecee22",
@@ -532,9 +532,9 @@
       "bytes": 7599
     },
     "docs/guide/cuda.md": {
-      "hash": "8cfe7a947a5978a33e441f2c40f4ecaf61e0f4dd",
-      "translatedAt": "2026-10-06T13:10:43.914Z",
-      "bytes": 9754
+      "hash": "7fdb8736121d33d2da7cb4a9ac06f1643c058f37",
+      "translatedAt": "2026-10-07T13:06:53.717Z",
+      "bytes": 9617
     },
     "docs/guide/dataset-ingestion.md": {
       "hash": "fe6d87ce5d46d1c1a550a94276464d6518fa8604",
@@ -542,9 +542,9 @@
       "bytes": 4660
     },
     "docs/guide/datadog-integration.md": {
-      "hash": "dbfe1541e01b808d0c0457db923afa92d5b52d8d",
-      "translatedAt": "2026-08-08T18:29:06.700Z",
-      "bytes": 4412
+      "hash": "7cc4e41700b60f5bdabd3bc857c389fc20318697",
+      "translatedAt": "2026-10-07T13:06:58.311Z",
+      "bytes": 4626
     },
     "docs/guide/audit-logs.md": {
       "hash": "d83626bfbe7e28ea32deca68a2f385d9cf833b46",
@@ -712,9 +712,9 @@
       "bytes": 2887
     },
     "docs/guide/otel-integration.md": {
-      "hash": "7ae07ad1fdc71103eb1d127465df947c755bdfe8",
-      "translatedAt": "2026-08-08T18:29:35.524Z",
-      "bytes": 4061
+      "hash": "e2354db594342ad36c0ccb787182a951be5b5168",
+      "translatedAt": "2026-10-07T13:07:01.157Z",
+      "bytes": 4292
     },
     "docs/guide/parametrized-functions.md": {
       "hash": "c963adf94db86aadd82b7a3b2eb7b4f9d1da0934",
@@ -1718,10 +1718,10 @@
       "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-06T13:11:03.232Z",
+  "updatedAt": "2026-10-07T13:07:01.157Z",
   "stats": {
-    "translated": 7,
-    "skipped": 333,
+    "translated": 4,
+    "skipped": 336,
     "failed": 0,
     "total": 340
   }

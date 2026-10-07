@@ -38,6 +38,7 @@ Modal Datadog 集成会将以下指标转发给 Datadog：
 * `modal.gpu.power.usage`
 * `modal.gpu.power.utilization`
 * `modal.gpu.temperature`
+* `modal.gpu.count`
 * `modal.container.running`
 * `modal.input_events.elapsed_time_us`
 * `modal.input_events.input_queue_time_us`
@@ -48,7 +49,10 @@ Modal Datadog 集成会将以下指标转发给 Datadog：
 * `modal.function.running_inputs`
 
 所有指标均标有 `container_id`、`environment_name`、`app_name`、`app_id`、
-`function_name`、`function_id`、`workspace_name`、`workspace_id`。
+`function_name`、`function_id`、`workspace_name`、`workspace_id`。指标来自
+GPU 容器还带有 `gpu_billing_type` 标签，GPU 类型为
+容器计费方式为（例如`H100`），可能与物理GPU模型不同
+当工作负载被调度到较新的 GPU 上时。
 
 已弃用的指标：
 
@@ -61,9 +65,7 @@ Modal Datadog 集成会将以下指标转发给 Datadog：
 作为[官方 Datadog 集成](https://docs.datadoghq.com/integrations/modal/)，
 Datadog 上的模态指标是免费的，而日志是收费的。
 
-## 日志属性
-
-转发到Datadog的日志包括以下属性：
+## 日志属性转发到Datadog的日志包括以下属性：
 
 * `container_id`
 * `app_id`
@@ -77,7 +79,8 @@ Datadog 上的模态指标是免费的，而日志是收费的。
 * `workspace`
 * `workspace_id`
 
-这些是[日志属性](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/)，不是标签。您可以在 Datadog 中过滤和搜索它们
+这些是[日志属性](https://docs.datadoghq.com/logs/log_configuration/attributes_naming_convention/)，
+不是标签。您可以在 Datadog 中过滤和搜索它们
 [日志浏览器](https://docs.datadoghq.com/logs/explorer/) 使用 `@` 前缀
 （例如，`@container_id:<value>`）。
 
@@ -88,7 +91,7 @@ Datadog 上的模态指标是免费的，而日志是收费的。
 设置【日志处理管道】(https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
 在 Datadog 中解析它们。
 
-Modal 在日志记录的`.message`字段中传递日志消息。至
+Modal 在日志记录的`.message`字段中传递日志消息。到
 解析日志时，您应该对该字段进行操作。请注意，模态积分
 确实建立了一些基本的管道。为了使您的管道正常工作，请确保
 在日志设置中，您的管道位于 Modal 的管道之前。
@@ -96,7 +99,7 @@ Modal 在日志记录的`.message`字段中传递日志消息。至
 ## 节省成本
 
 模态 Datadog 集成会将所有日志转发到 Datadog，这可能是
-对于冗长的应用程序来说代价高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
+对于冗长的应用程序来说成本高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
 或[索引排除过滤器](https://docs.datadoghq.com/logs/indexes/?tab=ui#exclusion-filters)
 在将日志发送到 Datadog 之前对其进行过滤。
 
@@ -115,5 +118,5 @@ Datadog，授权将被撤销。
    单击卸载集成。
 3. 确认您要卸载集成。
 4. 确保与此集成关联的所有 API 密钥均已
-   通过在 [API 密钥](https://app.datadoghq.com/organization-settings/api-keys?filter=Modal) 上搜索集成名称来禁用
+通过在 [API 密钥](https://app.datadoghq.com/organization-settings/api-keys?filter=Modal) 上搜索集成名称来禁用
    页。

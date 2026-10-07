@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-06T13:10:37.814Z",
+  "fetchedAt": "2026-10-07T13:06:51.857Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -834,7 +834,7 @@
       "source": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "finalUrl": "https://modal.com/docs/guide/cloud-bucket-mounts.md",
       "path": "docs/guide/cloud-bucket-mounts.md",
-      "bytes": 10898,
+      "bytes": 11247,
       "stub": false
     },
     {
@@ -874,7 +874,7 @@
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10215,
+      "bytes": 10078,
       "stub": false
     },
     {
@@ -898,7 +898,7 @@
       "source": "https://modal.com/docs/guide/datadog-integration.md",
       "finalUrl": "https://modal.com/docs/guide/datadog-integration.md",
       "path": "docs/guide/datadog-integration.md",
-      "bytes": 4674,
+      "bytes": 4918,
       "stub": false
     },
     {
@@ -1218,7 +1218,7 @@
       "source": "https://modal.com/docs/guide/otel-integration.md",
       "finalUrl": "https://modal.com/docs/guide/otel-integration.md",
       "path": "docs/guide/otel-integration.md",
-      "bytes": 4282,
+      "bytes": 4526,
       "stub": false
     },
     {

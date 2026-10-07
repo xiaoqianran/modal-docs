@@ -24,6 +24,12 @@ R2 和 S3 非常相似。参见
 您*不需要*需要管理员权限，并且您不应该*使用“客户端IP地址
 过滤”。
 
+R2 [临时访问凭证](https://developers.cloudflare.com/r2/api/tokens/#temporary-credentials)
+通过将 `AWS_SESSION_TOKEN` 添加到 Modal Secret 来支持
+`AWS_ACCESS_KEY_ID` 和 `AWS_SECRET_ACCESS_KEY`。临时凭证将
+过期后不会自动续订，因此安装一旦失效就会停止工作
+它们会过期。
+
 ## 安装 Google Cloud Storage 存储桶
 
 `CloudBucketMount` 使 Google Cloud Storage (GCS) 存储桶能够作为文件系统挂载
@@ -65,11 +71,11 @@ Amazon S3 存储桶与单个 AWS 区域关联。 [`Mountpoint`](https://github.c
 为了避免此问题，您可以通过向 Modal Secret 添加 `AWS_REGION` 键来指定 S3 存储桶的区域，如上面的代码示例所示。
 
 ### 使用AWS临时安全凭证
-
 `CloudBucketMount`s 还通过传递来支持 AWS 临时安全凭证
 附加环境变量`AWS_SESSION_TOKEN`。临时凭证
 将过期并且不会自动续订。您需要更新
 相应的 Modal Secret 以防止失败。
+
 您可以使用 [AWS CLI](https://aws.amazon.com/cli/) 获取临时凭证：
 
 ```shell
@@ -111,7 +117,6 @@ def f():
 ```
 
 ### 在存储桶中安装路径
-
 要仅挂载特定子目录下的文件，可以使用`key_prefix`指定路径前缀。
 由于此前缀指定一个目录，因此它必须以 `/` 结尾。
 当不提供前缀时，将安装整个存储桶。
@@ -142,6 +147,7 @@ s3_access_credentials = modal.Secret.from_dict({
 def f():
     subprocess.run(["ls", "/my-mount"])
 ```
+
 这只会挂载存储桶 `s3-bucket-name` 中前缀为 `path/to/dir/` 的文件。
 
 ### 只读模式
@@ -170,8 +176,7 @@ def f():
 ```
 
 虽然 S3 安装支持写入和读取操作，但它们针对
-顺序读取大文件。某些文件操作，例如重命名
-文件，不受支持。有关支持的操作的完整列表，
+顺序读取大文件。某些文件操作，例如重命名文件，不受支持。有关支持的操作的完整列表，
 咨询
 [安装点文档](https://github.com/awslabs/mountpoint-s3/blob/main/doc/SEMANTICS.md)。
 
@@ -180,7 +185,7 @@ def f():
 要利用 `CloudBucketMount` 从 S3 存储桶读取和写入文件，
 您的 IAM 策略必须包含 `s3:PutObject` 的权限，
 `s3:AbortMultipartUpload`和`s3:DeleteObject`。这些权限不是
-配置`read_only=True` 的安装座需要。
+配置有 `read_only=True` 的安装座需要。
 
 ```json
 {
@@ -210,7 +215,7 @@ def f():
 ## 限制和故障排除
 
 云存储桶安装具有某些不适用于 [卷](/docs/guide/volumes) 的限制。
-这些限制主要与在云存储桶装载中打开和编辑文件的方式有关。对于
+这些限制主要与在云存储桶装载中打开和编辑文件的方式有关。为了
 完整的限制列表，请参阅[挂载点故障排除文档](https://github.com/awslabs/mountpoint-s3/blob/a6179c72bfc237a1fdd06eb4a0863ca537f8d8a7/doc/TROUBLESHOOTING.md)
 以及[安装点语义文档](https://github.com/awslabs/mountpoint-s3/blob/main/doc/SEMANTICS.md)。
 
@@ -221,9 +226,7 @@ def f():
 * 要写入文件，您必须以`truncate`模式打开它。
 * 存储桶流量不会通过[代理](/docs/guide/proxy-ips) 退出。
 
-这些操作通常会导致 `PermissionError: [Errno 1] Operation not permitted` 错误。
-
-如果您需要这些功能，请尝试一下 [Volumes](/docs/guide/volumes)！如果您需要 S3 中的这些功能
+这些操作通常会导致 `PermissionError: [Errno 1] Operation not permitted` 错误。如果您需要这些功能，请尝试一下 [Volumes](/docs/guide/volumes)！如果您需要 S3 中的这些功能
 并且愿意为您的存储桶支付额外费用，您也许可以使用[S3 Express](https://aws.amazon.com/s3/storage-classes/express-one-zone/)。
 如果您有兴趣使用 S3 Express，请联系我们 [在 Slack 中](https://modal.com/slack)。
 
