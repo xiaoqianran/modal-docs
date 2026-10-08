@@ -13,7 +13,7 @@ Modal Clusters 支持跨多个协调容器运行的 petaFLOP/s 作业，例如�
 * 与所有 Modal 平台功能的互操作性（[Volumes](/docs/guide/volumes)、[Dicts](/docs/guide/dicts)、[Tunnels](/docs/guide/tunnels) 等）。
 
 当您调用集群[Function](https://modal.com/docs/guide/functions)或[Server](https://modal.com/docs/guide/servers)时，Modal会同时启动多个容器，然后在每个容器中运行您的代码。因此，您的代码应该在容器之间建立通信并相互协调以交付最终结果。
-该指南将引导您了解如何充分利用模态集群。
+该指南将引导您了解如何充分利用模态集群。要了解如何在集群中使用常见的训练框架，请参阅[多节点训练指南](https://modal.com/docs/guide/multi-node-training)。
 
 ## 使用 `@clustered` 装饰器
 
@@ -40,9 +40,7 @@ def train_model():
 
 上述配置创建了一组 4 个容器，每个容器有 8 个 H100 GPU 设备，总共 32 个设备。
 
-多节点集群中的容器在物理上并置并[组调度](https://en.wikipedia.org/wiki/Gang_scheduling)在一起，以便您的代码仅在获取所有请求的硬件后运行。
-
-传统上，这种集群和调度管理将由 SLURM、Kubernetes 或其他东西来处理。但对于 Modal，这一切都是通过 Python 装饰器以无服务器方式提供的！
+多节点集群中的容器在物理上并置并[组调度](https://en.wikipedia.org/wiki/Gang_scheduling)在一起，以便您的代码仅在获取所有请求的硬件后运行。传统上，这种集群和调度管理将由 SLURM、Kubernetes 或其他东西来处理。但对于 Modal，这一切都是通过 Python 装饰器以无服务器方式提供的！
 
 <Callout variant="info">
 
@@ -50,7 +48,7 @@ def train_model():
 
 </Callout>
 
-`@modal.clustered` 装饰器还支持使用 `@app.cls()` 的[定义为类的函数](https://modal.com/docs/guide/lifecycle-functions)，前提是该类只公开一个方法。
+`@modal.clustered` 装饰器还支持使用 `@app.cls()` 的[定义为类的函数](https://modal.com/docs/guide/lifecycle-functions)，前提是该类仅公开一个方法。
 
 不支持网络功能。对于 HTTP 工作负载，请使用 [服务器](https://modal.com/docs/guide/servers)。
 
@@ -74,7 +72,7 @@ else:
     print(f"Running as rank {container_rank}")
 ```
 
-当您调用集群[函数](https://modal.com/docs/guide/functions)时，每个容器都会收到函数调用参数的副本。例如，如果您调用四节点函数，您的代码将在四个容器中并行运行四次。
+当您调用 Clustered [Function](https://modal.com/docs/guide/functions) 时，每个容器都会收到 Function 调用参数的副本。例如，如果您调用四节点函数，您的代码将在四个容器中并行运行四次。
 
 对于集群[服务器](https://modal.com/docs/guide/servers)，网络流量仅路由到排名零，然后负责将请求分发到其他容器。
 仅排名零的输出返回给调用者；即，其他等级的输出被丢弃。要在返回最终结果之前共享工作，请使用[容器间网络](#networking) 或[RDMA](#rdma)。

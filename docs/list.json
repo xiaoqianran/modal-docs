@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-07T13:06:51.857Z",
+  "fetchedAt": "2026-10-08T13:14:04.662Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -802,7 +802,7 @@
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 26953,
+      "bytes": 26948,
       "stub": false
     },
     {
@@ -914,7 +914,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 4128,
+      "bytes": 4292,
       "stub": false
     },
     {
@@ -962,7 +962,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 4532,
+      "bytes": 5045,
       "stub": false
     },
     {
@@ -1162,7 +1162,7 @@
       "source": "https://modal.com/docs/guide/multi-node-clusters.md",
       "finalUrl": "https://modal.com/docs/guide/multi-node-clusters.md",
       "path": "docs/guide/multi-node-clusters.md",
-      "bytes": 9108,
+      "bytes": 9257,
       "stub": false
     },
     {
@@ -1274,7 +1274,7 @@
       "source": "https://modal.com/docs/guide/rbac.md",
       "finalUrl": "https://modal.com/docs/guide/rbac.md",
       "path": "docs/guide/rbac.md",
-      "bytes": 14975,
+      "bytes": 15174,
       "stub": false
     },
     {
@@ -1522,7 +1522,7 @@
       "source": "https://modal.com/docs/guide/user-groups.md",
       "finalUrl": "https://modal.com/docs/guide/user-groups.md",
       "path": "docs/guide/user-groups.md",
-      "bytes": 5141,
+      "bytes": 6181,
       "stub": false
     },
     {

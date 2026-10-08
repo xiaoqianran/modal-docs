@@ -3,7 +3,7 @@
 # 专用端点
 
 专用端点运行任何模型
-[模态库](https://modal.com/library)，或自定义权重，在隔离、
+[模态库](https://modal.com/library)，或自定义权重，在孤立的、
 自动缩放容器。当您需要控制自动缩放和
 区域或专用容量。
 
@@ -12,7 +12,7 @@
 从 CLI 创建端点：
 
 ```bash
-modal endpoint create --model Qwen/Qwen3.5-4B
+modal endpoint create --name support-chat --model Qwen/Qwen3.5-4B
 ```
 
 Modal 解析模型，选择兼容的服务配方，然后启动
@@ -20,7 +20,9 @@ Modal 解析模型，选择兼容的服务配方，然后启动
 可以在线观看。也可以从以下位置创建专用端点
 仪表板中的 [**端点**](https://modal.com/endpoints) 选项卡。
 
-如果省略 `--name`，Modal 会从模型中派生名称。
+端点名称是[模型名称](/docs/guide/endpoints#model-names)
+客户端在请求中以 `model` 的形式发送。如果省略 `--name`，Modal 会命名
+端点 `inference-1`、`inference-2` 等。
 
 ## 查看生成的源码
 
@@ -31,8 +33,8 @@ Modal SDK，包括 [`@app.server()`](/docs/guide/servers)。打开
 
 ## 提供自定义权重
 
-自定义权重使用兼容模态库模型的服务配方。通行证
-该模型具有 `--model`，然后提供 Hugging Face 或 Modal 的权重
+自定义权重使用兼容模态库模型的服务配方。经过
+该模型具有 `--model`，然后提供来自 Hugging Face 或 Modal 的权重
 音量。
 
 来自拥抱的脸：
@@ -44,6 +46,7 @@ modal endpoint create \
   --custom-hf-repo aisingapore/Qwen-SEA-LION-v4.5-27B-IT \
   --custom-hf-revision da42f2c0984d716fb2032e4176d81adfac98c630
 ```
+
 将 `--custom-hf-token` 用于门禁或私有存储库。
 
 从包含 `config.json` 文件的模态体：
@@ -82,14 +85,15 @@ modal endpoint create \
 共享 `Modal-Routing-Affinity-Key` 标头的请求将被路由到同一个容器
 尽最大努力，将对话的提示前缀保留在其中
 容器的缓存。参见
-[亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择
+[Affinity 路由](/docs/guide/endpoints#affinity-routing) 了解如何选择
 标头值。
 
 ## 指标
 
 **活动**视图显示随时间变化的请求量。使用**响应**进行检查
 个人请求和**容器**检查为其提供服务的容器。
-对于文本生成模型，**指标**将**推理指标**分开，即延迟、
+
+对于文本生成模型，**指标**将**推理指标**—延迟、
 吞吐量、正在运行和排队的请求、缓存使用情况和推测
 解码——来自**服务器指标**，例如自动缩放和CPU、内存、网络、
 和 GPU 利用率。

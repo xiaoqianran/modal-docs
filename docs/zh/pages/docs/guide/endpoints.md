@@ -56,8 +56,26 @@ Authorization: Bearer wk-<id>.ws-<secret>
 与人类兼容的消息 API。嵌入模型可以通过以下方式调用
 兼容 OpenAI 的嵌入 API。
 
-仪表板显示端点 URL 和模型名称。此示例使用聊天
-完成 API 和[代理令牌](#proxy-tokens)：
+### 型号名称
+
+将每个请求中的 `model` 设置为 Endpoint 的模型名称：
+
+* **专用端点** 使用端点名称，例如 `support-chat`。
+* **共享端点** 使用模态库中的模型 ID。
+
+仪表板显示每个端点的 URL 和模型名称。您还可以获得
+通过 OpenAI 兼容模型 API 来自端点本身的模型名称，
+其中列出了端点服务的模型：
+
+```bash
+curl "<your-endpoint-url>/v1/models" \
+  -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET"
+```
+
+### 发送请求
+
+此示例使用聊天完成 API 和
+[代理令牌](#proxy-tokens):
 
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
@@ -82,7 +100,6 @@ LLM 服务引擎缓存提示前缀的 KV 状态，因此请求
 要将一个对话的请求放在一起，请发送相同的路由密钥
 每个文件上的 `Modal-Routing-Affinity-Key` 标头。路由键是
 任意字符串；每次对话、任务或代理运行时使用一个。
-
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \
@@ -100,7 +117,7 @@ curl "<your-endpoint-url>/v1/chat/completions" \
   由许多不相关的对话共享，将所有流量集中在一个对话上
   容器。
 * **当前缀更改时使用新密钥**，例如在压缩或
-总结了一个很长的背景。缓存的前缀不再适用，并且新的密钥
+  总结了一个很长的背景。缓存的前缀不再适用，并且新的密钥
   让请求移动到具有可用容量的容器。
 
 请注意，当端点

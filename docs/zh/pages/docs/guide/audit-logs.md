@@ -12,7 +12,7 @@
 调查，并回答诸如“*”是否有人删除此 Secret 之类的问题
 上周四？”* 无需询问 Modal 支持。
 
-审核日志可在<a href="/settings/audit-logs" target="_blank" rel="noopener" class="text-c-green-100 hover:underline">设置页面</a>中查看。
+审核日志可在<a href="/settings/audit-logs" target="_blank" rel="noopener" class="text-accent hover:underline">设置页面</a>中查看。
 
 <center>
 <video controls autoplay muted playsinline><source src="https://modal-public-assets.s3.us-east-1.amazonaws.com/docs/audit-logs-v2-demo-2.mp4" type="video/mp4">
@@ -54,7 +54,7 @@
 
 > 注意：**容器运行时活动不被审计。**审计日志记录
 > 工作区级别的操作（部署应用程序、创建卷、撤销卷）
-> 令牌) — 不是单独的函数调用或沙箱 `exec` 调用，
+> token) — 不是单独的函数调用或沙箱 `exec` 调用，
 > 在函数和沙箱日志中捕获。
 
 <br />
@@ -97,7 +97,7 @@
 | `token.create` | API 令牌已创建。令牌的名称和过期时间记录在事件元数据中。                                                                                                                                                                       || `token.delete` | API 令牌已被撤销。                                                                                                                                                                                                                                           |
 | `user.create` |创建了一个新的用户帐户。                                                                                                                                                                                                                                     |
 | `user_group.create` |在工作区中创建了一个用户组。                                                                                                                                                                                                                          |
-| `user_group.delete` |用户组已从工作区中删除。                                                                                                                                                                                                                        || `user_group.update` |用户组的名称、成员资格或环境角色已更新。                                                                                                                                                                                                 |
+| `user_group.delete` |用户组已从工作区中删除。                                                                                                                                                                                                                        || `user_group.update` |用户组的名称、成员身份或环境角色已更新。                                                                                                                                                                                                 |
 | `volume.create` |创建了一个卷。                                                                                                                                                                                                                                               |
 | `volume.delete` |卷已删除。                                                                                                                                                                                                                                               || `volume.get` |按名称或 ID 查找现有卷。                                                                                                                                                                                                                  |
 | `volume.rename` |卷已重命名。                                                                                                                                                                                                                                               |
@@ -106,7 +106,7 @@
 | `workspace.leave` |用户离开工作区。                                                                                                                                                                                                                                            |
 | `workspace.set_budget` |工作区的支出预算已更新。先前和新的每周期预算值记录在事件元数据中。                                                                                                                                            || `workspace.set_default_environment_settings` |工作区的默认环境设置已更新。没有显式覆盖的环境继承这些默认值。阻止的未经身份验证的资源的之前/之后值记录在事件元数据中。                                            |
 | `workspace.set_max_member_token_lifetime` |工作区的最大成员 API 令牌生命周期已更新。以秒为单位的之前/之后值记录在事件元数据中；未设置的值意味着没有上限。                                                                                                        |
-| `workspace.set_net_spend_limit` |工作区的自付费用（净）支出限额已更新。先前和新的每周期限制记录在事件元数据中。                                                                                                                                |
+| `workspace.set_net_spend_limit` |工作区的自付费用（净额）支出限额已更新。先前和新的每周期限制记录在事件元数据中。                                                                                                                                |
 | `workspace.update_github_autojoin` |链接的 GitHub 组织的成员是否可以在没有邀请的情况下加入工作区已更改。                                                                                                                                                             || `workspace.update_idp` |工作区的 SAML 身份提供商配置已更改。启用 SSO 强制实施会立即注销未通过 SAML 进行身份验证的会话。                                                                                                              |
 | `workspace.upload_idp_metadata` |已为工作区上传 SAML 元数据文档，替换任何已为其托管的 Modal 文件。这将设置工作区的 SSO 元数据 URL 以及登录 Modal 将接受的身份提供商。                                                       |
 

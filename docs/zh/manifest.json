@@ -547,9 +547,9 @@
       "bytes": 4626
     },
     "docs/guide/audit-logs.md": {
-      "hash": "d83626bfbe7e28ea32deca68a2f385d9cf833b46",
-      "translatedAt": "2026-09-28T13:35:13.287Z",
-      "bytes": 23767
+      "hash": "380e03fe46b6d9a7341f6abdf0734dc21a094ab8",
+      "translatedAt": "2026-10-08T13:14:37.989Z",
+      "bytes": 23764
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "5ad0c5574e1e5583312a5a3de3aedfeb1d70a513",
-      "translatedAt": "2026-10-03T11:29:07.980Z",
-      "bytes": 4012
+      "hash": "5430d613f093e97b95c0f66500fd5f99d18ee2bc",
+      "translatedAt": "2026-10-08T13:14:09.840Z",
+      "bytes": 4501
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -792,9 +792,9 @@
       "bytes": 5363
     },
     "docs/guide/rbac.md": {
-      "hash": "50cbb1634a6cea5915b386a06320e5699cdaac5c",
-      "translatedAt": "2026-10-01T12:57:16.026Z",
-      "bytes": 12079
+      "hash": "7533a9a0c31acbbc171a6b46c44d9fa72063d02c",
+      "translatedAt": "2026-10-08T13:14:26.491Z",
+      "bytes": 12278
     },
     "docs/guide/sandbox-spawn.md": {
       "hash": "f0f220838d4e5d82d8ca60344ec1c4e269e5dfec",
@@ -1583,9 +1583,9 @@
       "bytes": 3537
     },
     "docs/guide/dedicated-endpoints.md": {
-      "hash": "8351c1c45e5223d96f431a79e7474408827cc7ea",
-      "translatedAt": "2026-10-03T11:29:07.093Z",
-      "bytes": 3796
+      "hash": "8489d44313b18699658aacbf23b3c6169a269294",
+      "translatedAt": "2026-10-08T13:14:06.516Z",
+      "bytes": 3958
     },
     "docs/guide/shared-endpoints.md": {
       "hash": "1ed679ac2ee2fa3e1fd70599aa59d6915d7d2dcd",
@@ -1593,9 +1593,9 @@
       "bytes": 1689
     },
     "docs/guide/user-groups.md": {
-      "hash": "53c14adbf1a518816ebbc1f787edc545ad19374e",
-      "translatedAt": "2026-10-06T13:11:02.239Z",
-      "bytes": 4682
+      "hash": "87b9d648fae1f2abec41cdec9b567a200fe6723a",
+      "translatedAt": "2026-10-08T13:14:29.969Z",
+      "bytes": 5720
     },
     "docs/guide/getting-started.md": {
       "hash": "e609bcf69c16d4e0c279138f715763f36e43865b",
@@ -1618,9 +1618,9 @@
       "bytes": 5939
     },
     "docs/guide/multi-node-clusters.md": {
-      "hash": "5da92beb84ffc993a482886e7e1449c317fcc699",
-      "translatedAt": "2026-10-01T12:56:48.724Z",
-      "bytes": 8349
+      "hash": "f59b3daba0f95c3fdb8743fbce28c6a3ee86fcee",
+      "translatedAt": "2026-10-08T13:14:15.031Z",
+      "bytes": 8501
     },
     "docs/sdk/go/latest/ExperimentalOutboundPolicy.md": {
       "hash": "6e6ea06d038cea78892c709bdf47a435af850f20",
@@ -1718,10 +1718,10 @@
       "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-07T13:07:01.157Z",
+  "updatedAt": "2026-10-08T13:14:37.989Z",
   "stats": {
-    "translated": 4,
-    "skipped": 336,
+    "translated": 6,
+    "skipped": 334,
     "failed": 0,
     "total": 340
   }
