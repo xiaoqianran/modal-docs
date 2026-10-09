@@ -1718,11 +1718,11 @@
       "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-08T13:14:37.989Z",
+  "updatedAt": "2026-10-09T13:01:20.202Z",
   "stats": {
-    "translated": 6,
-    "skipped": 334,
-    "failed": 0,
+    "translated": 0,
+    "skipped": 335,
+    "failed": 5,
     "total": 340
   }
 }

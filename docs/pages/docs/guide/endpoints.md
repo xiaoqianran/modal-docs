@@ -57,14 +57,8 @@ OpenAI-compatible Embeddings API.
 
 ### Model names
 
-Set `model` in each request to the Endpoint's model name:
-
-* **Dedicated Endpoints** use the Endpoint name, for example `support-chat`.
-* **Shared Endpoints** use the model ID from the Modal Library.
-
-The dashboard shows each Endpoint's URL and model name. You can also get the
-model name from the Endpoint itself through the OpenAI-compatible Models API,
-which lists the models an Endpoint serves:
+Set `model` to the value shown in the dashboard's request examples.
+You can also retrieve it through the OpenAI-compatible Models API:
 
 ```bash
 curl "<your-endpoint-url>/v1/models" \

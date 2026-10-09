@@ -18,9 +18,9 @@ provisioning. The command prints the Endpoint ID and a dashboard link where you
 can watch it come online. Dedicated Endpoints can also be created from the
 [**Endpoints**](https://modal.com/endpoints) tab in the dashboard.
 
-The Endpoint name is the [model name](/docs/guide/endpoints#model-names) that
-clients send as `model` in requests. If you omit `--name`, Modal names the
-Endpoint `inference-1`, `inference-2`, and so on.
+When you create an Endpoint, Modal uses its name as the
+[model name](/docs/guide/endpoints#model-names) that clients send as `model` in
+requests.
 
 ## View the generated source
 
