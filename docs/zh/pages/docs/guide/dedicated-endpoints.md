@@ -3,7 +3,7 @@
 # 专用端点
 
 专用端点运行任何模型
-[模态库](https://modal.com/library)，或自定义权重，在孤立的、
+[模态库](https://modal.com/library)，或自定义权重，在隔离、
 自动缩放容器。当您需要控制自动缩放和
 区域或专用容量。
 
@@ -20,9 +20,9 @@ Modal 解析模型，选择兼容的服务配方，然后启动
 可以在线观看。也可以从以下位置创建专用端点
 仪表板中的 [**端点**](https://modal.com/endpoints) 选项卡。
 
-端点名称是[模型名称](/docs/guide/endpoints#model-names)
-客户端在请求中以 `model` 的形式发送。如果省略 `--name`，Modal 会命名
-端点 `inference-1`、`inference-2` 等。
+当您创建 Endpoint 时，Modal 使用其名称作为
+客户端以 `model` 形式发送的 [模型名称](/docs/guide/endpoints#model-names)
+请求。
 
 ## 查看生成的源码
 

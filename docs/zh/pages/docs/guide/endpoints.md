@@ -58,14 +58,8 @@ Authorization: Bearer wk-<id>.ws-<secret>
 
 ### 型号名称
 
-将每个请求中的 `model` 设置为 Endpoint 的模型名称：
-
-* **专用端点** 使用端点名称，例如 `support-chat`。
-* **共享端点** 使用模态库中的模型 ID。
-
-仪表板显示每个端点的 URL 和模型名称。您还可以获得
-通过 OpenAI 兼容模型 API 来自端点本身的模型名称，
-其中列出了端点服务的模型：
+将 `model` 设置为仪表板请求示例中显示的值。
+您还可以通过 OpenAI 兼容模型 API 检索它：
 
 ```bash
 curl "<your-endpoint-url>/v1/models" \
@@ -100,6 +94,7 @@ LLM 服务引擎缓存提示前缀的 KV 状态，因此请求
 要将一个对话的请求放在一起，请发送相同的路由密钥
 每个文件上的 `Modal-Routing-Affinity-Key` 标头。路由键是
 任意字符串；每次对话、任务或代理运行时使用一个。
+
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET" \

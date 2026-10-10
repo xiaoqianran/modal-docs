@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-09T13:00:40.635Z",
+  "fetchedAt": "2026-10-10T12:17:39.017Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -890,7 +890,7 @@
       "source": "https://modal.com/docs/guide/data-residency.md",
       "finalUrl": "https://modal.com/docs/guide/data-residency.md",
       "path": "docs/guide/data-residency.md",
-      "bytes": 12027,
+      "bytes": 12021,
       "stub": false
     },
     {
@@ -1282,7 +1282,7 @@
       "source": "https://modal.com/docs/guide/region-selection.md",
       "finalUrl": "https://modal.com/docs/guide/region-selection.md",
       "path": "docs/guide/region-selection.md",
-      "bytes": 5796,
+      "bytes": 5783,
       "stub": false
     },
     {
@@ -1418,7 +1418,7 @@
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 12106,
+      "bytes": 15987,
       "stub": false
     },
     {

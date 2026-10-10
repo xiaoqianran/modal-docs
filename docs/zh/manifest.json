@@ -187,9 +187,9 @@
       "bytes": 16281
     },
     "docs/examples/computer_use_vnc.md": {
-      "hash": "cc7a5b7f9359143478a746225d5a11c8e6e7ad17",
-      "translatedAt": "2026-10-01T12:56:23.090Z",
-      "bytes": 13525
+      "hash": "a7a47a6355d7f64612326d9198930c8303e42dd7",
+      "translatedAt": "2026-10-10T12:17:41.685Z",
+      "bytes": 13602
     },
     "docs/cli/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "5430d613f093e97b95c0f66500fd5f99d18ee2bc",
-      "translatedAt": "2026-10-08T13:14:09.840Z",
-      "bytes": 4501
+      "hash": "8e4cc4a42620091b18c9e142ac562c63dd840ec4",
+      "translatedAt": "2026-10-10T12:17:45.058Z",
+      "bytes": 4251
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -752,14 +752,14 @@
       "bytes": 4372
     },
     "docs/guide/resources.md": {
-      "hash": "a97e775f8118b6363e9f3b458cce7a3e0add0d68",
-      "translatedAt": "2026-08-08T18:29:41.007Z",
-      "bytes": 3557
+      "hash": "6c756d1241eb604290996ae854051a7f5dfdea19",
+      "translatedAt": "2026-10-10T12:17:50.235Z",
+      "bytes": 3563
     },
     "docs/guide/region-selection.md": {
-      "hash": "43fcee56a179ef2fbad8d6824a671689e162596e",
-      "translatedAt": "2026-09-15T11:32:23.311Z",
-      "bytes": 5367
+      "hash": "96c9c68fd9dfef5c37b8d770805267cb9636d87f",
+      "translatedAt": "2026-10-10T12:17:48.512Z",
+      "bytes": 5362
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -797,9 +797,9 @@
       "bytes": 12278
     },
     "docs/guide/sandbox-spawn.md": {
-      "hash": "f0f220838d4e5d82d8ca60344ec1c4e269e5dfec",
-      "translatedAt": "2026-09-30T12:21:46.045Z",
-      "bytes": 3822
+      "hash": "b52aa3230e8c1ffff622ed4415198137edd2710a",
+      "translatedAt": "2026-10-10T12:17:52.064Z",
+      "bytes": 4080
     },
     "docs/guide/sandbox-networking.md": {
       "hash": "e982eea7c2be7c5ed1b895808d1fa80bb7b5a6e5",
@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "c2f05890f2d0b04ccfe65a4ac16dcc1803c71871",
-      "translatedAt": "2026-09-30T12:22:07.443Z",
-      "bytes": 9380
+      "hash": "1bbd808c01b9e1d96f2c2529cccc5914aa4f07f3",
+      "translatedAt": "2026-10-10T12:18:01.405Z",
+      "bytes": 12143
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -1497,9 +1497,9 @@
       "bytes": 20227
     },
     "docs/guide/data-residency.md": {
-      "hash": "2002853151e2e8391749daf5861bb4ff7657ecf9",
-      "translatedAt": "2026-09-04T11:03:40.386Z",
-      "bytes": 9955
+      "hash": "9393f850eba7b0b76d6e4fd0e685c5d6a9af67fd",
+      "translatedAt": "2026-10-10T12:17:49.305Z",
+      "bytes": 9995
     },
     "docs/sdk/go/latest/FunctionAutoscalerSettings.md": {
       "hash": "abeacba83058eb325c3015c9df2c1a3050e2cc1c",
@@ -1583,9 +1583,9 @@
       "bytes": 3537
     },
     "docs/guide/dedicated-endpoints.md": {
-      "hash": "8489d44313b18699658aacbf23b3c6169a269294",
-      "translatedAt": "2026-10-08T13:14:06.516Z",
-      "bytes": 3958
+      "hash": "2102650125e159f3524e44808b4909ab2610cd10",
+      "translatedAt": "2026-10-10T12:17:42.675Z",
+      "bytes": 3908
     },
     "docs/guide/shared-endpoints.md": {
       "hash": "1ed679ac2ee2fa3e1fd70599aa59d6915d7d2dcd",
@@ -1718,11 +1718,11 @@
       "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-09T13:01:20.202Z",
+  "updatedAt": "2026-10-10T12:18:01.405Z",
   "stats": {
-    "translated": 0,
-    "skipped": 335,
-    "failed": 5,
+    "translated": 8,
+    "skipped": 332,
+    "failed": 0,
     "total": 340
   }
 }

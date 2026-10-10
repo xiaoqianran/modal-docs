@@ -29,7 +29,7 @@ sb = modal.Sandbox.create(region=["us-west"], app=app)
 我们的[基本使用定价](/定价)之上的乘数将应用于定义了容器区域的任何函数或沙盒。
 
 | **区域类型** | **乘数** |
-| ----------------------- | -------------- |
+| ------------------------ | -------------- |
 |广泛（例如`us`）| 1.15 倍 |
 |窄（例如 `us-west`）| 1.75 倍 |
 下面是一个示例：假设您有一个使用 1 个 T4、1 个 CPU 核心和 1GB 内存的 Function 或 Sandbox 容器。您已指定它应在 `us-west` 中运行。运行 1 小时的成本为 `((T4 hourly cost) + (CPU hourly cost for one core) + (Memory hourly cost for one GB)) * 1.75`。
@@ -81,7 +81,7 @@ Modal 为容器区域提供不同级别的粒度。尽可能使用更广泛的�
 
 除了让您指定函数容器运行的区域之外，Modal 还允许您指定输入和输出将路由到哪个区域，以减少网络开销。默认情况下，这是`us-east`（美国弗吉尼亚州）。
 
-这不适用于沙盒，因为大多数操作直接进入容器（有一些小例外通过`us-east`路由）。
+这不适用于沙箱，因为大多数操作直接进入容器（有一些小例外是通过`us-east`路由的）。
 
 ### 指定路由区域
 要使模态函数的流量路由通过特定区域，请将 `routing_region=` 参数传递给 `function` 装饰器。
@@ -99,17 +99,15 @@ def f():
 * `eu-west`（爱尔兰都柏林）
 * `ap-south`（印度孟买）
 
-### 当前限制
+### 当前限制`routing_region=`只能在功能的初始部署期间设置，并且不能在后续重新部署中更改。要更改路由区域，应创建一个新函数。指定 `us-east` 之外的路由区域的函数只能使用 `.remote()` 或 `.map()` 或通过 [Web Functions](/docs/guide/webhooks) 的 HTTP 来调用。
 
-`routing_region=`只能在功能的初始部署期间设置，并且不能在后续重新部署中更改。要更改路由区域，应创建一个新函数。指定 `us-east` 之外的路由区域的函数只能使用 `.remote()` 或 `.map()` 或通过 [Web Functions](/docs/guide/webhooks) 的 HTTP 来调用。
-
-[大于 2 MiB 的输入和输出](/docs/guide/security#function-inputs-and-outputs) 仍上传到 `us-east` 中的对象存储。
+[大于 2 MiB 的输入和输出](/docs/guide/security#data-retention) 仍上传到 `us-east` 中的对象存储。
 
 ## 优化延迟
 
-Modal 拥有多种工具来优化网络延迟，甚至在实时机器人等极端情况下可降至约 10 毫秒。将容器区域选择与附近的路由区域结合使用可以消除大量的网络开销。
-[Cloudping.co](https://www.cloudping.co) 提供了区域之间延迟的良好估计。例如，AWS `us-east`（美国弗吉尼亚州）和`us-west`（美国俄勒冈州）之间的往返延迟约为 60 毫秒。
+Modal 拥有多种工具来优化网络延迟，甚至在实时机器人等极端情况下可降低至约 10 毫秒。将容器区域选择与附近的路由区域结合使用可以消除大量的网络开销。
 
+[Cloudping.co](https://www.cloudping.co) 提供了区域之间延迟的良好估计。例如，AWS `us-east`（美国弗吉尼亚州）和`us-west`（美国俄勒冈州）之间的往返延迟约为 60 毫秒。
 可以使用单独的功能拆分区域部署，如下所示：
 
 ```python

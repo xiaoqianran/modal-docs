@@ -65,9 +65,6 @@ Sandbox 和 ContainerProcess `stdout` 和 `stderr` 句柄是 [`StreamReader`](/d
 对象。这些对象支持以同步和异步方式从流中读取。
 这些句柄还遵守为 `Sandbox.exec` 指定的超时。
 
-要在底层进程完成后从流中读取数据，您可以使用 `read`
-方法，该方法会阻塞，直到进程完成并返回整个输出流。
-
 ```python notest
 sb = modal.Sandbox.create(app=my_app)
 p = sb.exec("echo", "hello")
@@ -104,6 +101,7 @@ asyncio.run(run_async())
 ```
 
 ### 流类型
+
 默认情况下，所有流都缓冲在内存中，等待被消耗
 客户。您可以使用 `stdout` 和 `stderr` 参数控制此行为。
 这些参数在概念上类似于 `stdout` 和 `stderr`
@@ -147,3 +145,9 @@ p.wait()
 
 sb.terminate()
 ```
+
+仅当您从 exec 中读取时，exec 的 stdout 和 stderr 才会流式传输到您的客户端
+流对象。您可以在底层进程完成后从流中读取
+通过调用 `read`，它返回整个输出流。如果过程仍然
+运行时，`read`会阻塞，直到完成。执行完成后，您可以读取其
+输出时间长达 10 分钟。然后 Modal 会丢弃输出，因此后面的读取将会失败。
