@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-11T12:34:05.348Z",
+  "fetchedAt": "2026-10-12T15:06:46.144Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 324,
   "ok": 324,
@@ -1330,7 +1330,7 @@
       "source": "https://modal.com/docs/guide/sandbox-networking.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-networking.md",
       "path": "docs/guide/sandbox-networking.md",
-      "bytes": 19193,
+      "bytes": 19332,
       "stub": false
     },
     {
@@ -1354,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 21273,
+      "bytes": 23302,
       "stub": false
     },
     {
@@ -1362,7 +1362,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 20373,
+      "bytes": 20174,
       "stub": false
     },
     {

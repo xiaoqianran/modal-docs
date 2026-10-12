@@ -16,6 +16,10 @@ Modal provides three levels of outbound network restriction:
 
 `outbound_cidr_allowlist` and `outbound_domain_allowlist` can be combined additively - traffic that meets either criteria will be let through.
 
+<Callout variant="warning">
+Currently, DNS traffic is allowed without restriction except when all outbound traffic is blocked.
+</Callout>
+
 For advanced HTTPS inspection, the experimental `proxy_traffic_via_sidecar`
 option routes outbound TCP traffic on port 443 from the main container through
 a Sidecar. Relaying replaces the Sandbox's own controls on that traffic rather

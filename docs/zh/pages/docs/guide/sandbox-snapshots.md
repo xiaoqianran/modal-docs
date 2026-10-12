@@ -6,7 +6,7 @@
 并稍后恢复。这对于：
 
 * 减少启动延迟
-* 创建自定义环境供您的沙箱运行
+* 创建自定义环境供您的沙盒运行
 * 备份沙箱的状态以进行调试
 * 以相同的初始状态运行大规模实验
 * 分支沙箱的状态以独立测试不同的代码更改
@@ -132,7 +132,7 @@ assert p2.stdout.read().strip() == "test"
 利用与我们为沙盒快速冷启动相同的基础设施。
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
-请注意，文件系统快照仅涵盖沙箱的根文件系统。
+请注意，文件系统快照仅涵盖沙盒的根文件系统。
 此快照不涵盖任何已安装的[卷](/docs/guide/volumes)
 并且不会包含在生成的图像中。
 
@@ -332,7 +332,7 @@ fmt.Println(strings.TrimSpace(string(stdout))) // "data"
 
 要卸载以前安装的映像，
 在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
-卸载后，该路径下的底层沙盒文件系统再次可见。
+卸载后，该路径下的底层沙箱文件系统再次可见。
 
 <CodeTabs>
   {#snippet python()}
@@ -437,16 +437,18 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
 * 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
-* 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
+* 使用 `_experimental_enable_snapshot=True` 创建的 Sandbox 只能在与原始 Sandbox 运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
-* 指定 `runtime="vm"` 的沙箱内存快照仅适用于一组已启用的客户。如果您有兴趣，请通过 [Slack](/slack) 联系我们或发送电子邮件至 <support@modal.com>。
 * 指定 `runtime="vm"` 的沙箱在使用 `_experimental_enable_snapshot=True` 创建时无法挂载卷。
 
 ## 保持沙箱状态
 
 要在沙箱会话中保留状态，您需要：
+
 1. **触发快照。** 快照是从沙箱外部触发的，通常是在终止之前。一种常见的模式是在沙箱内运行 exec 进程并等待其退出。一旦完成，控制器就会拍摄快照并终止沙箱。
-2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。以下示例展示了这种模式。此代码通常在模态函数或您自己的后端中运行，编排沙箱：
+2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。
+
+以下示例展示了这种模式。此代码通常在模态函数或您自己的后端中运行，编排沙箱：
 
 ```python notest
 import modal
@@ -524,4 +526,5 @@ mc.Images.Delete(ctx, imageId, nil)
 ```
 
 {/片段} </CodeTabs>
+
 要删除快照，您需要自己跟踪图像 ID（例如，在数据库或 [Modal Dict](/docs/guide/dicts) 中），因为目前没有 API 可以列出您创建的所有快照。

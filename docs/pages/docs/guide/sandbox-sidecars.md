@@ -8,10 +8,15 @@ There are currently several [known limitations](#limitations).
 
 ## Introduction
 
-Sandbox Sidecars let you run additional containers alongside your main
-Sandbox container, on the same host. A sandbox and its sidecars are connected
-via an internal bridge network, allowing low latency communication between
-containers over TCP/UDP, making them ideal for:
+Sandbox Sidecars are isolated containers that run alongside your main Sandbox
+container on the same host. They provide a low-latency trust boundary, letting you
+split code with different levels of trust across containers. For example, you can
+keep credentials, proxies, or monitoring in a Sidecar that the main container
+cannot directly access.
+
+Because a Sandbox and its Sidecars run on the same host, communication between
+them stays local instead of crossing a remote service boundary. This makes
+Sidecars ideal for:
 
 * Separating an agent harness from its execution environment, by running the
   agent in one container and its tool calls in another. See the [agent example](/docs/examples/sidecar_agent)
@@ -21,12 +26,17 @@ containers over TCP/UDP, making them ideal for:
   or other secrets before passing on network calls to external services. The
   [credential proxy example](/docs/examples/sidecar_secrets_injection) uses
   a Modal [Secret](/docs/guide/secrets) that is injected only in the sidecar.
+* Monitoring and filtering outbound traffic, by [routing the Sandbox's HTTPS
+  traffic through a proxy Sidecar](#routing-https-traffic-through-a-sidecar)
+  with your own rules. The [traffic routing example](/docs/examples/sidecar_traffic_routing)
+  shows a mitmproxy-based request filter.
 * Splitting out complex multi-service applications over separate containers,
   such as databases, caches or worker processes, similar to Docker Compose. The
   [Redis example](/docs/examples/sidecar_redis) shows the pattern.
 
 We're still discovering all the ways that Sandbox Sidecars can be used - if you
-come up with another use case, please let us know!
+come up with another use case, please let us know! For more background on why
+we built Sidecars, see the [Sidecars launch blog post](https://modal.com/blog/introducing-sandbox-sidecars-trust-boundary).
 
 Sidecars are managed through the sidecars interface on a Sandbox
 (`_experimental_sidecars` in Python, `experimentalSidecars` in JS/Go),
@@ -35,9 +45,21 @@ which provides methods to create, list, get, and terminate Sidecar containers.
 Each Sidecar container:
 
 * Runs its own image independently from the main Sandbox container.
-* Runs in a separate, sandboxed process isolated from the main Sandbox container and other Sidecar containers.
-* Can communicate over an internal bridge network with the main Sandbox container and other Sidecar containers.
+* Is isolated from the main Sandbox container and other Sidecar containers with
+  the same isolation boundary as separate Sandboxes: gVisor or a VM, depending on
+  the Sandbox's [runtime](/docs/guide/sandboxes#runtimes).
+* Can communicate over an internal bridge network with the main Sandbox container
+  and other Sidecar containers. In our benchmarks, communication between a Sandbox
+  and its Sidecars is at least 3x faster than between separate Sandboxes in the
+  same region.
+* Is created through the Modal SDK, not from inside the Sandbox, so code running
+  in the main Sandbox container can't create or modify it.
 * Can be created, terminated, and replaced dynamically during the Sandbox's lifetime.
+  Terminating the Sandbox stops all of its Sidecars.
+* Has its own outbound network policy, independent of the main Sandbox container.
+* Shares the CPU and memory of the Sandbox, which makes Sidecars more cost-efficient
+  than running the same processes across multiple Sandboxes. See
+  [Resource configuration](#resource-configuration).
 * Supports executing commands just like the main Sandbox container.
 
 ## Usage
@@ -161,8 +183,6 @@ func main() {
 ```
 
 {/snippet} </CodeTabs>
-
-Sidecars use the same [runtime](/docs/guide/sandboxes#runtimes) as the main Sandbox.
 
 ### Listing and retrieving sidecars
 
@@ -297,6 +317,19 @@ The option cannot be combined with setting `block_network`,
 You can specify that traffic from a Sidecar should exit through a
 [Proxy](/docs/guide/proxy-ips) by passing a `proxy` at Sidecar creation, just as
 for a Sandbox.
+
+### Connect Tokens
+
+<Callout variant="info">
+
+Sidecars can connect directly to every port on the main container, including
+the port that [Connect Tokens](/docs/guide/sandbox-networking#connecting-to-sandboxes-with-http-and-websockets)
+route requests to. Requests a Sidecar sends to that port do not need a token,
+and can set any `X-Verified-User-Data` header. If your server in the main
+container trusts that header, avoid using Connect Tokens and Sidecars together
+in the same Sandbox.
+
+</Callout>
 
 ### OIDC tokens
 
@@ -637,4 +670,6 @@ for sidecars:
 * **Limitations on GPU Sandboxes**: You can attach Sidecars to Sandboxes with GPUs, but the Sidecar is CPU-only and cannot attach [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
 * **No memory snapshot support**: A Sidecar's [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots) and [individual directories](/docs/guide/sandbox-snapshots#directory-snapshots) can be independently snapshotted, but Sidecar memory state can not be captured with a
   [memory snapshot](/docs/guide/sandbox-snapshots#memory-snapshots).
+* **Sidecars bypass Connect Tokens**: a Sidecar can reach the main container's Connect Token port directly and set any
+  `X-Verified-User-Data` header. See [Connect Tokens](#connect-tokens).
 * **Changes to /etc/hosts are not preserved**: `/etc/hosts` is rewritten on sidecar create/terminate and user changes are not preserved.

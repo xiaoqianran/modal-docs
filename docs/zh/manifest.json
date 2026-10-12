@@ -802,14 +802,14 @@
       "bytes": 4080
     },
     "docs/guide/sandbox-networking.md": {
-      "hash": "e982eea7c2be7c5ed1b895808d1fa80bb7b5a6e5",
-      "translatedAt": "2026-09-30T12:21:43.431Z",
-      "bytes": 18184
+      "hash": "341bf22c9503b00d052a6852eb5e707d512732c9",
+      "translatedAt": "2026-10-12T15:06:57.547Z",
+      "bytes": 18314
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "a39ee2e8c6e7f71577d57cdc1891e502cfd4b8d1",
-      "translatedAt": "2026-10-02T12:19:29.387Z",
-      "bytes": 19238
+      "hash": "4f900155452b48487824ed1b3bb6156f1b101704",
+      "translatedAt": "2026-10-12T15:07:00.566Z",
+      "bytes": 19057
     },
     "docs/guide/scale.md": {
       "hash": "4a8710b0a08c1516d4cdb6c760d114d591e41074",
@@ -1492,9 +1492,9 @@
       "bytes": 66129
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "742f08eee31b3a8a61c94d032a2d3909f88f38b6",
-      "translatedAt": "2026-10-03T11:29:17.167Z",
-      "bytes": 20227
+      "hash": "7bb37471bad240454b0e7caf8a28f494b11462e6",
+      "translatedAt": "2026-10-12T15:06:53.506Z",
+      "bytes": 22081
     },
     "docs/guide/data-residency.md": {
       "hash": "9393f850eba7b0b76d6e4fd0e685c5d6a9af67fd",
@@ -1718,10 +1718,10 @@
       "bytes": 2084
     }
   },
-  "updatedAt": "2026-10-11T12:34:05.442Z",
+  "updatedAt": "2026-10-12T15:07:00.566Z",
   "stats": {
-    "translated": 0,
-    "skipped": 340,
+    "translated": 3,
+    "skipped": 337,
     "failed": 0,
     "total": 340
   }
