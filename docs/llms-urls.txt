@@ -116,6 +116,7 @@ https://modal.com/docs/guide/developing-debugging.md
 https://modal.com/docs/guide/dicts.md
 https://modal.com/docs/guide/dynamic-batching.md
 https://modal.com/docs/guide/dynamic-function-config.md
+https://modal.com/docs/guide/endpoint-candidates.md
 https://modal.com/docs/guide/endpoint-integrations.md
 https://modal.com/docs/guide/endpoints.md
 https://modal.com/docs/guide/entra-sso.md

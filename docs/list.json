@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-12T15:06:46.144Z",
+  "fetchedAt": "2026-10-13T13:59:42.698Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 324,
-  "ok": 324,
+  "totalUrls": 325,
+  "ok": 325,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 26477,
+      "bytes": 26556,
       "stub": false
     },
     {
@@ -950,6 +950,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/endpoint-candidates.md",
+      "source": "https://modal.com/docs/guide/endpoint-candidates.md",
+      "finalUrl": "https://modal.com/docs/guide/endpoint-candidates.md",
+      "path": "docs/guide/endpoint-candidates.md",
+      "bytes": 2928,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/endpoint-integrations.md",
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
@@ -1266,7 +1274,7 @@
       "source": "https://modal.com/docs/guide/queues.md",
       "finalUrl": "https://modal.com/docs/guide/queues.md",
       "path": "docs/guide/queues.md",
-      "bytes": 4680,
+      "bytes": 4734,
       "stub": false
     },
     {
@@ -1354,7 +1362,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 23302,
+      "bytes": 23186,
       "stub": false
     },
     {
@@ -1466,7 +1474,7 @@
       "source": "https://modal.com/docs/guide/sticky-sessions.md",
       "finalUrl": "https://modal.com/docs/guide/sticky-sessions.md",
       "path": "docs/guide/sticky-sessions.md",
-      "bytes": 6475,
+      "bytes": 6849,
       "stub": false
     },
     {

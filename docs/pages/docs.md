@@ -47,6 +47,7 @@ The docs are organized into three main sections:
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
   - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
+  - [Endpoint candidates](https://modal.com/docs/guide/endpoint-candidates.md)
   - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Training
   - [Quickstart](https://modal.com/docs/guide/training-quickstart.md)

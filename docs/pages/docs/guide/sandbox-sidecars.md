@@ -560,10 +560,12 @@ regardless of the resource reservation.
 On the gVisor runtime, bursting is still possible; see the [guide to Sandbox resources and
 pricing](/docs/guide/sandbox-resources) for more details.
 
-On the VM runtime, Sidecars cannot be combined with memory bursting. Instead, you need to
-reserve memory for any Sidecars when you launch the Sandbox. That reserve is incompatible with VM memory bursting,
-so the Sandbox must set an equal memory request and limit. With every Sidecar launch, you either specify how much of
-the reserve to use for that Sidecar, or leave the option empty to use the entire remaining reserve:
+On the VM runtime, you need to reserve memory for any Sidecars when you launch the Sandbox.
+The reserve is carved out of the main VM's memory: it boots with `memory - reserve` and, if the
+Sandbox uses [memory bursting](/docs/guide/sandbox-resources), never grows past `limit - reserve`,
+leaving the reserve for Sidecars. The request must leave the main VM at least 1024 MiB. With every
+Sidecar launch, you either specify how much of the reserve to use for that Sidecar, or leave the
+option empty to use the entire remaining reserve:
 
 <CodeTabs>
 {#snippet python()}
@@ -576,7 +578,7 @@ sb = modal.Sandbox.create(
     image=image,
     timeout=300,
     runtime="vm",
-    memory=(8192, 8192),
+    memory=8192,
     experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
 )
 
@@ -607,7 +609,6 @@ const sb = await modal.sandboxes.create(app, image, {
   timeoutMs: 300 * 1000,
   runtime: "vm",
   memoryMiB: 8192,
-  memoryLimitMiB: 8192,
   experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
 });
 
@@ -633,7 +634,6 @@ sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 	Timeout:             5 * time.Minute,
 	Runtime:             modal.SandboxRuntimeVM,
 	MemoryMiB:           8192,
-	MemoryLimitMiB:      8192,
 	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
 })
 
@@ -666,7 +666,6 @@ for sidecars:
   building is not supported for sidecars. See also
   [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).
 * **No stdin/stdout**: A Sidecar's entrypoint does not expose stdin, stdout, or stderr streams.
-* **No VM memory bursting**: Sidecars on the VM runtime cannot be combined with VM memory bursting. Set an equal memory request and limit, e.g. `memory=(8192, 8192)`.
 * **Limitations on GPU Sandboxes**: You can attach Sidecars to Sandboxes with GPUs, but the Sidecar is CPU-only and cannot attach [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts).
 * **No memory snapshot support**: A Sidecar's [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots) and [individual directories](/docs/guide/sandbox-snapshots#directory-snapshots) can be independently snapshotted, but Sidecar memory state can not be captured with a
   [memory snapshot](/docs/guide/sandbox-snapshots#memory-snapshots).

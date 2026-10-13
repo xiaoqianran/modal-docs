@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "dc79a98d11342db2d65b28c0cc842740110c50c0",
-      "translatedAt": "2026-10-06T13:10:55.182Z",
-      "bytes": 25937
+      "hash": "ccc66a57dd3449ce8f20bab8493892f72ab5a807",
+      "translatedAt": "2026-10-13T14:00:14.086Z",
+      "bytes": 25989
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -747,9 +747,9 @@
       "bytes": 4055
     },
     "docs/guide/queues.md": {
-      "hash": "1dc1c857709c9004b6375cfe747d8cd19c58a046",
-      "translatedAt": "2026-08-08T18:29:39.138Z",
-      "bytes": 4372
+      "hash": "d16d6d9b33c35c0735370811483f39b9cee5b189",
+      "translatedAt": "2026-10-13T13:59:49.220Z",
+      "bytes": 4413
     },
     "docs/guide/resources.md": {
       "hash": "6c756d1241eb604290996ae854051a7f5dfdea19",
@@ -1492,9 +1492,9 @@
       "bytes": 66129
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "7bb37471bad240454b0e7caf8a28f494b11462e6",
-      "translatedAt": "2026-10-12T15:06:53.506Z",
-      "bytes": 22081
+      "hash": "05b4b088e92c22ddc90646231c60514267893ef4",
+      "translatedAt": "2026-10-13T14:00:04.425Z",
+      "bytes": 22006
     },
     "docs/guide/data-residency.md": {
       "hash": "9393f850eba7b0b76d6e4fd0e685c5d6a9af67fd",
@@ -1698,9 +1698,9 @@
       "bytes": 6379
     },
     "docs/guide/sticky-sessions.md": {
-      "hash": "433fa4d82364e1a1504adcb903bed8ef705eaf86",
-      "translatedAt": "2026-10-06T13:11:03.232Z",
-      "bytes": 6095
+      "hash": "90748690fb6090d4d29cd1bd3a0d2b1f219e6b25",
+      "translatedAt": "2026-10-13T14:00:09.727Z",
+      "bytes": 6424
     },
     "docs/examples/sandbox_secret_injection.md": {
       "hash": "dd536a0249671c7fb854a047181603bf7238654e",
@@ -1716,13 +1716,18 @@
       "hash": "9bbddc156d5212641c12d47748ebda41ce0a78f2",
       "translatedAt": "2026-10-06T13:10:58.448Z",
       "bytes": 2084
+    },
+    "docs/guide/endpoint-candidates.md": {
+      "hash": "9d66a97f8e394b135bed332d7a3e750d92f38b75",
+      "translatedAt": "2026-10-13T13:59:44.798Z",
+      "bytes": 2630
     }
   },
-  "updatedAt": "2026-10-12T15:07:00.566Z",
+  "updatedAt": "2026-10-13T14:00:14.086Z",
   "stats": {
-    "translated": 3,
-    "skipped": 337,
+    "translated": 5,
+    "skipped": 336,
     "failed": 0,
-    "total": 340
+    "total": 341
   }
 }

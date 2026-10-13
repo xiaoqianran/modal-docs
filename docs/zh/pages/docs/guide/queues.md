@@ -54,8 +54,8 @@ def main(x="some object"):
 队列通过字符串键分为单独的 FIFO 分区。默认情况下，一个
 使用分区（对应于空键）。
 单个`Queue`最多可以包含100,000个分区，每个分区最多5,000个
-项目。每个项目最多可达 1 MiB。这些限制也适用于默认
-分区。
+项目。每个项目最大可达 1 MiB，每个分区最大可达 64 MiB
+总大小。这些限制也适用于默认分区。
 
 每个分区都有独立的TTL，默认24小时。
 较低的 TTL 可以通过 `put` 中的 `partition_ttl` 参数指定，或者
@@ -86,8 +86,8 @@ with modal.Queue.ephemeral() as q:
 
 ## 您可以同步或异步、阻塞或非阻塞访问模态队列
 
-队列默认是同步且阻塞的。消费者会阻塞并等待
-在空队列上，生产者将阻塞并等待满队列，两者都带有 `Optional`，可配置 `timeout`。如果`timeout`是`None`，
+队列默认是同步且阻塞的。消费者会阻塞并等待在空队列上，生产者将阻塞并等待满队列，
+两者都带有 `Optional`，可配置 `timeout`。如果`timeout`是`None`，
 他们将无限期地等待。如果提供了 `timeout`，`get` 方法将引发
 [`queue.Empty`](https://docs.python.org/3/library/queue.html#queue.Empty)
 异常和 `put` 方法将会引发
@@ -116,7 +116,7 @@ async def main(value=None):
 
 Python 队列可以具有任何类型的值。
 
-模态队列可以存储任何可序列化类型的 Python 对象。
+模态队列可以存储任何可序列化类型的Python对象。
 
 对象使用[`cloudpickle`](https://github.com/cloudpipe/cloudpickle)进行序列化，
 因此精确的支持是从该库继承的。 `cloudpickle` 可以序列化令人惊讶的各种对象，

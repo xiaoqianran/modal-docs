@@ -25,7 +25,9 @@ class Server:
 
 ## 启动并使用粘性会话
 
-会话有一个生命周期，在此期间它们可以为属于它的一个或多个请求提供服务。调用 `Server.sessions.start()` 创建一个会话并将其分配给一个容器，必要时旋转一个容器，并返回一个 `session_id` 和一个会话令牌。任何携带令牌作为 `Modal-Authorization: Bearer <token>` 标头的 HTTP 请求（包括 WebSocket 握手）都会确定性地路由到该容器。
+会话有一个生命周期，在此期间它们可以为属于它的一个或多个请求提供服务。
+
+调用 `Server.sessions.start()` 创建一个会话并将其分配给一个容器，必要时旋转一个容器，并返回一个 `session_id` 和一个会话令牌。任何携带令牌作为 `Modal-Authorization: Bearer <token>` 标头的 HTTP 请求（包括 WebSocket 握手）都会确定性地路由到该容器。转发到容器的每个请求都携带 `x-modal-server-session-id` 标头，其中包含请求会话的 `session_id` (`sd-...`)。这可用于将服务器收到的请求与其会话相关联。
 
 一旦达到配置的空闲超时，会话就会自然结束。也可以是
 通过终止请求显式结束。终止的会话等待任何正在进行的会话
@@ -41,7 +43,6 @@ requests.get(server.get_url(), headers=headers).raise_for_status()
 
 server.sessions.terminate(session_creds.token)
 ```
-
 也可以使用原始 HTTP 请求在 SDK 外部管理会话。在下面的示例中，`PROXY_AUTH_TOKEN`是组合`wk-<id>.ws-<secret>`格式的[代理令牌](/docs/guide/webhook-proxy-auth)，`SESSION_TOKEN`是启动会话时返回的令牌：
 
 ```bash
@@ -62,6 +63,7 @@ curl -X POST "$SERVER_URL/_modal/sessions/terminate" \
 ```
 
 ## 授权
+
 启动或终止会话遵循正常的[服务器请求身份验证](/docs/guide/servers#request-authentication)。
 
 要发出属于会话的请求，请将其会话令牌包含在 `Modal-Authorization: Bearer <token>` 标头中。不需要[代理令牌](/docs/guide/webhook-proxy-auth)。即使服务器设置了`unauthenticated=True`，也需要会话令牌。任何对会话服务器的非会话流量（即没有会话令牌的请求）都会被拒绝，此类工作负载应使用服务器。
@@ -83,15 +85,19 @@ curl -i "$SERVER_URL/?modal_session_token=$SESSION_TOKEN"
 curl -i "$SERVER_URL/" --cookie "__Host-modal-session-token=$SESSION_TOKEN"
 # HTTP/1.1 200 OK
 ```
-
 通过在升级请求之前发出引导 HTTP 请求以将查询参数令牌交换为会话 cookie，来支持 WebSocket 请求。
 
 ## 会话并发和自动缩放
-带有`@modal.sessioned`装饰器的服务器还支持设置最大并发和目标并发。与分别基于[输入](/docs/guide/servers#concurrency-and-autoscaling)和[并发请求](/docs/guide/functions#autoscaling-and-parallelism)进行扩展的函数和服务器不同，会话服务器的并发单位是会话。单个容器在任何给定时间最多允许 `max_concurrency`（默认为 1000 个）活动会话。当目标并发未设置时，它默认为`max_concurrency`，超出此限制的附加会话启动请求会触发附加容器的扩展（除非达到`max_containers`）。 `max_concurrency` 每个容器的会话上限为 1000 个。
+
+具有`@modal.sessioned`装饰器的服务器还支持设置最大并发和目标并发。与分别基于[输入](/docs/guide/servers#concurrency-and-autoscaling)和[并发请求](/docs/guide/functions#autoscaling-and-parallelism)进行扩展的函数和服务器不同，会话服务器的并发单位是会话。单个容器在任何给定时间最多允许 `max_concurrency`（默认为 1000 个）活动会话。当目标并发未设置时，它默认为`max_concurrency`，超出此限制的附加会话启动请求会触发附加容器的扩展（除非达到`max_containers`）。 `max_concurrency` 每个容器的会话上限为 1000 个。
 
 为了实现更积极的自动缩放，即使有可用空间，服务器也可以指定目标并发数，其中`0 < target_concurrency <= max_concurrency <= 1000`。
-
 其他服务器自动缩放控制，例如还可以设置放大/缩小窗口、缓冲容器等以进行进一步调整。有关更多详细信息，请参阅[服务器并发和自动缩放](/docs/guide/servers#concurrency-and-autoscaling)。
 
 ## 排队
+
 与对非会话服务器的请求不同，如果无法将请求路由到容器，就会立即拒绝，会话创建会排队等待最多 5 分钟的容量。排队仅适用于会话启动。
+
+## 示例
+
+有关粘性会话的基本用例，请参阅[会话式 WebSocket 聊天室示例](/docs/examples/sessioned_chatroom)。

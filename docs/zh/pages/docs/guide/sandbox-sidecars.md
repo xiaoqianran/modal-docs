@@ -305,7 +305,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 
 相反，中继流量由 Sidecar 的出口控制控制。
 转发到. Sidecar的出站网络策略独立于main
-容器的并且默认打开，所以除非你通过 `outbound_cidr_allowlist`
+容器的并且默认是打开的，所以除非你通过 `outbound_cidr_allowlist`
 或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
 Sidecar 选择连接到的任何目的地。
 
@@ -391,7 +391,7 @@ fmt.Println(state) // "ready"
 
 ### 目录挂载和快照
 
-您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它之后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
+您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它之后。您还可以将 Sidecar 目录快照到新镜像中。由此产生的
 图像可以在任何接受现有图像的地方使用，包括作为安装
 或作为新容器的文件系统。
 
@@ -472,7 +472,7 @@ Sidecar可以挂载[云桶挂载](/docs/guide/cloud-bucket-mounts)，
 配置方式与沙盒上相同。每个容器都有自己的挂载：
 安装在 Sidecar 中的存储桶在主 Sandbox 容器中不可见，或者
 在其他 Sidecar 中，因此将其安装在每个需要它的容器中。云桶
-GPU 沙箱的 Sidecar 不支持挂载。
+GPU 沙盒的 Sidecar 不支持挂载。
 
 <CodeTabs>
 {#snippet python()}
@@ -538,7 +538,7 @@ fmt.Println(string(stdout))
 使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
 身份令牌是为 Sidecar 容器颁发的，因此其`container_id`
 声明与主容器的声明不同。匹配的 IAM 信任策略
-完整主题还必须允许 Sidecar 的容器 ID。
+完整的主题也必须允许 Sidecar 的容器 ID。
 
 ## 资源配置
 
@@ -558,10 +558,12 @@ fmt.Println(string(stdout))
 在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
 定价](/docs/guide/sandbox-resources) 了解更多详细信息。
 
-在VM运行时，Sidecar不能与内存爆发结合起来。相反，您需要
-当您启动沙盒时，为任何 Sidecar 保留内存。该保留与 VM 内存爆发不兼容，
-因此沙箱必须设置相等的内存请求和限制。每次 Sidecar 启动时，您都可以指定
-用于该 Sidecar 的储备，或将该选项留空以使用全部剩余储备：
+在 VM 运行时上，启动 Sandbox 时需要为任何 Sidecar 预留内存。
+预留空间是从主 VM 的内存中划分出来的：它以 `memory - reserve` 启动，并且如果
+沙箱使用[内存爆发](/docs/guide/sandbox-resources)，永远不会超过`limit - reserve`，
+留下边车的储备。该请求必须为主虚拟机留下至少 1024 MiB。与每一个
+Sidecar 启动时，您可以指定用于该 Sidecar 的储备量，或者保留
+选项为空以使用全部剩余储备：
 
 <CodeTabs>
 {#snippet python()}
@@ -574,7 +576,7 @@ sb = modal.Sandbox.create(
     image=image,
     timeout=300,
     runtime="vm",
-    memory=(8192, 8192),
+    memory=8192,
     experimental_options={"vm_sidecar_memory_reserve_mib": 1024},
 )
 
@@ -598,13 +600,13 @@ worker = sb._experimental_sidecars.create(
 {/片段}
 
 {#snippet javascript()}
+
 ```javascript notest
 const sb = await modal.sandboxes.create(app, image, {
   command: ["sleep", "600"],
   timeoutMs: 300 * 1000,
   runtime: "vm",
   memoryMiB: 8192,
-  memoryLimitMiB: 8192,
   experimentalOptions: { vm_sidecar_memory_reserve_mib: "1024" },
 });
 
@@ -630,7 +632,6 @@ sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 	Timeout:             5 * time.Minute,
 	Runtime:             modal.SandboxRuntimeVM,
 	MemoryMiB:           8192,
-	MemoryLimitMiB:      8192,
 	ExperimentalOptions: map[string]any{"vm_sidecar_memory_reserve_mib": "1024"},
 })
 
@@ -657,16 +658,15 @@ _ = worker
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
 
-* **仅预构建图像**：Sidecar 图像必须已存在：使用 `image.build()` 预构建，a
+* **仅预构建的图像**：Sidecar 图像必须已经存在：使用 `image.build()` 预构建，a
   [命名图像](/docs/guide/named-images) 通过 `Image.from_name()`，
   通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅
   [将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **无 stdin/stdout**：Sidecar 的入口点不公开 stdin、stdout 或 stderr 流。
-* **无 VM 内存爆发**：VM 运行时上的 Sidecar 不能与 VM 内存爆发相结合。设置相等的内存请求和限制，例如`memory=(8192, 8192)`。
 * **GPU 沙箱的限制**：您可以将 Sidecar 连接到具有 GPU 的沙箱，但 Sidecar 仅限 CPU，无法连接 [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts)。
-* **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[单个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
+* **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[各个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
   [内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。
 * **Sidecars 绕过 Connect Tokens**：Sidecar 可以直接到达主容器的 Connect Token 端口并设置任何
-  `X-Verified-User-Data` 标题。请参阅[连接令牌](#connect-tokens)。
+  `X-Verified-User-Data` 标头。请参阅[连接令牌](#connect-tokens)。
 * **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
