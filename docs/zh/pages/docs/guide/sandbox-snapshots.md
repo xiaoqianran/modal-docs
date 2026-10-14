@@ -138,7 +138,7 @@ assert p2.stdout.read().strip() == "test"
 
 ### 分叉
 
-由于文件系统快照是[图像](/docs/reference/modal.Image)，因此您可以从同一快照创建多个沙箱。每个沙盒都以快照文件系统的相同副本开始，因此您可以使用它来运行并行工作负载或独立测试不同的更改。
+由于文件系统快照是[图像](/docs/sdk/py/latest/modal.Image)，因此您可以从同一快照创建多个沙箱。每个沙盒都以快照文件系统的相同副本开始，因此您可以使用它来运行并行工作负载或独立测试不同的更改。
 
 <CodeTabs>
   {#snippet python()}

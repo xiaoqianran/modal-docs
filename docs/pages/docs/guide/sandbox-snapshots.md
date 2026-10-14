@@ -139,7 +139,7 @@ and will not be included in the resulting Image.
 
 ### Forking
 
-Since Filesystem Snapshots are [Images](/docs/reference/modal.Image), you can create multiple Sandboxes from the same snapshot. Each Sandbox starts with an identical copy of the snapshotted filesystem, so you can use this to run parallel workloads or test different changes independently.
+Since Filesystem Snapshots are [Images](/docs/sdk/py/latest/modal.Image), you can create multiple Sandboxes from the same snapshot. Each Sandbox starts with an identical copy of the snapshotted filesystem, so you can use this to run parallel workloads or test different changes independently.
 
 <CodeTabs>
   {#snippet python()}
