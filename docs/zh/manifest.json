@@ -1723,10 +1723,10 @@
       "bytes": 2630
     }
   },
-  "updatedAt": "2026-10-14T11:36:41.777Z",
+  "updatedAt": "2026-10-15T11:15:11.602Z",
   "stats": {
-    "translated": 1,
-    "skipped": 340,
+    "translated": 0,
+    "skipped": 341,
     "failed": 0,
     "total": 341
   }
