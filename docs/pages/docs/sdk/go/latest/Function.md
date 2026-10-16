@@ -5,8 +5,32 @@ Function references a deployed Modal Function.
 ```go
 type Function struct {
 	FunctionID string
-	Logs       *FunctionLogsManager // Logs provides access to logs emitted by this Function.
+	Logs       *FunctionLogsManager    // Logs provides access to logs emitted by this Function.
+	Metrics    *FunctionMetricsManager // Metrics provides metric samples and schema definitions.
 }
+```
+
+## FromID
+
+*Accessed via `client.Functions`*
+
+```go
+FromID(ctx context.Context, functionID string) (*Function, error)
+```
+
+FromID references a Function by its ID.
+
+```
+client, err := modal.NewClient()
+if err != nil {
+	return err
+}
+defer client.Close()
+fn, err := client.Functions.FromID(ctx, "fu-***")
+if err != nil {
+	return err
+}
+fmt.Println(fn.getWebURL())
 ```
 
 ## FromName
@@ -70,6 +94,57 @@ Spawn(ctx context.Context, args []any, kwargs map[string]any) (*FunctionCall, er
 ```
 
 Spawn starts running a single input on a remote Function.
+
+## Stats
+
+```go
+Stats(ctx context.Context, params *FunctionStatsParams) (*FunctionStats, error)
+```
+
+Stats returns historical statistics. The default range is the last hour; the maximum range is 7 days.
+
+Read statistics for the last hour:
+
+```
+fn, err := client.Functions.FromName(ctx, "libmodal-test-support", "echo_string", nil)
+if err != nil {
+	return err
+}
+stats, err := fn.Stats(ctx, nil)
+if err != nil {
+	return err
+}
+fmt.Println(stats.InputSuccessCount, stats.InputFailureCount)
+```
+
+Include all variants over the last 24 hours:
+
+```
+until := time.Now()
+since := until.Add(-24 * time.Hour)
+variantStats, err := fn.Stats(ctx, &modal.FunctionStatsParams{
+	Since:       &since,
+	Until:       &until,
+	AllVariants: true,
+})
+if err != nil {
+	return err
+}
+for metric, distribution := range variantStats.InputPercentileStats {
+	fmt.Println(metric, distribution.Unit, distribution.Percentiles)
+}
+```
+
+Set Container to a container ID to restrict statistics to that container.
+
+**Parameters** (`FunctionStatsParams`)
+
+FunctionStatsParams contains options for Function.Stats.
+
+* `Since` (`*time.Time`): Since is inclusive and defaults to one hour before Until.
+* `Until` (`*time.Time`): Until is exclusive and defaults to the current time.
+* `Container` (`string`): Container restricts statistics to this container ID.
+* `AllVariants` (`bool`): AllVariants aggregates the base Function and its variants.
 
 ## UpdateAutoscaler
 
@@ -203,3 +278,84 @@ LogTailParams are options for fetching the most recent logs.
 
 * `Entries` (`int`): Entries is the number of log entries to return. It defaults to 100.
 * `Source` (`LogSource`): Source filters logs by stdout, stderr, or system. The zero value includes all sources.
+
+## Function.Metrics
+
+Metrics provides metric samples and schema definitions.
+
+### Export
+
+```go
+Export(ctx context.Context, params *FunctionMetricsExportParams) (*ObjectMetrics, error)
+```
+
+Export fetches metric samples for a Function.
+
+Defaults to all groups over the last hour. Since defaults to one hour before
+Until. The maximum range is 31 days, with at most 500 points per series. If
+BucketSize is omitted, Modal selects a supported width targeting approximately
+100 buckets. Bounds round down to UTC bucket boundaries, so data before Since
+may be included and the partial bucket at Until is excluded.
+
+Set AllVariants to true to include the root Function and its variants.
+Missing observations have a nil Value. Use `FunctionMetricsManager.Schema` to
+discover group names and series definitions without fetching samples.
+
+```
+bucketSize := 5 * time.Minute
+metrics, err := function.Metrics.Export(ctx, &modal.FunctionMetricsExportParams{
+	BucketSize: &bucketSize,
+	Groups:     []string{"calls"},
+})
+if err != nil {
+	return err
+}
+for _, point := range metrics.Series["successful_calls_count"].Points {
+	if point.Value == nil {
+		fmt.Println(point.Time, "missing")
+	} else {
+		fmt.Println(point.Time, *point.Value)
+	}
+}
+```
+
+**Parameters** (`FunctionMetricsExportParams`)
+
+FunctionMetricsExportParams configures a metric export.
+
+* `Since` (`*time.Time`): Since defaults to one hour before Until.
+* `Until` (`*time.Time`): Until defaults to the current time.
+* `BucketSize` (`*time.Duration`): BucketSize is optional; nil lets Modal select a supported width.
+* `Groups` (`[]string`): Groups selects metric groups; empty selects all groups.
+* `AllVariants` (`bool`): AllVariants includes the root Function and all its variants.
+
+### Schema
+
+```go
+Schema(ctx context.Context, params *MetricsSchemaParams) (map[string]MetricsSchema, error)
+```
+
+Schema returns metric definitions keyed by group name without fetching samples.
+Pass nil params or omit Groups to return all supported groups. Each group's
+Definitions contains its individual series names, units, and descriptions.
+Use these group names in `FunctionMetricsExportParams.Groups` when exporting.
+
+Inspect the available call metrics:
+
+```
+schema, err := fn.Metrics.Schema(ctx, &modal.MetricsSchemaParams{
+	Groups: []string{"calls"},
+})
+if err != nil {
+	return err
+}
+for _, definition := range schema["calls"].Definitions {
+	fmt.Println(definition.Name, definition.Unit, definition.Description)
+}
+```
+
+**Parameters** (`MetricsSchemaParams`)
+
+MetricsSchemaParams selects groups whose definitions should be returned.
+
+* `Groups` (`[]string`): Groups defaults to all groups.

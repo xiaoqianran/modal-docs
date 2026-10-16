@@ -168,6 +168,8 @@ async fromName(
 Get a running `Sandbox` by name from a deployed `App`.
 
 Raises a `NotFoundError` if no running Sandbox is found with the given name.
+If `includeTerminated` is set to `true` and no Sandbox with the name is currently
+running, the most recent terminated Sandbox will be returned instead.
 A Sandbox's name is the `name` argument passed to `sandboxes.create()`.
 
 * `appName`: Name of the deployed App
@@ -178,6 +180,7 @@ A Sandbox's name is the `name` argument passed to `sandboxes.create()`.
 Optional parameters for `client.sandboxes.fromName()`.
 
 * `environment?` (`string`)
+* `includeTerminated?` (`boolean`): If `includeTerminated` is set to `true` and no Sandbox with the name is currently running, the most recent terminated Sandbox will be returned instead.
 
 **Returns:** Promise that resolves to a Sandbox
 
@@ -208,6 +211,7 @@ EXPERIMENTAL: the API is subject to change.
 Optional parameters for `client.sandboxes.experimentalFromName()`.
 
 * `environment?` (`string`)
+* `includeTerminated?` (`boolean`): If `includeTerminated` is set to `true` and no Sandbox with the name is currently running, the most recent terminated Sandbox will be returned instead.
 
 **Returns:** Promise that resolves to a Sandbox
 
@@ -687,6 +691,8 @@ Options for `SidecarService.create()`.
 * `cloudBucketMounts?` (`Record<string, CloudBucketMount>`): Mount points for Modal `CloudBucketMount`s. Not supported for GPU Sandboxes.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the sidecar is allowed to access. Independent of the main container; if not set, all CIDRs are allowed. An empty list blocks all external egress while preserving connectivity to the main container.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the sidecar is allowed to access. Supports wildcard prefixes (`*.example.com`). Independent of the main container.
+* `includeOidcIdentityToken?` (`boolean`): If true, the sidecar receives a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP). The token identifies the sidecar container itself, not the main container. Not supported for GPU Sandboxes.
+* `proxy?` (`Proxy`): `Proxy` to route the sidecar's outbound traffic through, giving it a static outbound IP of its own, independent of the main container. Not supported for GPU Sandboxes.
 * `pty?` (`boolean`): Enable a PTY for the sidecar.
 * `experimentalMemoryReserveConsumeMiB?` (`number`): Memory, in MiB, the sidecar consumes from the Sandbox's sidecar memory reserve (the `vm_sidecar_memory_reserve_mib` experimental option); unset consumes whatever is left of it. Ignored by Sandboxes without a reserve. Experimental.
 

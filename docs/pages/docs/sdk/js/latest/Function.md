@@ -7,7 +7,24 @@ class Function_ {
   readonly functionId: string;
   readonly methodName?: string;
   get logs(): FunctionLogsManager; // Access logs for this Function. Use `fetch()` to read logs from a UTC time range, `tail()` to read the most recent logs, and `stream()` to follow new logs as they arrive. See also: [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs) for CLI access to logs for an App.
+  get metrics(): FunctionMetricsManager; // Access metric samples with export() and series definitions with schema().
 }
+```
+
+## fromId
+
+*Accessed via `modal.functions`*
+
+```typescript
+async fromId(functionId: string): Promise<Function_>
+```
+
+Reference a `Function` by its ID.
+
+```typescript
+const client = new ModalClient();
+const fn = await client.functions.fromId("fu-***");
+console.log(await fn.getWebUrl());
 ```
 
 ## fromName
@@ -74,6 +91,42 @@ async spawn(
   kwargs: Record<string, any> = {},
 ): Promise<FunctionCall>
 ```
+
+## stats
+
+```typescript
+async stats(params: FunctionStatsParams = {}): Promise<FunctionStats>
+```
+
+Return historical statistics. Defaults to the last hour; the maximum range is 7 days.
+
+**Parameters** (`FunctionStatsParams`)
+
+* `since?` (`Date`): Inclusive start; defaults to one hour before until.
+* `until?` (`Date`): Exclusive end; defaults to the current time.
+* `container?` (`string`): Restrict statistics to this container ID.
+* `allVariants?` (`boolean`): Aggregate the base Function and its variants. Defaults to false.
+
+Read statistics for the last hour.
+
+```ts
+const fn = await modal.functions.fromName("libmodal-test-support", "echo_string");
+const stats = await fn.stats();
+console.log(stats.inputSuccessCount, stats.inputFailureCount);
+```
+
+Include all variants over the last 24 hours.
+
+```ts
+const until = new Date();
+const since = new Date(until.getTime() - 24 * 60 * 60 * 1000);
+const variantStats = await fn.stats({ since, until, allVariants: true });
+for (const [metric, distribution] of Object.entries(variantStats.inputPercentileStats)) {
+  console.log(metric, distribution.unit, distribution.percentiles);
+}
+```
+
+Set `container` to a container ID to restrict statistics to that container.
 
 ## updateAutoscaler
 
@@ -247,3 +300,60 @@ for await (const entry of function_.logs.tail({ entries: 20 })) {
   process.stdout.write(entry.message);
 }
 ```
+
+## Function.metrics
+
+Access metric samples with export() and series definitions with schema().
+
+### export
+
+```typescript
+async export(
+  params: FunctionMetricsExportParams = {},
+): Promise<ObjectMetrics>
+```
+
+Fetch metric samples, defaulting to all groups over the last hour.
+
+The maximum range is 31 days, with at most 500 points per series. Omit
+bucketSizeSecs to let Modal select a supported width targeting approximately
+100 buckets. Bounds round down to UTC bucket boundaries: data before since
+may be included, and the partial bucket at until is excluded.
+Missing observations have value null. Use schema() to discover definitions.
+
+**Parameters** (`FunctionMetricsExportParams`)
+
+Options for exporting Function metric samples.
+
+* `since?` (`Date`): Defaults to one hour before until.
+* `until?` (`Date`): Defaults to the current time.
+* `bucketSizeSecs?` (`number`): Bucket width in whole seconds.
+* `allVariants?` (`boolean`): Include the root Function and all its variants. Defaults to false.
+
+```typescript
+const metrics = await fn.metrics.export({
+  bucketSizeSecs: 5 * 60,
+  groups: ["calls"],
+});
+for (const point of metrics.series["successful_calls_count"].points) {
+  console.log(point.time, point.value);
+}
+```
+
+### schema
+
+```typescript
+async schema(
+  params: MetricsSchemaParams = {},
+): Promise<Record<string, MetricsSchema>>
+```
+
+Return metric definitions keyed by group name, without fetching samples.
+Omit groups to return all groups. Each group's definitions include all its
+individual series.
+
+**Parameters** (`MetricsSchemaParams`)
+
+Options for discovering metric definitions.
+
+* `groups?` (`string[]`): Omit or pass an empty array to select all groups.

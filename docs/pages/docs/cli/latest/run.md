@@ -31,6 +31,21 @@ names as they do locally.
 modal run -m my_project.my_app
 ```
 
+Pass `-` to read the script from stdin. The script must have a single local
+entrypoint (or a single function):
+
+```
+modal run - <<'EOF'
+import modal
+
+app = modal.App()
+
+@app.function()
+def hello():
+    print("hello from Modal")
+EOF
+```
+
 **Usage**:
 
 ```shell

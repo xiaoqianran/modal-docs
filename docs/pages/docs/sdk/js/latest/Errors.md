@@ -36,6 +36,11 @@ class ExecutionError extends Error
 
 Function execution exceeds the allowed time limit.
 
+`FunctionCall.get()` throws `TimeoutError`
+instead when `timeoutMs` elapses before the Function finishes. Matching that
+case with `instanceof FunctionTimeoutError` is deprecated and will stop
+working in a future release.
+
 ```typescript
 class FunctionTimeoutError extends Error
 ```

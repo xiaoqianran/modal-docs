@@ -19,6 +19,7 @@ modal workspace [OPTIONS] COMMAND [ARGS]...
 
 * `members`: View the members of the current Workspace.
 * `proxy-tokens`: Manage the proxy tokens of the current Workspace.
+* `service-users`: Manage Service Users.
 * `settings`: Manage workspace settings.
 
 ## `modal workspace members`
@@ -229,6 +230,186 @@ modal workspace proxy-tokens update wk-123 name production-webhooks
 
 ```shell
 modal workspace proxy-tokens update [OPTIONS] TOKEN_ID SETTING VALUE
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+## `modal workspace service-users`
+
+Manage Service Users. Must be workspace manager or owner.
+
+Service users are programmatic accounts that allow automated systems to interact with Modal. They're
+ideal for CI/CD pipelines, automated deployments, and other workflows that need to authenticate.
+
+Service User credentials are typically made available to a process as environment variables:
+
+```
+export MODAL_TOKEN_ID=your-token-id
+export MODAL_TOKEN_SECRET=your-token-secret
+```
+
+A newly created Service User has no permissions by default. In order to interact with a specific
+Environment, Service Users must be granted explicit permissions.
+
+See https://modal.com/docs/guide/service-users for more information.
+
+**Usage**:
+
+```shell
+modal workspace service-users [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+**Commands**:
+
+* `create`: Create a Service User in this workspace.
+* `delete`: Delete a Service User in this Workspace.
+* `info`: Inspect a Service User in this workspace.
+* `list`: List all Service Users in this workspace.
+* `set-role`: Update a Service User's role in a specific Environment.
+
+### `modal workspace service-users create`
+
+Create a Service User in this workspace.
+
+In order to run this command, you must have at least Manager level permissions in the Workspace.
+
+By default, Service Users have no permissions. To explicitly grant the Service User permissions
+to interact with a given environment, use [`modal workspace service-users set-role`](https://modal.com/docs/cli/latest/workspace#modal-workspace-service-users-set-role)
+or [`modal environment roles update`](https://modal.com/docs/cli/latest/environment#modal-environment-roles-update).
+
+Optionally, you can also specify an expiration window by passing `--expires-in`. After the specified
+amount of time elapses, this Service User will be deleted, and any credentials associated with
+this Service User will stop working. The option expects a positive integer value, optionally
+suffixed by the units `s`, `m`, `h`, or `d`, meaning seconds, minutes, hours, and days respectively.
+If no suffix is provided, the value is interpreted as seconds. If `--expires-in` is not provided,
+the newly created Service User will never expire.
+
+Examples:
+
+```bash
+# Create a Service User named `test-1`, which never expires:
+modal workspace service-users create test-1
+
+# Two ways of creating a Service User which is valid for an hour:
+modal workspace service-users create test-2 --expires-in 3600
+modal workspace service-users create test-3 --expires-in 1h
+
+# Create a Service User which is valid for 1 year, outputting JSON:
+modal workspace service-users create test-4 --expires-in 365d --json
+```
+
+**Usage**:
+
+```shell
+modal workspace service-users create [OPTIONS] NAME
+```
+
+**Options**:
+
+* `--expires-in TEXT`: Expiration time. Accepts integers (interpreted as seconds), as well as values suffixed by `s`, `m`, `h`, or `d`.
+* `--json`: Output as JSON.
+* `--help`: Show this message and exit.
+
+### `modal workspace service-users delete`
+
+Delete a Service User in this Workspace.
+
+Note that this action is irreversible. Any existing processes / scripts that use the credentials
+associated with the target Service User will stop being able to authenticate with Modal.
+
+```bash
+# Delete the Service User named `test-service-user`
+modal workspace service-users delete test-service-user
+```
+
+**Usage**:
+
+```shell
+modal workspace service-users delete [OPTIONS] NAME
+```
+
+**Options**:
+
+* `--allow-missing`: Don't error if the Volume doesn't exist.
+* `-y, --yes`: Run without pausing for confirmation.
+* `--help`: Show this message and exit.
+
+### `modal workspace service-users info`
+
+Inspect a Service User in this workspace.
+
+Examples:
+
+```bash
+# Inspect the Service User named `test-service-user`
+modal workspace service-users info test-service-user
+
+# Inspect the Service User named `test-service-user-2`, outputting JSON
+modal workspace service-users info test-service-user-2 --json
+```
+
+**Usage**:
+
+```shell
+modal workspace service-users info [OPTIONS] NAME
+```
+
+**Options**:
+
+* `--json`: Output as JSON.
+* `--help`: Show this message and exit.
+
+### `modal workspace service-users list`
+
+List all Service Users in this workspace.
+
+In order to run this command, you must have at least Manager level permissions in the Workspace.
+
+Examples:
+
+```bash
+# List all Service Users with a human-readable output format
+modal workspace service-users list
+
+# List all Service Users and return JSON output
+modal workspace service-users list --json
+```
+
+**Usage**:
+
+```shell
+modal workspace service-users list [OPTIONS]
+```
+
+**Options**:
+
+* `--json`: Output as JSON.
+* `--help`: Show this message and exit.
+
+### `modal workspace service-users set-role`
+
+Update a Service User's role in a specific Environment.
+
+Examples:
+
+```bash
+# Give Contributor access in Environment `main` to Service User `test-service-user`
+modal workspace service-users set-role test-service-user main contributor
+
+# Revoke access to Environment `prod` from Service User `test-service-user`
+modal workspace service-users set-role test-service-user prod no-access
+```
+
+**Usage**:
+
+```shell
+modal workspace service-users set-role [OPTIONS] SERVICE_USER_NAME ENVIRONMENT_NAME ROLE
 ```
 
 **Options**:

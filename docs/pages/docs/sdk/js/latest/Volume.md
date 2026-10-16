@@ -25,6 +25,7 @@ Optional parameters for `client.volumes.fromName()`.
 
 * `environment?` (`string`)
 * `createIfMissing?` (`boolean`)
+* `version?` (`1 | 2`): Experimental VolumeFS version; omit to accept either version.
 
 ## ephemeral
 

@@ -14,11 +14,109 @@ modal function [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
+* `autoscaler`: View and Configure Autoscaler settings for Modal Functions.
 * `calls`: Show recent inputs for a Modal Function.
 * `info`: Show information about a given Modal Function.
 * `logs`: Fetch or stream Function logs.
+* `metrics`: Preview and export metrics for a Modal Function.
 * `stats`: Show aggregate statistics for a Modal Function.
 * `variants`: List the variants of a Modal Function.
+
+## `modal function autoscaler`
+
+View and Configure Autoscaler settings for Modal Functions.
+
+**Usage**:
+
+```shell
+modal function autoscaler [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+**Commands**:
+
+* `settings`: Show the current Autsocaling settings for the provided Function.
+* `update`: Update the current Autsocaling settings for the provided Function.
+
+### `modal function autoscaler settings`
+
+Show the current Autsocaling settings for the provided Function.
+
+In addition to the current settings, this command also shows any active overrides to these
+settings, along with metadata about who overrode the setting, and when. FUNCTION may be a
+Function ID or a deployed Function name in the form `APP_NAME/FUNCTION_NAME`.
+
+If a setting's value is the default and not overridden, its value is omitted in the output.
+
+Examples:
+
+Show autoscaling settings for a deployed Function:
+
+```
+modal function autoscaler settings my-app/my-function
+```
+
+Show autoscaling settings using a Function ID:
+
+```
+modal function autoscaler settings fu-1234
+```
+
+**Usage**:
+
+```shell
+modal function autoscaler settings [OPTIONS] FUNCTION
+```
+
+**Options**:
+
+* `--json`: Output as JSON.
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--help`: Show this message and exit.
+
+### `modal function autoscaler update`
+
+Update the current Autsocaling settings for the provided Function.
+
+FUNCTION may be a Function ID or a deployed Function name in the form `APP_NAME/FUNCTION_NAME`.
+
+Settings can be modified using the `--max-containers`, `--min-containers`, `--buffer-containers`,
+and `--scaledown-window` options.
+
+If provided, Max Containers should be a positive integer, Min/Buffer Containers should be
+nonnegative integers, and Scaledown window should be a positive integer measured in seconds.
+
+Examples:
+
+Update Max Containers for a deployed Function:
+
+```
+modal function autoscaler update my-app/my-function --max-containers 10
+```
+
+Update both Min and Buffer Containers for a Function by ID:
+
+```
+modal function autoscaler update fu-1234 --min-containers 3 --buffer-containers 2
+```
+
+**Usage**:
+
+```shell
+modal function autoscaler update [OPTIONS] FUNCTION
+```
+
+**Options**:
+
+* `--max-containers TEXT`: Maximum concurrent containers.
+* `--min-containers TEXT`: Minimum number of containers to keep running.
+* `--buffer-containers TEXT`: Extra containers to keep warm beyond current demand.
+* `--scaledown-window TEXT`: Maximum duration (in seconds) idle containers wait before scaling down.
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--help`: Show this message and exit.
 
 ## `modal function calls`
 
@@ -28,10 +126,21 @@ FUNCTION may be a Function ID or a deployed Function name in the form
 `APP_NAME/FUNCTION_NAME`. Each unique input corresponds to one entry
 in the output.
 
+Use `--since` and/or `--until` to fetch all inputs in the time range,
+oldest first. `--until` defaults to now. If `--since` is omitted, the preceeding hour
+is fetched. If timezones are omitted, the time is interpreted as local time.
+
+`--tail` cannot be combined with either date option.
+By default, `--tail` returns the latest 10 inputs, newest first.
+
 Examples:
 
 ```
 modal function calls my-app/my-function
+```
+
+```
+modal function calls my-app/my-function --since 2h --until 1h
 ```
 
 Show recent calls across all variants of a Cls:
@@ -54,7 +163,9 @@ modal function calls [OPTIONS] FUNCTION
 
 **Options**:
 
-* `-n, --tail INTEGER RANGE`: Show up to the last N Function inputs.  \[default: 10; 1<=x<=1000]
+* `-n, --tail INTEGER RANGE`: Show up to the last N Function inputs. Defaults to 10. Cannot be combined with --since or --until.  \[1<=x<=1000]
+* `--since TEXT`: Fetch inputs enqueued at or after this time (e.g. '2h' or an ISO 8601 datetime).
+* `--until TEXT`: Fetch inputs enqueued before this time (e.g. '1h' or an ISO 8601 datetime).
 * `--all-variants`: Include inputs from the base Function and all its variants.
 * `--show-function-call-id`: Include the Function Call ID in table output.
 * `--json`: Output calls as JSON.
@@ -178,6 +289,74 @@ modal function logs [OPTIONS] FUNCTION_REF
 * `--show-function-call-id`: Prefix each line with its FunctionCall ID
 * `--show-container-id`: Prefix each line with its Container ID
 * `--all-variants`: Include logs from the base and all its variants.
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--help`: Show this message and exit.
+
+## `modal function metrics`
+
+Preview and export metrics for a Modal Function.
+
+Function may be an Object ID or a deployed Function name in the form
+`APP_NAME/FUNCTION_NAME`.
+
+Each metric is a time series over the window from `--since` to `--until`
+(default: the last hour, maximum: 31 days). Samples are aggregated into
+fixed-width buckets.
+
+Set the width with `--bucket-size`. Each series is limited to 500 buckets, so long windows
+need wider buckets. Time bounds are rounded down to bucket boundaries in UTC.
+Results may include data before --since and exclude data between the last boundary and --until.
+
+Series are grouped by name. Specify which metrics to return with `--group`.
+
+By default, prints a schema summarizing the date range, bucket size, and time series that would
+be returned. Use `--json` or `--csv` to output the raw samples instead.
+
+Preview available Function metrics:
+
+```shell
+modal function metrics my-app/my-function
+```
+
+Export calls metrics for the last two hours as JSON:
+
+```shell
+modal function metrics my-app/my-function --group calls --since 2h --json > metrics.json
+```
+
+Export CPU, memory, network, and GPU metrics:
+
+```shell
+modal function metrics my-app/my-function --group cpu --group memory --group network --group gpu --json
+```
+
+Save container metrics with five-minute buckets as CSV:
+
+```shell
+modal function metrics fu-abc123 --group containers --bucket-size 5m --csv > metrics.csv
+```
+
+Export all metrics groups across all parametrized variants:
+
+```shell
+modal function metrics my-app/MyClass.* --all-variants --json > metrics.json
+```
+
+**Usage**:
+
+```shell
+modal function metrics [OPTIONS] FUNCTION
+```
+
+**Options**:
+
+* `--since TEXT`: Start time: ISO 8601 or relative duration (e.g. 2h). Naive times are local.
+* `--until TEXT`: End time; same syntax as --since. Defaults to now.
+* `--group TEXT`: Metric group; repeat to select multiple. Defaults to all. Valid values are 'containers', 'cpu', 'memory', 'network', 'gpu', 'calls'.
+* `--bucket-size DURATION`: Bucket width: 1m, 2m, 3m, 4m, 5m, 6m, 10m, 12m, 15m, 20m, 30m, 1h, 2h, 3h, 4h, 8h, 12h, 1d. By default, a value is chosen that splits the time range into approximately 100 buckets.
+* `--json`: Fetch metric samples and output JSON.
+* `--csv`: Fetch metric samples and output CSV.
+* `--all-variants`: Aggregate the root Function and its variants.
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
 * `--help`: Show this message and exit.
 

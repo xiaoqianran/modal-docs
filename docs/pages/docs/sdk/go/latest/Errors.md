@@ -55,6 +55,10 @@ type ExecutionError struct {
 
 FunctionTimeoutError is returned when a Function execution exceeds the allowed time limit.
 
+FunctionCall.Get also returns it, wrapping a TimeoutError, when its Timeout elapses before the
+Function finishes. Matching that case as a FunctionTimeoutError is deprecated: a future release
+will return a plain TimeoutError there, so check for it with errors.As(err, \&TimeoutError{}).
+
 ```go
 type FunctionTimeoutError struct {
 	Exception string

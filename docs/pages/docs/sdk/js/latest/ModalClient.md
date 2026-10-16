@@ -21,6 +21,7 @@ class ModalClient {
   readonly apps: AppService;
   readonly cloudBucketMounts: CloudBucketMountService;
   readonly cls: ClsService;
+  readonly environments: EnvironmentService;
   readonly functions: FunctionService;
   readonly functionCalls: FunctionCallService;
   readonly images: ImageService;

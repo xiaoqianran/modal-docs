@@ -25,6 +25,7 @@ VolumeFromNameParams are options for finding Modal Volumes.
 
 * `Environment` (`string`)
 * `CreateIfMissing` (`bool`)
+* `Version` (`int`): Version selects a VolumeFS version: 0 leaves it unspecified (any version), while 1 or 2 selects that version. This option is experimental and matches the Python SDK.
 
 ## Ephemeral
 

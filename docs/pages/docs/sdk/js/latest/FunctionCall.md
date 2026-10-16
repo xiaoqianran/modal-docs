@@ -49,6 +49,11 @@ Optional parameters for `FunctionCall.get()`.
 
 * `timeoutMs?` (`number`)
 
+**Raises:**
+
+* `TimeoutError`: if `timeoutMs` elapses before the Function finishes.
+* `FunctionTimeoutError`: if the Function exceeds its execution timeout.
+
 ## FunctionCall.logs
 
 Access logs for this FunctionCall.

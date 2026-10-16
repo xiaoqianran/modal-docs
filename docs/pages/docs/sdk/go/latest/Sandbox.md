@@ -1,9 +1,7 @@
 # Sandbox
 
 Sandbox represents a Modal Sandbox, which can run commands and manage
-input/output streams for a remote process. After you are done interacting with the sandbox,
-we recommend calling `Sandbox.Detach` which disconnects your client from the sandbox and
-cleans up any resources associated with the connection.
+input/output streams for a remote process.
 
 ```go
 type Sandbox struct {
@@ -158,7 +156,9 @@ FromName(ctx context.Context, appName, name string, params *SandboxFromNameParam
 
 FromName gets a running Sandbox by name from a deployed App.
 
-Raises a NotFoundError if no running Sandbox is found with the given name.
+Raises a NotFoundError if no running Sandbox is found with the given name,
+unless IncludeTerminated is set, in which case the most recently created
+Sandbox with the name is returned even if it has terminated.
 A Sandbox's name is the `Name` argument passed to `App.CreateSandbox`.
 
 **Parameters** (`SandboxFromNameParams`)
@@ -166,6 +166,7 @@ A Sandbox's name is the `Name` argument passed to `App.CreateSandbox`.
 SandboxFromNameParams are options for finding deployed Sandbox objects by name.
 
 * `Environment` (`string`)
+* `IncludeTerminated` (`bool`): If IncludeTerminated is set to true and no Sandbox with the name is currently running, the most recent terminated Sandbox will be returned instead.
 
 ## ExperimentalFromName
 
@@ -185,6 +186,7 @@ EXPERIMENTAL: the API is subject to change.
 SandboxExperimentalFromNameParams are options for SandboxService.ExperimentalFromName.
 
 * `Environment` (`string`)
+* `IncludeTerminated` (`bool`): If IncludeTerminated is set to true and no Sandbox with the name is currently running, the most recent terminated Sandbox will be returned instead.
 
 ## ExperimentalFromSnapshot
 
@@ -622,6 +624,8 @@ SidecarCreateParams holds options for creating a sidecar container.
 * `CloudBucketMounts` (`map[string]*CloudBucketMount`): CloudBucketMounts to mount in the sidecar container, keyed by mount path. Not supported for GPU Sandboxes.
 * `OutboundCIDRAllowlist` (`*Allowlist`): OutboundCIDRAllowlist restricts the sidecar's outbound traffic to these CIDRs. Independent of the main container; nil means all CIDRs are allowed. A non-nil allowlist with empty Entries blocks all external egress while preserving connectivity to the main container.
 * `OutboundDomainAllowlist` (`*Allowlist`): OutboundDomainAllowlist restricts the sidecar's outbound TLS connections (port 443) to these SNI domains. Supports wildcard prefixes (\*.example.com). Independent of the main container.
+* `IncludeOidcIdentityToken` (`bool`): IncludeOidcIdentityToken gives the sidecar a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP). The token identifies the sidecar container itself, not the main container. Not supported for GPU Sandboxes; Create returns an InvalidError for them.
+* `Proxy` (`*Proxy`): Proxy routes the sidecar's outbound traffic through a Modal Proxy, giving it a static outbound IP of its own, independent of the main container. Not supported for GPU Sandboxes; Create returns an InvalidError for them.
 * `PTY` (`bool`): PTY sets whether to enable a PTY for the sidecar container.
 * `ExperimentalMemoryReserveConsumeMiB` (`int`): ExperimentalMemoryReserveConsumeMiB is the memory, in MiB, the sidecar consumes from the Sandbox's sidecar memory reserve (the vm\_sidecar\_memory\_reserve\_mib experimental option); zero consumes whatever is left of it. Ignored by Sandboxes without a reserve. Experimental.
 

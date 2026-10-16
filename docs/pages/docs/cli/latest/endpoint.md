@@ -75,7 +75,7 @@ modal endpoint create [OPTIONS]
 **Options**:
 
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
-* `--name TEXT`: Endpoint name. If not provided, a default will be derived from the model name.
+* `--name TEXT`: Endpoint name. Defaults to inference-`{number}` if not provided.
 * `--model TEXT`: Hugging Face repo ID for the base model architecture (e.g., 'Qwen/Qwen3.6-27B-FP8').  \[required]
 * `--routing-region TEXT`: Region to route inference requests through. Defaults to us-west.
 * `--compute-region TEXT`: Region to run Endpoint containers in. May be specified multiple times. This incurs a region selection price multiplier.

@@ -50,6 +50,9 @@ Get(ctx context.Context, params *FunctionCallGetParams) (any, error)
 Get waits for the output of a FunctionCall.
 If timeout > 0, the operation will be cancelled after the specified duration.
 
+If Timeout elapses before the Function finishes, the returned error matches TimeoutError with
+errors.As. If the Function exceeds its execution timeout, it is a FunctionTimeoutError.
+
 **Parameters** (`FunctionCallGetParams`)
 
 FunctionCallGetParams are options for getting outputs from Function Calls.

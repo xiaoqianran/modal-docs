@@ -1721,13 +1721,167 @@
       "hash": "9d66a97f8e394b135bed332d7a3e750d92f38b75",
       "translatedAt": "2026-10-13T13:59:44.798Z",
       "bytes": 2630
+    },
+    "docs/sdk/go/latest/AppInfo.md": {
+      "hash": "be58f676d266b25551d3c739b41f4ade41441e0e",
+      "translatedAt": "2026-10-16T11:11:21.237Z",
+      "bytes": 309,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/AppLifecycle.md": {
+      "hash": "346b003fc9135ee17a573c06e5044f10895a01bf",
+      "translatedAt": "2026-10-16T11:11:21.462Z",
+      "bytes": 372,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/AppState.md": {
+      "hash": "55e68412bf01215b2f89b244cba65509beb78e78",
+      "translatedAt": "2026-10-16T11:11:34.269Z",
+      "bytes": 413,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/Environment.md": {
+      "hash": "657bda0bc0b78f2cee6f37f63eb5e33c4196ad03",
+      "translatedAt": "2026-10-16T11:11:47.891Z",
+      "bytes": 1837,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/MetricDefinition.md": {
+      "hash": "c48b38d4180f3ff15d620c700c08087e89942095",
+      "translatedAt": "2026-10-16T11:12:14.701Z",
+      "bytes": 173,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/MetricSeries.md": {
+      "hash": "7db2183936c3a78c3e64a7012899672bc6acfc9d",
+      "translatedAt": "2026-10-16T11:12:27.960Z",
+      "bytes": 234,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/MetricsSchema.md": {
+      "hash": "f9c4b3f7b3ae83a42b95a0ff5ca56d59c0b8ea1b",
+      "translatedAt": "2026-10-16T11:12:28.092Z",
+      "bytes": 173,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/ObjectMetrics.md": {
+      "hash": "fd0aafd2e48b4adb0d9ce34b9df387b6f25cd3c1",
+      "translatedAt": "2026-10-16T11:12:41.557Z",
+      "bytes": 347,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/StatsPercentileDistribution.md": {
+      "hash": "3a7015793352a4e00b831b70481dffa68de1b63b",
+      "translatedAt": "2026-10-16T11:12:54.394Z",
+      "bytes": 219,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/StatsPercentile.md": {
+      "hash": "886ef1d655067cd044e30b32fdb73b3e9b35ba1b",
+      "translatedAt": "2026-10-16T11:12:54.686Z",
+      "bytes": 188,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/go/latest/TimeSeriesPoint.md": {
+      "hash": "15745b86012dc41b0e70a5d6f0cee979e63c00d6",
+      "translatedAt": "2026-10-16T11:13:07.858Z",
+      "bytes": 231,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/AppInfo.md": {
+      "hash": "8b15c5802b527176ec9577d4c84bf004f72c41f2",
+      "translatedAt": "2026-10-16T11:13:34.063Z",
+      "bytes": 364,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/AppLifecycle.md": {
+      "hash": "ba087233a3a4ba29522acca76b78b9f5b9555e0f",
+      "translatedAt": "2026-10-16T11:13:34.960Z",
+      "bytes": 289,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/AppState.md": {
+      "hash": "55cf1c230329c7f2ebd32cd2c7785f1ec2fa8857",
+      "translatedAt": "2026-10-16T11:13:46.973Z",
+      "bytes": 203,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/Environment.md": {
+      "hash": "2d5cd8b9d28419a5e2c12bd74175b156ea06a2b8",
+      "translatedAt": "2026-10-16T11:13:47.891Z",
+      "bytes": 2121,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/MetricDefinition.md": {
+      "hash": "b9dfb565653c4d2320b21f6c4d5e40f8b9c71689",
+      "translatedAt": "2026-10-16T11:14:26.800Z",
+      "bytes": 178,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/MetricSeries.md": {
+      "hash": "d5873c7ac4d058af26f1a9474edc48e1c0d0223d",
+      "translatedAt": "2026-10-16T11:14:27.696Z",
+      "bytes": 226,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/MetricsSchema.md": {
+      "hash": "afd45d7b5d3f056ded4ae88b52c4071d3d0cbab9",
+      "translatedAt": "2026-10-16T11:14:40.373Z",
+      "bytes": 170,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/ObjectMetrics.md": {
+      "hash": "ddd2632342947c18bb39930a87094e7ab0990097",
+      "translatedAt": "2026-10-16T11:14:53.775Z",
+      "bytes": 343,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/StatsPercentileDistribution.md": {
+      "hash": "79a4f96100d1ce9ab29c11221852c743575dd846",
+      "translatedAt": "2026-10-16T11:15:06.988Z",
+      "bytes": 141,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/StatsPercentile.md": {
+      "hash": "3aae72c79adad22827e25fdb2605c4e5861d7a75",
+      "translatedAt": "2026-10-16T11:15:07.103Z",
+      "bytes": 106,
+      "fallback": true,
+      "error": "HTTP 429"
+    },
+    "docs/sdk/js/latest/TimeSeriesPoint.md": {
+      "hash": "1a252ff7a9eaade546475a086555606bbc011404",
+      "translatedAt": "2026-10-16T11:15:19.717Z",
+      "bytes": 221,
+      "fallback": true,
+      "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-15T11:15:11.602Z",
+  "updatedAt": "2026-10-16T11:16:27.247Z",
   "stats": {
     "translated": 0,
-    "skipped": 341,
-    "failed": 0,
-    "total": 341
+    "skipped": 301,
+    "failed": 62,
+    "total": 363
   }
 }
