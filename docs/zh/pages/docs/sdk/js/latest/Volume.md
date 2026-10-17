@@ -27,6 +27,7 @@ async fromName(name: string, params?: VolumeFromNameParams): Promise<Volume>
 
 * `environment?` (`string`)
 * `createIfMissing?` (`boolean`)
+* `version?` (`1 | 2`): 实验VolumeFS版本；省略接受任一版本。
 
 ## 短暂的
 
@@ -47,13 +48,13 @@ async ephemeral(params: VolumeEphemeralParams = {}): Promise<Volume>
 
 ## 删除
 
-*通过`modal.volumes`访问*
-
-```typescript
+*通过`modal.volumes`访问*```typescript
 async delete(name: string, params?: VolumeDeleteParams): Promise<void>
 ```
 
-删除名为`Volume`。警告：删除是不可逆的，并且会影响当前使用该卷的任何应用程序。
+删除名为`Volume`。
+
+警告：删除是不可逆的，并且会影响当前使用该卷的任何应用程序。
 
 **参数** (`VolumeDeleteParams`)
 

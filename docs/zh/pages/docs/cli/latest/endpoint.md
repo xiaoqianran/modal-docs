@@ -75,13 +75,13 @@ modal endpoint create [OPTIONS]
 
 **选项**：
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--name TEXT`：端点名称。如果未提供，将从模型名称派生默认值。
+* `--name TEXT`：端点名称。如果未提供，则默认为 inference-`{number}`。
 * `--model TEXT`：基本模型架构的 Hugging Face 存储库 ID（例如“Qwen/Qwen3.6-27B-FP8”）。  \[必填]
 * `--routing-region TEXT`：用于路由推理请求的区域。默认为美国西部。
 * `--compute-region TEXT`：运行端点容器的区域。可以指定多次。这会产生区域选择价格乘数。* `--colocate-compute`：运行路由区域内的所有容器。这会产生区域选择价格乘数。
 * `--unauthenticated`：允许对端点进行未经身份验证的 HTTP 请求。
 * `--custom-hf-repo TEXT`：Hugging Face 存储库 ID，用于微调模型权重。
-* `--custom-hf-revision TEXT`：Git 修订版 --custom-hf-repo。
+* `--custom-hf-revision TEXT`：--custom-hf-repo 的 Git 修订版。
 * `--custom-hf-token TEXT`：私有的拥抱脸部令牌--custom-hf-repo。
 * `--custom-volume-name TEXT`：包含自定义模型权重的模态体积名称。
 * `--custom-volume-path TEXT`：包含模型权重的体积内的路径。
@@ -100,10 +100,10 @@ modal endpoint info qwen-chat
 ```
 
 通过 ID 获取有关端点的信息：
+
 ```bash
 modal endpoint info ep-123456
 ```
-
 将信息输出为 JSON：
 
 ```bash
@@ -200,8 +200,8 @@ modal endpoint logs qwen-chat --source stderr --search timeout --timestamps
 ```shell
 modal endpoint logs [OPTIONS] ENDPOINT_IDENTIFIER
 ```
-**选项**：
 
+**选项**：
 * `-f, --follow`：流式传输日志输出直到中断
 * `--since TEXT`：时间范围的开始。接受 ISO 8601 日期时间或相对时间，例如“1d”、“2h”或“30m”。
 * `--until TEXT`：时间范围结束；接受与 --since 相同的参数类型
@@ -209,9 +209,9 @@ modal endpoint logs [OPTIONS] ENDPOINT_IDENTIFIER
 * `--search TEXT`: 按搜索文本过滤
 * `--container TEXT`: 按容器 ID 过滤 (ta-\*)
 * `-s, --source TEXT`：按源过滤：'stdout'、'stderr' 或 'system'
-* `--timestamps`：在每行前面加上时间戳作为前缀
+* `--timestamps`：在每行前面加上时间戳
 * `--show-server-id`：在每行前面加上服务器 ID 前缀
-* `--show-container-id`：在每行前面加上容器 ID 前缀* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `--show-container-id`：在每行前面加上容器 ID 前缀* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 
 ## `modal endpoint stats`
@@ -255,8 +255,8 @@ modal endpoint stats qwen-chat \
     --until 2026-09-01T08:00:00Z \
     --json
 ```
-显示特定容器的统计信息：
 
+显示特定容器的统计信息：
 ```bash
 modal endpoint stats qwen-chat --container-id ta-12345
 ```
@@ -274,7 +274,7 @@ modal endpoint stats [OPTIONS] ENDPOINT_IDENTIFIER
 * `--container-id CONTAINER_ID`：仅计算此容器的统计数据。
 * `--no-color`：禁用输出中的颜色。
 * `--json`：将统计数据输出为 JSON。
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 
 ## `modal endpoint stop`
@@ -289,6 +289,6 @@ modal endpoint stop [OPTIONS] ENDPOINT_IDENTIFIER
 
 **选项**：
 
-* `-y, --yes`：运行时无需暂停确认。
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-y, --yes`：运行时不暂停确认。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。

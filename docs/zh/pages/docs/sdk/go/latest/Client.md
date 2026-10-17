@@ -10,6 +10,7 @@ type Client struct {
 	Apps              AppService
 	CloudBucketMounts CloudBucketMountService
 	Cls               ClsService
+	Environments      *EnvironmentService
 	Functions         FunctionService
 	FunctionCalls     FunctionCallService
 	Images            ImageService

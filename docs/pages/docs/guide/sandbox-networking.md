@@ -16,6 +16,9 @@ Modal provides three levels of outbound network restriction:
 
 `outbound_cidr_allowlist` and `outbound_domain_allowlist` can be combined additively - traffic that meets either criteria will be let through.
 
+Sidecars have their own outbound network policy; see [Sandbox Sidecars →
+Outbound access control](/docs/guide/sandbox-sidecars#outbound-access-control).
+
 <Callout variant="warning">
 Currently, DNS traffic is allowed without restriction except when all outbound traffic is blocked.
 </Callout>

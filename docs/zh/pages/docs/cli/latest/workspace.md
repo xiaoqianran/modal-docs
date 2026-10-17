@@ -21,6 +21,7 @@ modal workspace [OPTIONS] COMMAND [ARGS]...
 
 * `members`：查看当前Workspace的成员。
 * `proxy-tokens`：管理当前Workspace的代理代币。
+* `service-users`：管理服务用户。
 * `settings`：管理工作区设置。
 
 ## `modal workspace members`
@@ -35,9 +36,9 @@ modal workspace members [OPTIONS] COMMAND [ARGS]...
 
 **选项**：
 
-* `--help`：显示此消息并退出。
+* `--help`：显示此消息并退出。**命令**：
 
-**命令**：* `list`：列出当前Workspace的成员。
+* `list`：列出当前Workspace的成员。
 
 ### `modal workspace members list`
 
@@ -71,10 +72,10 @@ Modal-Secret: ws-456
 ```
 
 或者作为单个不记名令牌：
-
 ```
 Authorization: Bearer wk-123.ws-456
 ```
+
 请参阅https://modal.com/docs/guide/webhook-proxy-auth了解更多信息。
 
 在启用 RBAC 的工作区中，令牌的范围仅限于特定环境；
@@ -230,6 +231,180 @@ modal workspace proxy-tokens update [OPTIONS] TOKEN_ID SETTING VALUE
 
 * `--help`：显示此消息并退出。
 
+## `modal workspace service-users`
+
+管理服务用户。必须是工作区经理或所有者。
+
+服务用户是允许自动化系统与 Modal 交互的编程帐户。他们是
+非常适合 CI/CD 管道、自动化部署和其他需要身份验证的工作流程。
+
+服务用户凭据通常作为环境变量提供给进程：
+
+```
+export MODAL_TOKEN_ID=your-token-id
+export MODAL_TOKEN_SECRET=your-token-secret
+```
+新创建的服务用户默认没有权限。为了与特定的人进行交互
+环境、服务用户必须被授予明确的权限。
+
+请参阅https://modal.com/docs/guide/service-users了解更多信息。
+
+**用法**：
+
+```shell
+modal workspace service-users [OPTIONS] COMMAND [ARGS]...
+```
+
+**选项**：
+
+* `--help`：显示此消息并退出。
+
+**命令**：
+
+* `create`：在此工作区中创建服务用户。
+* `delete`：删除此工作空间中的服务用户。
+* `info`：检查此工作区中的服务用户。
+* `list`：列出此工作区中的所有服务用户。
+* `set-role`：更新服务用户在特定环境中的角色。
+
+### `modal workspace service-users create`在此工作区中创建服务用户。
+
+为了运行此命令，您必须至少在工作区中拥有管理员级别权限。
+
+默认情况下，服务用户没有权限。显式授予服务用户权限
+要与给定环境交互，请使用 [`modal workspace service-users set-role`](https://modal.com/docs/cli/latest/workspace#modal-workspace-service-users-set-role)
+或[`modal environment roles update`](https://modal.com/docs/cli/latest/environment#modal-environment-roles-update)。
+
+或者，您还可以通过传递 `--expires-in` 来指定过期窗口。指定后
+经过一段时间后，该服务用户将被删除，并且与此相关的任何凭据
+该服务用户将停止工作。该选项需要一个正整数值，可选
+后缀为单位 `s`、`m`、`h` 或 `d`，分别表示秒、分钟、小时和天。
+如果未提供后缀，则该值将解释为秒。如果没有提供`--expires-in`，
+新创建的服务用户永远不会过期。
+
+示例：
+
+```bash
+# Create a Service User named `test-1`, which never expires:
+modal workspace service-users create test-1
+
+# Two ways of creating a Service User which is valid for an hour:
+modal workspace service-users create test-2 --expires-in 3600
+modal workspace service-users create test-3 --expires-in 1h
+
+# Create a Service User which is valid for 1 year, outputting JSON:
+modal workspace service-users create test-4 --expires-in 365d --json
+```
+
+**用法**：
+
+```shell
+modal workspace service-users create [OPTIONS] NAME
+```
+
+**选项**：
+
+* `--expires-in TEXT`：过期时间。接受整数（解释为秒）以及以 `s`、`m`、`h` 或 `d` 为后缀的值。
+* `--json`：输出为 JSON。
+* `--help`：显示此消息并退出。
+
+### `modal workspace service-users delete`
+
+删除此工作区中的服务用户。请注意，此操作是不可逆转的。使用凭据的任何现有进程/脚本
+与目标服务用户关联的用户将无法通过 Modal 进行身份验证。
+
+```bash
+# Delete the Service User named `test-service-user`
+modal workspace service-users delete test-service-user
+```
+
+**用法**：
+
+```shell
+modal workspace service-users delete [OPTIONS] NAME
+```
+
+**选项**：
+
+* `--allow-missing`：如果卷不存在，则不会出错。
+* `-y, --yes`：运行时不暂停确认。
+* `--help`：显示此消息并退出。
+
+### `modal workspace service-users info`
+
+检查此工作区中的服务用户。
+
+示例：
+
+```bash
+# Inspect the Service User named `test-service-user`
+modal workspace service-users info test-service-user
+
+# Inspect the Service User named `test-service-user-2`, outputting JSON
+modal workspace service-users info test-service-user-2 --json
+```
+
+**用法**：
+
+```shell
+modal workspace service-users info [OPTIONS] NAME
+```
+
+**选项**：
+
+* `--json`：输出为 JSON。
+* `--help`：显示此消息并退出。
+
+### `modal workspace service-users list`
+
+列出此工作区中的所有服务用户。
+为了运行此命令，您必须至少在工作区中拥有管理员级别权限。
+
+示例：
+
+```bash
+# List all Service Users with a human-readable output format
+modal workspace service-users list
+
+# List all Service Users and return JSON output
+modal workspace service-users list --json
+```
+
+**用法**：
+
+```shell
+modal workspace service-users list [OPTIONS]
+```
+
+**选项**：
+
+* `--json`：输出为 JSON。
+* `--help`：显示此消息并退出。
+
+### `modal workspace service-users set-role`
+
+更新特定环境中服务用户的角色。
+
+示例：
+
+```bash
+# Give Contributor access in Environment `main` to Service User `test-service-user`
+modal workspace service-users set-role test-service-user main contributor
+
+# Revoke access to Environment `prod` from Service User `test-service-user`
+modal workspace service-users set-role test-service-user prod no-access
+```
+
+**用法**：
+
+```shell
+modal workspace service-users set-role [OPTIONS] SERVICE_USER_NAME ENVIRONMENT_NAME ROLE
+```
+
+**选项**：
+
+* `--help`：显示此消息并退出。
+
 ## `modal workspace settings`
 
 管理工作区设置。必须是工作区经理或所有者。
@@ -244,9 +419,7 @@ modal workspace settings [OPTIONS] COMMAND [ARGS]...
 
 * `--help`：显示此消息并退出。
 
-**命令**：
-
-* `list`：查看工作区的当前设置。
+**命令**：* `list`：查看工作区的当前设置。
 * `set`：更新工作区设置。
 
 ### `modal workspace settings list`
@@ -265,6 +438,7 @@ modal workspace settings list [OPTIONS]
 * `--help`：显示此消息并退出。
 
 ### `modal workspace settings set`
+
 更新工作区设置。必须是工作区经理或所有者。
 
 可以更新以下设置：

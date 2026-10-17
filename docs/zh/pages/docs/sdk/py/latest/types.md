@@ -354,6 +354,48 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 <Parameter name="object_id" type="str" description="" />
 <Parameter name="context_ids" type="list[str]" description="" />
 
+## 指标定义
+
+单个可导出系列的名称、单位和含义。
+
+**属性**
+
+<Parameter name="name" type="str" description="" />
+<Parameter name="unit" type="str" description="" />
+<Parameter name="description" type="str" description="" />
+
+## 公制系列
+
+具有按时间排序的点的单独度量系列。
+
+**属性**
+
+<Parameter name="name" type="str" description="" />
+<Parameter name="unit" type="str" description="" />
+<Parameter name="aggregation" type="str" description="" />
+<Parameter name="points" type="list[TimeSeriesPoint]" description="" />
+<Parameter name="description" type="str" defaultValue="&#x27;&#x27;" description="" />
+
+## 指标架构
+
+指标组及其各个系列定义。**属性**
+
+<Parameter name="name" type="str" description="" />
+<Parameter name="definitions" type="list[MetricDefinition]" description="" />
+
+## 对象度量
+
+在有效的、与 UTC 对齐的\[since, Until) 范围内导出指标。
+
+**属性**
+
+<Parameter name="object_id" type="str" description="" />
+<Parameter name="since" type="datetime" description="" />
+<Parameter name="until" type="datetime" description="" />
+<Parameter name="bucket_size" type="timedelta" description="" />
+<Parameter name="point_count" type="int" description="" />
+<Parameter name="series" type="dict[str, MetricSeries]" description="" />
+
 ## 代理令牌信息
 
 有关代理令牌的元数据，不包括令牌秘密。
@@ -376,7 +418,9 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 <Parameter name="created_at" type="datetime" description="" />
 <Parameter name="created_by" type="str | None" description="" />
 
-## SandboxConnectCredentials存储用于与沙箱建立 HTTP 连接的凭据的简单数据结构。
+## SandboxConnectCredentials
+
+存储用于与沙箱建立 HTTP 连接的凭据的简单数据结构。
 
 **属性**
 
@@ -386,7 +430,6 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 ## 秘密信息
 
 有关 Secret 对象的信息。
-
 **属性**
 
 <Parameter name="name" type="str | None" description="" />
@@ -453,9 +496,7 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 <Parameter name="cloud_bucket_mounts" type="dict[str, CloudBucketMountInfo]" description="" />
 <Parameter name="secrets" type="list[str]" description="" />
 
-## 服务器会话凭证
-
-服务器上粘性会话的凭据。
+## 服务器会话凭证服务器上粘性会话的凭据。
 
 携带`token`的请求将被路由到同一个容器。
 
@@ -492,19 +533,44 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 
 </Parameter>
 
+## 服务用户信息
+
+包含有关模态服务用户的元数据的轻量级数据类。
+
+**属性**
+
+<Parameter name="service_user_id" type="str" description="" />
+<Parameter name="name" type="str" description="" />
+<Parameter name="token_id" type="str" description="" />
+<Parameter name="created_by" type="str" description="" />
+<Parameter name="created_at" type="datetime" description="" />
+<Parameter name="last_used_at" type="datetime | None" description="" />
+<Parameter name="expires_at" type="datetime | None" description="" />
+<Parameter name="environment_roles" type="dict[str, str]" description="" />
+
 ## 统计百分比
 
 指标或策略的百分位数测量。
-
 **属性**
 
 <Parameter name="percentile" type="float" description="" />
 <Parameter name="value" type="float" description="" />
 
-## 统计百分比分布**属性**
+## 统计百分比分布
+
+**属性**
 
 <Parameter name="unit" type="str" description="" />
 <Parameter name="percentiles" type="list[StatsPercentile]" description="" />
+
+## 时间序列点
+
+UTC 存储桶开始处的指标示例。缺失的观察值没有值。
+
+**属性**
+
+<Parameter name="time" type="datetime" description="" />
+<Parameter name="value" type="float | None" description="" />
 
 ## 代币数据
 
@@ -569,6 +635,7 @@ object\_id 字段标识其日志管理器生成该条目的对象或应用程序
 ## 工作区设置
 
 工作区的当前设置。
+
 **属性**
 
 <Parameter name="default_environment" type="str" description="" />

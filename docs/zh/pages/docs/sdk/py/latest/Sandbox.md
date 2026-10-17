@@ -117,25 +117,28 @@ detach(self)
 ## 来自\_name
 
 ```python
-from_name(app_name, name, *, environment_name=None, client=None)
-```
+from_name(app_name, name, *, environment_name=None, include_terminated=False,
+    client=None)
+```从已部署的应用程序中按名称获取正在运行的沙箱。
 
-从已部署的应用程序中按名称获取正在运行的沙箱。沙箱的名称是传递给 `Sandbox.create` 的 `name` 参数。
+沙箱的名称是传递给 `Sandbox.create` 的 `name` 参数。
 
 **参数**
 
 <Parameter name="app_name" type="str" description="Name of the deployed app to look up the sandbox under." />
 <Parameter name="name" type="str" description="Sandbox name to resolve." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name for the lookup; defaults to the configured environment." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for the RPC; defaults to ⟦T75⟧ when omitted." />
+<Parameter name="include_terminated" type="bool" defaultValue="False" description="If set to ⟦T75⟧ and no Sandbox with the name is currently running, the most recent terminated Sandbox will be returned instead." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for the RPC; defaults to ⟦T76⟧ when omitted." />
 
 **退货**
 
-用于运行沙箱的`Sandbox`句柄。
+正在运行的沙箱的 `Sandbox` 句柄，或最近终止的沙箱句柄
+`include_terminated=True`。
 
 **加薪**
 
-* `NotFoundError`：如果不存在具有给定名称的正在运行的沙箱。
+* `NotFoundError`：如果不存在与给定名称匹配的沙箱。
 
 ## 来自\_id
 
@@ -143,9 +146,9 @@ from_name(app_name, name, *, environment_name=None, client=None)
 from_id(sandbox_id, client=None)
 ```
 
-从 id 构造沙箱并查找沙箱结果。
+根据 id 构造沙箱并查找沙箱结果。
 
-可以使用`.object_id`访问沙箱对象的ID。
+可以使用`.object_id`访问沙盒对象的ID。
 
 **参数**
 
@@ -161,8 +164,8 @@ from_id(sandbox_id, client=None)
 ```python
 get_tags(self)
 ```
-
 从服务器获取当前附加到此沙箱的任何标签（键值对）。
+
 **退货**
 
 标签作为从标签名称到标签值的映射。
@@ -192,19 +195,19 @@ snapshot_filesystem(self, timeout=55, *, ttl=30 * 24 * 3600)
 
 **参数**
 
-<Parameter name="timeout" type="int" defaultValue="55" description="Maximum time in seconds to wait for the snapshot operation. If the snapshot does not return within that window, the call is cancelled and ⟦T81⟧ is raised." />
-<Parameter name="ttl" type="int | None" defaultValue="30 * 24 * 3600" description="The resulting Image is retained for ⟦T82⟧ seconds (default: 30 days). Pass ⟦T83⟧ to retain the image indefinitely." />
+<Parameter name="timeout" type="int" defaultValue="55" description="Maximum time in seconds to wait for the snapshot operation. If the snapshot does not return within that window, the call is cancelled and ⟦T83⟧ is raised." />
+<Parameter name="ttl" type="int | None" defaultValue="30 * 24 * 3600" description="The resulting Image is retained for ⟦T84⟧ seconds (default: 30 days). Pass ⟦T85⟧ to retain the image indefinitely." />
 
 **退货**
 
 一个 [`Image`](https://modal.com/docs/sdk/py/latest/Image) 对象，可用于生成新对象
-具有相同文件系统的沙箱。
-
-##挂载\_image
+具有相同文件系统的沙箱。##挂载\_image
 
 ```python
 mount_image(self, path, image, *, _experimental_encryption_key=None)
-```将镜像挂载到正在运行的沙箱中的指定路径。
+```
+
+将镜像挂载到正在运行的沙箱中的指定路径。
 
 `path` 应该是一个**不是**根路径（`/`）的目录。如果路径不存在
 它将被创建。如果存在且包含数据，则替换之前的目录
@@ -219,8 +222,8 @@ mount_image(self, path, image, *, _experimental_encryption_key=None)
 
 **参数**
 
-<Parameter name="path" type="PurePosixPath | str" description="Absolute mount point directory inside the sandbox (not ⟦T93⟧)." />
-<Parameter name="image" type="_Image" description="Image to mount at ⟦T94⟧ (must be built, referenced by ID, or snapshot-based as described above)." />
+<Parameter name="path" type="PurePosixPath | str" description="Absolute mount point directory inside the sandbox (not ⟦T95⟧)." />
+<Parameter name="image" type="_Image" description="Image to mount at ⟦T96⟧ (must be built, referenced by ID, or snapshot-based as described above)." />
 
 **使用**
 
@@ -238,8 +241,8 @@ sandbox_session_2.filesystem.list_files("/user_project")
 ```python
 unmount_image(self, path)
 ```
-
 从正在运行的沙箱中卸载以前安装的映像。
+
 `path` 必须是传递给 `.mount_image()` 的确切安装点。
 卸载后，该路径下的底层沙箱文件系统变为
 再次可见。
@@ -258,16 +261,16 @@ snapshot_directory(self, path, *, timeout=55, ttl=30 * 24 * 3600,
 对正在运行的沙箱中的目录进行快照，用其内容创建一个新图像。
 
 `timeout` 如果快照未在该窗口内返回，则调用被取消
-`modal.exception.TimeoutError` 被提升。
+并且`modal.exception.TimeoutError`升高。
 
 `ttl` 生成的图像保留 `ttl` 秒（默认值：30 天）
-通过`ttl=None`无限期保留图像。
-
-**参数**
+通过`ttl=None`无限期保留图像。**参数**
 
 <Parameter name="path" type="PurePosixPath | str" description="Absolute path of the directory inside the sandbox to snapshot." />
 
-**退货**包含目录内容的`Image`。
+**退货**
+
+包含目录内容的`Image`。
 
 **使用**
 
@@ -298,9 +301,9 @@ wait(self, raise_on_termination=True)
 wait_until_ready(self, *, timeout=300)
 ```
 
-等待沙箱就绪探测器报告沙箱已就绪。
+等待沙箱就绪探针报告沙箱已就绪。
 
-沙箱必须配置`readiness_probe`才能使用此方法。
+沙盒必须配置`readiness_probe`才能使用此方法。
 
 **参数**
 
@@ -334,10 +337,10 @@ tunnels(self, timeout=50)
 <Parameter name="timeout" type="int" defaultValue="50" description="Maximum time in seconds to wait for tunnel metadata when not already cached." />
 
 **退货**
-
 将容器端口映射到`Tunnel`元数据的字典。
 
 **加薪**
+
 * `SandboxTimeoutError`：如果超时后隧道不可用。
 
 ## 创建\_connect\_token
@@ -359,9 +362,7 @@ create_connect_token(self, user_metadata=None, port=8080)
 
 **退货**
 
-用于通过 HTTP 连接到沙箱的 URL 和令牌凭据。
-
-## 重新加载\_volumes
+用于通过 HTTP 连接到沙箱的 URL 和令牌凭据。## 重新加载\_volumes
 
 ```python
 reload_volumes(self, *, timeout=55)
@@ -369,7 +370,9 @@ reload_volumes(self, *, timeout=55)
 
 重新加载沙箱中安装的所有卷。
 
-v1.1.0 中添加。阻塞直到重新加载完成，或者在超时时引发`modal.exception.TimeoutError`（重新加载
+v1.1.0 中添加。
+
+阻塞直到重新加载完成，或者在超时时引发`modal.exception.TimeoutError`（重新加载
 可能仍会在后台完成）。
 
 **参数**
@@ -384,7 +387,7 @@ terminate(self, *, wait=False)
 
 终止沙盒执行。
 
-如果沙箱已经完成运行，则这是无操作。
+如果沙盒已经完成运行，则这是无操作。
 
 **参数**
 
@@ -413,7 +416,6 @@ exec(self, *args, stdout=StreamType.PIPE, stderr=StreamType.PIPE, timeout=None,
     workdir=None, env=None, secrets=None, text=True, bufsize=-1, pty=False,
     _pty_info=None, pty_info=None)
 ```
-
 在沙箱中执行命令并返回 ContainerProcess 句柄。
 
 参见[`ContainerProcess`](https://modal.com/docs/sdk/py/latest/container_process#containerprocess)
@@ -429,10 +431,10 @@ exec(self, *args, stdout=StreamType.PIPE, stderr=StreamType.PIPE, timeout=None,
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables to set during command execution." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets to inject as environment variables during command execution." />
 <Parameter name="text" type="bool" defaultValue="True" description="If True, decode streams as text; if False, yield bytes." />
-<Parameter name="bufsize" type="Literal[-1, 1]" defaultValue="-1" description="Control line-buffered output. `⟦T111⟧⟦T112⟧⟦T113⟧⟦T114⟧⟦T115⟧` is True)." />
+<Parameter name="bufsize" type="Literal[-1, 1]" defaultValue="-1" description="Control line-buffered output. `⟦T113⟧⟦T114⟧⟦T115⟧⟦T116⟧⟦T117⟧` is True)." />
 <Parameter name="pty" type="bool" defaultValue="False" description="Enable a PTY for the command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty." />
-<Parameter name="_pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T116⟧ instead. ⟦T117⟧ will override ⟦T118⟧." />
-<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T119⟧ instead. ⟦T120⟧ will override ⟦T121⟧." />
+<Parameter name="_pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T118⟧ instead. ⟦T119⟧ will override ⟦T120⟧." />
+<Parameter name="pty_info" type="api_pb2.PTYInfo | None" defaultValue="None" description="*DEPRECATED* Use ⟦T121⟧ instead. ⟦T122⟧ will override ⟦T123⟧." />
 
 **退货**
 
@@ -462,8 +464,7 @@ copy_from_local(self, local_path, remote_path)
 
 将本地文件复制到沙箱中。
 
-`remote_path` 必须是沙箱中文件的绝对路径。
-如果需要，会创建 `remote_path` 的父目录。
+`remote_path` 必须是沙箱中文件的绝对路径。如果需要，会创建 `remote_path` 的父目录。
 如果远程文件已存在，则将其覆盖。
 
 **参数**
@@ -471,7 +472,9 @@ copy_from_local(self, local_path, remote_path)
 <Parameter name="local_path" type="str | os.PathLike" description="Path to the file on the local machine." />
 <Parameter name="remote_path" type="str" description="Absolute path to the file in the Sandbox." />
 
-**加薪*** `SandboxFilesystemNotADirectoryError`：`remote_path`的父路径组件不是目录。
+**加薪**
+
+* `SandboxFilesystemNotADirectoryError`：`remote_path`的父路径组件不是目录。
 * `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。
 * `SandboxFilesystemPermissionError`：沙箱中的写入权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -496,7 +499,7 @@ sandbox.filesystem.copy_from_local(local_path, "/tmp/hello.txt")
 copy_to_local(self, remote_path, local_path)
 ```
 
-将文件从沙盒复制到本地路径。
+将文件从沙箱复制到本地路径。
 
 `remote_path` 必须是沙盒中文件的绝对路径。
 如果需要，会创建 `local_path` 的父目录。
@@ -506,6 +509,7 @@ copy_to_local(self, remote_path, local_path)
 
 <Parameter name="remote_path" type="str" description="Absolute path to the file in the Sandbox." />
 <Parameter name="local_path" type="str | os.PathLike" description="Path to the file on the local machine." />
+
 **加薪**
 
 * `SandboxFilesystemNotFoundError`: 远程路径不存在。
@@ -522,9 +526,7 @@ copy_to_local(self, remote_path, local_path)
 ```python fixture:sandbox fixture:tmpdir
 sandbox.filesystem.write_text("Hello, world!\n", "/tmp/hello.txt")
 sandbox.filesystem.copy_to_local("/tmp/hello.txt", "/tmp/local-hello.txt")
-```
-
-### filesystem.list\_files
+```### filesystem.list\_files
 
 ```python
 list_files(self, remote_path)
@@ -538,7 +540,9 @@ list_files(self, remote_path)
 
 **退货**
 
-描述每个条目的 `FileInfo` 对象列表。**加薪**
+描述每个条目的 `FileInfo` 对象列表。
+
+**加薪**
 
 * `SandboxFilesystemNotFoundError`: 路径不存在。
 * `SandboxFilesystemNotADirectoryError`：路径不是目录。
@@ -568,8 +572,9 @@ make_directory(self, remote_path, *, create_parents=True)
 直接父目录必须已存在，且路径不得已存在。
 
 **参数**
+
 <Parameter name="remote_path" type="str" description="Absolute path of the directory to create in the Sandbox." />
-<Parameter name="create_parents" type="bool" defaultValue="True" description="When `⟦T161⟧`, create missing parents and succeed if the directory already exists." />
+<Parameter name="create_parents" type="bool" defaultValue="True" description="When `⟦T163⟧`, create missing parents and succeed if the directory already exists." />
 
 **加薪**
 
@@ -590,9 +595,7 @@ sandbox.filesystem.make_directory("/tmp/a/b/c")
 
 ```python
 read_bytes(self, remote_path)
-```
-
-从沙盒中读取文件并以字节形式返回其内容。
+```从沙盒中读取文件并以字节形式返回其内容。
 
 `remote_path` 必须是沙盒中文件的绝对路径。
 
@@ -604,7 +607,9 @@ read_bytes(self, remote_path)
 
 从文件中读取的原始字节。
 
-**加薪*** `SandboxFilesystemNotFoundError`: 路径不存在。
+**加薪**
+
+* `SandboxFilesystemNotFoundError`: 路径不存在。
 * `SandboxFilesystemIsADirectoryError`：路径指向一个目录。
 * `SandboxFilesystemFileTooLargeError`：文件超出读取大小限制。
 * `SandboxFilesystemPermissionError`：读取权限被拒绝。
@@ -633,7 +638,6 @@ read_text(self, remote_path)
 <Parameter name="remote_path" type="str" description="Absolute path to the file in the Sandbox." />
 
 **退货**
-
 文件内容解码为 UTF-8。
 
 **加薪**
@@ -662,20 +666,19 @@ remove(self, remote_path, *, recursive=False)
 
 当`remote_path`是目录且`recursive`是`False`时（
 默认），仅当它为空时才将其删除。当`recursive`为`True`时，
-删除该目录及其所有内容。
-
-并非所有安装都支持递归目录删除。
+删除该目录及其所有内容。并非所有安装都支持递归目录删除。
 特别是`CloudBucketMount`不支持。安
 在这种情况下，`InvalidError` 会被引发。
 
 **参数**
 
 <Parameter name="remote_path" type="str" description="Absolute path to the file in the Sandbox." />
-<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T188⟧`, remove the directory and all its contents." />
+<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T190⟧`, remove the directory and all its contents." />
 
 **加薪**
 
-* `SandboxFilesystemNotFoundError`: 远程路径不存在。* `SandboxFilesystemDirectoryNotEmptyError`: `recursive` 为 `False` 并且目录不为空。
+* `SandboxFilesystemNotFoundError`: 远程路径不存在。
+* `SandboxFilesystemDirectoryNotEmptyError`: `recursive` 为 `False` 并且目录不为空。
 * `SandboxFilesystemPermissionError`：沙箱中的读取权限被拒绝。
 * `InvalidError`：安装座不支持该操作。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
@@ -702,8 +705,7 @@ sandbox.filesystem.remove("/tmp/mydir", recursive=True)
 stat(self, remote_path)
 ```
 
-返回沙盒中单个文件、目录或符号链接的元数据。
-
+返回沙箱中单个文件、目录或符号链接的元数据。
 `remote_path` 必须是沙盒中的绝对路径。如果 `remote_path` 是符号链接，则返回
 `FileInfo` 对象描述符号链接，而不是它指向的目标。
 
@@ -714,6 +716,7 @@ stat(self, remote_path)
 **退货**
 
 描述路径的 `FileInfo` 对象。
+
 **加薪**
 
 * `SandboxFilesystemNotFoundError`: 路径不存在。
@@ -735,20 +738,19 @@ print(info.size, info.permissions, info.modified_time)
 watch(self, remote_path, *, filter=None, recursive=False, timeout=None)
 ```
 
-观察沙盒中的路径以了解文件系统更改。
-
-`remote_path` 必须是沙盒中的绝对路径。如果它指向
+观察沙盒中的路径以了解文件系统更改。`remote_path` 必须是沙盒中的绝对路径。如果它指向
 对于某个文件，会报告该文件的事件。如果它指向一个
 目录，报告直接位于其中的条目的事件。套装
-`recursive=True` 还接收所有嵌套子目录的事件。如果 `remote_path` 是符号链接，则跟随它并进行事件引用
+`recursive=True` 还接收所有嵌套子目录的事件。
+如果 `remote_path` 是符号链接，则跟随它并进行事件引用
 已解析目标下的路径。
 
 **参数**
 
 <Parameter name="remote_path" type="str" description="Absolute path in the Sandbox to watch." />
-<Parameter name="filter" type="Optional[list[FileWatchEventType]]" defaultValue="None" description="Restrict the kinds of events emitted to those included in the list. The default `⟦T207⟧` permits all event types." />
-<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T208⟧`, also report events for all nested subdirectories." />
-<Parameter name="timeout" type="Optional[int]" defaultValue="None" description="Number of seconds to watch for. `⟦T209⟧` means watch indefinitely." />
+<Parameter name="filter" type="Optional[list[FileWatchEventType]]" defaultValue="None" description="Restrict the kinds of events emitted to those included in the list. The default `⟦T209⟧` permits all event types." />
+<Parameter name="recursive" type="bool" defaultValue="False" description="When `⟦T210⟧`, also report events for all nested subdirectories." />
+<Parameter name="timeout" type="Optional[int]" defaultValue="None" description="Number of seconds to watch for. `⟦T211⟧` means watch indefinitely." />
 
 **产量**
 
@@ -781,6 +783,7 @@ for event in sandbox.filesystem.watch(
 ```python
 write_bytes(self, data, remote_path)
 ```
+
 将二进制内容写入沙箱中的文件。
 
 `remote_path` 必须是沙盒中文件的绝对路径。
@@ -796,8 +799,7 @@ write_bytes(self, data, remote_path)
 
 * `TypeError`：`data` 不是类似字节的。
 * `SandboxFilesystemNotADirectoryError`：父路径组件不是目录。
-* `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。
-* `SandboxFilesystemPermissionError`：写权限被拒绝。
+* `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。* `SandboxFilesystemPermissionError`：写权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
 
 **使用**
@@ -812,7 +814,9 @@ sandbox.filesystem.write_bytes(b"Hello, world!\n", "/tmp/hello.bin")
 write_text(self, data, remote_path)
 ```
 
-将 UTF-8 文本写入沙箱中的文件。`remote_path` 必须是沙盒中文件的绝对路径。
+将 UTF-8 文本写入沙箱中的文件。
+
+`remote_path` 必须是沙箱中文件的绝对路径。
 如果需要，会创建 `remote_path` 的父目录。
 如果远程文件已存在，则将其覆盖。
 
@@ -828,7 +832,6 @@ write_text(self, data, remote_path)
 * `SandboxFilesystemIsADirectoryError`: `remote_path` 指向一个目录。
 * `SandboxFilesystemPermissionError`：写权限被拒绝。
 * `SandboxFilesystemError`：命令因任何其他原因失败。
-
 **使用**
 
 ```python fixture:sandbox
@@ -856,6 +859,7 @@ stderr(self)
 
 [`StreamReader`](https://modal.com/docs/sdk/py/latest/io_streams#streamreader)
 对于沙盒的 stderr 流。
+
 **退货**
 
 沙箱 stderr 的流读取器。
@@ -867,7 +871,7 @@ stdin(self)
 ```
 
 [`StreamWriter`](https://modal.com/docs/sdk/py/latest/io_streams#streamwriter)
-对于沙箱的标准输入流。
+对于沙盒的标准输入流。
 
 **退货**
 
@@ -879,7 +883,7 @@ stdin(self)
 returncode(self)
 ```
 
-如果沙箱进程已完成运行，则返回代码，否则`None`。
+如果沙盒进程已完成运行，则返回代码，否则`None`。
 
 **退货**
 
@@ -889,18 +893,18 @@ returncode(self)
 
 ```python
 list(*, app_id=None, tags=None, client=None)
-```
-
-列出当前环境或应用程序 ID（如果指定）的所有沙箱。如果指定了标签，则仅
+```列出当前环境或应用程序 ID（如果指定）的所有沙箱。如果指定了标签，则仅
 返回至少具有这些标签的沙箱。
 
 **参数**
 
 <Parameter name="app_id" type="str | None" defaultValue="None" description="If set, restrict results to sandboxes under this app ID." />
 <Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="If set, only sandboxes containing at least these tags are returned." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for listing; defaults to ⟦T241⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for listing; defaults to ⟦T243⟧ when omitted." />
 
-**退货**一个异步生成器，生成 `Sandbox` 对象。
+**退货**
+
+一个异步生成器，生成 `Sandbox` 对象。
 
 ## 日志
 
@@ -921,7 +925,7 @@ logs: SandboxLogsManager
 **另见**
 
 * [`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs):
-  CLI 访问应用程序的日志。
+CLI 访问应用程序的日志。
 
 ### 日志.fetch
 
@@ -941,6 +945,7 @@ fetch(self, *, since, until=None, source=None, search_text="")
 **产量**
 
 `LogEntry` 按时间顺序排列的对象。
+
 **使用**
 
 ```python notest

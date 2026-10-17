@@ -132,7 +132,7 @@ result, err := functionCall.Get(ctx, &modal.FunctionCallGetParams{Timeout: &zero
 
 {/片段} </CodeTabs>
 
-或者你可以在多个容器之间分配令人尴尬的并行工作：
+或者，您可以在多个容器之间分配令人尴尬的并行工作：
 
 <CodeTabs>
   {#snippet python()}
@@ -319,7 +319,7 @@ result, err := f.Remote(ctx, nil, nil)
   消耗有限的资源（例如，与数据库的连接）。
 * 版本固定函数将忽略 `min_containers` 配置
   函数装饰器，默认情况下它们不会维护暖池。如果这个
-  如果需要，可以使用`Function.update_autoscaler()`方法
+  如果需要，可以使用`Function.autoscaler.update()`方法
   动态配置暖池。用户有责任扩展
   不再需要时将池温热下来。
 
@@ -344,18 +344,18 @@ result, err := f.Remote(ctx, nil, nil)
 将无法在本地使用。
 
 与同一个 Python 应用程序中的函数之间的远程调用不同，
-查找后，类型检查器将无法读取函数接口。
+查找后类型检查器将无法读取函数接口。
 您的代码必须显式缩小结果范围以将其视为
 具体类型。
 
 ## 使用 HTTPS 调用
 
-模态 [Web Functions](/docs/guide/webhooks) 可以通过 HTTPS 调用
+模态 [Web 函数](/docs/guide/webhooks) 可以通过 HTTPS 调用
 [公共 URL](/docs/guide/webhook-urls)。
 
 与通过我们的 SDK 之一进行函数查找不同，Web 函数不是
 默认情况下进行身份验证，并且经过身份验证的 Web Functions 使用
 [代理令牌](/docs/guide/webhook-proxy-auth) 而不是 Modal API 令牌。
 
-Web 函数可以从 Web 浏览器、Unix 工具（如
+Web 函数可以从 Web 浏览器、Unix 工具（例如
 `curl`，或任何具有 HTTPS 客户端的语言。

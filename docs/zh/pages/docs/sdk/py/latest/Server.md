@@ -29,6 +29,39 @@ object_id(self)
 
 此服务器实例的 Modal 内部 ID。
 
+## 指标
+
+```python
+metrics: ServerMetricsManager
+```
+
+使用 `export()` 访问指标示例，使用 `schema()` 访问系列定义。
+
+### 指标.schema
+
+```python
+schema(self, groups=None)
+```
+
+返回按组名称键入的指标定义，而不获取样本。
+
+省略 `groups` 以列出所有组。每个组都包含其确切的个体
+系列定义。### 指标.导出
+
+```python
+export(self, *, since=None, until=None, bucket_size=None, groups=None)
+```
+
+获取服务器的指标样本。
+
+默认为过去一小时内的所有组。 `since` 默认一小时
+`until`之前；天真的日期时间使用当地时间。最大范围为 31
+天，每个系列最多 500 分。自动时省略 `bucket_size`
+尺码。边界向下舍入到 UTC 存储桶边界；部分桶
+`until` 被排除在外。缺失的观察值没有价值。
+
+使用 `schema()` 无需获取样本即可发现组和系列。
+
 ## 日志
 
 ```python
@@ -51,7 +84,9 @@ logs: ServerLogsManager
 
 ```python
 fetch(self, *, since, until=None, source=None, search_text="")
-```获取与日期范围和过滤器相对应的服务器日志。
+```
+
+获取与日期范围和过滤器相对应的服务器日志。
 
 **参数**
 
@@ -108,9 +143,7 @@ for entry in server.logs.tail(20):
 stream(self, timeout=None)
 ```
 
-流式传输新的服务器日志，直到达到超时。
-
-**参数**
+流式传输新的服务器日志，直到达到超时。**参数**
 
 <Parameter name="timeout" type="float | None" defaultValue="None" description="Number of seconds to wait between log entries before terminating the stream. By default, this will block until it is interrupted." />
 
@@ -133,13 +166,14 @@ for entry in server.logs.stream(timeout=60):
 sessions: ServerSessionsManager
 ```
 
-在用`@modal.sessioned()`修饰的服务器上启动和终止粘性会话。
+在用`@modal.sessioned()`装饰的服务器上启动和终止粘性会话。
 
 ### 会话.start
 
 ```python
 start(self, idle_timeout=600)
 ```
+
 启动粘性会话并返回其 ID 和令牌。
 
 对携带返回令牌的服务器 URL 的请求将被路由到同一个容器，直到
@@ -171,13 +205,15 @@ server.sessions.terminate(session.token)
 
 ```python
 terminate(self, token)
-```终止粘性会话。
+```
+
+终止粘性会话。
 
 对其提出的新请求将被拒绝。该容器继续为其他会话提供服务。
 
 **参数**
 
-<Parameter name="token" type="str" description="The ⟦T36⟧ of the ⟦T37⟧ to terminate." />
+<Parameter name="token" type="str" description="The ⟦T48⟧ of the ⟦T49⟧ to terminate." />
 
 **使用**
 
@@ -188,21 +224,27 @@ session = server.sessions.start()
 server.sessions.terminate(session.token)
 ```
 
+## 自动缩放器
+
+```python
+autoscaler(self)
+```
+
+查看和更新服务器上的自动缩放程序设置。
+
 ## 信息
 
 ```python
 info(self, *, refresh=False)
 ```
 
-获取服务器资源请求、关联安装、http 配置等的概述。
-
-如果服务器句柄是，则此方法执行网络请求来填充此信息
-尚未获取信息的远程查找（例如来自`Server.from_name(...)`），
+获取服务器资源请求、关联安装、http 配置等的概述。如果服务器句柄是，则此方法执行网络请求来填充此信息
+尚未获取其信息的远程查找（例如来自`Server.from_name(...)`），
 或者如果`refresh=True`。
 
 **参数**
 
-<Parameter name="refresh" type="bool" defaultValue="False" description="Always perform a network request. Pass ⟦T40⟧ to ensure that this method returns the most up to date information." />
+<Parameter name="refresh" type="bool" defaultValue="False" description="Always perform a network request. Pass ⟦T52⟧ to ensure that this method returns the most up to date information." />
 
 **退货**
 
@@ -224,6 +266,7 @@ update_autoscaler(self, *, target_concurrency=None, min_containers=None,
     max_containers=None, buffer_containers=None, scaleup_window=None,
     scaledown_window=None)
 ```
+
 覆盖此服务器当前的自动缩放程序行为。
 
 未指定的参数将保留其当前值，即静态值
@@ -276,7 +319,7 @@ server.update_autoscaler(target_concurrency=0)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
+将本地对象与其在 Modal 服务器上的身份同步。
 
 很少需要显式调用此方法，因为大多数操作都会
 需要时懒洋洋地补充水分。主要用例是当您需要访问对象时
@@ -288,9 +331,7 @@ hydrate(self, client=None)
 from_name(cls, app_name, name, *, environment_name=None, client=None)
 ```
 
-通过名称从已部署的应用程序引用服务器。
-
-这是一种延迟对局部进行补水的惰性方法
+通过名称从已部署的应用程序引用服务器。这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
@@ -302,7 +343,7 @@ from_id(cls, server_id, *, client=None)
 
 通过 ID 从已部署或正在运行的应用程序引用服务器。
 
-这是一种延迟对局部进行补水的惰性方法
+这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
@@ -329,7 +370,7 @@ stats(self, *, since=None, until=None, container=None)
 
 **参数**
 
-<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T44⟧. Values without a timezone are interpeted as local time." />
+<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T56⟧. Values without a timezone are interpeted as local time." />
 <Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive. If omitted, this defaults to current time. Values without a timezone are interpeted as local time." />
 <Parameter name="container" type="str | None" defaultValue="None" description="If passed in, the stats are computed for only this container. Default None." />
 

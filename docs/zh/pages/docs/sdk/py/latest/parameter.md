@@ -8,7 +8,7 @@ parameter(*, default=_no_default, init=True)
 
 用于指定 modal.cls 参数的选项，类似于数据类的 dataclass.field
 
-```
+```python
 class A:
     a: str = modal.parameter()
 

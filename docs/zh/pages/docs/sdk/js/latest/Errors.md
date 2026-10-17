@@ -38,11 +38,14 @@ class ExecutionError extends Error
 
 函数执行超出允许的时间限制。
 
+`FunctionCall.get()` 抛出 `TimeoutError`
+相反，当函数完成之前`timeoutMs`过去时。匹配那个
+带有 `instanceof FunctionTimeoutError` 的情况已被弃用并将停止
+在未来的版本中工作。
+
 ```typescript
 class FunctionTimeoutError extends Error
-```
-
-## 内部故障
+```## 内部故障
 
 Modal 中的可重试内部错误。
 
@@ -60,7 +63,9 @@ class InvalidError extends Error
 
 ## 未发现错误
 
-未找到某些资源。```typescript
+未找到某些资源。
+
+```typescript
 class NotFoundError extends Error
 ```
 
@@ -105,7 +110,6 @@ class SandboxFilesystemDirectoryNotEmptyError extends SandboxFilesystemError
 ```
 
 ## Sandbox文件系统错误
-
 无效沙盒文件系统操作导致的错误。
 
 ```typescript
@@ -119,6 +123,7 @@ class SandboxFilesystemError extends Error
 ```typescript
 class SandboxFilesystemFileTooLargeError extends SandboxFilesystemError
 ```
+
 ## SandboxFilesystemIsADirectoryError
 
 尝试对解析为目录的路径进行文件操作。

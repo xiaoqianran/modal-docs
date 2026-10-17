@@ -27,17 +27,32 @@ modal run my_app.py
 
 除了指向文件之外，您还可以使用 Python 模块路径，该路径
 默认情况下将确保您的远程功能将使用相同的模块
-名称与当地的名称相同。
+名称与当地的名称相同。```
+modal run -m my_project.my_app
+```
+
+通过 `-` 从标准输入读取脚本。该脚本必须有一个本地
+入口点（或单个函数）：
 
 ```
-modal run -m my_project.my_app
+modal run - <<'EOF'
+import modal
+
+app = modal.App()
+
+@app.function()
+def hello():
+    print("hello from Modal")
+EOF
 ```
 
 **用法**：
 
 ```shell
 modal run [OPTIONS] FUNC_REF
-```**选项**：
+```
+
+**选项**：
 
 * `-n, --name TEXT`：本次运行的应用程序的名称。
 * `-w, --write-result TEXT`：将返回值（必须是str或bytes）写入本地路径。

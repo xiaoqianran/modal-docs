@@ -23,6 +23,7 @@ class ModalClient {
   readonly apps: AppService;
   readonly cloudBucketMounts: CloudBucketMountService;
   readonly cls: ClsService;
+  readonly environments: EnvironmentService;
   readonly functions: FunctionService;
   readonly functionCalls: FunctionCallService;
   readonly images: ImageService;
@@ -49,7 +50,7 @@ new ModalClient(params?: ModalClientParams)
 * `tokenSecret?` (`string`)
 * `oauthRefreshToken?` (`string`)：Modal 令牌端点返回的 OAuth 刷新令牌。
 * `oauthClientId?` (`string`)：模态颁发的 OAuth 客户端 ID，带有 `oc-` 前缀。
-* `oauthClientSecret?` (`string`)：模态颁发的 OAuth 客户端密钥，带有 `ov-` 前缀。* `oauthJwtKey?` (`string`)：编码为 PEM 的未加密 RSA 私钥，带有文字或转义换行符。
+* `oauthClientSecret?` (`string`)：模态颁发的 OAuth 客户端密钥，带有 `ov-` 前缀。* `oauthJwtKey?` (`string`)：未加密的 RSA 私钥编码为 PEM，带有文字或转义换行符。
 * `environment?` (`string`)
 * `endpoint?` (`string`)
 * `timeoutMs?` (`number`)

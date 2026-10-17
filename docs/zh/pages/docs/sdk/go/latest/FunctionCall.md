@@ -47,8 +47,13 @@ FunctionCallCancelParams 是取消函数调用的选项。
 
 ```go
 Get(ctx context.Context, params *FunctionCallGetParams) (any, error)
-```Get 等待 FunctionCall 的输出。
+```
+
+Get 等待 FunctionCall 的输出。
 如果超时> 0，则操作将在指定的持续时间后取消。
+
+如果在函数完成之前超时，则返回的错误与 TimeoutError 匹配
+错误。如果函数超过其执行超时，则会出现 FunctionTimeoutError。
 
 **参数** (`FunctionCallGetParams`)
 
@@ -57,7 +62,6 @@ FunctionCallGetParams 是用于从函数调用获取输出的选项。
 * `Timeout` (`*time.Duration`): Timeout指定等待输出的最大持续时间。如果为零，则不应用超时。如果设置为 0，它将检查函数调用是否已完成。
 
 ## 函数调用.Logs
-
 Logs 提供对此 FunctionCall 发出的日志的访问。
 
 ### 获取
@@ -71,6 +75,7 @@ Fetch(
 
 Fetch 获取与对应的 FunctionCall 关联的所有日志
 日期范围和过滤器。
+
 params.Since 默认为 FunctionCall 的开始，params.Until
 默认为当前时间。该序列产生 `LogEntry` 值
 按时间顺序排列。
@@ -81,7 +86,8 @@ FunctionCallLogFetchParams 是用于获取 FunctionCall 日志的选项。
 
 * `Since` (`*time.Time`)：因为是时间范围的开始。它默认为 FunctionCall 的开始。
 * `Until` (`*time.Time`)：直到时间范围结束。它默认为当前时间。
-* `Source` (`LogSource`)：源按 stdout、stderr 或系统过滤日志。零值包括所有来源。* `SearchText` (`string`): SearchText 通过搜索文本过滤 FunctionCall 日志。
+* `Source` (`LogSource`)：源按 stdout、stderr 或系统过滤日志。零值包括所有来源。
+* `SearchText` (`string`): SearchText 通过搜索文本过滤 FunctionCall 日志。
 
 ### 流
 
@@ -104,6 +110,7 @@ Stream 流式传输新的 FunctionCall 日志，直到达到超时。
 **参数** (`LogStreamParams`)
 
 LogStreamParams 是流日志的选项。
+
 * `Timeout` (`*time.Duration`)：超时是终止流之前日志条目之间等待的持续时间。当 nil 时，流会阻塞直到被中断。
 
 ### 尾巴

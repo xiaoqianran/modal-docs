@@ -4,36 +4,36 @@
 
 Modal 可以轻松地跨数千个容器扩展计算。
 您不必担心您的应用程序会因病毒式传播或需要等待而崩溃
-a long time for your batch jobs to complete.
+批处理作业需要很长时间才能完成。
 
 在大多数情况下，扩展会自动发生，您不需要
 想想吧。但了解 Modal 的自动缩放器是如何工作的会很有帮助
 工作原理以及当您需要更精细的控制时如何控制其行为。
 
-## How does autoscaling work on Modal?
+## 自动缩放在 Modal 上如何工作？
 
 每个模态函数都对应一个自动缩放容器池。尺寸
-of the pool is managed by Modal's autoscaler. The autoscaler will spin up new
+池的大小由 Modal 的自动缩放器管理。自动缩放器将启动新的
 当没有容量可用于新输入时，容器会旋转
-down containers when resources are idling. By default, Modal Functions will
+当资源空闲时关闭容器。默认情况下，模态函数将
 当没有输入要处理时缩放为零。
 
 快速而频繁地做出自动缩放决策，以便您的批处理作业
 可以快速启动，您部署的应用程序可以响应任何突然的变化
 交通。
 
-## Configuring autoscaling behavior
+## 配置自动缩放行为
 
 Modal 公开了一些设置，允许您配置自动缩放器
 行为。这些设置可以传递到`@app.function`或`@app.cls`
 装饰器：
 * `max_containers`：特定功能的容器上限。
 * `min_containers`：应保温的最少容器数量，
-  even when the Function is inactive.
+  即使该功能处于非活动状态。
 * `buffer_containers`：函数运行时要维护的缓冲区大小
   活动的，这样额外的输入就不需要排队等待新容器。
 * `scaledown_window`：个体的最大持续时间（以秒为单位）
-  containers can remain idle when scaling down.
+  缩小规模时容器可以保持空闲状态。
 
 一般来说，这些设置允许您权衡成本和延迟。维护
 更大的热池或空闲缓冲区会增加成本，但会降低发生这种情况的可能性
@@ -44,23 +44,30 @@ Modal 公开了一些设置，允许您配置自动缩放器
 输入。请注意，容器可能不会在整个缩小窗口之前等待
 如果应用程序严重过度配置，则关闭。
 
-## Dynamic autoscaler updates
+## 动态自动缩放器更新
 
-还可以动态更新自动缩放器设置（即，无需重新部署
-应用程序）使用 [`Function.update_autoscaler()`](/docs/sdk/py/latest/Function#update_autoscaler)
-方法：
+还可以动态查看和更新自动缩放器设置（即
+无需重新部署应用程序）使用
+[`Function.autoscaler.update()`](/docs/sdk/py/latest/Function#autoscalerupdate) 方法。
 
 ```python notest
 f = modal.Function.from_name("my-app", "f")
-f.update_autoscaler(max_containers=100)
+f.autoscaler.update(max_containers=100)
 ```
 自动定标器设置将恢复为函数中的配置
-decorator the next time you deploy the App. Or they can be overridden by
+下次部署应用程序时使用装饰器。或者它们可以被覆盖
 进一步动态更新：
 
 ```python notest
-f.update_autoscaler(min_containers=2, max_containers=10)
-f.update_autoscaler(min_containers=4)  # max_containers=10 will still be in effect
+f.autoscaler.update(min_containers=2, max_containers=10)
+f.autoscaler.update(min_containers=4)  # max_containers=10 will still be in effect
+```
+
+要查看函数的当前自动定标器设置，您可以使用
+[`Function.autoscaler.settings()`](/docs/sdk/py/latest/Function#autoscalersettings) 方法：
+
+```python notest
+current_settings = f.autoscaler.settings()
 ```
 
 常见的模式是在[计划函数](/docs/guide/cron) 中运行此方法
@@ -73,32 +80,37 @@ def inference_server():
 
 @app.function(schedule=modal.Cron("0 6 * * *", timezone="America/New_York"))
 def increase_warm_pool():
-    inference_server.update_autoscaler(min_containers=4)
+    inference_server.autoscaler.update(min_containers=4)
 
 @app.function(schedule=modal.Cron("0 22 * * *", timezone="America/New_York"))
 def decrease_warm_pool():
-    inference_server.update_autoscaler(min_containers=0)
+    inference_server.autoscaler.update(min_containers=0)
 ```
 
-当您有 [`modal.Cls`](/docs/sdk/py/latest/Cls) 时，`update_autoscaler`
-是*实例*上的方法，将控制实例的自动缩放行为
-为具有该特定参数集的函数提供服务的容器：
+当您有 [`modal.Cls`](/docs/sdk/py/latest/Cls) 时，自动缩放器会更新
+是对 Cls 的 *实例* 的操作，而不是 `Cls` 本身，如
+具有不同参数值的实例使用单独的容器池，
+自动缩放彼此独立。
+
+`.autoscaler`命名空间可用于任何实例的任何方法句柄
+你的`Cls`。具体方法无关紧要 - 所有自动缩放操作
+作用于同一个底层实例。例如：
 
 ```python notest
 MyClass = modal.Cls.from_name("my-app", "MyClass")
 obj = MyClass(model_version="3.5")
-obj.update_autoscaler(buffer_containers=2)  # type: ignore
+# In this example, `MyCls` has a method called `my_method`
+obj.my_method.autoscaler.update(buffer_containers=2) # type: ignore
 ```
 
 请注意，有必要禁用这一行的类型检查，因为
-对象将显示为您定义的类的实例，而不是
+方法将显示为您定义的类的方法，而不是
 模态包装类型。
 
-## Parallel execution of inputs
-
+## 输入的并行执行
 如果您的代码使用不同的独立函数重复运行相同的函数
 输入（例如，网格搜索），提高性能的最简单方法是运行
-those function calls in parallel using Modal's
+使用 Modal 并行调用这些函数
 [`Function.map()`](/docs/sdk/py/latest/Function#map) 方法。
 
 这是一个例子，如果我们有一个函数 `evaluate_model` 需要一个
@@ -126,9 +138,7 @@ def main():
 （本例中为数字 0 - 99）大致并行，结果为
 作为可迭代对象返回，结果的排序方式与输入相同。
 
-### 例外情况
-
-默认情况下，如果任何函数调用引发异常，该异常将
+### 例外情况默认情况下，如果任何函数调用引发异常，该异常将
 被传播。将异常视为成功结果并将其汇总到
 结果列表，传入
 [`return_exceptions=True`](/docs/sdk/py/latest/Function#map)。
@@ -164,7 +174,6 @@ def my_func(a, b):
 def main():
     assert list(my_func.starmap([(1, 2), (3, 4)])) == [3, 7]
 ```
-
 ### 陷阱
 
 请注意，`.map()`是模态函数对象本身的一个方法，所以你不需要
@@ -187,17 +196,17 @@ results = map(evaluate_model, inputs)
 ```
 
 ## 异步使用
+
 所有 Modal API 均提供阻塞和异步变体。如果你
 熟悉异步编程，您可以使用它来创建
 任意并行执行模式，还有任何 Modal 的额外好处
 功能将远程执行。请参阅[异步指南](/docs/guide/async) 或
 有关异步使用的更多信息的示例。
 
-## GPU加速
+## GPU 加速
 
 有时，您可以利用 GPU 加速来加速应用程序。参见
 有关更多信息，请参阅 [GPU 部分](/docs/guide/gpu)。
 
 ## 缩放限制
-
 Modal 强制实施影响可扩展性的各种平台限制。并发容器总数（以及并发使用的 GPU 总数）的限制取决于工作区的[计划级别](/定价)。单个函数运行的并发容器数也有 4,000 个硬性限制。其他限制适用于各个输入级别，并取决于特定的函数[调用方法](/docs/guide/function-incall-methods)。

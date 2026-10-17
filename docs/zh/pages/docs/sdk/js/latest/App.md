@@ -2,7 +2,7 @@
 
 # 应用程序
 
-代表已部署的模态应用程序。
+代表模态应用程序。
 
 ```typescript
 class App {
@@ -28,3 +28,18 @@ async fromName(name: string, params: AppFromNameParams = {}): Promise<App>
 
 * `environment?` (`string`)
 * `createIfMissing?` (`boolean`)
+
+## 信息
+
+```typescript
+async info(params: AppInfoParams = {}): Promise<AppInfo>
+```
+
+返回有关此应用程序的信息，包括其生命周期以及成员函数和服务器。
+默认情况下，返回上次查找、列出或刷新的快照。
+
+**参数** (`AppInfoParams`)
+
+`App.info` 的可选参数。
+
+* `refresh?` (`boolean`)：获取当前信息而不是缓存的查找或列出快照。

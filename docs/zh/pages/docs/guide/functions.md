@@ -148,7 +148,7 @@ def f():
 ## 执行语义
 模态函数抽象了可靠的云计算编排的几个原则，以呈现一个看起来像本地 Python 函数调用的输入/输出接口。
 
-函数调用将通过您的 Modal 令牌/秘密凭证自动进行身份验证，并根据您的 [RBAC](/docs/guide/rbac) 配置进行授权。 Function 实现不需要执行访问控制。
+函数调用会通过您的 Modal 令牌/秘密凭证自动进行身份验证，并根据您的 [RBAC](/docs/guide/rbac) 配置进行授权。 Function 实现不需要执行访问控制。
 
 Modal 负责调度容器并将输入路由到它们。默认情况下，函数容器可以在我们的全球队列中的任何位置启动，从而最大限度地提高可用性并最大限度地减少调度延迟。限制容器调度，例如为了合规性，[配置计算和路由区域](/docs/guide/region-selection)：
 
@@ -159,7 +159,7 @@ def f():
 ```
 
 请注意，计算区域选择会产生[定价乘数](/docs/guide/region-selection#pricing)；路由区域选择则不然。区域选择还限制了计算池，尤其是与特定 GPU 或大型资源请求结合使用时，这可能会影响调度延迟。
-由于容器调度会对输入负载做出反应，因此容器在调用时可能不可用。输入将在 Modal 的 I/O 系统中排队，直到它们可以分发到可用容器。如果输入入队太快或队列已满，它们将被拒绝并显示 [`ResourceExhaustedError`](/docs/sdk/py/latest/exception#resourceexhaustederror)。对于批处理工作负载，更喜欢持久的 [`f.spawn()`](/docs/sdk/py/latest/Function#spawn) 方法，它支持更高的调用率和更深的输入队列。
+由于容器调度会对输入负载做出反应，因此容器在调用时可能不可用。输入将在 Modal 的 I/O 系统中排队，直到可以分发到可用容器。如果输入入队太快或队列已满，它们将被拒绝并显示 [`ResourceExhaustedError`](/docs/sdk/py/latest/exception#resourceexhaustederror)。对于批处理工作负载，更喜欢持久的 [`f.spawn()`](/docs/sdk/py/latest/Function#spawn) 方法，它支持更高的调用率和更深的输入队列。
 
 Modal 对每次调用应用输入超时；不需要在调用上下文中设置超时。默认情况下超时很短（5 分钟），但对于模型训练等长时间运行的流程，超时可以延长至 24 小时：
 
@@ -203,11 +203,11 @@ def f():
     ...
 ```
 
-虽然大多数 Function 配置需要重新部署才能更改，但可以使用 [`f.update_autoscaler()`](/docs/sdk/py/latest/Function#update_autoscaler) 动态更新自动缩放器参数：
+虽然大多数 Function 配置需要重新部署才能更改，但可以使用 [`f.autoscaler.update()`](/docs/sdk/py/latest/Function#autoscalerupdate) 动态更新自动缩放器参数：
 
 ```python notest
 f = modal.Function.from_name("prod-app", "f")
-f.update_autoscaler(max_containers=50)  # Override the Function's decorator configuration
+f.autoscaler.update(max_containers=50)  # Override the Function's decorator configuration
 ```
 
 请注意，任何动态更新都将由后续部署重置。

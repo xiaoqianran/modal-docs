@@ -57,6 +57,10 @@ type ExecutionError struct {
 
 当函数执行超过允许的时间限制时，将返回 FunctionTimeoutError。
 
+当 FunctionCall.Get 的超时时间在
+函数结束。不推荐将这种情况匹配为 FunctionTimeoutError：未来版本
+将在那里返回一个普通的 TimeoutError，因此请使用Errors.As(err, \&TimeoutError{}) 检查它。
+
 ```go
 type FunctionTimeoutError struct {
 	Exception string
@@ -84,7 +88,6 @@ type InvalidError struct {
 ```
 
 ## 未发现错误
-
 未找到资源时返回 NotFoundError。
 
 ```go
@@ -114,6 +117,7 @@ type QueueFullError struct {
 ```
 
 ## 远程错误
+
 RemoteError 表示 Modal 服务器上的错误，或 Python 异常。
 
 ```go
@@ -174,7 +178,6 @@ type SandboxFilesystemIsADirectoryError struct {
 ```
 
 ## SandboxFilesystemNotADirectoryError
-
 当目录操作针对非目录路径时，会返回 SandboxFilesystemNotADirectoryError。
 
 ```go
@@ -194,6 +197,7 @@ type SandboxFilesystemNotFoundError struct {
 ```
 
 ## SandboxFilesystemPathAlreadyExistsError
+
 当创建操作针对现有路径时，会返回 SandboxFilesystemPathAlreadyExistsError。
 
 ```go

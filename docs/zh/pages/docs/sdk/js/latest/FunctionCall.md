@@ -51,7 +51,12 @@ async get(params: FunctionCallGetParams = {}): Promise<any>
 
 * `timeoutMs?` (`number`)
 
-## 函数调用.logs此 FunctionCall 的访问日志。
+**加薪：*** `TimeoutError`：如果在函数完成之前`timeoutMs`过去了。
+* `FunctionTimeoutError`：如果函数超过其执行超时时间。
+
+## 函数调用.logs
+
+此 FunctionCall 的访问日志。
 
 使用 `fetch()` 从 UTC 读取日志
 时间范围，`tail()`阅读最多
@@ -74,7 +79,6 @@ fetch(params: FunctionCallLogFetchParams = {}): AsyncIterable<LogEntry>
 函数调用。条目按时间顺序返回。
 
 **参数** (`FunctionCallLogFetchParams`)
-
 * `since?` (`Date`)：UTC 时间范围的开始。默认为 FunctionCall 的开始。
 * `until?` (`Date`)：UTC 时间范围结束。默认为当前时间。
 * `source?` (`LogSource`)：按来源过滤：`stdout`、`stderr` 或 `system`。
@@ -103,10 +107,11 @@ stream(params: FunctionCallLogStreamParams = {}): AsyncIterable<LogEntry>
 流式传输新的 FunctionCall 日志，直到达到超时或
 观察到 FunctionCall 已完成。
 
-完成检查是尽力而为的。如果无法确定是否完成，
-流将继续，直到达到超时。
+完成检查是尽力而为的。如果无法确定是否完成，流将继续，直到达到超时。
 
-**参数** (`FunctionCallLogStreamParams`)* `timeoutMs?` (`number`)：结束流之前日志条目之间等待的毫秒数。默认情况下，流会阻塞直至被中断。
+**参数** (`FunctionCallLogStreamParams`)
+
+* `timeoutMs?` (`number`)：结束流之前日志条目之间等待的毫秒数。默认情况下，流会阻塞直至被中断。
 
 **返回：** `LogEntry` 对象到达时的异步可迭代。
 

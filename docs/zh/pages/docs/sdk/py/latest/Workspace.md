@@ -92,7 +92,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T33⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T43⟧ to include all tags in the report." />
 
 **退货**
 
@@ -119,7 +119,7 @@ summary(self, cycle=None)
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T38⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T48⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 
@@ -183,7 +183,7 @@ update(self, proxy_token_id, *, name)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T49⟧) to update." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T59⟧) to update." />
 <Parameter name="name" type="str" description="The updated name for the token." />
 
 **使用**
@@ -227,7 +227,7 @@ allow(self, proxy_token_id, environment_name)
 允许代理令牌对给定环境的请求进行身份验证。
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T50⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T60⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to allow access to." />
 
 **使用**
@@ -251,7 +251,7 @@ revoke(self, proxy_token_id, environment_name)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T51⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T61⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to revoke access from." />
 
 **使用**
@@ -274,7 +274,7 @@ delete(self, proxy_token_id)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T52⟧) to delete." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T62⟧) to delete." />
 
 **使用**
 
@@ -287,12 +287,6 @@ modal.Workspace.from_context().proxy_tokens.delete(token_id)
 ```python
 settings: WorkspaceSettingsManager
 ```工作区设置 API 的命名空间。
-
-### settings.valid\_settings
-
-```python
-valid_settings(cls)
-```
 
 ### 设置.list
 
@@ -328,4 +322,134 @@ set(self, name, value)
 
 ```python notest
 modal.Workspace.from_context().settings.set("default-environment", "dev")
+```
+
+## 服务\_用户
+
+```python
+service_users: WorkspaceServiceUserManager
+```
+
+用于管理工作空间中的服务用户的命名空间。
+有关服务的更多信息，请参阅[指南](https://modal.com/docs/guide/service-users)
+用户。
+
+### 服务\_users.create
+
+```python
+create(self, name, *, expires_in)
+```
+
+在当前工作区中创建新的服务用户。
+
+要调用此功能，您需要拥有工作区的管理员权限。
+
+**参数**
+
+<Parameter name="name" type="str" description="The name of the new Service User. Must consistent only of alphanumeric, &#x27;-&#x27;, or &#x27;_&#x27; characters." />
+<Parameter name="expires_in" type="int | None" description="An expiration time, in seconds, after which the token will stop working. If ⟦T64⟧, the token will never expire." />
+
+**退货**
+
+包含服务用户凭证的`TokenData`数据类。请注意，这
+这是您唯一能够查看这些凭据的时间。
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+
+# Creates a Service User named "test-service-user", whose credentials expire after one year.
+service_user_token_data = ws.service_users.create(
+    "test-service-user",
+    expires_in=datetime.timedelta(days=365).total_seconds(),
+)
+```
+
+### 服务\_users.set\_role
+
+```python
+set_role(self, service_user_name, environment_name, *, role)
+```
+
+设置环境中指定服务用户的角色。要调用此功能，您需要拥有工作区的管理员权限。
+
+**参数**
+
+<Parameter name="service_user_name" type="str" description="The name of the Service User." />
+<Parameter name="environment_name" type="str" description="The name of the Environment to which the Service User&#x27;s new role will apply." />
+<Parameter name="role" type="str" description="The access level to grant this Service User." />
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+# Grants Service User "test-service-user" the Viewer role in Environment "production"
+ws.service_users.set_role("test-service-user", "production", role="viewer")
+
+# Revokes access to "production" from Service User "test-service-user"
+ws.service_users.set_role("test-service-user", "production", role="no-access")
+```
+
+### 服务\_users.info
+
+```python
+info(self, name)
+```
+
+获取有关特定服务用户的信息。
+
+**参数**
+
+<Parameter name="name" type="str" description="The name of the Service User to introspect." />
+
+**退货**
+
+包含有关服务用户的信息的`ServiceUserInfo`数据类。
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+service_user = ws.service_users.info("test-service-user")
+```
+
+### 服务\_users.list
+
+```python
+list(self)
+```
+
+列出当前工作区中的所有服务用户。
+
+**退货**
+
+`ServiceUserInfo` 数据类列表。
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+for service_user in ws.service_users.list():
+    print(service_user.name)
+```
+
+### 服务\_users.delete
+
+```python
+delete(self, name, *, allow_missing=False)
+```
+
+永久删除服务用户。
+
+**参数**
+
+<Parameter name="name" type="str" description="The name of the Service User to delete." />
+<Parameter name="allow_missing" type="bool" defaultValue="False" description="If ⟦T68⟧, do not throw an exception if the Service User does not exist." />
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.service_users.delete("test-service-user")
 ```

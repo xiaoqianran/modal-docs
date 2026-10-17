@@ -74,7 +74,7 @@ assert queue.get() == 42
 **限制**
 
 单个 `Queue` 最多可包含 100,000 个分区，每个分区最多可包含 5,000 个项目。每个项目最多可达
-1 MiB。
+1 MiB，每个分区的总大小最多可达 64 MiB。
 
 分区键必须非空且不得超过 64 字节。
 
@@ -84,9 +84,8 @@ assert queue.get() == 42
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的标识同步。
-
-很少需要显式调用此方法，因为大多数操作需要时会懒洋洋地补充水分。主要用例是当您需要时
+将本地对象与其在 Modal 服务器上的身份同步。很少需要显式调用此方法，因为大多数操作
+需要时会懒洋洋地补充水分。主要用例是当您需要时
 访问对象元数据，例如其 ID。
 
 *在 v0.72.39 中添加*：此方法取代了已弃用的 `.resolve()` 方法。
@@ -107,7 +106,7 @@ create(self, name, *, allow_existing=False, environment_name=None, client=None)
 
 在工作区环境中创建一个新的命名队列。
 
-这不会返回本地句柄；创建后使用`modal.Queue.from_name`查找队列。
+这不会返回本地句柄；创建后使用 `modal.Queue.from_name` 查找队列。
 
 v1.1.2 中添加。
 
@@ -123,12 +122,12 @@ v1.1.2 中添加。
 ```python notest
 modal.Queue.objects.create("my-queue")
 ```
-
 队列将在活动环境中创建，或者可以指定另一个队列：
 
 ```python notest
 modal.Queue.objects.create("my-queue", environment_name="dev")
 ```
+
 默认情况下，如果队列已存在，则会引发错误； `allow_existing=True` 使这种情况成为无操作：
 
 ```python notest
@@ -158,16 +157,16 @@ v1.1.2 中添加。
 <Parameter name="environment_name" type="str" defaultValue="&quot;&quot;" description="Environment to list from; defaults to the active environment." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T48⟧ when omitted." />
 
-**退货**
-
-列表中每个命名队列的水合 `Queue` 对象。
+**退货**列表中每个命名队列的水合 `Queue` 对象。
 
 **使用**
 
 ```python
 queues = modal.Queue.objects.list()
 print([q.name for q in queues])
-```将从活动环境中检索队列，或者可以指定另一个队列：
+```
+
+将从活动环境中检索队列，或者可以指定另一个队列：
 
 ```python notest
 dev_queues = modal.Queue.objects.list(environment_name="dev")
@@ -204,7 +203,6 @@ v1.1.2 中添加。
 ```python notest
 await modal.Queue.objects.delete("my-queue")
 ```
-
 队列将从活动环境中删除，或者可以指定另一个队列：
 
 ```python notest
@@ -224,6 +222,7 @@ validate_partition_key(partition)
 ```
 
 ## 短暂的
+
 ```python
 ephemeral(cls, client=None, environment_name=None)
 ```
@@ -270,9 +269,7 @@ Hydration 是惰性的：第一次使用句柄时从 Modal 获取元数据。
 
 `Queue` 手柄（可能尚未吸水）。
 
-**使用**
-
-```python
+**用法**```python
 q = modal.Queue.from_name("my-queue", create_if_missing=True)
 q.put(123)
 ```
@@ -283,7 +280,9 @@ q.put(123)
 from_id(queue_id, client=None)
 ```
 
-从 id 构造一个队列并查找队列元数据。这是一种延迟对局部进行补水的惰性方法
+从 id 构造一个队列并查找队列元数据。
+
+这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
 
@@ -328,7 +327,6 @@ clear(self, *, partition=None, all=False)
 清除单个分区或所有分区的内容。
 
 警告：这是破坏性操作，将不可撤销地删除数据。
-
 **参数**
 
 <Parameter name="partition" type="str | None" defaultValue="None" description="Partition to clear; omit with ⟦T57⟧ to clear every partition." />
@@ -348,6 +346,7 @@ get(self, block=True, timeout=None, *, partition=None)
 ```
 
 删除并返回队列中的下一个对象。
+
 如果`block`是`True`（默认）并且队列为空，`get`将无限期地等待
 一个对象，或者直到`timeout`（如果指定）。引发本机 `queue.Empty` 异常
 如果达到`timeout`。
@@ -369,9 +368,8 @@ get_many(self, n_values, block=True, timeout=None, *, partition=None)
 
 从队列中删除并返回最多 `n_values` 个对象。
 
-如果队列中的项目少于`n_values`，则返回全部。
-
-如果`block`是`True`（默认）并且队列为空，则`get_many`等待至少一个对象存在，或者直到`timeout`（如果指定）。如果满足以下条件，则提高 stdlib 的 `queue.Empty`
+如果队列中的项目少于`n_values`，则返回全部。如果`block`是`True`（默认）并且队列为空，则`get_many`等待至少一个
+对象存在，或者直到`timeout`（如果指定）。如果满足以下条件，则提高 stdlib 的 `queue.Empty`
 在任何项目到达之前已达到超时。
 
 如果`block`是`False`，则当队列为空时立即返回一个空列表。 `timeout`
@@ -396,6 +394,7 @@ put(self, v, block=True, timeout=None, *, partition=None, partition_ttl=24 *
 如果`block`是`True`并且队列已满，此方法将无限期重试或
 直到`timeout`（如果指定）。如果达到 `timeout`，则引发 stdlib 的 `queue.Full` 异常。
 如果阻塞，不建议省略`timeout`，因为操作可能会无限期等待。
+
 如果 `block` 是 `False`，则如果队列已满，此方法会立即引发 `queue.Full`。 `timeout` 是
 在这种情况下被忽略。
 
@@ -417,8 +416,9 @@ put_many(self, vs, block=True, timeout=None, *, partition=None, partition_ttl=24
 将多个对象添加到队列末尾。
 
 如果`block`是`True`并且队列已满，此方法将无限期重试或
-直到`timeout`（如果指定）。如果达到 `timeout`，则引发 stdlib 的 `queue.Full` 异常。
-如果阻塞，不建议省略`timeout`，因为操作可能会无限期等待。如果 `block` 是 `False`，则如果队列已满，此方法会立即引发 `queue.Full`。 `timeout` 是
+直到`timeout`（如果指定）。如果达到 `timeout`，则引发 stdlib 的 `queue.Full` 异常。如果阻塞，不建议省略`timeout`，因为操作可能会无限期等待。
+
+如果 `block` 是 `False`，则如果队列已满，此方法会立即引发 `queue.Full`。 `timeout` 是
 在这种情况下被忽略。
 
 **参数**

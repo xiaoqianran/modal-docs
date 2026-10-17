@@ -56,9 +56,9 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
   同一地区。
 * 通过Modal SDK创建，而不是从Sandbox内部创建，因此代码运行
   在主沙盒容器中无法创建或修改它。
-* 可以在沙箱的生命周期内动态创建、终止和替换。
+* 可以在沙盒的生命周期内动态创建、终止和替换。
   终止沙盒会停止其所有 Sidecar。
-* 拥有自己的出站网络策略，独立于主沙盒容器。
+* 拥有自己的[出站网络策略](#outbound-access-control)，独立于主沙箱容器。
 * 共享Sandbox的CPU和内存，这使得Sidecars更具成本效益
   而不是在多个沙箱中运行相同的进程。参见
   [资源配置](#resource-configuration)。
@@ -230,116 +230,14 @@ _ = sidecar
 
 {/片段} </CodeTabs>
 
-### 通过 Sidecar 路由 HTTPS 流量Sidecars 可用于检查来自主沙箱的传出 HTTPS 流量
-不同上下文中的容器，例如执行更高级的请求
-过滤、检查日志请求或注入主要的秘密
-沙盒容器不应具有访问权限。
-
-通常，应用程序需要支持显式代理配置，例如
-尊重 `HTTPS_PROXY` 环境变量，通过 Sidecar 路由流量。
-要包含来自**代理不知道**应用程序的 HTTPS 流量（端口 443 上的 TCP），您可以
-设置路由 **所有** 出站的实验性 `proxy_traffic_via_sidecar` 选项
-来自主 Sandbox 容器的 HTTPS 流量通过 Sidecar。
-
-<CodeTabs>
-{#snippet python()}
-
-```python notest
-sb = modal.Sandbox.create(
-    "sleep",
-    "600",
-    app=app,
-    image=image,
-    experimental_options={"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
-)
-
-# Until this Sidecar is running, HTTPS from the main container is refused.
-sb._experimental_sidecars.create("python", "/proxy.py", name="my-proxy-sidecar", image=proxy_image)
-```
-
-{/片段}
-
-{#snippet javascript()}
-
-```javascript notest
-const sb = await modal.sandboxes.create(app, image, {
-  command: ["sleep", "600"],
-  experimentalOptions: { proxy_traffic_via_sidecar: "my-proxy-sidecar" },
-});
-
-// Until this Sidecar is running, HTTPS from the main container is refused.
-await sb.experimentalSidecars.create("my-proxy-sidecar", proxyImage, {
-  command: ["python", "/proxy.py"],
-});
-```
-
-{/片段}
-
-{#snippet go()}
-
-```go notest
-sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-	Command:             []string{"sleep", "600"},
-	ExperimentalOptions: map[string]any{"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
-})
-// Until this Sidecar is running, HTTPS from the main container is refused.
-sb.ExperimentalSidecars.Create(ctx, "my-proxy-sidecar", proxyImage, &modal.SidecarCreateParams{
-	Command: []string{"python", "/proxy.py"},
-})
-```
-
-{/片段} </CodeTabs>
-
-Sidecar 接收原始 TLS 流并且必须读取目标主机名
-来自`ClientHello`的SNI。原来的目的IP没有转发，所以
-诸如`SO_ORIGINAL_DST`之类的机制不起作用。读取或重写 HTTP
-请求，使用证书颁发机构终止代理中的 TLS
-沙盒信任。参见【Sidecar流量路由
-示例](/docs/examples/sidecar_traffic_routing) 完整的基于 mitmproxy
-请求过滤器。
-
-仅中继到端口 443 的 TCP 流量。沙盒自己的出口控制是
-为此预留：沙盒上的`outbound_cidr_allowlist`仍然控制着每一个
-其他端口，但无论其列出什么，中继流量都会通过。非中继
-流量仍然受到沙箱的出口控制。
-
-相反，中继流量由 Sidecar 的出口控制控制。
-转发到. Sidecar的出站网络策略独立于main
-容器的并且默认是打开的，所以除非你通过 `outbound_cidr_allowlist`
-或`outbound_domain_allowlist`到Sidecar本身，中继流量到达
-Sidecar 选择连接到的任何目的地。
-
-该选项不能与设置`block_network`结合使用，
-沙盒上的`outbound_domain_allowlist`或`proxy`。
-
-### 模态代理
-
-您可以指定来自 Sidecar 的流量应通过
-[Proxy](/docs/guide/proxy-ips) 通过在创建 Sidecar 时传递 `proxy` ，就像
-对于沙箱。
-
-### 连接令牌
-
-<Callout variant="info">
-
-Sidecars可以直接连接到主容器上的每个端口，包括
-[连接令牌](/docs/guide/sandbox-networking#connecting-to-sandboxes-with-http-and-websockets) 的端口
-将请求路由到。 Sidecar 发送到该端口的请求不需要令牌，
-并且可以设置任何`X-Verified-User-Data`标头。如果你的服务器在主
-容器信任该标头，避免同时使用 Connect Tokens 和 Sidecar
-在同一个沙箱中。
-
-</Callout>
-
-### OIDC 代币
-
-与沙箱一样，Sidecar 不会收到 [OIDC](/docs/guide/oidc-integration)
+### OIDC 代币与沙箱一样，Sidecar 不会收到 [OIDC](/docs/guide/oidc-integration)
 默认情况下的令牌。要选择加入，请在创建时传递 `include_oidc_identity_token=True`
 边车。然后，该令牌可通过以下方式在 Sidecar 内使用：
 `MODAL_IDENTITY_TOKEN`环境变量。 Sidecar的身份令牌已发行
 对于其容器，因此其 `container_id` 声明与相应的 Sandbox 不同。
 
 ### 文件系统快照
+
 您可以将正在运行的 Sidecar 的文件系统快照为可重用的映像。的
 生成的图像可以在任何接受现有图像的地方使用；例子
 下面使用它来启动另一个 Sidecar。快照的范围仅限于该 Sidecar；
@@ -391,11 +289,10 @@ fmt.Println(state) // "ready"
 
 ### 目录挂载和快照
 
-您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它之后。您还可以将 Sidecar 目录快照到新镜像中。由此产生的
+您可以在正在运行的 Sidecar 中将图像挂载到绝对路径并卸载它
+稍后。您还可以将 Sidecar 目录快照到新的 Image 中。由此产生的
 图像可以在任何接受现有图像的地方使用，包括作为安装
-或作为新容器的文件系统。
-
-下面的示例使用已安装的 `/workspace` 作为会话状态，对其进行快照，
+或作为新容器的文件系统。下面的示例使用已安装的 `/workspace` 作为会话状态，对其进行快照，
 终止原始 Sidecar，并将快照挂载到替换的 Sidecar 中
 边车：
 
@@ -536,9 +433,229 @@ fmt.Println(string(stdout))
 {/片段} </CodeTabs>
 
 使用 [OIDC 身份验证](/docs/guide/cloud-bucket-mounts#using-oidc-identity-tokens)，
-身份令牌是为 Sidecar 容器颁发的，因此其`container_id`
-声明与主容器的声明不同。匹配的 IAM 信任策略
+身份令牌是为 Sidecar 容器颁发的，因此它的 `container_id`声明与主容器的声明不同。匹配的 IAM 信任策略
 完整的主题也必须允许 Sidecar 的容器 ID。
+
+## 网络
+
+### 容器之间的通信
+
+主沙盒容器可通过主机名 `main` 访问，并且每个
+Sidecar 可以通过创建它时使用的 `name` 访问。这些主机名是
+列于`/etc/hosts`。
+
+同一Sandbox中容器之间的流量不受任何
+容器的出站允许列表，无论是 CIDR 还是域。例如，一个主
+具有 `outbound_domain_allowlist` 的容器可以通过名称连接到 Sidecar，
+而`outbound_cidr_allowlist`为空的Sidecar仍然可以到达`main`。
+这仅适用于同一沙盒中的容器；其他私有IP地址
+保持封锁状态。
+
+### 出站访问控制
+
+每个Sidecar都有自己的出站网络策略，独立于主
+容器的并默认打开。 Sidecar 不会继承 Sandbox 的
+`outbound_cidr_allowlist` 或 `outbound_domain_allowlist`，并限制一个
+Sidecar 不会影响主容器或其他 Sidecar。
+
+在创建 Sidecar 时设置其出站允许列表。这些选项的行为
+就像同名的沙箱选项一样：
+
+* `outbound_cidr_allowlist` 仅允许流量到达列出的 IP 范围，使用
+  任何协议。
+* `outbound_domain_allowlist` 仅允许端口 443 上的 TLS 流量到达所列的
+  域，匹配于
+  [SNI](/docs/guide/sandbox-networking#how-domain-filtering-works)。通配符
+  支持诸如`*.example.com`之类的前缀。
+* 设置两个白名单后，将允许与任一白名单匹配的流量。
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sidecar = sb._experimental_sidecars.create(
+    "sleep",
+    "600",
+    name="restricted",
+    image=image,
+    outbound_cidr_allowlist=["52.0.0.0/8"],
+    outbound_domain_allowlist=["api.openai.com", "*.github.com"],
+)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sidecar = await sb.experimentalSidecars.create("restricted", image, {
+  command: ["sleep", "600"],
+  outboundCidrAllowlist: ["52.0.0.0/8"],
+  outboundDomainAllowlist: ["api.openai.com", "*.github.com"],
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sidecar, _ := sb.ExperimentalSidecars.Create(ctx, "restricted", image, &modal.SidecarCreateParams{
+	Command:                 []string{"sleep", "600"},
+	OutboundCIDRAllowlist:   &modal.Allowlist{Entries: []string{"52.0.0.0/8"}},
+	OutboundDomainAllowlist: &modal.Allowlist{Entries: []string{"api.openai.com", "*.github.com"}},
+})
+_ = sidecar
+```
+
+{/片段} </CodeTabs>
+
+Sidecar 不支持`block_network`，因为完全网络阻塞的 Sidecar
+无法到达主容器。阻止所有外部出口，同时保持
+连接到沙箱中的其他容器，传递一个空的 CIDR 允许列表：
+
+* Python：`outbound_cidr_allowlist=[]`
+* JavaScript: `outboundCidrAllowlist: []`
+* 前往：`OutboundCIDRAllowlist: &modal.Allowlist{}`
+
+<Callout variant="warning">
+
+当 Sidecar 有白名单时，通过 Modal 解析器进行 DNS 查找仍然有效，
+包括空的 CIDR 允许列表。 `8.8.8.8` 等公共解析器被阻止
+除非您将它们列入白名单。
+
+</Callout>
+
+Sidecar的出站网络策略在Sidecar创建时就固定了。
+在运行时更新沙盒的网络策略
+（Python 中的`_experimental_set_outbound_network_policy`，Python 中的`updateNetworkPolicy`
+JavaScript，Go 中的`UpdateNetworkPolicy`）仅更改主容器的政策，并且永远不会影响 Sidecar。要更改 Sidecar 的策略，请将其终止
+并创建一个替代品。
+
+|选项 |沙箱（主容器）|边车 |
+| ------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------- |
+| `block_network` |支持 |不支持。使用空的`outbound_cidr_allowlist` |
+| `outbound_cidr_allowlist` |支持 |支持，按 Sidecar 设置 |
+| `outbound_domain_allowlist` *（测试版）* |支持 |支持，按 Sidecar 设置 |
+|模态代理 (`proxy`) |支持 |支持，按 Sidecar 设置（不在 GPU 沙箱上）|
+| [出站策略](/docs/guide/sandbox-secret-injection) |支持 |不支持 |
+|在运行时更新策略 |支持（实验性）|不支持；创建替代 Sidecar |
+
+### 模态代理您可以指定来自 Sidecar 的流量应通过
+[Proxy](/docs/guide/proxy-ips) 通过在创建 Sidecar 时传递 `proxy` ，就像
+对于沙箱。 Sidecar 的代理是独立于主代理配置的
+容器的，因此其静态出站 IP 可能与主容器的不同。
+GPU 不支持将代理与 Sidecar 一起使用
+沙箱；客户端提出错误。
+
+### 通过 Sidecar 路由 HTTPS 流量
+
+Sidecars 可用于检查来自主沙箱的传出 HTTPS 流量
+不同上下文中的容器，例如执行更高级的请求
+过滤、检查日志请求或注入主要的秘密
+沙盒容器不应具有访问权限。
+
+通常，应用程序需要支持显式代理配置，例如
+尊重 `HTTPS_PROXY` 环境变量，通过 Sidecar 路由流量。
+要包含来自**代理不知道**应用程序的 HTTPS 流量（端口 443 上的 TCP），您可以
+设置路由 **所有** 出站的实验性 `proxy_traffic_via_sidecar` 选项
+来自主 Sandbox 容器的 HTTPS 流量通过 Sidecar。
+
+<CodeTabs>
+{#snippet python()}
+
+```python notest
+sb = modal.Sandbox.create(
+    "sleep",
+    "600",
+    app=app,
+    image=image,
+    experimental_options={"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+)
+
+# Until this Sidecar is running, HTTPS from the main container is refused.
+sb._experimental_sidecars.create("python", "/proxy.py", name="my-proxy-sidecar", image=proxy_image)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["sleep", "600"],
+  experimentalOptions: { proxy_traffic_via_sidecar: "my-proxy-sidecar" },
+});
+
+// Until this Sidecar is running, HTTPS from the main container is refused.
+await sb.experimentalSidecars.create("my-proxy-sidecar", proxyImage, {
+  command: ["python", "/proxy.py"],
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:             []string{"sleep", "600"},
+	ExperimentalOptions: map[string]any{"proxy_traffic_via_sidecar": "my-proxy-sidecar"},
+})
+// Until this Sidecar is running, HTTPS from the main container is refused.
+sb.ExperimentalSidecars.Create(ctx, "my-proxy-sidecar", proxyImage, &modal.SidecarCreateParams{
+	Command: []string{"python", "/proxy.py"},
+})
+```
+
+{/片段} </CodeTabs>
+
+Sidecar 接收原始 TLS 流并且必须读取目标主机名
+来自`ClientHello`的SNI。原来的目的IP没有转发，所以
+诸如`SO_ORIGINAL_DST`之类的机制不起作用。读取或重写 HTTP
+请求，使用证书颁发机构终止代理中的 TLS
+沙盒信任。参见【Sidecar流量路由
+示例](/docs/examples/sidecar_traffic_routing) 完整的基于 mitmproxy
+请求过滤器。
+
+仅中继从主容器到端口 443 的 TCP 流量。出口从
+代理 Sidecar 本身以及来自任何其他 Sidecar 的代理 Sidecar 不会被中继并遵循
+每个容器自己的[出站访问控制](#outbound-access-control)。
+
+继电器闭合失败。直到具有配置名称的 Sidecar 运行为止，
+退出后，来自主容器的 HTTPS 连接将被拒绝
+而不是直接出去。一个新创建的同名 Sidecar 需要
+通过继电器。
+
+#### 与出口控制的交互
+
+* 沙盒上的 `outbound_cidr_allowlist` 控制除
+  443，但无论白名单是什么，端口 443 上的中继流量都会通过包含。
+* 中继流量由代理 Sidecar 自己的出口控制控制，
+  默认打开。除非您通过`outbound_cidr_allowlist`或
+  `outbound_domain_allowlist` 到代理Sidecar，中继流量可以到达任何
+  代理 Sidecar 连接到的目的地。
+
+`proxy_traffic_via_sidecar` 不能与 `block_network` 组合使用，
+`outbound_domain_allowlist`，模态代理（`proxy`），或者
+沙盒上的[出站策略](/docs/guide/sandbox-secret-injection)。一个
+允许沙箱`outbound_cidr_allowlist`。
+
+对于`proxy_traffic_via_sidecar`，Sidecar 名称不能为空或`main`，必须
+最多 64 个字符长，并且只能包含字母、数字、短划线、
+和下划线。
+
+### 连接令牌
+
+<Callout variant="info">
+Sidecars可以直接连接到主容器上的每个端口，包括
+[连接令牌](/docs/guide/sandbox-networking#connecting-to-sandboxes-with-http-and-websockets) 的端口
+将请求路由到。 Sidecar 发送到该端口的请求不需要令牌，
+并且可以设置任何`X-Verified-User-Data`标头。如果你的服务器在主
+容器信任该标头，避免同时使用 Connect Tokens 和 Sidecar
+在同一个沙箱中。
+
+</Callout>
 
 ## 资源配置
 
@@ -554,13 +671,12 @@ fmt.Println(string(stdout))
 
 每个沙箱有 **250** 并发 sidecar 容器的硬性限制，
 与资源预留无关。
-
 在gVisor运行时，爆发仍然是可能的；请参阅[沙箱资源指南和
 定价](/docs/guide/sandbox-resources) 了解更多详细信息。
 
 在 VM 运行时上，启动 Sandbox 时需要为任何 Sidecar 预留内存。
 预留空间是从主 VM 的内存中划分出来的：它以 `memory - reserve` 启动，并且如果
-沙箱使用[内存爆发](/docs/guide/sandbox-resources)，永远不会超过`limit - reserve`，
+沙盒使用[内存爆发](/docs/guide/sandbox-resources)，永远不会超过`limit - reserve`，
 留下边车的储备。该请求必须为主虚拟机留下至少 1024 MiB。与每一个
 Sidecar 启动时，您可以指定用于该 Sidecar 的储备量，或者保留
 选项为空以使用全部剩余储备：
@@ -658,15 +774,18 @@ _ = worker
 主沙箱支持与常规沙箱相同的功能，但某些功能尚不支持
 对于边车：
 
-* **仅预构建的图像**：Sidecar 图像必须已经存在：使用 `image.build()` 预构建，a
+* **仅预构建图像**：Sidecar 图像必须已存在：使用 `image.build()` 预构建，a
   [命名图像](/docs/guide/named-images) 通过 `Image.from_name()`，
-  通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
+通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅
   [将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
 * **无 stdin/stdout**：Sidecar 的入口点不公开 stdin、stdout 或 stderr 流。
 * **GPU 沙箱的限制**：您可以将 Sidecar 连接到具有 GPU 的沙箱，但 Sidecar 仅限 CPU，无法连接 [Cloud Bucket Mounts](/docs/guide/cloud-bucket-mounts)。
-* **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[各个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
+* **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[单个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
   [内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。
 * **Sidecars 绕过 Connect Tokens**：Sidecar 可以直接到达主容器的 Connect Token 端口并设置任何
-  `X-Verified-User-Data` 标头。请参阅[连接令牌](#connect-tokens)。
-* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。
+  `X-Verified-User-Data` 标题。请参阅[连接令牌](#connect-tokens)。
+* **Sidecar 没有`block_network`**：Sidecar 无法完全网络阻塞，
+  并且其出站网络策略创建后无法更改。参见
+  [出站访问控制](#outbound-access-control)。
+* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
