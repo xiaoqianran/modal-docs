@@ -1877,10 +1877,10 @@
       "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-17T10:34:33.389Z",
+  "updatedAt": "2026-10-18T10:48:34.314Z",
   "stats": {
-    "translated": 41,
-    "skipped": 322,
+    "translated": 0,
+    "skipped": 363,
     "failed": 0,
     "total": 363
   }
