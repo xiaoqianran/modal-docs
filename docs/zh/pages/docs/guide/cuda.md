@@ -9,13 +9,13 @@ Modal 可以利用数据中心级 NVIDIA GPU 轻松加速您的工作负载。
 有关 Modal 上可用的 GPU 以及如何为您的用例选择 GPU 的更多信息，
 请参阅[本指南](/docs/guide/gpu)。深入了解这两个方面
 [GPU 硬件](/gpu-glossary/device-hardware) 和 [软件](/gpu-glossary/device-software)
-有关 [CUDA 堆栈](/gpu-glossary/host-software/) 的更多详细信息，
+有关 [CUDA 堆栈](/gpu-glossary/host-software) 的更多详细信息，
 请参阅我们的 [GPU 术语表](/gpu-glossary/readme)。
 
 这是 tl;dr：
 
-* [适用于 Linux-x86\_64 的 NVIDIA 加速显卡驱动程序](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#driver-installation)，版本 580.95.05，
-  和 [CUDA Driver API](https://docs.nvidia.com/cuda/archive/13.0.0/cuda-driver-api/index.html) 版本 13.0 已安装。
+* [适用于 Linux-x86\_64 的 NVIDIA 加速显卡驱动程序](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/#driver-installation)，版本 610.57.04，
+  和 [CUDA Driver API](https://docs.nvidia.com/cuda/archive/13.3.0/cuda-driver-api/index.html) 版本 13.3 已安装。
   您可以调用 `nvidia-smi` 或从任何可访问 GPU 的模态函数运行已编译的 CUDA 程序。
 * 这意味着您可以安装许多流行的库，例如 `torch`，它们捆绑了其他 CUDA 依赖项 [使用简单的 `pip_install`](#install-gpu-accelerated-torch-and-transformers-with-pip_install)。
 * 对于像`flash-attn`这样的前沿库，您可能需要手动安装CUDA依赖项。
@@ -77,7 +77,7 @@ def check_nvidia_smi():
 包装 CUDA 驱动程序 API 的是 [CUDA Runtime API](/gpu-glossary/host-software/cuda-runtime-api)，即 `libcudart.so` 共享库。
 该 API 包括 [`cudaLaunchKernel`](https://docs.nvidia.com/cuda/archive/12.8.0/cuda-runtime-api/group__CUDART__HIGHLEVEL.html#group__CUDART__HIGHLEVEL_1g7656391f2e52f569214adbfc19689eb3) 等函数
 并且在 CUDA 程序中更常用（请参阅[此 HackerNews 评论](https://news.ycombinator.com/item?id=20616385) 了解原因的彩色评论）。
-默认情况下，Modal 上*未*安装此共享库。
+默认情况下，Modal 上“未”安装此共享库。
 CUDA Runtime API 通常作为更大的 [NVIDIA CUDA Toolkit](https://docs.nvidia.com/cuda/index.html) 的一部分安装，
 其中包括 [NVIDIA CUDA 编译器驱动程序](/gpu-glossary/host-software/nvcc) (`nvcc`) 及其工具链
 以及许多用于编写和调试 CUDA 程序的 [有用的东西](/gpu-glossary/host-software/cuda-binary-utilities)（`cuobjdump`、`cudnn`、分析器等）。
@@ -96,7 +96,7 @@ CUDA Runtime API 通常作为更大的 [NVIDIA CUDA Toolkit](https://docs.nvidia
 ## 安装 GPU 加速的 `torch` 和 `transformers` 以及 `pip_install`
 
 CUDA工具包的组件可以通过`pip`安装，
-通过 PyPI 包，例如 [`nvidia-cuda-runtime-cu12`](https://pypi.org/project/nvidia-cuda-runtime-cu12/)
+通过 PyPI 包，如 [`nvidia-cuda-runtime-cu12`](https://pypi.org/project/nvidia-cuda-runtime-cu12/)
 和[`nvidia-cuda-nvrtc-cu12`](https://pypi.org/project/nvidia-cuda-nvrtc-cu12/)。
 这些组件被列为一些流行的 GPU 加速 Python 库的依赖项，例如 `torch`。
 
@@ -115,7 +115,7 @@ def run_torch():
     return has_cuda
 ```
 
-许多用于运行开放权重模型的库，例如 `transformers` 和 `vllm`，
+许多用于运行开放权重模型的库，例如`transformers`和`vllm`，
 在引擎盖下使用`torch`，因此可以以相同的方式安装：
 
 ```python
@@ -135,7 +135,7 @@ def run_transformers():
 许多其他依赖于其组件作为普通系统包安装的库无法找到它们。
 
 对于这些情况，我们建议您使用已将完整 CUDA 堆栈安装为系统包的映像
-并且所有环境变量设置正确，例如 [Docker Hub 上的`nvidia/cuda:*-devel-*` 镜像](https://hub.docker.com/r/nvidia/cuda)。
+并且所有环境变量设置正确，例如[Docker Hub上的`nvidia/cuda:*-devel-*`镜像](https://hub.docker.com/r/nvidia/cuda)。
 
 [TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/overview.html) 是一种推理引擎，可加速和优化大型语言模型的性能。它需要完整的 CUDA 工具包才能安装。
 

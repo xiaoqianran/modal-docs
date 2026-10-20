@@ -21,10 +21,11 @@ from .src.common import COLOR, PYTHON_VERSION, image
 
 ```
 
-您将需要两个 [Modal Secrets](https://modal.com/docs/guide/secrets) 来运行此示例：一个用于访问 OpenAI API，另一个用于访问 LangSmith API 以记录代理的行为。
+您将需要两个 [Modal Secrets](https://modal.com/docs/guide/secrets) 来运行此示例：
+一个用于访问 OpenAI API，另一个用于访问 LangSmith API 以记录代理的行为。
 
 要创建它们，请前往[秘密仪表板](https://modal.com/secrets)，选择“创建新秘密”，
-并使用为 OpenAI 和 LangSmith 提供的模板。
+使用为 OpenAI 提供的模板，并为 LangSmith 创建带有 `LANGCHAIN_API_KEY` 的自定义密钥。
 
 ```python
 app = modal.App(
@@ -40,7 +41,7 @@ app = modal.App(
 
 ## 创建沙箱
 
-我们在模态[沙箱](https://modal.com/docs/guide/sandbox)中执行代理的代码，这使我们能够
+我们在模态[沙盒](https://modal.com/docs/guide/sandbox)中执行代理的代码，这使我们能够
 在安全环境中运行任意代码。在此示例中，我们将使用 [`transformers`](https://huggingface.co/docs/transformers/index)
 使用预训练模型生成文本的库。让我们创建一个具有必要依赖项的沙箱。
 
@@ -64,7 +65,6 @@ def create_sandbox(app) -> modal.Sandbox:
 
 
 ```
-
 我们还需要一种在沙箱中运行代码的方法。为此，我们将编写一个简单的包装器
 围绕 Modal Sandbox `exec` 方法。我们使用`exec`，因为它允许我们运行代码而无需启动
 新容器。我们可以在多次运行中重复使用同一个容器，从而保留状态。
@@ -98,9 +98,7 @@ def run(code: str, sb: modal.Sandbox) -> tuple[str, str]:
 现在我们有了可以在其中执行代码的沙箱，我们可以构建代理的图。我们的图表是
 在 `edges` 和 `nodes` 模块中定义
 [与此示例相关](https://github.com/modal-labs/modal-examples/tree/main/13_sandboxes/codelangchain)。
-节点是改变状态的动作。边是节点之间的过渡。
-
-这个想法很简单：我们从节点`generate`开始，它调用LLM根据文档生成代码。
+节点是改变状态的动作。边是节点之间的过渡。这个想法很简单：我们从节点`generate`开始，它调用LLM根据文档生成代码。
 生成的代码作为称为 `check_code_execution` 的边缘的一部分执行（在沙箱中）
 然后输出被传递到 LLM 进行评估（`evaluate_execution` 节点）。
 如果 LLM 确定代码已正确执行——这可能意味着代码引发了异常！ --
@@ -164,8 +162,8 @@ def go(
 ```
 
 ## 运行图表
-
 现在让我们从命令行调用代理！
+
 我们定义一个在本地运行并触发 Modal 执行的`local_entrypoint`。
 
 您可以通过从包含 `codelangchain` 目录的文件夹中执行以下命令来调用它

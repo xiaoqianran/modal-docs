@@ -26,7 +26,7 @@
 ### 0.11.0 (2026-09-28)
 * 沙箱现在使用我们的[下一代后端](/blog/秒内缩放至 100 万并发沙箱)，为 CPU 沙箱提供更高的创建率和并发限制。不需要更改代码，但需要注意一些语义差异：
   * [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create) 方法现在会阻塞，直到调度 Sandbox，而不是立即返回。
-  * 如果无法安排沙盒（例如，由于无法满足资源或放置请求），创建将超时并引发 [`ResourceExhaustedError`](/docs/sdk/js/latest/Errors#resourceexhaustederror.)。
+  * 如果无法安排沙箱（例如，由于无法满足资源或放置请求），创建将超时并引发 [`ResourceExhaustedError`](/docs/sdk/js/latest/Errors#resourceexhaustederror.)。
 * 沙箱现在可以使用完整的虚拟机作为运行时，为运行 Docker 等工作流程提供更好的支持：
   * 在 [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create) 的参数中设置`runtime: "vm"`以启用。
   * 要强制继续使用 gVisor 运行时，请设置 `runtime="gvisor"`。这是当前的默认行为，但默认行为将来可能会更改。
@@ -37,7 +37,7 @@
 ### 0.10.1 (2026-09-10)
 * 现在可以通过在 `.modal.toml` 中设置 `MODAL_SANDBOX_V2=1` 环境变量或 `sandbox_v2 = true` 配置文件配置来选择[性能更佳的沙箱后端](/blog/scaling-to-1-million-concurrent-sandboxes-in-seconds)。然后，沙箱将使用新的后端，无需更改任何代码。这将成为即将发布的版本中的默认行为；设置标志可以让您提前选择加入。
 * 现在，客户端在连接空闲时释放与 Sandbox 主机的连接，并在后续操作时自动重新连接，因此不再需要调用 [`Sandbox.detach()`](/docs/sdk/js/latest/Sandbox#detach) 进行资源清理。
-* 我们修复了调用二进制模式沙箱流的 `readText()` 有时可能返回不正确数据的问题。
+* 我们修复了调用二进制模式沙盒流的 `readText()` 有时可能返回不正确数据的问题。
 * 图像构建现在遵循 `modal.toml` 配置文件中指定的 `image_builder_version`。
 
 ### 0.10.0 (2026-08-27)
@@ -53,7 +53,7 @@
 * [`client.secrets.fromObject`](/docs/sdk/js/latest/Secret#fromobject) 现在是惰性的，因此返回的 `Secret` 在第一次使用之前有一个空的 `secretId`。通过将机密直接发送到沙箱并避免机密创建限制，可以改善 [`Sandbox.experimentalCreate`](/docs/sdk/js/latest/Sandbox#experimentalcreate) 和 [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 的延迟。
 * [`Function_.withOptions`](/docs/sdk/js/latest/Function#withoptions) 和 [`Cls.withOptions`](/docs/sdk/js/latest/Cls#withoptions) 现在接受 `routingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由经过的区域。
 * 添加了 [`Sandbox.filesystem.watch`](/docs/sdk/js/latest/Sandbox#filesystemwatch) 以监视沙箱中文件系统更改的路径。它生成 [`FileWatchEvent`](/docs/sdk/js/latest/FileWatchEvent) 对象并支持 `recursive`、事件类型 `filter` 和 `timeoutMs` 绑定。
-* **中断：** [`Sandbox.reloadVolumes`](/docs/sdk/js/latest/Sandbox#reloadvolumes) 现在会阻塞，直到重新加载卷为止，并受到可通过 `SandboxReloadVolumesParams.timeoutMs` 配置的新超时（默认为 55 秒）的限制。如果重新加载未在该窗口内完成，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。
+* **突破：** [`Sandbox.reloadVolumes`](/docs/sdk/js/latest/Sandbox#reloadvolumes) 现在会阻塞，直到重新加载卷为止，并受到可通过 `SandboxReloadVolumesParams.timeoutMs` 配置的新超时（默认为 55 秒）的限制。如果重新加载未在该窗口内完成，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。
 * **中断：** 将 `VolumeMountOptions` 类型重命名为 `VolumeMountOptionsParams`。相应地更新任何 [`withMountOptions`](/docs/sdk/js/latest/Volume#withmountoptions) 类型注释。
 
 ## 0.8
@@ -75,14 +75,15 @@
 * 添加了对 Functions 动态配置的支持：[`Function_.withOptions`](/docs/sdk/js/latest/Function#withoptions)、[`Function_.withConcurrency`](/docs/sdk/js/latest/Function#withconcurrency)、[`Function_.withBatching`](/docs/sdk/js/latest/Function#withbatching) 和[`Function_.instance`](/docs/sdk/js/latest/Function#instance)。
 * 提高了为函数调用上传或下载大数据负载时的可靠性。
 * 修复了向加载了 [`Image.fromId`](/docs/sdk/js/latest/Image#fromid) 的镜像添加 Dockerfile 命令可能无法使用解析后的镜像作为基础的错误。
-* [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/js/latest/Errors#invaliderror) 拒绝相对的 `workdir` 客户端。空字符串 `workdir` 也会被拒绝（通过 `undefined` 使用图像默认值）。
+* [`Sandbox.exec`](/docs/sdk/js/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/js/latest/Errors#invaliderror) 拒绝相对的 `workdir` 客户端。空字符串 `workdir` 也会被拒绝（传递 `undefined` 以使用图像默认值）。
 * **突破：** JS SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，JS SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙盒工作流程的改进。因此，固定的 `ModalClient.imageBuilderVersion` 属性已被删除，取而代之的是 [`ModalClient.getImageBuilderVersion`](/docs/sdk/js/latest/ModalClient#getimagebuilderversion)。
 * **突破：** [`Sandbox.snapshotFilesystem`](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 不再采用位置 `timeoutMs` 参数。超时现在作为 `timeoutMs?: number` 存在于 params 对象上，使该方法与 [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 同等。将 `sb.snapshotFilesystem(30000, params)` 迁移到 `sb.snapshotFilesystem({ timeoutMs: 30000, ...params })`。
 * **突破：** [`Sandbox.snapshotFilesystem`](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 和 [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其参数对象上接受显式 `ttlMs` 字段（以毫秒为单位），控制生成的图像保留的时间。两种方法均默认为 30 天。这是 `snapshotFilesystem` 的默认更改，之前它无限期地保留图像。通过`ttlMs: null`选择退出到期。* **突破：** [`Sandbox.snapshotDirectory`](/docs/sdk/js/latest/Sandbox#snapshotdirectory) 现在在其 params 对象上也有一个 `timeoutMs` 字段，默认值为 55 秒，这使其与文件系统快照相同。如果快照未在该窗口内返回，则会引发 [`TimeoutError`](/docs/sdk/js/latest/Errors#timeouterror)。超时可以设置为任意高，以保留不超时的旧行为。
 * **中断：** [`Sandbox.fromId`](/docs/sdk/js/latest/Sandbox#fromid) 不再检查沙箱 ID 是否存在。您可以运行 [`poll`](/docs/sdk/js/latest/Sandbox#poll) 来获取沙箱的状态。
 * **重大突破：** 删除了已弃用的低级文件句柄 API：`sandbox.open` 和 `SandboxFile`。请使用 [Sandbox 文件系统 API](/docs/sdk/js/latest/Sandbox#sandboxfilesystem)：`sandbox.filesystem`。
 * **中断：** 删除了已弃用的 `volume.readOnly` 和 `volume.isReadOnly`。请改用 [`withMountOptions({ readOnly: true })`](/docs/sdk/js/latest/Volume#withmountoptions)。
-* **中断：** 从 [`sandboxes.create`](/docs/sdk/js/latest/Sandbox#create) 中删除了已弃用的 `cidrAllowlist` 参数。请使用 `outboundCidrAllowlist` 代替。* **突破：** 删除了整个已弃用的 v0.5.0 向后兼容表面：全局 `initializeClient()` / `close()` 函数和 `ClientOptions` 类型；已弃用的静态工厂 `App.lookup`、`Function_.lookup`、`Cls.lookup`、`Queue.lookup` / `Queue.ephemeral` / `Queue.delete`、`Volume.fromName` / `Volume.ephemeral`、`Secret.fromName` / `Secret.fromObject`、`Sandbox.fromId` / `Sandbox.fromName` / `Sandbox.list`、`Image.fromId` / `Image.fromRegistry` / `Image.fromAwsEcr` / `Image.fromGcpArtifactRegistry` / `Image.delete`、 `Proxy.fromName`和`FunctionCall.fromId`；实例垫片 `app.createSandbox`、`app.imageFromRegistry` / `imageFromAwsEcr` / `imageFromGcpArtifactRegistry`、公共 `CloudBucketMount` 构造函数和已弃用的 `LookupOptions` / `DeleteOptions` / `EphemeralOptions` 类型别名。请参阅 [`MIGRATION-GUIDE.md`](../MIGRATION-GUIDE.md)。
+* **中断：** 从 [`sandboxes.create`](/docs/sdk/js/latest/Sandbox#create) 中删除了已弃用的 `cidrAllowlist` 参数。请使用 `outboundCidrAllowlist` 代替。* **突破：** 删除了整个已弃用的 v0.5.0 向后兼容表面：全局 `initializeClient()` / `close()` 函数和 `ClientOptions` 类型；已弃用的静态工厂 `App.lookup`、`Function_.lookup`、`Cls.lookup`、`Queue.lookup` / `Queue.ephemeral` / `Queue.delete`、`Volume.fromName` / `Volume.ephemeral`、`Secret.fromName` / `Secret.fromObject`、`Sandbox.fromId` / `Sandbox.fromName` / `Sandbox.list`、`Image.fromId` / `Image.fromRegistry` / `Image.fromAwsEcr` / `Image.fromGcpArtifactRegistry` / `Image.delete`、 `Proxy.fromName`和`FunctionCall.fromId`；实例垫片 `app.createSandbox`、`app.imageFromRegistry` / `imageFromAwsEcr` / `imageFromGcpArtifactRegistry`、公共 `CloudBucketMount` 构造函数和弃用
+d `LookupOptions` / `DeleteOptions` / `EphemeralOptions` 类型别名。请参阅[`MIGRATION-GUIDE.md`](https://github.com/modal-labs/modal-client/blob/main/MIGRATION-GUIDE.md)。
 
 ## 0.7
 
@@ -195,7 +196,7 @@
 
 ### 0.5.0 (2025-10-28)
 
-Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大更改的详细列表，请参阅[迁移指南](../MIGRATION-GUIDE.md)。
+Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大更改的详细列表，请参阅[迁移指南](https://github.com/modal-labs/modal-client/blob/main/MIGRATION-GUIDE.md)。
 
 * SDK 现在公开一个中央 [`ModalClient`](/docs/sdk/js/latest/ModalClient) 对象作为与 Modal 资源交互的主要入口点。
 * 使用 Modal 对象实例（函数、沙箱、图像等）的界面与以前基本相同，但有一些命名更改。
@@ -206,7 +207,7 @@ Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大�
 
 其他新功能：
 
-* 添加了在创建 Sandboxes 和 Cls 实例时设置 CPU 和内存限制的支持。
+* 添加了对创建 Sandboxes 和 Cls 实例时设置 CPU 和内存限制的支持。
 
 ## 0.3
 
@@ -244,20 +245,20 @@ Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大�
 ### 0.3.18 (2025-08-26)
 
 * 添加了 [`Image.build`](/docs/sdk/js/latest/Image#build)。
-* 添加了 [`Image.fromId`](/docs/sdk/js/latest/Image#fromid)。* 添加了对使用自定义选项实例化 Cls 的支持，使用 [`Cls.withOptions()`](/docs/sdk/js/latest/Cls#withoptions)/[`.withConcurrency()`](/docs/sdk/js/latest/Cls#withconcurrency)/[`.withBatching()`](/docs/sdk/js/latest/Cls#withbatching)。
-* 添加了对 [命名沙箱](https://modal.com/docs/guide/sandbox#named-sandboxes) 的支持（[`examples/sandbox-named.ts`](./examples/sandbox-named.ts) 中的示例）。
+* 添加了 [`Image.fromId`](/docs/sdk/js/latest/Image#fromid)。
+* 添加了对使用自定义选项实例化 Cls 的支持，使用 [`Cls.withOptions()`](/docs/sdk/js/latest/Cls#withoptions)/[`.withConcurrency()`](/docs/sdk/js/latest/Cls#withconcurrency)/[`.withBatching()`](/docs/sdk/js/latest/Cls#withbatching)。* 添加了对[命名沙箱](https://modal.com/docs/guide/sandbox#named-sandboxes)的支持（示例见[`examples/sandbox-named.ts`](https://github.com/modal-labs/modal-client/blob/main/js/examples/sandbox-named.ts)）。
 * 添加了对 [`Volume.ephemeral()`](/docs/sdk/js/latest/Volume#ephemeral) 的支持。
 
 ### 0.3.17 (2025-08-22)
 
-* 添加了对更多参数的支持 [`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create):
+* 在[`Sandbox.create()`](/docs/sdk/js/latest/Sandbox#create)中添加了对更多参数的支持：
   * `blockNetwork`：是否阻止沙箱的所有网络访问。
   * `cidrAllowlist`：允许沙箱访问的CIDR列表。
   * `gpu`：沙盒的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
   * `cloud`：运行沙箱的云提供商。
   * `regions`：运行沙盒的区域。
-* `verbose`：启用详细日志记录。
-  * `proxy`：将模态代理连接到沙箱。
+  * `verbose`：启用详细日志记录。
+* `proxy`：将模态代理连接到沙箱。
   * `workdir`：设置工作目录。
 * 添加了对将 [`CloudBucketMount`](/docs/sdk/js/latest/CloudBucketMount) 挂载到沙箱的支持。
 * 添加了惰性的顶级 Image 对象。图像是在创建沙箱时构建的。
@@ -274,8 +275,8 @@ Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大�
 ### 0.3.16 (2025-08-07)
 
 * 添加了对[从 ID 获取沙箱](/docs/sdk/js/latest/Sandbox#fromid) 的支持。
-### 0.3.15 (2025-07-23)
 
+### 0.3.15 (2025-07-23)
 * 添加了对[对沙箱的文件系统进行快照](/docs/sdk/js/latest/Sandbox#snapshotfilesystem) 的支持。
 * 添加了对[轮询沙箱](/docs/sdk/js/latest/Sandbox#poll) 的支持，以检查它们是否仍在运行，或获取退出代码。
 * 添加了对在包含 Secrets 的沙箱中执行命令的支持。
@@ -305,7 +306,7 @@ Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大�
 
 ### 0.3.9 (2025-06-27)
 
-* 添加了对沙箱文件系统的支持。
+* 添加了对沙盒文件系统的支持。
 
 ### 0.3.8 (2025-06-24)
 
@@ -315,7 +316,7 @@ Modal SDK for JS 的第一个 beta 版本（从 alpha 毕业）。有关重大�
 
 * 添加了对使用 `App.imageFromAwsEcr()` 从 AWS ECR 创建映像的支持。
 * 添加了对使用 `Secret.fromName()` 访问模态机密的支持。
-* 修复了一些 pickle 对象（负整数、字典）的序列化。
+* 修复了一些 pickled 对象的序列化（负整数、字典）。
 
 ### 0.3.6 (2025-06-09)
 

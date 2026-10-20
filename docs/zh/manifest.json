@@ -137,9 +137,9 @@
       "bytes": 160
     },
     "docs/examples/agent.md": {
-      "hash": "416dd549aced17287f9132b50ac924c9a3425652",
-      "translatedAt": "2026-08-08T18:27:54.425Z",
-      "bytes": 7545
+      "hash": "9b7f8ccff0ec933b94adde43400b59293f5d98dc",
+      "translatedAt": "2026-10-20T11:19:29.841Z",
+      "bytes": 7597
     },
     "docs/examples/algolia_indexer.md": {
       "hash": "d911194b91a174a526ed3eff7c0edec4443e73ca",
@@ -532,9 +532,9 @@
       "bytes": 7599
     },
     "docs/guide/cuda.md": {
-      "hash": "7fdb8736121d33d2da7cb4a9ac06f1643c058f37",
-      "translatedAt": "2026-10-07T13:06:53.717Z",
-      "bytes": 9617
+      "hash": "d17bfdc90d4ca7d4782f4808f56e80594ccb09a1",
+      "translatedAt": "2026-10-20T11:19:37.843Z",
+      "bytes": 9611
     },
     "docs/guide/dataset-ingestion.md": {
       "hash": "fe6d87ce5d46d1c1a550a94276464d6518fa8604",
@@ -547,9 +547,9 @@
       "bytes": 4626
     },
     "docs/guide/audit-logs.md": {
-      "hash": "380e03fe46b6d9a7341f6abdf0734dc21a094ab8",
-      "translatedAt": "2026-10-08T13:14:37.989Z",
-      "bytes": 23764
+      "hash": "70623fbb805c36a72acf54ac99b8dfe57a35897c",
+      "translatedAt": "2026-10-20T11:20:42.664Z",
+      "bytes": 24028
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -807,9 +807,9 @@
       "bytes": 18654
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "fe037611c0ff1a239d2f81ea45ec1c4e39e83a4b",
-      "translatedAt": "2026-10-14T11:36:41.776Z",
-      "bytes": 19061
+      "hash": "0323fe6b75db602fd1f91fadbf361cc4b977e84f",
+      "translatedAt": "2026-10-20T11:19:53.653Z",
+      "bytes": 18940
     },
     "docs/guide/scale.md": {
       "hash": "9ea9d4b810fc1033c28c1ef99a0c09c0c31fdbd0",
@@ -1530,9 +1530,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/go/releases.md": {
-      "hash": "b72a26172b7d1362b68b28dc01fbc535394adf1a",
-      "translatedAt": "2026-10-17T10:31:30.558Z",
-      "bytes": 30113
+      "hash": "da0d26fa8cfb330d26ce08627706e2158701cdba",
+      "translatedAt": "2026-10-20T11:20:46.155Z",
+      "bytes": 30199
     },
     "docs/sdk/js/latest/FunctionAutoscalerSettings.md": {
       "hash": "4d2ac7408bf7821f8ff2fe04159b66c6d5143a6a",
@@ -1563,9 +1563,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/js/releases.md": {
-      "hash": "3d1887a4e77de88be45ef5e67ead547b6ef712b9",
-      "translatedAt": "2026-10-17T10:32:14.742Z",
-      "bytes": 27918
+      "hash": "581bd81235a8eda0d630b9129648efaab8eec1d7",
+      "translatedAt": "2026-10-20T11:21:30.287Z",
+      "bytes": 28072
     },
     "docs/guide/entra-sso.md": {
       "hash": "348075049b7be28016dcc96f9aa7dc109fe11c8c",
@@ -1877,10 +1877,10 @@
       "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-19T12:49:50.424Z",
+  "updatedAt": "2026-10-20T11:21:30.287Z",
   "stats": {
-    "translated": 0,
-    "skipped": 363,
+    "translated": 6,
+    "skipped": 357,
     "failed": 0,
     "total": 363
   }

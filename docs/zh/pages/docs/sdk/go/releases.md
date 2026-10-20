@@ -19,7 +19,7 @@
 * [`client.Volumes.FromName()`](/docs/sdk/go/latest/Volume#fromname) 方法 (`VolumeFromNameParams`) 的参数现在有一个 `Version` 字段，支持 [v2 Volume](/docs/guide/volumes#volumes-v2) 创建。
 * [`client.Sandboxes.FromName()`](/docs/sdk/go/latest/Sandbox#fromname) 方法现在将返回最近终止的使用 `IncludeTerminated: true` 名称（如果此后尚未声明）的沙箱。
 * 通过 [`Sandbox.Filesystem`](/docs/sdk/go/latest/Sandbox#sandboxfilesystem) 方法写入现在性能更高。
-* [`FunctionCall.Get()`](/docs/sdk/go/latest/FunctionCall#get) 方法现在返回一个 [`FunctionTimeoutError`](/docs/sdk/go/latest/Errors#functiontimeouterror)，当其 `Timeout` 时，它包装了 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)在Function结束之前就已经过去了，这样就可以将其与超出其自身执行超时的Function调用区分开来：
+* [`FunctionCall.Get()`](/docs/sdk/go/latest/FunctionCall#get) 方法现在返回一个 [`FunctionTimeoutError`](/docs/sdk/go/latest/Errors#functiontimeouterror)，它在 `Timeout` 时包装了 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)在Function结束之前就已经过去了，这样就可以将其与超出其自身执行超时的Function调用区分开来：
   * 使用`errors.As(err, &modal.TimeoutError{})`来检测这种情况。
   * 不推荐将这种情况匹配为 `FunctionTimeoutError`；未来的版本将返回一个简单的 `TimeoutError`。
 
@@ -30,7 +30,7 @@
 * 沙箱现在可以使用完整的虚拟机作为运行时，为运行 Docker 等工作流程提供更好的支持：
   * 在传递给[`Sandboxes.Create()`](/docs/sdk/go/latest/Sandbox#create)的`SandboxCreateParams`中设置`Runtime: modal.SandboxRuntimeVM`以启用。
   * 要强制继续使用 gVisor 运行时，请设置 `Runtime: modal.SandboxRuntimeGVisor`。这是当前的默认行为，但默认行为将来可能会更改。
-* 我们添加了一个 [`Sandbox.Logs`](/docs/sdk/go/latest/Sandbox#sandboxlogs) 命名空间，其中包含从沙箱的入口点进程获取日志的方法。
+* 我们添加了一个 [`Sandbox.Logs`](/docs/sdk/go/latest/Sandbox#sandboxlogs) 命名空间，其中包含从沙箱入口点进程获取日志的方法。
 
 ## 0.10
 
@@ -53,7 +53,7 @@
 * [`Secrets.FromMap`](/docs/sdk/go/latest/Secret#frommap) 现在是惰性的，因此返回的 `Secret` 在第一次使用之前有一个空的 `SecretID`。通过将机密直接发送到沙箱并避免机密创建限制，可以改善 [`Sandbox.ExperimentalCreate`](/docs/sdk/go/latest/Sandbox#experimentalcreate) 和 [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 的延迟。
 * [`Function.WithOptions`](/docs/sdk/go/latest/Function#withoptions) 和 [`Cls.WithOptions`](/docs/sdk/go/latest/Cls#withoptions) 现在接受 `RoutingRegion` 选项来覆盖 Function 或 Cls 的输入和输出路由通过的区域。
 * 添加了 [`Sandbox.Filesystem.Watch`](/docs/sdk/go/latest/Sandbox#filesystemwatch) 以监视沙箱中文件系统更改的路径。它生成 [`FileWatchEvent`](/docs/sdk/go/latest/FileWatchEvent) 对象并支持 `Recursive`、事件类型 `Filter` 和 `Timeout` 绑定。* **突破：** [`Sandbox.ReloadVolumes`](/docs/sdk/go/latest/Sandbox#reloadvolumes) 现在会阻塞，直到重新加载卷为止，并受到可通过 `SandboxReloadVolumesParams.Timeout` 配置的新超时（默认为 55 秒）的限制。如果重新加载未在该窗口内完成，则会引发 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)。
-* **中断：** 将 `VolumeMountOptions` 类型重命名为 `VolumeMountOptionsParams`。相应地更新 [`WithMountOptions(&VolumeMountOptions{...})`](/docs/sdk/go/latest/Volume#withmountoptions) 调用站点。
+* **突破：** 将 `VolumeMountOptions` 类型重命名为 `VolumeMountOptionsParams`。相应地更新 [`WithMountOptions(&VolumeMountOptions{...})`](/docs/sdk/go/latest/Volume#withmountoptions) 调用站点。
 * **中断：** 将 `SandboxCreateParams` 中的 `OutboundCIDRAllowlist` 和 `OutboundDomainAllowlist` 从 `[]string` 更改为 [`*Allowlist`](/docs/sdk/go/latest/Allowlist)。非零 `*Allowlist` 启用白名单模式（即使`Entries`为空，也会阻止该类型的所有流量）； `nil` 表示开放获取。将 `OutboundCIDRAllowlist: []string{"10.0.0.0/8"}` 迁移到 `OutboundCIDRAllowlist: &Allowlist{Entries: []string{"10.0.0.0/8"}}`。
 
 ## 0.8
@@ -74,7 +74,7 @@
 * 修复了向加载了 [`Image.FromID`](/docs/sdk/go/latest/Image#fromid) 的镜像添加 Dockerfile 命令可能无法使用解析后的镜像作为基础的错误。
 * [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 现在使用 [`InvalidError`](/docs/sdk/go/latest/Errors#invaliderror) 拒绝相对的 `Workdir` 客户端。
 * [`Sandbox.Create`](/docs/sdk/go/latest/Sandbox#create) 和 [`Sandbox.Exec`](/docs/sdk/go/latest/Sandbox#exec) 现在，如果任何 `Secrets` 条目为零，则返回 [`InvalidError`](/docs/sdk/go/latest/Errors#invaliderror)。
-* **突破：** Go SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，Go SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙箱工作流程的改进。
+* **突破：** Go SDK 现在从您的 [模态工作区设置](https://modal.com/settings/image-config) 读取 [图像生成器版本](https://modal.com/docs/guide/images#image-builder-updates)，就像 Python SDK 一样。此前，Go SDK 被硬编码为使用版本 `2024.10`。如果您的工作区配置使用不同的版本，您的图像将重建一次（然后像往常一样缓存），因此请注意升级后的首次运行可能需要比平时更长的时间。请注意，版本 `2025.06` 有许多专门针对沙盒工作流程的改进。
 * **突破：** [`Sandbox.SnapshotFilesystem`](/docs/sdk/go/latest/Sandbox#snapshotfilesystem) 不再采用位置 `timeout` 参数。超时现在作为 `Timeout time.Duration` 存在于 params 结构中，使该方法与 [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 同等。将 `sb.SnapshotFilesystem(ctx, 30*time.Second, params)` 迁移到 `sb.SnapshotFilesystem(ctx, &SandboxSnapshotFilesystemParams{Timeout: 30*time.Second, ...})`。
 * **突破：** [`Sandbox.SnapshotFilesystem`](/docs/sdk/go/latest/Sandbox#snapshotfilesystem) 和 [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 现在在其参数上接受显式 `TTL` 字段（`time.Duration`）结构体，控制结果图像的保留时间。两种方法均默认为 30 天。这是 `SnapshotFilesystem` 的默认更改，之前它无限期地保留图像。通过`TTL: modal.NoExpiryTTL`选择退出到期。
 * **突破：** [`Sandbox.SnapshotDirectory`](/docs/sdk/go/latest/Sandbox#snapshotdirectory) 现在在其 params 结构上也有一个 `Timeout` 字段，默认值为 55 秒，这使其与文件系统快照相同。如果快照未在该窗口内返回，则会引发 [`TimeoutError`](/docs/sdk/go/latest/Errors#timeouterror)。超时可以设置为任意高，以保留不超时的旧行为。
@@ -208,7 +208,7 @@
 
 ### 0.5.0 (2025-10-28)
 
-Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大更改的详细列表，请参阅[迁移指南](../MIGRATION-GUIDE.md)。
+Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大更改的详细列表，请参阅[迁移指南](https://github.com/modal-labs/modal-client/blob/main/MIGRATION-GUIDE.md)。
 
 * SDK 现在公开一个中央 [`Client`](/docs/sdk/go/latest/Client) 对象作为与 Modal 资源交互的主要入口点。
 * 使用 Modal 对象实例（函数、沙箱、图像等）的界面与以前基本相同，但有一些命名更改。
@@ -220,7 +220,7 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
 * 字段名称遵循 Go 大小写约定（例如，`Id` → `ID`、`Url` → `URL`、`TokenId` → `TokenID`）。
 * 为所有表示内存量的参数添加了明确的单位后缀（以 MiB 为单位，后缀为 `MiB`）。
 
-其他新功能：* 添加了在创建 Sandboxes 和 Cls 实例时设置 CPU 和内存限制的支持。
+其他新功能：* 添加了对创建 Sandboxes 和 Cls 实例时设置 CPU 和内存限制的支持。
 
 ## 0.0
 
@@ -258,7 +258,7 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
 * 添加了 [`Image.Build`](/docs/sdk/go/latest/Image#build)。
 * 添加了`NewImageFromId`。
 * 调用 `CloseEphemeral()` 后对临时队列的操作现在将显式失败。* 添加了对使用自定义选项实例化 Cls 的支持，使用 [`Cls.WithOptions()`](/docs/sdk/go/latest/Cls#withoptions)/[`.WithConcurrency()`](/docs/sdk/go/latest/Cls#withconcurrency)/[`.WithBatching()`](/docs/sdk/go/latest/Cls#withbatching)。
-* 添加了对 [命名沙箱](https://modal.com/docs/guide/sandbox#named-sandboxes) 的支持（[`examples/sandbox-named/main.go`](./examples/sandbox-named/main.go) 中的示例）。
+* 添加了对[命名沙箱](https://modal.com/docs/guide/sandbox#named-sandboxes)的支持（例如[`examples/sandbox-named/main.go`](https://github.com/modal-labs/modal-client/blob/main/go/examples/sandbox-named/main.go)）。
 * 添加了对`VolumeEphemeral()`的支持。
 
 ### 0.0.17 (2025-08-22)
@@ -268,8 +268,8 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
   * `CIDRAllowlist`：允许沙箱访问的CIDR列表。
   * `GPU`：沙箱的 GPU 预留（例如“A100”、“T4:2”、“A100-80GB:4”）。
   * `Cloud`：运行沙箱的云提供商。
-* `Regions`：运行沙盒的区域。
-  * `Verbose`：启用详细日志记录。
+  * `Regions`：运行沙箱的区域。
+* `Verbose`：启用详细日志记录。
   * `Proxy`：将模态代理连接到沙箱。
   * `Workdir`：设置工作目录。
 * 添加了对将 [`CloudBucketMount`](/docs/sdk/go/latest/CloudBucketMount) 挂载到沙箱的支持。
@@ -278,8 +278,8 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
   * `NewImageFromAwsEcr`
   * `NewImageFromGcpArtifactRegistry`
 * 添加了 `SecretFromMap()` 以从键值对创建 Secret（如 Python 中的 `from_dict()`）。
-* 将 `Name` 字段添加到 `App`s、`Sandbox`es、`Secret`s、`Volume`s 和 `Queue`s。* 添加了对 [`Function.GetCurrentStats()`](/docs/sdk/go/latest/Function#getcurrentstats) 的支持。
-* 添加了对 [`Function.UpdateAutoscaler()`](/docs/sdk/go/latest/Function#updateautoscaler) 的支持。
+* 将 `Name` 字段添加到 `App`s、`Sandbox`es、`Secret`s、`Volume`s 和 `Queue`s。
+* 添加了对 [`Function.GetCurrentStats()`](/docs/sdk/go/latest/Function#getcurrentstats) 的支持。* 添加了对 [`Function.UpdateAutoscaler()`](/docs/sdk/go/latest/Function#updateautoscaler) 的支持。
 * 添加了对 [`Function.GetWebURL()`](/docs/sdk/go/latest/Function#getweburl) 的支持。
 * 添加了对`Volume.ReadOnly()`的支持。
 * 添加了对沙箱上[设置标签](/docs/sdk/go/latest/Sandbox#settags)以及[列出沙箱](/docs/sdk/go/latest/Sandbox#list)（按标签）的支持。
@@ -320,7 +320,7 @@ Go 的 Modal SDK 的第一个 Beta 版本（从 alpha 毕业）。有关重大�
 * 为沙箱进程的 `ExecOptions` 添加了 `Workdir` 和 `Timeout` 选项。
 
 ### 0.0.9 (2025-06-27)
-* 添加了对沙箱文件系统的支持。
+* 添加了对沙盒文件系统的支持。
 
 ### 0.0.8 (2025-06-18)
 

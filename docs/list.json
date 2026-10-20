@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-19T12:49:50.307Z",
+  "fetchedAt": "2026-10-20T11:19:23.759Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 349,
   "ok": 349,
@@ -234,7 +234,7 @@
       "source": "https://modal.com/docs/examples/agent.md",
       "finalUrl": "https://modal.com/docs/examples/agent.md",
       "path": "docs/examples/agent.md",
-      "bytes": 7700,
+      "bytes": 7750,
       "stub": false
     },
     {
@@ -802,7 +802,7 @@
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 26948,
+      "bytes": 27259,
       "stub": false
     },
     {
@@ -874,7 +874,7 @@
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10078,
+      "bytes": 10077,
       "stub": false
     },
     {
@@ -1370,7 +1370,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 20178,
+      "bytes": 20061,
       "stub": false
     },
     {
@@ -1970,7 +1970,7 @@
       "source": "https://modal.com/docs/sdk/go/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/go/releases.md",
       "path": "docs/sdk/go/releases.md",
-      "bytes": 31322,
+      "bytes": 31426,
       "stub": false
     },
     {
@@ -2386,7 +2386,7 @@
       "source": "https://modal.com/docs/sdk/js/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/js/releases.md",
       "path": "docs/sdk/js/releases.md",
-      "bytes": 29237,
+      "bytes": 29391,
       "stub": false
     },
     {

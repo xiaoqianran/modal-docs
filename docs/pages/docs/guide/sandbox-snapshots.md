@@ -445,7 +445,6 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * It is not possible to snapshot a Sandbox while a `Sandbox.exec` command is still running. Furthermore, any background processes launched by a call to `Sandbox.exec` will not be properly restored after a snapshot.
 * A Sandbox created with `_experimental_enable_snapshot=True` can only be restored on the same exact instance type that the original Sandbox was run on. Given Modal's diverse fleet of capacity, this can sometimes lead to scheduling delays.
 * A Sandbox created with `_experimental_enable_snapshot=True` cannot pin its `region`, and a Sandbox restored from a Memory Snapshot is scheduled wherever the original instance type is available.
-* Sandboxes that specify `runtime="vm"` cannot mount Volumes when created with `_experimental_enable_snapshot=True`.
 
 ## Persisting Sandbox State
 

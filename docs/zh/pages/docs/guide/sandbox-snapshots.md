@@ -6,7 +6,7 @@
 并稍后恢复。这对于：
 
 * 减少启动延迟
-* 创建自定义环境供您的沙盒运行
+* 创建自定义环境供您的沙箱运行
 * 备份沙箱的状态以进行调试
 * 以相同的初始状态运行大规模实验
 * 分支沙箱的状态以独立测试不同的代码更改
@@ -98,7 +98,7 @@ snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirect
 ```
 
 {/片段} </CodeTabs>
-如果您尝试使用过期的快照，Modal 将在将镜像安装到正在运行的沙箱中时立即引发`NotFoundError`，或者在从过期镜像启动新沙箱时在第一次交互时（例如`exec`或`wait`）。请注意，`Image.from_id()`本身是惰性的，即使提供的图像ID已被删除，也不会在构造时引发错误。
+如果您尝试使用过期的快照，Modal 将在将镜像安装到正在运行的沙箱中时立即引发 `NotFoundError`，或者在从过期镜像启动新沙箱时首次交互（例如 `exec` 或 `wait`）。请注意，`Image.from_id()`本身是惰性的，即使提供的图像ID已被删除，也不会在构造时引发错误。
 
 要管理长期快照的存储，您可以在不再需要时以编程方式删除它们。有关详细信息，请参阅[删除快照](#deleting-snapshots)。
 
@@ -132,7 +132,7 @@ assert p2.stdout.read().strip() == "test"
 利用与我们为沙盒快速冷启动相同的基础设施。
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
-请注意，文件系统快照仅涵盖沙盒的根文件系统。
+请注意，文件系统快照仅涵盖沙箱的根文件系统。
 此快照不涵盖任何已安装的[卷](/docs/guide/volumes)
 并且不会包含在生成的图像中。
 
@@ -328,11 +328,11 @@ fmt.Println(strings.TrimSpace(string(stdout))) // "data"
 ```
 {/片段} </CodeTabs>
 
-### 卸载已安装的映像
+### 卸载已安装的镜像
 
 要卸载以前安装的映像，
 在您传递到 `mount_image` 的确切路径上调用 `unmount_image`。
-卸载后，该路径下的底层沙箱文件系统再次可见。
+卸载后，该路径下的底层沙盒文件系统再次可见。
 
 <CodeTabs>
   {#snippet python()}
@@ -437,9 +437,8 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 * 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
 * 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
-* 使用 `_experimental_enable_snapshot=True` 创建的 Sandbox 只能在与原始 Sandbox 运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
+* 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
 * 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
-* 指定 `runtime="vm"` 的沙箱在使用 `_experimental_enable_snapshot=True` 创建时无法挂载卷。
 
 ## 保持沙箱状态
 
@@ -476,7 +475,7 @@ sb.terminate()
 
 ## 删除快照
 
-由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除 API 删除它们。这对于管理存储或遵守数据保留策略很有用。
+由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除API删除它们。这对于管理存储或遵守数据保留策略很有用。
 
 <Callout variant="warning">
 
