@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-20T11:19:23.759Z",
+  "fetchedAt": "2026-10-21T11:35:08.169Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 349,
   "ok": 349,
@@ -642,7 +642,7 @@
       "source": "https://modal.com/docs/examples/paint_flowers.md",
       "finalUrl": "https://modal.com/docs/examples/paint_flowers.md",
       "path": "docs/examples/paint_flowers.md",
-      "bytes": 8355,
+      "bytes": 8299,
       "stub": false
     },
     {
@@ -1218,7 +1218,7 @@
       "source": "https://modal.com/docs/guide/okta-sso.md",
       "finalUrl": "https://modal.com/docs/guide/okta-sso.md",
       "path": "docs/guide/okta-sso.md",
-      "bytes": 2972,
+      "bytes": 3096,
       "stub": false
     },
     {
@@ -1322,7 +1322,7 @@
       "source": "https://modal.com/docs/guide/saml-sso.md",
       "finalUrl": "https://modal.com/docs/guide/saml-sso.md",
       "path": "docs/guide/saml-sso.md",
-      "bytes": 2844,
+      "bytes": 2987,
       "stub": false
     },
     {
@@ -1330,7 +1330,7 @@
       "source": "https://modal.com/docs/guide/sandbox-files.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-files.md",
       "path": "docs/guide/sandbox-files.md",
-      "bytes": 13428,
+      "bytes": 15716,
       "stub": false
     },
     {
@@ -1338,7 +1338,7 @@
       "source": "https://modal.com/docs/guide/sandbox-networking.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-networking.md",
       "path": "docs/guide/sandbox-networking.md",
-      "bytes": 19706,
+      "bytes": 23019,
       "stub": false
     },
     {
@@ -1370,7 +1370,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 20061,
+      "bytes": 27657,
       "stub": false
     },
     {
@@ -1378,7 +1378,7 @@
       "source": "https://modal.com/docs/guide/sandbox-spawn.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-spawn.md",
       "path": "docs/guide/sandbox-spawn.md",
-      "bytes": 4285,
+      "bytes": 9240,
       "stub": false
     },
     {
@@ -1386,7 +1386,7 @@
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 39921,
+      "bytes": 41519,
       "stub": false
     },
     {
@@ -1498,7 +1498,7 @@
       "source": "https://modal.com/docs/guide/training-quickstart.md",
       "finalUrl": "https://modal.com/docs/guide/training-quickstart.md",
       "path": "docs/guide/training-quickstart.md",
-      "bytes": 2128,
+      "bytes": 2071,
       "stub": false
     },
     {
@@ -1578,7 +1578,7 @@
       "source": "https://modal.com/docs/guide/workspaces.md",
       "finalUrl": "https://modal.com/docs/guide/workspaces.md",
       "path": "docs/guide/workspaces.md",
-      "bytes": 5345,
+      "bytes": 6064,
       "stub": false
     },
     {

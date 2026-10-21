@@ -44,8 +44,10 @@ Okta SSO 在 <a href="/pricing">企业计划</a> 上可用。请联系 <a href="
    ![Okta 登录编辑](../../assets/docs/okta-sign-on-edit.png)
 5. 填写工作区字段以配置您的特定模态工作区。参见
    [步骤 2](/docs/guide/okta-sso#step-2-link-your-workspace-to-okta-modal-application)
-   如果您不确定这是什么。
-   ![Okta 添加工作空间](../../assets/docs/okta-add-workspace-username.png)
+   如果您不确定这是什么。如果你以后
+   [重命名您的工作空间](/docs/guide/workspaces#renaming-a-workspace)，更新
+   将此字段更改为新名称。
+   ![Okta 添加工作区](../../assets/docs/okta-add-workspace-username.png)
 
 #### 步骤 2：将您的工作区链接到 Okta Modal 应用程序
 
@@ -64,15 +66,15 @@ Okta SSO 在 <a href="/pricing">企业计划</a> 上可用。请联系 <a href="
 2. 单击“分配”选项卡并添加适当的人员或组。
 
 ![Okta 分配用户](../../assets/docs/okta-assign-people.png)
-
 3. 要测试集成，请以您在上一步中分配的用户之一的身份登录。
 4. 单击 Okta 仪表板上的模态应用程序以启动单点登录。
+
 #### 注释
 
 集成使用以下 SAML 属性：
 
 |名称 |价值|
-| ---------| -------------- |
+| --------- | -------------- |
 |电子邮件 |用户.电子邮件 |
 |名字 |用户.名字 |
 |姓氏 |用户.姓氏 |

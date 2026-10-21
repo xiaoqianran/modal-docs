@@ -743,6 +743,9 @@ entrypoint and run containers with `sb.exec`. Containers on the Docker bridge
 can reach each other, and `/var/lib/docker` is included in
 [Filesystem Snapshots](/docs/guide/sandbox-snapshots#filesystem-snapshots).
 
+<CodeTabs>
+  {#snippet python()}
+
 ```python notest
 image = (
     modal.Image.from_registry("ubuntu:24.04")
@@ -765,6 +768,71 @@ print(p.stdout.read())
 
 sb.terminate()
 ```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+import { Probe } from "modal";
+
+const dockerImage = modal.images
+  .fromRegistry("ubuntu:24.04")
+  .dockerfileCommands([
+    "ENV DEBIAN_FRONTEND=noninteractive",
+    "RUN apt-get update && apt-get install -y docker.io",
+  ]);
+
+const sb = await modal.sandboxes.create(app, dockerImage, {
+  command: ["dockerd"],
+  runtime: "vm",
+  readinessProbe: Probe.withExec(["docker", "info"], {
+    intervalMs: 500,
+  }),
+});
+await sb.waitUntilReady();
+
+const p = await sb.exec(
+  ["docker", "run", "--rm", "alpine", "echo", "hello from Docker"],
+  { stdout: "pipe" },
+);
+await p.wait();
+console.log(await p.stdout.readText());
+
+await sb.terminate();
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+dockerImage := mc.Images.FromRegistry("ubuntu:24.04", nil).DockerfileCommands([]string{
+	"ENV DEBIAN_FRONTEND=noninteractive",
+	"RUN apt-get update && apt-get install -y docker.io",
+}, nil)
+probe, _ := modal.NewExecProbe(
+	[]string{"docker", "info"},
+	&modal.ExecProbeParams{Interval: 500 * time.Millisecond},
+)
+sb, _ := mc.Sandboxes.Create(ctx, app, dockerImage, &modal.SandboxCreateParams{
+	Command:        []string{"dockerd"},
+	Runtime:        modal.SandboxRuntimeVM,
+	ReadinessProbe: probe,
+})
+sb.WaitUntilReady(ctx, 5*time.Minute, nil)
+
+p, _ := sb.Exec(ctx, []string{
+	"docker", "run", "--rm", "alpine", "echo", "hello from Docker",
+}, &modal.SandboxExecParams{Stdout: modal.Pipe})
+p.Wait(ctx, nil)
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout))
+
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
 
 ## Environments
 

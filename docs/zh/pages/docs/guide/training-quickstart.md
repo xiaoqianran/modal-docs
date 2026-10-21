@@ -20,7 +20,7 @@ Modal 提供了多种开始训练的方法。
 安装包：
 
 ```bash
-uv add 'modal-dojo @ git+https://github.com/modal-projects/modal-dojo.git'
+uv add modal-dojo
 ```
 
 设置 [Modal](/docs/cli/latest/setup) 和 [仪表板](https://dojo.modal.dev/guides/dashboard)：

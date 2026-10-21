@@ -707,9 +707,9 @@
       "bytes": 10983
     },
     "docs/guide/okta-sso.md": {
-      "hash": "5e3a993072512703ec954a19cfd3548092f6fa40",
-      "translatedAt": "2026-08-08T18:29:34.242Z",
-      "bytes": 2887
+      "hash": "2dfdb07360bf5d3581cbdb1a06e39d34550f7a4a",
+      "translatedAt": "2026-10-21T11:35:11.367Z",
+      "bytes": 3024
     },
     "docs/guide/otel-integration.md": {
       "hash": "e2354db594342ad36c0ccb787182a951be5b5168",
@@ -777,14 +777,14 @@
       "bytes": 1259
     },
     "docs/guide/saml-sso.md": {
-      "hash": "3e992152913bba67a34a8cfe543270ff6c129040",
-      "translatedAt": "2026-08-29T12:36:10.190Z",
-      "bytes": 2681
+      "hash": "63655a0d690e16b4be42ce56911ac461a6c61d72",
+      "translatedAt": "2026-10-21T11:35:16.590Z",
+      "bytes": 2839
     },
     "docs/guide/sandbox-files.md": {
-      "hash": "a0da02c21be8defe7d715c21ea202cb291216564",
-      "translatedAt": "2026-09-30T12:21:34.076Z",
-      "bytes": 13154
+      "hash": "e288a77fa8e097a9abfad99f5572448292c816cb",
+      "translatedAt": "2026-10-21T11:35:16.592Z",
+      "bytes": 15433
     },
     "docs/guide/sandbox-resources.md": {
       "hash": "cf43815a53a33c2f36464cbd603bc13a34b8e285",
@@ -797,19 +797,19 @@
       "bytes": 12278
     },
     "docs/guide/sandbox-spawn.md": {
-      "hash": "b52aa3230e8c1ffff622ed4415198137edd2710a",
-      "translatedAt": "2026-10-10T12:17:52.064Z",
-      "bytes": 4080
+      "hash": "ed3a2a1bfaacaad910a68c533a2af0e7e39bb000",
+      "translatedAt": "2026-10-21T11:35:29.890Z",
+      "bytes": 9185
     },
     "docs/guide/sandbox-networking.md": {
-      "hash": "9cecf7d4f10a2f45a260aa0620c8cb036e9e430e",
-      "translatedAt": "2026-10-17T10:30:06.930Z",
-      "bytes": 18654
+      "hash": "5f1d44bb6f3a2e8e92c7e53c1a46a0388e59a6fc",
+      "translatedAt": "2026-10-21T11:35:39.421Z",
+      "bytes": 22004
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "0323fe6b75db602fd1f91fadbf361cc4b977e84f",
-      "translatedAt": "2026-10-20T11:19:53.653Z",
-      "bytes": 18940
+      "hash": "53b099660edd778cdd379bd820efaf5847632fc2",
+      "translatedAt": "2026-10-21T11:35:28.305Z",
+      "bytes": 26473
     },
     "docs/guide/scale.md": {
       "hash": "9ea9d4b810fc1033c28c1ef99a0c09c0c31fdbd0",
@@ -832,9 +832,9 @@
       "bytes": 8673
     },
     "docs/guide/sandboxes.md": {
-      "hash": "4d324fcafee922de9f55422aa70f6925e4da26cd",
-      "translatedAt": "2026-10-05T14:19:18.026Z",
-      "bytes": 38624
+      "hash": "ad159e716c1eeb3f4bf505e613edb6433935757c",
+      "translatedAt": "2026-10-21T11:35:56.078Z",
+      "bytes": 40249
     },
     "docs/guide/service-users.md": {
       "hash": "b0303b96aef575571deaab0197cca3ec121da747",
@@ -922,9 +922,9 @@
       "bytes": 15471
     },
     "docs/guide/workspaces.md": {
-      "hash": "92a0d2d2731efab27912431ec94d84b2f5661867",
-      "translatedAt": "2026-09-11T11:03:31.374Z",
-      "bytes": 5011
+      "hash": "b0bc06ba564fa502f083bbf50d1cdb1cd2b1a2ab",
+      "translatedAt": "2026-10-21T11:35:47.592Z",
+      "bytes": 5732
     },
     "docs/sdk/go/latest/CloudBucketMount.md": {
       "hash": "295dfc449a1b611601c168c2fede1a970df19732",
@@ -1678,9 +1678,9 @@
       "bytes": 15201
     },
     "docs/examples/paint_flowers.md": {
-      "hash": "da2d4fca48532a7a91da4df0e80591a97e638123",
-      "translatedAt": "2026-10-03T11:29:06.792Z",
-      "bytes": 8174
+      "hash": "5db140bf76f87aed61b8f5d82fcfe0428782a506",
+      "translatedAt": "2026-10-21T11:35:11.789Z",
+      "bytes": 8118
     },
     "docs/guide/dojo.md": {
       "hash": "dbbe64236282fecf5cd8406d40429ca955869388",
@@ -1713,9 +1713,9 @@
       "bytes": 8678
     },
     "docs/guide/training-quickstart.md": {
-      "hash": "9bbddc156d5212641c12d47748ebda41ce0a78f2",
-      "translatedAt": "2026-10-06T13:10:58.448Z",
-      "bytes": 2084
+      "hash": "97e3640df006f85a12cb010979f20baa6b2d250d",
+      "translatedAt": "2026-10-21T11:35:40.342Z",
+      "bytes": 2027
     },
     "docs/guide/endpoint-candidates.md": {
       "hash": "9d66a97f8e394b135bed332d7a3e750d92f38b75",
@@ -1877,10 +1877,10 @@
       "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-20T11:21:30.287Z",
+  "updatedAt": "2026-10-21T11:35:56.078Z",
   "stats": {
-    "translated": 6,
-    "skipped": 357,
+    "translated": 10,
+    "skipped": 353,
     "failed": 0,
     "total": 363
   }

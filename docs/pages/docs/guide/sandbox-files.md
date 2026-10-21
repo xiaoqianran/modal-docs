@@ -292,6 +292,9 @@ data efficiently from many sandboxes.
 
 To access a Volume from a Sandbox, you can use the `volumes` parameter of `Sandbox.create`:
 
+<CodeTabs>
+  {#snippet python()}
+
 ```python notest
 # Find or create a Volume with the name "my-volume".
 vol = modal.Volume.from_name("my-volume", create_if_missing=True)
@@ -313,6 +316,59 @@ sb.terminate(wait=True)
 for data in vol.read_file("a.txt"):
     print(data)
 ```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const vol = await modal.volumes.fromName("my-volume", {
+  createIfMissing: true,
+});
+const sb = await modal.sandboxes.create(app, image, {
+  volumes: { "/cache": vol },
+});
+
+// Read a file in the Volume.
+let p = await sb.exec(["bash", "-c", "cat /cache/some-file.txt"], {
+  stdout: "pipe",
+});
+console.log(await p.stdout.readText());
+await p.wait();
+
+// Write a file to the Volume.
+p = await sb.exec(["bash", "-c", "echo foo > /cache/a.txt"]);
+await p.wait();
+await sb.terminate({ wait: true });
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+vol, _ := mc.Volumes.FromName(ctx, "my-volume", &modal.VolumeFromNameParams{
+	CreateIfMissing: true,
+})
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Volumes: map[string]*modal.Volume{"/cache": vol},
+})
+
+// Read a file in the Volume.
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "cat /cache/some-file.txt"}, &modal.SandboxExecParams{
+	Stdout: modal.Pipe,
+})
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Print(string(stdout))
+p.Wait(ctx, nil)
+
+// Write a file to the Volume.
+p, _ = sb.Exec(ctx, []string{"bash", "-c", "echo foo > /cache/a.txt"}, nil)
+p.Wait(ctx, nil)
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
 
 File syncing behavior differs between Volumes and CloudBucketMounts. For
 Volumes, changes are persisted by [background commits](/docs/guide/volumes#background-commits)
@@ -355,13 +411,9 @@ sb.terminate(wait=True)
 {#snippet javascript()}
 
 ```javascript notest
-const app = await modal.apps.fromName("my-app", {
-  createIfMissing: true,
-});
 const vol = await modal.volumes.fromName("shared-volume", {
   createIfMissing: true,
 });
-const image = modal.images.fromRegistry("python:3.13-slim");
 
 // Each Sandbox only sees its own subdirectory of the Volume.
 const sb = await modal.sandboxes.create(app, image, {
@@ -379,18 +431,15 @@ await sb.terminate({ wait: true });
 {#snippet go()}
 
 ```go notest
-app, _ := mc.Apps.FromName(ctx, "volume-subdir-test", &modal.AppFromNameParams{CreateIfMissing: true})
-
 vol, _ := mc.Volumes.FromName(ctx, "shared-volume", &modal.VolumeFromNameParams{
 	CreateIfMissing: true,
 })
-image := mc.Images.FromRegistry("python:3.13-slim", nil)
 
 // Each Sandbox only sees its own subdirectory of the Volume.
 subPath := "/users/user_123"
 sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 	Volumes: map[string]*modal.Volume{
-		"/data": vol.WithMountOptions(&modal.VolumeMountOptions{SubPath: &subPath}),
+		"/data": vol.WithMountOptions(&modal.VolumeMountOptionsParams{SubPath: &subPath}),
 	},
 })
 defer sb.Terminate(ctx, nil)
@@ -398,7 +447,7 @@ defer sb.Terminate(ctx, nil)
 // /data inside the Sandbox maps to /users/user_123 in the Volume.
 // The Sandbox cannot see or modify files belonging to other users.
 p, _ := sb.Exec(ctx, []string{"bash", "-c", "echo hello > /data/output.txt"}, nil)
-p.Wait(ctx)
+p.Wait(ctx, nil)
 ```
 
 {/snippet} </CodeTabs>
@@ -412,6 +461,9 @@ For [Volumes v2](/docs/guide/volumes#volumes-v2-overview), you can explicitly
 commit changes at any point during Sandbox execution by running the `sync`
 command on the mountpoint. This persists all data and metadata changes to the
 Volume's storage without waiting for the Sandbox to terminate:
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 sb = modal.Sandbox.create(
@@ -431,6 +483,58 @@ if p.returncode != 0:
 # Changes are now persisted and visible to other containers
 sb.terminate()
 ```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const vol = await modal.volumes.fromName("my-v2-volume");
+const sb = await modal.sandboxes.create(app, image, {
+  volumes: { "/data": vol },
+});
+
+// Write files to the Volume.
+let p = await sb.exec(["bash", "-c", "echo 'hello' > /data/output.txt"]);
+await p.wait();
+
+// Commit changes immediately.
+p = await sb.exec(["sync", "/data"]);
+const code = await p.wait();
+if (code !== 0) {
+  throw new Error(`sync failed with exit code ${code}`);
+}
+
+// Changes are now persisted and visible to other containers.
+await sb.terminate();
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+vol, _ := mc.Volumes.FromName(ctx, "my-v2-volume", nil)
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Volumes: map[string]*modal.Volume{"/data": vol},
+})
+
+// Write files to the Volume.
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "echo 'hello' > /data/output.txt"}, nil)
+p.Wait(ctx, nil)
+
+// Commit changes immediately.
+p, _ = sb.Exec(ctx, []string{"sync", "/data"}, nil)
+returnCode, _ := p.Wait(ctx, nil)
+if returnCode != 0 {
+	panic(fmt.Sprintf("sync failed with exit code %d", returnCode))
+}
+
+// Changes are now persisted and visible to other containers.
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
 
 This is particularly useful for long-running Sandboxes where you want to
 persist intermediate results, or when you need changes to be visible to other

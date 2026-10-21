@@ -18,7 +18,7 @@ Here, we walk through how to start training with Modal Dojo. See [here](/docs/ex
 Install the package:
 
 ```bash
-uv add 'modal-dojo @ git+https://github.com/modal-projects/modal-dojo.git'
+uv add modal-dojo
 ```
 
 Set up [Modal](/docs/cli/latest/setup) and the [dashboard](https://dojo.modal.dev/guides/dashboard):

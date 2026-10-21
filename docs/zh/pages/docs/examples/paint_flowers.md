@@ -38,7 +38,7 @@ uv run --python 3.12 --script 06_gpu_and_ml/paint_flowers/paint_flowers.py
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#   "modal-dojo @ git+https://github.com/modal-projects/modal-dojo@main",
+#   "modal-dojo",
 #   "pillow",
 # ]
 # ///

@@ -127,6 +127,20 @@ Modal 支持[基于角色的访问控制 (RBAC)](/docs/guide/rbac)，以便对�
 
 </Callout>
 
+## 重命名工作区
+
+工作区所有者和管理员可以从以下位置重命名工作区：
+[身份和配置](/settings/workspace-management/identity-and-provisioning)
+页。成员保持登录状态，部署的 Web 端点保留其现有的
+URL 直到重新部署为止，之后它们将使用新名称。旧的
+您的工作区名称将保留 30 天，在此期间仪表板会链接到该名称
+将成员重定向到新名称，您可以切换回来。
+
+如果您的工作区使用 SAML SSO，请更新 Okta 应用程序中的工作区字段，
+或另一个身份提供商中的 ACS URL 和登录 URL，紧随其后
+重命名或 SSO 登录停止工作。个人工作区无法重命名；
+联系<support@modal.com>。
+
 ## 离开工作空间
 
 要离开工作区，请导航至[设置页面](/settings/workspaces)，然后

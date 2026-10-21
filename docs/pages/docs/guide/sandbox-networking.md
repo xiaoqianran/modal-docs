@@ -53,10 +53,18 @@ sb = modal.Sandbox.create(
 {#snippet javascript()}
 
 ```javascript notest
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const app = await modal.apps.fromName("sandbox-network", {
+  createIfMissing: true,
+});
+const image = modal.images.fromRegistry("python:3.13-slim");
 const sb = await modal.sandboxes.create(app, image, {
   command: ["python", "my_script.py"],
   blockNetwork: true,
 });
+await sb.terminate();
 ```
 
 {/snippet}
@@ -64,10 +72,27 @@ const sb = await modal.sandboxes.create(app, image, {
 {#snippet go()}
 
 ```go notest
-sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-	Command:      []string{"python", "my_script.py"},
-	BlockNetwork: true,
-})
+package main
+
+import (
+	"context"
+
+	modal "github.com/modal-labs/modal-client/go"
+)
+
+func main() {
+	ctx := context.Background()
+	mc, _ := modal.NewClient()
+	app, _ := mc.Apps.FromName(ctx, "sandbox-network", &modal.AppFromNameParams{
+		CreateIfMissing: true,
+	})
+	image := mc.Images.FromRegistry("python:3.13-slim", nil)
+	sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+		Command:      []string{"python", "my_script.py"},
+		BlockNetwork: true,
+	})
+	sb.Terminate(ctx, nil)
+}
 ```
 
 {/snippet} </CodeTabs>
@@ -471,13 +496,14 @@ raw TCP ports to the internet. This is useful if, for example, you want to run a
 server inside the Sandbox that expects a raw TCP connection and handles
 authentication itself.
 
-Use the `encrypted_ports` and `unencrypted_ports` parameters of `Sandbox.create`
-to specify which ports to forward. You can then access the public URL of a tunnel
-using the [`Sandbox.tunnels`](/docs/sdk/py/latest/Sandbox#tunnels) method:
+To forward ports, list them as encrypted or unencrypted ports when you create a
+Sandbox. Then look up each port's tunnel to get its public URL:
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import requests
-import time
 
 sb = modal.Sandbox.create(
     "python",
@@ -485,24 +511,80 @@ sb = modal.Sandbox.create(
     "http.server",
     "12345",
     encrypted_ports=[12345],
+    readiness_probe=modal.Probe.with_tcp(12345),
     app=my_app,
 )
 
-tunnel = sb.tunnels()[12345]
+# Blocks until port 12345 is accepting connections
+sb.wait_until_ready()
 
-time.sleep(1)  # Wait for server to start.
+tunnel = sb.tunnels()[12345]
 
 print(f"Connecting to {tunnel.url}...")
 print(requests.get(tunnel.url, timeout=5).text)
 ```
 
-It is also possible to create an encrypted port that uses `HTTP/2` rather than `HTTP/1.1` with the `h2_ports` option. This will return
-a URL that you can make H2 (HTTP/2 + TLS) requests to. If you want to run an `HTTP/2` server inside a sandbox, this feature may be useful.
-Here is an example:
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+import { Probe } from "modal";
+
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["python", "-m", "http.server", "12345"],
+  encryptedPorts: [12345],
+  readinessProbe: Probe.withTcp(12345),
+});
+
+// Blocks until port 12345 is accepting connections
+await sb.waitUntilReady();
+
+const tunnel = (await sb.tunnels())[12345];
+
+console.log(`Connecting to ${tunnel.url}...`);
+const response = await fetch(tunnel.url);
+console.log(await response.text());
+await sb.terminate();
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+probe, _ := modal.NewTCPProbe(12345, nil)
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:        []string{"python", "-m", "http.server", "12345"},
+	EncryptedPorts: []int{12345},
+	ReadinessProbe: probe,
+})
+
+// Blocks until port 12345 is accepting connections
+sb.WaitUntilReady(ctx, 5*time.Minute, nil)
+
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[12345]
+
+fmt.Printf("Connecting to %s...\n", tunnel.URL())
+client := &http.Client{Timeout: 5 * time.Second}
+response, _ := client.Get(tunnel.URL())
+body, _ := io.ReadAll(response.Body)
+response.Body.Close()
+fmt.Println(string(body))
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
+
+To run an `HTTP/2` server inside a Sandbox, create an encrypted port that uses
+`HTTP/2` instead of `HTTP/1.1`. Its tunnel URL accepts H2 (HTTP/2 + TLS)
+requests:
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
-import time
-
 port = 4359
 sb = modal.Sandbox.create(
     app=my_app,
@@ -512,9 +594,41 @@ sb = modal.Sandbox.create(
 p = sb.exec("python", "my_http2_server.py")
 
 tunnel = sb.tunnels()[port]
-time.sleep(1)
 print(f"Tunnel URL: {tunnel.url}")
 ```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const port = 4359;
+const sb = await modal.sandboxes.create(app, image, {
+  h2Ports: [port],
+});
+const p = await sb.exec(["python", "my_http2_server.py"]);
+const tunnel = (await sb.tunnels())[port];
+console.log(`Tunnel URL: ${tunnel.url}`);
+await sb.terminate();
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+port := 4359
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	H2Ports: []int{port},
+})
+sb.Exec(ctx, []string{"python", "my_http2_server.py"}, nil)
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[port]
+fmt.Printf("Tunnel URL: %s\n", tunnel.URL())
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
 
 For more details on how tunnels work, see the [tunnels guide](/docs/guide/tunnels).
 
@@ -560,7 +674,10 @@ You can delegate any subdomain depth you like (e.g. `tunnels.a.b.c.example.com`)
 Reach out to us on Slack and provide the domain name. We'll enable it for your
 workspace.
 
-**3. Pass `custom_domain` to `Sandbox.create`.**
+**3. Pass the custom domain when creating a Sandbox.**
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import modal
@@ -576,6 +693,41 @@ sb = modal.Sandbox.create(
 tunnel = sb.tunnels()[8080]
 print(tunnel.url)  # https://[...].sandbox.example.com
 ```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["python", "-m", "http.server", "8080"],
+  encryptedPorts: [8080],
+  customDomain: "sandbox.example.com",
+});
+
+const tunnel = (await sb.tunnels())[8080];
+console.log(tunnel.url); // https://[...].sandbox.example.com
+await sb.terminate();
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:        []string{"python", "-m", "http.server", "8080"},
+	EncryptedPorts: []int{8080},
+	CustomDomain:   "sandbox.example.com",
+})
+
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[8080]
+fmt.Println(tunnel.URL()) // https://[...].sandbox.example.com
+sb.Terminate(ctx, nil)
+```
+
+{/snippet} </CodeTabs>
 
 Modal will provision a TLS certificate automatically. Sandbox Connect Tokens generated
 for this sandbox will also use the custom domain.

@@ -27,14 +27,14 @@ Sidecar有自己的出站网络策略；参见[沙箱边车→
 对于高级 HTTPS 检查，实验性 `proxy_traffic_via_sidecar`
 选项将来自主容器的端口 443 上的出站 TCP 流量路由到
 边车。中继取代了沙盒自己对该流量的控制，而不是
-而不是添加到它们中：`outbound_cidr_allowlist`继续统治着每一个
+而不是添加到它们中：`outbound_cidr_allowlist`继续管理着每一个
 其他端口，但停止申请端口 443，该端口由Sidecar 的出口控制。请参阅[通过
 Sidecar](/docs/guide/sandbox-sidecars#routing-https-traffic-through-a-sidecar)
 了解详情。
 
 ### 阻止所有网络访问
 
-设置`block_network=True`以防止沙盒进行任何出站
+Set `block_network=True` to prevent the Sandbox from making any outbound
 连接：
 
 <CodeTabs>
@@ -53,10 +53,18 @@ sb = modal.Sandbox.create(
 {#snippet javascript()}
 
 ```javascript notest
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const app = await modal.apps.fromName("sandbox-network", {
+  createIfMissing: true,
+});
+const image = modal.images.fromRegistry("python:3.13-slim");
 const sb = await modal.sandboxes.create(app, image, {
   command: ["python", "my_script.py"],
   blockNetwork: true,
 });
+await sb.terminate();
 ```
 
 {/片段}
@@ -64,10 +72,27 @@ const sb = await modal.sandboxes.create(app, image, {
 {#snippet go()}
 
 ```go notest
-sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
-	Command:      []string{"python", "my_script.py"},
-	BlockNetwork: true,
-})
+package main
+
+import (
+	"context"
+
+	modal "github.com/modal-labs/modal-client/go"
+)
+
+func main() {
+	ctx := context.Background()
+	mc, _ := modal.NewClient()
+	app, _ := mc.Apps.FromName(ctx, "sandbox-network", &modal.AppFromNameParams{
+		CreateIfMissing: true,
+	})
+	image := mc.Images.FromRegistry("python:3.13-slim", nil)
+	sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+		Command:      []string{"python", "my_script.py"},
+		BlockNetwork: true,
+	})
+	sb.Terminate(ctx, nil)
+}
 ```
 
 {/片段} </CodeTabs>
@@ -77,8 +102,8 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 ### 按 IP 范围限制（CIDR 允许列表）
 
-使用`outbound_cidr_allowlist`将出站流量限制到一组IP
-范围。所有流向这些范围之外的 IP 的流量（`outbound_domain_allowlist` 允许的流量除外）都会被阻止。
+Use `outbound_cidr_allowlist` to restrict outbound traffic to a set of IP
+范围。 All traffic to IPs outside these ranges (except traffic allowed by `outbound_domain_allowlist`) is blocked.
 
 <CodeTabs>
 {#snippet python()}
@@ -167,7 +192,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 以 `*.` 为前缀的条目与父域和任何子域匹配：
 
 |允许列表条目 |比赛|不匹配|
-| --------------- | ------------------------------------------------- | ----------------- |
+| ---------------- | ------------------------------------------------- | ----------------- |
 | `example.com` | `example.com` | `sub.example.com` |
 | `*.example.com` | `example.com`、`a.example.com`、`a.b.example.com` | `evilexample.com` |
 
@@ -446,13 +471,13 @@ JSON 序列化元数据作为 `user_metadata` 传递到
 
 使用 Sandbox Connect 代币需要记住以下几点：
 
-1. 默认情况下，请求路由到容器中的8080端口。通行证`port`
-   到 `create_connect_token()` 路由到不同的端口。
-2. 令牌可以在 `Authorization` 标头中发送，在 `_modal_connect_token` 中发送
+1. 默认情况下，请求路由到容器中的8080端口。通票`port`
+   至 `create_connect_token()` 路由至其他港口。
+2. 令牌可以在`Authorization`标头、`_modal_connect_token`中发送
    查询参数，或在 `_modal_connect_token` cookie 中。
 3. 如果`_modal_connect_token`设置为查询参数，则结果响应将
    包含一个 `Set-Cookie` 标头，将其设置为 cookie。
-4. `user_metadata`必须是JSON可序列化的并且必须小于512
+4. `user_metadata` 必须是 JSON 可序列化的并且必须小于 512
    序列化后的字符。
 5. `user_metadata` 被编码到连接令牌本身中，因此它
    不应包含秘密。
@@ -462,14 +487,16 @@ JSON 序列化元数据作为 `user_metadata` 传递到
 虽然建议使用[Sandbox Connect Tokens](#connecting-to-sandboxes-with-http-and-websockets)
 对于到容器的 HTTP 请求和 WebSocket 连接，您还可以公开
 到互联网的原始 TCP 端口。例如，如果您想运行
-沙箱内的服务器需要原始 TCP 连接并处理
-身份验证本身。使用 `Sandbox.create` 的 `encrypted_ports` 和 `unencrypted_ports` 参数
-指定要转发的端口。然后您可以访问隧道的公共 URL
-使用 [`Sandbox.tunnels`](/docs/sdk/py/latest/Sandbox#tunnels) 方法：
+沙箱内的服务器需要原始 TCP 连接并处理身份验证本身。
+
+要转发端口，请在创建端口时将其列为加密或未加密端口
+沙盒。然后查找每个端口的隧道以获取其公共 URL：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import requests
-import time
 
 sb = modal.Sandbox.create(
     "python",
@@ -477,24 +504,80 @@ sb = modal.Sandbox.create(
     "http.server",
     "12345",
     encrypted_ports=[12345],
+    readiness_probe=modal.Probe.with_tcp(12345),
     app=my_app,
 )
 
-tunnel = sb.tunnels()[12345]
+# Blocks until port 12345 is accepting connections
+sb.wait_until_ready()
 
-time.sleep(1)  # Wait for server to start.
+tunnel = sb.tunnels()[12345]
 
 print(f"Connecting to {tunnel.url}...")
 print(requests.get(tunnel.url, timeout=5).text)
 ```
 
-还可以通过 `h2_ports` 选项创建使用 `HTTP/2` 而不是 `HTTP/1.1` 的加密端口。这将返回
-您可以向其发出 H2 (HTTP/2 + TLS) 请求的 URL。如果您想在沙箱内运行 `HTTP/2` 服务器，此功能可能很有用。
-这是一个例子：
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+import { Probe } from "modal";
+
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["python", "-m", "http.server", "12345"],
+  encryptedPorts: [12345],
+  readinessProbe: Probe.withTcp(12345),
+});
+
+// Blocks until port 12345 is accepting connections
+await sb.waitUntilReady();
+
+const tunnel = (await sb.tunnels())[12345];
+
+console.log(`Connecting to ${tunnel.url}...`);
+const response = await fetch(tunnel.url);
+console.log(await response.text());
+await sb.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+probe, _ := modal.NewTCPProbe(12345, nil)
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:        []string{"python", "-m", "http.server", "12345"},
+	EncryptedPorts: []int{12345},
+	ReadinessProbe: probe,
+})
+
+// Blocks until port 12345 is accepting connections
+sb.WaitUntilReady(ctx, 5*time.Minute, nil)
+
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[12345]
+
+fmt.Printf("Connecting to %s...\n", tunnel.URL())
+client := &http.Client{Timeout: 5 * time.Second}
+response, _ := client.Get(tunnel.URL())
+body, _ := io.ReadAll(response.Body)
+response.Body.Close()
+fmt.Println(string(body))
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
+
+要在沙箱内运行 `HTTP/2` 服务器，请创建一个使用的加密端口
+`HTTP/2`而不是`HTTP/1.1`。其隧道 URL 接受 H2 (HTTP/2 + TLS)
+要求：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
-import time
-
 port = 4359
 sb = modal.Sandbox.create(
     app=my_app,
@@ -504,15 +587,47 @@ sb = modal.Sandbox.create(
 p = sb.exec("python", "my_http2_server.py")
 
 tunnel = sb.tunnels()[port]
-time.sleep(1)
 print(f"Tunnel URL: {tunnel.url}")
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const port = 4359;
+const sb = await modal.sandboxes.create(app, image, {
+  h2Ports: [port],
+});
+const p = await sb.exec(["python", "my_http2_server.py"]);
+const tunnel = (await sb.tunnels())[port];
+console.log(`Tunnel URL: ${tunnel.url}`);
+await sb.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+port := 4359
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	H2Ports: []int{port},
+})
+sb.Exec(ctx, []string{"python", "my_http2_server.py"}, nil)
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[port]
+fmt.Printf("Tunnel URL: %s\n", tunnel.URL())
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
 有关隧道工作原理的更多详细信息，请参阅[隧道指南](/docs/guide/tunnels)。
 
 ### 自定义域
 
 <Callout variant="gated-feature">
+
 <a href="/pricing">团队和企业计划</a>提供了沙盒隧道的自定义域。访问<a href="/settings/plans">工作空间设置</a>进行升级。
 
 </Callout>
@@ -525,15 +640,14 @@ print(f"Tunnel URL: {tunnel.url}")
 
 默认情况下，沙盒隧道由 `w.modal.host` 的子域提供服务。
 在某些情况下，需要通过自定义域提供隧道服务
-出于安全原因。这可以通过手动设置实现。
-
-请注意，隧道自定义域与 Modal 中的其他自定义域不同。其他自定义域使用`CNAME`转发。对于隧道，我们需要使用
+出于安全原因。这可以通过手动设置实现。请注意，隧道自定义域与 Modal 中的其他自定义域不同。
+其他自定义域使用`CNAME`转发。对于隧道，我们需要使用
 `NS` 记录将域委托给 Modal 的名称服务器。
 
 **1.将（子）域委托给 Modal 的名称服务器。**
 
 将 `NS` 记录添加到指向 Modal 名称服务器的 DNS 区域。例如，
-要使用 `sandbox.example.com`，请在 DNS 提供商的 DNS 中添加以下记录
+要使用 `sandbox.example.com`，请在您的 DNS 提供商的 DNS 提供商的记录中添加以下记录
 控制面板：
 
 |名称 |类型 |价值|
@@ -546,10 +660,14 @@ print(f"Tunnel URL: {tunnel.url}")
 您可以委托您喜欢的任何子域深度（例如`tunnels.a.b.c.example.com`）。
 
 **2.要求 Modal 设置域。**
+
 在 Slack 上联系我们并提供域名。我们将为您启用它
 工作区。
 
-**3.通过 `custom_domain` 到 `Sandbox.create`。**
+**3.创建沙箱时传递自定义域。**
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import modal
@@ -566,12 +684,45 @@ tunnel = sb.tunnels()[8080]
 print(tunnel.url)  # https://[...].sandbox.example.com
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image, {
+  command: ["python", "-m", "http.server", "8080"],
+  encryptedPorts: [8080],
+  customDomain: "sandbox.example.com",
+});
+
+const tunnel = (await sb.tunnels())[8080];
+console.log(tunnel.url); // https://[...].sandbox.example.com
+await sb.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Command:        []string{"python", "-m", "http.server", "8080"},
+	EncryptedPorts: []int{8080},
+	CustomDomain:   "sandbox.example.com",
+})
+
+tunnels, _ := sb.Tunnels(ctx, 5*time.Minute, nil)
+tunnel := tunnels[8080]
+fmt.Println(tunnel.URL()) // https://[...].sandbox.example.com
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
+
 Modal 将自动提供 TLS 证书。生成的沙箱连接令牌
 此沙箱还将使用自定义域。
 
-## 安全模型
-
-模态沙箱通过两者之一与主机和其他工作负载隔离
+## 安全模型模态沙箱通过两者之一与主机和其他工作负载隔离
 [运行时](/docs/guide/sandboxes#runtimes) 我们提供：
 
 * **gVisor**：[gVisor](https://gvisor.dev/)是Google开发的容器运行时
@@ -581,7 +732,6 @@ Modal 将自动提供 TLS 证书。生成的沙箱连接令牌
 * **虚拟机**：沙箱在其自己的虚拟机中运行，并具有自己的 Linux
   内核，通过Linux由CPU的硬件虚拟化隔离
   [KVM](https://docs.kernel.org/virt/kvm/index.html) 虚拟机管理程序。
-
 此页面上的[网络访问控制](#outbound-access-control) 适用于
 两个运行时。
 

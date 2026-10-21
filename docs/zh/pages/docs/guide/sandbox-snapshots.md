@@ -6,7 +6,7 @@
 并稍后恢复。这对于：
 
 * 减少启动延迟
-* 创建自定义环境供您的沙箱运行
+* 创建自定义环境供您的沙盒运行
 * 备份沙箱的状态以进行调试
 * 以相同的初始状态运行大规模实验
 * 分支沙箱的状态以独立测试不同的代码更改
@@ -57,6 +57,16 @@ snapshot = sb.snapshot_directory("/project", ttl=None)
 {#snippet javascript()}
 
 ```javascript notest
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const app = await modal.apps.fromName("sandbox-snapshots", {
+  createIfMissing: true,
+});
+const baseImage = modal.images.fromRegistry("python:3.13-slim");
+const sb = await modal.sandboxes.create(app, baseImage);
+await (await sb.exec(["mkdir", "-p", "/project"])).wait();
+
 // Filesystem snapshot with custom TTL of 7 days
 let image = await sb.snapshotFilesystem({ ttlMs: 7 * 24 * 3600 * 1000 });
 
@@ -70,35 +80,63 @@ let snapshot = await sb.snapshotDirectory("/project", {
 
 // Directory snapshot with no expiry
 snapshot = await sb.snapshotDirectory("/project", { ttlMs: null });
+await sb.terminate();
 ```
 
 {/片段}
 {#snippet go()}
 
 ```go notest
-// Filesystem snapshot with custom TTL of 7 days
-image, _ := sb.SnapshotFilesystem(ctx, &modal.SandboxSnapshotFilesystemParams{
-    TTL: 7 * 24 * time.Hour,
-})
+package main
 
-// Filesystem snapshot with no expiry (retain indefinitely, like the pre-v0.8.0 default)
-image, _ = sb.SnapshotFilesystem(ctx, &modal.SandboxSnapshotFilesystemParams{
-    TTL: modal.NoExpiryTTL,
-})
+import (
+	"context"
+	"fmt"
+	"time"
 
-// Directory snapshot with custom TTL of 7 days
-snapshot, _ := sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirectoryParams{
-    TTL: 7 * 24 * time.Hour,
-})
+	modal "github.com/modal-labs/modal-client/go"
+)
 
-// Directory snapshot with no expiry
-snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirectoryParams{
-    TTL: modal.NoExpiryTTL,
-})
+func main() {
+	ctx := context.Background()
+	mc, _ := modal.NewClient()
+	app, _ := mc.Apps.FromName(ctx, "sandbox-snapshots", &modal.AppFromNameParams{
+		CreateIfMissing: true,
+	})
+	baseImage := mc.Images.FromRegistry("python:3.13-slim", nil)
+	sb, _ := mc.Sandboxes.Create(ctx, app, baseImage, nil)
+	p, _ := sb.Exec(ctx, []string{"mkdir", "-p", "/project"}, nil)
+	p.Wait(ctx, nil)
+
+	// Filesystem snapshot with custom TTL of 7 days
+	image, _ := sb.SnapshotFilesystem(ctx, &modal.SandboxSnapshotFilesystemParams{
+		TTL: 7 * 24 * time.Hour,
+	})
+	fmt.Println(image.ImageID)
+
+	// Filesystem snapshot with no expiry (retain indefinitely, like the pre-v0.8.0 default)
+	image, _ = sb.SnapshotFilesystem(ctx, &modal.SandboxSnapshotFilesystemParams{
+		TTL: modal.NoExpiryTTL,
+	})
+	fmt.Println(image.ImageID)
+
+	// Directory snapshot with custom TTL of 7 days
+	snapshot, _ := sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirectoryParams{
+		TTL: 7 * 24 * time.Hour,
+	})
+	fmt.Println(snapshot.ImageID)
+
+	// Directory snapshot with no expiry
+	snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirectoryParams{
+		TTL: modal.NoExpiryTTL,
+	})
+	fmt.Println(snapshot.ImageID)
+	sb.Terminate(ctx, nil)
+}
 ```
 
 {/片段} </CodeTabs>
-如果您尝试使用过期的快照，Modal 将在将镜像安装到正在运行的沙箱中时立即引发 `NotFoundError`，或者在从过期镜像启动新沙箱时首次交互（例如 `exec` 或 `wait`）。请注意，`Image.from_id()`本身是惰性的，即使提供的图像ID已被删除，也不会在构造时引发错误。
+如果您尝试使用过期的快照，Modal 将在将镜像安装到正在运行的沙箱中时立即引发 `NotFoundError`，或者在从过期镜像启动新沙箱时首次交互（例如 `exec` 或 `wait`）。通过 ID 引用图像是惰性的，即使提供的图像 ID 已被删除，也不会在构造时引发错误。
 
 要管理长期快照的存储，您可以在不再需要时以编程方式删除它们。有关详细信息，请参阅[删除快照](#deleting-snapshots)。
 
@@ -107,8 +145,10 @@ snapshot, _ = sb.SnapshotDirectory(ctx, "/project", &modal.SandboxSnapshotDirect
 文件系统快照是沙箱根文件系统在给定时间点的副本。
 这些快照是[图像](/docs/sdk/py/latest/Image)，可用于创建新的沙箱。
 
-要创建文件系统快照，您可以使用
-[`Sandbox.snapshot_filesystem()`](/docs/sdk/py/latest/Sandbox#snapshot_filesystem) 方法：
+拍摄正在运行的 Sandbox 的文件系统的快照，然后从生成的 Image 启动一个新的 Sandbox：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import modal
@@ -127,9 +167,49 @@ p2 = sb2.exec("bash", "-c", "cat /test")
 assert p2.stdout.read().strip() == "test"
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const sb = await modal.sandboxes.create(app, image);
+const p = await sb.exec(["bash", "-c", "echo 'test' > /test"]);
+await p.wait();
+const snapshotImage = await sb.snapshotFilesystem();
+await sb.terminate();
+
+const sb2 = await modal.sandboxes.create(app, snapshotImage);
+const p2 = await sb2.exec(["bash", "-c", "cat /test"], { stdout: "pipe" });
+console.assert((await p2.stdout.readText()).trim() === "test");
+await sb2.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sb, _ := mc.Sandboxes.Create(ctx, app, image, nil)
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "echo 'test' > /test"}, nil)
+p.Wait(ctx, nil)
+snapshotImage, _ := sb.SnapshotFilesystem(ctx, nil)
+sb.Terminate(ctx, nil)
+
+sb2, _ := mc.Sandboxes.Create(ctx, app, snapshotImage, nil)
+p2, _ := sb2.Exec(ctx, []string{"bash", "-c", "cat /test"}, &modal.SandboxExecParams{
+	Stdout: modal.Pipe,
+})
+stdout, _ := io.ReadAll(p2.Stdout)
+fmt.Println(strings.TrimSpace(string(stdout)))
+sb2.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
+
 文件系统快照针对性能进行了优化：它们被计算为差异
 来自您的基础映像，因此仅存储修改后的文件。恢复文件系统快照
 利用与我们为沙盒快速冷启动相同的基础设施。
+
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
 请注意，文件系统快照仅涵盖沙箱的根文件系统。
@@ -227,7 +307,7 @@ fmt.Println(strings.TrimSpace(string(stdout3))) // "setup done"
 ### 用法
 
 使用`snapshot_directory`对目录进行快照，
-`mount_image` 在目录路径上挂载先前的目录快照，
+`mount_image` 在目录路径上挂载以前的目录快照，
 和 `unmount_image` 稍后删除已安装的图像。
 要使用客户持有的密钥材料保护目录快照，请参阅
 [客户提供的加密密钥](/docs/guide/customer-supplied-encryption-keys#directory-snapshots)。
@@ -365,7 +445,10 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 </Callout>沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
 
-要对 Sandbox 进行快照，请创建它并将 `_experimental_enable_snapshot` 设置为 `True`，然后使用 `_experimental_snapshot` 方法，该方法返回一个 `SandboxSnapshot` 对象：
+要拍摄内存快照，请创建一个启用内存快照的沙箱，然后调用其实验性快照方法，该方法返回一个`SandboxSnapshot`：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 image = modal.Image.debian_slim().apt_install("curl", "procps")
@@ -381,7 +464,47 @@ print(f"Performing snapshot of {sb.object_id} ...")
 snapshot = sb._experimental_snapshot()
 ```
 
-使用 `Sandbox._experimental_from_snapshot` 从返回的 SandboxSnapshot 创建一个新的 Sandbox：
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const snapshotImage = modal.images
+  .fromRegistry("python:3.13-slim")
+  .dockerfileCommands(["RUN apt-get update && apt-get install -y curl procps"]);
+
+const sb = await modal.sandboxes.create(app, snapshotImage, {
+  command: ["python3", "-m", "http.server", "8000"],
+  experimentalEnableSnapshot: true,
+});
+console.log(`Performing snapshot of ${sb.sandboxId} ...`);
+const snapshot = await sb.experimentalSnapshot();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+snapshotImage := mc.Images.FromRegistry("python:3.13-slim", nil).DockerfileCommands([]string{
+	"RUN apt-get update && apt-get install -y curl procps",
+}, nil)
+
+sb, _ := mc.Sandboxes.Create(ctx, app, snapshotImage, &modal.SandboxCreateParams{
+	Command:                    []string{"python3", "-m", "http.server", "8000"},
+	ExperimentalEnableSnapshot: true,
+})
+fmt.Printf("Performing snapshot of %s ...\n", sb.SandboxID)
+snapshot, _ := sb.ExperimentalSnapshot(ctx, nil)
+fmt.Printf("Snapshot ID: %s\n", snapshot.SnapshotID)
+```
+
+{/片段} </CodeTabs>
+
+从返回的`SandboxSnapshot`创建一个新的沙箱：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 print(f"Restoring from snapshot {sb.object_id} ...")
@@ -397,8 +520,55 @@ reply = p.stdout.read()
 print(reply)  # <!DOCTYPE HTML><html lang...
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+console.log(`Restoring from snapshot ${snapshot.snapshotId} ...`);
+const sb2 = await modal.sandboxes.experimentalFromSnapshot(snapshot);
+
+console.log("Let's see that the http.server is still running...");
+let p = await sb2.exec(["ps", "aux"], { stdout: "pipe" });
+console.log(await p.stdout.readText());
+
+// Talk to snapshotted Sandbox http.server
+p = await sb2.exec(["curl", "http://localhost:8000/"], { stdout: "pipe" });
+console.log(await p.stdout.readText());
+await sb2.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+fmt.Printf("Restoring from snapshot %s ...\n", snapshot.SnapshotID)
+sb2, _ := mc.Sandboxes.ExperimentalFromSnapshot(ctx, snapshot, nil)
+
+fmt.Println("Let's see that the http.server is still running...")
+p, _ := sb2.Exec(ctx, []string{"ps", "aux"}, &modal.SandboxExecParams{
+	Stdout: modal.Pipe,
+})
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Print(string(stdout))
+
+// Talk to snapshotted Sandbox http.server
+p, _ = sb2.Exec(ctx, []string{"curl", "http://localhost:8000/"}, &modal.SandboxExecParams{
+	Stdout: modal.Pipe,
+})
+stdout, _ = io.ReadAll(p.Stdout)
+fmt.Print(string(stdout))
+sb2.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
 新沙箱将是原始沙箱的副本。所有正在运行的进程仍将运行，处于与快照时相同的状态，并且对文件系统所做的任何更改都将可见。
-您可以使用 `snapshot.object_id` 检索任何沙盒快照的 ID。要按 ID 从快照恢复，请首先使用 `SandboxSnapshot.from_id` 对快照进行再水合，然后从中恢复：
+
+要稍后从快照恢复，请保存其 ID。然后通过该 ID 查找快照并从中恢复：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 snapshot_id = snapshot.object_id
@@ -408,6 +578,32 @@ snapshot = modal.SandboxSnapshot.from_id(snapshot_id)
 sandbox = modal.Sandbox._experimental_from_snapshot(snapshot)
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const snapshotId = snapshot.snapshotId;
+// ... save the snapshot ID for later
+// sometime in the future...
+const savedSnapshot = await modal.sandboxSnapshots.fromId(snapshotId);
+const sandbox = await modal.sandboxes.experimentalFromSnapshot(savedSnapshot);
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+snapshotID := snapshot.SnapshotID
+// ... save the snapshot ID for later
+// sometime in the future...
+savedSnapshot, _ := mc.SandboxSnapshots.FromID(ctx, snapshotID, nil)
+sandbox, _ := mc.Sandboxes.ExperimentalFromSnapshot(ctx, savedSnapshot, nil)
+```
+
+{/片段} </CodeTabs>
+
 请注意，这些方法是*实验性的*，我们将来可能会更改它们。
 
 ### 重新快照
@@ -416,6 +612,9 @@ sandbox = modal.Sandbox._experimental_from_snapshot(snapshot)
 这意味着快照状态的“链”只能变得与该系列中第一个快照的到期日期一样旧。
 
 例如，以下示例中的快照\_2在创建后仅在3天内有效：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 sandbox_1 = modal.Sandbox.create(_experimental_enable_snapshot=True)
@@ -430,24 +629,63 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 # snapshot_2 now has a lifetime of 7 - 4 = 3 days from creation
 ```
 
-### 限制
+{/片段}
 
-* 沙箱内存快照在创建后 7 天后过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
+{#snippet javascript()}
+
+```javascript notest
+const sandbox1 = await modal.sandboxes.create(app, image, {
+  experimentalEnableSnapshot: true,
+});
+// snapshot1 has a lifetime of 7 days from creation
+const snapshot1 = await sandbox1.experimentalSnapshot();
+
+// 4 days later, restore and snapshot again
+console.log(`Restoring from snapshot ${snapshot1.snapshotId} ...`);
+const sandbox2 = await modal.sandboxes.experimentalFromSnapshot(snapshot1);
+const snapshot2 = await sandbox2.experimentalSnapshot();
+// The new snapshot now has a lifetime of 7 - 4 = 3 days from creation
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+sandbox1, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	ExperimentalEnableSnapshot: true,
+})
+// snapshot1 has a lifetime of 7 days from creation
+snapshot1, _ := sandbox1.ExperimentalSnapshot(ctx, nil)
+
+// 4 days later, restore and snapshot again
+fmt.Printf("Restoring from snapshot %s ...\n", snapshot1.SnapshotID)
+sandbox2, _ := mc.Sandboxes.ExperimentalFromSnapshot(ctx, snapshot1, nil)
+snapshot2, _ := sandbox2.ExperimentalSnapshot(ctx, nil)
+// snapshot2 now has a lifetime of 7 - 4 = 3 days from creation
+```
+
+{/片段} </CodeTabs>
+
+### 限制
+* 沙盒内存快照将在创建后 7 天过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
-* 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
-* 使用 `_experimental_enable_snapshot=True` 创建的沙箱或从快照恢复的沙箱无法在 GPU 上运行。
-* 当 `Sandbox.exec` 命令仍在运行时，无法对沙箱进行快照。此外，通过调用`Sandbox.exec`启动的任何后台进程在快照后都不会正确恢复。
-* 使用 `_experimental_enable_snapshot=True` 创建的沙盒只能在与原始沙盒运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
-* 使用 `_experimental_enable_snapshot=True` 创建的沙盒无法固定其 `region`，并且从内存快照恢复的沙盒将安排在原始实例类型可用的任何位置。
+* 对沙箱进行快照目前将导致其终止。我们打算尽快取消此限制。
+* 在启用内存快照或从快照恢复的情况下创建的沙箱无法与 GPU 一起运行。
+* 当 exec 命令仍在运行时，无法对沙箱进行快照。此外，由 exec 调用启动的任何后台进程在快照后都不会正确恢复。
+* 启用内存快照创建的 Sandbox 只能在与原始 Sandbox 运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
+* 启用内存快照创建的沙箱无法固定其区域，并且从内存快照恢复的沙箱会安排在原始实例类型可用的任何位置。
 
 ## 保持沙箱状态
-
 要在沙箱会话中保留状态，您需要：
 
 1. **触发快照。** 快照是从沙箱外部触发的，通常是在终止之前。一种常见的模式是在沙箱内运行 exec 进程并等待其退出。一旦完成，控制器就会拍摄快照并终止沙箱。
-2. **存储快照 ID。** 必须保留 `object_id` 字符串，以便稍后可以从中恢复。这通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。
+2. **存储快照 ID。** 您需要此 ID 以便稍后从快照恢复。它通常由会话或用户 ID 进行键控，并且可以存储在数据库、外部键值存储或 [Modal Dict](/docs/guide/dicts) 中。
 
-以下示例展示了这种模式。此代码通常在模态函数或您自己的后端中运行，编排沙箱：
+以下示例展示了这种模式。此代码通常会在模态函数或您自己的后端中运行，编排沙箱：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 import modal
@@ -473,12 +711,68 @@ snapshot_store[session_id] = sb.snapshot_filesystem().object_id
 sb.terminate()
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+// Replace this in-process map with your database or key-value store.
+const snapshotStore = new Map();
+const sessionId = "sess_a1b2c3d4";
+
+// Restore from snapshot, or use the base Image.
+let restoredImage = image;
+const snapshotId = snapshotStore.get(sessionId);
+if (snapshotId) {
+  restoredImage = await modal.images.fromId(snapshotId);
+}
+
+const sb = await modal.sandboxes.create(app, restoredImage);
+
+// Run agent which exits when ready to be snapshotted.
+const p = await sb.exec(["python", "agent.py"]);
+await p.wait();
+
+// Snapshot and store the Image ID.
+const snapshot = await sb.snapshotFilesystem();
+snapshotStore.set(sessionId, snapshot.imageId);
+await sb.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+// Replace this in-process map with your database or key-value store.
+snapshotStore := map[string]string{}
+sessionID := "sess_a1b2c3d4"
+
+// Restore from snapshot, or use the base Image.
+restoredImage := image
+if snapshotID, ok := snapshotStore[sessionID]; ok {
+	restoredImage, _ = mc.Images.FromID(ctx, snapshotID, nil)
+}
+
+sb, _ := mc.Sandboxes.Create(ctx, app, restoredImage, nil)
+
+// Run agent which exits when ready to be snapshotted.
+p, _ := sb.Exec(ctx, []string{"python", "agent.py"}, nil)
+p.Wait(ctx, nil)
+
+// Snapshot and store the Image ID.
+snapshot, _ := sb.SnapshotFilesystem(ctx, nil)
+snapshotStore[sessionID] = snapshot.ImageID
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
+
 ## 删除快照
 
-由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除API删除它们。这对于管理存储或遵守数据保留策略很有用。
+由于文件系统和目录快照都是[图像](/docs/sdk/py/latest/Image)，因此您可以使用图像删除 API 删除它们。这对于管理存储或遵守数据保留策略很有用。
 
 <Callout variant="warning">
-
 删除是不可逆的。已删除的快照无法恢复，并且配置为使用已删除快照的任何沙盒都将无法启动。
 
 </Callout>
@@ -516,9 +810,9 @@ await modal.images.delete(imageId);
 
 ```go notest
 // Get the image ID from a filesystem or directory snapshot
-image, _ := sb.SnapshotFilesystem(ctx, nil)
-// or: image, _ := sb.SnapshotDirectory(ctx, "/project", nil)
-imageId := image.ImageID // e.g., "im-abc123"
+snapshotImage, _ := sb.SnapshotFilesystem(ctx, nil)
+// or: snapshotImage, _ := sb.SnapshotDirectory(ctx, "/project", nil)
+imageId := snapshotImage.ImageID // e.g., "im-abc123"
 
 // Later, delete the snapshot when no longer needed
 mc.Images.Delete(ctx, imageId, nil)

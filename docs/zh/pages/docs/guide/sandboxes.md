@@ -1,11 +1,11 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙箱
+# 沙盒
 
 此页面是沙箱的高级指南，
 用于在 Modal 上执行不受信任的用户或代理代码的安全容器。
 
-有关 `modal.Sandbox` 接口的参考文档，
+有关 `modal.Sandbox` 界面的参考文档，
 请参阅[此页](/docs/sdk/py/latest/Sandbox)。
 
 ## 什么是沙箱以及为什么我应该使用它们？
@@ -212,27 +212,27 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 生命周期事件按顺序为：
 
 1. **已创建** — 已向 Modal 请求并注册沙盒。在此
-   指出 Sandbox 对象存在并具有 ID，但没有计算资源
+   指出 Sandbox 对象存在并具有 ID，但尚未使用任何计算资源
    尚未分配。这是调用`Sandbox.create`后的初始状态。
 
-2. **已安排** — 沙盒已安排给特定工作人员。的
-   工作人员现在正在配置沙盒所需的资源（CPU、内存、GPU、
+2. **已安排** — 沙箱已安排给特定工作人员。的
+   工作人员现在正在配置沙箱所需的资源（CPU、内存、GPU、
    卷等）并准备容器环境。沙盒将
-   容器完全初始化后，过渡到 **Started**。
+   容器完全初始化后，转换到 **Started**。
 
-3. **开始** — 沙箱的容器已在工作人员上启动，并且
+3. **开始** — 沙盒的容器已在工作人员上启动，并且
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
 
-4. **准备就绪** — 如果 [就绪探针](/docs/guide/sandboxes#readiness-probes)
-   为沙盒启用，一旦探测成功就会触发此事件，表明
+4. **准备就绪** — 如果[就绪探针](/docs/guide/sandboxes#readiness-probes)
+   为沙盒启用，一旦探测成功，就会触发此事件，表明
    沙箱内的服务已完全初始化并准备好接受流量。
    这对于运行 Web 服务器或其他服务的沙箱特别有用
 在处理请求之前需要预热时间。如果就绪探针是
    未配置，将跳过此事件。
 
-5. **完成** — 沙箱已停止运行。这可能会发生在几个人身上
+5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上
    原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
@@ -586,7 +586,7 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
 探针，将引发错误。同样，在沙箱结束后调用它
-终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`
+终止会引发错误。然而，在沙箱之后调用`wait_until_ready()`
 已经准备好立即返回。
 
 ## 返回代码
@@ -674,7 +674,7 @@ fmt.Println(returnCodeSb) // 137
 
 沙箱在两个运行时之一上运行：
 
-* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，提供强隔离，适合大多数工作负载。
+* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，提供强大的隔离性，适合大多数工作负载。
 * **虚拟机** 在具有自己的 Linux 内核的虚拟机中运行沙箱。使用
   适用于需要完整 Linux 环境的工作负载的 VM 运行时，例如
   在沙箱内运行 Docker，安装
@@ -685,10 +685,11 @@ fmt.Println(returnCodeSb) // 137
   [团队和企业计划](/定价)；要请求访问权限，请通过以下方式联系
   [Slack](/slack) 或发送电子邮件至 <support@modal.com>。
 
-通过 `runtime` 参数切换运行时，或者保持未设置状态，让 Modal 为您选择。
+通过 `runtime` 参数切换运行时间，或者保持未设置状态，让 Modal 为您选择。
 
 <CodeTabs>
-  {#snippet python()}
+{#snippet python()}
+
 ```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app, runtime="vm")  # or: runtime="gvisor"
 p = sb.exec("uname", "-srn")
@@ -722,14 +723,17 @@ fmt.Println(string(stdout)) // Linux modal 7.2.6
 
 {/片段} </CodeTabs>
 
-[GPU](/docs/guide/gpu) 沙箱仅支持 `runtime="gvisor"`。
+[GPU](/docs/guide/gpu) 沙盒仅支持 `runtime="gvisor"`。
 
 ### 在沙箱中运行 Docker
 
 使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙盒
 入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
-可以互相到达，`/var/lib/docker`包含在
+可以互相到达，并且`/var/lib/docker`包含在
 [文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 image = (
@@ -753,6 +757,69 @@ print(p.stdout.read())
 
 sb.terminate()
 ```
+
+{/片段}
+
+{#snippet javascript()}```javascript notest
+import { Probe } from "modal";
+
+const dockerImage = modal.images
+  .fromRegistry("ubuntu:24.04")
+  .dockerfileCommands([
+    "ENV DEBIAN_FRONTEND=noninteractive",
+    "RUN apt-get update && apt-get install -y docker.io",
+  ]);
+
+const sb = await modal.sandboxes.create(app, dockerImage, {
+  command: ["dockerd"],
+  runtime: "vm",
+  readinessProbe: Probe.withExec(["docker", "info"], {
+    intervalMs: 500,
+  }),
+});
+await sb.waitUntilReady();
+
+const p = await sb.exec(
+  ["docker", "run", "--rm", "alpine", "echo", "hello from Docker"],
+  { stdout: "pipe" },
+);
+await p.wait();
+console.log(await p.stdout.readText());
+
+await sb.terminate();
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+dockerImage := mc.Images.FromRegistry("ubuntu:24.04", nil).DockerfileCommands([]string{
+	"ENV DEBIAN_FRONTEND=noninteractive",
+	"RUN apt-get update && apt-get install -y docker.io",
+}, nil)
+probe, _ := modal.NewExecProbe(
+	[]string{"docker", "info"},
+	&modal.ExecProbeParams{Interval: 500 * time.Millisecond},
+)
+sb, _ := mc.Sandboxes.Create(ctx, app, dockerImage, &modal.SandboxCreateParams{
+	Command:        []string{"dockerd"},
+	Runtime:        modal.SandboxRuntimeVM,
+	ReadinessProbe: probe,
+})
+sb.WaitUntilReady(ctx, 5*time.Minute, nil)
+
+p, _ := sb.Exec(ctx, []string{
+	"docker", "run", "--rm", "alpine", "echo", "hello from Docker",
+}, &modal.SandboxExecParams{Stdout: modal.Pipe})
+p.Wait(ctx, nil)
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Println(string(stdout))
+
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
 
 ## 环境
 
@@ -948,7 +1015,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 {/片段} </CodeTabs>
 
 <Callout variant="info">
-* **Modal 在拉取后将外部图像标签视为不可变。** 对于[外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
+* **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
 </Callout>

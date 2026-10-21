@@ -128,6 +128,20 @@ Modal supports [Role-Based Access Control (RBAC)](/docs/guide/rbac) for more gra
 
 </Callout>
 
+## Renaming a Workspace
+
+Workspace Owners and Managers can rename a Workspace from the
+[Identity & provisioning](/settings/workspace-management/identity-and-provisioning)
+page. Members stay signed in, and deployed web endpoints keep their existing
+URLs until they are redeployed, after which they use the new name. The old
+name is held for your Workspace for 30 days, during which dashboard links to it
+redirect members to the new name and you can switch back.
+
+If your Workspace uses SAML SSO, update the Workspace field in your Okta app,
+or the ACS URL and login URL in another identity provider, right after
+renaming, or SSO sign-in stops working. Personal Workspaces can't be renamed;
+contact <support@modal.com>.
+
 ## Leaving a Workspace
 
 To leave a Workspace, navigate to [the settings page](/settings/workspaces) and

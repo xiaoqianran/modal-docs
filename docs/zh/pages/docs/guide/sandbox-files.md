@@ -2,10 +2,10 @@
 
 # 文件系统访问
 
-有多种选项可用于将文件上传到沙箱并访问它们
+有多种选项可用于将文件上传到沙盒并访问它们
 从沙箱外部。
 
-## 文件系统 API
+## 文件系统API
 
 在沙箱中传入和传出数据的最便捷方式
 执行是使用我们的文件系统API：
@@ -293,6 +293,9 @@ Volumes 和 CloudBucketMounts 允许您上传一次数据并访问该数据
 
 要从沙箱访问卷，您可以使用 `Sandbox.create` 的 `volumes` 参数：
 
+<CodeTabs>
+  {#snippet python()}
+
 ```python notest
 # Find or create a Volume with the name "my-volume".
 vol = modal.Volume.from_name("my-volume", create_if_missing=True)
@@ -315,12 +318,66 @@ for data in vol.read_file("a.txt"):
     print(data)
 ```
 
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const vol = await modal.volumes.fromName("my-volume", {
+  createIfMissing: true,
+});
+const sb = await modal.sandboxes.create(app, image, {
+  volumes: { "/cache": vol },
+});
+
+// Read a file in the Volume.
+let p = await sb.exec(["bash", "-c", "cat /cache/some-file.txt"], {
+  stdout: "pipe",
+});
+console.log(await p.stdout.readText());
+await p.wait();
+
+// Write a file to the Volume.
+p = await sb.exec(["bash", "-c", "echo foo > /cache/a.txt"]);
+await p.wait();
+await sb.terminate({ wait: true });
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+vol, _ := mc.Volumes.FromName(ctx, "my-volume", &modal.VolumeFromNameParams{
+	CreateIfMissing: true,
+})
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Volumes: map[string]*modal.Volume{"/cache": vol},
+})
+
+// Read a file in the Volume.
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "cat /cache/some-file.txt"}, &modal.SandboxExecParams{
+	Stdout: modal.Pipe,
+})
+stdout, _ := io.ReadAll(p.Stdout)
+fmt.Print(string(stdout))
+p.Wait(ctx, nil)
+
+// Write a file to the Volume.
+p, _ = sb.Exec(ctx, []string{"bash", "-c", "echo foo > /cache/a.txt"}, nil)
+p.Wait(ctx, nil)
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
+
 卷和 CloudBucketMount 之间的文件同步行为有所不同。对于
 卷，更改由[后台提交](/docs/guide/volumes#background-commits) 保存
 在沙箱执行时每隔几秒运行一次，并在以下时间进行最终提交
 沙盒终止。使用 Volumes v2，您还可以在任何时候显式提交（请参阅
 [使用 `sync` 提交卷更改](#committing-volume-changes-with-sync-v2-only)
-如下）。对于 CloudBucketMounts，文件会自动同步。
+以下）。对于 CloudBucketMounts，文件会自动同步。
+
 您需要通过调用沙箱对象上的 [.reload\_volumes()](/docs/sdk/py/latest/Sandbox#reload_volumes) 方法显式重新加载卷以查看自首次安装以来所做的更改。
 
 ###挂载子目录
@@ -350,18 +407,12 @@ p.wait()
 sb.terminate(wait=True)
 ```
 
-{/片段}
-
-{#snippet javascript()}
+{/片段}{#snippet javascript()}
 
 ```javascript notest
-const app = await modal.apps.fromName("my-app", {
-  createIfMissing: true,
-});
 const vol = await modal.volumes.fromName("shared-volume", {
   createIfMissing: true,
 });
-const image = modal.images.fromRegistry("python:3.13-slim");
 
 // Each Sandbox only sees its own subdirectory of the Volume.
 const sb = await modal.sandboxes.create(app, image, {
@@ -379,18 +430,15 @@ await sb.terminate({ wait: true });
 {#snippet go()}
 
 ```go notest
-app, _ := mc.Apps.FromName(ctx, "volume-subdir-test", &modal.AppFromNameParams{CreateIfMissing: true})
-
 vol, _ := mc.Volumes.FromName(ctx, "shared-volume", &modal.VolumeFromNameParams{
 	CreateIfMissing: true,
 })
-image := mc.Images.FromRegistry("python:3.13-slim", nil)
 
 // Each Sandbox only sees its own subdirectory of the Volume.
 subPath := "/users/user_123"
 sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 	Volumes: map[string]*modal.Volume{
-		"/data": vol.WithMountOptions(&modal.VolumeMountOptions{SubPath: &subPath}),
+		"/data": vol.WithMountOptions(&modal.VolumeMountOptionsParams{SubPath: &subPath}),
 	},
 })
 defer sb.Terminate(ctx, nil)
@@ -398,7 +446,7 @@ defer sb.Terminate(ctx, nil)
 // /data inside the Sandbox maps to /users/user_123 in the Volume.
 // The Sandbox cannot see or modify files belonging to other users.
 p, _ := sb.Exec(ctx, []string{"bash", "-c", "echo hello > /data/output.txt"}, nil)
-p.Wait(ctx)
+p.Wait(ctx, nil)
 ```
 
 {/片段} </CodeTabs>
@@ -412,6 +460,9 @@ p.Wait(ctx)
 通过运行 `sync` 在沙箱执行期间随时提交更改
 挂载点上的命令。这会将所有数据和元数据更改保存到
 无需等待沙盒终止即可存储卷：
+
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 sb = modal.Sandbox.create(
@@ -431,6 +482,57 @@ if p.returncode != 0:
 # Changes are now persisted and visible to other containers
 sb.terminate()
 ```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const vol = await modal.volumes.fromName("my-v2-volume");
+const sb = await modal.sandboxes.create(app, image, {
+  volumes: { "/data": vol },
+});
+
+// Write files to the Volume.
+let p = await sb.exec(["bash", "-c", "echo 'hello' > /data/output.txt"]);
+await p.wait();
+
+// Commit changes immediately.
+p = await sb.exec(["sync", "/data"]);
+const code = await p.wait();
+if (code !== 0) {
+  throw new Error(`sync failed with exit code ${code}`);
+}
+
+// Changes are now persisted and visible to other containers.
+await sb.terminate();
+```
+{/片段}
+
+{#snippet go()}
+
+```go notest
+vol, _ := mc.Volumes.FromName(ctx, "my-v2-volume", nil)
+sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Volumes: map[string]*modal.Volume{"/data": vol},
+})
+
+// Write files to the Volume.
+p, _ := sb.Exec(ctx, []string{"bash", "-c", "echo 'hello' > /data/output.txt"}, nil)
+p.Wait(ctx, nil)
+
+// Commit changes immediately.
+p, _ = sb.Exec(ctx, []string{"sync", "/data"}, nil)
+returnCode, _ := p.Wait(ctx, nil)
+if returnCode != 0 {
+	panic(fmt.Sprintf("sync failed with exit code %d", returnCode))
+}
+
+// Changes are now persisted and visible to other containers.
+sb.Terminate(ctx, nil)
+```
+
+{/片段} </CodeTabs>
 
 这对于您想要长期运行的沙箱特别有用
 保留中间结果，或者当您需要更改对其他人可见时
