@@ -3,27 +3,15 @@
 # 沙盒
 
 此页面是沙箱的高级指南，
-用于在 Modal 上执行不受信任的用户或代理代码的安全容器。
+用于在 Modal 上执行不受信任代码的安全容器。沙箱很有用
+用于执行 LLM 生成的代码或隔离用户生成的代码等任务
+代码。
 
-有关 `modal.Sandbox` 界面的参考文档，
-请参阅[此页](/docs/sdk/py/latest/Sandbox)。
+有关 `modal.Sandbox` 接口的完整参考文档，请访问我们的 SDK
+文档 ([Python](/docs/sdk/py/latest/Sandbox),
+[JavaScript](/docs/sdk/js/latest/Sandbox)、[Go](/docs/sdk/go/latest/Sandbox))。
 
-## 什么是沙箱以及为什么我应该使用它们？
-
-除了Function接口之外，Modal还有一个直接的
-用于*在运行时*定义容器并安全地运行任意代码的接口
-在他们里面。
-
-例如，如果您想要：
-
-* 执行由语言模型生成的代码。
-* 创建隔离环境来运行不受信任的代码。
-* 检查 git 存储库并对其运行命令，例如测试套件，或者
-  `npm lint`。
-* 针对完整的 Docker 堆栈运行测试或 CI 管道。
-* 运行具有任意依赖项和设置脚本的容器。
-
-每个单独的作业称为**沙箱**，可以使用
+可以使用以下命令创建沙箱
 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create) 构造函数：
 
 <CodeTabs>
@@ -61,9 +49,7 @@ async for line in p.stdout:
     print(line, end="")
 
 await sb.terminate.aio()
-```
-
-{/片段}
+```{/片段}
 
 {#snippet javascript()}
 
@@ -137,6 +123,7 @@ func main() {
 ```
 
 {/片段} </CodeTabs>
+
 **注意：** 您可以直接使用`python my_script.py`将上面的示例作为脚本运行。这里不需要`modal run`，因为没有[入口点](/docs/guide/apps#entrypoints-for-ephemeral-apps)。
 
 沙盒从外部生成时需要传递 [`App`](/docs/guide/apps)
@@ -144,12 +131,17 @@ func main() {
 [`App.lookup`](/docs/sdk/py/latest/App#lookup)。 `App.lookup` 上的`create_if_missing` 旗帜
 如果不存在，将创建一个具有给定名称的 `App` 。
 
-## 配置
+＃＃ 配置
+沙箱是通过参数配置的
+[`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create)。参考`Sandbox.create`
+有关沙箱配置的完整文档，或参阅
+[JavaScript](/docs/sdk/js/latest/Sandbox) 和 [Go](/docs/sdk/go/latest/Sandbox)
+SDK 参考。
 
-沙箱支持常规 `modal.Function` 中的几乎所有配置选项。请参阅 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create) 了解更多文档
-关于沙盒配置。
-
-例如，图像和卷可以像函数一样使用：
+沙箱支持常规 Modal 中几乎所有的配置选项
+[函数](/docs/sdk/py/latest/Function)。例如，
+[图像](/docs/guide/images) 和 [卷](/docs/guide/volumes) 只能使用
+与函数一样：
 
 <CodeTabs>
   {#snippet python()}
@@ -174,9 +166,7 @@ sb = await modal.Sandbox.create.aio(
 )
 ```
 
-{/片段}
-
-{#snippet javascript()}
+{/片段}{#snippet javascript()}
 
 ```javascript notest
 const image = modal.images.fromRegistry("python:3.13-slim");
@@ -202,6 +192,78 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 
 {/片段} </CodeTabs>
 
+显式CPU和内存[资源配置](/docs/guide/sandbox-resources)
+对于许多任务来说并不是必需的，因为沙箱可以机会主义地
+[超出他们请求的资源](/docs/guide/sandbox-resources#pay-for-what-you-use)
+当需要时。可以提供更繁重的工作
+确保可用性的额外资源：
+
+<CodeTabs>
+  {#snippet python()}
+
+```python notest
+import modal
+
+app = modal.App.lookup("my-app", create_if_missing=True)
+
+sb = modal.Sandbox.create(
+    cpu=0.5,
+    memory=512,
+    app=app,
+)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+import { ModalClient } from "modal";
+
+const modal = new ModalClient();
+const app = await modal.apps.fromName("my-app", { createIfMissing: true });
+const image = modal.images.fromRegistry("python:3.13-slim");
+
+const sb = await modal.sandboxes.create(app, image, {
+  cpu: 0.5,
+  memoryMiB: 512,
+});
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+package main
+
+import (
+	"context"
+
+	modal "github.com/modal-labs/modal-client/go"
+)
+
+func main() {
+	ctx := context.Background()
+	mc, _ := modal.NewClient()
+
+	app, _ := mc.Apps.FromName(ctx, "my-app", &modal.AppFromNameParams{
+		CreateIfMissing: true,
+	})
+	image := mc.Images.FromRegistry("python:3.13-slim", nil)
+
+	sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+		CPU:       0.5,
+		MemoryMiB: 512,
+	})
+}
+```
+
+{/片段} </CodeTabs>
+
+沙箱按`max(request, actual)`计费。看
+[沙盒定价](/pricing#sandboxes) 了解费率。
+
 ## 生命周期
 
 ### 活动
@@ -209,6 +271,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 每个沙箱都会经历一系列生命周期事件，因为它从
 创作到完成。了解这些事件对于监控很有用，
 调试以及构建对沙箱状态变化做出反应的自动化。
+
 生命周期事件按顺序为：
 
 1. **已创建** — 已向 Modal 请求并注册沙盒。在此
@@ -224,19 +287,18 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
-
 4. **准备就绪** — 如果[就绪探针](/docs/guide/sandboxes#readiness-probes)
    为沙盒启用，一旦探测成功，就会触发此事件，表明
    沙箱内的服务已完全初始化并准备好接受流量。
    这对于运行 Web 服务器或其他服务的沙箱特别有用
-在处理请求之前需要预热时间。如果就绪探针是
+   在处理请求之前需要预热时间。如果就绪探针是
    未配置，将跳过此事件。
 
-5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上
-   原因：入口点进程自行退出，沙箱被显式地退出
+5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
-   可以在沙箱内执行命令。您可以详细了解为什么沙盒在仪表板中停止运行或通过检查从返回的退出代码
+   可以在沙箱内执行命令。您可以详细了解为什么沙盒
+   在仪表板中停止运行或通过检查从返回的退出代码
    `sandbox.poll()`。
 
 ### 超时
@@ -260,7 +322,6 @@ sb = await modal.Sandbox.create.aio(app=sb_app, timeout=10*60)  # 10 minutes
 ```
 
 {/片段}
-
 {#snippet javascript()}
 
 ```javascript notest
@@ -286,9 +347,10 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 然后使用后续沙箱从该快照恢复。
 
 ### 空闲超时
+
 沙箱也可以在一段时间不活动后自动终止 - 您可以通过设置 `idle_timeout` 参数来做到这一点。如果满足以下任一条件，则沙盒被视为处于活动状态：
 
-1.它有一个活跃的[命令](/docs/guide/sandbox-spawn)正在运行（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
+1.它有一个正在运行的活动[命令](/docs/guide/sandbox-spawn)（通过[`sb.exec(...)`](/docs/sdk/py/latest/Sandbox#exec)）
 2.它的标准输入正在被写入（通过[`sb.stdin.write()`](/docs/sdk/py/latest/Sandbox#stdin)）
 3. 它在其中一个[隧道](/docs/guide/tunnels) 上有一个开放的 TCP 连接
 
@@ -306,6 +368,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 成功了。
 
 有两种类型的就绪探针：
+
 * **TCP 探测** — 检查沙箱内的 TCP 端口是否正在接受连接。
   当您的启动逻辑包括启动服务器时，这是最常见的选择。
 * **Execprobe** — 在沙箱内运行任意命令，并在以下情况下成功：
@@ -314,7 +377,9 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   安装等
 
 两种探头类型都接受一个`interval_ms`参数（默认值：100ms）来控制如何
-通常会重试该检查，直到成功为止。#### TCP 就绪探测
+通常会重试该检查，直到成功为止。
+
+#### TCP 就绪探测
 
 当您的 Sandbox 启动服务器并且您想要等到
 它正在监听一个端口：
@@ -376,7 +441,6 @@ await sb.waitUntilReady();
 // The server is now ready — interact with it via tunnels, exec, etc.
 await sb.terminate();
 ```
-
 {/片段}
 
 {#snippet go()}
@@ -465,6 +529,7 @@ await sb.terminate.aio()
 ```
 
 {/片段}
+
 {#snippet javascript()}
 
 ```javascript notest
@@ -531,9 +596,8 @@ func main() {
 {/片段} </CodeTabs>
 
 **注意：** 就绪探针最多运行 5 分钟。如果探头没有
-在该窗口内成功，`wait_until_ready()`将提高
-`modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
-内置`TimeoutError`，所以裸露的`except TimeoutError`无法捕获它。探头
+在该窗口内成功，`wait_until_ready()`将提高`modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
+内置 `TimeoutError`，因此裸露的 `except TimeoutError` 无法捕获它。探头
 超时不会自动终止沙盒 - 您可能想要捕获
 如果从未准备就绪，则会出现错误并显式终止沙箱：
 
@@ -548,7 +612,9 @@ except modal.exception.TimeoutError:
     sb.terminate()
 ```
 
-{/片段}{#snippet python\_async()}
+{/片段}
+
+{#snippet python\_async()}
 
 ```python notest
 try:
@@ -584,7 +650,7 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 {/片段} </CodeTabs>
 
-如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
+如果您在未配置就绪状态的沙盒上调用`wait_until_ready()`
 探针，将引发错误。同样，在沙箱结束后调用它
 终止会引发错误。然而，在沙箱之后调用`wait_until_ready()`
 已经准备好立即返回。
@@ -594,13 +660,12 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 提供[Unix风格的退出代码](https://tldp.org/LDP/abs/html/exitcodes.html)来帮助诊断成功、手动终止或内存不足等情况。
 
 它们可用于以下两者：
+
 * 沙箱中的进程（通过 [`ContainerProcess.returncode`](/docs/sdk/py/latest/container_process#returncode) / [`ContainerProcess.poll()`](/docs/sdk/py/latest/container_process#poll))
 * 沙箱本身（通过 [`Sandbox.returncode`](/docs/sdk/py/latest/Sandbox#returncode) / [`Sandbox.poll()`](/docs/sdk/py/latest/Sandbox#poll))
 
 <CodeTabs>
-  {#snippet python()}
-
-```python fixture:sb_app
+  {#snippet python()}```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app)
 
 # Read returncode of individual process
@@ -674,21 +739,19 @@ fmt.Println(returnCodeSb) // 137
 
 沙箱在两个运行时之一上运行：
 
-* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，提供强大的隔离性，适合大多数工作负载。
+* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，
+  提供强大的隔离性，适合大多数工作负载。
 * **虚拟机** 在具有自己的 Linux 内核的虚拟机中运行沙箱。使用
   适用于需要完整 Linux 环境的工作负载的 VM 运行时，例如
   在沙箱内运行 Docker，安装
   [FUSE](https://man7.org/linux/man-pages/man4/fuse.4.html) 文件系统，或
   使用嵌套管理资源
-  [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。嵌套
-  虚拟化也可用于
-  [团队和企业计划](/定价)；要请求访问权限，请通过以下方式联系
-  [Slack](/slack) 或发送电子邮件至 <support@modal.com>。
+[cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。
 
 通过 `runtime` 参数切换运行时间，或者保持未设置状态，让 Modal 为您选择。
 
 <CodeTabs>
-{#snippet python()}
+  {#snippet python()}
 
 ```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app, runtime="vm")  # or: runtime="gvisor"
@@ -723,12 +786,14 @@ fmt.Println(string(stdout)) // Linux modal 7.2.6
 
 {/片段} </CodeTabs>
 
-[GPU](/docs/guide/gpu) 沙盒仅支持 `runtime="gvisor"`。
+[GPU](/docs/guide/gpu) 沙箱仅支持 `runtime="gvisor"`。
+
+通过设置，可以在 [企业计划](/定价) 上使用嵌套虚拟化
+VM 沙箱上的`experimental_options={"enable_nested_virt": True}`。
 
 ### 在沙箱中运行 Docker
 
-使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙盒
-入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
+使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙箱入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
 可以互相到达，并且`/var/lib/docker`包含在
 [文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
 
@@ -760,7 +825,9 @@ sb.terminate()
 
 {/片段}
 
-{#snippet javascript()}```javascript notest
+{#snippet javascript()}
+
+```javascript notest
 import { Probe } from "modal";
 
 const dockerImage = modal.images
@@ -890,13 +957,13 @@ fmt.Println(string(stdout))
 {/片段} </CodeTabs>
 
 ### OIDC 身份令牌
-
 将`include_oidc_identity_token=True`传递给`modal.Sandbox.create`来注入
 `MODAL_IDENTITY_TOKEN` 包含 OIDC 令牌的环境变量
 沙盒。请参阅 [OIDC 集成指南](/docs/guide/oidc-integration)
 详细信息。
 
 ### 自定义图像
+
 就像函数一样，沙箱支持[自定义图像](/docs/guide/images)。这些可以使用[方法链接](/docs/guide/images)或通过引用[外部容器注册表中的现有映像](/docs/guide/existing-images)来定义。
 
 #### 将镜像构建与沙箱创建分开
@@ -962,7 +1029,6 @@ await modal.Sandbox.create.aio(app=app, image=image)
 ```
 
 {/片段}
-
 {#snippet javascript()}
 
 ```javascript notest
@@ -1015,6 +1081,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 {/片段} </CodeTabs>
 
 <Callout variant="info">
+
 * **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
@@ -1024,8 +1091,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 
 您可能需要手动启用输出流才能查看映像构建日志：
 
-<CodeTabs>
-  {#snippet python()}
+<CodeTabs>{#snippet python()}
 
 ```python fixture:sb_app
 image = modal.Image.debian_slim().pip_install("pandas", "numpy")
@@ -1045,7 +1111,9 @@ with modal.enable_output():
     sb = await modal.Sandbox.create.aio(image=image, app=sb_app)
 ```
 
-{/片段}{#snippet javascript()}
+{/片段}
+
+{#snippet javascript()}
 
 ```javascript notest
 const image = modal.images
@@ -1105,7 +1173,6 @@ const sb = await modal.sandboxes.create(app, image, {
   timeoutMs: 10 * 1000,
 });
 ```
-
 {/片段}
 
 {#snippet go()}
@@ -1118,6 +1185,7 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 ```
 
 {/片段} </CodeTabs>
+
 此功能对于运行您想要的长期服务最有用
 继续在后台运行。请参阅我们的 [Jupyter 笔记本示例](/docs/examples/jupyter_sandbox)
 更具体的例子。
@@ -1254,8 +1322,7 @@ sb2, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 如果沙盒当前正在运行*。如果没有找到正在运行的沙箱，`from_name()`将引发
 一个错误。
 
-<CodeTabs>
-  {#snippet python()}
+<CodeTabs>{#snippet python()}
 
 ```python notest
 sb_app = modal.App.lookup("my-app", create_if_missing=True)
@@ -1279,7 +1346,9 @@ sb2 = await modal.Sandbox.from_name.aio("my-app", "my-name")
 assert sb1.object_id == sb2.object_id # sb1 and sb2 refer to the same Sandbox
 ```
 
-{/片段}{#snippet javascript()}
+{/片段}
+
+{#snippet javascript()}
 
 ```javascript notest
 const app = await modal.apps.fromName("my-app", { createIfMissing: true });
@@ -1451,8 +1520,8 @@ for sandbox := range it {
 ```
 
 {/片段} </CodeTabs>
-
 ## 清理客户端资源
+
 当您使用 SDK 中的沙箱句柄与沙箱交互时（例如，
 调用`exec()`），它打开与远程沙箱的直接连接并保持
 它为后续命令打开。此连接和相关资源是

@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-21T11:35:08.169Z",
+  "fetchedAt": "2026-10-22T11:34:45.265Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 349,
   "ok": 349,
@@ -1386,7 +1386,7 @@
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 41519,
+      "bytes": 42815,
       "stub": false
     },
     {

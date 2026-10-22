@@ -832,9 +832,9 @@
       "bytes": 8673
     },
     "docs/guide/sandboxes.md": {
-      "hash": "ad159e716c1eeb3f4bf505e613edb6433935757c",
-      "translatedAt": "2026-10-21T11:35:56.078Z",
-      "bytes": 40249
+      "hash": "933f6964b365bd887a55f5d17ecf82ca03f1ac19",
+      "translatedAt": "2026-10-22T11:35:08.004Z",
+      "bytes": 41532
     },
     "docs/guide/service-users.md": {
       "hash": "b0303b96aef575571deaab0197cca3ec121da747",
@@ -1877,10 +1877,10 @@
       "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-21T11:35:56.078Z",
+  "updatedAt": "2026-10-22T11:35:08.004Z",
   "stats": {
-    "translated": 10,
-    "skipped": 353,
+    "translated": 1,
+    "skipped": 362,
     "failed": 0,
     "total": 363
   }
