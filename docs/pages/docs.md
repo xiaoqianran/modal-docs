@@ -143,6 +143,7 @@ The docs are organized into three main sections:
   - [Global variables](https://modal.com/docs/guide/global-variables.md)
   - [Region selection](https://modal.com/docs/guide/region-selection.md)
   - [GPU Metrics](https://modal.com/docs/guide/gpu-metrics.md)
+  - [Search syntax](https://modal.com/docs/guide/log-search-syntax.md)
 
 ## Examples
 

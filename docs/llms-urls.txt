@@ -139,6 +139,7 @@ https://modal.com/docs/guide/job-queue.md
 https://modal.com/docs/guide/jupyter-notebooks.md
 https://modal.com/docs/guide/lifecycle-functions.md
 https://modal.com/docs/guide/local-data.md
+https://modal.com/docs/guide/log-search-syntax.md
 https://modal.com/docs/guide/managing-deployments.md
 https://modal.com/docs/guide/memory-snapshots.md
 https://modal.com/docs/guide/modal-1-0-migration.md

@@ -78,5 +78,3 @@ And when you're ready for something fancier, explore our [full library of exampl
 * [Training a small language model from scratch](/docs/examples/hp_sweep_gpt)
 * [Parallel processing of Parquet files on S3](/docs/examples/s3_bucket_mount)
 * [Parsing documents with dots.ocr in a Modal Notebook](https://modal.com/notebooks/modal-labs/_/nb-8wvXoGoAcba8sRF8VkVg18)
-
-You can also learn Modal interactively without installing anything through our [code playground](/playground).

@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "df211784838130cbb45c0edcdb1f3d24db2a2738",
-      "translatedAt": "2026-10-17T10:29:22.556Z",
-      "bytes": 27858
+      "hash": "9a1db89dcdcd685005d34ee3072b0b0502d8622a",
+      "translatedAt": "2026-10-23T11:24:28.516Z",
+      "bytes": 27942
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -467,9 +467,9 @@
       "bytes": 24428
     },
     "docs/guide.md": {
-      "hash": "3d2f80b4cbb0dbf059a7c5d27e3266f2aaee6744",
-      "translatedAt": "2026-09-16T11:18:49.582Z",
-      "bytes": 3904
+      "hash": "33ad236145160df7d0b211cc602169639b875224",
+      "translatedAt": "2026-10-23T11:24:14.596Z",
+      "bytes": 3784
     },
     "docs/examples/vllm_throughput.md": {
       "hash": "5d2c3d7a100277131ad5ec7b2112ac2e95bb403f",
@@ -542,9 +542,9 @@
       "bytes": 4660
     },
     "docs/guide/datadog-integration.md": {
-      "hash": "7cc4e41700b60f5bdabd3bc857c389fc20318697",
-      "translatedAt": "2026-10-07T13:06:58.311Z",
-      "bytes": 4626
+      "hash": "31ae97c56e00c3fd862341d49b93802d0a0fb44c",
+      "translatedAt": "2026-10-23T11:24:19.746Z",
+      "bytes": 4873
     },
     "docs/guide/audit-logs.md": {
       "hash": "70623fbb805c36a72acf54ac99b8dfe57a35897c",
@@ -712,9 +712,9 @@
       "bytes": 3024
     },
     "docs/guide/otel-integration.md": {
-      "hash": "e2354db594342ad36c0ccb787182a951be5b5168",
-      "translatedAt": "2026-10-07T13:07:01.157Z",
-      "bytes": 4292
+      "hash": "a75d722ac4c769f35ab4d9e53ae94ff4778b21cd",
+      "translatedAt": "2026-10-23T11:24:26.851Z",
+      "bytes": 4619
     },
     "docs/guide/parametrized-functions.md": {
       "hash": "c963adf94db86aadd82b7a3b2eb7b4f9d1da0934",
@@ -1603,9 +1603,9 @@
       "bytes": 2921
     },
     "docs/guide/intro.md": {
-      "hash": "3d2f80b4cbb0dbf059a7c5d27e3266f2aaee6744",
-      "translatedAt": "2026-09-22T11:22:38.354Z",
-      "bytes": 3904
+      "hash": "33ad236145160df7d0b211cc602169639b875224",
+      "translatedAt": "2026-10-23T11:24:20.064Z",
+      "bytes": 3784
     },
     "docs/cli/latest/function.md": {
       "hash": "df882b3e858365db2219a557a5f7b6c0acbf214e",
@@ -1875,13 +1875,18 @@
       "bytes": 221,
       "fallback": true,
       "error": "HTTP 429"
+    },
+    "docs/guide/log-search-syntax.md": {
+      "hash": "03a0e5414c2a2a5a1b64e735dc611b00dc3c9529",
+      "translatedAt": "2026-10-23T11:24:22.991Z",
+      "bytes": 3033
     }
   },
-  "updatedAt": "2026-10-22T11:35:08.004Z",
+  "updatedAt": "2026-10-23T11:24:28.516Z",
   "stats": {
-    "translated": 1,
-    "skipped": 362,
+    "translated": 6,
+    "skipped": 358,
     "failed": 0,
-    "total": 363
+    "total": 364
   }
 }

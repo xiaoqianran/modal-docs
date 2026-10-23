@@ -78,5 +78,3 @@ Python 是构建 Modal 应用程序和实现 Modal 函数的主要语言，但�
 * [从头开始训练小语言模型](/docs/examples/hp_sweep_gpt)
 * [S3 上 Parquet 文件的并行处理](/docs/examples/s3_bucket_mount)
 * [在模态笔记本中使用dots.ocr解析文档](https://modal.com/notebooks/modal-labs/_/nb-8wvXoGoAcba8sRF8VkVg18)
-
-您还可以通过我们的[代码游乐场](/playground) 以交互方式学习 Modal，而无需安装任何东西。

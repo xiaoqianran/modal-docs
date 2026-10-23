@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-22T11:34:45.265Z",
+  "fetchedAt": "2026-10-23T11:24:12.508Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 349,
-  "ok": 349,
+  "totalUrls": 350,
+  "ok": 350,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28428,
+      "bytes": 28499,
       "stub": false
     },
     {
@@ -778,7 +778,7 @@
       "source": "https://modal.com/docs/guide",
       "finalUrl": "https://modal.com/docs/guide.md",
       "path": "docs/guide.md",
-      "bytes": 4078,
+      "bytes": 3966,
       "stub": false
     },
     {
@@ -898,7 +898,7 @@
       "source": "https://modal.com/docs/guide/datadog-integration.md",
       "finalUrl": "https://modal.com/docs/guide/datadog-integration.md",
       "path": "docs/guide/datadog-integration.md",
-      "bytes": 4918,
+      "bytes": 5159,
       "stub": false
     },
     {
@@ -1098,7 +1098,7 @@
       "source": "https://modal.com/docs/guide/intro.md",
       "finalUrl": "https://modal.com/docs/guide/intro.md",
       "path": "docs/guide/intro.md",
-      "bytes": 4078,
+      "bytes": 3966,
       "stub": false
     },
     {
@@ -1131,6 +1131,14 @@
       "finalUrl": "https://modal.com/docs/guide/local-data.md",
       "path": "docs/guide/local-data.md",
       "bytes": 1130,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/log-search-syntax.md",
+      "source": "https://modal.com/docs/guide/log-search-syntax.md",
+      "finalUrl": "https://modal.com/docs/guide/log-search-syntax.md",
+      "path": "docs/guide/log-search-syntax.md",
+      "bytes": 3294,
       "stub": false
     },
     {
@@ -1226,7 +1234,7 @@
       "source": "https://modal.com/docs/guide/otel-integration.md",
       "finalUrl": "https://modal.com/docs/guide/otel-integration.md",
       "path": "docs/guide/otel-integration.md",
-      "bytes": 4526,
+      "bytes": 4851,
       "stub": false
     },
     {
