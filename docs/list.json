@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-23T11:24:12.508Z",
+  "fetchedAt": "2026-10-24T10:43:25.480Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 350,
-  "ok": 350,
+  "totalUrls": 348,
+  "ok": 348,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28499,
+      "bytes": 28338,
       "stub": false
     },
     {
@@ -290,7 +290,7 @@
       "source": "https://modal.com/docs/examples/chai1.md",
       "finalUrl": "https://modal.com/docs/examples/chai1.md",
       "path": "docs/examples/chai1.md",
-      "bytes": 11054,
+      "bytes": 11081,
       "stub": false
     },
     {
@@ -306,7 +306,7 @@
       "source": "https://modal.com/docs/examples/chatterbox_tts.md",
       "finalUrl": "https://modal.com/docs/examples/chatterbox_tts.md",
       "path": "docs/examples/chatterbox_tts.md",
-      "bytes": 4992,
+      "bytes": 5013,
       "stub": false
     },
     {
@@ -322,7 +322,7 @@
       "source": "https://modal.com/docs/examples/computer_use_vnc.md",
       "finalUrl": "https://modal.com/docs/examples/computer_use_vnc.md",
       "path": "docs/examples/computer_use_vnc.md",
-      "bytes": 13767,
+      "bytes": 14513,
       "stub": false
     },
     {
@@ -362,7 +362,7 @@
       "source": "https://modal.com/docs/examples/deepseek_v4_flash.md",
       "finalUrl": "https://modal.com/docs/examples/deepseek_v4_flash.md",
       "path": "docs/examples/deepseek_v4_flash.md",
-      "bytes": 11493,
+      "bytes": 11548,
       "stub": false
     },
     {
@@ -630,14 +630,6 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/opencode_server.md",
-      "source": "https://modal.com/docs/examples/opencode_server.md",
-      "finalUrl": "https://modal.com/docs/examples/opencode_server.md",
-      "path": "docs/examples/opencode_server.md",
-      "bytes": 9691,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/paint_flowers.md",
       "source": "https://modal.com/docs/examples/paint_flowers.md",
       "finalUrl": "https://modal.com/docs/examples/paint_flowers.md",
@@ -730,7 +722,7 @@
       "source": "https://modal.com/docs/examples/swe_gym.md",
       "finalUrl": "https://modal.com/docs/examples/swe_gym.md",
       "path": "docs/examples/swe_gym.md",
-      "bytes": 14314,
+      "bytes": 14376,
       "stub": false
     },
     {
@@ -778,7 +770,7 @@
       "source": "https://modal.com/docs/guide",
       "finalUrl": "https://modal.com/docs/guide.md",
       "path": "docs/guide.md",
-      "bytes": 3966,
+      "bytes": 3720,
       "stub": false
     },
     {
@@ -906,7 +898,7 @@
       "source": "https://modal.com/docs/guide/dataset-ingestion.md",
       "finalUrl": "https://modal.com/docs/guide/dataset-ingestion.md",
       "path": "docs/guide/dataset-ingestion.md",
-      "bytes": 5120,
+      "bytes": 5145,
       "stub": false
     },
     {
@@ -1098,7 +1090,7 @@
       "source": "https://modal.com/docs/guide/intro.md",
       "finalUrl": "https://modal.com/docs/guide/intro.md",
       "path": "docs/guide/intro.md",
-      "bytes": 3966,
+      "bytes": 3720,
       "stub": false
     },
     {
@@ -1114,7 +1106,7 @@
       "source": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "finalUrl": "https://modal.com/docs/guide/jupyter-notebooks.md",
       "path": "docs/guide/jupyter-notebooks.md",
-      "bytes": 1967,
+      "bytes": 1819,
       "stub": false
     },
     {
@@ -1194,7 +1186,7 @@
       "source": "https://modal.com/docs/guide/named-images.md",
       "finalUrl": "https://modal.com/docs/guide/named-images.md",
       "path": "docs/guide/named-images.md",
-      "bytes": 4871,
+      "bytes": 5141,
       "stub": false
     },
     {
@@ -1203,14 +1195,6 @@
       "finalUrl": "https://modal.com/docs/guide/network-egress-billing.md",
       "path": "docs/guide/network-egress-billing.md",
       "bytes": 3861,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/notebooks.md",
-      "source": "https://modal.com/docs/guide/notebooks.md",
-      "finalUrl": "https://modal.com/docs/guide/notebooks.md",
-      "path": "docs/guide/notebooks.md",
-      "bytes": 12296,
       "stub": false
     },
     {
@@ -1274,7 +1258,7 @@
       "source": "https://modal.com/docs/guide/proxy-ips.md",
       "finalUrl": "https://modal.com/docs/guide/proxy-ips.md",
       "path": "docs/guide/proxy-ips.md",
-      "bytes": 3961,
+      "bytes": 4087,
       "stub": false
     },
     {
@@ -1338,7 +1322,7 @@
       "source": "https://modal.com/docs/guide/sandbox-files.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-files.md",
       "path": "docs/guide/sandbox-files.md",
-      "bytes": 15716,
+      "bytes": 16109,
       "stub": false
     },
     {
@@ -1370,7 +1354,7 @@
       "source": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-sidecars.md",
       "path": "docs/guide/sandbox-sidecars.md",
-      "bytes": 28823,
+      "bytes": 29095,
       "stub": false
     },
     {
@@ -1378,7 +1362,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 27657,
+      "bytes": 28042,
       "stub": false
     },
     {
@@ -1394,7 +1378,7 @@
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 42815,
+      "bytes": 42835,
       "stub": false
     },
     {
@@ -1418,7 +1402,7 @@
       "source": "https://modal.com/docs/guide/sdk-javascript-go.md",
       "finalUrl": "https://modal.com/docs/guide/sdk-javascript-go.md",
       "path": "docs/guide/sdk-javascript-go.md",
-      "bytes": 3920,
+      "bytes": 4115,
       "stub": false
     },
     {

@@ -7,7 +7,7 @@
 使用[“Dreambooth”论文](https://dreambooth.github.io/)中称为文本反转的技术。
 实际上，它教会了通用图像生成模型一个新的“专有名词”，
 允许个性化生成艺术和照片。
-我们通过低阶适应（LoRA）来补充文本反转
+我们通过低秩适应（LoRA）来补充文本反转
 以提高训练期间的效率。
 
 然后，它可以与其他人共享模型——无需花费 25 美元/天的 GPU 服务器成本——
@@ -19,7 +19,7 @@
 [卷](https://modal.com/docs/guide/volumes) 用于存储，
 和 [Web Functions](https://modal.com/docs/guide/webhooks) 用于服务。
 
-通过一些灯光定制，您可以用它来生成您的宠物的图像！
+通过一些轻微的定制，您可以用它来生成您的宠物的图像！
 
 ![Gradio.app图像生成接口](./gradio-image-generate.png)
 
@@ -51,7 +51,7 @@ Modal 使创建和使用环境变得容易
 ```python
 app = modal.App(name="example-diffusers-lora-finetune")
 
-image = modal.Image.debian_slim(python_version="3.10").uv_pip_install(
+image = modal.Image.debian_slim(python_version="3.12").uv_pip_install(
     "accelerate==0.31.0",
     "datasets~=2.13.0",
     "fastapi[standard]==0.115.4",
@@ -366,10 +366,10 @@ def train(instance_example_urls, config):
 
 为了使用我们微调的模型根据提示生成图像，我们定义了一个名为 `inference` 的模态函数。
 
-天真地说，这似乎不适合 Modal 灵活的无服务器基础架构：
+天真地说，这似乎不适合 Modal 灵活的无服务器基础设施：
 您是否不需要在每个函数调用中包含加载模型并启动模型的步骤？
 
-为了在容器启动时初始化模型一次，
+为了在容器启动时仅初始化模型一次，
 我们使用 Modal 的 [容器生命周期](https://modal.com/docs/guide/lifecycle-functions) 功能，这需要函数成为一部分
 一个类的。请注意，我们保存模型的`modal.Volume`也安装在这里，
 这样我们就可以使用`train`创建的微调模型。

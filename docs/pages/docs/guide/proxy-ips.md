@@ -92,7 +92,8 @@ import modal
 app = modal.App.lookup("sandbox-proxy", create_if_missing=True)
 sb = modal.Sandbox.create(
     app=app,
-    image=modal.Image.debian_slim().apt_install("curl"),
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-proxy"),  # a published Image with curl installed
     proxy=modal.Proxy.from_name("<your-proxy>"))
 
 process = sb.exec("curl", "-s", "https://ifconfig.me")

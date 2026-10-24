@@ -77,7 +77,8 @@ updated when a sidecar is created or terminated.
 import modal
 
 app = modal.App.lookup("sidecar-example", create_if_missing=True)
-image = modal.Image.debian_slim().build(app)
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+image = modal.Image.from_name("sandbox-runtime")
 
 sb = modal.Sandbox.create("sleep", "600", app=app, image=image, timeout=300)
 
@@ -113,7 +114,8 @@ const modal = new ModalClient();
 const app = await modal.apps.fromName("sidecar-example", {
   createIfMissing: true,
 });
-const image = await modal.images.fromRegistry("python:3.13-slim").build(app);
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+const image = await modal.images.fromName("sandbox-runtime");
 
 const sb = await modal.sandboxes.create(app, image, {
   command: ["sleep", "600"],
@@ -159,7 +161,8 @@ func main() {
 	app, _ := mc.Apps.FromName(ctx, "sidecar-example", &modal.AppFromNameParams{
 		CreateIfMissing: true,
 	})
-	image, _ := mc.Images.FromRegistry("python:3.13-slim", nil).Build(ctx, app, nil)
+	// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+	image, _ := mc.Images.FromName(ctx, "sandbox-runtime", nil)
 
 	sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 		Command: []string{"sleep", "600"},
@@ -784,7 +787,7 @@ The main sandbox supports the same features as a regular sandbox, but some featu
 for sidecars:
 
 * **Pre-built images only**: Sidecar images must already exist: pre-built with `image.build()`, a
-  [named image](/docs/guide/named-images) via `Image.from_name()`, an
+  [named image](/docs/guide/named-images) via `Image.from_name()` after resolving it with `.build(app)`, an
   ID via `Image.from_id()`, or created from [filesystem](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[directory](/docs/guide/sandbox-snapshots#directory-snapshots) snapshots. Lazy image
   building is not supported for sidecars. See also
   [Separating Image builds from Sandbox creation](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation).

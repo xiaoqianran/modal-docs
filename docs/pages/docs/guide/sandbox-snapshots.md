@@ -455,14 +455,20 @@ To take a memory snapshot, create a Sandbox with memory snapshots enabled, then 
   {#snippet python()}
 
 ```python notest
-image = modal.Image.debian_slim().apt_install("curl", "procps")
 app = modal.App.lookup("sandbox-snapshot", create_if_missing=True)
 
-with modal.enable_output():
-    sb = modal.Sandbox.create(
-        "python3", "-m", "http.server", "8000",
-        app=app, image=image, _experimental_enable_snapshot=True
-    )
+# The named Image was built and published ahead of time with `curl` and `procps`
+# installed, which the checks below rely on:
+#
+#     modal.Image.debian_slim().apt_install("curl", "procps").build(app).publish("sandbox-snapshot-base")
+
+sb = modal.Sandbox.create(
+    "python3", "-m", "http.server", "8000",
+    app=app,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-snapshot-base"),
+    _experimental_enable_snapshot=True,
+)
 
 print(f"Performing snapshot of {sb.object_id} ...")
 snapshot = sb._experimental_snapshot()
@@ -701,11 +707,12 @@ app = modal.App.lookup("sandbox-snapshot-lifecycle", create_if_missing=True)
 snapshot_store = modal.Dict.from_name("sandbox-snapshots", create_if_missing=True)
 session_id = "sess_a1b2c3d4"
 
-# Restore from snapshot, or use base image
+# Restore from snapshot, or use the base image
 if session_id in snapshot_store:
     image = modal.Image.from_id(snapshot_store[session_id])
 else:
-    image = modal.Image.debian_slim()
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image = modal.Image.from_name("sandbox-session-base")
 
 sb = modal.Sandbox.create(image=image, app=app)
 

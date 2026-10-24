@@ -6,7 +6,6 @@ Modal is an AI infrastructure platform that lets you:
 * Scale out [batch jobs](/docs/guide/batch-processing) to run massively in parallel
 * [Train](/docs/examples/hp_sweep_gpt) or [fine-tune](/docs/examples/diffusers_lora_finetune) open weights or custom models on the latest GPUs
 * Spin up thousands of isolated and secure [Sandboxes](/docs/guide/sandboxes) to execute AI generated code
-* Launch GPU-backed [Notebooks](/docs/guide/notebooks-modal) in seconds and collaborate with your colleagues in real-time
 
 You get [full serverless execution and pricing](/pricing) because we host everything and charge per second of usage.
 
@@ -77,4 +76,3 @@ And when you're ready for something fancier, explore our [full library of exampl
 * [Building a coding agent with Modal Sandboxes and LangGraph](/docs/examples/agent)
 * [Training a small language model from scratch](/docs/examples/hp_sweep_gpt)
 * [Parallel processing of Parquet files on S3](/docs/examples/s3_bucket_mount)
-* [Parsing documents with dots.ocr in a Modal Notebook](https://modal.com/notebooks/modal-labs/_/nb-8wvXoGoAcba8sRF8VkVg18)

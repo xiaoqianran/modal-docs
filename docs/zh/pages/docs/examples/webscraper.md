@@ -95,7 +95,7 @@ $ modal run webscraper.py --url http://example.com
 ## 添加依赖
 
 在上面的代码中，我们使用了Python标准库`urllib`库。
-这对于静态网页非常有效，但现在很多页面都使用 javascript
+这对于静态网页非常有用，但现在很多页面都使用 javascript
 动态加载内容，该内容不会出现在加载的 html 文件中。
 让我们使用 [Playwright](https://playwright.dev/python/docs/intro) 包来
 相反，启动一个可以解释任何 JavaScript 的无头 Chromium 浏览器
@@ -110,7 +110,7 @@ $ modal run webscraper.py --url http://example.com
 import modal
 
 app = modal.App("example-webscraper")
-playwright_image = modal.Image.debian_slim(python_version="3.10").run_commands(
+playwright_image = modal.Image.debian_slim(python_version="3.12").run_commands(
     "apt-get update",
     "apt-get install -y software-properties-common",
     "apt-add-repository non-free",
@@ -237,7 +237,7 @@ Slack 使用我们的凭据，如下所示：
 ```python
 import os
 
-slack_sdk_image = modal.Image.debian_slim(python_version="3.10").uv_pip_install(
+slack_sdk_image = modal.Image.debian_slim(python_version="3.12").uv_pip_install(
     "slack-sdk"
 )
 
@@ -304,7 +304,7 @@ modal run webscraper.py  # runs get_links.map via the local_entrypoint
 modal run webscraper.py::daily_scrape --limit 1  # quick test
 ```
 现在重新部署脚本以使用更新后的代码覆盖旧部署，并且
-您将在 Slack 频道中获得每日已抓取链接的提要 🎉
+您将在 Slack 频道中收到每日已抓取链接的提要 🎉
 
 ```bash
 modal deploy webscraper.py

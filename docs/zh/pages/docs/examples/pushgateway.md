@@ -25,7 +25,7 @@ import modal
 PUSHGATEWAY_VERSION = "1.9.0"
 
 gw_image = (
-    modal.Image.debian_slim(python_version="3.10")
+    modal.Image.debian_slim(python_version="3.12")
     .apt_install("wget", "tar")
     .run_commands(
         f"wget https://github.com/prometheus/pushgateway/releases/download/v{PUSHGATEWAY_VERSION}/pushgateway-{PUSHGATEWAY_VERSION}.linux-amd64.tar.gz",
@@ -40,13 +40,13 @@ gw_image = (
 
 ## 启动 Pushgateway
 
-我们将把 Pushgateway 作为一个单独的 Modal 应用程序启动。这样我们就可以运行Pushgateway了
+我们将把 Pushgateway 作为单独的 Modal 应用程序启动。这样我们就可以运行Pushgateway了
 在后台，让我们的主应用程序向其推送指标。我们将使用`web_server`
 装饰器来公开 Pushgateway 的 Web 界面。注意，我们必须设置`max_containers=1`
 因为 Pushgateway 是一个单进程应用程序。如果我们启动多个实例，它们会
 互相冲突。
 
-这是一个示例配置，但生产就绪配置将在两个方面有所不同：
+这是一个示例配置，但生产就绪配置在两个方面有所不同：
 
 1. 您应该为Pushgateway设置身份验证。 Pushgateway 支持[基本身份验证](https://github.com/prometheus/pushgateway/blob/42c4075fc5e2564031f2852885cdb2f5d570f672/README.md#tls-and-basic-authentication)
    开箱即用。如果您需要更高级的身份验证，请考虑使用[Web功能层](https://modal.com/docs/guide/webhooks#authentication)

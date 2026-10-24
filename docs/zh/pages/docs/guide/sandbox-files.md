@@ -2,10 +2,10 @@
 
 # 文件系统访问
 
-有多种选项可用于将文件上传到沙盒并访问它们
+有多种选项可用于将文件上传到沙箱并访问它们
 从沙箱外部。
 
-## 文件系统API
+## 文件系统 API
 
 在沙箱中传入和传出数据的最便捷方式
 执行是使用我们的文件系统API：
@@ -550,18 +550,25 @@ sb.Terminate(ctx, nil)
 [`Image`](/docs/sdk/py/latest/Image) 类：
 
 ```python notest
-# Eagerly build the image - otherwise the Image will lazily build when the
-# Sandbox is created.
-image = (
-    modal.Image.debian_slim()
-    .add_local_dir(
-        local_path="/home/user/my_dir",
-        remote_path="/app",
-    )
-    .build(my_app)
-)
+# The Image is built and published ahead of time, so Sandbox creation never
+# waits on a build. `copy=True` bakes the files into the Image; without it they
+# are attached at container start and are not part of the published Image.
+#
+#     image = (
+#         modal.Image.debian_slim()
+#         .add_local_dir(
+#             local_path="/home/user/my_dir",
+#             remote_path="/app",
+#             copy=True,
+#         )
+#     )
+#     image.build(my_app).publish("sandbox-with-local-files")
 
-sb = modal.Sandbox.create(app=my_app, image=image)
+sb = modal.Sandbox.create(
+    app=my_app,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-with-local-files"),
+)
 p = sb.exec("ls", "/app")
 print(p.stdout.read())
 p.wait()

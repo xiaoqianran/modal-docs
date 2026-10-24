@@ -552,18 +552,25 @@ This can be done using the
 [`Image`](/docs/sdk/py/latest/Image) class:
 
 ```python notest
-# Eagerly build the image - otherwise the Image will lazily build when the
-# Sandbox is created.
-image = (
-    modal.Image.debian_slim()
-    .add_local_dir(
-        local_path="/home/user/my_dir",
-        remote_path="/app",
-    )
-    .build(my_app)
-)
+# The Image is built and published ahead of time, so Sandbox creation never
+# waits on a build. `copy=True` bakes the files into the Image; without it they
+# are attached at container start and are not part of the published Image.
+#
+#     image = (
+#         modal.Image.debian_slim()
+#         .add_local_dir(
+#             local_path="/home/user/my_dir",
+#             remote_path="/app",
+#             copy=True,
+#         )
+#     )
+#     image.build(my_app).publish("sandbox-with-local-files")
 
-sb = modal.Sandbox.create(app=my_app, image=image)
+sb = modal.Sandbox.create(
+    app=my_app,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-with-local-files"),
+)
 p = sb.exec("ls", "/app")
 print(p.stdout.read())
 p.wait()

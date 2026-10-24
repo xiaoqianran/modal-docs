@@ -2,12 +2,6 @@
 
 This guide page documents integrations between Jupyter notebooks and Modal.
 
-<Callout variant="info">
-
-For our hosted notebooks product with real-time collaboration, see [Modal Notebooks](/docs/guide/notebooks).
-
-</Callout>
-
 ## Modal inside Jupyter
 
 You can use the Modal client library in notebook environments like Jupyter! Just

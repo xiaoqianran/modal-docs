@@ -49,20 +49,20 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 * 独立于主沙盒容器运行自己的映像。
 * 与主 Sandbox 容器和其他 Sidecar 容器隔离
 与单独沙箱相同的隔离边界：gVisor 或 VM，具体取决于
-  沙盒的[运行时](/docs/guide/sandboxes#runtimes)。
+  沙箱的[运行时](/docs/guide/sandboxes#runtimes)。
 * 可以通过内部桥接网络与主沙箱容器进行通信
   和其他边车容器。在我们的基准测试中，沙箱之间的通信
   它的 Sidecar 比独立沙箱之间的速度至少快 3 倍
   同一地区。
 * 通过Modal SDK创建，而不是从Sandbox内部创建，因此代码运行
   在主沙盒容器中无法创建或修改它。
-* 可以在沙盒的生命周期内动态创建、终止和替换。
+* 可以在沙箱的生命周期内动态创建、终止和替换。
   终止沙盒会停止其所有 Sidecar。
-* 拥有自己的[出站网络策略](#outbound-access-control)，独立于主沙箱容器。
+* 拥有自己的[出站网络策略](#outbound-access-control)，独立于主沙盒容器。
 * 共享Sandbox的CPU和内存，这使得Sidecars更具成本效益
   而不是在多个沙箱中运行相同的进程。参见
   [资源配置](#resource-configuration)。
-* 支持像主沙箱容器一样执行命令。
+* 支持像主沙盒容器一样执行命令。
 
 ## 用法
 
@@ -79,7 +79,8 @@ Sidecars 通过 Sandbox 上的 sidecars 界面进行管理
 import modal
 
 app = modal.App.lookup("sidecar-example", create_if_missing=True)
-image = modal.Image.debian_slim().build(app)
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+image = modal.Image.from_name("sandbox-runtime")
 
 sb = modal.Sandbox.create("sleep", "600", app=app, image=image, timeout=300)
 
@@ -115,7 +116,8 @@ const modal = new ModalClient();
 const app = await modal.apps.fromName("sidecar-example", {
   createIfMissing: true,
 });
-const image = await modal.images.fromRegistry("python:3.13-slim").build(app);
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+const image = await modal.images.fromName("sandbox-runtime");
 
 const sb = await modal.sandboxes.create(app, image, {
   command: ["sleep", "600"],
@@ -161,7 +163,8 @@ func main() {
 	app, _ := mc.Apps.FromName(ctx, "sidecar-example", &modal.AppFromNameParams{
 		CreateIfMissing: true,
 	})
-	image, _ := mc.Images.FromRegistry("python:3.13-slim", nil).Build(ctx, app, nil)
+	// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+	image, _ := mc.Images.FromName(ctx, "sandbox-runtime", nil)
 
 	sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 		Command: []string{"sleep", "600"},
@@ -529,12 +532,12 @@ Sidecar 不支持`block_network`，因为完全网络阻塞的 Sidecar
 Sidecar的出站网络策略在Sidecar创建时就固定了。
 在运行时更新沙盒的网络策略
 （Python 中的`_experimental_set_outbound_network_policy`，Python 中的`updateNetworkPolicy`
-JavaScript，Go 中的`UpdateNetworkPolicy`）仅更改主容器的政策，并且永远不会影响 Sidecar。要更改 Sidecar 的策略，请将其终止
+JavaScript，Go 中的`UpdateNetworkPolicy`）仅更改主容器的政策并且永远不会影响 Sidecars。要更改 Sidecar 的策略，请将其终止
 并创建一个替代品。
 
 |选项 |沙箱（主容器）|边车 |
 | ------------------------------------------------------------------- | ------------------------ | ---------------------------------------------------------------- |
-| `block_network` |支持 |不支持。使用空的`outbound_cidr_allowlist` |
+| `block_network` |支持 |不支持。使用空的`outbound_cidr_allowlist`|
 | `outbound_cidr_allowlist` |支持 |支持，按 Sidecar 设置 |
 | `outbound_domain_allowlist` *（测试版）* |支持 |支持，按 Sidecar 设置 |
 |模态代理 (`proxy`) |支持 |支持，按 Sidecar 设置（不在 GPU 沙箱上）|
@@ -542,7 +545,7 @@ JavaScript，Go 中的`UpdateNetworkPolicy`）仅更改主容器的政策，并�
 |在运行时更新策略 |支持（实验性）|不支持；创建替代 Sidecar |
 
 ### 模态代理您可以指定来自 Sidecar 的流量应通过
-[Proxy](/docs/guide/proxy-ips) 通过在创建 Sidecar 时传递 `proxy` ，就像
+[Proxy](/docs/guide/proxy-ips) 通过在 Sidecar 创建时传递 `proxy` ，就像
 对于沙箱。 Sidecar 的代理是独立于主代理配置的
 容器的，因此其静态出站 IP 可能与主容器的不同。
 GPU 不支持将代理与 Sidecar 一起使用
@@ -638,7 +641,7 @@ Sidecar 接收原始 TLS 流并且必须读取目标主机名
 
 `proxy_traffic_via_sidecar` 不能与 `block_network` 组合使用，
 `outbound_domain_allowlist`，模态代理（`proxy`），或者
-沙盒上的[出站策略](/docs/guide/sandbox-secret-injection)。一个
+沙箱上的[出站策略](/docs/guide/sandbox-secret-injection)。一个
 允许沙箱`outbound_cidr_allowlist`。
 
 对于`proxy_traffic_via_sidecar`，Sidecar 名称不能为空或`main`，必须
@@ -677,8 +680,7 @@ Sidecars可以直接连接到主容器上的每个端口，包括
 在 VM 运行时上，启动 Sandbox 时需要为任何 Sidecar 预留内存。
 预留空间是从主 VM 的内存中划分出来的：它以 `memory - reserve` 启动，并且如果
 沙盒使用[内存爆发](/docs/guide/sandbox-resources)，永远不会超过`limit - reserve`，
-留下边车的储备。该请求必须为主虚拟机留下至少 1024 MiB。与每一个
-Sidecar 启动时，您可以指定用于该 Sidecar 的储备量，或者保留
+留下边车的储备。该请求必须为主虚拟机留下至少 1024 MiB。与每一个Sidecar 启动时，您可以指定用于该 Sidecar 的储备量，或者保留
 选项为空以使用全部剩余储备：
 
 <CodeTabs>
@@ -775,7 +777,7 @@ _ = worker
 对于边车：
 
 * **仅预构建图像**：Sidecar 图像必须已存在：使用 `image.build()` 预构建，a
-  [命名图像](/docs/guide/named-images) 通过 `Image.from_name()`，
+  [命名图像](/docs/guide/named-images) 通过 `Image.from_name()` 使用 `.build(app)` 解决后，
 通过 `Image.from_id()` 的 ID，或从 [文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)/[目录](/docs/guide/sandbox-snapshots#directory-snapshots) 快照创建。懒惰的形象
   Sidecar 不支持构建。另请参阅
   [将图像构建与沙箱创建分开](/docs/guide/sandboxes#separating-image-builds-from-sandbox-creation)。
@@ -784,8 +786,8 @@ _ = worker
 * **不支持内存快照**：Sidecar的[文件系统](/docs/guide/sandbox-snapshots#filesystem-snapshots)和[单个目录](/docs/guide/sandbox-snapshots#directory-snapshots)可以独立进行快照，但Sidecar内存状态不能用
   [内存快照](/docs/guide/sandbox-snapshots#memory-snapshots)。
 * **Sidecars 绕过 Connect Tokens**：Sidecar 可以直接到达主容器的 Connect Token 端口并设置任何
-  `X-Verified-User-Data` 标题。请参阅[连接令牌](#connect-tokens)。
+  `X-Verified-User-Data` 标头。请参阅[连接令牌](#connect-tokens)。
 * **Sidecar 没有`block_network`**：Sidecar 无法完全网络阻塞，
   并且其出站网络策略创建后无法更改。参见
   [出站访问控制](#outbound-access-control)。
-* **对 /etc/hosts 的更改不会保留**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不会保留用户更改。
+* **不保留对 /etc/hosts 的更改**：`/etc/hosts` 在 sidecar 创建/终止时重写，并且不保留用户更改。

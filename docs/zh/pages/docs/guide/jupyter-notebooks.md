@@ -4,12 +4,6 @@
 
 本指南页面记录了 Jupyter Notebook 和 Modal 之间的集成。
 
-<Callout variant="info">
-
-有关我们具有实时协作功能的托管笔记本产品，请参阅[模态笔记本](/docs/guide/notebooks)。
-
-</Callout>
-
 ## Jupyter 内的模态
 
 您可以在 Jupyter 等笔记本环境中使用 Modal 客户端库！只是
@@ -49,6 +43,7 @@ with modal.enable_output():
 
 如果您遇到上面未记录的问题，请尝试重新启动笔记本内核，因为它可能是
 处于损坏状态，这在笔记本开发中很常见。
+
 如果问题仍然存在，请[在 Slack 中](https://modal.com/slack) 联系我们。
 
 我们正在努力消除这些已知问题，以便编写模态应用程序

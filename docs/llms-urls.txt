@@ -76,7 +76,6 @@ https://modal.com/docs/examples/modal_tailscale.md
 https://modal.com/docs/examples/mongodb-search.md
 https://modal.com/docs/examples/music-video-gen.md
 https://modal.com/docs/examples/nemotron_inference.md
-https://modal.com/docs/examples/opencode_server.md
 https://modal.com/docs/examples/paint_flowers.md
 https://modal.com/docs/examples/potus_speech_qanda.md
 https://modal.com/docs/examples/pushgateway.md
@@ -148,7 +147,6 @@ https://modal.com/docs/guide/multi-node-clusters.md
 https://modal.com/docs/guide/multi-node-training.md
 https://modal.com/docs/guide/named-images.md
 https://modal.com/docs/guide/network-egress-billing.md
-https://modal.com/docs/guide/notebooks.md
 https://modal.com/docs/guide/oidc-integration.md
 https://modal.com/docs/guide/okta-sso.md
 https://modal.com/docs/guide/otel-integration.md

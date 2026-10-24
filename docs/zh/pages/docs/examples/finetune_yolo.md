@@ -33,7 +33,7 @@ Modal 在容器内的云中运行您的代码。所以要使用它，我们必�
 
 ```python
 image = (
-    modal.Image.debian_slim(python_version="3.10")
+    modal.Image.debian_slim(python_version="3.12")
     .apt_install(  # install system libraries for graphics handling, model download
         ["libgl1-mesa-glx", "libglib2.0-0", "curl"]
     )

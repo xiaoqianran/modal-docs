@@ -141,7 +141,7 @@ SDK references.
 
 Sandboxes support nearly all configuration options found in regular Modal
 [Functions](/docs/sdk/py/latest/Function). For example,
-[Images](/docs/guide/images) and [Volumes](/docs/guide/volumes) can be used just
+[named Images](/docs/guide/named-images) and [Volumes](/docs/guide/volumes) can be used just
 as with Functions:
 
 <CodeTabs>
@@ -149,7 +149,8 @@ as with Functions:
 
 ```python fixture:sb_app
 sb = modal.Sandbox.create(
-    image=modal.Image.debian_slim().pip_install("pandas"),
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-pandas"),
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
@@ -161,7 +162,8 @@ sb = modal.Sandbox.create(
 
 ```python fixture:sb_app
 sb = await modal.Sandbox.create.aio(
-    image=modal.Image.debian_slim().pip_install("pandas"),
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-pandas"),
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
@@ -172,7 +174,8 @@ sb = await modal.Sandbox.create.aio(
 {#snippet javascript()}
 
 ```javascript notest
-const image = modal.images.fromRegistry("python:3.13-slim");
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+const image = await modal.images.fromName("sandbox-pandas");
 const volume = modal.volumes.fromName("my-volume");
 const sb = await modal.sandboxes.create(app, image, {
   volumes: { "/data": volume },
@@ -185,7 +188,8 @@ const sb = await modal.sandboxes.create(app, image, {
 {#snippet go()}
 
 ```go notest
-image := mc.Images.FromRegistry("python:3.13-slim", nil)
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+image, err := mc.Images.FromName(ctx, "sandbox-pandas", nil)
 volume := mc.Volumes.FromName("my-volume", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Volumes: map[string]*modal.Volume{"/data": volume},
@@ -812,16 +816,20 @@ can reach each other, and `/var/lib/docker` is included in
   {#snippet python()}
 
 ```python notest
-image = (
-    modal.Image.from_registry("ubuntu:24.04")
-    .env({"DEBIAN_FRONTEND": "noninteractive"})
-    .apt_install("docker.io")
-)
+# The named Image has Docker installed. It was built and published ahead of time:
+#
+#     image = (
+#         modal.Image.from_registry("ubuntu:24.04")
+#         .env({"DEBIAN_FRONTEND": "noninteractive"})
+#         .apt_install("docker.io")
+#     )
+#     image.build(sb_app).publish("sandbox-docker")
 
 sb = modal.Sandbox.create(
     "dockerd",
     app=sb_app,
-    image=image,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-docker"),
     runtime="vm",
     readiness_probe=modal.Probe.with_exec("docker", "info", interval_ms=500),
 )
@@ -987,7 +995,8 @@ inline Image definitions.
 Use [`Image.build`](/docs/sdk/py/latest/Image#build) to trigger
 Image builds as part of a deployment flow or at a regular interval (e.g., in a
 [scheduled job](/docs/guide/cron) or CI pipeline), then publish the result as a
-[named image](/docs/guide/named-images)
+[named image](/docs/guide/named-images). Wrap the build in `modal.enable_output()`
+to stream its build logs.
 
 Sandboxes can then use [`Image.from_name`](/docs/sdk/py/latest/Image#from_name)
 to reference the Image in a way that's guaranteed to not block on rebuilds.
@@ -1011,6 +1020,7 @@ with modal.enable_output():
 # sandbox_app.py
 app = modal.App.lookup("sandbox-app", create_if_missing=True)
 
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image = modal.Image.from_name("sandbox-runtime")
 modal.Sandbox.create(app=app, image=image)
 ```
@@ -1036,6 +1046,7 @@ await image.publish.aio("sandbox-runtime")
 # app.py
 app = await modal.App.lookup.aio("sandbox-app", create_if_missing=True)
 
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image = modal.Image.from_name("sandbox-runtime")
 await modal.Sandbox.create.aio(app=app, image=image)
 ```
@@ -1062,6 +1073,7 @@ const app = await modal.apps.fromName("sandbox-app", {
   createIfMissing: true,
 });
 
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 const image = await modal.images.fromName("sandbox-runtime");
 await modal.sandboxes.create(app, image);
 ```
@@ -1087,6 +1099,7 @@ app, err = mc.Apps.FromName(ctx, "sandbox-app", &modal.AppFromNameParams{
 	CreateIfMissing: true,
 })
 
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image, err = mc.Images.FromName(ctx, "sandbox-runtime", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 ```
@@ -1099,57 +1112,6 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 * To pick up a new version of an external registry image, update the tag in your deploy script (for example, `ubuntu:24.04` → `ubuntu:24.04-20240523`).
 
 </Callout>
-
-#### Image build logs
-
-You may need to manually enable output streaming to see your image build logs:
-
-<CodeTabs>
-  {#snippet python()}
-
-```python fixture:sb_app
-image = modal.Image.debian_slim().pip_install("pandas", "numpy")
-
-with modal.enable_output():
-    sb = modal.Sandbox.create(image=image, app=sb_app)
-```
-
-{/snippet}
-
-{#snippet python\_async()}
-
-```python fixture:sb_app
-image = modal.Image.debian_slim().pip_install("pandas", "numpy")
-
-with modal.enable_output():
-    sb = await modal.Sandbox.create.aio(image=image, app=sb_app)
-```
-
-{/snippet}
-
-{#snippet javascript()}
-
-```javascript notest
-const image = modal.images
-  .fromRegistry("python:3.13-slim")
-  .dockerfileCommands(["RUN pip install pandas numpy"]);
-
-const sb = await modal.sandboxes.create(app, image);
-```
-
-{/snippet}
-
-{#snippet go()}
-
-```go notest
-image := mc.Images.FromRegistry("python:3.13-slim", nil).
-  DockerfileCommands([]string{"RUN pip install pandas numpy"}, nil)
-
-// Note: Image build logs are automatically streamed in Go
-sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-```
-
-{/snippet} </CodeTabs>
 
 ## Running a Sandbox with an entrypoint
 
@@ -1401,7 +1363,7 @@ be shorter than 64 characters.
 ## Tagging
 
 Sandboxes can also be tagged with arbitrary key-value pairs. These tags can be used
-to filter results in `Sandbox.list`.
+to filter results in `Sandbox.list`. A Sandbox can carry up to 10 tags.
 
 <CodeTabs>
   {#snippet python()}

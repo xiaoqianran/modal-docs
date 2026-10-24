@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙盒
+# 沙箱
 
 此页面是沙箱的高级指南，
 用于在 Modal 上执行不受信任代码的安全容器。沙箱很有用
@@ -134,13 +134,13 @@ func main() {
 ＃＃ 配置
 沙箱是通过参数配置的
 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create)。参考`Sandbox.create`
-有关沙箱配置的完整文档，或参阅
+有关沙盒配置的完整文档，或参阅
 [JavaScript](/docs/sdk/js/latest/Sandbox) 和 [Go](/docs/sdk/go/latest/Sandbox)
 SDK 参考。
 
 沙箱支持常规 Modal 中几乎所有的配置选项
 [函数](/docs/sdk/py/latest/Function)。例如，
-[图像](/docs/guide/images) 和 [卷](/docs/guide/volumes) 只能使用
+[命名图像](/docs/guide/named-images) 和 [卷](/docs/guide/volumes) 只能使用
 与函数一样：
 
 <CodeTabs>
@@ -148,7 +148,8 @@ SDK 参考。
 
 ```python fixture:sb_app
 sb = modal.Sandbox.create(
-    image=modal.Image.debian_slim().pip_install("pandas"),
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-pandas"),
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
@@ -160,7 +161,8 @@ sb = modal.Sandbox.create(
 
 ```python fixture:sb_app
 sb = await modal.Sandbox.create.aio(
-    image=modal.Image.debian_slim().pip_install("pandas"),
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-pandas"),
     volumes={"/data": modal.Volume.from_name("data-volume", create_if_missing=True)},
     app=sb_app,
 )
@@ -169,7 +171,8 @@ sb = await modal.Sandbox.create.aio(
 {/片段}{#snippet javascript()}
 
 ```javascript notest
-const image = modal.images.fromRegistry("python:3.13-slim");
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+const image = await modal.images.fromName("sandbox-pandas");
 const volume = modal.volumes.fromName("my-volume");
 const sb = await modal.sandboxes.create(app, image, {
   volumes: { "/data": volume },
@@ -182,7 +185,8 @@ const sb = await modal.sandboxes.create(app, image, {
 {#snippet go()}
 
 ```go notest
-image := mc.Images.FromRegistry("python:3.13-slim", nil)
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+image, err := mc.Images.FromName(ctx, "sandbox-pandas", nil)
 volume := mc.Volumes.FromName("my-volume", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   Volumes: map[string]*modal.Volume{"/data": volume},
@@ -294,7 +298,7 @@ func main() {
    在处理请求之前需要预热时间。如果就绪探针是
    未配置，将跳过此事件。
 
-5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上原因：入口点进程自行退出，沙箱被显式地退出
+5. **完成** — 沙箱已停止运行。这可能会发生在几个人身上原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
    可以在沙箱内执行命令。您可以详细了解为什么沙盒
@@ -373,11 +377,11 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   当您的启动逻辑包括启动服务器时，这是最常见的选择。
 * **Execprobe** — 在沙箱内运行任意命令，并在以下情况下成功：
   命令退出，状态代码为 0。将此用于任何其他就绪条件：检查
-  文件存在，验证安装脚本是否已完成，确认依赖关系
+  文件存在，验证安装脚本是否已完成，确认依赖项
   安装等
 
 两种探头类型都接受一个`interval_ms`参数（默认值：100ms）来控制如何
-通常会重试该检查，直到成功为止。
+通常会重试检查，直到成功为止。
 
 #### TCP 就绪探测
 
@@ -597,7 +601,7 @@ func main() {
 
 **注意：** 就绪探针最多运行 5 分钟。如果探头没有
 在该窗口内成功，`wait_until_ready()`将提高`modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
-内置 `TimeoutError`，因此裸露的 `except TimeoutError` 无法捕获它。探头
+内置`TimeoutError`，所以裸露的`except TimeoutError`无法捕获它。探头
 超时不会自动终止沙盒 - 您可能想要捕获
 如果从未准备就绪，则会出现错误并显式终止沙箱：
 
@@ -650,9 +654,9 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 {/片段} </CodeTabs>
 
-如果您在未配置就绪状态的沙盒上调用`wait_until_ready()`
+如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
 探针，将引发错误。同样，在沙箱结束后调用它
-终止会引发错误。然而，在沙箱之后调用`wait_until_ready()`
+终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`
 已经准备好立即返回。
 
 ## 返回代码
@@ -748,7 +752,7 @@ fmt.Println(returnCodeSb) // 137
   使用嵌套管理资源
 [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。
 
-通过 `runtime` 参数切换运行时间，或者保持未设置状态，让 Modal 为您选择。
+通过 `runtime` 参数切换运行时，或者保持未设置状态，让 Modal 为您选择。
 
 <CodeTabs>
   {#snippet python()}
@@ -801,16 +805,20 @@ VM 沙箱上的`experimental_options={"enable_nested_virt": True}`。
   {#snippet python()}
 
 ```python notest
-image = (
-    modal.Image.from_registry("ubuntu:24.04")
-    .env({"DEBIAN_FRONTEND": "noninteractive"})
-    .apt_install("docker.io")
-)
+# The named Image has Docker installed. It was built and published ahead of time:
+#
+#     image = (
+#         modal.Image.from_registry("ubuntu:24.04")
+#         .env({"DEBIAN_FRONTEND": "noninteractive"})
+#         .apt_install("docker.io")
+#     )
+#     image.build(sb_app).publish("sandbox-docker")
 
 sb = modal.Sandbox.create(
     "dockerd",
     app=sb_app,
-    image=image,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-docker"),
     runtime="vm",
     readiness_probe=modal.Probe.with_exec("docker", "info", interval_ms=500),
 )
@@ -975,7 +983,8 @@ fmt.Println(string(stdout))
 使用 [`Image.build`](/docs/sdk/py/latest/Image#build) 触发
 映像构建作为部署流程的一部分或定期构建（例如，在
 [计划作业](/docs/guide/cron) 或 CI 管道），然后将结果发布为
-[命名图像](/docs/guide/named-images)
+[命名图像](/docs/guide/named-images)。将构建包装在 `modal.enable_output()` 中
+流式传输其构建日志。
 
 然后沙箱可以使用 [`Image.from_name`](/docs/sdk/py/latest/Image#from_name)
 以保证在重建时不会阻塞的方式引用图像。
@@ -999,12 +1008,12 @@ with modal.enable_output():
 # sandbox_app.py
 app = modal.App.lookup("sandbox-app", create_if_missing=True)
 
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image = modal.Image.from_name("sandbox-runtime")
 modal.Sandbox.create(app=app, image=image)
 ```
 
 {/片段}
-
 {#snippet python\_async()}
 
 ```python notest
@@ -1024,11 +1033,13 @@ await image.publish.aio("sandbox-runtime")
 # app.py
 app = await modal.App.lookup.aio("sandbox-app", create_if_missing=True)
 
+# prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image = modal.Image.from_name("sandbox-runtime")
 await modal.Sandbox.create.aio(app=app, image=image)
 ```
 
 {/片段}
+
 {#snippet javascript()}
 
 ```javascript notest
@@ -1049,6 +1060,7 @@ const app = await modal.apps.fromName("sandbox-app", {
   createIfMissing: true,
 });
 
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 const image = await modal.images.fromName("sandbox-runtime");
 await modal.sandboxes.create(app, image);
 ```
@@ -1074,6 +1086,7 @@ app, err = mc.Apps.FromName(ctx, "sandbox-app", &modal.AppFromNameParams{
 	CreateIfMissing: true,
 })
 
+// prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
 image, err = mc.Images.FromName(ctx, "sandbox-runtime", nil)
 sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 ```
@@ -1082,64 +1095,12 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 
 <Callout variant="info">
 
-* **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
+* **Modal 在拉取后将外部图像标签视为不可变。** 对于[外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
 </Callout>
 
-#### 镜像构建日志
-
-您可能需要手动启用输出流才能查看映像构建日志：
-
-<CodeTabs>{#snippet python()}
-
-```python fixture:sb_app
-image = modal.Image.debian_slim().pip_install("pandas", "numpy")
-
-with modal.enable_output():
-    sb = modal.Sandbox.create(image=image, app=sb_app)
-```
-
-{/片段}
-
-{#snippet python\_async()}
-
-```python fixture:sb_app
-image = modal.Image.debian_slim().pip_install("pandas", "numpy")
-
-with modal.enable_output():
-    sb = await modal.Sandbox.create.aio(image=image, app=sb_app)
-```
-
-{/片段}
-
-{#snippet javascript()}
-
-```javascript notest
-const image = modal.images
-  .fromRegistry("python:3.13-slim")
-  .dockerfileCommands(["RUN pip install pandas numpy"]);
-
-const sb = await modal.sandboxes.create(app, image);
-```
-
-{/片段}
-
-{#snippet go()}
-
-```go notest
-image := mc.Images.FromRegistry("python:3.13-slim", nil).
-  DockerfileCommands([]string{"RUN pip install pandas numpy"}, nil)
-
-// Note: Image build logs are automatically streamed in Go
-sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
-```
-
-{/片段} </CodeTabs>
-
-## 使用入口点运行沙箱
-
-在大多数情况下，沙箱被视为可以运行任意命令的通用容器
+## 使用入口点运行沙箱在大多数情况下，沙箱被视为可以运行任意命令的通用容器
 命令。但是，在某些情况下，您可能想要运行单个命令或脚本
 作为沙盒的入口点。您可以通过将命令参数传递给
 沙箱构造函数：
@@ -1173,6 +1134,7 @@ const sb = await modal.sandboxes.create(app, image, {
   timeoutMs: 10 * 1000,
 });
 ```
+
 {/片段}
 
 {#snippet go()}
@@ -1262,9 +1224,7 @@ fmt.Println(string(stdout))
 
 一个常见的用例是保持沙箱池可用于执行任务
 当它们进来时。您可以保留“开放”沙箱的`object_id`列表，并且
-重用它们，在使用它们的任何函数中关闭`object_id`。
-
-## 命名沙箱
+重用它们，在使用它们的任何函数中关闭`object_id`。## 命名沙箱
 
 您可以在创建沙箱时为其指定名称。每个名称在应用程序中必须是唯一的 -
 一次只有一个“正在运行”的沙箱可以使用给定名称。请注意，关联的应用程序必须是
@@ -1293,7 +1253,6 @@ sb2 = await modal.Sandbox.create.aio(app=sb_app, name="my-name")
 ```
 
 {/片段}
-
 {#snippet javascript()}
 
 ```javascript notest
@@ -1322,7 +1281,8 @@ sb2, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 如果沙盒当前正在运行*。如果没有找到正在运行的沙箱，`from_name()`将引发
 一个错误。
 
-<CodeTabs>{#snippet python()}
+<CodeTabs>
+  {#snippet python()}
 
 ```python notest
 sb_app = modal.App.lookup("my-app", create_if_missing=True)
@@ -1382,10 +1342,8 @@ fmt.Println(sb1.SandboxID == sb2.SandboxID)
 沙箱名称只能包含字母数字字符、短划线、句点和下划线，并且必须
 少于 64 个字符。
 
-## 标记
-
-沙箱还可以用任意键值对进行标记。可以使用这些标签
-过滤`Sandbox.list`中的结果。
+## 标记沙箱还可以用任意键值对进行标记。可以使用这些标签
+过滤`Sandbox.list`中的结果。一个沙箱最多可以携带 10 个标签。
 
 <CodeTabs>
   {#snippet python()}
@@ -1520,6 +1478,7 @@ for sandbox := range it {
 ```
 
 {/片段} </CodeTabs>
+
 ## 清理客户端资源
 
 当您使用 SDK 中的沙箱句柄与沙箱交互时（例如，

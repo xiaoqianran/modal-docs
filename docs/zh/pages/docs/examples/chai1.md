@@ -114,6 +114,7 @@ image = (
     .uv_pip_install(
         "chai_lab==0.5.0",
         "huggingface-hub==0.36.0",
+        "pyarrow==20.0.0",
     )
     .uv_pip_install(
         "torch==2.7.1",
@@ -185,7 +186,7 @@ preds_dir = Path("/preds")
 
 现在我们准备定义一个运行 Chai-1 的模态函数。
 
-我们通过将函数包装在装饰器`@app.function`中来将其放在 Modal 上。
+我们将函数包装在装饰器`@app.function`中，将其放在 Modal 上。
 我们为装饰器提供一些参数来描述我们的代码运行所需的基础设施：
 我们创建的卷、我们定义的图像，当然还有快速的 GPU！
 

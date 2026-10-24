@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "9a1db89dcdcd685005d34ee3072b0b0502d8622a",
-      "translatedAt": "2026-10-23T11:24:28.516Z",
-      "bytes": 27942
+      "hash": "296fbb55cd0a7872ff6d8f7c52bb73094c8b0c5e",
+      "translatedAt": "2026-10-24T10:43:54.298Z",
+      "bytes": 27774
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -172,14 +172,14 @@
       "bytes": 7622
     },
     "docs/examples/chai1.md": {
-      "hash": "4b09a702e9edaa2c8575799dc11862d2c87c3042",
-      "translatedAt": "2026-08-08T18:28:01.926Z",
-      "bytes": 10762
+      "hash": "8e8102b47ac411c44a719f248ce2b5f2f116348b",
+      "translatedAt": "2026-10-24T10:43:29.847Z",
+      "bytes": 10783
     },
     "docs/examples/chatterbox_tts.md": {
-      "hash": "c94b1206262a5116c307343dbca0d038139528fd",
-      "translatedAt": "2026-08-08T18:28:03.018Z",
-      "bytes": 4869
+      "hash": "dda000ef9408b572165b77ab3b9045f207573dd4",
+      "translatedAt": "2026-10-24T10:43:32.794Z",
+      "bytes": 4893
     },
     "docs/examples/chat_with_pdf_vision.md": {
       "hash": "5d37e4e8ea899101ad60a3a17b053fde624e9265",
@@ -187,9 +187,9 @@
       "bytes": 16281
     },
     "docs/examples/computer_use_vnc.md": {
-      "hash": "a7a47a6355d7f64612326d9198930c8303e42dd7",
-      "translatedAt": "2026-10-10T12:17:41.685Z",
-      "bytes": 13602
+      "hash": "cc057f08e874a52813ecf474dfcdf1880c8864d3",
+      "translatedAt": "2026-10-24T10:43:36.243Z",
+      "bytes": 14343
     },
     "docs/cli/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -207,9 +207,9 @@
       "bytes": 13396
     },
     "docs/examples/deepseek_v4_flash.md": {
-      "hash": "7d96bf3586e66ead36489b99fd3024cc2e40f95d",
-      "translatedAt": "2026-08-08T18:28:08.336Z",
-      "bytes": 11206
+      "hash": "062134161771a51aa9ff72a29d063b7849db17fd",
+      "translatedAt": "2026-10-24T10:43:38.632Z",
+      "bytes": 11270
     },
     "docs/examples/dbt_duckdb.md": {
       "hash": "15852c9df0427f46fc73382d8aab3f18307d5208",
@@ -227,9 +227,9 @@
       "bytes": 7813
     },
     "docs/examples/diffusers_lora_finetune.md": {
-      "hash": "a50b899a5cfcf1887d3c1c1350ac31a665825fe6",
-      "translatedAt": "2026-08-08T18:28:12.295Z",
-      "bytes": 21314
+      "hash": "d13d2760bed3cb0b5c2a599f01b8886381cd0eb4",
+      "translatedAt": "2026-10-24T10:43:45.461Z",
+      "bytes": 21320
     },
     "docs/examples/discord_bot.md": {
       "hash": "7585d9c5f5081269a095a3edb489fa390e62d00f",
@@ -257,8 +257,8 @@
       "bytes": 8440
     },
     "docs/examples/finetune_yolo.md": {
-      "hash": "f7a86dc3665ee10ace5b9839a528af68929c041e",
-      "translatedAt": "2026-08-08T18:28:18.688Z",
+      "hash": "6c05db4fff5dbf952849eae76d0d47a1855a997f",
+      "translatedAt": "2026-10-24T10:43:50.092Z",
       "bytes": 12210
     },
     "docs/examples/fine_tune_asr.md": {
@@ -397,9 +397,9 @@
       "bytes": 9575
     },
     "docs/examples/pushgateway.md": {
-      "hash": "74d7af7fb93ebc283852031c5c6e65c6ebff92e1",
-      "translatedAt": "2026-08-08T18:28:39.030Z",
-      "bytes": 6494
+      "hash": "f1f59813230f888ba4cc12a073cdb2ad36c0b224",
+      "translatedAt": "2026-10-24T10:43:52.238Z",
+      "bytes": 6485
     },
     "docs/examples/s3_bucket_mount.md": {
       "hash": "7880a6397970a4ea2b4bd0346a2c5aa7a27bc4f9",
@@ -457,8 +457,8 @@
       "bytes": 22684
     },
     "docs/examples/webscraper.md": {
-      "hash": "5c49406b6da188f2e515f7ac6689b99f1dd2cdf3",
-      "translatedAt": "2026-08-08T18:28:51.774Z",
+      "hash": "1464311ae460b3abe9634b1aaa77910e9a5b904f",
+      "translatedAt": "2026-10-24T10:44:03.145Z",
       "bytes": 10388
     },
     "docs/examples/webrtc_yolo.md": {
@@ -467,9 +467,9 @@
       "bytes": 24428
     },
     "docs/guide.md": {
-      "hash": "33ad236145160df7d0b211cc602169639b875224",
-      "translatedAt": "2026-10-23T11:24:14.596Z",
-      "bytes": 3784
+      "hash": "3f8ff287345597ef6f9f8bd4593c6a3c991982b2",
+      "translatedAt": "2026-10-24T10:44:01.391Z",
+      "bytes": 3559
     },
     "docs/examples/vllm_throughput.md": {
       "hash": "5d2c3d7a100277131ad5ec7b2112ac2e95bb403f",
@@ -537,9 +537,9 @@
       "bytes": 9611
     },
     "docs/guide/dataset-ingestion.md": {
-      "hash": "fe6d87ce5d46d1c1a550a94276464d6518fa8604",
-      "translatedAt": "2026-08-08T18:29:06.619Z",
-      "bytes": 4660
+      "hash": "c63c7491991c6d825e5e81ef0b7775a9c7650f03",
+      "translatedAt": "2026-10-24T10:44:04.746Z",
+      "bytes": 4687
     },
     "docs/guide/datadog-integration.md": {
       "hash": "31ae97c56e00c3fd862341d49b93802d0a0fb44c",
@@ -647,9 +647,9 @@
       "bytes": 15053
     },
     "docs/guide/jupyter-notebooks.md": {
-      "hash": "1de0a15788a7c0408194badf248266be06ac6735",
-      "translatedAt": "2026-09-20T11:06:54.917Z",
-      "bytes": 1896
+      "hash": "fd2a851d3682470d57b1066ec189228dde56c2be",
+      "translatedAt": "2026-10-24T10:44:04.500Z",
+      "bytes": 1742
     },
     "docs/guide/images.md": {
       "hash": "a081d3c64689195aee986f668595875fa696dbe5",
@@ -692,9 +692,9 @@
       "bytes": 13862
     },
     "docs/guide/named-images.md": {
-      "hash": "eca8afc06271d7817a74e125646b261fa3c60bea",
-      "translatedAt": "2026-09-30T12:21:31.094Z",
-      "bytes": 4563
+      "hash": "f0fd89e86dc66a052e8ff4150a629466a970e84c",
+      "translatedAt": "2026-10-24T10:44:06.308Z",
+      "bytes": 4833
     },
     "docs/guide/multi-node-training.md": {
       "hash": "0b1cebb2ea36e307f06e5b28be818c3918d84fcb",
@@ -737,9 +737,9 @@
       "bytes": 2403
     },
     "docs/guide/proxy-ips.md": {
-      "hash": "6e1463ee9224710453258e0d1ceb18073b91c916",
-      "translatedAt": "2026-10-03T11:29:10.462Z",
-      "bytes": 3746
+      "hash": "41719085d5718e799e7b7cf10eec67b9b57485b7",
+      "translatedAt": "2026-10-24T10:44:07.237Z",
+      "bytes": 3872
     },
     "docs/guide/project-structure.md": {
       "hash": "ba2f072bda1e6c1d41df003feb2f2d5e99689f70",
@@ -782,9 +782,9 @@
       "bytes": 2839
     },
     "docs/guide/sandbox-files.md": {
-      "hash": "e288a77fa8e097a9abfad99f5572448292c816cb",
-      "translatedAt": "2026-10-21T11:35:16.592Z",
-      "bytes": 15433
+      "hash": "8cb82ab208f8c3f332c7a40fd62dd555d59aa9a5",
+      "translatedAt": "2026-10-24T10:44:10.356Z",
+      "bytes": 15827
     },
     "docs/guide/sandbox-resources.md": {
       "hash": "cf43815a53a33c2f36464cbd603bc13a34b8e285",
@@ -807,9 +807,9 @@
       "bytes": 22004
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "53b099660edd778cdd379bd820efaf5847632fc2",
-      "translatedAt": "2026-10-21T11:35:28.305Z",
-      "bytes": 26473
+      "hash": "07971b6c79a44ba35fce6cc2727f0fdcdd7cef13",
+      "translatedAt": "2026-10-24T10:44:20.469Z",
+      "bytes": 26863
     },
     "docs/guide/scale.md": {
       "hash": "9ea9d4b810fc1033c28c1ef99a0c09c0c31fdbd0",
@@ -817,9 +817,9 @@
       "bytes": 7288
     },
     "docs/guide/sdk-javascript-go.md": {
-      "hash": "7af54e0f1a5378ac2a0866d12d75bd45598dcc21",
-      "translatedAt": "2026-08-08T18:29:54.281Z",
-      "bytes": 3746
+      "hash": "490407ef33b40c21016bb5146ee373fbf847773c",
+      "translatedAt": "2026-10-24T10:44:25.802Z",
+      "bytes": 3941
     },
     "docs/guide/secrets.md": {
       "hash": "9cf0eadcea09200c0ce2a0d3e85c7ef3779589d2",
@@ -832,9 +832,9 @@
       "bytes": 8673
     },
     "docs/guide/sandboxes.md": {
-      "hash": "933f6964b365bd887a55f5d17ecf82ca03f1ac19",
-      "translatedAt": "2026-10-22T11:35:08.004Z",
-      "bytes": 41532
+      "hash": "164608f8bd29dd5efa79c7f0a0a7987c97dd1ce2",
+      "translatedAt": "2026-10-24T10:44:38.441Z",
+      "bytes": 41574
     },
     "docs/guide/service-users.md": {
       "hash": "b0303b96aef575571deaab0197cca3ec121da747",
@@ -1492,9 +1492,9 @@
       "bytes": 68837
     },
     "docs/guide/sandbox-sidecars.md": {
-      "hash": "9d21ff297ca840c46a069668b5fac8d09098cb36",
-      "translatedAt": "2026-10-17T10:30:18.772Z",
-      "bytes": 26988
+      "hash": "e70bd25fd0d94cf83b46f95be0c9a8708106c2c1",
+      "translatedAt": "2026-10-24T10:44:23.809Z",
+      "bytes": 27243
     },
     "docs/guide/data-residency.md": {
       "hash": "9393f850eba7b0b76d6e4fd0e685c5d6a9af67fd",
@@ -1603,9 +1603,9 @@
       "bytes": 2921
     },
     "docs/guide/intro.md": {
-      "hash": "33ad236145160df7d0b211cc602169639b875224",
-      "translatedAt": "2026-10-23T11:24:20.064Z",
-      "bytes": 3784
+      "hash": "3f8ff287345597ef6f9f8bd4593c6a3c991982b2",
+      "translatedAt": "2026-10-24T10:44:03.500Z",
+      "bytes": 3559
     },
     "docs/cli/latest/function.md": {
       "hash": "df882b3e858365db2219a557a5f7b6c0acbf214e",
@@ -1688,9 +1688,9 @@
       "bytes": 2029
     },
     "docs/examples/swe_gym.md": {
-      "hash": "68fbc69cca82071d64d48f5b960380b97435593e",
-      "translatedAt": "2026-09-30T12:21:27.325Z",
-      "bytes": 14052
+      "hash": "66348cb702b6d0aaa2db911852192a2355b10909",
+      "translatedAt": "2026-10-24T10:43:59.147Z",
+      "bytes": 14114
     },
     "docs/guide/spindle.md": {
       "hash": "2eba1fc6397f78a4542f6ac3ca147bca3855f9b4",
@@ -1882,10 +1882,10 @@
       "bytes": 3033
     }
   },
-  "updatedAt": "2026-10-23T11:24:28.516Z",
+  "updatedAt": "2026-10-24T10:44:38.441Z",
   "stats": {
-    "translated": 6,
-    "skipped": 358,
+    "translated": 21,
+    "skipped": 343,
     "failed": 0,
     "total": 364
   }

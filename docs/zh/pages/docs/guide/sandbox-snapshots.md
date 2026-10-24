@@ -6,7 +6,7 @@
 并稍后恢复。这对于：
 
 * 减少启动延迟
-* 创建自定义环境供您的沙盒运行
+* 创建自定义环境供您的沙箱运行
 * 备份沙箱的状态以进行调试
 * 以相同的初始状态运行大规模实验
 * 分支沙箱的状态以独立测试不同的代码更改
@@ -21,7 +21,7 @@ Modal 目前支持三种不同类型的 Sandbox 快照：
 
 不同的快照类型有不同的保留策略：
 
-|快照类型 |默认保留期限 |
+|快照类型|默认保留期限 |
 | ------------------- | ------------------------ |
 |文件系统快照 |创建后 30 天 |
 |目录快照 |创建后 30 天 |
@@ -212,7 +212,7 @@ sb2.Terminate(ctx, nil)
 
 请参阅[快照保留](#snapshot-retention)了解 TTL 配置选项，并参阅[删除快照](#deleting-snapshots)了解如何管理快照存储。
 
-请注意，文件系统快照仅涵盖沙箱的根文件系统。
+请注意，文件系统快照仅涵盖沙盒的根文件系统。
 此快照不涵盖任何已安装的[卷](/docs/guide/volumes)
 并且不会包含在生成的图像中。
 
@@ -445,20 +445,26 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 </Callout>沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
 
-要拍摄内存快照，请创建一个启用内存快照的沙箱，然后调用其实验性快照方法，该方法返回一个`SandboxSnapshot`：
+要拍摄内存快照，请创建一个启用内存快照的沙盒，然后调用其实验性快照方法，该方法返回一个`SandboxSnapshot`：
 
 <CodeTabs>
   {#snippet python()}
 
 ```python notest
-image = modal.Image.debian_slim().apt_install("curl", "procps")
 app = modal.App.lookup("sandbox-snapshot", create_if_missing=True)
 
-with modal.enable_output():
-    sb = modal.Sandbox.create(
-        "python3", "-m", "http.server", "8000",
-        app=app, image=image, _experimental_enable_snapshot=True
-    )
+# The named Image was built and published ahead of time with `curl` and `procps`
+# installed, which the checks below rely on:
+#
+#     modal.Image.debian_slim().apt_install("curl", "procps").build(app).publish("sandbox-snapshot-base")
+
+sb = modal.Sandbox.create(
+    "python3", "-m", "http.server", "8000",
+    app=app,
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image=modal.Image.from_name("sandbox-snapshot-base"),
+    _experimental_enable_snapshot=True,
+)
 
 print(f"Performing snapshot of {sb.object_id} ...")
 snapshot = sb._experimental_snapshot()
@@ -668,12 +674,12 @@ snapshot2, _ := sandbox2.ExperimentalSnapshot(ctx, nil)
 {/片段} </CodeTabs>
 
 ### 限制
-* 沙盒内存快照将在创建后 7 天过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
+* 沙箱内存快照在创建后 7 天后过期（请参阅[快照保留](#snapshot-retention)）。对于更持久的快照，请尝试[文件系统快照](#filesystem-snapshots)。
 * 拍摄快照时，打开的 TCP 连接将自动关闭，并且在恢复快照时需要重新打开。
-* 对沙箱进行快照目前将导致其终止。我们打算尽快取消此限制。
+* 对沙盒进行快照目前将导致其终止。我们打算尽快取消此限制。
 * 在启用内存快照或从快照恢复的情况下创建的沙箱无法与 GPU 一起运行。
-* 当 exec 命令仍在运行时，无法对沙箱进行快照。此外，由 exec 调用启动的任何后台进程在快照后都不会正确恢复。
-* 启用内存快照创建的 Sandbox 只能在与原始 Sandbox 运行时完全相同的实例类型上恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
+* 当 exec 命令仍在运行时，无法对沙盒进行快照。此外，由 exec 调用启动的任何后台进程在快照后都不会正确恢复。
+* 启用内存快照创建的 Sandbox 只能在与原始 Sandbox 运行时完全相同的实例类型上进行恢复。鉴于莫代尔的运力多样化，这有时会导致调度延迟。
 * 启用内存快照创建的沙箱无法固定其区域，并且从内存快照恢复的沙箱会安排在原始实例类型可用的任何位置。
 
 ## 保持沙箱状态
@@ -694,11 +700,12 @@ app = modal.App.lookup("sandbox-snapshot-lifecycle", create_if_missing=True)
 snapshot_store = modal.Dict.from_name("sandbox-snapshots", create_if_missing=True)
 session_id = "sess_a1b2c3d4"
 
-# Restore from snapshot, or use base image
+# Restore from snapshot, or use the base image
 if session_id in snapshot_store:
     image = modal.Image.from_id(snapshot_store[session_id])
 else:
-    image = modal.Image.debian_slim()
+    # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
+    image = modal.Image.from_name("sandbox-session-base")
 
 sb = modal.Sandbox.create(image=image, app=app)
 

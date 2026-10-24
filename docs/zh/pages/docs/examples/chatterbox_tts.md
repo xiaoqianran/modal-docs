@@ -27,16 +27,17 @@ import modal
 *“peft”：正确加载模型所需的
 
 ```python
-image = modal.Image.debian_slim(python_version="3.10").uv_pip_install(
-    "chatterbox-tts==0.1.6",
+image = modal.Image.debian_slim(python_version="3.12").uv_pip_install(
+    "chatterbox-tts==0.1.7",
     "fastapi[standard]==0.124.4",
     "peft==0.18.0",
+    "setuptools<82",
 )
 
 ```
 
 我们还将使用 Chatterbox 提供的一组语音提示，您可以[此处](https://modal-cdn.com/blog/audio/chatterbox-tts-voices.zip)下载。
-解压文件并使用以下 CLI 命令将其上传到名为 `chatterbox-tts-voices` 的 `modal.Volume`：
+解压缩文件并使用以下 CLI 命令将其上传到名为 `chatterbox-tts-voices` 的 `modal.Volume`：
 
 ```shell
 modal volume create chatterbox-tts-voices

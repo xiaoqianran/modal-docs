@@ -132,7 +132,6 @@ The docs are organized into three main sections:
   - [Budgets](https://modal.com/docs/guide/budgets.md)
 - Other topics
   - [Feature maturity](https://modal.com/docs/guide/feature-maturity.md)
-  - [Notebooks](https://modal.com/docs/guide/notebooks.md)
   - [Restricted Functions](https://modal.com/docs/guide/restricted-access.md)
   - [JavaScript/Go SDKs (Beta)](https://modal.com/docs/guide/sdk-javascript-go.md)
   - [Modal 1.0 migration guide](https://modal.com/docs/guide/modal-1-0-migration.md)
@@ -189,7 +188,6 @@ The docs are organized into three main sections:
   - [Fold proteins with Boltz-2](https://modal.com/docs/examples/boltz_predict.md)
 - Modal Sandboxes
   - [Run Cursor Cloud Agents on Modal](https://modal.com/docs/examples/cursor.md)
-  - [Run a background coding agent with OpenCode](https://modal.com/docs/examples/opencode_server.md)
   - [Build a scalable AI coding platform](https://modal.com/docs/examples/modal-vibe.md)
   - [Create GIFs from Slack using the Claude Agent SDK](https://modal.com/docs/examples/claude-slack-gif-creator.md)
   - [Run a LangGraph agent's code in a secure GPU sandbox](https://modal.com/docs/examples/agent.md)

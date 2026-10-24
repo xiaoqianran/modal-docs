@@ -6,14 +6,21 @@
 他们不是调用一组固定的 API，而是查看呈现的页面或屏幕，
 决定接下来要单击或输入的内容，采取该操作，然后再看一次。
 
-本示例使用[浏览器使用](https://docs.browser-use.com/)构建一个。
+本示例使用[浏览器使用](https://docs.browser-use.com/) 构建一个。
 由 Modal 提供的开放权重模型
 [端点](https://modal.com/docs/guide/endpoints) 为代理提供动力。代理
 在 Modal Sandbox 中驱动 Chromium
 [VM](https://modal.com/docs/guide/sandboxes#runtimes),
 而小型 Web UI 嵌入了 noVNC 桌面，因此您可以实时观看它的工作情况。
 
-## 运行示例
+## 运行示例模型端点需要[代理令牌](https://modal.com/docs/guide/webhook-proxy-auth)。
+创建一个并将其存储在模态 [Secret](https://modal.com/docs/guide/secrets) 中：
+
+```bash
+modal workspace proxy-tokens create
+modal secret create example-proxy-token \
+  MODAL_PROXY_TOKEN_ID=wk-... MODAL_PROXY_TOKEN_SECRET=ws-...
+```
 
 以编程方式测试示例：
 
@@ -52,7 +59,8 @@ MINUTES = 60
 您的 API 密钥。然而，出于我们的目的，我们提供开放权重模型
 我们自己通过模态[端点](https://modal.com/docs/guide/endpoints)。
 只需一条命令即可为代理创建兼容 OpenAI 的服务器
-打电话。不需要外部 API 密钥，整个演示在 Modal 上运行。
+打电话。代理使用您的代理令牌而不是外部 API 进行身份验证
+键，整个演示在 Modal 上运行。
 
 ```python
 ENDPOINT_MODEL = "Qwen/Qwen3.6-27B-FP8"
@@ -60,6 +68,10 @@ ENDPOINT_NAME = "example-computer-use-vnc"
 ENDPOINT_ROUTING_REGION = "us-west"
 ENDPOINT_WARMUP_TIME = 5 * MINUTES
 endpoint_server = modal.Server.from_name(f"ep-{ENDPOINT_NAME}", "Server")
+proxy_token_secret = modal.Secret.from_name(
+    "example-proxy-token",
+    required_keys=["MODAL_PROXY_TOKEN_ID", "MODAL_PROXY_TOKEN_SECRET"],
+)
 
 VNC_PORT = 6080
 SESSION_START_TIMEOUT = 2 * MINUTES
@@ -71,7 +83,6 @@ RESULT_PREFIX = "__BROWSER_USE_RESULT__="
 DESKTOP_READY_PATH = "/tmp/desktop_ready"
 
 ```
-
 ## 设置可共享的虚拟桌面
 
 默认情况下，浏览器使用会启动 Chromium headless。不过，我们想看的是
@@ -124,6 +135,9 @@ AGENT_SCRIPT = textwrap.dedent(
     from browser_use import Agent, Browser, ChatOpenAI, Tools
 
     base_url = os.environ["ENDPOINT_BASE_URL"]
+    proxy_token = (
+        f"{os.environ['MODAL_PROXY_TOKEN_ID']}.{os.environ['MODAL_PROXY_TOKEN_SECRET']}"
+    )
     start_page = "data:text/html," + urllib.parse.quote(
         "<body style='margin:0;background:#222;color:#ddd;font:28px system-ui;"
         "display:grid;place-items:center;height:100vh'>Starting desktop...</body>"
@@ -132,9 +146,12 @@ AGENT_SCRIPT = textwrap.dedent(
 
     def wait_for_endpoint() -> str:
         deadline = time.monotonic() + int(os.environ["ENDPOINT_WARMUP_TIME"])
+        request = urllib.request.Request(
+            f"{base_url}/v1/models", headers={"Authorization": f"Bearer {proxy_token}"}
+        )
         while True:
             try:
-                with urllib.request.urlopen(f"{base_url}/v1/models", timeout=5) as response:
+                with urllib.request.urlopen(request, timeout=5) as response:
                     model_name = json.load(response)["data"][0]["id"]
                 if isinstance(model_name, str) and model_name:
                     return model_name
@@ -158,7 +175,7 @@ AGENT_SCRIPT = textwrap.dedent(
         model = await asyncio.to_thread(wait_for_endpoint)
         llm = ChatOpenAI(
             model=model,
-            api_key="unused",
+            api_key=proxy_token,
             base_url=f"{base_url}/v1",
             reasoning_effort="none",
             reasoning_models=[model],
@@ -210,7 +227,6 @@ def create_endpoint_if_missing() -> None:
             ENDPOINT_MODEL,
             "--routing-region",
             ENDPOINT_ROUTING_REGION,
-            "--unauthenticated",
         ],
         check=True,
     )
@@ -246,7 +262,6 @@ def is_server_up(url: str) -> bool:
 虚拟桌面，绘制 Chromium，然后运行浏览器使用。 `start_session`
 等待桌面就绪标记存在并且 noVNC 页面响应，然后
 返回沙箱 ID 和观看 URL。
-
 浏览器嵌入该 URL 并使用 ID 轮询状态路由。当
 代理退出，沙箱终止，状态路由返回其最终状态
 结果。启动失败会在返回错误之前终止沙箱。
@@ -265,7 +280,7 @@ async def start_session(task: str):
             SANDBOX_COMMAND,
             app=app,
             image=sandbox_image,
-            experimental_options={"vm_runtime": True},
+            runtime="vm",
             env={
                 "AGENT_SCRIPT": AGENT_SCRIPT,
                 "AGENT_TASK": task,
@@ -274,6 +289,7 @@ async def start_session(task: str):
                 "ENDPOINT_WARMUP_TIME": str(ENDPOINT_WARMUP_TIME),
                 "RESULT_PREFIX": RESULT_PREFIX,
             },
+            secrets=[proxy_token_secret],
             encrypted_ports=[VNC_PORT],
             timeout=SANDBOX_TIMEOUT,
             readiness_probe=modal.Probe.with_exec("test", "-f", DESKTOP_READY_PATH),
