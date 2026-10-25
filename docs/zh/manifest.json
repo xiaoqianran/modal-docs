@@ -1882,10 +1882,10 @@
       "bytes": 3033
     }
   },
-  "updatedAt": "2026-10-24T10:44:38.441Z",
+  "updatedAt": "2026-10-25T11:08:33.603Z",
   "stats": {
-    "translated": 21,
-    "skipped": 343,
+    "translated": 0,
+    "skipped": 364,
     "failed": 0,
     "total": 364
   }
