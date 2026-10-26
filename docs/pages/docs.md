@@ -40,6 +40,7 @@ The docs are organized into three main sections:
   - [Networking and security](https://modal.com/docs/guide/sandbox-networking.md)
   - [File access](https://modal.com/docs/guide/sandbox-files.md)
   - [Snapshots](https://modal.com/docs/guide/sandbox-snapshots.md)
+  - [Exit Snapshots (Beta)](https://modal.com/docs/guide/sandbox-exit-snapshots.md)
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [Sidecars (Beta)](https://modal.com/docs/guide/sandbox-sidecars.md)
   - [Secret injection (Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)

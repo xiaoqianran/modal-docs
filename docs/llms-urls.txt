@@ -162,6 +162,7 @@ https://modal.com/docs/guide/resources.md
 https://modal.com/docs/guide/restricted-access.md
 https://modal.com/docs/guide/retries.md
 https://modal.com/docs/guide/saml-sso.md
+https://modal.com/docs/guide/sandbox-exit-snapshots.md
 https://modal.com/docs/guide/sandbox-files.md
 https://modal.com/docs/guide/sandbox-networking.md
 https://modal.com/docs/guide/sandbox-resources.md

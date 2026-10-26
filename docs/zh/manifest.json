@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "296fbb55cd0a7872ff6d8f7c52bb73094c8b0c5e",
-      "translatedAt": "2026-10-24T10:43:54.298Z",
-      "bytes": 27774
+      "hash": "3e790d1f1998cb814899c946b1e8113f491a9e07",
+      "translatedAt": "2026-10-26T12:42:51.221Z",
+      "bytes": 27856
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -1880,13 +1880,18 @@
       "hash": "03a0e5414c2a2a5a1b64e735dc611b00dc3c9529",
       "translatedAt": "2026-10-23T11:24:22.991Z",
       "bytes": 3033
+    },
+    "docs/guide/sandbox-exit-snapshots.md": {
+      "hash": "08a83871ffcccaebfa76ee615bc1973793bff9b2",
+      "translatedAt": "2026-10-26T12:42:36.740Z",
+      "bytes": 7478
     }
   },
-  "updatedAt": "2026-10-25T11:08:33.603Z",
+  "updatedAt": "2026-10-26T12:42:51.222Z",
   "stats": {
-    "translated": 0,
-    "skipped": 364,
+    "translated": 2,
+    "skipped": 363,
     "failed": 0,
-    "total": 364
+    "total": 365
   }
 }

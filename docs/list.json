@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-25T11:08:33.485Z",
+  "fetchedAt": "2026-10-26T12:42:30.439Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 348,
-  "ok": 348,
+  "totalUrls": 349,
+  "ok": 349,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28338,
+      "bytes": 28422,
       "stub": false
     },
     {
@@ -1315,6 +1315,14 @@
       "finalUrl": "https://modal.com/docs/guide/saml-sso.md",
       "path": "docs/guide/saml-sso.md",
       "bytes": 2987,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/sandbox-exit-snapshots.md",
+      "source": "https://modal.com/docs/guide/sandbox-exit-snapshots.md",
+      "finalUrl": "https://modal.com/docs/guide/sandbox-exit-snapshots.md",
+      "path": "docs/guide/sandbox-exit-snapshots.md",
+      "bytes": 8117,
       "stub": false
     },
     {
