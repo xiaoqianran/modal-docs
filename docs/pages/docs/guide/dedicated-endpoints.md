@@ -1,9 +1,9 @@
 # Dedicated Endpoints
 
-Dedicated Endpoints run any model in the
-[Modal Library](https://modal.com/library), or custom weights, on isolated,
-autoscaling containers. Use them when you need control over autoscaling and
-regions, or dedicated capacity.
+Dedicated Endpoints run
+[supported models](/docs/guide/supported-models#dedicated-endpoint-models),
+or compatible custom weights, on isolated, autoscaling containers. Use them
+when you need control over autoscaling and regions, or dedicated capacity.
 
 ## Create a Dedicated Endpoint
 
@@ -31,9 +31,9 @@ code into your own Modal App when you need full control of the serving stack.
 
 ## Serve custom weights
 
-Custom weights use the serving recipe for a compatible Modal Library model. Pass
-that model with `--model`, then provide weights from Hugging Face or a Modal
-Volume.
+Custom weights use the serving recipe for a compatible
+[Dedicated Endpoint model](/docs/guide/supported-models#dedicated-endpoint-models). Pass that model with `--model`,
+then provide weights from Hugging Face or a Modal Volume.
 
 From Hugging Face:
 

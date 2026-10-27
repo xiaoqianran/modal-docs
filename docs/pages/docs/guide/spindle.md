@@ -4,7 +4,7 @@
 
 [Spindle](https://github.com/modal-projects/spindle) is an open-source Tinker-compatible API with support for
 [multi-tenant LoRA training](https://github.com/modal-projects/spindle/blob/main/docs/multi-lora.md) and
-[single-tenant full-parameter training](https://github.com/modal-projects/spindle/blob/main/docs/full-fine-tunes.md).
+[single-tenant full-parameter training and fine-tuning](https://github.com/modal-projects/spindle/blob/main/docs/full-fine-tunes.md).
 
 Why use Spindle?
 

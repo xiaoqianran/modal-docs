@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-26T12:42:30.439Z",
+  "fetchedAt": "2026-10-27T11:57:16.705Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 349,
-  "ok": 349,
+  "totalUrls": 347,
+  "ok": 347,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28422,
+      "bytes": 28213,
       "stub": false
     },
     {
@@ -366,14 +366,6 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
-      "source": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
-      "finalUrl": "https://modal.com/docs/examples/diffusers_lora_finetune.md",
-      "path": "docs/examples/diffusers_lora_finetune.md",
-      "bytes": 21861,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/discord_bot.md",
       "source": "https://modal.com/docs/examples/discord_bot.md",
       "finalUrl": "https://modal.com/docs/examples/discord_bot.md",
@@ -474,7 +466,7 @@
       "source": "https://modal.com/docs/examples/hello_world.md",
       "finalUrl": "https://modal.com/docs/examples/hello_world.md",
       "path": "docs/examples/hello_world.md",
-      "bytes": 4084,
+      "bytes": 4076,
       "stub": false
     },
     {
@@ -482,7 +474,7 @@
       "source": "https://modal.com/docs/examples/hp_sweep_gpt.md",
       "finalUrl": "https://modal.com/docs/examples/hp_sweep_gpt.md",
       "path": "docs/examples/hp_sweep_gpt.md",
-      "bytes": 29039,
+      "bytes": 29041,
       "stub": false
     },
     {
@@ -523,14 +515,6 @@
       "finalUrl": "https://modal.com/docs/examples/vllm_inference.md",
       "path": "docs/examples/llm_inference.md",
       "bytes": 13210,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/examples/llm-finetuning.md",
-      "source": "https://modal.com/docs/examples/llm-finetuning.md",
-      "finalUrl": "https://modal.com/docs/examples/llm-finetuning.md",
-      "path": "docs/examples/llm-finetuning.md",
-      "bytes": 9490,
       "stub": false
     },
     {
@@ -634,7 +618,7 @@
       "source": "https://modal.com/docs/examples/paint_flowers.md",
       "finalUrl": "https://modal.com/docs/examples/paint_flowers.md",
       "path": "docs/examples/paint_flowers.md",
-      "bytes": 8299,
+      "bytes": 8303,
       "stub": false
     },
     {
@@ -734,19 +718,11 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/unsloth_finetune.md",
-      "source": "https://modal.com/docs/examples/unsloth_finetune.md",
-      "finalUrl": "https://modal.com/docs/examples/unsloth_finetune.md",
-      "path": "docs/examples/unsloth_finetune.md",
-      "bytes": 20959,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/vllm_throughput.md",
       "source": "https://modal.com/docs/examples/vllm_throughput.md",
       "finalUrl": "https://modal.com/docs/examples/vllm_throughput.md",
       "path": "docs/examples/vllm_throughput.md",
-      "bytes": 23705,
+      "bytes": 23541,
       "stub": false
     },
     {
@@ -770,7 +746,7 @@
       "source": "https://modal.com/docs/guide",
       "finalUrl": "https://modal.com/docs/guide.md",
       "path": "docs/guide.md",
-      "bytes": 3720,
+      "bytes": 3692,
       "stub": false
     },
     {
@@ -866,7 +842,7 @@
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10077,
+      "bytes": 10063,
       "stub": false
     },
     {
@@ -906,7 +882,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 4235,
+      "bytes": 4324,
       "stub": false
     },
     {
@@ -946,7 +922,7 @@
       "source": "https://modal.com/docs/guide/endpoint-candidates.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-candidates.md",
       "path": "docs/guide/endpoint-candidates.md",
-      "bytes": 2928,
+      "bytes": 2982,
       "stub": false
     },
     {
@@ -962,7 +938,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 4781,
+      "bytes": 5234,
       "stub": false
     },
     {
@@ -1066,7 +1042,7 @@
       "source": "https://modal.com/docs/guide/gpu.md",
       "finalUrl": "https://modal.com/docs/guide/gpu.md",
       "path": "docs/guide/gpu.md",
-      "bytes": 7945,
+      "bytes": 7930,
       "stub": false
     },
     {
@@ -1090,7 +1066,7 @@
       "source": "https://modal.com/docs/guide/intro.md",
       "finalUrl": "https://modal.com/docs/guide/intro.md",
       "path": "docs/guide/intro.md",
-      "bytes": 3720,
+      "bytes": 3692,
       "stub": false
     },
     {
@@ -1178,7 +1154,7 @@
       "source": "https://modal.com/docs/guide/multi-node-training.md",
       "finalUrl": "https://modal.com/docs/guide/multi-node-training.md",
       "path": "docs/guide/multi-node-training.md",
-      "bytes": 5053,
+      "bytes": 5068,
       "stub": false
     },
     {
@@ -1450,7 +1426,7 @@
       "source": "https://modal.com/docs/guide/shared-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
       "path": "docs/guide/shared-endpoints.md",
-      "bytes": 1876,
+      "bytes": 1817,
       "stub": false
     },
     {
@@ -1466,7 +1442,7 @@
       "source": "https://modal.com/docs/guide/spindle.md",
       "finalUrl": "https://modal.com/docs/guide/spindle.md",
       "path": "docs/guide/spindle.md",
-      "bytes": 6589,
+      "bytes": 6605,
       "stub": false
     },
     {
@@ -1486,6 +1462,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/supported-models.md",
+      "source": "https://modal.com/docs/guide/supported-models.md",
+      "finalUrl": "https://modal.com/docs/guide/supported-models.md",
+      "path": "docs/guide/supported-models.md",
+      "bytes": 10105,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/timeouts.md",
       "source": "https://modal.com/docs/guide/timeouts.md",
       "finalUrl": "https://modal.com/docs/guide/timeouts.md",
@@ -1498,7 +1482,7 @@
       "source": "https://modal.com/docs/guide/training-quickstart.md",
       "finalUrl": "https://modal.com/docs/guide/training-quickstart.md",
       "path": "docs/guide/training-quickstart.md",
-      "bytes": 2071,
+      "bytes": 2136,
       "stub": false
     },
     {
@@ -1538,7 +1522,7 @@
       "source": "https://modal.com/docs/guide/volumes.md",
       "finalUrl": "https://modal.com/docs/guide/volumes.md",
       "path": "docs/guide/volumes.md",
-      "bytes": 26126,
+      "bytes": 25793,
       "stub": false
     },
     {

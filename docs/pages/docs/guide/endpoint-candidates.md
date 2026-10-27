@@ -10,9 +10,9 @@ containers.
 Open your Endpoint in the [dashboard](https://modal.com/endpoints), then open
 the **Deployment** dropdown and choose **Create candidate**.
 
-An Endpoint can have up to five candidates at once. Choose a model from the
-Modal Library with the same task type as production: text generation or
-embeddings. To use custom weights, select **Custom weights**, then provide a
+An Endpoint can have up to five candidates at once. Choose a
+[Dedicated Endpoint model](/docs/guide/supported-models#dedicated-endpoint-models) with the same task type as
+production: text generation or embeddings. To use custom weights, select **Custom weights**, then provide a
 Hugging Face repository and revision or a Modal Volume and path. The weights
 must be compatible with the selected base model; see
 [Serve custom weights](/docs/guide/dedicated-endpoints#serve-custom-weights).

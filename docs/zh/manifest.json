@@ -1885,13 +1885,20 @@
       "hash": "08a83871ffcccaebfa76ee615bc1973793bff9b2",
       "translatedAt": "2026-10-26T12:42:36.740Z",
       "bytes": 7478
+    },
+    "docs/guide/supported-models.md": {
+      "hash": "50e82548fb7b6c4d560394bfb489835d8e6b007c",
+      "translatedAt": "2026-10-27T11:59:02.973Z",
+      "bytes": 10105,
+      "fallback": true,
+      "error": "HTTP 429"
     }
   },
-  "updatedAt": "2026-10-26T12:42:51.222Z",
+  "updatedAt": "2026-10-27T11:59:16.382Z",
   "stats": {
-    "translated": 2,
-    "skipped": 363,
-    "failed": 0,
-    "total": 365
+    "translated": 0,
+    "skipped": 348,
+    "failed": 18,
+    "total": 366
   }
 }

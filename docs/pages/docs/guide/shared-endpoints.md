@@ -1,11 +1,9 @@
 # Shared Endpoints
 
-Shared Endpoints serve a subset of models in the
-[Modal Library](https://modal.com/library) from Modal-managed pools. Every model
-available for Shared Endpoints is also available for
-[Dedicated Endpoints](/docs/guide/dedicated-endpoints). The Library shows which
-serving modes each model supports. Modal manages the hardware and autoscaling,
-and usage is billed per token.
+Shared Endpoints serve a subset of
+[supported models](/docs/guide/supported-models#shared-endpoint-models) from
+Modal-managed pools. Modal manages the hardware and autoscaling, and usage is
+billed per token.
 
 ## Create a Shared Endpoint
 
@@ -37,7 +35,9 @@ header value.
 
 ## Pricing
 
-Token rates are shown when you create an Endpoint and in its Usage view. Credits
+Token rates for each model are listed in
+[supported models](/docs/guide/supported-models#shared-endpoint-models), and are
+shown when you create an Endpoint and in its Usage view. Credits
 included with your plan cannot be used for Shared Endpoint usage. To cap
 out-of-pocket charges, see [spend limits](/docs/guide/budgets#spend-limits).
 

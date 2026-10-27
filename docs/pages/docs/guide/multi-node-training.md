@@ -1,6 +1,6 @@
 # Multi-node training
 
-When you need maximum control over your training loop and infrastructure, you can use a [Clustered Function](/docs/guide/multi-node-clusters).
+When you need maximum control over your training or fine-tuning loop and infrastructure, you can use a [Clustered Function](/docs/guide/multi-node-clusters).
 
 This guide covers how to spin one up for frameworks based on [torchrun](https://docs.pytorch.org/docs/2.14/elastic/run.html) or [Ray](https://docs.ray.io/en/latest/index.html),
 which supports [RDMA](/docs/guide/multi-node-clusters#rdma). See [here](/docs/examples/miles_grpo) for an example that does just that.

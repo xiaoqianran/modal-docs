@@ -1,8 +1,8 @@
 # Endpoints
 
-Modal Endpoints let you deploy models from the
-[Modal Library](https://modal.com/library)—or your own custom weights—as
-production-ready inference APIs.
+Modal Endpoints let you deploy
+[supported open models](/docs/guide/supported-models)—or your own custom
+weights—as production-ready inference APIs.
 
 * **Fast inference** — tuned open-source serving engines, with speculative
   decoding where supported, behind Modal's low-latency request proxy.
@@ -14,18 +14,20 @@ production-ready inference APIs.
 
 Choose between two serving modes:
 
-|              | [Shared Endpoints](/docs/guide/shared-endpoints) | [Dedicated Endpoints](/docs/guide/dedicated-endpoints) |
-| ------------ | ------------------------------------------------ | ------------------------------------------------------ |
-| **Best for** | Fast, fully managed inference                    | Isolated capacity and custom models                    |
-| **Models**   | Selected models from the Modal Library           | All Modal Library models, plus custom weights          |
-| **Billing**  | Per token                                        | Compute resources                                      |
-| **Capacity** | Managed by Modal                                 | Configurable autoscaling, including scale-to-zero      |
+|              | [Shared Endpoints](/docs/guide/shared-endpoints)                     | [Dedicated Endpoints](/docs/guide/dedicated-endpoints)                                          |
+| ------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| **Best for** | Fast, fully managed inference                                        | Isolated capacity and custom models                                                             |
+| **Models**   | [Shared models](/docs/guide/supported-models#shared-endpoint-models) | [Dedicated models](/docs/guide/supported-models#dedicated-endpoint-models), plus custom weights |
+| **Billing**  | Per token                                                            | Compute resources                                                                               |
+| **Capacity** | Managed by Modal                                                     | Configurable autoscaling, including scale-to-zero                                               |
 
 ## Create an endpoint
 
-Browse the [Modal Library](https://modal.com/library) to choose a model and see
-which serving modes it supports. Then create an Endpoint from the
-[**Endpoints**](https://modal.com/endpoints) tab in the dashboard.
+Choose a model from [supported models](/docs/guide/supported-models), which
+lists the serving modes each model supports. Then create an Endpoint from the
+[**Endpoints**](https://modal.com/endpoints) tab in the dashboard. To learn more
+about a model, browse the
+[Model Library](https://modal.com/library).
 
 ## Proxy tokens
 

@@ -188,5 +188,5 @@ To dive deep on GPU internals, check out our [GPU Glossary](/gpu-glossary/readme
 To see these installation patterns in action, check out these examples:
 
 * [Fast LLM inference on big GPUs](/docs/examples/llm_inference)
-* [Finetune a character LoRA for your pet](/docs/examples/diffusers_lora_finetune)
 * [Optimized Flux inference](/docs/examples/flux)
+* [Fine-tune a model to paint flowers](/docs/examples/paint_flowers)

@@ -46,6 +46,7 @@ The docs are organized into three main sections:
   - [Secret injection (Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
 - Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
+  - [Supported models](https://modal.com/docs/guide/supported-models.md)
   - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
   - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
   - [Endpoint candidates](https://modal.com/docs/guide/endpoint-candidates.md)
@@ -160,15 +161,12 @@ The docs are organized into three main sections:
   - [Deploy Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
   - [Serve Inkling-Small with SGLang](https://modal.com/docs/examples/inkling_small.md)
   - [Serve DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
-  - [Efficient LLM Finetuning with Unsloth](https://modal.com/docs/examples/unsloth_finetune.md)
   - [Run a multimodal RAG chatbot to answer questions about PDFs](https://modal.com/docs/examples/chat_with_pdf_vision.md)
-  - [Fine-tune an LLM to replace your CEO](https://modal.com/docs/examples/llm-finetuning.md)
   - [Deploy a stateless MCP with FastMCP](https://modal.com/docs/examples/mcp_server_stateless.md)
 - Images, video, & 3D
   - [Edit images with Flux Kontext](https://modal.com/docs/examples/image_to_image.md)
   - [Fine-tune Wan2.1 video models on your face](https://modal.com/docs/examples/music-video-gen.md)
   - [Run Flux fast with torch.compile](https://modal.com/docs/examples/flux.md)
-  - [Fine-tune Flux with LoRA](https://modal.com/docs/examples/diffusers_lora_finetune.md)
   - [Animate images with LTX-Video](https://modal.com/docs/examples/image_to_video.md)
   - [Generate video clips with LTX-Video](https://modal.com/docs/examples/ltx.md)
   - [Run Stable Diffusion with a CLI, API, and web UI](https://modal.com/docs/examples/text_to_image.md)

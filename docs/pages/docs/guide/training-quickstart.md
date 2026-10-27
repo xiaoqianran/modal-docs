@@ -3,7 +3,7 @@
 Modal provides many ways to get started with training.
 
 The easiest way is to use [Modal Dojo](https://dojo.modal.dev), an open-source library that gives you the building blocks,
-tuned defaults, and observability you need for easy, production-grade SFT and RL.
+tuned defaults, and observability you need for easy, production-grade post-training: supervised fine-tuning (SFT) and reinforcement learning (RL).
 
 For a Tinker-compatible API, you can deploy a [Spindle](/docs/guide/spindle)
 server.

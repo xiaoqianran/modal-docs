@@ -4,7 +4,7 @@ Modal is an AI infrastructure platform that lets you:
 
 * Run low latency [inference](/docs/examples/llm_inference) with sub-second cold starts, using open weights or custom models
 * Scale out [batch jobs](/docs/guide/batch-processing) to run massively in parallel
-* [Train](/docs/examples/hp_sweep_gpt) or [fine-tune](/docs/examples/diffusers_lora_finetune) open weights or custom models on the latest GPUs
+* [Train or fine-tune](/docs/guide/training-quickstart) open weights or custom models on the latest GPUs
 * Spin up thousands of isolated and secure [Sandboxes](/docs/guide/sandboxes) to execute AI generated code
 
 You get [full serverless execution and pricing](/pricing) because we host everything and charge per second of usage.
@@ -72,7 +72,7 @@ And when you're ready for something fancier, explore our [full library of exampl
 
 * [Running your own LLM inference](/docs/examples/llm_inference)
 * [Transcribing speech in real time with Kyutai STT](/docs/examples/streaming_kyutai_stt)
-* [Fine-tuning Flux](/docs/examples/diffusers_lora_finetune)
+* [Fine-tuning a model to paint flowers](/docs/examples/paint_flowers)
 * [Building a coding agent with Modal Sandboxes and LangGraph](/docs/examples/agent)
 * [Training a small language model from scratch](/docs/examples/hp_sweep_gpt)
 * [Parallel processing of Parquet files on S3](/docs/examples/s3_bucket_mount)
