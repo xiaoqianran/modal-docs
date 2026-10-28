@@ -718,17 +718,22 @@ You may also use `setup_dockerfile_commands` to run Dockerfile commands before t
 remaining commands run. This might be useful if you want a custom Python installation or to
 set a `SHELL`. Prefer `run_commands()` when possible though.
 
-To authenticate against a private registry with static credentials, you must set the `secret` parameter to
-a `modal.Secret` containing a username (`REGISTRY_USERNAME`) and
-an access token or password (`REGISTRY_PASSWORD`).
+To pull from a private registry, set the `secret` parameter to a `modal.Secret` holding
+registry credentials. The kind of authentication follows from the keys in the Secret:
 
-To authenticate against private registries with credentials from a cloud provider,
-use `Image.from_gcp_artifact_registry()` or `Image.from_aws_ecr()`.
+* AWS ECR: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` and `AWS_REGION` (optionally `AWS_SESSION_TOKEN`),
+  or `AWS_ROLE_ARN` and `AWS_REGION` to assume a role with [OIDC](https://modal.com/docs/guide/oidc-integration).
+  See `Image.from_aws_ecr()` for details.
+* GCP Artifact Registry: `SERVICE_ACCOUNT_JSON`, holding the service account key's JSON.
+  See `Image.from_gcp_artifact_registry()` for details.
+* Other registries: a username (`REGISTRY_USERNAME`) and an access token or password (`REGISTRY_PASSWORD`).
+
+The Secret must have the keys for exactly one of these; otherwise an error is raised.
 
 **Parameters**
 
 <Parameter name="tag" type="str" description="Registry image reference (e.g. ``python:3.11-slim``)." />
-<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Optional secret for static registry credentials." />
+<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Optional Secret with registry credentials; its keys determine the kind of authentication." />
 <Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after ``FROM`` during base setup." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
@@ -744,112 +749,18 @@ An `Image` based on the registry tag.
 modal.Image.from_registry("python:3.11-slim-bookworm")
 modal.Image.from_registry("ubuntu:22.04", add_python="3.11")
 modal.Image.from_registry("nvcr.io/nvidia/pytorch:22.12-py3")
-```
-
-## from\_gcp\_artifact\_registry
-
-```python
-from_gcp_artifact_registry(tag, secret=None, *, setup_dockerfile_commands=[],
-    force_build=False, add_python=None, **kwargs)
-```
-
-Build a Modal image from a private image in Google Cloud Platform (GCP) Artifact Registry.
-
-You will need to pass a `modal.Secret` containing [your GCP service account key data](https://cloud.google.com/iam/docs/keys-create-delete#creating)
-as `SERVICE_ACCOUNT_JSON`. This can be done from the [Secrets](https://modal.com/secrets) page.
-Your service account should be granted a specific role depending on the GCP registry used:
-
-* For Artifact Registry images (`pkg.dev` domains) use
-  the ["Artifact Registry Reader"](https://cloud.google.com/artifact-registry/docs/access-control#roles) role
-* For Container Registry images (`gcr.io` domains) use
-  the ["Storage Object Viewer"](https://cloud.google.com/artifact-registry/docs/transition/setup-gcr-repo) role
-
-**Note:** This method does not use `GOOGLE_APPLICATION_CREDENTIALS` as that
-variable accepts a path to a JSON file, not the actual JSON string.
-
-See `Image.from_registry()` for information about the other parameters.
-
-**Parameters**
-
-<Parameter name="tag" type="str" description="Full GCP Artifact Registry image reference." />
-<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Secret containing ``SERVICE_ACCOUNT_JSON`` for registry authentication." />
-<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after ``FROM`` during base setup." />
-<Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
-<Parameter name="**kwargs" type="" description="Additional arguments forwarded to `from_registry`." />
-
-**Returns**
-
-An `Image` based on the private GCP artifact.
-
-**Usage**
-
-```python
-modal.Image.from_gcp_artifact_registry(
-    "us-east1-docker.pkg.dev/my-project-1234/my-repo/my-image:my-version",
-    secret=modal.Secret.from_name(
-        "my-gcp-secret",
-        required_keys=["SERVICE_ACCOUNT_JSON"],
-    ),
-    add_python="3.11",
-)
-```
-
-## from\_aws\_ecr
-
-```python
-from_aws_ecr(tag, secret=None, *, setup_dockerfile_commands=[],
-    force_build=False, add_python=None, **kwargs)
-```
-
-Build a Modal image from a private image in AWS Elastic Container Registry (ECR).
-
-You will need to pass a `modal.Secret` containing either IAM user credentials or OIDC
-configuration to access the target ECR registry.
-
-For IAM user authentication, set `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_REGION`.
-
-For OIDC authentication, set `AWS_ROLE_ARN` and `AWS_REGION`.
-
-IAM configuration details can be found in the AWS documentation for
-["Private repository policies"](https://docs.aws.amazon.com/AmazonECR/latest/userguide/repository-policies.html).
-
-For more details on using an AWS role to access ECR, see the [OIDC integration guide](https://modal.com/docs/guide/oidc-integration).
-
-See `Image.from_registry()` for information about the other parameters.
-
-**Parameters**
-
-<Parameter name="tag" type="str" description="Full ECR image URI." />
-<Parameter name="secret" type="_Secret | None" defaultValue="None" description="Secret with IAM or OIDC credentials for ECR." />
-<Parameter name="setup_dockerfile_commands" type="list[str]" defaultValue="[]" description="Extra Dockerfile lines run after ``FROM`` during base setup." />
-<Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
-<Parameter name="add_python" type="str | None" defaultValue="None" description="Optional standalone Python series to inject when the base image lacks Python." />
-<Parameter name="**kwargs" type="" description="Additional arguments forwarded to `from_registry`." />
-
-**Returns**
-
-An `Image` based on the private ECR image.
-
-**Usage**
-
-```python
-modal.Image.from_aws_ecr(
-    "000000000000.dkr.ecr.us-east-1.amazonaws.com/my-private-registry:my-version",
-    secret=modal.Secret.from_name(
-        "aws",
-        required_keys=["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_REGION"],
-    ),
-    add_python="3.11",
+modal.Image.from_registry(
+    "ghcr.io/my-org/my-image:latest",
+    secret=modal.Secret.from_name("my-registry-secret"),
 )
 ```
 
 ## from\_dockerfile
 
 ```python
-from_dockerfile(path, *, force_build=False, context_dir=None, env=None,
-    secrets=None, gpu=None, add_python=None, build_args={},
-    ignore=AUTO_DOCKERIGNORE)
+from_dockerfile(path, *, force_build=False, context_dir=None,
+    ignore=AUTO_DOCKERIGNORE, build_args={}, registry_secret=None, secrets=None,
+    env=None, gpu=None, add_python=None)
 ```
 
 Build a Modal image from a local Dockerfile.
@@ -857,17 +768,21 @@ Build a Modal image from a local Dockerfile.
 If your Dockerfile does not have Python installed, you can use the `add_python` parameter
 to specify a version of Python to add to the image.
 
+A `registry_secret` can be provided to pull the base image from a private registry.
+Currently this is supported only for single-stage Dockerfiles.
+
 **Parameters**
 
 <Parameter name="path" type="str | Path" description="Path to the Dockerfile on the local machine." />
 <Parameter name="force_build" type="bool" defaultValue="False" description="If True, skip cached image builds." />
 <Parameter name="context_dir" type="Path | str | None" defaultValue="None" description="Build context directory for resolving relative COPY paths." />
-<Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
-<Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables during the build." />
-<Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the builder container." />
-<Parameter name="add_python" type="str | None" defaultValue="None" description="Standalone Python version to add when the Dockerfile does not install Python." />
-<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile ``ARG`` values forwarded to the build." />
 <Parameter name="ignore" type="Sequence[str] | Callable[[Path], bool]" defaultValue="AUTO_DOCKERIGNORE" description="Ignore rules for the implicit context mount (defaults to auto ``.dockerignore`` behavior)." />
+<Parameter name="build_args" type="dict[str, str]" defaultValue="&#123;&#125;" description="Dockerfile ``ARG`` values forwarded to the build." />
+<Parameter name="registry_secret" type="_Secret | None" defaultValue="None" description="Optional Secret with credentials for pulling the base image from a private registry." />
+<Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets injected as environment variables in the build container." />
+<Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables set in the build container." />
+<Parameter name="gpu" type="str | None" defaultValue="None" description="GPU type to attach to the build container." />
+<Parameter name="add_python" type="str | None" defaultValue="None" description="Standalone Python version to add when the Dockerfile does not install Python." />
 
 **Returns**
 
@@ -914,6 +829,12 @@ image = modal.Image.from_dockerfile(
     "./Dockerfile",
     add_python="3.12",
     ignore=FilePatternMatcher.from_file("/path/to/dockerignore"),
+)
+
+# Pull the Dockerfile's base image from a private registry.
+image = modal.Image.from_dockerfile(
+    "./Dockerfile",
+    registry_secret=modal.Secret.from_name("my-registry-secret"),
 )
 ```
 

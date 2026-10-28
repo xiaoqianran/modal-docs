@@ -34,8 +34,9 @@ create(*args, app=None, name=None, tags=None, image=None, env=None,
     inbound_cidr_allowlist=None, volumes={}, pty=False, encrypted_ports=[],
     h2_ports=[], unencrypted_ports=[], custom_domain=None, proxy=None,
     include_oidc_identity_token=False, readiness_probe=None, verbose=False,
-    experimental_options=None, _experimental_enable_snapshot=False, client=None,
-    environment_name=None, pty_info=None, cidr_allowlist=None)
+    experimental_options=None, _experimental_enable_snapshot=False,
+    _experimental_persistent=False, client=None, environment_name=None,
+    pty_info=None, cidr_allowlist=None)
 ```
 
 Create a new Sandbox to run untrusted, arbitrary code.
@@ -52,7 +53,7 @@ The Sandbox's corresponding container will be created asynchronously.
 <Parameter name="env" type="dict[str, str | None] | None" defaultValue="None" description="Environment variables to set in the Sandbox." />
 <Parameter name="secrets" type="Collection[_Secret] | None" defaultValue="None" description="Secrets to inject into the Sandbox as environment variables." />
 <Parameter name="network_file_systems" type="dict[str | os.PathLike, _NetworkFileSystem]" defaultValue="&#123;&#125;" description="Network file systems to mount into the sandbox." />
-<Parameter name="timeout" type="int" defaultValue="300" description="Maximum lifetime of the sandbox in seconds." />
+<Parameter name="timeout" type="int | None" defaultValue="300" description="Maximum lifetime of the sandbox in seconds." />
 <Parameter name="idle_timeout" type="int | None" defaultValue="None" description="The amount of time in seconds that a sandbox can be idle before being terminated." />
 <Parameter name="workdir" type="str | None" defaultValue="None" description="Working directory of the sandbox." />
 <Parameter name="gpu" type="str | None" defaultValue="None" description="GPU reservation for the sandbox." />
@@ -65,7 +66,7 @@ The Sandbox's corresponding container will be created asynchronously.
 <Parameter name="outbound_cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of CIDRs the sandbox is allowed to access. If None, all CIDRs are allowed." />
 <Parameter name="outbound_domain_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of domain names the sandbox is allowed to access. Supports wildcard prefixes (``*.``); a bare ``&quot;*&quot;`` allows all domains. The outbound policy can be replaced later via `Sandbox._experimental_set_outbound_network_policy`." />
 <Parameter name="_experimental_outbound_policy" type="_OutboundPolicy | None" defaultValue="None" description="Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload. See `modal.experimental.OutboundPolicy`. This API is experimental and may change in the future." />
-<Parameter name="inbound_cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of CIDRs allowed to connect inbound to the sandbox (tunnels and connection tokens). If None, all CIDRs are allowed." />
+<Parameter name="inbound_cidr_allowlist" type="Sequence[str] | None" defaultValue="None" description="List of CIDRs allowed to connect inbound to the sandbox (encrypted tunnels and connection tokens). If None, all CIDRs are allowed." />
 <Parameter name="volumes" type="dict[str | os.PathLike, _Volume | _CloudBucketMount]" defaultValue="&#123;&#125;" description="Mount points for Modal Volumes and CloudBucketMounts." />
 <Parameter name="pty" type="bool" defaultValue="False" description="Enable a PTY for the Sandbox entrypoint command. When enabled, all output (stdout and stderr from the process) is multiplexed into stdout, and the stderr stream is effectively empty." />
 <Parameter name="encrypted_ports" type="Sequence[int]" defaultValue="[]" description="List of ports to tunnel into the sandbox. Encrypted ports are tunneled with TLS." />

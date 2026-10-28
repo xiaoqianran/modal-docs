@@ -7,7 +7,13 @@ billed per token.
 
 ## Create a Shared Endpoint
 
-Create a Shared Endpoint from the
+Pass `--shared` to create a Shared Endpoint from the CLI:
+
+```bash
+modal endpoint create --shared --model moonshotai/Kimi-K3
+```
+
+Shared Endpoints can also be created from the
 [**Endpoints**](https://modal.com/endpoints) tab in the dashboard.
 
 Once the Endpoint is ready, the dashboard provides its URL, model name, and

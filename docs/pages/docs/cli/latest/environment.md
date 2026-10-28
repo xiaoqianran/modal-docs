@@ -262,4 +262,5 @@ modal environment update [OPTIONS] CURRENT_NAME
 
 * `--set-name TEXT`: New name of the Environment.
 * `--set-web-suffix TEXT`: New web suffix of the Environment (empty string is no suffix).
+* `--set-image-builder-version TEXT`: New image builder version of the Environment (empty string uses the Workspace default).
 * `--help`: Show this message and exit.

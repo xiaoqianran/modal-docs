@@ -64,7 +64,7 @@ modal.Sandbox.create("echo", "hi", client=client, app=app)
 
 ```python
 from_oauth_credentials(cls, refresh_token, *, oauth_client_id,
-    oauth_client_secret)
+    oauth_client_secret=None, oauth_jwt_key=None)
 ```
 
 Constructor based on OAuth credentials; useful for managing Modal on behalf of third-party users.
@@ -73,7 +73,8 @@ Constructor based on OAuth credentials; useful for managing Modal on behalf of t
 
 <Parameter name="refresh_token" type="str" description="OAuth refresh token returned by Modal&#x27;s token endpoint." />
 <Parameter name="oauth_client_id" type="str" description="Modal-issued OAuth client ID, with an `oc-` prefix." />
-<Parameter name="oauth_client_secret" type="str" description="Modal-issued OAuth client secret, with an `ov-` prefix." />
+<Parameter name="oauth_client_secret" type="str | None" defaultValue="None" description="Modal-issued OAuth client secret, with an `ov-` prefix." />
+<Parameter name="oauth_jwt_key" type="str | None" defaultValue="None" description="Unencrypted RSA private key encoded as PEM, with literal or escaped newlines. Requires `modal[oauth]`." />
 
 **Returns**
 

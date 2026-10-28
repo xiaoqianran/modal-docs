@@ -31,12 +31,21 @@ modal endpoint [OPTIONS] COMMAND [ARGS]...
 
 Deploy a new Endpoint.
 
+Creates a Dedicated Endpoint by default, with support for custom weights and compute placement.
+Use --shared to serve a supported base model with Modal-managed capacity.
+
 Examples:
 
-Create an Endpoint from a base model:
+Create a Dedicated Endpoint from a base model:
 
 ```bash
 modal endpoint create --model Qwen/Qwen3.6-27B-FP8
+```
+
+Create a Shared Endpoint from a supported base model:
+
+```bash
+modal endpoint create --shared --model moonshotai/Kimi-K3
 ```
 
 Create an Endpoint with an explicit name:
@@ -75,12 +84,13 @@ modal endpoint create [OPTIONS]
 **Options**:
 
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
-* `--name TEXT`: Endpoint name. Defaults to inference-`{number}` if not provided.
+* `--name TEXT`: Endpoint name. If omitted, Modal chooses a name.
 * `--model TEXT`: Hugging Face repo ID for the base model architecture (e.g., 'Qwen/Qwen3.6-27B-FP8').  \[required]
-* `--routing-region TEXT`: Region to route inference requests through. Defaults to us-west.
-* `--compute-region TEXT`: Region to run Endpoint containers in. May be specified multiple times. This incurs a region selection price multiplier.
-* `--colocate-compute`: Run all containers within the routing region. This incurs a region selection price multiplier.
-* `--unauthenticated`: Allow unauthenticated HTTP requests to the endpoint.
+* `--shared`: Create a Shared Endpoint. Defaults to a Dedicated Endpoint.
+* `--routing-region TEXT`: Region to route inference requests through. Defaults to us-west. Shared Endpoint routing cannot currently be customized.
+* `--compute-region TEXT`: Region to run Dedicated Endpoint containers in. May be specified multiple times. This incurs a region selection price multiplier.
+* `--colocate-compute`: Run all Dedicated Endpoint containers within the routing region. This incurs a region selection price multiplier.
+* `--unauthenticated`: Allow unauthenticated HTTP requests to a Dedicated Endpoint.
 * `--custom-hf-repo TEXT`: Hugging Face repo ID for fine-tuned model weights.
 * `--custom-hf-revision TEXT`: Git revision for --custom-hf-repo.
 * `--custom-hf-token TEXT`: Hugging Face token for private --custom-hf-repo.

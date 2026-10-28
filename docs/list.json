@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-27T11:57:16.705Z",
+  "fetchedAt": "2026-10-28T12:34:48.749Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 347,
   "ok": 347,
@@ -90,7 +90,7 @@
       "source": "https://modal.com/docs/cli/latest/endpoint.md",
       "finalUrl": "https://modal.com/docs/cli/latest/endpoint.md",
       "path": "docs/cli/latest/endpoint.md",
-      "bytes": 8116,
+      "bytes": 8573,
       "stub": false
     },
     {
@@ -98,7 +98,7 @@
       "source": "https://modal.com/docs/cli/latest/environment.md",
       "finalUrl": "https://modal.com/docs/cli/latest/environment.md",
       "path": "docs/cli/latest/environment.md",
-      "bytes": 7487,
+      "bytes": 7613,
       "stub": false
     },
     {
@@ -218,7 +218,7 @@
       "source": "https://modal.com/docs/cli/latest/workspace.md",
       "finalUrl": "https://modal.com/docs/cli/latest/workspace.md",
       "path": "docs/cli/latest/workspace.md",
-      "bytes": 11236,
+      "bytes": 13230,
       "stub": false
     },
     {
@@ -882,7 +882,7 @@
       "source": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/dedicated-endpoints.md",
       "path": "docs/guide/dedicated-endpoints.md",
-      "bytes": 4324,
+      "bytes": 4339,
       "stub": false
     },
     {
@@ -938,7 +938,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 5234,
+      "bytes": 5612,
       "stub": false
     },
     {
@@ -1426,7 +1426,7 @@
       "source": "https://modal.com/docs/guide/shared-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
       "path": "docs/guide/shared-endpoints.md",
-      "bytes": 1817,
+      "bytes": 1959,
       "stub": false
     },
     {
@@ -2378,7 +2378,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/App.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/App.md",
       "path": "docs/sdk/py/latest/App.md",
-      "bytes": 33777,
+      "bytes": 34176,
       "stub": false
     },
     {
@@ -2410,7 +2410,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Client.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Client.md",
       "path": "docs/sdk/py/latest/Client.md",
-      "bytes": 2444,
+      "bytes": 2686,
       "stub": false
     },
     {
@@ -2458,7 +2458,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/config.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/config.md",
       "path": "docs/sdk/py/latest/config.md",
-      "bytes": 5835,
+      "bytes": 5870,
       "stub": false
     },
     {
@@ -2594,7 +2594,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Image.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Image.md",
       "path": "docs/sdk/py/latest/Image.md",
-      "bytes": 50441,
+      "bytes": 47215,
       "stub": false
     },
     {
@@ -2690,7 +2690,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Sandbox.md",
       "path": "docs/sdk/py/latest/Sandbox.md",
-      "bytes": 37451,
+      "bytes": 37504,
       "stub": false
     },
     {
@@ -2738,7 +2738,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/types.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/types.md",
       "path": "docs/sdk/py/latest/types.md",
-      "bytes": 21352,
+      "bytes": 21820,
       "stub": false
     },
     {
@@ -2762,7 +2762,7 @@
       "source": "https://modal.com/docs/sdk/py/latest/Workspace.md",
       "finalUrl": "https://modal.com/docs/sdk/py/latest/Workspace.md",
       "path": "docs/sdk/py/latest/Workspace.md",
-      "bytes": 12869,
+      "bytes": 14242,
       "stub": false
     },
     {
@@ -2778,7 +2778,7 @@
       "source": "https://modal.com/docs/sdk/py/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/py/releases.md",
       "path": "docs/sdk/py/releases.md",
-      "bytes": 74190,
+      "bytes": 77087,
       "stub": false
     }
   ],

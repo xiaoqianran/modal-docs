@@ -17,10 +17,85 @@ modal workspace [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
+* `member-tokens`: Manage Member API Tokens.
 * `members`: View the members of the current Workspace.
 * `proxy-tokens`: Manage the proxy tokens of the current Workspace.
 * `service-users`: Manage Service Users.
 * `settings`: Manage workspace settings.
+
+## `modal workspace member-tokens`
+
+Manage Member API Tokens.
+
+All Member Tokens are associated with a unique Member of the Workspace. Any requests to Modal using a
+Token are authenticated as the associated Member (and as such, are governed by the permissions that
+have been assigned to the specific Member). Workspace Owners and Managers can use [`modal environment roles update`](https://modal.com/docs/cli/latest/environment#modal-environment-roles-update)
+to update these permissions programmatically.
+
+This CLI allows users to list and delete the tokens associated to themselves. Workspace Owners
+and Managers can list all tokens in their Workspace, and can delete any of them.
+
+**Usage**:
+
+```shell
+modal workspace member-tokens [OPTIONS] COMMAND [ARGS]...
+```
+
+**Options**:
+
+* `--help`: Show this message and exit.
+
+**Commands**:
+
+* `delete`: Delete a Member Token in this Workspace.
+* `list`: List Member Tokens in the Workspace.
+
+### `modal workspace member-tokens delete`
+
+Delete a Member Token in this Workspace.
+
+Note that this action is irreversible. This will immediately invalidate the target token and will
+render it unable to authenticate with Modal.
+
+```bash
+# Delete the Token with ID `ak-REDACTED`
+modal workspace member-tokens delete ak-REDACTED
+```
+
+**Usage**:
+
+```shell
+modal workspace member-tokens delete [OPTIONS] TOKEN_ID
+```
+
+**Options**:
+
+* `--allow-missing`: Don't error if the Token doesn't exist.
+* `-y, --yes`: Run without pausing for confirmation.
+* `--help`: Show this message and exit.
+
+### `modal workspace member-tokens list`
+
+List Member Tokens in the Workspace. Workspace Managers and Owners can see all tokens in the
+Workspace.
+
+```bash
+modal workspace member-tokens list
+
+# Show list in JSON format:
+modal workspace member-tokens list --json
+```
+
+**Usage**:
+
+```shell
+modal workspace member-tokens list [OPTIONS]
+```
+
+**Options**:
+
+* `--json`: Output as JSON.
+* `--help`: Show this message and exit.
 
 ## `modal workspace members`
 
@@ -336,7 +411,7 @@ modal workspace service-users delete [OPTIONS] NAME
 
 **Options**:
 
-* `--allow-missing`: Don't error if the Volume doesn't exist.
+* `--allow-missing`: Don't error if the Service User doesn't exist.
 * `-y, --yes`: Run without pausing for confirmation.
 * `--help`: Show this message and exit.
 

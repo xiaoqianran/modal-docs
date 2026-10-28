@@ -598,6 +598,28 @@ Get the tags that are currently attached to the App.
 
 Tags as a map from key to value.
 
+## stop
+
+```python
+stop(self, *, client=None)
+```
+
+Stop the App.
+
+Stopping an App terminates all of its running containers and sandboxes and prevents
+new inputs from being processed.
+
+**Examples:**
+
+```python notest
+app = modal.App.lookup("my-app")
+app.stop()
+```
+
+**Parameters**
+
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use for the RPC." />
+
 ## logs
 
 ```python

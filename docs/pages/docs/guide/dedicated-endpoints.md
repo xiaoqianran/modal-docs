@@ -7,7 +7,7 @@ when you need control over autoscaling and regions, or dedicated capacity.
 
 ## Create a Dedicated Endpoint
 
-Create an Endpoint from the CLI:
+The CLI creates Dedicated Endpoints by default:
 
 ```bash
 modal endpoint create --name support-chat --model Qwen/Qwen3.5-4B

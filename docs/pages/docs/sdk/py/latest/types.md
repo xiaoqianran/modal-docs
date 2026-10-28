@@ -359,6 +359,18 @@ for a function log entry, this will contain the function call ID, the input ID, 
 <Parameter name="object_id" type="str" description="" />
 <Parameter name="context_ids" type="list[str]" description="" />
 
+## MemberTokenInfo
+
+**Attributes**
+
+<Parameter name="name" type="str | None" description="" />
+<Parameter name="token_id" type="str" description="" />
+<Parameter name="user_id" type="str" description="" />
+<Parameter name="username" type="str" description="" />
+<Parameter name="created_at" type="datetime" description="" />
+<Parameter name="last_used_at" type="datetime | None" description="" />
+<Parameter name="expires_at" type="datetime | None" description="" />
+
 ## MetricDefinition
 
 The name, unit, and meaning of an individual exportable series.

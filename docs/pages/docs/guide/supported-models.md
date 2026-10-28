@@ -38,7 +38,7 @@ For entries shown as model IDs, pass the ID to `modal endpoint create --model`.
 | Model                                                                                              | Input Modalities   |
 | -------------------------------------------------------------------------------------------------- | ------------------ |
 | [Beam 1.0 501B-A23B-FP8](/library/reflection/beam)                                                 | Text               |
-| `reflection/Beam-1.0-501B-A23B-NVFP4`                                                              | Text               |
+| [Beam 1.0 501B-A23B-NVFP4](/library/reflection/beam)                                               | Text               |
 | [DeepSeek V4 Flash](/library/deepseek/deepseek-v4-flash)                                           | Text               |
 | [DeepSeek V4 Flash Preview](/library/deepseek/deepseek-v4-flash-preview)                           | Text               |
 | [DeepSeek V4 Pro](/library/deepseek/deepseek-v4-pro)                                               | Text               |
@@ -85,6 +85,6 @@ For entries shown as model IDs, pass the ID to `modal endpoint create --model`.
 | [Qwen3.6 35B A3B FP8](/library/qwen/qwen3-6-35b-a3b-fp8)                                           | Text, Image        |
 | [Qwen3.8 2.4T A95B NVFP4](/library/qwen/qwen3-8-2-4t-a95b-nvfp4)                                   | Text               |
 | [Qwen3.8 27B](/library/qwen/qwen3-8-27b)                                                           | Text               |
-| `Qwen/Qwen3.8-Flash-Next`                                                                          | Text, Image        |
+| [Qwen3.8 Flash Next](/library/qwen/qwen3-8-flash-next-fp8)                                         | Text, Image        |
 | [Qwen3.8 Flash Next FP8](/library/qwen/qwen3-8-flash-next-fp8)                                     | Text, Image        |
 | [Step 5 Preview](/library/stepfun/step-5-preview)                                                  | Text, Image        |

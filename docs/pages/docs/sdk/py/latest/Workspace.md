@@ -463,3 +463,62 @@ Permanently delete a Service User.
 ws = modal.Workspace.from_context()
 ws.service_users.delete("test-service-user")
 ```
+
+## member\_tokens
+
+```python
+member_tokens: WorkspaceMemberTokenManager
+```
+
+Namespace for managing Member API Tokens in a Workspace.
+
+```python
+__init__(self, workspace)
+```
+
+### member\_tokens.list
+
+```python
+list(self)
+```
+
+List Member Tokens in the specified Workspace.
+
+If you are a Manager or an Owner of this Workspace, this method will return a list of all the
+Member Tokens in the Workspace. Otherwise, this method will only return the Tokens you have
+created.
+
+**Returns**
+
+A list of `MemberTokenInfo` dataclasses.
+
+**Usage**
+
+```python notest
+ws = modal.Workspace.from_context()
+for member_token in ws.member_tokens.list():
+    print(member_token)
+```
+
+### member\_tokens.delete
+
+```python
+delete(self, token_id, *, allow_missing=False)
+```
+
+Delete a Member Token in the specified Workspace.
+
+If you are a Workspace Manager or Owner, you can use this method to delete any Token in the
+Workspace. Otherwise, you can only delete Member Tokens that you have created.
+
+**Parameters**
+
+<Parameter name="token_id" type="str" description="The ID of the Member Token you would like to delete." />
+<Parameter name="allow_missing" type="bool" defaultValue="False" description="If `True`, do not throw an exception if the Member Token does not exist." />
+
+**Usage**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.member_tokens.delete(token_id="ak-REDACTED")
+```

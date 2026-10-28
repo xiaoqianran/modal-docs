@@ -24,7 +24,23 @@ Choose between two serving modes:
 ## Create an endpoint
 
 Choose a model from [supported models](/docs/guide/supported-models), which
-lists the serving modes each model supports. Then create an Endpoint from the
+lists the serving modes each model supports. Both CLI examples below require a
+[Proxy Token](#proxy-tokens).
+
+The CLI creates Dedicated Endpoints by default:
+
+```bash
+modal endpoint create --model Qwen/Qwen3.5-4B
+```
+
+Pass `--shared` to create a Shared Endpoint:
+
+```bash
+modal endpoint create --shared --model moonshotai/Kimi-K3
+```
+
+The command prints the Endpoint ID and a dashboard link to follow provisioning.
+You can also create an Endpoint from the
 [**Endpoints**](https://modal.com/endpoints) tab in the dashboard. To learn more
 about a model, browse the
 [Model Library](https://modal.com/library).
