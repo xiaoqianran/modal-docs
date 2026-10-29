@@ -2,14 +2,14 @@
 
 # 专用端点
 
-专用端点运行任何模型
-[模态库](https://modal.com/library)，或自定义权重，在隔离、
-自动缩放容器。当您需要控制自动缩放和
-区域或专用容量。
+专用端点运行
+[支持的模型](/docs/guide/supported-models#dedicated-endpoint-models),
+或兼容的自定义权重，在隔离的自动缩放容器上。使用它们
+当您需要控制自动扩展和区域或专用容量时。
 
 ## 创建专用端点
 
-从 CLI 创建端点：
+CLI 默认创建专用端点：
 
 ```bash
 modal endpoint create --name support-chat --model Qwen/Qwen3.5-4B
@@ -33,9 +33,9 @@ Modal SDK，包括 [`@app.server()`](/docs/guide/servers)。打开
 
 ## 提供自定义权重
 
-自定义权重使用兼容模态库模型的服务配方。经过
-该模型具有 `--model`，然后提供来自 Hugging Face 或 Modal 的权重
-音量。
+自定义重量使用兼容的服务配方
+[专用端点模型](/docs/guide/supported-models#dedicated-endpoint-models)。使用 `--model` 通过该模型，
+然后提供来自拥抱面或模态体积的权重。
 
 来自拥抱的脸：
 
@@ -85,11 +85,10 @@ modal endpoint create \
 共享 `Modal-Routing-Affinity-Key` 标头的请求将被路由到同一个容器
 尽最大努力，将对话的提示前缀保留在其中
 容器的缓存。参见
-[Affinity 路由](/docs/guide/endpoints#affinity-routing) 了解如何选择
+[亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择
 标头值。
 
 ## 指标
-
 **活动**视图显示随时间变化的请求量。使用**响应**进行检查
 个人请求和**容器**检查为其提供服务的容器。
 

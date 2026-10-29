@@ -12,7 +12,7 @@ class Workspace(modal.object.Object)
 hydrate(self, client=None)
 ```
 
-将本地对象与其在 Modal 服务器上的身份同步。
+将本地对象与其在 Modal 服务器上的标识同步。
 
 很少需要显式调用此方法，因为大多数操作
 需要时会懒洋洋地补充水分。主要用例是当您需要时
@@ -57,7 +57,7 @@ from_context(*, client=None)
 
 这将返回活动模态凭据进行身份验证的工作空间
 （即您的活动配置文件或 `MODAL_TOKEN_ID` / `MODAL_TOKEN_SECRET` 环境
-变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作空间
+变量）。如果在 Modal 容器内调用，它将返回该容器所在的工作区
 容器正在运行。
 
 ## 计费
@@ -92,7 +92,7 @@ report(self, *, start, end=None, resolution="d", tag_names=None)
 <Parameter name="start" type="datetime" description="Start of the report, inclusive and rounded to the beginning of the interval. Must be in UTC or timezone-naive (interpreted as UTC)." />
 <Parameter name="end" type="datetime | None" defaultValue="None" description="End of the report, exclusive. Must be in UTC or timezone-naive. Partial final intervals will be excluded from the report." />
 <Parameter name="resolution" type="str" defaultValue="&quot;d&quot;" description="Resolution, e.g. &quot;d&quot; for daily or &quot;h&quot; for hourly." />
-<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T43⟧ to include all tags in the report." />
+<Parameter name="tag_names" type="list[str] | None" defaultValue="None" description="List of tag names; each row will include the tag name and value in use for that object during the relevant time interval. Pass ⟦T49⟧ to include all tags in the report." />
 
 **退货**
 
@@ -119,7 +119,7 @@ summary(self, cycle=None)
 
 **参数**
 
-<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T48⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
+<Parameter name="cycle" type="str | datetime | None" defaultValue="None" description="Start of the summary, inclusive. Must be the first of a month, and must be in UTC or timezone-naive (interpreted as UTC). If provided as a string, it must either be formatted as an ISO 8601 month (YYYY-MM), or must be one of the convenience spellings &quot;this month&quot; or &quot;last month&quot;. If not provided, ⟦T54⟧ defaults to the first of the current month (in which case a summary is generated for the current billing cycle)." />
 
 **退货**
 
@@ -183,7 +183,7 @@ update(self, proxy_token_id, *, name)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T59⟧) to update." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T65⟧) to update." />
 <Parameter name="name" type="str" description="The updated name for the token." />
 
 **使用**
@@ -227,7 +227,7 @@ allow(self, proxy_token_id, environment_name)
 允许代理令牌对给定环境的请求进行身份验证。
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T60⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T66⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to allow access to." />
 
 **使用**
@@ -251,7 +251,7 @@ revoke(self, proxy_token_id, environment_name)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T61⟧) to operate on." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T67⟧) to operate on." />
 <Parameter name="environment_name" type="str" description="The name of the environment to revoke access from." />
 
 **使用**
@@ -274,7 +274,7 @@ delete(self, proxy_token_id)
 
 **参数**
 
-<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T62⟧) to delete." />
+<Parameter name="proxy_token_id" type="str" description="The token ID (⟦T68⟧) to delete." />
 
 **使用**
 
@@ -347,7 +347,7 @@ create(self, name, *, expires_in)
 **参数**
 
 <Parameter name="name" type="str" description="The name of the new Service User. Must consistent only of alphanumeric, &#x27;-&#x27;, or &#x27;_&#x27; characters." />
-<Parameter name="expires_in" type="int | None" description="An expiration time, in seconds, after which the token will stop working. If ⟦T64⟧, the token will never expire." />
+<Parameter name="expires_in" type="int | None" description="An expiration time, in seconds, after which the token will stop working. If ⟦T70⟧, the token will never expire." />
 
 **退货**
 
@@ -405,7 +405,7 @@ info(self, name)
 
 **退货**
 
-包含有关服务用户的信息的`ServiceUserInfo`数据类。
+包含服务用户信息的`ServiceUserInfo`数据类。
 
 **使用**
 
@@ -445,11 +445,69 @@ delete(self, name, *, allow_missing=False)
 **参数**
 
 <Parameter name="name" type="str" description="The name of the Service User to delete." />
-<Parameter name="allow_missing" type="bool" defaultValue="False" description="If ⟦T68⟧, do not throw an exception if the Service User does not exist." />
+<Parameter name="allow_missing" type="bool" defaultValue="False" description="If ⟦T74⟧, do not throw an exception if the Service User does not exist." />
 
 **使用**
 
 ```python notest
 ws = modal.Workspace.from_context()
 ws.service_users.delete("test-service-user")
+```
+
+## 成员\_令牌
+
+```python
+member_tokens: WorkspaceMemberTokenManager
+```
+用于管理工作空间中的成员 API 令牌的命名空间。
+
+```python
+__init__(self, workspace)
+```
+
+### 成员\_tokens.list
+
+```python
+list(self)
+```
+
+列出指定工作区中的成员令牌。
+
+如果您是此工作区的经理或所有者，此方法将返回所有工作区的列表
+工作区中的成员令牌。否则，该方法只会返回您拥有的Token
+创建的。
+
+**退货**
+
+`MemberTokenInfo` 数据类列表。
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+for member_token in ws.member_tokens.list():
+    print(member_token)
+```
+
+### 成员\_tokens.delete
+
+```python
+delete(self, token_id, *, allow_missing=False)
+```
+
+删除指定工作区中的成员令牌。
+
+如果您是工作区管理员或所有者，您可以使用此方法删除工作区中的任何 Token
+工作区。否则，您只能删除您创建的会员令牌。
+
+**参数**
+
+<Parameter name="token_id" type="str" description="The ID of the Member Token you would like to delete." />
+<Parameter name="allow_missing" type="bool" defaultValue="False" description="If ⟦T76⟧, do not throw an exception if the Member Token does not exist." />
+
+**使用**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.member_tokens.delete(token_id="ak-REDACTED")
 ```

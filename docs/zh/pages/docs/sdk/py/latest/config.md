@@ -12,7 +12,8 @@
 1. Modal API 令牌使用 `MODAL_TOKEN_ID` 和 `MODAL_TOKEN_SECRET`。的
    `modal token set` 命令将这些值存储在`.modal.toml` 中。
 2. 第三方 OAuth 集成通常会注入 `MODAL_OAUTH_REFRESH_TOKEN`，
-   `MODAL_OAUTH_CLIENT_ID`和`MODAL_OAUTH_CLIENT_SECRET`进入流程。
+   `MODAL_OAUTH_CLIENT_ID`，以及 `MODAL_OAUTH_CLIENT_SECRET` 或
+   `MODAL_OAUTH_JWT_KEY` 进入流程。
 
 两种身份验证方法不能组合使用，并且所有值
 必须提供所选方法。
@@ -113,12 +114,12 @@ get(self, key, *, profile=None, use_env=True)
 解决顺序（优先级最高）：
 
 1. 环境变量`MODAL_<KEY>`（下划线分隔，大写），当`use_env`为True时。
-2. `.modal.toml` 中命名的配置文件。
+2. `.modal.toml` 中的命名配置文件。
 3. 该设置的内置默认值。
 
 **参数**
 
-<Parameter name="key" type="str" description="Setting name (for example `⟦T51⟧⟦T52⟧⟦T53⟧⟦T54⟧⟦T55⟧` module docs." />
+<Parameter name="key" type="str" description="Setting name (for example `⟦T52⟧⟦T53⟧⟦T54⟧⟦T55⟧⟦T56⟧` module docs." />
 <Parameter name="profile" type="str | None" defaultValue="None" description="Profile section to read from the TOML file; defaults to the active profile." />
 <Parameter name="use_env" type="bool" defaultValue="True" description="When False, skip environment variables and read only from the file or defaults." />
 

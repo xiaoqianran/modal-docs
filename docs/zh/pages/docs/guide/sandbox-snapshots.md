@@ -6,7 +6,7 @@
 并稍后恢复。这对于：
 
 * 减少启动延迟
-* 创建自定义环境供您的沙箱运行
+* 创建自定义环境供您的沙盒运行
 * 备份沙箱的状态以进行调试
 * 以相同的初始状态运行大规模实验
 * 分支沙箱的状态以独立测试不同的代码更改
@@ -21,7 +21,7 @@ Modal 目前支持三种不同类型的 Sandbox 快照：
 
 不同的快照类型有不同的保留策略：
 
-|快照类型|默认保留期限 |
+|快照类型 |默认保留期限 |
 | ------------------- | ------------------------ |
 |文件系统快照 |创建后 30 天 |
 |目录快照 |创建后 30 天 |
@@ -445,7 +445,9 @@ _ = sb2.UnmountImage(ctx, "/project", nil)
 
 </Callout>沙箱内存快照是沙箱整个状态的副本，包括内存中和文件系统上的状态。稍后可以恢复这些快照以创建新的沙箱，它是原始沙箱的精确克隆。
 
-要拍摄内存快照，请创建一个启用内存快照的沙盒，然后调用其实验性快照方法，该方法返回一个`SandboxSnapshot`：
+两个 [运行时](/docs/guide/sandboxes#runtimes) 都支持内存快照，我们建议将内存快照与 `runtime="vm"` 结合使用。
+
+要拍摄内存快照，请创建一个启用内存快照的沙箱，然后调用其实验性快照方法，该方法返回一个`SandboxSnapshot`：
 
 <CodeTabs>
   {#snippet python()}
@@ -463,6 +465,7 @@ sb = modal.Sandbox.create(
     app=app,
     # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
     image=modal.Image.from_name("sandbox-snapshot-base"),
+    runtime="vm",
     _experimental_enable_snapshot=True,
 )
 
@@ -481,6 +484,7 @@ const snapshotImage = modal.images
 
 const sb = await modal.sandboxes.create(app, snapshotImage, {
   command: ["python3", "-m", "http.server", "8000"],
+  runtime: "vm",
   experimentalEnableSnapshot: true,
 });
 console.log(`Performing snapshot of ${sb.sandboxId} ...`);
@@ -498,6 +502,7 @@ snapshotImage := mc.Images.FromRegistry("python:3.13-slim", nil).DockerfileComma
 
 sb, _ := mc.Sandboxes.Create(ctx, app, snapshotImage, &modal.SandboxCreateParams{
 	Command:                    []string{"python3", "-m", "http.server", "8000"},
+	Runtime:                    modal.SandboxRuntimeVM,
 	ExperimentalEnableSnapshot: true,
 })
 fmt.Printf("Performing snapshot of %s ...\n", sb.SandboxID)
@@ -527,7 +532,6 @@ print(reply)  # <!DOCTYPE HTML><html lang...
 ```
 
 {/片段}
-
 {#snippet javascript()}
 
 ```javascript notest
@@ -569,6 +573,7 @@ sb2.Terminate(ctx, nil)
 ```
 
 {/片段} </CodeTabs>
+
 新沙箱将是原始沙箱的副本。所有正在运行的进程仍将运行，处于与快照时相同的状态，并且对文件系统所做的任何更改都将可见。
 
 要稍后从快照恢复，请保存其 ID。然后通过该 ID 查找快照并从中恢复：
@@ -608,9 +613,7 @@ savedSnapshot, _ := mc.SandboxSnapshots.FromID(ctx, snapshotID, nil)
 sandbox, _ := mc.Sandboxes.ExperimentalFromSnapshot(ctx, savedSnapshot, nil)
 ```
 
-{/片段} </CodeTabs>
-
-请注意，这些方法是*实验性的*，我们将来可能会更改它们。
+{/片段} </CodeTabs>请注意，这些方法是*实验性的*，我们将来可能会更改它们。
 
 ### 重新快照
 
@@ -623,7 +626,7 @@ sandbox, _ := mc.Sandboxes.ExperimentalFromSnapshot(ctx, savedSnapshot, nil)
   {#snippet python()}
 
 ```python notest
-sandbox_1 = modal.Sandbox.create(_experimental_enable_snapshot=True)
+sandbox_1 = modal.Sandbox.create(runtime="vm", _experimental_enable_snapshot=True)
 
 # snapshot_1 has a lifetime of 7 days from creation
 snapshot_1 = sandbox_1._experimental_snapshot()
@@ -641,6 +644,7 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 
 ```javascript notest
 const sandbox1 = await modal.sandboxes.create(app, image, {
+  runtime: "vm",
   experimentalEnableSnapshot: true,
 });
 // snapshot1 has a lifetime of 7 days from creation
@@ -659,6 +663,7 @@ const snapshot2 = await sandbox2.experimentalSnapshot();
 
 ```go notest
 sandbox1, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Runtime:                    modal.SandboxRuntimeVM,
 	ExperimentalEnableSnapshot: true,
 })
 // snapshot1 has a lifetime of 7 days from creation

@@ -11,12 +11,12 @@
   大型且功能强大的语言模型可以理解自然语言中的任务，因此您可以
   精心设计自然语言“提示”以引发所需的行为。
 
-* [**微调**](https://modal.com/docs/examples/llm-finetuning):
+* [**微调**](https://modal.com/docs/guide/training-quickstart):
   这些相同的语言模型通过代表任务的数据集的梯度下降进行训练，
   并且可以通过代表您的任务的数据集的梯度下降来进一步训练它们。
 
 * **从头开始训练**：
-  如果您有足够的数据来完成您的任务，您可以扔掉预训练的模型并创建自己的模型。
+  如果你有足够的数据来完成你的任务，你可以扔掉预训练的模型并创建你自己的模型。
 
 每一步都会增加额外的工程复杂性，但也会带来卓越的性价比帕累托前沿
 为了您的任务。尺寸十分之一的微调模型通常优于更通用的模型，
@@ -279,7 +279,7 @@ class ModelHyperparameters:
 
 它将跨 8 个容器并行训练 8 个模型，每个模型
 使用不同的超参数，改变头的数量（`n_heads`），
-`context_size`（Karpathy 称为“区块大小”），以及 dropout 率 (`dropout`)。跑进去并行我们需要使用[`starmap`方法](https://modal.com/docs/guide/scale#parallel-execution-of-inputs)。
+`context_size`（Karpathy 称为“区块大小”）和 dropout 率 (`dropout`)。跑进去并行我们需要使用[`starmap`方法](https://modal.com/docs/guide/scale#parallel-execution-of-inputs)。
 
 我们训练所有模型直到第一个检查点，然后提前停止，所以我们
 可以比较验证损失。
@@ -447,7 +447,7 @@ def monitor_training():
 请注意，有 8 个模型进行训练，其中训练量最低的一个
 第 600 步的验证损失继续训练到 3000 个步骤。
 
-## 在训练期间和之后在 Modal 上为 SLM 提供服务
+## 在训练期间和训练之后在 Modal 上为 SLM 提供服务
 
 因为我们的权重存储在分布式 Volume 中，
 我们可以部署基于它们的推理函数，无需任何额外的工作——

@@ -62,7 +62,7 @@ A10 实例最多支持 4 个 GPU（最高 96 GB GPU RAM）。请注意，请求
 GPU 始终连接到同一台物理机器。
 
 ## 选择 GPU
-对于运行（而不是训练）神经网络，我们建议从
+对于运行（而不是训练）神经网络，我们建议开始
 与[L40S](https://resources.nvidia.com/en-us-l40s/l40s-datasheet-28413)，
 它提供了成本和性能的完美平衡以及 48 GB GPU
 RAM 用于存储模型权重和激活。
@@ -203,9 +203,9 @@ def run():
 
 或者看一下使用 GPU 的模态应用程序的一些示例：
 
-* [为你的宠物微调角色 LoRA](/docs/examples/diffusers_lora_finetune)
 * [大型 GPU 上的快速 LLM 推理](/docs/examples/llm_inference)
 * [使用 CLI、API 和 Web UI 实现稳定扩散](/docs/examples/text_to_image)
+* [微调模型来绘制花朵](/docs/examples/paint_flowers)
 * [渲染 Blender 视频](/docs/examples/blender_video)
 
 <YoutubeEmbed videoId="MLvC7W_b6SA"/>

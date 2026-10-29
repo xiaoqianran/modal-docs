@@ -2,9 +2,9 @@
 
 # 端点
 
-模态端点允许您从以下位置部署模型
-[模态库](https://modal.com/library) - 或您自己的自定义权重 - 作为
-生产就绪的推理 API。
+模态端点让您可以部署
+[支持的开放模型](/docs/guide/supported-models) - 或您自己的自定义
+权重——作为生产就绪的推理 API。
 
 * **快速推理** - 调整开源服务引擎，具有推测性
   在 Modal 的低延迟请求代理后面支持解码。
@@ -17,22 +17,40 @@
 有两种服务模式可供选择：
 
 |              | [共享端点](/docs/guide/shared-endpoints) | [专用端点](/docs/guide/dedicated-endpoints) |
-| ------------ | ------------------------------------------------ | ------------------------------------------------------------------ |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | **最适合** |快速、完全托管的推理 |隔离容量和定制模型|
-| **型号** |模态库中选定的模型 |所有模态库模型，以及自定义权重 |
-| **计费** |每个代币 |计算资源|
-| **容量** |由莫代尔管理|可配置的自动缩放，包括缩放至零 |
+| **型号** | [共享模型](/docs/guide/supported-models#shared-endpoint-models) | [专用模型](/docs/guide/supported-models#dedicated-endpoint-models)，加上自定义权重 |
+| **计费** |每个代币 |计算资源|| **容量** |由莫代尔管理|可配置的自动缩放，包括缩放至零 |
 
 ## 创建端点
 
-浏览[模态库](https://modal.com/library)选择模型并查看
-支持哪些服务模式。然后从以下位置创建一个端点
-仪表板中的 [**端点**](https://modal.com/endpoints) 选项卡。
+从[支持的模型](/docs/guide/supported-models)中选择一个模型，
+列出各型号支持的服务模式。下面的两个 CLI 示例都需要
+[代理令牌](#proxy-tokens)。
+
+CLI 默认创建专用端点：
+
+```bash
+modal endpoint create --model Qwen/Qwen3.5-4B
+```
+
+通过 `--shared` 创建共享端点：
+
+```bash
+modal endpoint create --shared --model moonshotai/Kimi-K3
+```
+
+该命令打印端点 ID 和仪表板链接以跟踪配置。
+您还可以从以下位置创建端点
+仪表板中的 [**端点**](https://modal.com/endpoints) 选项卡。了解更多
+关于型号，请浏览
+[模型库](https://modal.com/library)。
 
 ## 代理代币
 
 共享端点始终需要
-[代理令牌](/docs/guide/webhook-proxy-auth)。专用端点需要一个默认情况下。使用 CLI 创建一个：
+[代理令牌](/docs/guide/webhook-proxy-auth)。专用端点需要一个
+默认情况下。使用 CLI 创建一个：
 
 ```bash
 modal workspace proxy-tokens create
@@ -80,7 +98,6 @@ curl "<your-endpoint-url>/v1/chat/completions" \
     "messages": [{ "role": "user", "content": "Hello!" }]
   }'
 ```
-
 请参阅[端点集成](/docs/guide/endpoint-integrations)进行连接
 将 OpenCode、Codex 和 Claude Code 等编码代理连接到共享端点。
 

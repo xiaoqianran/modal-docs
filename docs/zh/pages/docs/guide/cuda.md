@@ -96,7 +96,7 @@ CUDA Runtime API 通常作为更大的 [NVIDIA CUDA Toolkit](https://docs.nvidia
 ## 安装 GPU 加速的 `torch` 和 `transformers` 以及 `pip_install`
 
 CUDA工具包的组件可以通过`pip`安装，
-通过 PyPI 包，如 [`nvidia-cuda-runtime-cu12`](https://pypi.org/project/nvidia-cuda-runtime-cu12/)
+通过 PyPI 包，例如 [`nvidia-cuda-runtime-cu12`](https://pypi.org/project/nvidia-cuda-runtime-cu12/)
 和[`nvidia-cuda-nvrtc-cu12`](https://pypi.org/project/nvidia-cuda-nvrtc-cu12/)。
 这些组件被列为一些流行的 GPU 加速 Python 库的依赖项，例如 `torch`。
 
@@ -115,7 +115,7 @@ def run_torch():
     return has_cuda
 ```
 
-许多用于运行开放权重模型的库，例如`transformers`和`vllm`，
+许多用于运行开放权重模型的库，例如 `transformers` 和 `vllm`，
 在引擎盖下使用`torch`，因此可以以相同的方式安装：
 
 ```python
@@ -135,7 +135,7 @@ def run_transformers():
 许多其他依赖于其组件作为普通系统包安装的库无法找到它们。
 
 对于这些情况，我们建议您使用已将完整 CUDA 堆栈安装为系统包的映像
-并且所有环境变量设置正确，例如[Docker Hub上的`nvidia/cuda:*-devel-*`镜像](https://hub.docker.com/r/nvidia/cuda)。
+并且所有环境变量设置正确，例如 [Docker Hub 上的`nvidia/cuda:*-devel-*` 镜像](https://hub.docker.com/r/nvidia/cuda)。
 
 [TensorRT-LLM](https://nvidia.github.io/TensorRT-LLM/overview.html) 是一种推理引擎，可加速和优化大型语言模型的性能。它需要完整的 CUDA 工具包才能安装。
 
@@ -185,5 +185,5 @@ def run_tiny_model():
 要查看这些安装模式的实际效果，请查看以下示例：
 
 * [大型 GPU 上的快速 LLM 推理](/docs/examples/llm_inference)
-* [为您的宠物微调角色 LoRA](/docs/examples/diffusers_lora_finetune)
 * [优化的通量推断](/docs/examples/flux)
+* [微调模型来绘制花朵](/docs/examples/paint_flowers)

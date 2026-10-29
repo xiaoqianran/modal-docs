@@ -5,7 +5,7 @@
 Modal 提供了多种开始训练的方法。
 
 最简单的方法是使用 [Modal Dojo](https://dojo.modal.dev)，一个为您提供构建块的开源库，
-调整默认值和可观测性，以实现简单的生产级 SFT 和 RL。
+简单的生产级后期训练所需的调整默认值和可观察性：监督微调 (SFT) 和强化学习 (RL)。
 
 对于 Tinker 兼容的 API，您可以部署 [Spindle](/docs/guide/spindle)
 服务器。

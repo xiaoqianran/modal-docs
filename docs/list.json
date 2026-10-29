@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-10-28T12:34:48.749Z",
+  "fetchedAt": "2026-10-29T12:45:20.696Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 347,
   "ok": 347,
@@ -770,7 +770,7 @@
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 27259,
+      "bytes": 27881,
       "stub": false
     },
     {
@@ -1346,7 +1346,7 @@
       "source": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-snapshots.md",
       "path": "docs/guide/sandbox-snapshots.md",
-      "bytes": 28042,
+      "bytes": 28359,
       "stub": false
     },
     {

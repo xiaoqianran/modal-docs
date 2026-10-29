@@ -240,7 +240,7 @@ vllm_cache_vol = modal.Volume.from_name("vllm-cache", create_if_missing=True)
 我们将运行 8 位浮点格式的较小模型。
 Hopper 和更高版本的 GPU 原生支持这种格式。
 为了最大化吞吐量，我们希望确保我们的推理是
-[计算限制](https://modal.com/gpu-glossary/perf/compute-bound):
+[计算限制](https://modal.com/gpu-glossary/perf/compute-bound)：
 瓶颈不是从内存加载权重/KV 缓存，
 它正在对这些值执行计算。
 粗略地说，我们希望能够组装一批
@@ -405,9 +405,6 @@ data_root = Path("/data")
 
 ```
 
-请注意，v2 卷仍处于测试阶段，因此可能会丢失数据。这对于大多数批处理作业来说是可以接受的，这些作业从外部提取数据
-真相的来源。
-
 下面的`transform`函数对包含数据的文件夹进行操作
 每个文件一份归档
 （采用 [NetCDF](https://en.wikipedia.org/wiki/NetCDF)/`.nc` 格式）。
@@ -471,6 +468,7 @@ def _transform_filing_batch(raw_filing_paths: list[Path]) -> list[Filing | None]
 
 
 ```
+
 因为这些容器的扩展成本低廉，并且仅需要
 管道期间短暂爆发，我们为容器设置`scaledown_window`
 比默认的五分钟低得多的值——这里是五秒。
@@ -482,7 +480,8 @@ def _transform_filing_batch(raw_filing_paths: list[Path]) -> list[Filing | None]
 三十多年前的日常档案档案。
 
 我们使用 `requests` 库从 API 中提取数据。
-我们将下载大数据（可能是兆字节到几千兆字节）文件的并发性较低，因此运行异步 Web 客户端几乎没有什么好处。
+我们将下载大数据（可能是兆字节到几千兆字节）
+文件的并发性较低，因此运行异步 Web 客户端几乎没有什么好处。
 
 ```python
 scraper_image = modal.Image.debian_slim(python_version="3.13").uv_pip_install(
@@ -536,11 +535,11 @@ def extract(day: dt.date) -> str | None:
 ```
 
 ## 附录
+
 该代码的其余部分由实用程序函数和样板文件组成
 主要代码如上。
 
 ### 用于转换 SEC 文件的实用程序
-
 本节中的代码用于转换、规范化和其他处理
 从 SEC 下载的原始文件。
 

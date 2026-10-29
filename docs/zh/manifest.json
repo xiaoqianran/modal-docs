@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "3e790d1f1998cb814899c946b1e8113f491a9e07",
-      "translatedAt": "2026-10-26T12:42:51.221Z",
-      "bytes": 27856
+      "hash": "a62fc25cb2cfcbbabde6ec935447d10fbcac7a6b",
+      "translatedAt": "2026-10-29T12:45:49.062Z",
+      "bytes": 27680
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -57,9 +57,9 @@
       "bytes": 3119
     },
     "docs/cli/latest/endpoint.md": {
-      "hash": "17ea5641bad400f188f1cc8ddcfbc1622385a9b2",
-      "translatedAt": "2026-10-17T10:29:03.147Z",
-      "bytes": 8006
+      "hash": "cbeb9560e68428220487751c8386ba90a52ce5b7",
+      "translatedAt": "2026-10-29T12:45:34.416Z",
+      "bytes": 8423
     },
     "docs/cli/latest/image.md": {
       "hash": "74678df36d4e2815b93db4f0f80f7a6995b9dd14",
@@ -77,9 +77,9 @@
       "bytes": 988
     },
     "docs/cli/latest/environment.md": {
-      "hash": "26ca0ac32bb18b294a74f3951a10e0d6e583a68c",
-      "translatedAt": "2026-09-29T12:36:07.120Z",
-      "bytes": 7161
+      "hash": "3b0085d9fe9569f148391b32a57d2aed1dc144fe",
+      "translatedAt": "2026-10-29T12:45:44.609Z",
+      "bytes": 7282
     },
     "docs/cli/latest/run.md": {
       "hash": "d0d696394ed87874185305f855b5fd209f8a18f2",
@@ -127,9 +127,9 @@
       "bytes": 5283
     },
     "docs/cli/latest/workspace.md": {
-      "hash": "109c872260c770d80787a28871c4c3b9aef19f67",
-      "translatedAt": "2026-10-17T10:29:39.271Z",
-      "bytes": 10784
+      "hash": "80303d78374362e4da4516baf4152cdb79fa3725",
+      "translatedAt": "2026-10-29T12:46:01.061Z",
+      "bytes": 12749
     },
     "docs/examples.md": {
       "hash": "99ea2028532f0a8dd61031cd1c27e5841b0d42a4",
@@ -302,9 +302,9 @@
       "bytes": 6930
     },
     "docs/examples/hello_world.md": {
-      "hash": "901f08a5fd148ea891439f5738eee63ebdd96740",
-      "translatedAt": "2026-08-08T18:28:24.075Z",
-      "bytes": 3973
+      "hash": "e11933c7ee8ae6cb6a7a7a3a07d2068b210bb6b3",
+      "translatedAt": "2026-10-29T12:45:53.518Z",
+      "bytes": 3964
     },
     "docs/examples/inkling_small.md": {
       "hash": "21833a2cece7bf097b744b4e9ce8f9acdcfd4345",
@@ -317,9 +317,9 @@
       "bytes": 10529
     },
     "docs/examples/hp_sweep_gpt.md": {
-      "hash": "d2ff16727c8f0f16a6ce0b1129f532572cb1a8f8",
-      "translatedAt": "2026-08-08T18:28:25.900Z",
-      "bytes": 28720
+      "hash": "0d74cd2dce75b2c4c1afecbcec41b2f9564c51d2",
+      "translatedAt": "2026-10-29T12:46:01.249Z",
+      "bytes": 28725
     },
     "docs/examples/liquidai_embeddings_server.md": {
       "hash": "dab4961fa95c38a7c9672be08754d97359894dbe",
@@ -467,14 +467,14 @@
       "bytes": 24428
     },
     "docs/guide.md": {
-      "hash": "3f8ff287345597ef6f9f8bd4593c6a3c991982b2",
-      "translatedAt": "2026-10-24T10:44:01.391Z",
-      "bytes": 3559
+      "hash": "839d25dc640e8f023f9e195bb9f70956460c0222",
+      "translatedAt": "2026-10-29T12:46:05.867Z",
+      "bytes": 3524
     },
     "docs/examples/vllm_throughput.md": {
-      "hash": "5d2c3d7a100277131ad5ec7b2112ac2e95bb403f",
-      "translatedAt": "2026-08-08T18:28:53.735Z",
-      "bytes": 22974
+      "hash": "c38e02eaff55938cde87922eb362087fd44b929f",
+      "translatedAt": "2026-10-29T12:46:11.563Z",
+      "bytes": 22792
     },
     "docs/guide/async.md": {
       "hash": "2e6a8748362728d12c9f672c3beda34e9167e11a",
@@ -532,9 +532,9 @@
       "bytes": 7599
     },
     "docs/guide/cuda.md": {
-      "hash": "d17bfdc90d4ca7d4782f4808f56e80594ccb09a1",
-      "translatedAt": "2026-10-20T11:19:37.843Z",
-      "bytes": 9611
+      "hash": "af906ca2b18de63085279ce8248b490353dd4470",
+      "translatedAt": "2026-10-29T12:46:18.684Z",
+      "bytes": 9605
     },
     "docs/guide/dataset-ingestion.md": {
       "hash": "c63c7491991c6d825e5e81ef0b7775a9c7650f03",
@@ -547,9 +547,9 @@
       "bytes": 4873
     },
     "docs/guide/audit-logs.md": {
-      "hash": "70623fbb805c36a72acf54ac99b8dfe57a35897c",
-      "translatedAt": "2026-10-20T11:20:42.664Z",
-      "bytes": 24028
+      "hash": "b32fbf339e7cfec10a7e63c0141cc61f4671790b",
+      "translatedAt": "2026-10-29T12:47:12.785Z",
+      "bytes": 24553
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "8e4cc4a42620091b18c9e142ac562c63dd840ec4",
-      "translatedAt": "2026-10-10T12:17:45.058Z",
-      "bytes": 4251
+      "hash": "80d8648f0b6a94cd4a60b44a1251aade1fef02c6",
+      "translatedAt": "2026-10-29T12:46:28.759Z",
+      "bytes": 4858
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -632,9 +632,9 @@
       "bytes": 2143
     },
     "docs/guide/gpu.md": {
-      "hash": "d97228b3ab7e2de94e92a7329d033746198d0c22",
-      "translatedAt": "2026-09-16T11:18:56.290Z",
-      "bytes": 7469
+      "hash": "5c4f153f28ba21f9b3143addbb7f1944276c6b70",
+      "translatedAt": "2026-10-29T12:46:36.866Z",
+      "bytes": 7457
     },
     "docs/guide/job-queue.md": {
       "hash": "7a5152e855ad73ba499f402f707b41ff962e9e69",
@@ -697,9 +697,9 @@
       "bytes": 4833
     },
     "docs/guide/multi-node-training.md": {
-      "hash": "0b1cebb2ea36e307f06e5b28be818c3918d84fcb",
-      "translatedAt": "2026-09-30T12:21:28.814Z",
-      "bytes": 5032
+      "hash": "02c07bff3428dfe24c5e1f2505de04b833848e7e",
+      "translatedAt": "2026-10-29T12:46:38.676Z",
+      "bytes": 5042
     },
     "docs/guide/oidc-integration.md": {
       "hash": "258486fcd479be084e222adc2d9261e5cd45c872",
@@ -807,9 +807,9 @@
       "bytes": 22004
     },
     "docs/guide/sandbox-snapshots.md": {
-      "hash": "07971b6c79a44ba35fce6cc2727f0fdcdd7cef13",
-      "translatedAt": "2026-10-24T10:44:20.469Z",
-      "bytes": 26863
+      "hash": "8d18f8a8155bfa0611bc1e04433283a94c305b5f",
+      "translatedAt": "2026-10-29T12:46:50.306Z",
+      "bytes": 27172
     },
     "docs/guide/scale.md": {
       "hash": "9ea9d4b810fc1033c28c1ef99a0c09c0c31fdbd0",
@@ -902,9 +902,9 @@
       "bytes": 7482
     },
     "docs/guide/volumes.md": {
-      "hash": "3155a404447bae3c4beeb97b1ad92b5e83833aa8",
-      "translatedAt": "2026-08-27T17:33:33.521Z",
-      "bytes": 24575
+      "hash": "e9c4cb2b082cbc0e7be9b96ae7502444c9f4f69c",
+      "translatedAt": "2026-10-29T12:47:28.478Z",
+      "bytes": 24313
     },
     "docs/sdk/go/latest/Allowlist.md": {
       "hash": "83cf87e357688e095723ab39eb571571be393572",
@@ -1232,9 +1232,9 @@
       "bytes": 58828
     },
     "docs/sdk/py/latest/Client.md": {
-      "hash": "076ab40a6456772ea2769a179ed189168ecde05e",
-      "translatedAt": "2026-08-29T12:37:55.821Z",
-      "bytes": 2406
+      "hash": "eca25869241c6d99983abb977ea57ba1ec899881",
+      "translatedAt": "2026-10-29T12:47:32.350Z",
+      "bytes": 2643
     },
     "docs/sdk/py/latest/CloudBucketMount.md": {
       "hash": "7700e50d146994580237450e2e3cf79a78e51aa1",
@@ -1242,9 +1242,9 @@
       "bytes": 3806
     },
     "docs/sdk/py/latest/App.md": {
-      "hash": "ef6199fa7627f7169ac73ab8f78a8361650e2b45",
-      "translatedAt": "2026-10-17T10:32:33.661Z",
-      "bytes": 33345
+      "hash": "50cfc7cf40234f4ad4a7f35e08a2ac86b378ee44",
+      "translatedAt": "2026-10-29T12:47:34.215Z",
+      "bytes": 33743
     },
     "docs/sdk/py/latest/Cls.md": {
       "hash": "9fb9ce7f1a81f0c8adbdb017c7ac640f5ab79ea3",
@@ -1327,9 +1327,9 @@
       "bytes": 8477
     },
     "docs/sdk/py/latest/Image.md": {
-      "hash": "c809bb7367f432f11277f73b75b930167c799dc6",
-      "translatedAt": "2026-08-13T07:45:57.685Z",
-      "bytes": 49050
+      "hash": "384d34168bf03beb6d64fb3a7bbbb065988cac4c",
+      "translatedAt": "2026-10-29T12:48:01.438Z",
+      "bytes": 45901
     },
     "docs/sdk/py/latest/Server.md": {
       "hash": "34ab36d6a8128a0a90011e144919eda151563b05",
@@ -1342,9 +1342,9 @@
       "bytes": 718
     },
     "docs/sdk/py/latest/Sandbox.md": {
-      "hash": "38bb90707b83640137cd6dd8aba3c44232a8f9ce",
-      "translatedAt": "2026-10-17T10:33:21.420Z",
-      "bytes": 36237
+      "hash": "5f7141e5ef93fc1ca41e1bacb196d9b3a311917a",
+      "translatedAt": "2026-10-29T12:48:04.940Z",
+      "bytes": 36293
     },
     "docs/sdk/py/latest/asgi_app.md": {
       "hash": "da78589b4f5a98002591316af85515e89f88a6e3",
@@ -1352,9 +1352,9 @@
       "bytes": 545
     },
     "docs/sdk/py/latest/Workspace.md": {
-      "hash": "67162a87434142175d19ab5a68ddeeebac7c763c",
-      "translatedAt": "2026-10-17T10:33:11.520Z",
-      "bytes": 12289
+      "hash": "aeb7ef58dafc0409912fe6c6b868934bc58f11fc",
+      "translatedAt": "2026-10-29T12:48:15.148Z",
+      "bytes": 13626
     },
     "docs/sdk/py/latest/batched.md": {
       "hash": "3122c59fd8fe2ce1484443eda28fc6f22b159c08",
@@ -1407,9 +1407,9 @@
       "bytes": 197
     },
     "docs/sdk/py/latest/config.md": {
-      "hash": "80dff9dc9ed3851a6f7726a5b636b9263cc0547e",
-      "translatedAt": "2026-10-04T12:10:37.150Z",
-      "bytes": 5627
+      "hash": "6f1522d8e13f46f6b21ecb5194dba677c87692ad",
+      "translatedAt": "2026-10-29T12:48:13.580Z",
+      "bytes": 5664
     },
     "docs/sdk/py/latest/fastapi_endpoint.md": {
       "hash": "c69ca66ddd0b8c493059ec6dae3c79b385e7b618",
@@ -1472,9 +1472,9 @@
       "bytes": 769
     },
     "docs/sdk/py/latest/types.md": {
-      "hash": "9998eb4a4d01a7cbe1d5f7ef14ada616e6e5d4d3",
-      "translatedAt": "2026-10-17T10:33:23.384Z",
-      "bytes": 21013
+      "hash": "abbe2f6a929a06a2741dcb4bd0d7a2a6520b9e8b",
+      "translatedAt": "2026-10-29T12:48:29.052Z",
+      "bytes": 21515
     },
     "docs/guide/function-invocation-methods.md": {
       "hash": "71733471918e68c0584de211907560d93f2c455a",
@@ -1487,9 +1487,9 @@
       "bytes": 16718
     },
     "docs/sdk/py/releases.md": {
-      "hash": "281392e2e7758de9fe5d71af7e38263ee37d063a",
-      "translatedAt": "2026-10-17T10:34:33.389Z",
-      "bytes": 68837
+      "hash": "cef33088d3994e9bfe91bb1ef0295a1453d4ec81",
+      "translatedAt": "2026-10-29T12:49:39.786Z",
+      "bytes": 71521
     },
     "docs/guide/sandbox-sidecars.md": {
       "hash": "e70bd25fd0d94cf83b46f95be0c9a8708106c2c1",
@@ -1583,14 +1583,14 @@
       "bytes": 3537
     },
     "docs/guide/dedicated-endpoints.md": {
-      "hash": "2102650125e159f3524e44808b4909ab2610cd10",
-      "translatedAt": "2026-10-10T12:17:42.675Z",
-      "bytes": 3908
+      "hash": "a37ad81ae758c02a3b75d179f4c91bf3908d61f4",
+      "translatedAt": "2026-10-29T12:46:21.592Z",
+      "bytes": 4015
     },
     "docs/guide/shared-endpoints.md": {
-      "hash": "1ed679ac2ee2fa3e1fd70599aa59d6915d7d2dcd",
-      "translatedAt": "2026-10-03T11:29:17.509Z",
-      "bytes": 1689
+      "hash": "4217ad5a7b827e041567e9ea5a4f9a0fa91304d0",
+      "translatedAt": "2026-10-29T12:46:51.796Z",
+      "bytes": 1805
     },
     "docs/guide/user-groups.md": {
       "hash": "87b9d648fae1f2abec41cdec9b567a200fe6723a",
@@ -1603,9 +1603,9 @@
       "bytes": 2921
     },
     "docs/guide/intro.md": {
-      "hash": "3f8ff287345597ef6f9f8bd4593c6a3c991982b2",
-      "translatedAt": "2026-10-24T10:44:03.500Z",
-      "bytes": 3559
+      "hash": "839d25dc640e8f023f9e195bb9f70956460c0222",
+      "translatedAt": "2026-10-29T12:46:37.178Z",
+      "bytes": 3524
     },
     "docs/cli/latest/function.md": {
       "hash": "df882b3e858365db2219a557a5f7b6c0acbf214e",
@@ -1678,9 +1678,9 @@
       "bytes": 15201
     },
     "docs/examples/paint_flowers.md": {
-      "hash": "5db140bf76f87aed61b8f5d82fcfe0428782a506",
-      "translatedAt": "2026-10-21T11:35:11.789Z",
-      "bytes": 8118
+      "hash": "16886868e0b1cd12a192483a6fbd270e866a120d",
+      "translatedAt": "2026-10-29T12:46:03.945Z",
+      "bytes": 8110
     },
     "docs/guide/dojo.md": {
       "hash": "dbbe64236282fecf5cd8406d40429ca955869388",
@@ -1693,9 +1693,9 @@
       "bytes": 14114
     },
     "docs/guide/spindle.md": {
-      "hash": "2eba1fc6397f78a4542f6ac3ca147bca3855f9b4",
-      "translatedAt": "2026-10-06T13:10:57.126Z",
-      "bytes": 6379
+      "hash": "a55fab40570a781266b11d911886cf69c15cc2c5",
+      "translatedAt": "2026-10-29T12:46:54.228Z",
+      "bytes": 6388
     },
     "docs/guide/sticky-sessions.md": {
       "hash": "90748690fb6090d4d29cd1bd3a0d2b1f219e6b25",
@@ -1713,14 +1713,14 @@
       "bytes": 8678
     },
     "docs/guide/training-quickstart.md": {
-      "hash": "97e3640df006f85a12cb010979f20baa6b2d250d",
-      "translatedAt": "2026-10-21T11:35:40.342Z",
-      "bytes": 2027
+      "hash": "85dbe327231bda84b2bc40fddcd6eeb3d1761b23",
+      "translatedAt": "2026-10-29T12:47:13.774Z",
+      "bytes": 2067
     },
     "docs/guide/endpoint-candidates.md": {
-      "hash": "9d66a97f8e394b135bed332d7a3e750d92f38b75",
-      "translatedAt": "2026-10-13T13:59:44.798Z",
-      "bytes": 2630
+      "hash": "c2081bf37d253bf8e033cf3f2adb7a50bb33eaae",
+      "translatedAt": "2026-10-29T12:46:23.322Z",
+      "bytes": 2681
     },
     "docs/sdk/go/latest/AppInfo.md": {
       "hash": "be58f676d266b25551d3c739b41f4ade41441e0e",
@@ -1887,18 +1887,16 @@
       "bytes": 7478
     },
     "docs/guide/supported-models.md": {
-      "hash": "50e82548fb7b6c4d560394bfb489835d8e6b007c",
-      "translatedAt": "2026-10-27T11:59:02.973Z",
-      "bytes": 10105,
-      "fallback": true,
-      "error": "HTTP 429"
+      "hash": "a1b1445c1b4de776204ba16424159994ceaff4e7",
+      "translatedAt": "2026-10-29T12:47:12.549Z",
+      "bytes": 6017
     }
   },
-  "updatedAt": "2026-10-28T12:38:06.429Z",
+  "updatedAt": "2026-10-29T12:49:39.787Z",
   "stats": {
-    "translated": 0,
-    "skipped": 337,
-    "failed": 29,
+    "translated": 31,
+    "skipped": 335,
+    "failed": 0,
     "total": 366
   }
 }

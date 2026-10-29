@@ -19,10 +19,82 @@ modal workspace [OPTIONS] COMMAND [ARGS]...
 
 **命令**：
 
+* `member-tokens`：管理会员 API 令牌。
 * `members`：查看当前Workspace的成员。
 * `proxy-tokens`：管理当前Workspace的代理代币。
 * `service-users`：管理服务用户。
 * `settings`：管理工作区设置。
+
+## `modal workspace member-tokens`
+
+管理会员 API 令牌。所有成员令牌都与工作区的唯一成员相关联。任何使用 Modal 的请求
+令牌被验证为关联的成员（因此，受以下权限的约束）
+已分配给特定成员）。工作区所有者和管理员可以使用 [`modal environment roles update`](https://modal.com/docs/cli/latest/environment#modal-environment-roles-update)
+以编程方式更新这些权限。
+
+此 CLI 允许用户列出和删除与自己关联的令牌。工作区所有者
+经理可以列出其工作区中的所有令牌，并可以删除其中任何令牌。
+
+**用法**：
+
+```shell
+modal workspace member-tokens [OPTIONS] COMMAND [ARGS]...
+```
+
+**选项**：
+
+* `--help`：显示此消息并退出。
+
+**命令**：
+
+* `delete`：删除此工作空间中的会员令牌。
+* `list`：列出工作区中的成员代币。
+
+### `modal workspace member-tokens delete`
+
+删除此工作区中的成员令牌。
+
+请注意，此操作是不可逆转的。这将立即使目标令牌失效，并将
+使其无法通过 Modal 进行身份验证。
+
+```bash
+# Delete the Token with ID `ak-REDACTED`
+modal workspace member-tokens delete ak-REDACTED
+```
+
+**用法**：
+
+```shell
+modal workspace member-tokens delete [OPTIONS] TOKEN_ID
+```
+
+**选项**：
+
+* `--allow-missing`：如果Token不存在，不要报错。
+* `-y, --yes`：运行时不暂停确认。
+* `--help`：显示此消息并退出。
+
+### `modal workspace member-tokens list`
+
+列出工作区中的成员令牌。工作区管理员和所有者可以看到工作区中的所有令牌
+工作区。
+
+```bash
+modal workspace member-tokens list
+
+# Show list in JSON format:
+modal workspace member-tokens list --json
+```
+
+**用法**：
+
+```shell
+modal workspace member-tokens list [OPTIONS]
+```
+
+**选项**：
+
+* `--json`：输出为 JSON。* `--help`：显示此消息并退出。
 
 ## `modal workspace members`
 
@@ -36,7 +108,9 @@ modal workspace members [OPTIONS] COMMAND [ARGS]...
 
 **选项**：
 
-* `--help`：显示此消息并退出。**命令**：
+* `--help`：显示此消息并退出。
+
+**命令**：
 
 * `list`：列出当前Workspace的成员。
 
@@ -72,6 +146,7 @@ Modal-Secret: ws-456
 ```
 
 或者作为单个不记名令牌：
+
 ```
 Authorization: Bearer wk-123.ws-456
 ```
@@ -94,10 +169,10 @@ modal workspace proxy-tokens [OPTIONS] COMMAND [ARGS]...
 **命令**：
 
 * `allow`：允许代理令牌对环境进行身份验证。
-* `create`：在当前工作空间中创建代理令牌。
-* `delete`：从当前工作空间中删除代理令牌。
+* `create`：在当前工作空间中创建代理令牌。* `delete`：从当前工作空间中删除代理令牌。
 * `list`：列出当前Workspace的代理代币。
-* `revoke`：撤销代理令牌对环境的访问权限。* `update`：更新当前工作区中的代理令牌。
+* `revoke`：撤销代理令牌对环境的访问权限。
+* `update`：更新当前工作区中的代理令牌。
 
 ### `modal workspace proxy-tokens allow`
 
@@ -140,7 +215,6 @@ modal workspace proxy-tokens create [OPTIONS]
 ```
 
 **选项**：
-
 * `--name TEXT`：帮助识别令牌的名称。
 * `--json`
 * `--help`：显示此消息并退出。
@@ -160,9 +234,10 @@ modal workspace proxy-tokens delete wk-123
 ```shell
 modal workspace proxy-tokens delete [OPTIONS] TOKEN_ID
 ```
+
 **选项**：
 
-* `-y, --yes`：运行时不暂停确认。
+* `-y, --yes`：运行时无需暂停确认。
 * `--help`：显示此消息并退出。
 
 ### `modal workspace proxy-tokens list`
@@ -189,9 +264,7 @@ modal workspace proxy-tokens list [OPTIONS]
 * `--json`
 * `--help`：显示此消息并退出。
 
-### `modal workspace proxy-tokens revoke`
-
-撤销代理令牌对环境的访问权限。
+### `modal workspace proxy-tokens revoke`撤销代理令牌对环境的访问权限。
 
 示例：
 
@@ -211,7 +284,9 @@ modal workspace proxy-tokens revoke [OPTIONS] TOKEN_ID ENVIRONMENT_NAME
 
 ### `modal workspace proxy-tokens update`
 
-更新当前工作区中的代理令牌。可以更新以下设置：
+更新当前工作区中的代理令牌。
+
+可以更新以下设置：
 
 * `name`：帮助识别令牌的名称。传递一个空值将其删除。
 
@@ -244,6 +319,7 @@ modal workspace proxy-tokens update [OPTIONS] TOKEN_ID SETTING VALUE
 export MODAL_TOKEN_ID=your-token-id
 export MODAL_TOKEN_SECRET=your-token-secret
 ```
+
 新创建的服务用户默认没有权限。为了与特定的人进行交互
 环境、服务用户必须被授予明确的权限。
 
@@ -262,12 +338,13 @@ modal workspace service-users [OPTIONS] COMMAND [ARGS]...
 **命令**：
 
 * `create`：在此工作区中创建服务用户。
-* `delete`：删除此工作空间中的服务用户。
-* `info`：检查此工作区中的服务用户。
+* `delete`：删除此工作空间中的服务用户。* `info`：检查此工作区中的服务用户。
 * `list`：列出此工作区中的所有服务用户。
 * `set-role`：更新服务用户在特定环境中的角色。
 
-### `modal workspace service-users create`在此工作区中创建服务用户。
+### `modal workspace service-users create`
+
+在此工作区中创建服务用户。
 
 为了运行此命令，您必须至少在工作区中拥有管理员级别权限。
 
@@ -302,15 +379,15 @@ modal workspace service-users create test-4 --expires-in 365d --json
 modal workspace service-users create [OPTIONS] NAME
 ```
 
-**选项**：
-
-* `--expires-in TEXT`：过期时间。接受整数（解释为秒）以及以 `s`、`m`、`h` 或 `d` 为后缀的值。
+**选项**：* `--expires-in TEXT`：过期时间。接受整数（解释为秒）以及以 `s`、`m`、`h` 或 `d` 为后缀的值。
 * `--json`：输出为 JSON。
 * `--help`：显示此消息并退出。
 
 ### `modal workspace service-users delete`
 
-删除此工作区中的服务用户。请注意，此操作是不可逆转的。使用凭据的任何现有进程/脚本
+删除此工作区中的服务用户。
+
+请注意，此操作是不可逆转的。使用凭据的任何现有进程/脚本
 与目标服务用户关联的用户将无法通过 Modal 进行身份验证。
 
 ```bash
@@ -326,8 +403,8 @@ modal workspace service-users delete [OPTIONS] NAME
 
 **选项**：
 
-* `--allow-missing`：如果卷不存在，则不会出错。
-* `-y, --yes`：运行时不暂停确认。
+* `--allow-missing`：如果服务用户不存在，则不会出错。
+* `-y, --yes`：直接运行，无需暂停确认。
 * `--help`：显示此消息并退出。
 
 ### `modal workspace service-users info`
@@ -343,7 +420,6 @@ modal workspace service-users info test-service-user
 # Inspect the Service User named `test-service-user-2`, outputting JSON
 modal workspace service-users info test-service-user-2 --json
 ```
-
 **用法**：
 
 ```shell
@@ -358,6 +434,7 @@ modal workspace service-users info [OPTIONS] NAME
 ### `modal workspace service-users list`
 
 列出此工作区中的所有服务用户。
+
 为了运行此命令，您必须至少在工作区中拥有管理员级别权限。
 
 示例：
@@ -405,9 +482,7 @@ modal workspace service-users set-role [OPTIONS] SERVICE_USER_NAME ENVIRONMENT_N
 
 * `--help`：显示此消息并退出。
 
-## `modal workspace settings`
-
-管理工作区设置。必须是工作区经理或所有者。
+## `modal workspace settings`管理工作区设置。必须是工作区经理或所有者。
 
 **用法**：
 
@@ -419,7 +494,9 @@ modal workspace settings [OPTIONS] COMMAND [ARGS]...
 
 * `--help`：显示此消息并退出。
 
-**命令**：* `list`：查看工作区的当前设置。
+**命令**：
+
+* `list`：查看工作区的当前设置。
 * `set`：更新工作区设置。
 
 ### `modal workspace settings list`

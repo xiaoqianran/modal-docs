@@ -22,13 +22,14 @@
 
 ## 卷 v2
 
-<Callout variant="beta">
+Volumes 有两个版本。我们建议所有新卷使用 Volume v2：
+它支持更多文件、更高吞吐量、数百个并发写入
+容器，并且符合 HIPAA 标准。
 
-特定于 v2 卷的说明将在下面用 🌱 注释。
+当没有指定版本时，Volumes v1 仍然是默认的，所以通过
+创建卷时的`version=2`（或命令行上的`--version=2`）。
 
-</Callout>
-
-请阅读下面有关 [Volumes v2](#volumes-v2-overview) 的更多信息。
+请阅读下面有关 [Volumes v2](#volumes-v2-overview) 的更多信息。特定于 v2 卷的指令将用 🌱 进行注释。
 
 ## 创建卷
 
@@ -57,7 +58,6 @@ def run():
         f.write("hello")
     vol.commit()  # Needed to make sure all changes are persisted before exit
 ```
-
 您还可以从临时模态 Shell 浏览和操作卷：
 
 ```bash
@@ -70,6 +70,7 @@ def run():
 实际吞吐量无法得到保证，并且可能会较低，具体取决于网络状况。
 
 ## 安装选项
+
 将卷附加到函数或沙箱时，您可以使用以下命令配置挂载选项
 [`Volume.with_mount_options`](/docs/sdk/py/latest/Volume#with_mount_options)。
 这些选项不存储在卷本身上 - 它们适用于每个容器挂载，
@@ -115,7 +116,6 @@ sb.exec("ls", "/user_data").wait()
 卷中其他会话的文件。
 
 **注意：** 子路径当前仅限于目录 - 您无法挂载单个文件。
-
 ## 从卷中下载文件
 
 虽然卷中的单个文件没有文件大小限制，但前端仅支持下载最大 16MB 的文件。对于较大的文件，请使用 CLI：
@@ -125,6 +125,7 @@ sb.exec("ls", "/user_data").wait()
 ```
 
 ### 从代码中延迟创建卷
+
 您还可以使用以下代码从代码中延迟创建卷：
 
 ```python
@@ -135,9 +136,7 @@ vol = modal.Volume.from_name("my-volume", create_if_missing=True)
 
 如果卷不存在，这将创建该卷。
 
-## 使用模态之外的体积
-
-卷也可以通过 [Python SDK](/docs/sdk/py/latest/Volume) 或我们的 [CLI](/docs/cli/latest/volume) 在 Modal 之外使用。
+## 使用模态之外的体积卷也可以通过 [Python SDK](/docs/sdk/py/latest/Volume) 或我们的 [CLI](/docs/cli/latest/volume) 在 Modal 之外使用。
 
 ### 使用本地代码中的卷
 
@@ -187,7 +186,7 @@ Usage: modal volume [OPTIONS] COMMAND [ARGS]...
 
 ## 卷提交和重新加载
 
-与普通文件系统不同，您需要显式重新加载卷才能看到
+与普通文件系统不同，您需要显式地重新加载卷才能看到
 自首次安装以来所做的更改。此重新加载是通过调用
 Volume 对象上的 [`.reload()`](/docs/sdk/py/latest/Volume#reload) 方法。
 同样，容器内所做的任何卷更改都需要提交
@@ -198,7 +197,7 @@ Volume 对象上的 [`.reload()`](/docs/sdk/py/latest/Volume#reload) 方法。
 
 在容器创建时，将安装附加卷的最新状态。如果
 然后该卷随后被另一个中的提交操作修改
-正在运行的容器，卷修改将变得可用，直到
+正在运行的容器，该卷修改将变得可用，直到
 原始容器执行 [`.reload()`](/docs/sdk/py/latest/Volume#reload)。
 
 考虑这个示例，它演示了重新加载的效果：
@@ -261,6 +260,7 @@ p=PosixPath('/root/foo/bar.txt') contains hello
 所附卷的内容将被提交
 您的应用程序代码无需调用 `.commit`。
 最终快照和提交也会在容器关闭时自动执行。
+
 能够在不更改应用程序代码的情况下保留对卷的更改
 在[使用框架训练或微调模型](#model-checkpointing)时特别有用。
 
@@ -312,6 +312,7 @@ ML 框架的功能。您可以使用保存的检查点重新启动训练
 有关更多信息，请参阅我们的[长时间运行训练的示例代码](/docs/examples/long-training)。
 
 ### 抱脸`transformers`
+
 要定期检查`modal.Volume`，只需设置`Trainer`
 [`output_dir`](https://huggingface.co/docs/transformers/main/en/main_classes/trainer#transformers.TrainingArguments.output_dir)
 到卷中的目录。
@@ -357,7 +358,6 @@ def finetune():
 [`ENOSPC`（设备上没有剩余空间）](https://pubs.opengroup.org/onlinepubs/9799919799/)。
 
 如果您需要处理大量文件，请考虑使用 Volumes v2！
-目前它处于测试阶段。请参阅下文了解更多信息。
 
 ## 文件系统一致性
 
@@ -401,9 +401,9 @@ def reload_with_open_files():
 ```
 
 ### 无法找到有关卷错误的文件
-
 访问卷中的文件时，不要忘记在卷的位置前面加上
 安装在容器中。
+
 在下面的示例中，卷已安装在`/data`，“hello”是
 正在写入`/data/xyz.txt`。
 
@@ -430,7 +430,9 @@ def run():
 此外，当前未在文件系统级别报告已用空间。
 因此，通过 `statfs` 系统调用查询磁盘使用情况的工具
 （例如 `shutil.disk_usage()`、`os.statvfs()`、`df`）将返回占位符
-价值观。如果需要检查 Volume 的大小，请参考 Modal 中显示的大小
+价值观。
+
+如果需要检查 Volume 的大小，请参考 Modal 中显示的大小
 仪表板，或在容器内安装的卷上使用`du`。
 
 ## Volumes v2 概述
@@ -438,19 +440,8 @@ def run():
 Volumes v2 的行为通常与 Volumes v1 一样，并且大多数现有 API
 您习惯的 CLI 命令在版本之间的工作方式相同。
 由于文件系统实现完全不同，所以会有
-一些可能与版本 1 不同的重要性能特征
+一些与 v1 不同的重要性能特征
 卷。以下概述了您应该注意的主要差异。
-
-### Volumes v2 仍处于 Beta 阶段
-
-<Callout variant="beta">
-我们还不能保证不会丢失任何数据，因此我们目前不建议对关键任务数据使用 Volumes v2。
-
-</Callout>
-
-您仍然可以获得 v2 的好处
-不珍贵或易于重建的数据，例如日志文件，
-定期更新训练数据和模型权重、缓存等。
 
 ### 卷 v2 符合 HIPAA 要求
 
@@ -475,6 +466,7 @@ Volumes v2 中的文件数量没有限制。
 
 文件系统不应经历任何性能下降，因为更多
 容器同时写入不同的文件。
+
 相比之下，在第 v1 卷中，我们建议不超过 5 位作者访问
 立即音量。
 
@@ -499,15 +491,15 @@ Volumes v2 中的文件数量没有限制。
 sync /path/to/mountpoint
 ```
 
-当您无法访问 Python SDK 时，这非常有用
-[`.commit()`](/docs/sdk/py/latest/Volume#commit) 方法，例如运行时
-沙箱中或交互式 `modal shell` 会话期间的 shell 命令。
+当您无法访问 Python SDK 时，这非常有用[`.commit()`](/docs/sdk/py/latest/Volume#commit) 方法，例如运行时
+沙盒中或交互式 `modal shell` 会话期间的 shell 命令。
 
 在挂载点上运行 `sync` 将刷新对内核的所有挂起写入
 然后将所有数据和元数据更改持久保存到卷的持久化中
 存储。
 
 例如，要在模式 shell 会话中提交更改：
+
 ```bash
 % modal shell --volume my-v2-volume
 root / → echo "hello" > /mnt/my-v2-volume/test.txt
@@ -530,12 +522,7 @@ if p.returncode != 0:
     raise Exception(f"sync failed with exit code {p.returncode}")
 ```
 
-> ⚠️ 此功能仅适用于 Volumes v2。
-
-### Volumes v2 有一些限制
-
-当我们权衡性能并听取用户反馈时，我们有
-设置一些人为的限制。
+### 卷 v2 限制
 
 * 文件必须小于 1 TiB。
 * 单个目录中最多可以存储 262,144 个文件。
@@ -583,6 +570,6 @@ root / → sync /mnt/2files2furious # Ensure changes are persisted before exitin
 
 ## 更多示例
 
-* [Character LoRA 微调](/docs/examples/diffusers_lora_finetune) 模型存储在卷上
+* [使用 Miles 和 GRPO 进行 LLM 后期培训](/docs/examples/miles_grpo)，包含卷上的数据集和检查点
 * [蛋白质折叠](/docs/examples/chai1)，模型权重和输出文件存储在卷上
 * [使用 Datasette 进行数据集可视化](/docs/examples/cron_datasette) 在卷上使用 SQLite 数据库

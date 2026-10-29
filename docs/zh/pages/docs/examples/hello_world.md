@@ -52,7 +52,7 @@ def f(i):
 
 1. 作为对`local`机器的常规调用，使用`f.local`
 
-2. 作为在云端运行的`remote`调用，带有`f.remote`
+2. 作为在云端运行的 `remote` 调用，带有 `f.remote`
 
 3. 通过 `map` 在云中通过多个输入 ping `f` 的多个副本，以及 `f.map`
 
@@ -119,10 +119,10 @@ Modal 这次会并行创建并运行更多容器。
 想象一些对你来说重要的事情，比如：
 
 * 运行【语言模型推理】(https://modal.com/docs/examples/vllm_inference)
-  或[微调](https://modal.com/docs/examples/slack-finetune)
+  或[微调](https://modal.com/docs/guide/training-quickstart)
 * 操作[音频](https://modal.com/docs/examples/musicgen)
-  或[图片](https://modal.com/docs/examples/diffusers_lora_finetune)
-* [嵌入巨大的文本数据集](https://modal.com/docs/examples/amazon_embeddings) 以闪电般的速度
+  或[图片](https://modal.com/docs/examples/text_to_image)
+* [以闪电般的速度嵌入巨大的文本数据集](https://modal.com/docs/examples/amazon_embeddings)
 
-Modal 允许您通过运行数百个或
+Modal 允许您通过运行数百或
 云中的数千个容器。

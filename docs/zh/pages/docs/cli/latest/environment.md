@@ -254,4 +254,5 @@ modal environment update [OPTIONS] CURRENT_NAME
 
 * `--set-name TEXT`：环境的新名称。
 * `--set-web-suffix TEXT`：环境的新网络后缀（空字符串没有后缀）。
+* `--set-image-builder-version TEXT`：环境的新图像生成器版本（空字符串使用工作空间默认值）。
 * `--help`：显示此消息并退出。

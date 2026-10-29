@@ -6,7 +6,7 @@ Modal 是一个 AI 基础设施平台，可让您：
 
 * 使用开放权重或自定义模型，以亚秒级冷启动运行低延迟[推理](/docs/examples/llm_inference)
 * 横向扩展[批处理作业](/docs/guide/batch-processing) 以大规模并行运行
-* [训练](/docs/examples/hp_sweep_gpt) 或 [微调](/docs/examples/diffusers_lora_finetune) 在最新 GPU 上开放权重或自定义模型
+* [训练或微调](/docs/guide/training-quickstart) 在最新 GPU 上开放权重或自定义模型
 * 启动数千个隔离且安全的[沙箱](/docs/guide/sandboxes)来执行人工智能生成的代码
 
 您可以获得[完整的无服务器执行和定价](/pricing)，因为我们托管所有内容并按秒使用收费。
@@ -72,7 +72,7 @@ Python 是构建 Modal 应用程序和实现 Modal 函数的主要语言，但�
 
 * [运行您自己的 LLM 推理](/docs/examples/llm_inference)
 * [使用 Kyutai STT 实时转录语音](/docs/examples/streaming_kyutai_stt)
-* [微调通量](/docs/examples/diffusers_lora_finetune)
+* [微调模型以绘制花朵](/docs/examples/paint_flowers)
 * [使用 Modal Sandboxes 和 LangGraph 构建编码代理](/docs/examples/agent)
 * [从头开始训练小语言模型](/docs/examples/hp_sweep_gpt)
 * [S3 上 Parquet 文件的并行处理](/docs/examples/s3_bucket_mount)

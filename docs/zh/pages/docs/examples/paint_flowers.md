@@ -3,7 +3,8 @@
 # 用代码画花
 
 正如这篇[博文](https://surya.website/rling-qwen-to-paint-with-code) 所示，
-您可以训练模型来使用以下命令创建花卉水彩草图
+您可以微调模型来创建水彩画
+使用花的草图
 [p5.刷](https://p5brush.org),
 并使用法官对参考图像池进行成对比较
 为奖励函数。
@@ -88,7 +89,6 @@ base_model = Qwen3_5_4B()
 
 使用参考池中现有的物种和调色板颜色，我们创建了一个
 用于训练模型的提示的[数据集](https://dojo.modal.dev/guides/dataset#creating-a-custom-dataset)。
-
 ```python
 SPECIES = ["hibiscus"]
 PALETTES = [
@@ -148,6 +148,7 @@ eval_dataset = FlowerPromptDataset(build_prompts(combos, N_EVAL))
 
 
 ```
+
 ## 创建奖励函数
 
 [奖励函数](https://dojo.modal.dev/guides/recipe#environment) 将每个草图渲染为

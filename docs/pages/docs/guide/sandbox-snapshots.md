@@ -449,6 +449,8 @@ A number of known [limitations](#limitations) currently apply.
 
 Sandbox memory snapshots are copies of a Sandbox’s entire state, both in memory and on the filesystem. These Snapshots can be restored later to create a new Sandbox, which is an exact clone of the original Sandbox.
 
+Memory snapshots are supported on both [runtimes](/docs/guide/sandboxes#runtimes), and we recommend using memory snapshots with `runtime="vm"`.
+
 To take a memory snapshot, create a Sandbox with memory snapshots enabled, then call its experimental snapshot method, which returns a `SandboxSnapshot`:
 
 <CodeTabs>
@@ -467,6 +469,7 @@ sb = modal.Sandbox.create(
     app=app,
     # prefer named Images in Sandboxes to ensure they are never built during Sandbox launch
     image=modal.Image.from_name("sandbox-snapshot-base"),
+    runtime="vm",
     _experimental_enable_snapshot=True,
 )
 
@@ -485,6 +488,7 @@ const snapshotImage = modal.images
 
 const sb = await modal.sandboxes.create(app, snapshotImage, {
   command: ["python3", "-m", "http.server", "8000"],
+  runtime: "vm",
   experimentalEnableSnapshot: true,
 });
 console.log(`Performing snapshot of ${sb.sandboxId} ...`);
@@ -502,6 +506,7 @@ snapshotImage := mc.Images.FromRegistry("python:3.13-slim", nil).DockerfileComma
 
 sb, _ := mc.Sandboxes.Create(ctx, app, snapshotImage, &modal.SandboxCreateParams{
 	Command:                    []string{"python3", "-m", "http.server", "8000"},
+	Runtime:                    modal.SandboxRuntimeVM,
 	ExperimentalEnableSnapshot: true,
 })
 fmt.Printf("Performing snapshot of %s ...\n", sb.SandboxID)
@@ -628,7 +633,7 @@ For example, snapshot\_2 in the following example would only be valid for 3 days
   {#snippet python()}
 
 ```python notest
-sandbox_1 = modal.Sandbox.create(_experimental_enable_snapshot=True)
+sandbox_1 = modal.Sandbox.create(runtime="vm", _experimental_enable_snapshot=True)
 
 # snapshot_1 has a lifetime of 7 days from creation
 snapshot_1 = sandbox_1._experimental_snapshot()
@@ -646,6 +651,7 @@ snapshot_2 = sandbox_2._experimental_snapshot()
 
 ```javascript notest
 const sandbox1 = await modal.sandboxes.create(app, image, {
+  runtime: "vm",
   experimentalEnableSnapshot: true,
 });
 // snapshot1 has a lifetime of 7 days from creation
@@ -664,6 +670,7 @@ const snapshot2 = await sandbox2.experimentalSnapshot();
 
 ```go notest
 sandbox1, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
+	Runtime:                    modal.SandboxRuntimeVM,
 	ExperimentalEnableSnapshot: true,
 })
 // snapshot1 has a lifetime of 7 days from creation

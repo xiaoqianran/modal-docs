@@ -2,10 +2,10 @@
 
 # 多节点训练
 
-当您需要最大程度地控制训练循环和基础设施时，可以使用[集群函数](/docs/guide/multi-node-clusters)。
+当您需要最大程度地控制训练或微调循环和基础设施时，可以使用[集群函数](/docs/guide/multi-node-clusters)。
 
 本指南介绍了如何为基于 [torchrun](https://docs.pytorch.org/docs/2.14/elastic/run.html) 或 [Ray](https://docs.ray.io/en/latest/index.html) 的框架启动一个框架，
-它支持 [RDMA](/docs/guide/multi-node-clusters#rdma)。请参阅[此处](/docs/examples/miles_grpo) 了解执行此操作的示例。
+它支持 [RDMA](/docs/guide/multi-node-clusters#rdma)。有关执行此操作的示例，请参阅[此处](/docs/examples/miles_grpo)。
 
 ## 火炬运行
 
@@ -63,7 +63,6 @@ def run():
 集群必须使用[每个节点的 GPU 设备的完整数量](/docs/guide/gpu#specifying-gpu-count)。
 
 ##雷
-
 要在集群功能上设置 [Ray 集群](https://docs.ray.io/en/latest/index.html)，请从 `modal.Cluster.from_context()` 收集有关集群和 IPv4 地址的信息。
 然后，在 0 级上启动一个头节点，在其他级上启动一个工作节点：
 

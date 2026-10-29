@@ -6,7 +6,7 @@
 
 [Spindle](https://github.com/modal-projects/spindle) 是一个开源的 Tinker 兼容 API，支持
 [多租户LoRA训练](https://github.com/modal-projects/spindle/blob/main/docs/multi-lora.md)和
-【单租户全参数训练】(https://github.com/modal-projects/spindle/blob/main/docs/full-fine-tunes.md)。
+【单租户全参数训练与微调】(https://github.com/modal-projects/spindle/blob/main/docs/full-fine-tunes.md)。
 
 为什么要使用主轴？
 
