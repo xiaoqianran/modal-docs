@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-10-29T12:45:20.696Z",
+  "fetchedAt": "2026-10-30T12:36:58.479Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 347,
-  "ok": 347,
+  "totalUrls": 345,
+  "ok": 345,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28213,
+      "bytes": 28003,
       "stub": false
     },
     {
@@ -330,7 +330,7 @@
       "source": "https://modal.com/docs/examples/cron_datasette.md",
       "finalUrl": "https://modal.com/docs/examples/cron_datasette.md",
       "path": "docs/examples/cron_datasette.md",
-      "bytes": 13636,
+      "bytes": 13626,
       "stub": false
     },
     {
@@ -354,7 +354,7 @@
       "source": "https://modal.com/docs/examples/dbt_duckdb.md",
       "finalUrl": "https://modal.com/docs/examples/dbt_duckdb.md",
       "path": "docs/examples/dbt_duckdb.md",
-      "bytes": 10807,
+      "bytes": 10797,
       "stub": false
     },
     {
@@ -366,19 +366,11 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/discord_bot.md",
-      "source": "https://modal.com/docs/examples/discord_bot.md",
-      "finalUrl": "https://modal.com/docs/examples/discord_bot.md",
-      "path": "docs/examples/discord_bot.md",
-      "bytes": 15957,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "source": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "finalUrl": "https://modal.com/docs/examples/doc_ocr_jobs.md",
       "path": "docs/examples/doc_ocr_jobs.md",
-      "bytes": 7815,
+      "bytes": 7810,
       "stub": false
     },
     {
@@ -386,7 +378,7 @@
       "source": "https://modal.com/docs/examples/doc_ocr_webapp.md",
       "finalUrl": "https://modal.com/docs/examples/doc_ocr_webapp.md",
       "path": "docs/examples/doc_ocr_webapp.md",
-      "bytes": 5452,
+      "bytes": 5437,
       "stub": false
     },
     {
@@ -410,7 +402,7 @@
       "source": "https://modal.com/docs/examples/fastrtc_flip_webcam.md",
       "finalUrl": "https://modal.com/docs/examples/fastrtc_flip_webcam.md",
       "path": "docs/examples/fastrtc_flip_webcam.md",
-      "bytes": 8672,
+      "bytes": 8667,
       "stub": false
     },
     {
@@ -546,7 +538,7 @@
       "source": "https://modal.com/docs/examples/mcp_server_stateless.md",
       "finalUrl": "https://modal.com/docs/examples/mcp_server_stateless.md",
       "path": "docs/examples/mcp_server_stateless.md",
-      "bytes": 4590,
+      "bytes": 4585,
       "stub": false
     },
     {
@@ -590,14 +582,6 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/mongodb-search.md",
-      "source": "https://modal.com/docs/examples/mongodb-search.md",
-      "finalUrl": "https://modal.com/docs/examples/mongodb-search.md",
-      "path": "docs/examples/mongodb-search.md",
-      "bytes": 8136,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/music-video-gen.md",
       "source": "https://modal.com/docs/examples/music-video-gen.md",
       "finalUrl": "https://modal.com/docs/examples/music-video-gen.md",
@@ -634,7 +618,7 @@
       "source": "https://modal.com/docs/examples/pushgateway.md",
       "finalUrl": "https://modal.com/docs/examples/pushgateway.md",
       "path": "docs/examples/pushgateway.md",
-      "bytes": 6615,
+      "bytes": 6590,
       "stub": false
     },
     {
@@ -730,7 +714,7 @@
       "source": "https://modal.com/docs/examples/webrtc_yolo.md",
       "finalUrl": "https://modal.com/docs/examples/webrtc_yolo.md",
       "path": "docs/examples/webrtc_yolo.md",
-      "bytes": 24876,
+      "bytes": 24871,
       "stub": false
     },
     {
@@ -1322,7 +1306,7 @@
       "source": "https://modal.com/docs/guide/sandbox-resources.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-resources.md",
       "path": "docs/guide/sandbox-resources.md",
-      "bytes": 5592,
+      "bytes": 6324,
       "stub": false
     },
     {
@@ -1402,7 +1386,7 @@
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 15987,
+      "bytes": 16226,
       "stub": false
     },
     {
@@ -1450,7 +1434,7 @@
       "source": "https://modal.com/docs/guide/sticky-sessions.md",
       "finalUrl": "https://modal.com/docs/guide/sticky-sessions.md",
       "path": "docs/guide/sticky-sessions.md",
-      "bytes": 6849,
+      "bytes": 7038,
       "stub": false
     },
     {

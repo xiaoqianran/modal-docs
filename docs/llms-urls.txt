@@ -43,7 +43,6 @@ https://modal.com/docs/examples/cursor.md
 https://modal.com/docs/examples/db_to_sheet.md
 https://modal.com/docs/examples/dbt_duckdb.md
 https://modal.com/docs/examples/deepseek_v4_flash.md
-https://modal.com/docs/examples/discord_bot.md
 https://modal.com/docs/examples/doc_ocr_jobs.md
 https://modal.com/docs/examples/doc_ocr_webapp.md
 https://modal.com/docs/examples/esm3.md
@@ -71,7 +70,6 @@ https://modal.com/docs/examples/ministral3_inference.md
 https://modal.com/docs/examples/miscellaneous
 https://modal.com/docs/examples/modal-vibe.md
 https://modal.com/docs/examples/modal_tailscale.md
-https://modal.com/docs/examples/mongodb-search.md
 https://modal.com/docs/examples/music-video-gen.md
 https://modal.com/docs/examples/nemotron_inference.md
 https://modal.com/docs/examples/paint_flowers.md

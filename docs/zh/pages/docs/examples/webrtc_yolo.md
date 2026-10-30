@@ -13,7 +13,7 @@
 </video>
 </center>
 
-您也可以[此处](https://modal-labs-examples--example-webrtc-yolo-webcamobjdet-web.modal.run)尝试我们的部署。
+您也可以[此处](https://modal-examples--example-webrtc-yolo-webcamobjdet-web.modal.run)尝试我们的部署。
 
 ## 什么是 WebRTC？WebRTC（Web 实时通信）是一种用于点之间实时媒体流的 [IETF 互联网协议](https://www.rfc-editor.org/rfc/rfc8825) 和 [W3C API 规范](https://www.w3.org/TR/webrtc/)
 通过互联网或万维网。
@@ -47,7 +47,7 @@
 
 Modal 将 Python 代码转变为可扩展的云服务。
 当您调用模态函数时，您将获得一个副本。
-如果在返回之前再调用 999 次，则您将拥有 1000 个副本。
+如果在返回之前再调用它 999 次，则您将拥有 1000 个副本。
 当您的函数全部返回时，您将旋转至 0 个副本。
 
 使这成为可能的模态编程模型的核心约束是函数调用是无状态的和独立的。

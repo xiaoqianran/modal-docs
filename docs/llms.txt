@@ -203,7 +203,6 @@ The docs are organized into three main sections:
 - Embeddings
   - [Serve Liquid AI embeddings with Modal Servers](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [Embed millions of documents with TEI](https://modal.com/docs/examples/amazon_embeddings.md)
-  - [Turn satellite images into vectors and store them in MongoDB](https://modal.com/docs/examples/mongodb-search.md)
 - Parallel processing and job scheduling
   - [Deploy a Hacker News Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
   - [Run a Document OCR job queue](https://modal.com/docs/examples/doc_ocr_jobs.md)
@@ -218,7 +217,6 @@ The docs are organized into three main sections:
   - [SQLite: Publish explorable data with Datasette](https://modal.com/docs/examples/cron_datasette.md)
   - [Algolia: Build docsearch with a crawler](https://modal.com/docs/examples/algolia_indexer.md)
 - Connecting to other APIs
-  - [Discord: Deploy and run a Discord Bot](https://modal.com/docs/examples/discord_bot.md)
   - [Google Sheets: Sync databases and APIs to a Google Sheet](https://modal.com/docs/examples/db_to_sheet.md)
   - [OpenAI: Run a RAG Q&A chatbot](https://modal.com/docs/examples/potus_speech_qanda.md)
   - [Tailscale: Add Modal Apps to your VPN](https://modal.com/docs/examples/modal_tailscale.md)

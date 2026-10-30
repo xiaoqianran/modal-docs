@@ -9,11 +9,11 @@
 任务发送到[另一个示例](https://modal.com/docs/examples/doc_ocr_jobs)中定义的单独模态应用程序，
 轮询直到任务完成，并显示
 结果。亲自尝试一下
-[这里](https://modal-labs-examples--example-doc-ocr-webapp-wrapper.modal.run/)。
+[这里](https://modal-examples--example-doc-ocr-webapp-wrapper.modal.run/)。
 
 它应该看起来像这样：
 
-[![Web应用程序前端](https://modal-cdn.com/doc_ocr_frontend.jpg)](https://modal-labs-examples--example-doc-ocr-webapp-wrapper.modal.run/)
+[![Web应用程序前端](https://modal-cdn.com/doc_ocr_frontend.jpg)](https://modal-examples--example-doc-ocr-webapp-wrapper.modal.run/)
 
 ## 基本设置
 
@@ -140,7 +140,7 @@ modal serve doc_ocr_webapp.py
 
 结果应该是这样的：
 
-[![Web应用程序前端](https://modal-cdn.com/doc_ocr_frontend.jpg)](https://modal-labs-examples--example-doc-ocr-webapp-wrapper.modal.run/)
+[![Web应用程序前端](https://modal-cdn.com/doc_ocr_frontend.jpg)](https://modal-examples--example-doc-ocr-webapp-wrapper.modal.run/)
 
 Modal 会监视所有已安装的文件，并在发生任何变化时更新应用程序。
 请参阅[这些文档](https://modal.com/docs/guide/webhooks#developing-with-modal-serve)

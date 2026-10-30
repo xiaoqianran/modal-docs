@@ -13,7 +13,7 @@ that works together with it, but note that you don't need a web app running on M
 to use this pattern. You can submit async tasks to Modal from any Python
 application (for example, a regular Django app running on Kubernetes).
 
-Try it out for yourself [here](https://modal-labs-examples--example-doc-ocr-webapp-wrapper.modal.run/).
+Try it out for yourself [here](https://modal-examples--example-doc-ocr-webapp-wrapper.modal.run/).
 
 ## Define an App
 

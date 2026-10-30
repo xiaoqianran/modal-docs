@@ -144,13 +144,13 @@ $ modal deploy pushgateway.py
 ✓ Created objects.
 ├── 🔨 Created mount /home/ec2-user/modal/examples/10_integrations/pushgateway.py
 ├── 🔨 Created function ExampleClientApplication.*.
-├── 🔨 Created web function serve => https://modal-labs-examples--example-pushgateway-serve.modal.run
-└── 🔨 Created web function for ExampleClientApplication.hello => https://modal-labs-examples--hello-pushgateway.modal.run
+├── 🔨 Created web function serve => https://modal-examples--example-pushgateway-serve.modal.run
+└── 🔨 Created web function for ExampleClientApplication.hello => https://modal-examples--hello-pushgateway.modal.run
 ✓ App deployed! 🎉
 ```
 
-您现在可以转到[客户端应用程序](https://modal-labs-examples--hello-pushgateway.modal.run)
-和 [Pushgateway](https://modal-labs-examples--example-pushgateway-serve.modal.run) URL 以查看正在推送的指标。
+您现在可以转到[客户端应用程序](https://modal-examples--hello-pushgateway.modal.run)
+和 [Pushgateway](https://modal-examples--example-pushgateway-serve.modal.run) URL 以查看正在推送的指标。
 
 ## 连接普罗米修斯
 
@@ -163,7 +163,7 @@ scrape_configs:
 - job_name: 'pushgateway'
   honor_labels: true # required so that the instance label is preserved
   static_configs:
-  - targets: ['modal-labs-examples--example-pushgateway-serve.modal.run']
+  - targets: ['modal-examples--example-pushgateway-serve.modal.run']
 ```
 
 请注意，如果您为 Pushgateway 设置了自定义域，则目标将会有所不同，

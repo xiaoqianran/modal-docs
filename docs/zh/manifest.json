@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "a62fc25cb2cfcbbabde6ec935447d10fbcac7a6b",
-      "translatedAt": "2026-10-29T12:45:49.062Z",
-      "bytes": 27680
+      "hash": "899fa71678ff41289849984239996bc6c3051fe1",
+      "translatedAt": "2026-10-30T12:37:20.654Z",
+      "bytes": 27472
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -202,9 +202,9 @@
       "bytes": 6859
     },
     "docs/examples/cron_datasette.md": {
-      "hash": "0c8d86bd3426cb1f0cfd72a020c01bfe3cd3174f",
-      "translatedAt": "2026-08-08T18:28:07.039Z",
-      "bytes": 13396
+      "hash": "cbdec5d00ee7cf8dcbad5e5260afcec6833bf652",
+      "translatedAt": "2026-10-30T12:37:02.025Z",
+      "bytes": 13386
     },
     "docs/examples/deepseek_v4_flash.md": {
       "hash": "062134161771a51aa9ff72a29d063b7849db17fd",
@@ -212,9 +212,9 @@
       "bytes": 11270
     },
     "docs/examples/dbt_duckdb.md": {
-      "hash": "15852c9df0427f46fc73382d8aab3f18307d5208",
-      "translatedAt": "2026-08-08T18:28:09.183Z",
-      "bytes": 10542
+      "hash": "bfc4e9b35a4340d89e901760c2f6b3b24a2e6a8f",
+      "translatedAt": "2026-10-30T12:37:07.112Z",
+      "bytes": 10523
     },
     "docs/examples/db_to_sheet.md": {
       "hash": "7200c76a5103a43c8c5e75ac93c15cb66f5b353f",
@@ -222,8 +222,8 @@
       "bytes": 10063
     },
     "docs/examples/doc_ocr_jobs.md": {
-      "hash": "3983685339c223e401103aaa9c2c485889adca5e",
-      "translatedAt": "2026-08-08T18:28:11.241Z",
+      "hash": "b11fb91a01daac11f0f1953d61e08079c45ee812",
+      "translatedAt": "2026-10-30T12:37:09.114Z",
       "bytes": 7813
     },
     "docs/examples/diffusers_lora_finetune.md": {
@@ -237,9 +237,9 @@
       "bytes": 15812
     },
     "docs/examples/doc_ocr_webapp.md": {
-      "hash": "f562f2b8da1fa40eb1166f891576e2240c989e6b",
-      "translatedAt": "2026-08-08T18:28:13.994Z",
-      "bytes": 5449
+      "hash": "8df32727777730840d8ce99910316306eb6efe8a",
+      "translatedAt": "2026-10-30T12:37:13.055Z",
+      "bytes": 5434
     },
     "docs/examples/esm3.md": {
       "hash": "87c99b9d30c8f4f94fbbf9199ffba7afe5618ad2",
@@ -252,9 +252,9 @@
       "bytes": 11477
     },
     "docs/examples/fastrtc_flip_webcam.md": {
-      "hash": "53347a686ff17c588b36e5ab916e149bb0694c21",
-      "translatedAt": "2026-08-08T18:28:17.206Z",
-      "bytes": 8440
+      "hash": "fb867f122371ec1a1130e02c8a424013957070f7",
+      "translatedAt": "2026-10-30T12:37:16.291Z",
+      "bytes": 8427
     },
     "docs/examples/finetune_yolo.md": {
       "hash": "6c05db4fff5dbf952849eae76d0d47a1855a997f",
@@ -347,9 +347,9 @@
       "bytes": 9414
     },
     "docs/examples/mcp_server_stateless.md": {
-      "hash": "2b141f16a60b9ed779e9f5545770ca390025ca1b",
-      "translatedAt": "2026-08-08T18:28:30.965Z",
-      "bytes": 4666
+      "hash": "4f11346216528ca5d976ee0a1ce02c54902083dd",
+      "translatedAt": "2026-10-30T12:37:17.490Z",
+      "bytes": 4655
     },
     "docs/examples/ltx.md": {
       "hash": "3368405b3d942ca70c602153adb6ece78bb5af7e",
@@ -397,9 +397,9 @@
       "bytes": 9575
     },
     "docs/examples/pushgateway.md": {
-      "hash": "f1f59813230f888ba4cc12a073cdb2ad36c0b224",
-      "translatedAt": "2026-10-24T10:43:52.238Z",
-      "bytes": 6485
+      "hash": "7499dc2d307e40e5a352836865206700e0549d90",
+      "translatedAt": "2026-10-30T12:37:19.033Z",
+      "bytes": 6460
     },
     "docs/examples/s3_bucket_mount.md": {
       "hash": "7880a6397970a4ea2b4bd0346a2c5aa7a27bc4f9",
@@ -462,9 +462,9 @@
       "bytes": 10388
     },
     "docs/examples/webrtc_yolo.md": {
-      "hash": "30d98f9a57f73e7f0329774d2f81ce2db0adfc19",
-      "translatedAt": "2026-09-04T11:03:26.209Z",
-      "bytes": 24428
+      "hash": "87f67594c0acd9e30603fd8813e95df273bb3c8a",
+      "translatedAt": "2026-10-30T12:37:24.523Z",
+      "bytes": 24426
     },
     "docs/guide.md": {
       "hash": "839d25dc640e8f023f9e195bb9f70956460c0222",
@@ -787,9 +787,9 @@
       "bytes": 15827
     },
     "docs/guide/sandbox-resources.md": {
-      "hash": "cf43815a53a33c2f36464cbd603bc13a34b8e285",
-      "translatedAt": "2026-09-30T12:21:36.417Z",
-      "bytes": 5363
+      "hash": "5b938af813063fc21d17fbf9ca8f139cc67c319f",
+      "translatedAt": "2026-10-30T12:37:23.153Z",
+      "bytes": 6055
     },
     "docs/guide/rbac.md": {
       "hash": "7533a9a0c31acbbc171a6b46c44d9fa72063d02c",
@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "1bbd808c01b9e1d96f2c2529cccc5914aa4f07f3",
-      "translatedAt": "2026-10-10T12:18:01.405Z",
-      "bytes": 12143
+      "hash": "1a96a8ccfabb1bcdbb8820f548b3af024cf7c65f",
+      "translatedAt": "2026-10-30T12:37:34.072Z",
+      "bytes": 12232
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -1698,9 +1698,9 @@
       "bytes": 6388
     },
     "docs/guide/sticky-sessions.md": {
-      "hash": "90748690fb6090d4d29cd1bd3a0d2b1f219e6b25",
-      "translatedAt": "2026-10-13T14:00:09.727Z",
-      "bytes": 6424
+      "hash": "2ca564552ae6bf9a58e9829809146c0cdcaa19da",
+      "translatedAt": "2026-10-30T12:37:26.677Z",
+      "bytes": 6600
     },
     "docs/examples/sandbox_secret_injection.md": {
       "hash": "dd536a0249671c7fb854a047181603bf7238654e",
@@ -1892,10 +1892,10 @@
       "bytes": 6017
     }
   },
-  "updatedAt": "2026-10-29T12:49:39.787Z",
+  "updatedAt": "2026-10-30T12:37:34.072Z",
   "stats": {
-    "translated": 31,
-    "skipped": 335,
+    "translated": 12,
+    "skipped": 354,
     "failed": 0,
     "total": 366
   }

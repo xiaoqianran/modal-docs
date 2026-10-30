@@ -110,14 +110,14 @@ npx @modelcontextprotocol/inspector
 ```
 输入上面的`modal serve`命令打印的MCP服务器的URL，
 后缀为 `/mcp/` （例如
-`https://modal-labs-examples--datetime-mcp-server-web-dev.modal.run/mcp/`）。还有
+`https://modal-examples--datetime-mcp-server-web-dev.modal.run/mcp/`）。还有
 确保选择“Streamable HTTP”作为“传输类型”。
 
 连接并单击“工具”选项卡中的“列出工具”后，您应该会看到您的
 列出了 `current_date_and_time` 工具，如果您“运行工具”，它应该为您提供
 当前日期和时间（UTC）！
 
-为了自动测试 MCP 服务器，我们启动一个客户端并让它列出工具。
+为了自动测试 MCP 服务器，我们启动客户端并让它列出工具。
 
 ```python
 @app.function(image=image)

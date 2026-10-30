@@ -10,7 +10,7 @@
 请参阅[此示例](https://modal.com/docs/examples/webrtc_yolo)。
 
 在此示例中，我们将网络摄像头视频从浏览器流式传输到 Modal 上的容器，
-视频被翻转、注释并以不到 100 毫秒的延迟发送回来。你可以尝试一下[这里](https://modal-labs-examples--example-fastrtc-flip-webcam-ui.modal.run/)
+视频被翻转、注释并以不到 100 毫秒的延迟发送回来。你可以尝试一下[这里](https://modal-examples--example-fastrtc-flip-webcam-ui.modal.run/)
 或者直接深入代码并自行运行。
 
 ## 在 Modal 上设置 FastRTC
@@ -168,7 +168,7 @@ modal serve 07_web/fastrtc_flip_webcam.py
 您还可以查看应用程序的仪表板
 通过出现在其下方的 `modal.com` URL。
 
-`modal serve`命令生成一个热重载开发服务器——
+`modal serve` 命令生成一个热重载开发服务器 --
 尝试编辑上面的`ui_args`中的`title`并观察服务器重新部署。
 
 此临时部署与您的终端会话相关联。
@@ -184,7 +184,7 @@ modal deploy 07_web_endponts/fastrtc_flip_webcam.py
 ## 附录
 
 这个 FastRTC 应用程序非常类似于“hello world”或“echo server”
-FastRTC 的功能：它只是翻转传入的网络摄像头流并添加一条“hello”消息。
+FastRTC 的：它只是翻转传入的网络摄像头流并添加一条“hello”消息。
 该逻辑如下所示。
 
 ```python

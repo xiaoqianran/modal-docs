@@ -101,3 +101,5 @@ curl -i "$SERVER_URL/" --cookie "__Host-modal-session-token=$SESSION_TOKEN"
 ## 示例
 
 有关粘性会话的基本用例，请参阅[会话式 WebSocket 聊天室示例](/docs/examples/sessioned_chatroom)。
+
+我们还有利用会话和 WebRTC 以及 [LiveKit](https://modal.com/blog/livekit-modal) 和 [Pipecat](https://github.com/modal-projects/modal-phonon-voice-bot) 的示例。

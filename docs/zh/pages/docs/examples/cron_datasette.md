@@ -7,7 +7,7 @@
 构建并部署一个交互式电影数据库，该数据库每天自动更新最新的 IMDb 数据。
 此示例演示如何在 Modal 上为包含数百万电影和电视节目记录的 Datasette 应用程序提供服务。
 
-亲自尝试一下[这里](https://modal-labs-examples--example-cron-datasette-ui.modal.run)。
+亲自尝试一下[这里](https://modal-examples--example-cron-datasette-ui.modal.run)。
 
 在此过程中，我们将学习如何使用以下 Modal 功能：
 
@@ -421,4 +421,4 @@ def run(force_refresh: bool = False, filter_year: int = None):
 
 ```
 
-您可以在[已部署的Web功能](https://modal-labs-examples--example-cron-datasette-ui.modal.run)中探索数据。
+您可以在[已部署的Web功能](https://modal-examples--example-cron-datasette-ui.modal.run)中探索数据。

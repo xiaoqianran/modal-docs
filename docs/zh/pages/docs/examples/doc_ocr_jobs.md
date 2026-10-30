@@ -13,7 +13,7 @@
 使用此模式。您可以从任何 Python 向 Modal 提交异步任务
 应用程序（例如，在 Kubernetes 上运行的常规 Django 应用程序）。
 
-亲自尝试一下[这里](https://modal-labs-examples--example-doc-ocr-webapp-wrapper.modal.run/)。
+亲自尝试一下[这里](https://modal-examples--example-doc-ocr-webapp-wrapper.modal.run/)。
 
 ## 定义一个应用程序
 
@@ -204,8 +204,8 @@ modal run doc_ocr_jobs.py
 modal deploy doc_ocr_jobs.py
 ```
 
-发布后我们可以[查找](https://modal.com/docs/guide/trigger-deployed-functions)这个函数
-从另一个Python进程并向其提交任务：
+发布后我们就可以[查找](https://modal.com/docs/guide/trigger-deployed-functions)这个函数
+从另一个 Python 进程并向其提交任务：
 
 ```python
 fn = modal.Function.from_name("example-doc-ocr-jobs", "parse_document")

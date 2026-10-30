@@ -256,12 +256,12 @@ modal deploy dbt_duckdb.py
 # ...
 # Created web function serve_dbt_docs => <output-url>
 ```
-如果导航到输出 URL，您应该会看到类似的内容
-[![dbt 文档示例](./dbt_docs.png)](https://modal-labs-examples--example-dbt-duckdb-serve-dbt-docs.modal.run)
+如果您导航到输出 URL，您应该会看到类似的内容
+[![dbt 文档示例](./dbt_docs.png)](https://modal-examples--example-dbt-duckdb-serve-dbt-docs.modal.run)
 
-您还可以在[此处](https://modal-labs-examples--example-dbt-duckdb-serve-dbt-docs.modal.run)查看我们的文档实例。
-该应用程序将以“无服务器”方式提供服务——它将自动扩展或缩小
-在使用量增加或减少期间，您根本不会被收取费用
+您还可以在[此处](https://modal-examples--example-dbt-duckdb-serve-dbt-docs.modal.run)查看我们的文档实例。
+该应用程序将“无服务器”地提供服务——它将自动扩展或缩小
+在使用量增加或减少期间，您根本不需要付费
 当它缩放到零时。
 
 ## 安排每日更新

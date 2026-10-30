@@ -4,19 +4,36 @@ This page covers resource configuration and pricing for Modal Sandboxes.
 For general documentation on CPU and memory options, see
 [Reserving CPU and memory](/docs/guide/resources).
 
-## Pay for what you use
+Modal Sandboxes differ from many other sandbox providers on two dimensions:
 
-Modal Sandboxes are billed by the second based on whichever is higher:
-your resource request or your actual usage.
-
-Sandboxes can burst beyond their CPU and memory requests when additional
-resources are available on the underlying host. Your request guarantees
-a minimum level of resources, but when spare capacity exists, your Sandbox
-can use more. You pay for `max(request, actual)`.
+* Modal Sandboxes have elastic resourcing. They automatically "burst" beyond their CPU and memory requests.
+* You're charged `max(request, actual)` for both CPU and memory. When bursting, charging `max(request, actual)`
+  means you only pay for active-resources.
 
 See [Billing](/docs/guide/resources#billing) in the resource guide for more details.
 
-## Configuring resources
+## Pay for what you use
+
+By default, each Sandbox requests 0.125 CPU cores and 128 MiB of memory and
+can burst beyond that when the host has spare capacity.
+
+Modal schedules and packs Sandboxes onto hosts so that
+additional CPU and memory is available the vast majority of the time. Because
+Sandboxes can reliably burst to use additional resources, most workloads don't
+need to set a resource request for their Sandboxes.
+
+Not setting a resource request means you only pay for the resources your Sandbox is
+actively using each second, with the small default request as the minimum.
+
+Set a [resource request](#setting-resource-requests) if your Sandboxes need
+guaranteed CPU or memory and a [resource limit](#setting-resource-limits) if
+you need to cap how much they can burst.
+
+## Setting resource requests
+
+Requesting resources guarantees your Sandbox a minimum amount of CPU and memory.
+You are charged for requested resources for the lifetime of your Sandbox, regardless of
+whether the resources are being used.
 
 Set CPU and memory requests using the `cpu` and `memory` parameters when creating your Sandbox.
 The `cpu` parameter specifies physical CPU cores (1 core = 2 vCPUs),
@@ -88,11 +105,12 @@ func main() {
 For details on default values and maximum limits, see
 [Reserving CPU and memory](/docs/guide/resources).
 
-### Resource limits
+## Setting resource limits
 
 You can set upper limits to cap how much a Sandbox can burst.
-This is particularly useful when an AI agent controls what runs inside the Sandbox,
-as it prevents misbehaving or adversarial workloads from consuming unbounded resources:
+Limits are particularly useful when an AI agent controls what runs inside the Sandbox,
+as they prevent misbehaving or adversarial workloads from consuming unbounded resources.
+They also let you evaluate agents on bounded resources, like when running evals.
 
 <CodeTabs>
   {#snippet python()}
@@ -136,21 +154,9 @@ sb, _ := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 See [Resource limits](/docs/guide/resources#resource-limits) for details on
 how CPU and memory limits behave.
 
-### Disk
-
-Sandboxes have the same [disk limits](/docs/guide/resources#disk-limits) as
-other Modal containers, and their disk size cannot be increased. On the
-[VM runtime](/docs/guide/sandboxes#runtimes), the root filesystem is a fixed
-512 GiB.
-
 ## Tuning your requests
 
-We recommend basing your resource requests on observed usage percentiles rather
-than peaks: around p50–75 for CPU and p90–95 for memory.
-
-Because Sandboxes can burst above their request, you generally want to
-request less than you'd think and let bursting cover the rest. The Sandboxes
-tab on an App page has metrics to help you find the right request size:
+The Sandboxes tab on an App page has metrics to help you monitor your bursting and, if needed, find the right request size:
 **CPU Per Sandbox**, **Memory Per Sandbox**, **CPU Pressure Per Sandbox**, and
 **Exit Reasons**.
 
@@ -162,16 +168,23 @@ tell you if a request is too low. CPU Pressure Per Sandbox tracks time Sandboxes
 spent stalled waiting for CPU; Exit Reasons tracks Sandboxes evicted while
 exceeding their memory request.
 
-1. Start with the [default request values](/docs/guide/resources) for CPU
+1. Start with the [default request values](#pay-for-what-you-use) for CPU
    and memory, which are used when you omit the `cpu` and `memory` parameters.
 
 2. Run your typical workload and check CPU Per Sandbox and Memory Per
    Sandbox to see your actual usage.
 
-3. Set your requests to around p50–75 for CPU and p90–95 for memory, then check
-   CPU Pressure Per Sandbox and Exit Reasons to confirm that throttling and
-   evictions are at acceptable levels. If they aren't, raise the resource request
-   as necessary.
+3. Check CPU Pressure Per Sandbox and Exit Reasons to confirm that throttling and
+   evictions are at acceptable levels.
+
+4. If evictions are higher than needed, raise the resource request based on your observed usage.
+
+## Disk
+
+Sandboxes have the same [disk limits](/docs/guide/resources#disk-limits) as
+other Modal containers, and their disk size cannot be increased. On the
+[VM runtime](/docs/guide/sandboxes#runtimes), the root filesystem is a fixed
+512 GiB.
 
 ## GPU Sandboxes
 
