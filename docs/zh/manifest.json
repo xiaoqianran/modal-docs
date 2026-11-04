@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "1a96a8ccfabb1bcdbb8820f548b3af024cf7c65f",
-      "translatedAt": "2026-10-30T12:37:34.072Z",
-      "bytes": 12232
+      "hash": "abf022ae7c01df7696c4f2270a52f85034535399",
+      "translatedAt": "2026-11-04T14:14:02.025Z",
+      "bytes": 12705
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -1892,10 +1892,10 @@
       "bytes": 6017
     }
   },
-  "updatedAt": "2026-11-03T13:58:23.787Z",
+  "updatedAt": "2026-11-04T14:14:02.025Z",
   "stats": {
-    "translated": 0,
-    "skipped": 366,
+    "translated": 1,
+    "skipped": 365,
     "failed": 0,
     "total": 366
   }

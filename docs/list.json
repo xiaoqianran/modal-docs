@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-03T13:58:23.697Z",
+  "fetchedAt": "2026-11-04T14:13:27.729Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 345,
   "ok": 345,
@@ -1386,7 +1386,7 @@
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 16226,
+      "bytes": 16941,
       "stub": false
     },
     {
