@@ -1887,12 +1887,12 @@
       "bytes": 7478
     },
     "docs/guide/supported-models.md": {
-      "hash": "a1b1445c1b4de776204ba16424159994ceaff4e7",
-      "translatedAt": "2026-10-29T12:47:12.549Z",
-      "bytes": 6017
+      "hash": "b1b30f3ad510cb1152053f103965e605a245d4bb",
+      "translatedAt": "2026-11-05T14:27:53.911Z",
+      "bytes": 6118
     }
   },
-  "updatedAt": "2026-11-04T14:14:02.025Z",
+  "updatedAt": "2026-11-05T14:27:53.911Z",
   "stats": {
     "translated": 1,
     "skipped": 365,

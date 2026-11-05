@@ -26,6 +26,7 @@ also appear when you create an Endpoint.
 | [Inkling NVFP4](/library/thinking-machines/inkling)                    | Text, Image, Audio | 1.20 / 0.27 cached                                         | 5.00                                                        |
 | [Qwen3.8-Max](/library/qwen/qwen3-8-max)                               | Text               | 2.00 / 0.25 cached                                         | 6.00                                                        |
 | [Qwen3.8-Max VL](/library/qwen/qwen3-8-max-vl)                         | Text, Image        | 2.00 / 0.25 cached                                         | 6.00                                                        |
+| [Kimi K3.1 Pro](/library/moonshot/kimi-k3-1-pro)                       | Text, Image        | 2.00 / 0.20 cached                                         | 10.00                                                       |
 | [Kimi K3](/library/moonshot/kimi-k3)                                   | Text, Image        | 3.00 / 0.30 cached                                         | 15.00                                                       |
 
 ## Dedicated Endpoint models
