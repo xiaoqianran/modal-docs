@@ -40,48 +40,79 @@ Modal supports SCIM for automatic provisioning and deprovisioning of users and
 
 #### Okta
 
-1. Create a new SCIM integration or select your existing custom app.
+**Supported features**
 
-   If you use the [Modal catalog app](https://www.okta.com/integrations/modal/)
-   for [Okta SSO](/docs/guide/okta-sso), create a separate private SCIM
-   integration. Your existing Modal app can continue to handle SSO; don't add
-   SSO to the new SCIM integration.
+The [Modal app](https://www.okta.com/integrations/modal/) in the Okta
+Integration Network (OIN) supports the following provisioning features:
 
-   If you use a custom app for SSO, you can reuse it for SCIM provisioning.
-   Select your existing app in the Okta Admin Console and continue to step 2.
+* Create users
+* Update user attributes
+* Deactivate users
+* Group push
 
-   To create a new integration in the Okta Admin Console:
+The Modal app doesn't support the following features:
 
-   1. Go to **Applications > Applications**.
-   2. Click **Create a new app integration**.
-   3. Select **Okta Integration Wizard**.
-   4. Choose **Provisioning** as the capability.
-   5. Choose **SCIM 2.0** as the provisioning method.
+* Import users
+* Import groups
+* Sync password
+* Profile sourcing
 
-2. Configure the integration with your Modal SCIM credentials.
+For more information on the listed features, visit the
+[Okta Glossary](https://help.okta.com/okta_help.htm?type=oie\&id=ext_glossary).
 
-   In the new integration wizard or your existing custom app's provisioning
-   settings, enter the following values. Replace `<workspace>` with your
-   Modal Workspace name.
+Pushed groups appear as [user groups](/docs/guide/user-groups) in Modal. Group
+names must be unique within a Workspace, ignoring case, across both custom and
+SCIM groups, so a group push fails if a group with the same name already exists.
+See [Group name conflicts](/docs/guide/user-groups#group-name-conflicts) for
+how to resolve this.
 
-   | Okta setting                      | Modal value                                           |
-   | --------------------------------- | ----------------------------------------------------- |
-   | SCIM connector base URL           | `https://modal.com/api/<workspace>/scim/v2`           |
-   | Unique identifier field for users | `userName`                                            |
-   | Authentication mode               | HTTP Header                                           |
-   | Authorization                     | The full SCIM token generated in step 1               |
-   | Supported provisioning actions    | Push New Users, Push Profile Updates, and Push Groups |
+**Configuration steps**
 
-   Click **Test API Credentials**. If you created a new integration, review and
-   deploy it. When prompted, add an app instance from your organization's
-   **Private apps** catalog.
+1. Add the Modal app to Okta.
 
-   In the app instance's **Provisioning > To App** settings, enable
-   **Create Users**, **Update User Attributes**, and **Deactivate Users**.
-   Assign the people and groups that Okta should provision to Modal.
+   If you already use the Modal app for [Okta SSO](/docs/guide/okta-sso),
+   select it in the Okta Admin Console under **Applications > Applications** and
+   continue to step 2. Otherwise, add it from the Okta Integration Network:
+
+   1. In the Okta Admin Console, go to **Applications > Applications** and click
+      **Browse App Catalog**.
+   2. Select **Modal** and click **Done**.
+   3. Select the **Sign On** tab and click **Edit**.
+   4. Enter your Modal Workspace name in the **Workspace** field and click
+      **Save**. Your Workspace name is shown under **Workspace Name** on the
+      **Identity and Provisioning** tab of the
+      [Workspace Management settings page](/settings/workspace-management/identity-and-provisioning).
+
+2. Configure the app with your Modal SCIM credentials.
+
+   Select the **Provisioning** tab, click **Configure API Integration**, select
+   **Enable API integration**, and enter:
+
+   | Okta setting | Modal value                             |
+   | ------------ | --------------------------------------- |
+   | API Token    | The full SCIM token generated in step 1 |
+
+   Click **Test API Credentials**, then click **Save**.
+
+3. Enable provisioning to Modal.
+
+   On the **Provisioning** tab, select **To App** and click **Edit**. Enable
+   **Create Users**, **Update User Attributes**, and **Deactivate Users**, then
+   click **Save**.
+
+4. Assign users and groups.
+
+   Select the **Assignments** tab and assign the people and groups that Okta
+   should provision to Modal. Modal identifies users by email address, so keep
+   the **Application username format** on the **Sign On** tab set to **Email**.
+
+5. Push groups.
+
+   Select the **Push Groups** tab, click **Push Groups**, and select the groups
+   whose membership Okta should sync to Modal.
 
    For more information, see Okta's
-   [Okta Integration Wizard documentation](https://help.okta.com/en-us/Content/Topics/Apps/oiw/create-app-integration.htm).
+   [provisioning documentation](https://help.okta.com/en-us/content/topics/provisioning/lcm/lcm-provision-application.htm).
 
 #### Microsoft Entra ID
 
@@ -161,9 +192,9 @@ Your IdP may also ask which user attributes Modal supports:
 | ------------------- | ------------- | ----------------------------------------------- |
 | externalId          | Yes           |                                                 |
 | userName            | Yes           | Required; must contain the user's email address |
-| displayName         | Yes           |                                                 |
-| name.familyName     | Yes           |                                                 |
-| name.givenName      | Yes           |                                                 |
+| displayName         | Yes           | Not displayed in the UI                         |
+| name.familyName     | Yes           | Not displayed in the UI                         |
+| name.givenName      | Yes           | Not displayed in the UI                         |
 | emails              | Read-only     | The primary email is derived from `userName`    |
 | active              | Yes           |                                                 |
 | addresses           | No            |                                                 |

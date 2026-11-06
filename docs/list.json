@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-05T14:27:31.501Z",
+  "fetchedAt": "2026-11-06T14:04:11.769Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 345,
   "ok": 345,
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28003,
+      "bytes": 28016,
       "stub": false
     },
     {
@@ -510,14 +510,6 @@
       "stub": false
     },
     {
-      "url": "https://modal.com/docs/examples/llm-voice-chat.md",
-      "source": "https://modal.com/docs/examples/llm-voice-chat.md",
-      "finalUrl": "https://modal.com/docs/examples/llm-voice-chat.md",
-      "path": "docs/examples/llm-voice-chat.md",
-      "bytes": 6884,
-      "stub": false
-    },
-    {
       "url": "https://modal.com/docs/examples/long-training.md",
       "source": "https://modal.com/docs/examples/long-training.md",
       "finalUrl": "https://modal.com/docs/examples/long-training.md",
@@ -1006,6 +998,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/google-sso.md",
+      "source": "https://modal.com/docs/guide/google-sso.md",
+      "finalUrl": "https://modal.com/docs/guide/google-sso.md",
+      "path": "docs/guide/google-sso.md",
+      "bytes": 5447,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/gpu-health.md",
       "source": "https://modal.com/docs/guide/gpu-health.md",
       "finalUrl": "https://modal.com/docs/guide/gpu-health.md",
@@ -1274,7 +1274,7 @@
       "source": "https://modal.com/docs/guide/saml-sso.md",
       "finalUrl": "https://modal.com/docs/guide/saml-sso.md",
       "path": "docs/guide/saml-sso.md",
-      "bytes": 2987,
+      "bytes": 3050,
       "stub": false
     },
     {
@@ -1362,7 +1362,7 @@
       "source": "https://modal.com/docs/guide/scim.md",
       "finalUrl": "https://modal.com/docs/guide/scim.md",
       "path": "docs/guide/scim.md",
-      "bytes": 9712,
+      "bytes": 10286,
       "stub": false
     },
     {
@@ -1386,7 +1386,7 @@
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 16941,
+      "bytes": 17325,
       "stub": false
     },
     {

@@ -117,14 +117,14 @@ Modal prioritizes the integrity, security, and availability of customer data. Un
 
 We provide security features across our products to help you secure your workloads, such as single sign-on, Role-Based Access Control (RBAC), Sandbox network access controls, audit logs, and customer-supplied encryption keys.
 
-| Product       | Features                                                                                                                                                                                                                 |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Workspace     | [Block unauthenticated endpoints](/docs/guide/webhook-proxy-auth#blocking-unauthenticated-urls), [Role-Based Access Control (RBAC)](/docs/guide/rbac), [Proxies (static egress IPs)](/docs/guide/proxy-ips)              |
-| Functions     | [Restricted Functions](/docs/guide/restricted-access)                                                                                                                                                                    |
-| Sandboxes     | [Outbound access control](/docs/guide/sandbox-networking#outbound-access-control), [Inbound access control](/docs/guide/sandbox-networking#inbound-access-control)                                                       |
-| Identity      | [Okta SSO](/docs/guide/okta-sso), [Microsoft Entra SSO](/docs/guide/entra-sso), [Custom SAML SSO](/docs/guide/saml-sso), [SCIM integration](/docs/guide/scim?idp=okta), [OIDC integration](/docs/guide/oidc-integration) |
-| Observability | [Audit logs](/docs/guide/audit-logs), [Datadog integration](/docs/guide/datadog-integration), [OpenTelemetry integration](/docs/guide/otel-integration)                                                                  |
-| Encryption    | [Customer-supplied encryption keys](/docs/guide/customer-supplied-encryption-keys)                                                                                                                                       |
+| Product       | Features                                                                                                                                                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Workspace     | [Block unauthenticated endpoints](/docs/guide/webhook-proxy-auth#blocking-unauthenticated-urls), [Role-Based Access Control (RBAC)](/docs/guide/rbac), [Proxies (static egress IPs)](/docs/guide/proxy-ips)                                                              |
+| Functions     | [Restricted Functions](/docs/guide/restricted-access)                                                                                                                                                                                                                    |
+| Sandboxes     | [Outbound access control](/docs/guide/sandbox-networking#outbound-access-control), [Inbound access control](/docs/guide/sandbox-networking#inbound-access-control)                                                                                                       |
+| Identity      | [Okta SSO](/docs/guide/okta-sso), [Microsoft Entra SSO](/docs/guide/entra-sso), [Google Workspace SSO](/docs/guide/google-sso), [Custom SAML SSO](/docs/guide/saml-sso), [SCIM integration](/docs/guide/scim?idp=okta), [OIDC integration](/docs/guide/oidc-integration) |
+| Observability | [Audit logs](/docs/guide/audit-logs), [Datadog integration](/docs/guide/datadog-integration), [OpenTelemetry integration](/docs/guide/otel-integration)                                                                                                                  |
+| Encryption    | [Customer-supplied encryption keys](/docs/guide/customer-supplied-encryption-keys)                                                                                                                                                                                       |
 
 ## Compliance standards
 

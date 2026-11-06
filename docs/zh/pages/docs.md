@@ -118,19 +118,21 @@
   - [使用 OIDC 与外部服务进行身份验证](https://modal.com/docs/guide/oidc-integration.md)
   - [将 Modal 连接到您的 Datadog 帐户](https://modal.com/docs/guide/datadog-integration.md)
   - [将 Modal 连接到您的 OpenTelemetry 提供商](https://modal.com/docs/guide/otel-integration.md)
-  - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
-  - [微软 Entra SSO](https://modal.com/docs/guide/entra-sso.md)
-  - [自定义 SAML SSO](https://modal.com/docs/guide/saml-sso.md)
-  - [SCIM 集成](https://modal.com/docs/guide/scim.md)
-  - [Slack 通知（测试版）](https://modal.com/docs/guide/slack-notifications.md)- 工作区和帐户设置
+  - [Slack 通知（测试版）](https://modal.com/docs/guide/slack-notifications.md)
+- 工作区和帐户设置
   - [工作空间](https://modal.com/docs/guide/workspaces.md)
   - [环境](https://modal.com/docs/guide/environments.md)
-  - [服务用户](https://modal.com/docs/guide/service-users.md)
-  - [用户组](https://modal.com/docs/guide/user-groups.md)
-  - [基于角色的访问控制（RBAC）](https://modal.com/docs/guide/rbac.md)
-  - [账单](https://modal.com/docs/guide/billing.md)
+  - [服务用户](https://modal.com/docs/guide/service-users.md)- [用户组](https://modal.com/docs/guide/user-groups.md)
+  - [基于角色的访问控制 (RBAC)](https://modal.com/docs/guide/rbac.md)
+  - [计费](https://modal.com/docs/guide/billing.md)
   - [网络出口计费](https://modal.com/docs/guide/network-egress-billing.md)
   - [预算](https://modal.com/docs/guide/budgets.md)
+- 身份和配置
+  - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
+  - [微软 Entra SSO](https://modal.com/docs/guide/entra-sso.md)
+  - [Google Workspace 单点登录](https://modal.com/docs/guide/google-sso.md)
+  - [自定义 SAML SSO](https://modal.com/docs/guide/saml-sso.md)
+  - [SCIM 集成](https://modal.com/docs/guide/scim.md)
 - 其他主题
   - [功能成熟度](https://modal.com/docs/guide/feature-maturity.md)
   - [限制功能](https://modal.com/docs/guide/restricted-access.md)
@@ -139,9 +141,9 @@
   - [文件和项目结构](https://modal.com/docs/guide/project-structure.md)
   - [开发与调试](https://modal.com/docs/guide/developing-debugging.md)
   - [Jupyter 笔记本](https://modal.com/docs/guide/jupyter-notebooks.md)
-  - [异步API使用](https://modal.com/docs/guide/async.md)
+- [异步API使用](https://modal.com/docs/guide/async.md)
   - [全局变量](https://modal.com/docs/guide/global-variables.md)
-- [地区选择](https://modal.com/docs/guide/region-selection.md)
+  - [区域选择](https://modal.com/docs/guide/region-selection.md)
   - [GPU指标](https://modal.com/docs/guide/gpu-metrics.md)
   - [搜索语法](https://modal.com/docs/guide/log-search-syntax.md)
 
@@ -155,12 +157,12 @@
 - 大型语言模型（LLM）
   - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
   - [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
-  - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)
-  - [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
-  - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)- [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
+  - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)- [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
+  - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
+  - [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
   - [服务DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
   - [运行多模式 RAG 聊天机器人来回答有关 PDF 的问题](https://modal.com/docs/examples/chat_with_pdf_vision.md)
-  - [使用FastMCP部署无状态MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
+  - [使用 FastMCP 部署无状态 MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
 - 图像、视频和 3D
   - [使用 Flux Kontext 编辑图像](https://modal.com/docs/examples/image_to_image.md)
   - [微调你脸上的Wan2.1视频模型](https://modal.com/docs/examples/music-video-gen.md)
@@ -169,7 +171,6 @@
   - [使用LTX-Video生成视频剪辑](https://modal.com/docs/examples/ltx.md)
   - [使用 CLI、API 和 Web UI 运行稳定的扩散](https://modal.com/docs/examples/text_to_image.md)
 - 音频
-  - [部署 Moshi 语音聊天机器人](https://modal.com/docs/examples/llm-voice-chat.md)
 - [使用 Kyutai STT 以语音速度传输文字记录](https://modal.com/docs/examples/streaming_kyutai_stt.md)
   - [使用 ACE-Step 制作音乐](https://modal.com/docs/examples/generate_music.md)
   - [用Chatterbox生成语音](https://modal.com/docs/examples/chatterbox_tts.md)
@@ -198,7 +199,7 @@
   - [训练编码特工](https://modal.com/docs/examples/swe_gym.md)
   - [让法学硕士数学更好](https://modal.com/docs/examples/miles_grpo.md)
 - 嵌入
-  - [使用 Modal 服务器提供 Liquid AI 嵌入服务](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [使用模态服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
@@ -210,7 +211,7 @@
   - [YOLO：微调并服务计算机视觉模型](https://modal.com/docs/examples/finetune_yolo.md)
   - [Blender：构建 3D 渲染农场](https://modal.com/docs/examples/blender_video.md)
   - [Streamlit：运行和部署 Streamlit 应用程序](https://modal.com/docs/examples/serve_streamlit.md)
-  - [SQLite：使用 Datasette 发布可探索的数据](https://modal.com/docs/examples/cron_datasette.md)
+  - [SQLite：使用Datasette发布可探索的数据](https://modal.com/docs/examples/cron_datasette.md)
   - [Algolia：用爬虫构建文档搜索](https://modal.com/docs/examples/algolia_indexer.md)
 - 连接到其他API
   - [Google Sheets：将数据库和 API 同步到 Google Sheets](https://modal.com/docs/examples/db_to_sheet.md)

@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "899fa71678ff41289849984239996bc6c3051fe1",
-      "translatedAt": "2026-10-30T12:37:20.654Z",
-      "bytes": 27472
+      "hash": "fe62216d5d264375e1730906723d14a35950a860",
+      "translatedAt": "2026-11-06T14:04:35.494Z",
+      "bytes": 27467
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -777,9 +777,9 @@
       "bytes": 1259
     },
     "docs/guide/saml-sso.md": {
-      "hash": "63655a0d690e16b4be42ce56911ac461a6c61d72",
-      "translatedAt": "2026-10-21T11:35:16.590Z",
-      "bytes": 2839
+      "hash": "6ba52a6e340806868886f6d0437e8579e7a5e2af",
+      "translatedAt": "2026-11-06T14:04:20.461Z",
+      "bytes": 2904
     },
     "docs/guide/sandbox-files.md": {
       "hash": "8cb82ab208f8c3f332c7a40fd62dd555d59aa9a5",
@@ -827,9 +827,9 @@
       "bytes": 3840
     },
     "docs/guide/scim.md": {
-      "hash": "47d071a42a8f0499b94f9c2683d160b9aef73fd9",
-      "translatedAt": "2026-10-06T13:10:57.353Z",
-      "bytes": 8673
+      "hash": "f7c4ebfc32e0c0bdc6cc9fd4e6b4959e75e7a07a",
+      "translatedAt": "2026-11-06T14:04:30.561Z",
+      "bytes": 9348
     },
     "docs/guide/sandboxes.md": {
       "hash": "164608f8bd29dd5efa79c7f0a0a7987c97dd1ce2",
@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "abf022ae7c01df7696c4f2270a52f85034535399",
-      "translatedAt": "2026-11-04T14:14:02.025Z",
-      "bytes": 12705
+      "hash": "6121c9e58c542bd6c6669b73993cda832d5804f1",
+      "translatedAt": "2026-11-06T14:04:47.748Z",
+      "bytes": 12818
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -1890,13 +1890,18 @@
       "hash": "b1b30f3ad510cb1152053f103965e605a245d4bb",
       "translatedAt": "2026-11-05T14:27:53.911Z",
       "bytes": 6118
+    },
+    "docs/guide/google-sso.md": {
+      "hash": "f3c3f234f3b92b643aeac8f93b7241115bf3b518",
+      "translatedAt": "2026-11-06T14:04:17.343Z",
+      "bytes": 5094
     }
   },
-  "updatedAt": "2026-11-05T14:27:53.911Z",
+  "updatedAt": "2026-11-06T14:04:47.749Z",
   "stats": {
-    "translated": 1,
-    "skipped": 365,
+    "translated": 5,
+    "skipped": 362,
     "failed": 0,
-    "total": 366
+    "total": 367
   }
 }

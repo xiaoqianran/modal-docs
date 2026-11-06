@@ -118,10 +118,6 @@ The docs are organized into three main sections:
   - [Using OIDC to authenticate with external services](https://modal.com/docs/guide/oidc-integration.md)
   - [Connecting Modal to your Datadog account](https://modal.com/docs/guide/datadog-integration.md)
   - [Connecting Modal to your OpenTelemetry provider](https://modal.com/docs/guide/otel-integration.md)
-  - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
-  - [Microsoft Entra SSO](https://modal.com/docs/guide/entra-sso.md)
-  - [Custom SAML SSO](https://modal.com/docs/guide/saml-sso.md)
-  - [SCIM Integration](https://modal.com/docs/guide/scim.md)
   - [Slack notifications (Beta)](https://modal.com/docs/guide/slack-notifications.md)
 - Workspace & account settings
   - [Workspaces](https://modal.com/docs/guide/workspaces.md)
@@ -132,6 +128,12 @@ The docs are organized into three main sections:
   - [Billing](https://modal.com/docs/guide/billing.md)
   - [Network egress billing](https://modal.com/docs/guide/network-egress-billing.md)
   - [Budgets](https://modal.com/docs/guide/budgets.md)
+- Identity and provisioning
+  - [Okta SSO](https://modal.com/docs/guide/okta-sso.md)
+  - [Microsoft Entra SSO](https://modal.com/docs/guide/entra-sso.md)
+  - [Google Workspace SSO](https://modal.com/docs/guide/google-sso.md)
+  - [Custom SAML SSO](https://modal.com/docs/guide/saml-sso.md)
+  - [SCIM Integration](https://modal.com/docs/guide/scim.md)
 - Other topics
   - [Feature maturity](https://modal.com/docs/guide/feature-maturity.md)
   - [Restricted Functions](https://modal.com/docs/guide/restricted-access.md)
@@ -171,7 +173,6 @@ The docs are organized into three main sections:
   - [Generate video clips with LTX-Video](https://modal.com/docs/examples/ltx.md)
   - [Run Stable Diffusion with a CLI, API, and web UI](https://modal.com/docs/examples/text_to_image.md)
 - Audio
-  - [Deploy a Moshi voice chatbot](https://modal.com/docs/examples/llm-voice-chat.md)
   - [Stream transcripts at the speed of speech using Kyutai STT](https://modal.com/docs/examples/streaming_kyutai_stt.md)
   - [Make music with ACE-Step](https://modal.com/docs/examples/generate_music.md)
   - [Generate speech with Chatterbox](https://modal.com/docs/examples/chatterbox_tts.md)

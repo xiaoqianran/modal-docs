@@ -8,13 +8,14 @@
 
 如果您使用 Okta 以外的身份提供商 (IdP)，则可以为模态工作区配置自定义 SAML SSO。
 
-有关特定于提供商的设置，请参阅我们的 [Okta SSO 文档](/docs/guide/okta-sso)
-或 [Microsoft Entra SSO 文档](/docs/guide/entra-sso)。
+有关特定于提供商的设置，请参阅我们的 [Okta SSO 文档](/docs/guide/okta-sso)，
+[Microsoft Entra SSO 文档](/docs/guide/entra-sso)，或
+[Google Workspace SSO 文档](/docs/guide/google-sso)。
 
 ## 先决条件
 
-* 采用 [企业](/定价) 计划的工作区
-* 对要使用 SSO 配置的工作区的管理员访问权限* 您的身份提供商的管理员权限
+* 采用 [企业](/定价) 计划的工作区* 对要使用 SSO 配置的工作区的管理员访问权限
+* 您的身份提供商的管理员权限
 
 ## 支持的功能
 
@@ -29,7 +30,7 @@
 使用以下设置配置您的 IdP：
 
 |设置|价值|
-| --------- | ------------------------------------------------- |
+| ---------| ------------------------------------------------- |
 |实体 ID | `https://www.modal.com` |
 | ACS 网址 | `https://modal.com/api/okta/saml/sso/<workspace>` |
 
@@ -42,7 +43,7 @@
 您的 IdP 必须发送以下 SAML 属性：
 
 |属性 |描述 |
-| --------- | -------------------- |
+| ---------| -------------------- |
 |电子邮件 |用户的电子邮件地址 |
 |名字 |用户的名字 |
 |姓氏 |用户的姓氏 |
@@ -53,7 +54,8 @@
 
 1. 在您的身份提供商中创建新的 SAML 应用程序
 2. 将实体ID设置为`https://www.modal.com`
-3. 将 ACS URL 设置为 `https://modal.com/api/okta/saml/sso/<workspace>`（将 `<workspace>` 替换为您的工作区名称）4. 配置所需的 SAML 属性（电子邮件、名字、姓氏）
+3. 将 ACS URL 设置为 `https://modal.com/api/okta/saml/sso/<workspace>`（将 `<workspace>` 替换为您的工作区名称）
+4. 配置所需的 SAML 属性（电子邮件、名字、姓氏）
 5. 确保您的 IdP 签署 SAML 断言
 
 #### 第 2 步：将您的工作区链接到您的 IdP
@@ -69,8 +71,9 @@
 3. 通过访问下面的登录 URL 测试 SP 发起的 SSO
 
 #### 步骤 4：在启用“需要 SSO”之前阅读此内容
+
 启用“需要 SSO”将强制所有用户通过 SSO 登录。确保您
-之前通过您的身份提供商拥有对模态工作区的管理员访问权限
+之前通过您的身份提供商拥有对您的模态工作区的管理员访问权限
 启用。
 
 ## 登录网址

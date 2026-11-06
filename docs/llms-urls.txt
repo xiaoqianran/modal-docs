@@ -60,7 +60,6 @@ https://modal.com/docs/examples/image_to_image.md
 https://modal.com/docs/examples/image_to_video.md
 https://modal.com/docs/examples/inkling_small.md
 https://modal.com/docs/examples/liquidai_embeddings_server.md
-https://modal.com/docs/examples/llm-voice-chat.md
 https://modal.com/docs/examples/llm_inference.md
 https://modal.com/docs/examples/long-training.md
 https://modal.com/docs/examples/ltx.md
@@ -123,6 +122,7 @@ https://modal.com/docs/guide/function-invocation-methods.md
 https://modal.com/docs/guide/functions.md
 https://modal.com/docs/guide/getting-started.md
 https://modal.com/docs/guide/global-variables.md
+https://modal.com/docs/guide/google-sso.md
 https://modal.com/docs/guide/gpu-health.md
 https://modal.com/docs/guide/gpu-metrics.md
 https://modal.com/docs/guide/gpu.md

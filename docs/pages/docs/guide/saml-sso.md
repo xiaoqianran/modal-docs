@@ -6,8 +6,9 @@ Custom SAML SSO is available on the <a href="/pricing">Enterprise plan</a>. Cont
 
 If you use an identity provider (IdP) other than Okta, you can configure custom SAML SSO for your Modal Workspace.
 
-For provider-specific setup, see our [Okta SSO documentation](/docs/guide/okta-sso)
-or [Microsoft Entra SSO documentation](/docs/guide/entra-sso).
+For provider-specific setup, see our [Okta SSO documentation](/docs/guide/okta-sso),
+[Microsoft Entra SSO documentation](/docs/guide/entra-sso), or
+[Google Workspace SSO documentation](/docs/guide/google-sso).
 
 ## Prerequisites
 
