@@ -58,7 +58,7 @@ from pathlib import Path
 在我们的 GRPO 配方中，我们将在多轮 RL 的 20 轮中允许 128k 最大上下文长度，批量大小为 32 组，每组 8 个提示。
 通过 DAPO 式过滤，每次尝试都获得相同奖励的组将被替换，因为它们不提供策略梯度信号。
 
-在我们的异步 RL 配方中，推出和评分工作人员将数据样本生成到队列中，供训练器循环使用。推广工作人员提交样品
+在我们的异步 RL 配方中，推出和评分工作人员将数据样本生成到队列中，供训练器循环使用。推广工作人员提交样本
 向我们的采样服务器发出请求，评分工作人员启动沙箱来执行代理代码以确定奖励，并且训练器循环调用我们的训练器
 服务器的端点（`forward_backward`和`optim_step`）用这些生成的部署和奖励来更新策略权重。
 
@@ -109,7 +109,7 @@ SMOKE_TRAINING = {
 
 ## 创建LoRA训练客户端
 
-将 `"qwen35-9b-lora-128k"` 作为 `base_model` 传递以选择服务器的 128K 上下文预设。
+将 Hugging Face 模型名称传递为 `base_model` 让服务器选择其配方。
 每个作业都有自己的 32 级适配器和优化器状态，​​但共享相同的多 LoRA 训练器节点。
 
 ```python
@@ -273,7 +273,7 @@ def main(argv=None):
     }
     if args.smoke_test:
         cfg.update(SMOKE_TRAINING)
-    base_model = "swe-gym-smoke" if args.smoke_test else "qwen35-9b-lora-128k"
+    base_model = "swe-gym-smoke" if args.smoke_test else MODEL
     log = Log(args.output)
     atomic_json(
         args.output / "config.json",
@@ -290,8 +290,18 @@ def main(argv=None):
         tasks = [t for t in tasks if t["instance_id"] == "facebookresearch__hydra-1560"]
     environments = Environments()
 
+    headers = {}
+    if os.environ.get("MODAL_PROXY_TOKEN_ID") and os.environ.get(
+        "MODAL_PROXY_TOKEN_SECRET"
+    ):
+        headers = {
+            "Modal-Key": os.environ["MODAL_PROXY_TOKEN_ID"],
+            "Modal-Secret": os.environ["MODAL_PROXY_TOKEN_SECRET"],
+        }
     service = tinker.ServiceClient(
-        base_url=os.environ["TINKER_BASE_URL"], api_key=os.environ["TINKER_API_KEY"]
+        base_url=os.environ["TINKER_BASE_URL"],
+        api_key=os.environ["TINKER_API_KEY"],
+        default_headers=headers,
     )
     tokenizer = AutoTokenizer.from_pretrained(MODEL, revision=MODEL_REVISION)
     reference = service.create_sampling_client(base_model=base_model)

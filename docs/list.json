@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-07T12:48:16.430Z",
+  "fetchedAt": "2026-11-08T13:08:58.732Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 345,
   "ok": 345,
@@ -682,7 +682,7 @@
       "source": "https://modal.com/docs/examples/swe_gym.md",
       "finalUrl": "https://modal.com/docs/examples/swe_gym.md",
       "path": "docs/examples/swe_gym.md",
-      "bytes": 14376,
+      "bytes": 14683,
       "stub": false
     },
     {

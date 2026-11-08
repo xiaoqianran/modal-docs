@@ -1688,9 +1688,9 @@
       "bytes": 2029
     },
     "docs/examples/swe_gym.md": {
-      "hash": "66348cb702b6d0aaa2db911852192a2355b10909",
-      "translatedAt": "2026-10-24T10:43:59.147Z",
-      "bytes": 14114
+      "hash": "2829cd44aa2c45a78e9827a847d1a04fded0a294",
+      "translatedAt": "2026-11-08T13:09:06.904Z",
+      "bytes": 14407
     },
     "docs/guide/spindle.md": {
       "hash": "a55fab40570a781266b11d911886cf69c15cc2c5",
@@ -1897,10 +1897,10 @@
       "bytes": 5094
     }
   },
-  "updatedAt": "2026-11-07T12:48:16.543Z",
+  "updatedAt": "2026-11-08T13:09:06.904Z",
   "stats": {
-    "translated": 0,
-    "skipped": 367,
+    "translated": 1,
+    "skipped": 366,
     "failed": 0,
     "total": 367
   }
