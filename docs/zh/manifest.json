@@ -547,9 +547,9 @@
       "bytes": 4873
     },
     "docs/guide/audit-logs.md": {
-      "hash": "b32fbf339e7cfec10a7e63c0141cc61f4671790b",
-      "translatedAt": "2026-10-29T12:47:12.785Z",
-      "bytes": 24553
+      "hash": "89e76b8adf1ce89ec5ed2761bd0ab83ac7f7e76b",
+      "translatedAt": "2026-11-10T14:43:03.920Z",
+      "bytes": 25638
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -792,9 +792,9 @@
       "bytes": 6055
     },
     "docs/guide/rbac.md": {
-      "hash": "7533a9a0c31acbbc171a6b46c44d9fa72063d02c",
-      "translatedAt": "2026-10-08T13:14:26.491Z",
-      "bytes": 12278
+      "hash": "1df1b5fa62d0a6be602d546aa96ab02d731f1ca3",
+      "translatedAt": "2026-11-10T14:42:25.164Z",
+      "bytes": 12281
     },
     "docs/guide/sandbox-spawn.md": {
       "hash": "ed3a2a1bfaacaad910a68c533a2af0e7e39bb000",
@@ -837,9 +837,9 @@
       "bytes": 41574
     },
     "docs/guide/service-users.md": {
-      "hash": "b0303b96aef575571deaab0197cca3ec121da747",
-      "translatedAt": "2026-10-17T10:30:21.736Z",
-      "bytes": 4555
+      "hash": "ffa551879d951668603cac71439f7ed839daea7b",
+      "translatedAt": "2026-11-10T14:42:28.947Z",
+      "bytes": 4609
     },
     "docs/guide/slack-notifications.md": {
       "hash": "5c138758bf0c9507b29fa3a81452d4ca9df716fa",
@@ -917,9 +917,9 @@
       "bytes": 977
     },
     "docs/guide/webhooks.md": {
-      "hash": "b204e5d5d32b5d2ac9cd9434190eca868da73b4d",
-      "translatedAt": "2026-08-08T18:30:13.754Z",
-      "bytes": 15471
+      "hash": "6ccc4f079a5701de871c9a707381faabae14ed12",
+      "translatedAt": "2026-11-10T14:42:38.396Z",
+      "bytes": 15568
     },
     "docs/guide/workspaces.md": {
       "hash": "b0bc06ba564fa502f083bbf50d1cdb1cd2b1a2ab",
@@ -1897,10 +1897,10 @@
       "bytes": 5094
     }
   },
-  "updatedAt": "2026-11-09T15:54:27.136Z",
+  "updatedAt": "2026-11-10T14:43:03.920Z",
   "stats": {
-    "translated": 0,
-    "skipped": 367,
+    "translated": 4,
+    "skipped": 363,
     "failed": 0,
     "total": 367
   }

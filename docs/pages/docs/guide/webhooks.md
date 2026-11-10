@@ -377,9 +377,11 @@ URL may be handled by the same container. Beyond this limit, additional
 containers will start up to scale your App horizontally. When you reach the
 Function's limit on containers, requests will queue for handling.
 
-Each workspace on Modal has a rate limit on total operations. For a new account,
-this is set to 200 Function calls or HTTP requests per second, with a
-burst multiplier of 5 seconds. If you reach the rate limit, excess requests will return a
+Each Function has a rate limit on incoming requests. By default, this is set to
+200 Function calls or HTTP requests per second per Function, with bursts of up to
+15 seconds' worth of traffic. Functions in a workspace also share a workspace-wide
+limit, 2,000 requests per second by default. If you reach the rate limit, excess
+requests will return a
 [429 status code](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429),
 and you'll need to [get in touch](mailto:support@modal.com) with us about
 raising the limit.

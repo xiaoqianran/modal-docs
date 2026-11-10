@@ -56,7 +56,7 @@ Changing the default updates access only for Members who use it. Roles assigned 
 | Workspace Member             | Contributor                      | Contributor                         | Viewer                         | No Access                         |
 | Service user / service token | No Access                        | No Access                           | No Access                      | No Access                         |
 
-Workspace Members can only be assigned an Environment Role in Restricted Environments. Service users can be given a Role on **any** Environment — Restricted or not — from their [tokens settings](/settings/tokens/service-users) or an Environment's Roles.
+Workspace Members can only be assigned an Environment Role in Restricted Environments. Service users can be given a Role on **any** Environment — Restricted or not — from the [service users settings](/settings/workspace-management/service-users) or an Environment's Roles.
 
 ### No Access and Workspace defaults
 

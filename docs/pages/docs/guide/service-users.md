@@ -18,8 +18,8 @@ Service users are only available for shared workspaces. You will need workspace 
 
 To create a service user in the Dashboard:
 
-1. Go to your workspace [tokens settings page](/settings/tokens/service-users)
-2. Click **New Service User**
+1. Go to your workspace [service users settings page](/settings/workspace-management/service-users)
+2. Click **Create service user**
 3. Enter a name for your service user (must be lowercase alphanumeric, can contain hyphens or underscores)
 4. Click **Create**
 5. Copy the `MODAL_TOKEN_ID` and `MODAL_TOKEN_SECRET`. **This is the only time you can view the token secret** for security reasons.
@@ -83,9 +83,9 @@ Deleting a Service User will immediately revoke the credentials associated with 
 
 To remove a service user in the Dashboard:
 
-1. Go to the [tokens settings page](/settings/tokens/service-users)
+1. Go to the [service users settings page](/settings/workspace-management/service-users)
 2. Find the service user in the table
-3. Click **Delete** when you hover over the row
+3. Open the row's **⋯** menu and click **Delete service user**
 
 You can also do this in the command line:
 

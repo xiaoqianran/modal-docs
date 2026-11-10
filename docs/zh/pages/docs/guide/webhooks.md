@@ -2,7 +2,7 @@
 
 # 网络功能
 
-本指南介绍了如何使用 Modal 设置 Web Functions。
+本指南介绍如何使用 Modal 设置 Web Functions。
 
 所有部署的模态函数都可以[从任何其他 Python 应用程序调用](/docs/guide/trigger-deployed-functions)
 使用模态客户端库。我们还提供多种公开方式
@@ -373,9 +373,11 @@ URL 可以由同一个容器处理。超出此限制，需额外
 容器将启动以水平扩展您的应用程序。当您到达
 函数对容器的限制，请求将排队等待处理。
 
-Modal 上的每个工作区对总操作都有速率限制。对于新帐户，
-这被设置为每秒 200 个函数调用或 HTTP 请求，其中
-突发倍数为 5 秒。如果达到速率限制，超出的请求将返回
+每个函数对传入请求都有速率限制。默认情况下，此设置为
+每个函数每秒 200 个函数调用或 HTTP 请求，突发次数高达
+15 秒的流量。工作区中的函数也共享工作区范围的
+限制，默认每秒 2,000 个请求。如果达到速率限制，则超出
+请求将返回一个
 [429状态码](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429),
 您需要与我们[联系](mailto:support@modal.com)
 提高限制。
@@ -428,6 +430,7 @@ async def f(request: Request, token: HTTPAuthorizationCredentials = Depends(auth
     # Function body
     return "success!"
 ```
+
 这假设您有一个名为的 [Modal Secret](https://modal.com/secrets)
 已创建`my-web-auth-token`，内容为`{AUTH_TOKEN: secret-random-token}`。
 现在，URL 将返回 401 状态代码，除非您使用
