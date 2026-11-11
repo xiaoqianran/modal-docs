@@ -332,9 +332,9 @@
       "bytes": 6622
     },
     "docs/examples/llm_inference.md": {
-      "hash": "a16a31808aa453a5baee0a3fd5446c5baeacc578",
-      "translatedAt": "2026-08-08T18:28:29.719Z",
-      "bytes": 12874
+      "hash": "df959c1fc6b9948c2495fa9b4de0b024f156cd18",
+      "translatedAt": "2026-11-11T13:57:49.883Z",
+      "bytes": 12909
     },
     "docs/examples/llm-finetuning.md": {
       "hash": "f0ca8e337f5d2abfffce66b6d33d83c4fe7c1e7e",
@@ -752,9 +752,9 @@
       "bytes": 4413
     },
     "docs/guide/resources.md": {
-      "hash": "6c756d1241eb604290996ae854051a7f5dfdea19",
-      "translatedAt": "2026-10-10T12:17:50.235Z",
-      "bytes": 3563
+      "hash": "b5532ed26b55583b2b3aa62721551aa7ccd8be3f",
+      "translatedAt": "2026-11-11T13:57:48.044Z",
+      "bytes": 3587
     },
     "docs/guide/region-selection.md": {
       "hash": "96c9c68fd9dfef5c37b8d770805267cb9636d87f",
@@ -1897,10 +1897,10 @@
       "bytes": 5094
     }
   },
-  "updatedAt": "2026-11-10T14:43:03.920Z",
+  "updatedAt": "2026-11-11T13:57:49.883Z",
   "stats": {
-    "translated": 4,
-    "skipped": 363,
+    "translated": 2,
+    "skipped": 365,
     "failed": 0,
     "total": 367
   }

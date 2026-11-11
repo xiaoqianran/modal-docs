@@ -34,7 +34,7 @@ import modal
 vllm_image = (
     modal.Image.from_registry("nvidia/cuda:12.9.0-devel-ubuntu22.04", add_python="3.12")
     .entrypoint([])
-    .uv_pip_install("vllm==0.21.0")
+    .uv_pip_install("vllm==0.21.0", "transformers==5.8.1")
     .env(
         {
             "HF_XET_HIGH_PERFORMANCE": "1",  # faster model transfers
@@ -95,7 +95,7 @@ vLLM 采用动态和即时编译来维持额外的性能，而无需编写太多
 例如通过 Torch 编译器和 CUDA 图形捕获。
 这些编译功能会产生延迟，以换取生成过程中更低的延迟和更高的吞吐量。
 此延迟通常为数十秒到几分钟，从缓存加载时减少到约十秒。
-我们通过下面的 `FAST_BOOT` 变量来控制这种权衡。
+我们通过下面的 `FAST_BOOT` 变量使这种权衡变​​得可控。
 
 ```python
 FAST_BOOT = False

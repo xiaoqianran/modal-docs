@@ -65,9 +65,9 @@ Disk requests are billed by increasing the memory request at a 20:1 ratio. For e
 
 ### CPU limits
 
-Modal containers have a default soft CPU limit that is set at 16 physical cores above the CPU request.
-Given that the default CPU request is 0.125 cores, the default soft CPU limit is 16.125 cores.
-Above this limit, the host will begin to throttle the CPU usage of the container.
+Modal containers have a default CPU limit that is set at 16 physical cores above the CPU request.
+Given that the default CPU request is 0.125 cores, the default CPU limit is 16.125 cores.
+The host enforces this limit by throttling the container's CPU usage so it cannot exceed the limit.
 
 You can alternatively set the CPU limit explicitly:
 

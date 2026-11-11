@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-10T14:42:08.083Z",
+  "fetchedAt": "2026-11-11T13:57:45.843Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 345,
   "ok": 345,
@@ -506,7 +506,7 @@
       "source": "https://modal.com/docs/examples/llm_inference.md",
       "finalUrl": "https://modal.com/docs/examples/vllm_inference.md",
       "path": "docs/examples/llm_inference.md",
-      "bytes": 13210,
+      "bytes": 13233,
       "stub": false
     },
     {
@@ -1250,7 +1250,7 @@
       "source": "https://modal.com/docs/guide/resources.md",
       "finalUrl": "https://modal.com/docs/guide/resources.md",
       "path": "docs/guide/resources.md",
-      "bytes": 3984,
+      "bytes": 3992,
       "stub": false
     },
     {
