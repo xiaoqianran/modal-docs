@@ -214,14 +214,19 @@ f.update_autoscaler(scaledown_window=300)
 from_id(cls, function_id, *, client=None)
 ```通过 ID 从已部署或正在运行的应用程序引用函数。
 
-这是一种延迟对局部进行补水的惰性方法
+这是一种延迟给局部补水的惰性方法
 具有来自 Modal 服务器的元数据的对象，直到第一个
 实际使用的时间。
+
+如果ID属于Cls，则Function仅支持以下API：
+`.logs`、`.metrics`、`.info()`、`.stats()`、`.get_current_stats()`、
+`.get_web_url()`、`.autoscaler` 和 `.update_autoscaler()`。使用`modal.Cls.from_name(...)`
+调用所有其他方法。
 
 **参数**
 
 <Parameter name="function_id" type="str" description="ID of the function." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T69⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T78⟧ when omitted." />
 
 **退货**
 
@@ -249,9 +254,9 @@ from_name(cls, app_name, name, *, version=None, environment_name=None,
 **参数**
 
 <Parameter name="app_name" type="str" description="Name of the deployed App." />
-<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T71⟧ instead." />
+<Parameter name="name" type="str" description="Name of the Function within that App. For class methods, use ⟦T80⟧ instead." />
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Environment to look up the App in; defaults to the active environment." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T72⟧ when omitted." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T81⟧ when omitted." />
 
 **退货**
 
@@ -262,6 +267,7 @@ from_name(cls, app_name, name, *, version=None, environment_name=None,
 ```python
 f = modal.Function.from_name("other-app", "function")
 ```
+
 `version` 参数允许您调用版本固定函数：
 
 ```python
@@ -282,7 +288,7 @@ info(self, *, refresh=False)
 
 **参数**
 
-<Parameter name="refresh" type="bool" defaultValue="False" description="Always perform a network request. Pass ⟦T77⟧ to ensure that this method returns the most up to date information." />
+<Parameter name="refresh" type="bool" defaultValue="False" description="Always perform a network request. Pass ⟦T86⟧ to ensure that this method returns the most up to date information." />
 
 **退货**
 
@@ -293,11 +299,11 @@ info(self, *, refresh=False)
 
 ```python
 get_web_url(self)
-```
+```用于通过 HTTP 寻址 Web 功能的 URL。
 
-用于通过 HTTP 寻址 Web 功能的 URL。
+**退货**
 
-**退货**Web 端点的 HTTPS URL，如果此函数不是 Web 端点，则为 `None`。
+Web 端点的 HTTPS URL，如果此函数不是 Web 端点，则为 `None`。
 
 ## 带有\_选项
 
@@ -378,7 +384,6 @@ remote(self, *args, **kwargs)
 **退货**
 
 远程函数返回的值。
-
 ## 远程\_gen
 
 ```python
@@ -393,6 +398,7 @@ remote_gen(self, *args, **kwargs)
 <Parameter name="**kwargs" type="" description="Keyword arguments forwarded to the deployed generator function." />
 
 **产量**
+
 远程生成器产生的值。
 
 ##本地
@@ -412,15 +418,15 @@ local(self, *args, **kwargs)
 <Parameter name="*args" type="P.args" description="Positional arguments passed to the underlying Python callable." />
 <Parameter name="**kwargs" type="P.kwargs" description="Keyword arguments passed to the underlying Python callable." />
 
-**退货**
-
-本地调用（或异步函数的协程）的返回值。
+**退货**本地调用（或异步函数的协程）的返回值。
 
 ## 生成
 
 ```python
 spawn(self, *args, **kwargs)
-```使用给定参数调用函数，而不等待结果。
+```
+
+使用给定参数调用函数，而不等待结果。
 
 概念上类似于 `multiprocessing.pool.apply_async`，或其他上下文中的未来/承诺。
 
@@ -454,17 +460,17 @@ stats(self, *, since=None, until=None, container=None, all_variants=False)
 ```
 
 返回模态函数的统计信息。
-
 默认时间范围是最近一小时。最大时间范围为 7 天。
 
 **参数**
 
-<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T90⟧. Values without a timezone are interpeted as local time." />
+<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T99⟧. Values without a timezone are interpeted as local time." />
 <Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive. If omitted, this defaults to current time. Values without a timezone are interpeted as local time." />
 <Parameter name="container" type="str | None" defaultValue="None" description="If passed in, the stats are computed for only this container. Default None." />
 <Parameter name="all_variants" type="bool" defaultValue="False" description="If True, aggregate the base Function and its variants." />
 
 **退货**
+
 `FunctionStats` 对象
 
 ## 自动缩放器
@@ -504,15 +510,14 @@ update(self, *, min_containers=UNSET_PARAMETER, max_containers=UNSET_PARAMETER,
 覆盖此功能的当前自动定标器设置。
 
 该函数的所有参数都是可选的；不传递给定参数的参数
-不会更新其值。
-
-请注意，重新部署包含此功能的应用程序将擦除所有覆盖并恢复其自动缩放器设置返回到创建时在函数上定义的设置。
+不会更新其值。请注意，重新部署包含此功能的应用程序将擦除所有覆盖并恢复
+其自动缩放器设置返回到创建时在函数上定义的设置。
 
 **参数**
 
-<Parameter name="min_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Minimum number of containers to keep running. Must be a nonnegative integer, or ⟦T93⟧. Passing ⟦T94⟧ is equivalent to setting the minimum to 0." />
-<Parameter name="max_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Maximum concurrent containers. Must be a positive integer, or ⟦T95⟧. Passing ⟦T96⟧ is equivalent to disabling the upper bound on container concurrency at the Function level (note that Environment and Workspace level container upper limits still apply.)" />
-<Parameter name="buffer_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Extra containers to keep warm beyond current demand. Must be a nonnegative integer, or ⟦T97⟧. Passing ⟦T98⟧ is equivalent to setting the buffer to 0." />
+<Parameter name="min_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Minimum number of containers to keep running. Must be a nonnegative integer, or ⟦T102⟧. Passing ⟦T103⟧ is equivalent to setting the minimum to 0." />
+<Parameter name="max_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Maximum concurrent containers. Must be a positive integer, or ⟦T104⟧. Passing ⟦T105⟧ is equivalent to disabling the upper bound on container concurrency at the Function level (note that Environment and Workspace level container upper limits still apply.)" />
+<Parameter name="buffer_containers" type="int | None" defaultValue="UNSET_PARAMETER" description="Extra containers to keep warm beyond current demand. Must be a nonnegative integer, or ⟦T106⟧. Passing ⟦T107⟧ is equivalent to setting the buffer to 0." />
 <Parameter name="scaledown_window" type="int" defaultValue="UNSET_PARAMETER" description="Maximum duration (in seconds) idle containers wait before scaling down. Must be a positive integer between 2 and 3600, inclusive." />
 
 **退货**
@@ -521,14 +526,14 @@ update(self, *, min_containers=UNSET_PARAMETER, max_containers=UNSET_PARAMETER,
 
 **使用**
 
-更新 `my_function` 以便 2 个容器始终处于活动状态。
+更新`my_function`，使 2 个容器始终处于活动状态。
 
 ```python notest
 fn = modal.Function.from_name("my-app", "my_function")
 fn.autoscaler.update(min_containers=2)
 ```
 
-更新`my_function`，使`max_containers`没有功能级别限制：
+更新`my_function`，使`max_containers`没有函数级别限制：
 
 ```python notest
 fn = modal.Function.from_name("my-app", "my_function")
@@ -546,9 +551,9 @@ map(self, *input_iterators, kwargs={}, order_outputs=True,
 
 为基础函数的每个位置参数传递一个可迭代对象。结果产生为
 可迭代（同步）或异步迭代器（`map.aio`）。
-
 如果应用于 `@app.function`，`map()` 每个输入和输出顺序匹配都会返回一个结果
 默认输入顺序。设置 `order_outputs=False` 按完成顺序发出结果。
+
 `return_exceptions` 可以将失败聚合到结果流中而不是引发。
 
 **参数**
@@ -616,13 +621,13 @@ def my_func(a, b):
 @app.local_entrypoint()
 def main():
     assert list(my_func.starmap([(1, 2), (3, 4)])) == [3, 7]
-```
-
-## 对于\_each
+```## 对于\_each
 
 ```python
 for_each(self, *input_iterators, kwargs={}, ignore_exceptions=False)
-```对所有输入执行该函数并等待完成，丢弃返回值。
+```
+
+对所有输入执行该函数并等待完成，丢弃返回值。
 
 与 `.map()` 类似，但您不需要迭代结果来驱动工作 - Modal 会处理每个输入。
 

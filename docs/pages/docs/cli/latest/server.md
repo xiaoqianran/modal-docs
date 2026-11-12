@@ -1,6 +1,6 @@
 # `modal server`
 
-Inspect Modal Servers.
+Deploy and inspect Modal Servers.
 
 **Usage**:
 
@@ -15,6 +15,7 @@ modal server [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 * `autoscaler`: View and Configure Autoscaler settings for Modal Servers.
+* `deploy`: Deploy a container image as a Server.
 * `info`: Show information about a given Modal Server.
 * `logs`: Fetch or stream Server logs.
 * `metrics`: Preview and export metrics for a Modal Server.
@@ -123,6 +124,111 @@ modal server autoscaler update [OPTIONS] SERVER
 * `--scaledown-window TEXT`: Maximum duration (in seconds) idle containers wait before scaling down.
 * `--scaleup-window TEXT`: Seconds of sustained demand required before scaling up new containers.
 * `--target-concurrency TEXT`: Target number of concurrent requests per container. May be fractional.
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--help`: Show this message and exit.
+
+## `modal server deploy`
+
+Deploy a container image as a Server.
+
+Runs an existing container image on Modal without writing any Python. `--image` is either a
+container image reference that includes its registry, such as `docker.io/nginx`, or the
+name of a Modal Image published with `modal image build` or `Image.publish()`, such as
+`my-image:v1`. A published Modal Image takes precedence over a registry image with the
+same reference. The image needs no Python and no Modal client; it only has to serve HTTP
+on `--port`.
+The server is started by the image's own ENTRYPOINT and CMD; `--entrypoint` and `--cmd`
+override them.
+
+A registry image is pulled once and reused by later deploys of the same reference. If a
+tag such as `latest` changes in the registry, pass `--force-build` to pull it again,
+or reference the image by digest.
+
+The Server is named "Server" and deployed under the App given by `--app-name`, which
+defaults to the image's repository name without its tag, so deploying a new tag of an
+image updates the same App. For example, `ghcr.io/org/api:v2` and `ghcr.io/org/api:v3`
+both deploy to the App `api`. Other `modal server` commands refer to it as
+`APP_NAME/Server`, e.g. `modal server logs api/Server`. Redeploying an App that is
+already deployed asks for confirmation first unless `--yes` is given. Without an
+interactive terminal, such as in CI, redeploying aborts unless `--yes` is given.
+
+Examples:
+
+Deploy a public image that starts its server through its own ENTRYPOINT and CMD:
+
+```
+modal server deploy --image docker.io/nginx --port 80 --unauthenticated
+```
+
+Deploy a private image with GPU, a Secret, a Volume, and an environment variable:
+
+```
+modal server deploy --image my-registry.com/api:v2 --port 8000 \
+    --registry-secret my-registry-creds --gpu A100 --secret my-api-keys \
+    --volume my-models:/models --env-var LOG_LEVEL=debug
+```
+
+Deploy an AWS ECR image with registry credentials and an API key taken from the local
+environment:
+
+```
+modal server deploy --image 123456789012.dkr.ecr.us-east-1.amazonaws.com/api:v2 --port 8000 \
+    --registry-secret-from-env AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION \
+    --secret-from-env OPENAI_API_KEY
+```
+
+Deploy an image with a custom entrypoint and command:
+
+```
+modal server deploy --image docker.io/python:3.12 --port 8000 \
+    --entrypoint "python -m" --cmd "http.server 8000"
+```
+
+Build a Dockerfile in the current directory into a named Modal Image, then deploy it:
+
+```
+modal image build -t my-image:v1 .
+modal server deploy --image my-image:v1 --port 8000
+```
+
+**Usage**:
+
+```shell
+modal server deploy [OPTIONS]
+```
+
+**Options**:
+
+* `--image TEXT`: Container image including its registry, e.g. 'docker.io/nginx', or the name of a published Modal Image, e.g. 'my-image:v1'.  \[required]
+* `--port INTEGER`: Port the server listens on inside the container.  \[required]
+* `--registry-secret TEXT`: Name of a Modal Secret with credentials for pulling a private registry image. Its keys select the kind of authentication: AWS\_ACCESS\_KEY\_ID, AWS\_SECRET\_ACCESS\_KEY and AWS\_REGION (optionally AWS\_SESSION\_TOKEN), or AWS\_ROLE\_ARN and AWS\_REGION, for AWS ECR; SERVICE\_ACCOUNT\_JSON for GCP; or REGISTRY\_USERNAME and REGISTRY\_PASSWORD for any other registry.
+* `--registry-secret-from-env KEYS`: Comma-separated names of local environment variables whose values are used to pull a private registry image, e.g. REGISTRY\_USERNAME,REGISTRY\_PASSWORD. Accepts the same keys as --registry-secret.
+* `--force-build`: Pull the registry image again instead of using a cached pull, e.g. after its tag is updated. Later builds from the same image reference also use the new pull.
+* `--entrypoint TEXT`: Override the image's ENTRYPOINT, which also clears its CMD unless --cmd is given. --cmd is appended as arguments, e.g. --entrypoint 'python -m' --cmd 'http.server 8000'.
+* `--cmd TEXT`: Command to start the server, overriding the image's CMD, e.g. 'python -m http.server 8000'. Split into arguments with shell quoting rules, so quote an argument that contains spaces, e.g. --cmd 'sh -c "python -m http.server 8000"'.
+* `--env-var KEY=VALUE`: Set an environment variable in the container, e.g. LOG\_LEVEL=debug. Repeatable.
+* `--secret TEXT`: Name of a Modal Secret whose keys are set as environment variables in the running container. Repeatable. Unlike --registry-secret, it is not used to pull the image.
+* `--secret-from-env KEYS`: Comma-separated names of local environment variables whose values are set as environment variables in the running container, e.g. API\_KEY,API\_TOKEN. Unlike --registry-secret-from-env, they are not used to pull the image.
+* `--volume NAME:PATH`: Mount a Modal Volume at an absolute path in the container, creating it if needed. Repeatable.
+* `--cpu CORES[,LIMIT]`: CPU cores to request, which may be fractional, e.g. 2. Add a comma and a hard limit to also cap usage, e.g. 2,4.
+* `--memory MIB[,LIMIT]`: Memory in MiB to request, e.g. 4096. Add a comma and a hard limit to also cap usage, e.g. 4096,8192.
+* `--gpu GPU[,FALLBACK...]`: GPU request, e.g. 'A100' or 'H100:8'. Pass a comma-separated list to fall back to the next GPU type when the earlier ones are unavailable, e.g. 'H100,A100'.
+* `--region TEXT`: Region where Server requests enter Modal before reaching a container.  \[default: us-east]
+* `--unauthenticated`: Accept requests without credentials. By default, requests must carry a workspace proxy token in Modal-Key and Modal-Secret headers; see 'modal workspace proxy-tokens'.
+* `--h2`: Forward requests to the container over HTTP/2. The server must accept cleartext HTTP/2 (h2c) on --port.
+* `--sessioned`: Enable sticky sessions. Clients start a session with 'Server.sessions.start()' and send its token in a 'Modal-Authorization: Bearer <token>' header; requests with the same token reach the same container.
+* `--target-concurrency FLOAT|none`: Concurrent requests each container aims to handle before scaling up. May be fractional. 'none' keeps the server on a single container.
+* `--max-concurrency INTEGER|none`: Maximum concurrent requests per container; requests above it receive a 429. 'none' means unlimited.
+* `--min-containers INTEGER`: Minimum number of containers to keep warm.
+* `--max-containers INTEGER|none`: Maximum number of containers. 'none' means bounded only by your workspace's container limit.
+* `--buffer-containers INTEGER`: Additional idle containers under active load.
+* `--scaleup-window INTEGER`: Seconds of sustained demand before scaling up containers.
+* `--scaledown-window INTEGER`: Maximum seconds idle containers wait before scaling down.
+* `--startup-timeout INTEGER`: Maximum container startup time in seconds.  \[default: 30]
+* `--exit-grace-period INTEGER`: Seconds to let in-flight requests finish on container shutdown.  \[default: 0]
+* `--app-name TEXT`: App to deploy under. Defaults to the image's repository name, e.g. 'api' for 'ghcr.io/org/api:v2'.
+* `--stream-logs`: Stream logs from the Server upon deployment.
+* `-y, --yes`: Run without pausing for confirmation.
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
 * `--help`: Show this message and exit.
 

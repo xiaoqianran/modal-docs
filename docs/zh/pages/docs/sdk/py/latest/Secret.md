@@ -269,7 +269,7 @@ def run():
 ## 信息
 
 ```python
-info(self)
+info(self, *, refresh=False)
 ```
 
 返回有关 Secret 对象的信息。

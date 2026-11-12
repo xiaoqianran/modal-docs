@@ -18,6 +18,17 @@ is_closed(self)
 
 如果客户端已关闭，则为 True，否则为 False。
 
+## 关闭
+
+```python
+close(self)
+```
+
+关闭该客户端并释放其连接和后台任务。
+
+多次调用此方法是安全的。客户端关闭后不能再用于请求。
+客户端还可以用作上下文管理器，在退出时自动关闭它们。
+
 ## 你好
 
 ```python
@@ -37,12 +48,11 @@ client.hello()
 
 ```python
 from_credentials(cls, token_id, token_secret)
-```
-
-基于token凭证的构造函数；对于代表第三方用户管理 Modal 很有用。
+```基于token凭证的构造函数；对于代表第三方用户管理 Modal 很有用。
 
 当需要显式管理客户端的生命周期时也很有用
-（例如，在分叉的子流程中运行 Modal 时）- 请参阅[疑难解答](/docs/guide/troubleshooting#connection-issues-in-forked-processes)。
+（例如，在分叉子进程中运行 Modal 时）- 请参阅
+[疑难解答](/docs/guide/troubleshooting#connection-issues-in-forked-processes)。
 
 **参数**
 
@@ -73,12 +83,11 @@ from_oauth_credentials(cls, refresh_token, *, oauth_client_id,
 **参数**
 
 <Parameter name="refresh_token" type="str" description="OAuth refresh token returned by Modal&#x27;s token endpoint." />
-<Parameter name="oauth_client_id" type="str" description="Modal-issued OAuth client ID, with an ⟦T10⟧ prefix." />
-<Parameter name="oauth_client_secret" type="str | None" defaultValue="None" description="Modal-issued OAuth client secret, with an ⟦T11⟧ prefix." />
-<Parameter name="oauth_jwt_key" type="str | None" defaultValue="None" description="Unencrypted RSA private key encoded as PEM, with literal or escaped newlines. Requires ⟦T12⟧." />
+<Parameter name="oauth_client_id" type="str" description="Modal-issued OAuth client ID, with an ⟦T11⟧ prefix." />
+<Parameter name="oauth_client_secret" type="str | None" defaultValue="None" description="Modal-issued OAuth client secret, with an ⟦T12⟧ prefix." />
+<Parameter name="oauth_jwt_key" type="str | None" defaultValue="None" description="Unencrypted RSA private key encoded as PEM, with literal or escaped newlines. Requires ⟦T13⟧." />
 
 **退货**
-
 经过身份验证的`Client`，其连接已打开。
 
 **使用**

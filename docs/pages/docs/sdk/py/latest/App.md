@@ -101,28 +101,41 @@ Human-readable description string for the app.
 lookup(name, *, client=None, environment_name=None, create_if_missing=False)
 ```
 
-Look up an App with a given name, creating a new App if necessary.
+Look up an App by name or App ID, creating a new App if necessary.
 
 Note that Apps created through this method will be in a deployed state,
 but they will not have any associated Functions or Classes. This method
 is mainly useful for creating an App to associate with a Sandbox.
 
+Passing an App ID (`ap-...`) instead of a name looks up that specific App,
+which also works for ephemeral Apps started with `app.run()` and for stopped
+Apps. A lookup by ID ignores `environment_name` and cannot be combined with
+`create_if_missing`.
+
 **Parameters**
 
-<Parameter name="name" type="str" description="App name to resolve or create." />
+<Parameter name="name" type="str" description="App name to resolve or create, or the ID of an existing App." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to `Client.from_env()` when omitted." />
-<Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name; defaults to the configured environment." />
-<Parameter name="create_if_missing" type="bool" defaultValue="False" description="If True, create the app when it does not already exist." />
+<Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name; defaults to the configured environment. Ignored when `name` is an App ID." />
+<Parameter name="create_if_missing" type="bool" defaultValue="False" description="If True, create the app when it does not already exist. Not supported when looking up an App by ID." />
 
 **Returns**
 
-An `App` handle tied to the deployed app record.
+An `App` handle tied to the App record.
 
 **Usage**
 
 ```python
 app = modal.App.lookup("my-app", create_if_missing=True)
 modal.Sandbox.create("echo", "hi", app=app)
+```
+
+Look up an ephemeral App by its ID and read its most recent logs:
+
+```python notest
+app = modal.App.lookup("ap-Xk7fT2qLm9RzVb4NwYc8Hd")
+for entry in app.logs.tail(20):
+    print(entry.message, end="")
 ```
 
 ## get\_dashboard\_url
@@ -718,6 +731,84 @@ app = modal.App.lookup("my-app")
 
 for entry in app.logs.stream(timeout=60):
     print(entry.message, end="")
+```
+
+## sandboxes
+
+```python
+sandboxes: AppSandboxesManager
+```
+
+Namespace for the Sandboxes belonging to this App.
+
+### sandboxes.stats
+
+```python
+stats(self, *, since, until=None, group_by_tags=None, tags=None)
+```
+
+Return statistics for this App's Sandboxes over a time range, optionally grouped by tag values.
+
+The maximum time range is 7 days.
+
+**Parameters**
+
+<Parameter name="since" type="datetime" description="The beginning of the time range, inclusive, on a UTC hour boundary. Values without a timezone are interpreted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive, on a UTC hour boundary. If omitted, this defaults to the current time. Values without a timezone are interpreted as local time." />
+<Parameter name="group_by_tags" type="Sequence[str] | None" defaultValue="None" description="Tag names to group by. Sandboxes with the same values for these names form one group; a name not present on a Sandbox counts as `None`. If omitted, all matching Sandboxes are returned as a single group." />
+<Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="Only include Sandboxes that have at least these tags." />
+
+**Yields**
+
+`SandboxGroupStats` objects, one per combination of tag values, with the following fields:
+
+* `tags`: the value of each name in `group_by_tags` for the group's Sandboxes, `None` where not present.
+* `cost`: total cost in USD as a `decimal.Decimal`, the sum of `cost_by_resource`.
+* `cost_by_resource`: cost in USD as `decimal.Decimal`s, by billed resource: `CPU`, `Memory`, and GPU
+  types such as `H100`. The resource names are subject to change as Modal's billing model evolves.
+
+**Raises**
+
+* `InvalidError`: If the time range is invalid or there are more than 10,000 groups.
+
+**Usage**
+
+```python notest
+app = modal.App.lookup("my-app")
+since = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) - timedelta(days=1)
+for group in app.sandboxes.stats(since=since, group_by_tags=["team"]):
+    print(group.tags, group.cost, group.cost_by_resource)
+```
+
+## stats
+
+```python
+stats(self, *, since=None, until=None)
+```
+
+Return aggregate Function, Server, and Sandbox statistics for this App.
+
+The default window is the most recent hour. Windows can span at most seven days,
+with a start in the past 30 days.
+
+App stats show total call counts, request counts, and the count of active and errored containers in
+the time window. The count of sandboxes that finished in the interval as well as the count
+that were still running as of the end of the window is also returned.
+
+The available stats and their definitions are subject to change and are provided
+on a best-effort basis. They may be delayed or incomplete.
+
+**Parameters**
+
+<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before `until`. Values without a timezone are interpeted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive. If omitted, this defaults to current time. Values without a timezone are interpeted as local time." />
+
+**Usage**
+
+```python notest
+stats = modal.App.lookup("my-app").stats()
+print(stats.functions.total.calls.failed)
+print(stats.functions["embed"].counts.containers.errors)
 ```
 
 ## info

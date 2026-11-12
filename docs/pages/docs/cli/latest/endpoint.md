@@ -22,6 +22,7 @@ modal endpoint [OPTIONS] COMMAND [ARGS]...
 
 * `create`: Deploy a new Endpoint.
 * `info`: Show details about an Endpoint, such as the model, URL, and status.
+* `library`: List models you can serve with Modal Endpoints.
 * `list`: List Endpoints that are provisioning or running in an environment.
 * `logs`: Fetch or stream logs for a dedicated Endpoint.
 * `stats`: Show aggregate Server statistics for a dedicated Endpoint.
@@ -75,6 +76,13 @@ modal endpoint create --name my-ft --model Qwen/Qwen3.6-27B-FP8 \
   --custom-volume-name qwen-ft --custom-volume-path /models/qwen
 ```
 
+Create an Endpoint with custom autoscaling:
+
+```bash
+modal endpoint create --model Qwen/Qwen3.6-27B-FP8 \
+  --min-containers 1 --max-containers 10
+```
+
 **Usage**:
 
 ```shell
@@ -96,6 +104,11 @@ modal endpoint create [OPTIONS]
 * `--custom-hf-token TEXT`: Hugging Face token for private --custom-hf-repo.
 * `--custom-volume-name TEXT`: Modal Volume name containing custom model weights.
 * `--custom-volume-path TEXT`: Path within Volume containing model weights.
+* `--min-containers INTEGER RANGE`: Minimum number of containers to keep running regardless of demand.  \[x>=0]
+* `--max-containers INTEGER RANGE`: Maximum number of containers that can run concurrently.  \[x>=1]
+* `--buffer-containers INTEGER RANGE`: Extra containers to keep running beyond current demand.  \[x>=0]
+* `--scaleup-window INTEGER RANGE`: Seconds of sustained demand required before scaling up.  \[x>=1]
+* `--scaledown-window INTEGER RANGE`: Seconds an idle container waits before scaling down.  \[2<=x<=3600]
 * `--help`: Show this message and exit.
 
 ## `modal endpoint info`
@@ -139,6 +152,43 @@ modal endpoint info [OPTIONS] ENDPOINT_IDENTIFIER
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
 * `--json`
 * `--no-color`: Disable colors in the output.
+* `--help`: Show this message and exit.
+
+## `modal endpoint library`
+
+List models you can serve with Modal Endpoints.
+
+Models are listed by their Hugging Face repo ID, with the input types they
+accept and whether they're available as shared endpoints, dedicated
+endpoints, or both.
+
+This is Modal's catalog of supported models, not the Endpoints in your
+workspace. To see those, run `modal endpoint list`.
+
+Examples:
+
+List models that support text input modality:
+
+```
+modal endpoint library --input-modality text
+```
+
+Pick a model ID and then create a shared endpoint:
+
+```
+modal endpoint create --model Qwen/Qwen3.8-27B --shared
+```
+
+**Usage**:
+
+```shell
+modal endpoint library [OPTIONS]
+```
+
+**Options**:
+
+* `--input-modality [text|image|audio]`: Only show models that accept any of these inputs. Can be repeated.
+* `--json`: Output models as JSON.
 * `--help`: Show this message and exit.
 
 ## `modal endpoint list`

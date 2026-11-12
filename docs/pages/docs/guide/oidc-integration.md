@@ -29,7 +29,10 @@ easily accessible. See our [discovery document](https://oidc.modal.com/.well-kno
 for a full list of claims.
 
 Generated tokens are automatically injected into your Function's containers via the `MODAL_IDENTITY_TOKEN`
-environment variable. Below is an example of what claims might be included in a token:
+environment variable. This environment variable contains the initial token and is not updated.
+For a periodically refreshed token, read the file whose path is in `MODAL_IDENTITY_TOKEN_FILE` instead.
+
+Below is an example of what claims might be included in a token:
 
 ```json
 {

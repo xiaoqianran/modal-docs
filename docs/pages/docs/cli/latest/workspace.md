@@ -48,6 +48,8 @@ modal workspace member-tokens [OPTIONS] COMMAND [ARGS]...
 **Commands**:
 
 * `delete`: Delete a Member Token in this Workspace.
+* `disable`: Disable member tokens in this Workspace.
+* `enable`: Enable member tokens in this Workspace.
 * `list`: List Member Tokens in the Workspace.
 
 ### `modal workspace member-tokens delete`
@@ -71,6 +73,77 @@ modal workspace member-tokens delete [OPTIONS] TOKEN_ID
 **Options**:
 
 * `--allow-missing`: Don't error if the Token doesn't exist.
+* `-y, --yes`: Run without pausing for confirmation.
+* `--help`: Show this message and exit.
+
+### `modal workspace member-tokens disable`
+
+Disable member tokens in this Workspace.
+
+A token which is disabled cannot be used to authenticate with Modal. However, it can be re-enabled
+at any point using [`modal workspace member-tokens enable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-enable).
+
+You can pass the `--all` option to disable all of the tokens you have created. If you are a Manager
+or above, this will disable all the tokens in your Workspace.
+
+Examples:
+
+```bash
+modal workspace member-tokens disable ak-REDACTED
+
+# Disable multiple tokens simultaneously
+modal workspace member-tokens disable ak-REDACTED ak-REDACTED
+
+# Disable everything you have access to
+modal workspace member-tokens disable --all
+```
+
+See Also:
+\- [`modal workspace member-tokens enable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-enable)
+\- [`Workspace.member_tokens.disable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensdisable).
+The SDK equivalent of this command.
+
+**Usage**:
+
+```shell
+modal workspace member-tokens disable [OPTIONS] [TOKEN_IDS]...
+```
+
+**Options**:
+
+* `--all`: Disable all tokens you have access to.
+* `-y, --yes`: Run without pausing for confirmation.
+* `--help`: Show this message and exit.
+
+### `modal workspace member-tokens enable`
+
+Enable member tokens in this Workspace.
+
+This is the opposite operation to disabling a token - given a disabled token, this command will
+re-enable it, allowing it to authenticate with Modal.
+
+Examples:
+
+```bash
+modal workspace member-tokens enable ak-REDACTED
+
+# Enable multiple tokens simultaneously
+modal workspace member-tokens enable ak-REDACTED ak-REDACTED
+```
+
+See Also:
+\- [`modal workspace member-tokens disable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-disable)
+\- [`Workspace.member_tokens.enable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensenable):
+The SDK equivalent of this command.
+
+**Usage**:
+
+```shell
+modal workspace member-tokens enable [OPTIONS] [TOKEN_IDS]...
+```
+
+**Options**:
+
 * `-y, --yes`: Run without pausing for confirmation.
 * `--help`: Show this message and exit.
 

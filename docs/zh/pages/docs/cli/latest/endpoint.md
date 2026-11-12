@@ -24,7 +24,8 @@ modal endpoint [OPTIONS] COMMAND [ARGS]...
 
 * `create`：部署新的端点。
 * `info`：显示有关 Endpoint 的详细信息，例如型号、URL 和状态。
-* `list`：列出在环境中配置或运行的端点。* `logs`：获取或流式传输专用端点的日志。
+* `library`：列出可以使用模态端点提供服务的模型。* `list`：列出在环境中配置或运行的端点。
+* `logs`：获取或流式传输专用端点的日志。
 * `stats`：显示专用端点的聚合服务器统计信息。
 * `stop`：永久停止端点并终止任何正在运行的容器。
 
@@ -48,12 +49,12 @@ modal endpoint create --model Qwen/Qwen3.6-27B-FP8
 ```bash
 modal endpoint create --shared --model moonshotai/Kimi-K3
 ```
-
 创建一个具有显式名称的端点：
 
 ```bash
 modal endpoint create --name qwen-chat --model Qwen/Qwen3.6-27B-FP8
 ```
+
 创建具有显式路由和计算区域的端点：
 
 ```bash
@@ -75,6 +76,13 @@ modal endpoint create --name my-ft --model Qwen/Qwen3.6-27B-FP8 \
   --custom-volume-name qwen-ft --custom-volume-path /models/qwen
 ```
 
+创建具有自定义自动缩放的端点：
+
+```bash
+modal endpoint create --model Qwen/Qwen3.6-27B-FP8 \
+  --min-containers 1 --max-containers 10
+```
+
 **用法**：
 
 ```shell
@@ -84,8 +92,8 @@ modal endpoint create [OPTIONS]
 **选项**：
 
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
-* `--name TEXT`：端点名称。如果省略，Modal 会选择一个名称。
-* `--model TEXT`：基本模型架构的 Hugging Face 存储库 ID（例如“Qwen/Qwen3.6-27B-FP8”）。  \[必需的]* `--shared`：创建共享端点。默认为专用端点。
+* `--name TEXT`：端点名称。如果省略，Modal 会选择一个名称。* `--model TEXT`：基本模型架构的 Hugging Face 存储库 ID（例如“Qwen/Qwen3.6-27B-FP8”）。  \[必填]
+* `--shared`：创建共享端点。默认为专用端点。
 * `--routing-region TEXT`：用于路由推理请求的区域。默认为美国西部。目前无法自定义共享端点路由。
 * `--compute-region TEXT`：运行专用端点容器的区域。可以指定多次。这会产生区域选择价格乘数。
 * `--colocate-compute`：运行路由区域内的所有专用端点容器。这会产生区域选择价格乘数。
@@ -95,6 +103,10 @@ modal endpoint create [OPTIONS]
 * `--custom-hf-token TEXT`：私有的拥抱脸部令牌--custom-hf-repo。
 * `--custom-volume-name TEXT`：包含自定义模型权重的模态体积名称。
 * `--custom-volume-path TEXT`：包含模型权重的体积内的路径。
+* `--min-containers INTEGER RANGE`：无论需求如何，保持运行的最小容器数量。  \[x>=0]
+* `--max-containers INTEGER RANGE`：可以同时运行的最大容器数。  \[x>=1]
+* `--buffer-containers INTEGER RANGE`：额外的容器可以在超出当前需求的情况下继续运行。  \[x>=0]
+* `--scaleup-window INTEGER RANGE`：扩大规模之前所需的持续需求秒数。  \[x>=1]* `--scaledown-window INTEGER RANGE`：空闲容器在缩小规模之前等待的秒数。  \[2<=x<=3600]
 * `--help`：显示此消息并退出。
 
 ## `modal endpoint info`
@@ -133,9 +145,46 @@ modal endpoint info qwen-chat --no-color
 modal endpoint info [OPTIONS] ENDPOINT_IDENTIFIER
 ```
 
-**选项**：* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+**选项**：
+
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--json`
 * `--no-color`：禁用输出中的颜色。
+* `--help`：显示此消息并退出。
+
+## `modal endpoint library`
+
+列出您可以使用模态端点提供服务的模型。
+
+模型按其 Hugging Face 存储库 ID 列出，以及它们的输入类型
+接受以及它们是否可用作共享端点、专用端点
+端点，或两者。
+
+这是 Modal 支持模型的目录，而不是您的 Endpoints
+工作区。要查看这些，请运行 `modal endpoint list`。
+
+示例：
+
+列出支持文本输入模式的型号：
+
+```
+modal endpoint library --input-modality text
+```
+
+选择一个模型 ID，然后创建一个共享端点：
+
+```
+modal endpoint create --model Qwen/Qwen3.8-27B --shared
+```
+
+**用法**：
+
+```shell
+modal endpoint library [OPTIONS]
+```
+
+**选项**：* `--input-modality [text|image|audio]`：仅显示接受任何这些输入的模型。可以重复。
+* `--json`：将模型输出为 JSON。
 * `--help`：显示此消息并退出。
 
 ## `modal endpoint list`
@@ -160,7 +209,6 @@ modal endpoint list [OPTIONS]
 
 默认情况下，此命令获取最后 100 个日志条目并退出。使用 `-f` 来
 相反，来自正在运行的端点的实时流日志。获取和跟随是互斥的。
-
 示例：
 
 按端点名称获取最近的日志：
@@ -213,9 +261,9 @@ modal endpoint logs [OPTIONS] ENDPOINT_IDENTIFIER
 
 **选项**：
 
-* `-f, --follow`：流日志输出直到中断* `--since TEXT`：时间范围的开始。接受 ISO 8601 日期时间或相对时间，例如“1d”、“2h”或“30m”。
-* `--until TEXT`：时间范围结束；接受与 --since 相同的参数类型
-* `-n, --tail INTEGER`：仅显示最后N条日志条目
+* `-f, --follow`：流日志输出直到中断
+* `--since TEXT`：时间范围的开始。接受 ISO 8601 日期时间或相对时间，例如“1d”、“2h”或“30m”。
+* `--until TEXT`：时间范围结束；接受与 --since 相同的参数类型* `-n, --tail INTEGER`：仅显示最后N条日志条目
 * `--search TEXT`：按搜索文本过滤
 * `--container TEXT`: 按容器 ID 过滤 (ta-\*)
 * `-s, --source TEXT`：按来源过滤：'stdout'、'stderr' 或 'system'
@@ -226,6 +274,7 @@ modal endpoint logs [OPTIONS] ENDPOINT_IDENTIFIER
 * `--help`：显示此消息并退出。
 
 ## `modal endpoint stats`
+
 显示专用端点的聚合服务器统计信息。
 
 默认时间范围是最近一小时。指标提供在
@@ -278,8 +327,9 @@ modal endpoint stats qwen-chat --container-id ta-12345
 modal endpoint stats [OPTIONS] ENDPOINT_IDENTIFIER
 ```
 
-**选项**：* `--since TEXT`：时间范围的开始。如果未提供时区，则视为当地时间。接受 ISO 8601 日期时间或相对时间，例如“2h”或“30m”。
-* `--until TEXT`：时间范围结束。如果未提供时区，则视为当地时间。
+**选项**：
+
+* `--since TEXT`：时间范围的开始。如果未提供时区，则视为当地时间。接受 ISO 8601 日期时间或相对时间，例如“2h”或“30m”。* `--until TEXT`：时间范围结束。如果未提供时区，则视为当地时间。
 * `--container-id CONTAINER_ID`：仅计算此容器的统计数据。
 * `--no-color`：禁用输出中的颜色。
 * `--json`：将统计数据输出为 JSON。
@@ -297,6 +347,7 @@ modal endpoint stop [OPTIONS] ENDPOINT_IDENTIFIER
 ```
 
 **选项**：
+
 * `-y, --yes`：运行时不暂停确认。
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。

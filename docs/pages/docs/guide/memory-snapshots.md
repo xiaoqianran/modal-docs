@@ -70,7 +70,8 @@ class MyCls:
 
 <Callout variant="alpha" />
 
-GPU Memory Snapshots build on CPU Memory Snapshots and additionally capture GPU state.
+GPU Memory Snapshots build on CPU Memory Snapshots and additionally capture GPU memory and CUDA state, including model weights loaded onto the GPU.
+Modal saves this state in the same distributed filesystem used for Images and Volumes, then reads it back when restoring a new container.
 
 In addition to `enable_memory_snapshot=True`,
 pass `experimental_options={"enable_gpu_snapshot": True}` to your Function or Cls
@@ -179,6 +180,17 @@ In certain cases, running the Torch Compiler can cause Memory Snapshot creation 
 Some of these failures can be fixed by setting the environment variable `TORCHINDUCTOR_COMPILE_THREADS` to `1` before compiling.
 
 ## Memory Snapshots FAQs
+
+### How fast is restoring a Memory Snapshot?
+
+GPU Memory Snapshots are typically restored from the worker's local disk cache.
+Snapshot data that is not cached locally is fetched from Modal's distributed storage.
+Restore time depends on the amount of saved CPU and GPU state and any initialization your code runs after restore.
+
+Snapshots can skip slow initialization steps, such as imports, JIT compilation, and model warmup.
+They help most when restoring the saved state takes much less time than running those steps again.
+If most of your startup time is spent reading model weights,
+[GPU Memory Snapshots generally will not improve it](#gpu-memory-snapshots-do-not-speed-up-model-loading-from-storage).
 
 ### How do I know whether Memory Snapshots are being created or used?
 

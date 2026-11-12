@@ -33,7 +33,7 @@ def foo():
     pass
 ```
 
-在此示例中，秘密和时间表已注册到应用程序。
+在此示例中，秘密和时间表已注册到应用程序中。
 
 ```python
 __init__(self, name=None, *, tags=None, image=None, secrets=[], volumes={},
@@ -46,7 +46,7 @@ __init__(self, name=None, *, tags=None, image=None, secrets=[], volumes={},
 
 <Parameter name="name" type="str | None" defaultValue="None" description="Optional app name used for registration and lookup." />
 <Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="Additional metadata to set on the App." />
-<Parameter name="image" type="_Image | None" defaultValue="None" description="Default image for the App (otherwise defaults to ⟦T45⟧)." />
+<Parameter name="image" type="_Image | None" defaultValue="None" description="Default image for the App (otherwise defaults to ⟦T51⟧)." />
 <Parameter name="secrets" type="Sequence[_Secret]" defaultValue="[]" description="Secrets to add for all Functions in the App." />
 <Parameter name="volumes" type="dict[str | PurePosixPath, _Volume]" defaultValue="&#123;&#125;" description="Volume mounts to use for all Functions." />
 <Parameter name="include_source" type="bool" defaultValue="True" description="Default for whether Function source files are added to the Modal container (per-function override possible)." />
@@ -101,22 +101,26 @@ description(self)
 lookup(name, *, client=None, environment_name=None, create_if_missing=False)
 ```
 
-查找具有给定名称的应用程序，如有必要，创建一个新应用程序。
+按名称或应用程序 ID 查找应用程序，如有必要，创建新应用程序。
 
 请注意，通过此方法创建的应用程序将处于已部署状态，
 但它们不会有任何关联的函数或类。这个方法
 主要用于创建与沙箱关联的应用程序。
 
+传递应用程序 ID (`ap-...`) 而不是名称来查找该特定应用程序，
+这也适用于以 `app.run()` 开头的临时应用程序和停止的应用程序应用程序。按 ID 查找会忽略 `environment_name` 并且不能与
+`create_if_missing`。
+
 **参数**
 
-<Parameter name="name" type="str" description="App name to resolve or create." />
-<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T47⟧ when omitted." />
-<Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name; defaults to the configured environment." />
-<Parameter name="create_if_missing" type="bool" defaultValue="False" description="If True, create the app when it does not already exist." />
+<Parameter name="name" type="str" description="App name to resolve or create, or the ID of an existing App." />
+<Parameter name="client" type="_Client | None" defaultValue="None" description="Modal client to use; defaults to ⟦T57⟧ when omitted." />
+<Parameter name="environment_name" type="str | None" defaultValue="None" description="Optional environment name; defaults to the configured environment. Ignored when ⟦T58⟧ is an App ID." />
+<Parameter name="create_if_missing" type="bool" defaultValue="False" description="If True, create the app when it does not already exist. Not supported when looking up an App by ID." />
 
 **退货**
 
-与已部署的应用程序记录绑定的 `App` 句柄。
+与应用程序记录绑定的`App`句柄。
 
 **使用**
 
@@ -125,11 +129,21 @@ app = modal.App.lookup("my-app", create_if_missing=True)
 modal.Sandbox.create("echo", "hi", app=app)
 ```
 
+通过 ID 查找临时应用程序并读取其最新日志：
+
+```python notest
+app = modal.App.lookup("ap-Xk7fT2qLm9RzVb4NwYc8Hd")
+for entry in app.logs.tail(20):
+    print(entry.message, end="")
+```
+
 ## 获取\_仪表板\_url
 
 ```python
 get_dashboard_url(self)
-```获取应用程序的仪表板 URL。
+```
+
+获取应用程序的仪表板 URL。
 
 **退货**
 
@@ -184,9 +198,7 @@ with app.run():
 with modal.enable_output():
     with app.run():
         some_modal_function.remote()
-```
-
-请注意，您不应在具有 Modal 的文件的全局范围内调用此函数
+```请注意，您不应在具有 Modal 的文件的全局范围内调用此函数
 定义的函数或类，因为当函数或类被定义时会运行该块
 也导入到您的容器中。如果您想将其作为入口点运行，
 考虑保护它：
@@ -201,7 +213,9 @@ if __name__ == "__main__":
 
 ```shell
 python app_module.py
-```## 部署
+```
+
+## 部署
 
 ```python
 deploy(self, *, name=None, environment_name=None, tag="", client=None,
@@ -214,7 +228,6 @@ deploy(self, *, name=None, environment_name=None, tag="", client=None,
 与`App.run`不同，此方法将在部署完成后立即返回。
 
 此方法是 `modal deploy` CLI 命令的编程替代方法。
-
 与`App.run`不同的是，函数日志在执行后不会流回本地客户端。
 应用程序已部署。
 
@@ -228,7 +241,7 @@ script，保护此调用，使其仅在直接执行文件时运行。
 <Parameter name="environment_name" type="str | None" defaultValue="None" description="Environment to deploy the App in." />
 <Parameter name="tag" type="str" defaultValue="&quot;&quot;" description="Optional metadata that is specific to this deployment." />
 <Parameter name="client" type="_Client | None" defaultValue="None" description="Alternate client to use for communication with the server." />
-<Parameter name="strategy" type="str" defaultValue="&quot;rolling&quot;" description="Deployment strategy. `⟦T55⟧⟦T56⟧⟦T57⟧` terminates all running containers as part of the deployment before new work starts." />
+<Parameter name="strategy" type="str" defaultValue="&quot;rolling&quot;" description="Deployment strategy. `⟦T66⟧⟦T67⟧⟦T68⟧` terminates all running containers as part of the deployment before new work starts." />
 
 **退货**
 
@@ -247,11 +260,10 @@ app.deploy()
 app = App("my-app")
 with modal.enable_output():
     app.deploy()
-```
+```与`App.run`不同的是，应用程序部署后，功能日志不会流回本地客户端。
 
-与`App.run`不同的是，应用程序部署后，函数日志不会流回本地客户端。
-
-请注意，您不应在全局范围内调用此方法，因为这会每次都重新部署应用程序文件已导入。如果您想编写程序化部署脚本，请保护此调用，以便它
+请注意，您不应在全局范围内调用此方法，因为这会每次都重新部署应用程序
+文件已导入。如果您想编写程序化部署脚本，请保护此调用，以便它
 仅当直接执行文件时才运行。然后您可以使用以下命令运行脚本：
 
 ```python notest
@@ -304,9 +316,7 @@ def main():
 modal run app_module.py
 ```
 
-请注意，不需要显式的 `app.run()`，因为应用程序会自动为您创建。
-
-**多个入口点**
+请注意，不需要显式的 `app.run()`，因为应用程序会自动为您创建。**多个入口点**
 
 如果您有多个 `local_entrypoint` 函数，请限定名称：
 
@@ -316,7 +326,8 @@ modal run app_module.py::app.some_other_function
 
 **解析参数**
 
-如果您的入口函数采用原始类型的参数，则 `modal run` 自动将它们解析为 CLI 选项。例如，可以使用以下函数调用
+如果您的入口函数采用原始类型的参数，则 `modal run` 自动
+将它们解析为 CLI 选项。例如，可以使用以下函数调用
 `modal run app_module.py --foo 1 --bar "hello"`：
 
 ```python
@@ -326,7 +337,7 @@ def main(foo: int, bar: str):
 ```
 
 目前支持`str`、`int`、`float`、`bool`、`datetime.datetime`。
-使用 `modal run app_module.py --help` 了解更多使用信息。
+使用`modal run app_module.py --help`了解更多使用信息。
 
 ## 函数
 
@@ -365,7 +376,7 @@ function(self, *, image=None, schedule=None, env=None, secrets=None, gpu=None,
 <Parameter name="proxy" type="_Proxy | None" defaultValue="None" description="Reference to a Modal Proxy to use in front of this function." />
 <Parameter name="retries" type="int | Retries | None" defaultValue="None" description="Number of times to retry each input in case of failure." />
 <Parameter name="timeout" type="int" defaultValue="300" description="Maximum execution time for inputs and startup time in seconds." />
-<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T73⟧." />
+<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T84⟧." />
 <Parameter name="name" type="str | None" defaultValue="None" description="Sets the Modal name of the function within the app." />
 <Parameter name="is_generator" type="None | bool" defaultValue="None" description="Set this to True if it&#x27;s a non-generator function returning a sync or async generator object." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider to run the function on. Possible values are aws, gcp, oci, auto." />
@@ -380,7 +391,7 @@ function(self, *, image=None, schedule=None, env=None, secrets=None, gpu=None,
 <Parameter name="include_source" type="bool | None" defaultValue="None" description="Whether the file or directory containing the Function&#x27;s source should automatically be included in the container. When unset, falls back to the App-level configuration, or is otherwise True by default." />
 <Parameter name="experimental_options" type="dict[str, Any] | None" defaultValue="None" description="Experimental options for the function." />
 <Parameter name="_experimental_restrict_output" type="bool" defaultValue="False" description="Experimental; do not use pickle for return values." />
-<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T74⟧." />
+<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T85⟧." />
 
 **退货**
 
@@ -400,7 +411,8 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
     experimental_options=None, _experimental_restrict_output=False,
     max_inputs=None)
 ```
-装饰器用此应用程序注册一个新的模态 [Cls](https://modal.com/docs/sdk/py/latest/Cls)。
+
+装饰器用这个应用程序注册一个新的模态[Cls](https://modal.com/docs/sdk/py/latest/Cls)。
 
 **参数**
 
@@ -421,7 +433,7 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 <Parameter name="proxy" type="_Proxy | None" defaultValue="None" description="Reference to a Modal Proxy to use in front of this function." />
 <Parameter name="retries" type="int | Retries | None" defaultValue="None" description="Number of times to retry each input in case of failure." />
 <Parameter name="timeout" type="int" defaultValue="300" description="Maximum execution time for inputs and startup time in seconds." />
-<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T76⟧." />
+<Parameter name="startup_timeout" type="int | None" defaultValue="None" description="Maximum startup time in seconds with higher precedence than ⟦T87⟧." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider to run the function on. Possible values are aws, gcp, oci, auto." />
 <Parameter name="region" type="str | Sequence[str] | None" defaultValue="None" description="Region or regions to run the function on." />
 <Parameter name="routing_region" type="str | None" defaultValue="None" description="Region to route inputs to the function through." />
@@ -431,14 +443,12 @@ cls(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 <Parameter name="restrict_modal_access" type="bool" defaultValue="False" description="Whether to allow this class access to other Modal resources." />
 <Parameter name="single_use_containers" type="bool" defaultValue="False" description="When True, containers will shut down after handling a single input." />
 <Parameter name="i6pn" type="bool | None" defaultValue="None" description="Whether to enable IPv6 container networking within the region." />
-<Parameter name="include_source" type="bool | None" defaultValue="None" description="When `⟦T77⟧`, don&#x27;t automatically add the App source to the container." />
+<Parameter name="include_source" type="bool | None" defaultValue="None" description="When `⟦T88⟧`, don&#x27;t automatically add the App source to the container." />
 <Parameter name="experimental_options" type="dict[str, Any] | None" defaultValue="None" description="Experimental options for the class service." />
 <Parameter name="_experimental_restrict_output" type="bool" defaultValue="False" description="Experimental; do not use pickle for return values." />
-<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T78⟧." />
+<Parameter name="max_inputs" type="int | None" defaultValue="None" description="Deprecated; replaced with ⟦T89⟧." />
 
-**退货**
-
-将包装类或部分注册为 Modal `Cls` 的装饰器。
+**退货**将包装类或部分注册为 Modal `Cls` 的装饰器。
 
 ## 服务器
 
@@ -457,7 +467,8 @@ server(self, *, image=None, env=None, secrets=None, gpu=None, serialized=False,
 装饰器用这个应用程序注册一个新的模态服务器。
 
 服务器运行以 `@modal.enter()` 方法启动的 HTTP 服务器。
-与 `@app.cls()` 不同，服务器仅公开 HTTP 端点，而不公开支持`.remote()`方法调用。
+与 `@app.cls()` 不同，服务器仅公开 HTTP 端点，而不公开
+支持`.remote()`方法调用。
 
 更多信息请参阅[指南](https://modal.com/docs/guide/servers)。
 
@@ -518,6 +529,7 @@ include(self, /, other_app, inherit_tags=True)
 ```
 
 将另一个应用程序的对象包含在这个应用程序中。
+
 对于将模态应用程序拆分到不同的独立文件中非常有用。
 
 当`inherit_tags=True`时，其他App上设置的任何标签都会被本App继承
@@ -526,7 +538,7 @@ include(self, /, other_app, inherit_tags=True)
 **参数**
 
 <Parameter name="other_app" type="&quot;_App&quot;" description="App whose registered functions and classes are merged into this app." />
-<Parameter name="inherit_tags" type="bool" defaultValue="True" description="If True, merge tags from ⟦T84⟧ into this app (this app wins on conflicts)." />
+<Parameter name="inherit_tags" type="bool" defaultValue="True" description="If True, merge tags from ⟦T95⟧ into this app (this app wins on conflicts)." />
 
 **退货**
 
@@ -557,13 +569,13 @@ def main():
 
 ```python
 set_tags(self, tags, *, client=None)
-```
-
-将键值元数据附加到应用程序。
+```将键值元数据附加到应用程序。
 
 标签元数据可用于向应用程序添加特定于组织的上下文，并且可以
 包含在计费报告和其他信息 API 中。标签也可以设置在
-应用程序构造函数。如果在调用此方法之前在应用程序上设置的任何标签都将被删除
+应用程序构造函数。
+
+如果在调用此方法之前在应用程序上设置的任何标签都将被删除
 包含在参数中（即，该方法没有 `.update()` 语义）。
 
 **参数**
@@ -594,7 +606,6 @@ stop(self, *, client=None)
 ```
 
 停止应用程序。
-
 停止应用程序会终止其所有正在运行的容器和沙箱，并防止
 正在处理的新输入。
 
@@ -642,9 +653,7 @@ fetch(self, *, since, until=None, source=None, search_text="")
 <Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
 <Parameter name="search_text" type="str" defaultValue="&quot;&quot;" description="Filter by search text." />
 
-**产量**
-
-`LogEntry` 按时间顺序排列的对象。
+**产量**`LogEntry` 按时间顺序排列的对象。
 
 **使用**
 
@@ -671,7 +680,9 @@ tail(self, entries=100, *, source=None)
 <Parameter name="entries" type="int" defaultValue="100" description="The number of log entries to return." />
 <Parameter name="source" type="LogSource | None" defaultValue="None" description="Filter by source: &#x27;stdout&#x27;, &#x27;stderr&#x27;, or &#x27;system&#x27;." />
 
-**产量**`LogEntry` 按时间顺序排列的对象。
+**产量**
+
+`LogEntry` 按时间顺序排列的对象。
 
 **使用**
 
@@ -696,7 +707,7 @@ stream(self, timeout=None)
 
 **产量**
 
-`LogEntry` 物品到达时。
+`LogEntry` 物体到达时。
 
 **使用**
 
@@ -705,6 +716,80 @@ app = modal.App.lookup("my-app")
 
 for entry in app.logs.stream(timeout=60):
     print(entry.message, end="")
+```
+
+## 沙箱
+
+```python
+sandboxes: AppSandboxesManager
+```
+
+属于该应用程序的沙箱的命名空间。
+
+### sandboxes.stats
+
+```python
+stats(self, *, since, until=None, group_by_tags=None, tags=None)
+```
+
+返回一段时间范围内此应用程序沙箱的统计信息，可以选择按标签值分组。
+
+最大时间范围为 7 天。
+**参数**
+
+<Parameter name="since" type="datetime" description="The beginning of the time range, inclusive, on a UTC hour boundary. Values without a timezone are interpreted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive, on a UTC hour boundary. If omitted, this defaults to the current time. Values without a timezone are interpreted as local time." />
+<Parameter name="group_by_tags" type="Sequence[str] | None" defaultValue="None" description="Tag names to group by. Sandboxes with the same values for these names form one group; a name not present on a Sandbox counts as ⟦T105⟧. If omitted, all matching Sandboxes are returned as a single group." />
+<Parameter name="tags" type="dict[str, str] | None" defaultValue="None" description="Only include Sandboxes that have at least these tags." />
+
+**产量**
+
+`SandboxGroupStats` 对象，每个标签值组合一个，具有以下字段：
+
+* `tags`：组沙箱中`group_by_tags`中每个名称的值，`None`不存在的情况。
+* `cost`：以美元计算的总成本为 `decimal.Decimal`，`cost_by_resource` 之和。
+* `cost_by_resource`：美元成本为 `decimal.Decimal`s，按计费资源：`CPU`、`Memory` 和 GPU
+  类型如`H100`。随着 Modal 计费模型的发展，资源名称可能会发生变化。
+
+**加薪**
+
+* `InvalidError`：如果时间范围无效或者组数超过10000组。
+
+**使用**
+
+```python notest
+app = modal.App.lookup("my-app")
+since = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0) - timedelta(days=1)
+for group in app.sandboxes.stats(since=since, group_by_tags=["team"]):
+    print(group.tags, group.cost, group.cost_by_resource)
+```
+
+## 统计数据```python
+stats(self, *, since=None, until=None)
+```
+
+返回此应用程序的聚合函数、服务器和沙箱统计信息。
+
+默认窗口是最近一小时。 Windows 最多可以持续 7 天，
+从过去 30 天内开始。
+
+应用程序统计信息显示总调用计数、请求计数以及活动容器和错误容器的计数
+时间窗口。时间间隔内完成的沙箱数量以及计数
+截至窗口结束仍在运行的那些也被返回。
+
+可用的统计数据及其定义可能会发生变化，并已提供
+在尽最大努力的基础上。它们可能会延迟或不完整。
+**参数**
+
+<Parameter name="since" type="datetime | None" defaultValue="None" description="The beginning of the time range, inclusive. If omitted, this defaults to an hour before ⟦T119⟧. Values without a timezone are interpeted as local time." />
+<Parameter name="until" type="datetime | None" defaultValue="None" description="The end of the time range, exclusive. If omitted, this defaults to current time. Values without a timezone are interpeted as local time." />
+
+**使用**
+
+```python notest
+stats = modal.App.lookup("my-app").stats()
+print(stats.functions.total.calls.failed)
+print(stats.functions["embed"].counts.containers.errors)
 ```
 
 ## 信息

@@ -22,7 +22,8 @@ modal app [OPTIONS] COMMAND [ARGS]...
 * `list`：列出正在运行、部署或最近停止的应用程序。
 * `logs`：获取或流式传输应用程序日志。
 * `rollback`：重新部署以前版本的应用程序。
-* `rollover`：重新部署应用程序以获取新容器，无需更改代码。* `stop`：永久停止应用程序并终止其正在运行的容器。
+* `rollover`：重新部署应用程序以获取新容器，无需更改代码。
+* `stats`：显示应用程序名称或 ID 的聚合统计信息。* `stop`：永久停止应用程序并终止其正在运行的容器。
 
 ## `modal app dashboard`
 
@@ -50,7 +51,7 @@ modal app dashboard [OPTIONS] APP_IDENTIFIER
 
 **选项**：
 
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 
 ## `modal app history`
@@ -78,7 +79,7 @@ modal app history [OPTIONS] APP_IDENTIFIER
 ```
 
 **选项**：
-* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或工作区默认值的顺序。
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--json`
 * `--help`：显示此消息并退出。
 
@@ -292,6 +293,48 @@ modal app rollover [OPTIONS] APP_IDENTIFIER
 **选项**：
 
 * `--strategy [rolling|recreate]`：展期策略
+* `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
+* `--help`：显示此消息并退出。
+
+## `modal app stats`
+
+显示应用程序名称或 ID 的汇总统计信息。
+
+如果省略 --since 和 --until，则返回最后一小时的统计信息。
+--since 和 --until 的值最多可以跨越 7 天。
+
+应用程序统计信息显示总调用计数、请求计数以及活动容器和错误容器的计数
+时间窗口。时间间隔内完成的沙箱数量以及计数
+截至窗口结束仍在运行的那些也被返回。
+
+可用的统计数据及其定义可能会发生变化，并已提供
+在尽最大努力的基础上。它们可能会延迟或不完整。
+
+示例：
+
+计算最近四天的应用统计信息
+
+```
+modal app stats my-app --since 4d
+```
+计算 json 中两小时前结束的三小时窗口的应用统计信息
+
+```
+modal app stats ap-123 --since 5h --until 2h --json
+```
+
+**用法**：
+
+```shell
+modal app stats [OPTIONS] APP
+```
+
+**选项**：
+
+* `--since TEXT`：包含开始：ISO 8601 日期时间或相对时间，例如“2h”。天真的时代是本地的。
+* `--until TEXT`：独占结束符：ISO 8601 日期时间或相对时间，例如“1h”。默认为现在。
+* `--json`：以 JSON 形式输出精确计数和生命周期元数据。
+* `--no-color`：禁用输出中的颜色。
 * `-e, --env TEXT`：交互环境。如果未指定，则按照 `MODAL_ENVIRONMENT`、您的活动本地配置文件或您的工作区默认值的顺序。
 * `--help`：显示此消息并退出。
 

@@ -1362,8 +1362,13 @@ be shorter than 64 characters.
 
 ## Tagging
 
-Sandboxes can also be tagged with arbitrary key-value pairs. These tags can be used
-to filter results in `Sandbox.list`. A Sandbox can carry up to 10 tags.
+Sandboxes can also be tagged with key-value pairs. These tags can be used
+to filter results in `Sandbox.list`. Tags are subject to these limits:
+
+* Up to 10 tags per Sandbox.
+* Tag keys may be up to 63 characters.
+* Up to 512 bytes across all tag keys and values on a Sandbox.
+* Tags can be set while a Sandbox is running, but not after it terminates.
 
 <CodeTabs>
   {#snippet python()}

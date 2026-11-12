@@ -273,7 +273,7 @@ def run():
 ## info
 
 ```python
-info(self)
+info(self, *, refresh=False)
 ```
 
 Return information about the Secret object.

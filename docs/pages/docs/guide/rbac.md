@@ -30,7 +30,7 @@ Modal [Environments](/docs/guide/environments) isolate Modal Apps and other reso
 Every Environment has three Environment Roles that determine access to it:
 
 * **Contributor** — Full read and write access to the Environment. Workspace Owners and Managers always have Contributor access.
-* **Viewer** — Read-only access to resources in the Environment, including dashboards, logs, metrics, app and function configuration.
+* **Viewer** — Read-only access to both data and metadata for resources in the Environment, such as dashboards, logs, metrics, App and Function configuration, and Volume contents.
 * **No Access** — No read or write access to the Environment.
 
 Workspace Members default to **Contributor** in regular Environments. In a **Restricted** Environment, Members other than Workspace Owners and Managers use the Environment's default member Role, which can be **Contributor**, **Viewer**, or **No Access**. Workspace Owners and Managers always have **Contributor** access.

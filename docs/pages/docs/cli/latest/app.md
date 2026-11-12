@@ -21,6 +21,7 @@ modal app [OPTIONS] COMMAND [ARGS]...
 * `logs`: Fetch or stream App logs.
 * `rollback`: Redeploy a previous version of an App.
 * `rollover`: Redeploy an App to get new containers without code changes.
+* `stats`: Show aggregate statistics for an App name or ID.
 * `stop`: Permanently stop an App and terminate its running containers.
 
 ## `modal app dashboard`
@@ -298,6 +299,49 @@ modal app rollover [OPTIONS] APP_IDENTIFIER
 **Options**:
 
 * `--strategy [rolling|recreate]`: Strategy for rollover
+* `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
+* `--help`: Show this message and exit.
+
+## `modal app stats`
+
+Show aggregate statistics for an App name or ID.
+
+If --since and --until are omitted, the stats are returned for the last hour.
+The values of --since and --until can span at most seven days.
+
+App stats show total call counts, request counts, and the count of active and errored containers in
+the time window. The count of sandboxes that finished in the interval as well as the count
+that were still running as of the end of the window is also returned.
+
+The available stats and their definitions are subject to change and are provided
+on a best-effort basis. They may be delayed or incomplete.
+
+Examples:
+
+Calculate App stats for the last four days
+
+```
+modal app stats my-app --since 4d
+```
+
+Calculate App stats for a three hour window ending two hours ago in json
+
+```
+modal app stats ap-123 --since 5h --until 2h --json
+```
+
+**Usage**:
+
+```shell
+modal app stats [OPTIONS] APP
+```
+
+**Options**:
+
+* `--since TEXT`: Inclusive start: an ISO 8601 datetime or relative time such as '2h'. Naive times are local.
+* `--until TEXT`: Exclusive end: an ISO 8601 datetime or relative time such as '1h'. Defaults to now.
+* `--json`: Output exact counts and lifecycle metadata as JSON.
+* `--no-color`: Disable colors in the output.
 * `-e, --env TEXT`: Environment to interact with. If unspecified, defers to `MODAL_ENVIRONMENT`, your active local profile, or your workspace default, in that order.
 * `--help`: Show this message and exit.
 

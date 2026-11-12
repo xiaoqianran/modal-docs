@@ -33,6 +33,8 @@ The following variables are present in containers running Modal Functions:
   a remote container.
 * **`MODAL_IDENTITY_TOKEN`** — An [OIDC token](/docs/guide/oidc-integration)
   encoding the identity of the Modal Function.
+* **`MODAL_IDENTITY_TOKEN_FILE`** — Path to the periodically refreshed OIDC token
+  file for longer-running Functions.
 
 ## Sandbox environment variables
 

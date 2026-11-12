@@ -16,6 +16,17 @@ Check if the client is closed.
 
 True if the client is closed, False otherwise.
 
+## close
+
+```python
+close(self)
+```
+
+Close this client and release its connections and background tasks.
+
+Calling this method more than once is safe. The client cannot be used for requests after closing.
+Clients can also be used as context managers to close them automatically on exit.
+
 ## hello
 
 ```python

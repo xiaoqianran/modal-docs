@@ -21,7 +21,7 @@ alongside the [`modal`](https://pypi.org/project/modal/) Python package.
 | [`modal container`](/docs/cli/latest/container) | Manage and connect to running containers. |
 | [`modal endpoint`](/docs/cli/latest/endpoint) | Create and manage LLM inference endpoints. |
 | [`modal function`](/docs/cli/latest/function) | Inspect Modal Functions. |
-| [`modal server`](/docs/cli/latest/server) | Inspect Modal Servers. |
+| [`modal server`](/docs/cli/latest/server) | Deploy and inspect Modal Servers. |
 
 ## Storage
 

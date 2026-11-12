@@ -182,7 +182,7 @@ A hydrated `Image` handle for the given ID.
 ## build
 
 ```python
-build(self, app)
+build(self, app=None)
 ```
 
 Eagerly build an image.
@@ -195,7 +195,7 @@ You do not need to build the image explicitly in that case.
 
 **Parameters**
 
-<Parameter name="app" type="modal.app._App" description="Initialized app used as the load context for the image build." />
+<Parameter name="app" type="&quot;modal.app._App | None&quot;" defaultValue="None" description="App for running the build. If not provided, the build will run in an ephemeral App." />
 
 **Returns**
 
@@ -206,9 +206,8 @@ This image after the build (and resolver load) completes.
 ```python
 image = modal.Image.debian_slim().uv_pip_install("scipy", "numpy")
 
-app = modal.App.lookup("build-image", create_if_missing=True)
 with modal.enable_output():  # To see logs in your local terminal
-    image.build(app)
+    image.build()
 
 # Save the image id
 my_image_id = image.object_id
@@ -940,8 +939,8 @@ make changes to them. You can force a rebuild by changing the function's source 
 <Parameter name="volumes" type="dict[str | PurePosixPath, _Volume | _CloudBucketMount]" defaultValue="&#123;&#125;" description="Volume and bucket mounts attached for the build." />
 <Parameter name="network_file_systems" type="dict[str | PurePosixPath, _NetworkFileSystem]" defaultValue="&#123;&#125;" description="Network file systems attached for the build." />
 <Parameter name="gpu" type="str | list[str] | None" defaultValue="None" description="GPU type or list of types for the builder container." />
-<Parameter name="cpu" type="float | None" defaultValue="None" description="CPU cores to request (soft limit)." />
-<Parameter name="memory" type="int | None" defaultValue="None" description="Memory to request in MiB (soft limit)." />
+<Parameter name="cpu" type="float | None" defaultValue="None" description="CPU cores to request." />
+<Parameter name="memory" type="int | None" defaultValue="None" description="Memory to request in MiB." />
 <Parameter name="timeout" type="int" defaultValue="60 * 60" description="Maximum build-step runtime in seconds." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider for the builder function." />
 <Parameter name="region" type="str | Sequence[str] | None" defaultValue="None" description="Region or regions for the builder function." />
@@ -1129,7 +1128,7 @@ Image names can contain an explicit tag designation using `name:tag`. If no tag 
 
 ```python notest
 image = modal.Image.debian_slim().pip_install("numpy")
-image.build(app)
+image.build()
 image.publish("my-image-with-numpy")     # my-image-with-numpy:latest
 image.publish("my-image-with-numpy:v1")
 ```

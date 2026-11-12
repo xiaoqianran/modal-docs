@@ -177,7 +177,7 @@ from_id(cls, image_id, client=None)
 ## 构建
 
 ```python
-build(self, app)
+build(self, app=None)
 ```
 
 积极树立形象。
@@ -189,7 +189,7 @@ build(self, app)
 
 **参数**
 
-<Parameter name="app" type="modal.app._App" description="Initialized app used as the load context for the image build." />
+<Parameter name="app" type="&quot;modal.app._App | None&quot;" defaultValue="None" description="App for running the build. If not provided, the build will run in an ephemeral App." />
 
 **退货**
 
@@ -200,9 +200,8 @@ build(self, app)
 ```python
 image = modal.Image.debian_slim().uv_pip_install("scipy", "numpy")
 
-app = modal.App.lookup("build-image", create_if_missing=True)
 with modal.enable_output():  # To see logs in your local terminal
-    image.build(app)
+    image.build()
 
 # Save the image id
 my_image_id = image.object_id
@@ -305,7 +304,7 @@ pip_install_private_repos(self, *repositories, git_user, find_links=None,
 这些 API 令牌应该有权读取作为参数提供的私有存储库列表。
 
 我们建议使用 Github 的[“细粒度”访问令牌](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/)。
-These tokens are repo-scoped, and avoid granting read permission across all of a user's private repos.
+这些令牌是存储库范围的，并且避免授予跨用户所有私有存储库的读取权限。
 
 **参数**
 
@@ -323,7 +322,7 @@ These tokens are repo-scoped, and avoid granting read permission across all of a
 
 **退货**
 
-A new `Image` with private repositories installed.
+安装了私人存储库的新`Image`。
 
 **使用**
 
@@ -351,7 +350,7 @@ pip_install_from_requirements(self, requirements_txt, find_links=None, *,
     force_build=False, env=None, secrets=None, gpu=None)
 ```
 
-Install a list of Python packages from a local `requirements.txt` file.
+从本地 `requirements.txt` 文件安装 Python 包列表。
 
 **参数**
 
@@ -495,7 +494,7 @@ uv_sync(self, uv_project_dir="./", *, force_build=False, groups=None,
 `uv_project_dir`中的`pyproject.toml`和`uv.lock`会自动添加到构建上下文中。的
 `uv_project_dir` 相对于调用`modal` 的当前工作目录。
 
-注意：这不会*将项目本身安装到环境中（这相当于
+注意：这*不会*将项目本身安装到环境中（这相当于
 `uv sync` 命令中的 `--no-install-project` 标志），并且您需要添加任何本地 python 源
 在此调用后使用 `Image.add_local_python_source` 或类似方法处理文件。
 
@@ -630,7 +629,7 @@ run_commands(self, *commands, env=None, secrets=None, volumes=None, gpu=None,
     force_build=False)
 ```
 
-使用要运行的 shell 命令列表来扩展映像。
+使用要运行的 shell 命令列表扩展映像。
 
 **参数**
 
@@ -694,7 +693,7 @@ from_registry(tag, secret=None, *, setup_dockerfile_commands=[],
 
 镜像必须是针对`linux/amd64`平台构建的。
 
-如果你的镜像没有安装Python，你可以使用`add_python`参数
+如果您的镜像未安装Python，您可以使用 `add_python` 参数
 指定要添加到图像的 Python 版本。否则，图像预计会
 PATH 上的 Python 为 `python`，以及 `pip`。
 
@@ -883,7 +882,7 @@ apt_install(self, *packages, force_build=False, env=None, secrets=None,
 
 **退货**
 
-应用了 `apt-get install` 图层的新 `Image`。
+A new `Image` with `apt-get install` layers applied.
 
 **使用**
 
@@ -891,7 +890,7 @@ apt_install(self, *packages, force_build=False, env=None, secrets=None,
 image = modal.Image.debian_slim().apt_install("git")
 ```
 
-## 运行\_函数
+## run\_function
 
 ```python
 run_function(self, raw_f, *, env=None, secrets=None, volumes={},
@@ -902,8 +901,8 @@ run_function(self, raw_f, *, env=None, secrets=None, volumes={},
 
 运行用户定义的函数 `raw_f` 作为映像构建步骤。
 
-该函数像普通模态函数一样运行，接受资源配置并集成
-具有诸如 Secrets 和 Volumes 之类的模态功能。与普通模态函数不同，对
+该函数的运行方式与普通模态函数类似，接受资源配置并集成
+with Modal features like Secrets and Volumes.与普通模态函数不同，对
 文件系统状态将在容器退出时捕获并保存为新映像。
 
 仅`raw_f`的源代码、`**kwargs`的内容以及任何引用的*全局*变量用于确定映像是否已更改并需要重建。
@@ -918,8 +917,8 @@ run_function(self, raw_f, *, env=None, secrets=None, volumes={},
 <Parameter name="volumes" type="dict[str | PurePosixPath, _Volume | _CloudBucketMount]" defaultValue="&#123;&#125;" description="Volume and bucket mounts attached for the build." />
 <Parameter name="network_file_systems" type="dict[str | PurePosixPath, _NetworkFileSystem]" defaultValue="&#123;&#125;" description="Network file systems attached for the build." />
 <Parameter name="gpu" type="str | list[str] | None" defaultValue="None" description="GPU type or list of types for the builder container." />
-<Parameter name="cpu" type="float | None" defaultValue="None" description="CPU cores to request (soft limit)." />
-<Parameter name="memory" type="int | None" defaultValue="None" description="Memory to request in MiB (soft limit)." />
+<Parameter name="cpu" type="float | None" defaultValue="None" description="CPU cores to request." />
+<Parameter name="memory" type="int | None" defaultValue="None" description="Memory to request in MiB." />
 <Parameter name="timeout" type="int" defaultValue="60 * 60" description="Maximum build-step runtime in seconds." />
 <Parameter name="cloud" type="str | None" defaultValue="None" description="Cloud provider for the builder function." />
 <Parameter name="region" type="str | Sequence[str] | None" defaultValue="None" description="Region or regions for the builder function." />
@@ -1104,7 +1103,7 @@ publish(self, name, *, environment_name=None, experimental_options=None,
 
 ```python notest
 image = modal.Image.debian_slim().pip_install("numpy")
-image.build(app)
+image.build()
 image.publish("my-image-with-numpy")     # my-image-with-numpy:latest
 image.publish("my-image-with-numpy:v1")
 ```

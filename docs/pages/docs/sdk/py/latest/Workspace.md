@@ -500,6 +500,65 @@ for member_token in ws.member_tokens.list():
     print(member_token)
 ```
 
+### member\_tokens.disable
+
+```python
+disable(self, *token_ids)
+```
+
+Disable member tokens in the specified Workspace.
+
+If you are a Workspace Manager or Owner, you can use this method to disable any token in the
+Workspace. Otherwise, you can only disable tokens that you have created. Disabled tokens cannot
+be used to authenticate with Modal, but can be re-enabled at any point.
+
+**Parameters**
+
+<Parameter name="*token_ids" type="str" description="The ID(s) of any tokens you want to disable." />
+
+**Usage**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.member_tokens.disable("ak-REDACTED", "ak-REDACTED")
+```
+
+**See Also**
+
+* [`Workspace.member_tokens.enable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensenable):
+  A function that re-enables a disabled token, so that it may be used again.
+* [`modal workspace member-tokens disable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-disable)
+  Command-line equivalent to this function.
+
+### member\_tokens.enable
+
+```python
+enable(self, *token_ids)
+```
+
+Re-enable member tokens that have been disabled in the specified Workspace.
+
+If you are a Workspace Manager or Owner, you can use this method to enable any token in the
+Workspace. Otherwise, you can only enable tokens that you have created.
+
+**Parameters**
+
+<Parameter name="*token_ids" type="str" description="The ID(s) of any tokens you want to enable." />
+
+**Usage**
+
+```python notest
+ws = modal.Workspace.from_context()
+ws.member_tokens.enable("ak-REDACTED", "ak-REDACTED")
+```
+
+**See Also**
+
+* [`Workspace.member_tokens.disable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensdisable).
+  A function that disables a token, so that it may not be used to authenticate with Modal.
+* [`modal workspace member-tokens enable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-enable)
+  Command-line equivalent to this function.
+
 ### member\_tokens.delete
 
 ```python

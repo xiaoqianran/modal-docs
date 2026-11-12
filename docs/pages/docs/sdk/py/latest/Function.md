@@ -222,6 +222,11 @@ This is a lazy method that defers hydrating the local
 object with metadata from Modal servers until the first
 time it is actually used.
 
+If the ID belongs to a Cls, the Function only supports the following APIs:
+`.logs`, `.metrics`, `.info()`, `.stats()`, `.get_current_stats()`,
+`.get_web_url()`, `.autoscaler` and `.update_autoscaler()`. Use `modal.Cls.from_name(...)`
+to invoke all other methods.
+
 **Parameters**
 
 <Parameter name="function_id" type="str" description="ID of the function." />

@@ -48,6 +48,8 @@ modal workspace member-tokens [OPTIONS] COMMAND [ARGS]...
 **命令**：
 
 * `delete`：删除此工作空间中的会员令牌。
+* `disable`：禁用此工作空间中的成员令牌。
+* `enable`：在此工作空间中启用成员令牌。
 * `list`：列出工作区中的成员代币。
 
 ### `modal workspace member-tokens delete`
@@ -72,6 +74,74 @@ modal workspace member-tokens delete [OPTIONS] TOKEN_ID
 
 * `--allow-missing`：如果Token不存在，不要报错。
 * `-y, --yes`：运行时不暂停确认。
+* `--help`：显示此消息并退出。
+
+### `modal workspace member-tokens disable`
+
+在此工作区中禁用成员令牌。禁用的令牌不能用于通过 Modal 进行身份验证。不过可以重新启用
+在任何时候使用[`modal workspace member-tokens enable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-enable)。
+
+您可以传递 `--all` 选项来禁用您创建的所有令牌。如果您是经理
+或以上，这将禁用您工作区中的所有令牌。
+
+示例：
+
+```bash
+modal workspace member-tokens disable ak-REDACTED
+
+# Disable multiple tokens simultaneously
+modal workspace member-tokens disable ak-REDACTED ak-REDACTED
+
+# Disable everything you have access to
+modal workspace member-tokens disable --all
+```
+
+另请参阅：
+\- [`modal workspace member-tokens enable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-enable)
+\- [`Workspace.member_tokens.disable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensdisable)。
+SDK 相当于此命令。
+
+**用法**：
+
+```shell
+modal workspace member-tokens disable [OPTIONS] [TOKEN_IDS]...
+```
+
+**选项**：
+
+* `--all`：禁用您有权访问的所有令牌。
+* `-y, --yes`：运行时不暂停确认。
+* `--help`：显示此消息并退出。
+
+### `modal workspace member-tokens enable`
+
+在此工作区中启用成员令牌。
+这是与禁用令牌相反的操作 - 给定禁用令牌，此命令将
+重新启用它，允许它通过 Modal 进行身份验证。
+
+示例：
+
+```bash
+modal workspace member-tokens enable ak-REDACTED
+
+# Enable multiple tokens simultaneously
+modal workspace member-tokens enable ak-REDACTED ak-REDACTED
+```
+
+另请参阅：
+\- [`modal workspace member-tokens disable`](https://modal.com/docs/cli/latest/workspace#modal-workspace-member-tokens-disable)
+\- [`Workspace.member_tokens.enable()`](https://modal.com/docs/sdk/py/latest/Workspace#member_tokensenable):
+SDK 相当于此命令。
+
+**用法**：
+
+```shell
+modal workspace member-tokens enable [OPTIONS] [TOKEN_IDS]...
+```
+
+**选项**：
+
+* `-y, --yes`：运行时无需暂停确认。
 * `--help`：显示此消息并退出。
 
 ### `modal workspace member-tokens list`
@@ -237,7 +307,7 @@ modal workspace proxy-tokens delete [OPTIONS] TOKEN_ID
 
 **选项**：
 
-* `-y, --yes`：运行时无需暂停确认。
+* `-y, --yes`：直接运行，无需暂停确认。
 * `--help`：显示此消息并退出。
 
 ### `modal workspace proxy-tokens list`

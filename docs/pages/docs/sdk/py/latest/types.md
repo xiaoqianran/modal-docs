@@ -4,7 +4,7 @@ Public data types returned by Modal APIs.
 
 ## AppInfo
 
-Information about a modal App, including its lifecycle and member functions and servers.
+Information about a modal App, including its lifecycle and member Functions and Servers.
 
 **Attributes**
 
@@ -49,6 +49,189 @@ The possible values are:
 * `STOPPED`
 * `INITIALIZING`
 * `DISABLED`
+
+## AppStats
+
+App-wide statistics over \[since, until), with current Functions and Servers indexed by name.
+
+Lifecycle metadata describes the App when queried, including for historical windows.
+
+**Attributes**
+
+<Parameter name="since" type="datetime" description="" />
+<Parameter name="until" type="datetime" description="" />
+<Parameter name="functions" type="FunctionStatsGroup" description="">
+
+Totals across current Functions, with individual Function stats keyed by name.
+
+<Parameter name="total" type="AppStats.FunctionCounts" description="" />
+<Parameter name="by_name" type="dict[str, AppStats.FunctionStats]" description="" />
+
+#### get
+
+```python
+get(self, key, default=None)
+```
+
+D.get(k\[,d]) -> D\[k] if k in D, else d.  d defaults to None.
+
+#### keys
+
+```python
+keys(self)
+```
+
+D.keys() -> a set-like object providing a view on D's keys
+
+#### items
+
+```python
+items(self)
+```
+
+D.items() -> a set-like object providing a view on D's items
+
+#### values
+
+```python
+values(self)
+```
+
+D.values() -> an object providing a view on D's values
+
+</Parameter>
+<Parameter name="servers" type="ServerStatsGroup" description="">
+
+Totals across current Servers, with individual Server stats keyed by name.
+
+<Parameter name="total" type="AppStats.ServerCounts" description="" />
+<Parameter name="by_name" type="dict[str, AppStats.ServerStats]" description="" />
+
+#### get
+
+```python
+get(self, key, default=None)
+```
+
+D.get(k\[,d]) -> D\[k] if k in D, else d.  d defaults to None.
+
+#### keys
+
+```python
+keys(self)
+```
+
+D.keys() -> a set-like object providing a view on D's keys
+
+#### items
+
+```python
+items(self)
+```
+
+D.items() -> a set-like object providing a view on D's items
+
+#### values
+
+```python
+values(self)
+```
+
+D.values() -> an object providing a view on D's values
+
+</Parameter>
+<Parameter name="sandboxes" type="SandboxCounts" description="">
+
+Sandboxes that finished in the window and those that are live as of the until cutoff.
+
+Total is finished + live.
+
+<Parameter name="total" type="int" description="" />
+<Parameter name="finished" type="int" description="" />
+<Parameter name="live" type="int" description="" />
+
+</Parameter>
+<Parameter name="lifecycle" type="AppLifecycle" description="" />
+<Parameter name="deployment_count" type="int | None" description="" />
+
+<Collapsible title="CallCounts">
+
+Completed Function inputs; each map item counts separately.
+
+**Attributes**
+
+<Parameter name="total" type="int" description="" />
+<Parameter name="succeeded" type="int" description="" />
+<Parameter name="failed" type="int" description="" />
+
+</Collapsible>
+
+<Collapsible title="ContainerCounts">
+
+Terminal container errors and distinct containers reporting resource activity in the window.
+
+**Attributes**
+
+<Parameter name="errors" type="int" description="" />
+<Parameter name="total" type="int" description="" />
+
+</Collapsible>
+
+<Collapsible title="FunctionCounts">
+
+Function call and container counts.
+
+**Attributes**
+
+<Parameter name="calls" type="AppStats.CallCounts" description="" />
+<Parameter name="containers" type="AppStats.ContainerCounts" description="" />
+
+</Collapsible>
+
+<Collapsible title="FunctionStats">
+
+Object ID and counts for a Function.
+
+**Attributes**
+
+<Parameter name="object_id" type="str" description="" />
+<Parameter name="counts" type="AppStats.FunctionCounts" description="" />
+
+</Collapsible>
+
+<Collapsible title="RequestCounts">
+
+Server requests split into HTTP 1xx/2xx/3xx and all other outcomes, including status zero.
+
+**Attributes**
+
+<Parameter name="total" type="int" description="" />
+<Parameter name="ok" type="int" description="" />
+<Parameter name="failed" type="int" description="" />
+
+</Collapsible>
+
+<Collapsible title="ServerCounts">
+
+Server request and container counts.
+
+**Attributes**
+
+<Parameter name="requests" type="AppStats.RequestCounts" description="" />
+<Parameter name="containers" type="AppStats.ContainerCounts" description="" />
+
+</Collapsible>
+
+<Collapsible title="ServerStats">
+
+Object ID and counts for a Server.
+
+**Attributes**
+
+<Parameter name="object_id" type="str" description="" />
+<Parameter name="counts" type="AppStats.ServerCounts" description="" />
+
+</Collapsible>
 
 ## BillingReportItem
 
@@ -370,6 +553,7 @@ for a function log entry, this will contain the function call ID, the input ID, 
 <Parameter name="created_at" type="datetime" description="" />
 <Parameter name="last_used_at" type="datetime | None" description="" />
 <Parameter name="expires_at" type="datetime | None" description="" />
+<Parameter name="disabled" type="bool" description="" />
 
 ## MetricDefinition
 
@@ -446,6 +630,31 @@ Simple data structure storing credentials for making HTTP connections to a sandb
 <Parameter name="url" type="str" description="" />
 <Parameter name="token" type="str" description="" />
 
+## SandboxGroupStats
+
+Statistics for a group of Sandboxes over a time range.
+
+**Attributes**
+
+<Parameter name="tags" type="dict[str, str | None]" description="" />
+<Parameter name="cost" type="Decimal" description="" />
+<Parameter name="cost_by_resource" type="dict[str, Decimal]" description="" />
+
+## SandboxStats
+
+Statistics for a single Sandbox over a time range.
+
+**Attributes**
+
+<Parameter name="since" type="datetime" description="" />
+<Parameter name="until" type="datetime" description="" />
+<Parameter name="duration" type="timedelta" description="" />
+<Parameter name="percentile_stats" type="dict[str, StatsPercentileDistribution]" description="" />
+<Parameter name="cost" type="Decimal | None" description="" />
+<Parameter name="cost_by_resource" type="dict[str, Decimal]" description="" />
+<Parameter name="billed_cpu_core_seconds" type="float" description="" />
+<Parameter name="billed_memory_gib_seconds" type="float" description="" />
+
 ## SecretInfo
 
 Information about a Secret object.
@@ -456,6 +665,7 @@ Information about a Secret object.
 <Parameter name="environment_name" type="str" description="" />
 <Parameter name="created_at" type="datetime" description="" />
 <Parameter name="created_by" type="str | None" description="" />
+<Parameter name="last_used" type="datetime | None" description="" />
 
 ## ServerAutoscalerSettings
 

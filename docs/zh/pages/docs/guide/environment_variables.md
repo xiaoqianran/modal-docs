@@ -34,6 +34,8 @@ Modal 运行时在初始化期间设置几个环境变量。的
   一个远程容器。
 * **`MODAL_IDENTITY_TOKEN`** — [OIDC 代币](/docs/guide/oidc-integration)
   编码模态函数的恒等式。
+* **`MODAL_IDENTITY_TOKEN_FILE`** — 定期刷新的 OIDC 令牌的路径
+  文件用于长时间运行的函数。
 
 ## 沙箱环境变量
 

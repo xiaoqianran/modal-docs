@@ -27,11 +27,14 @@ OIDC 集成有两个组件：发现文档和生成的
 生成的令牌由 Modal 使用中描述的密钥进行签名 [JWT](https://jwt.io/)
 发现文档。这些令牌包含函数的完整身份
 在 `sub` 声明中，他们使用自定义声明来使此信息更加详细
-交通便利。请参阅我们的[发现文档](https://oidc.modal.com/.well-known/openid-configuration)
+交通方便。请参阅我们的[发现文档](https://oidc.modal.com/.well-known/openid-configuration)
 获取完整的索赔清单。
 
 生成的令牌会通过 `MODAL_IDENTITY_TOKEN` 自动注入到函数的容器中
-环境变量。以下是令牌中可能包含哪些声明的示例：
+环境变量。该环境变量包含初始令牌并且不会更新。
+对于定期刷新的令牌，请改为读取路径位于 `MODAL_IDENTITY_TOKEN_FILE` 中的文件。
+
+以下是令牌中可能包含哪些声明的示例：
 
 ```json
 {
@@ -52,7 +55,7 @@ OIDC 集成有两个组件：发现文档和生成的
 }
 ```
 
-### 沙盒
+### 沙箱
 
 与函数不同，[Sandboxes](/docs/guide/sandboxes) 及其 [Sidecars](/docs/guide/sandbox-sidecars)
 默认情况下不会收到身份令牌。要选择加入，请在以下情况下传递 `include_oidc_identity_token=True`
@@ -73,6 +76,7 @@ OIDC，App名称有更严格的字符集。具体来说，必须是64
 字符或更少，并且只能包含字母数字字符、破折号、句点、
 和下划线。如果违反这些限制，OIDC 代币将不会被
 注入容器中。
+
 请注意，这些约束与应用于[已部署的应用程序](/docs/guide/managing-deployments) 的约束相同。
 这意味着如果应用程序是可部署的，它也将与 OIDC 兼容。
 
@@ -131,7 +135,7 @@ $ modal run oidc-token-test.py
 ### 步骤 1：配置 AWS 以信任 Modal 的 OIDC 提供商
 
 我们需要让 AWS 接受 Modal 身份令牌。为此，我们需要添加
-Modal 的 OIDC 提供商作为我们 AWS 账户中的可信实体。
+Modal 的 OIDC 提供商作为我们的 AWS 账户中的可信实体。
 
 ```bash
 aws iam create-open-id-connect-provider \
@@ -141,7 +145,6 @@ aws iam create-open-id-connect-provider \
 
 这将触发 AWS 拉取我们的 [JSON Web 密钥集 (JWKS)](https://auth0.com/docs/secure/tokens/json-web-tokens/json-web-key-sets)
 并用它来验证 Modal 签署的任何令牌的签名。
-
 ### 步骤 2：创建可供模态函数使用的 IAM 策略
 
 让我们创建一个简单的 IAM 策略，允许列出 S3 存储桶中的对象。
@@ -159,12 +162,12 @@ aws iam create-open-id-connect-provider \
   ]
 }
 ```
+
 ### 步骤 3：创建可由 Modal Functions 代入的 IAM 角色
 
 现在，我们可以创建使用此策略的 IAM 角色。访问 IAM 控制台
 创建这个角色。如果您使用 CLI 添加此策略，请更新
-OIDC 提供商 ARN 与 [第 1 步](#step-1-configure-aws-to-trust-modals-oidc-provider) 中创建的 ARN 相匹配。
-请务必将工作区 ID 占位符替换为您自己的占位符。您可以找到您的工作区 ID
+OIDC 提供商 ARN 与 [第 1 步](#step-1-configure-aws-to-trust-modals-oidc-provider) 中创建的 ARN 相匹配。请务必将工作区 ID 占位符替换为您自己的占位符。您可以找到您的工作区 ID
 在 https://modal.com/settings/workspaces 或通过 `modal token info` CLI。
 
 ```json
@@ -202,7 +205,6 @@ IAM 角色只能由工作区中的函数承担。您还可以进一步
 
 AWS 开发工具包内置了对 OIDC 令牌的支持，因此您可以将它们用作
 如下：
-
 ```python notest
 import boto3
 
@@ -250,6 +252,7 @@ $ modal run oidc-token-test.py
 ```
 
 ## AWS Elastic Container Registry (ECR) 的演示使用
+
 您还可以使用 OIDC 在 AWS 上对 [Private Registries](/docs/guide/existing-images) 进行身份验证。
 
 ### 先决条件
