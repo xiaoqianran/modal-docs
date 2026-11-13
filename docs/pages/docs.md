@@ -76,6 +76,7 @@ The docs are organized into three main sections:
   - [Managing deployments](https://modal.com/docs/guide/managing-deployments.md)
   - [Continuous deployment](https://modal.com/docs/guide/continuous-deployment.md)
   - [Scheduled Functions](https://modal.com/docs/guide/cron.md)
+  - [Observability](https://modal.com/docs/guide/programmatic-observability.md)
 - HTTP Applications
   - [Servers](https://modal.com/docs/guide/servers.md)
   - [Sticky Sessions](https://modal.com/docs/guide/sticky-sessions.md)

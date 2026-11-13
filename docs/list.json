@@ -1,8 +1,8 @@
 {
-  "fetchedAt": "2026-11-12T14:58:28.280Z",
+  "fetchedAt": "2026-11-13T14:24:15.990Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 345,
-  "ok": 345,
+  "totalUrls": 346,
+  "ok": 346,
   "failed": 0,
   "pages": [
     {
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 28016,
+      "bytes": 28096,
       "stub": false
     },
     {
@@ -746,7 +746,7 @@
       "source": "https://modal.com/docs/guide/audit-logs.md",
       "finalUrl": "https://modal.com/docs/guide/audit-logs.md",
       "path": "docs/guide/audit-logs.md",
-      "bytes": 28964,
+      "bytes": 33624,
       "stub": false
     },
     {
@@ -1203,6 +1203,14 @@
       "finalUrl": "https://modal.com/docs/guide/private-networking.md",
       "path": "docs/guide/private-networking.md",
       "bytes": 2710,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/programmatic-observability.md",
+      "source": "https://modal.com/docs/guide/programmatic-observability.md",
+      "finalUrl": "https://modal.com/docs/guide/programmatic-observability.md",
+      "path": "docs/guide/programmatic-observability.md",
+      "bytes": 14561,
       "stub": false
     },
     {

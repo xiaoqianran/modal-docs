@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "fe62216d5d264375e1730906723d14a35950a860",
-      "translatedAt": "2026-11-06T14:04:35.494Z",
-      "bytes": 27467
+      "hash": "0ef52aef7f61af9b4a6f91704a1118563b3725e0",
+      "translatedAt": "2026-11-13T14:24:37.889Z",
+      "bytes": 27549
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -547,9 +547,9 @@
       "bytes": 4873
     },
     "docs/guide/audit-logs.md": {
-      "hash": "89e76b8adf1ce89ec5ed2761bd0ab83ac7f7e76b",
-      "translatedAt": "2026-11-10T14:43:03.920Z",
-      "bytes": 25638
+      "hash": "1ecbd5e2bfbdb220e12c9b3d4e3de8594fa74578",
+      "translatedAt": "2026-11-13T14:25:12.805Z",
+      "bytes": 28628
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -1895,13 +1895,18 @@
       "hash": "f3c3f234f3b92b643aeac8f93b7241115bf3b518",
       "translatedAt": "2026-11-06T14:04:17.343Z",
       "bytes": 5094
+    },
+    "docs/guide/programmatic-observability.md": {
+      "hash": "59d42845cfa2b8beb8fe47f49dfbdede6086f189",
+      "translatedAt": "2026-11-13T14:24:50.747Z",
+      "bytes": 14056
     }
   },
-  "updatedAt": "2026-11-12T15:00:43.604Z",
+  "updatedAt": "2026-11-13T14:25:12.805Z",
   "stats": {
-    "translated": 20,
-    "skipped": 347,
+    "translated": 3,
+    "skipped": 365,
     "failed": 0,
-    "total": 367
+    "total": 368
   }
 }

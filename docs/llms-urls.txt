@@ -148,6 +148,7 @@ https://modal.com/docs/guide/otel-integration.md
 https://modal.com/docs/guide/parametrized-functions.md
 https://modal.com/docs/guide/preemption.md
 https://modal.com/docs/guide/private-networking.md
+https://modal.com/docs/guide/programmatic-observability.md
 https://modal.com/docs/guide/project-structure.md
 https://modal.com/docs/guide/proxy-ips.md
 https://modal.com/docs/guide/queues.md
