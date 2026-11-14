@@ -572,9 +572,9 @@
       "bytes": 5894
     },
     "docs/guide/endpoint-integrations.md": {
-      "hash": "29d7ab8b9ef5722a8d9908ab899f9c4ebb823ad7",
-      "translatedAt": "2026-09-11T11:02:44.671Z",
-      "bytes": 2407
+      "hash": "4b3a9cde8651bef7f2ae0f2cde31ba26c9b82adf",
+      "translatedAt": "2026-11-14T13:20:46.128Z",
+      "bytes": 2954
     },
     "docs/guide/endpoint-metrics.md": {
       "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
@@ -1902,10 +1902,10 @@
       "bytes": 14056
     }
   },
-  "updatedAt": "2026-11-13T14:25:12.805Z",
+  "updatedAt": "2026-11-14T13:20:46.128Z",
   "stats": {
-    "translated": 3,
-    "skipped": 365,
+    "translated": 1,
+    "skipped": 367,
     "failed": 0,
     "total": 368
   }

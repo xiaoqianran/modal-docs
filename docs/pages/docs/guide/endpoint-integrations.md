@@ -1,6 +1,6 @@
 # Endpoint integrations
 
-Connect OpenCode, Codex, or Claude Code to your
+Connect OpenCode, Hermes Agent, Codex, or Claude Code to your
 [Shared Endpoints](/docs/guide/shared-endpoints) through
 `https://inference.us-west.modal.direct`. Set the request's `model` to the
 Endpoint's hostname, for example `my-endpoint.us-west.modal.direct`.
@@ -27,6 +27,26 @@ running `/connect`:
 ```bash
 export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 ```
+
+## Hermes Agent
+
+[Install Hermes Agent](https://hermes-agent.nousresearch.com/docs/), create a
+[proxy token](/docs/guide/endpoints#proxy-tokens), and install the
+[Modal plugin](https://hermes-agent.nousresearch.com/docs/plugins/modal):
+
+```bash
+hermes plugins install modal
+```
+
+Set the token in its combined form, `wk-<id>.ws-<secret>`, in `~/.hermes/.env`:
+
+```bash
+# ~/.hermes/.env
+MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
+```
+
+Then run `hermes model`, select Modal as the provider, and select your endpoint
+by hostname.
 
 ## Codex
 

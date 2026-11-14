@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-13T14:24:15.990Z",
+  "fetchedAt": "2026-11-14T13:20:42.995Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 346,
   "ok": 346,
@@ -906,7 +906,7 @@
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
       "path": "docs/guide/endpoint-integrations.md",
-      "bytes": 2407,
+      "bytes": 2945,
       "stub": false
     },
     {
