@@ -542,9 +542,9 @@
       "bytes": 4687
     },
     "docs/guide/datadog-integration.md": {
-      "hash": "31ae97c56e00c3fd862341d49b93802d0a0fb44c",
-      "translatedAt": "2026-10-23T11:24:19.746Z",
-      "bytes": 4873
+      "hash": "f2ecf4be5dd4ddbc85698194c993faee237d9fda",
+      "translatedAt": "2026-11-15T13:47:52.669Z",
+      "bytes": 4920
     },
     "docs/guide/audit-logs.md": {
       "hash": "1ecbd5e2bfbdb220e12c9b3d4e3de8594fa74578",
@@ -1902,7 +1902,7 @@
       "bytes": 14056
     }
   },
-  "updatedAt": "2026-11-14T13:20:46.128Z",
+  "updatedAt": "2026-11-15T13:47:52.669Z",
   "stats": {
     "translated": 1,
     "skipped": 367,

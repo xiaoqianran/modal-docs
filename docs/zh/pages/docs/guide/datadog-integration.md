@@ -11,8 +11,8 @@
 这种集成使您能够：
 
 1.导出Datadog中的Modal审核日志
-2.将Modal Function日志导出到Datadog
-3. 将容器指标导出到Datadog
+2. 将模态函数、沙盒和服务器日志导出到 Datadog
+3. 将模态函数、沙箱和服务器指标导出到 Datadog
 
 ## 安装集成
 
@@ -64,8 +64,9 @@ GPU 容器另外标记有 `gpu_billing_type`，GPU 类型为
 * `modal.memory.utilization`（使用`modal.memory.usage`）
 * `modal.gpu.memory.utilization`（使用`modal.gpu.memory.usage`）
 
-可以使用`modal.input_events.successes`和`modal.input_events.total_inputs`
-衡量某个功能或应用程序的成功率。作为[官方 Datadog 集成](https://docs.datadoghq.com/integrations/modal/)，
+可以使用`modal.input_events.successes`和`modal.input_events.total_inputs`衡量某个功能或应用程序的成功率。
+
+作为[官方 Datadog 集成](https://docs.datadoghq.com/integrations/modal/)，
 Datadog 上的模态指标是免费的，而日志是收费的。
 
 ## 日志属性
@@ -104,7 +105,7 @@ Modal 在日志记录的`.message`字段中传递日志消息。至
 ## 节省成本
 
 模态 Datadog 集成会将所有日志转发到 Datadog，这可能是
-对于冗长的应用程序来说成本高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
+对于冗长的应用程序来说代价高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
 或[索引排除过滤器](https://docs.datadoghq.com/logs/indexes/?tab=ui#exclusion-filters)
 在将日志发送到 Datadog 之前对其进行过滤。
 
@@ -120,7 +121,7 @@ Datadog，授权将被撤销。
 1. 进入【模态指标设置页面】(http://modal.com/settings/metrics)
    并选择“删除 Datadog 集成”。
 2. 在 Datadog 模态集成磁贴的配置选项卡上，
-   单击卸载集成。
+单击卸载集成。
 3. 确认您要卸载集成。
 4. 确保与此集成关联的所有 API 密钥均已
    通过在 [API 密钥](https://app.datadoghq.com/organization-settings/api-keys?filter=Modal) 上搜索集成名称来禁用

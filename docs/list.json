@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-14T13:20:42.995Z",
+  "fetchedAt": "2026-11-15T13:47:47.673Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 346,
   "ok": 346,
@@ -842,7 +842,7 @@
       "source": "https://modal.com/docs/guide/datadog-integration.md",
       "finalUrl": "https://modal.com/docs/guide/datadog-integration.md",
       "path": "docs/guide/datadog-integration.md",
-      "bytes": 5159,
+      "bytes": 5206,
       "stub": false
     },
     {

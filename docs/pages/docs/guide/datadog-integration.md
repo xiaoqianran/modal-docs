@@ -9,8 +9,8 @@ Integration available for install in the Datadog marketplace.
 This integration allows you to:
 
 1. Export Modal audit logs in Datadog
-2. Export Modal Function logs to Datadog
-3. Export container metrics to Datadog
+2. Export Modal Function, Sandbox, and Server logs to Datadog
+3. Export Modal Function, Sandbox, and Server metrics to Datadog
 
 ## Installing the integration
 
