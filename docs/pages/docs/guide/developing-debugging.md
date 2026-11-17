@@ -133,15 +133,14 @@ function dashboard.
 You can also launch an interactive shell in a new Container with the same
 environment as your Function. This is handy for debugging issues with your
 Image, interactively refining build commands, and exploring the contents of
-[`Volume`](/docs/sdk/py/latest/Volume)s and
-[`NetworkFileSystem`](/docs/sdk/py/latest/NetworkFileSystem)s.
+[`Volume`](/docs/sdk/py/latest/Volume)s.
 
 The primary interface for accessing this feature is the
 [`modal shell`](/docs/cli/latest/shell) CLI command, which accepts a Function
 name in your App (or prompts you to select one, if none is provided), and runs
 an interactive command on the same image as the Function, with the same
 [`Secret`](/docs/sdk/py/latest/Secret)s and
-[`NetworkFileSystem`](/docs/sdk/py/latest/NetworkFileSystem)s attached as the selected Function.
+[`Volume`](/docs/sdk/py/latest/Volume)s attached as the selected Function.
 
 The default command is `/bin/bash`, but you can override this with any other
 command of your choice using the `--cmd` flag.

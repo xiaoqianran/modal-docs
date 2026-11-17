@@ -177,9 +177,9 @@
       "bytes": 10783
     },
     "docs/examples/chatterbox_tts.md": {
-      "hash": "dda000ef9408b572165b77ab3b9045f207573dd4",
-      "translatedAt": "2026-10-24T10:43:32.794Z",
-      "bytes": 4893
+      "hash": "9e1363d5d66903b6770bbb1ed13542e40c3395ac",
+      "translatedAt": "2026-11-17T15:50:07.143Z",
+      "bytes": 5028
     },
     "docs/examples/chat_with_pdf_vision.md": {
       "hash": "5d37e4e8ea899101ad60a3a17b053fde624e9265",
@@ -247,9 +247,9 @@
       "bytes": 16564
     },
     "docs/examples/esmfold2_binder_design.md": {
-      "hash": "d427fc120bef547e8cf89f1f962f1f697ab30208",
-      "translatedAt": "2026-08-08T18:28:16.282Z",
-      "bytes": 11477
+      "hash": "e56ed93e1d5bba0dfb01779c981a57f90ca90efe",
+      "translatedAt": "2026-11-17T15:50:08.431Z",
+      "bytes": 11269
     },
     "docs/examples/fastrtc_flip_webcam.md": {
       "hash": "fb867f122371ec1a1130e02c8a424013957070f7",
@@ -562,9 +562,9 @@
       "bytes": 4152
     },
     "docs/guide/developing-debugging.md": {
-      "hash": "924e84d19be609d4b20c18dc592e3e26b14485f9",
-      "translatedAt": "2026-08-08T18:29:10.888Z",
-      "bytes": 8786
+      "hash": "8c8b6e53c0f406ae4fa864b02e773cb5ebe21773",
+      "translatedAt": "2026-11-17T15:50:14.170Z",
+      "bytes": 8713
     },
     "docs/guide/dynamic-batching.md": {
       "hash": "51d8a317b4711e051927a56443e2242151585606",
@@ -572,9 +572,9 @@
       "bytes": 5894
     },
     "docs/guide/endpoint-integrations.md": {
-      "hash": "4b3a9cde8651bef7f2ae0f2cde31ba26c9b82adf",
-      "translatedAt": "2026-11-14T13:20:46.128Z",
-      "bytes": 2954
+      "hash": "d037dec4d1a24a6394b1cde84635a98c0685c42b",
+      "translatedAt": "2026-11-17T15:50:09.795Z",
+      "bytes": 3586
     },
     "docs/guide/endpoint-metrics.md": {
       "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
@@ -897,14 +897,14 @@
       "bytes": 3411
     },
     "docs/guide/webhook-urls.md": {
-      "hash": "402c30bb9cc4ecf82e14f7f81a8686947160444e",
-      "translatedAt": "2026-08-08T18:30:11.780Z",
-      "bytes": 7482
+      "hash": "d561108502ad2352cb65f0d0277623f330501a15",
+      "translatedAt": "2026-11-17T15:50:20.263Z",
+      "bytes": 8082
     },
     "docs/guide/volumes.md": {
-      "hash": "e9c4cb2b082cbc0e7be9b96ae7502444c9f4f69c",
-      "translatedAt": "2026-10-29T12:47:28.478Z",
-      "bytes": 24313
+      "hash": "47e56ea8c336e4688025b1100b68365a4fd13791",
+      "translatedAt": "2026-11-17T15:50:18.414Z",
+      "bytes": 24234
     },
     "docs/sdk/go/latest/Allowlist.md": {
       "hash": "83cf87e357688e095723ab39eb571571be393572",
@@ -1530,9 +1530,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/go/releases.md": {
-      "hash": "da0d26fa8cfb330d26ce08627706e2158701cdba",
-      "translatedAt": "2026-10-20T11:20:46.155Z",
-      "bytes": 30199
+      "hash": "9d4da0c1115e5a9c9b40b0f2a1c1de5a60bde9c4",
+      "translatedAt": "2026-11-17T15:50:43.679Z",
+      "bytes": 31591
     },
     "docs/sdk/js/latest/FunctionAutoscalerSettings.md": {
       "hash": "4d2ac7408bf7821f8ff2fe04159b66c6d5143a6a",
@@ -1563,9 +1563,9 @@
       "error": "HTTP 429"
     },
     "docs/sdk/js/releases.md": {
-      "hash": "581bd81235a8eda0d630b9129648efaab8eec1d7",
-      "translatedAt": "2026-10-20T11:21:30.287Z",
-      "bytes": 28072
+      "hash": "dd409e538eb60c18049265c59e3da50412c43b8b",
+      "translatedAt": "2026-11-17T15:50:42.636Z",
+      "bytes": 29412
     },
     "docs/guide/entra-sso.md": {
       "hash": "348075049b7be28016dcc96f9aa7dc109fe11c8c",
@@ -1902,10 +1902,10 @@
       "bytes": 14056
     }
   },
-  "updatedAt": "2026-11-16T15:29:29.508Z",
+  "updatedAt": "2026-11-17T15:50:43.679Z",
   "stats": {
-    "translated": 0,
-    "skipped": 368,
+    "translated": 8,
+    "skipped": 360,
     "failed": 0,
     "total": 368
   }

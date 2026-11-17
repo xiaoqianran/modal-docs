@@ -2,7 +2,7 @@
 
 # 端点集成
 
-将 OpenCode、Hermes Agent、Codex 或 Claude Code 连接到您的
+将 OpenCode、Hermes Agent、Omp、Codex 或 Claude Code 连接到您的
 [共享端点](/docs/guide/shared-endpoints) 通过
 `https://inference.us-west.modal.direct`。将请求的`model`设置为
 端点的主机名，例如 `my-endpoint.us-west.modal.direct`。
@@ -16,7 +16,7 @@ curl "https://inference.us-west.modal.direct/v1/models" \
 
 ## 开放代码
 
-[安装OpenCode](https://opencode.ai/docs/)并创建
+[安装OpenCode](https://opencode.ai/docs/)并创建一个
 [代理令牌](/docs/guide/endpoints#proxy-tokens)。在 OpenCode CLI 中，运行
 `/connect`，选择模态作为
 [provider](https://opencode.ai/docs/providers/)，并输入令牌作为
@@ -31,23 +31,38 @@ export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 
 ## 爱马仕代理
 
-[安装Hermes Agent](https://hermes-agent.nousresearch.com/docs/)，创建一个
-[代理令牌](/docs/guide/endpoints#proxy-tokens)，并安装
+[安装Hermes代理](https://hermes-agent.nousresearch.com/docs/)并安装
 [模态插件](https://hermes-agent.nousresearch.com/docs/plugins/modal):
 
 ```bash
 hermes plugins install modal
 ```
 
-在 `~/.hermes/.env` 中设置组合形式 `wk-<id>.ws-<secret>` 的令牌：
-
-```bash
-# ~/.hermes/.env
-MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
-```
+系统会提示您创建一个
+[代理令牌](/docs/guide/webhook-proxy-auth)，您可以通过以下方式创建
+[仪表板](/settings/proxy-auth-tokens) 或
+[CLI](/docs/cli/latest/workspace#modal-workspace-proxy-tokens)。
 
 然后运行 `hermes model`，选择 Modal 作为提供者，然后选择您的端点
 通过主机名。
+
+或者，您可以覆盖`MODAL_BASE_URL`；例如，当使用
+[专用端点](/docs/guide/dedicated-endpoints) 形式
+`https://<workspace>-<env>--<app>.<region>.modal.direct/v1`。
+
+## 奥普
+
+[安装Omp](https://omp.sh)并创建一个
+[代理令牌](/docs/guide/endpoints#proxy-tokens)。在 Omp CLI 中，运行
+`/login modal` 并输入组合形式的令牌，
+`wk-<id>.ws-<secret>`。然后运行 ​​`/model` 并按主机名选择您的端点。
+
+对于 CI 或其他无头使用，请在环境中设置令牌，而不是
+运行`/login modal`：
+
+```bash
+export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
+```
 
 ## 法典
 
@@ -63,6 +78,7 @@ base_url = "https://inference.us-west.modal.direct/v1"
 env_key = "MODAL_PROXY_TOKEN"
 wire_api = "responses"
 ```
+
 然后，您可以通过以下命令运行 Codex，端点主机名为
 型号ID：
 

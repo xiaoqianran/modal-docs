@@ -160,6 +160,16 @@ You'll be asked to update your domain DNS records with your domain name
 registrar and then validate the configuration in Modal. Once the records have
 been properly updated and propagated, your custom domain will be ready to use.
 
+When adding a custom domain, choose the **Region** that matches the [routing
+region](/docs/guide/region-selection#regional-routing) of the Web Function the
+domain will serve, or leave it as `Default` if the Web Function doesn't specify
+one. The Region determines which DNS record you'll be asked to create, such as a
+CNAME to `cname.us-west.modal.domains`. If your DNS record points to a different
+region than the Web Function's routing region, requests will fail with a 404
+"invalid function call" error. To fix the mismatch, point the DNS record at the
+target for the Web Function's region, or deploy a new Web Function with a
+matching `routing_region`.
+
 You can assign any Modal Web Function to any registered domain in your Workspace
 with the `custom_domains` argument.
 

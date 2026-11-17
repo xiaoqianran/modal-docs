@@ -4,7 +4,7 @@
 
 Modal 可以轻松地在云中运行应用程序、尝试在云中更改代码，以及
 调试远程执行代码，就像它就在您的笔记本电脑上一样。要速度
-促进您的内部开发循环，本指南提供了工具和技术的概要
+为了促进您的内部开发循环，本指南提供了工具和技术的概要
 用于在 Modal 中开发和调试软件。
 
 ## 互动性
@@ -14,7 +14,7 @@ Modal 可以轻松地在云中运行应用程序、尝试在云中更改代码�
 爆炸。
 
 ### 互动功能可以启动交互式 Python 调试器或启动 `IPython`
-REPL 就在 Modal 应用程序的中间。
+REPL 就在模态应用程序的中间。
 
 为此，您首先需要使用以下命令以“交互”模式运行您的应用程序
 `--interactive` / `-i` 标志。在交互模式下，可以建立连接
@@ -57,7 +57,7 @@ def f():
     IPython.embed()
 ```
 
-内置的Python调试器可以使用语言的`breakpoint()`启动
+内置的Python调试器可以使用该语言的`breakpoint()`启动
 功能。为了方便起见，断点自动调用`interact`。
 
 ```python
@@ -131,17 +131,16 @@ __pycache__  test00.py
 您还可以使用相同的方法在新容器中启动交互式 shell
 环境作为您的功能。这对于调试问题非常方便
 图像，交互式地完善构建命令，并探索内容
-[`Volume`](/docs/sdk/py/latest/Volume) 和
-[`NetworkFileSystem`](/docs/sdk/py/latest/NetworkFileSystem)。
+[`Volume`](/docs/sdk/py/latest/Volume)。
 
 访问此功能的主要接口是
 [`modal shell`](/docs/cli/latest/shell) CLI 命令，它接受一个 Function
 在您的应用程序中输入名称（或者提示您选择一个，如果没有提供），然后运行
 与函数相同的图像上的交互式命令，具有相同的
 [`Secret`](/docs/sdk/py/latest/Secret) 和
-[`NetworkFileSystem`](/docs/sdk/py/latest/NetworkFileSystem) 作为所选函数附加。
+[`Volume`](/docs/sdk/py/latest/Volume) 作为所选函数附加。
 
-默认命令是 `/bin/bash`，但您可以用任何其他命令覆盖它
+默认命令是 `/bin/bash`，但您可以使用任何其他命令覆盖它
 使用 `--cmd` 标志选择的命令。
 
 <Asciinema recordingId="824SeTFiQmleEUF5JjOElofhG" autoPlay={true} />
@@ -225,7 +224,7 @@ def f():
 
 ### 客户端回溯
 
-要查看客户端异常的回溯（又名[堆栈跟踪](https://en.wikipedia.org/wiki/Stack_trace)），您可以将 `MODAL_TRACEBACK` 环境变量设置为 `1`。
+要查看客户端异常的回溯（也称为[堆栈跟踪](https://en.wikipedia.org/wiki/Stack_trace)），您可以将 `MODAL_TRACEBACK` 环境变量设置为 `1`。
 
 ```bash
 MODAL_TRACEBACK=1 modal run my_app.py

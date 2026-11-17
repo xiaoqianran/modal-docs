@@ -1,6 +1,6 @@
 # Endpoint integrations
 
-Connect OpenCode, Hermes Agent, Codex, or Claude Code to your
+Connect OpenCode, Hermes Agent, Omp, Codex, or Claude Code to your
 [Shared Endpoints](/docs/guide/shared-endpoints) through
 `https://inference.us-west.modal.direct`. Set the request's `model` to the
 Endpoint's hostname, for example `my-endpoint.us-west.modal.direct`.
@@ -30,23 +30,38 @@ export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 
 ## Hermes Agent
 
-[Install Hermes Agent](https://hermes-agent.nousresearch.com/docs/), create a
-[proxy token](/docs/guide/endpoints#proxy-tokens), and install the
-[Modal plugin](https://hermes-agent.nousresearch.com/docs/plugins/modal):
+[Install Hermes Agent](https://hermes-agent.nousresearch.com/docs/) and install
+the [Modal plugin](https://hermes-agent.nousresearch.com/docs/plugins/modal):
 
 ```bash
 hermes plugins install modal
 ```
 
-Set the token in its combined form, `wk-<id>.ws-<secret>`, in `~/.hermes/.env`:
-
-```bash
-# ~/.hermes/.env
-MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
-```
+You'll be prompted to create a
+[proxy token](/docs/guide/webhook-proxy-auth), which you can create via the
+[dashboard](/settings/proxy-auth-tokens) or
+[CLI](/docs/cli/latest/workspace#modal-workspace-proxy-tokens).
 
 Then run `hermes model`, select Modal as the provider, and select your endpoint
 by hostname.
+
+Optionally, you can override `MODAL_BASE_URL`; for e.g., when using a
+[Dedicated Endpoint](/docs/guide/dedicated-endpoints) of the form
+`https://<workspace>-<env>--<app>.<region>.modal.direct/v1`.
+
+## Omp
+
+[Install Omp](https://omp.sh) and create a
+[proxy token](/docs/guide/endpoints#proxy-tokens). In the Omp CLI, run
+`/login modal` and enter the token in its combined form,
+`wk-<id>.ws-<secret>`. Then run `/model` and select your endpoint by hostname.
+
+For CI or other headless use, set the token in the environment instead of
+running `/login modal`:
+
+```bash
+export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
+```
 
 ## Codex
 

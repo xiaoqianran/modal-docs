@@ -46,7 +46,7 @@ remote_function.get_web_url() == requests.get(handle.get_web_url()).json()
 完整的 URL 将由多条信息构建而成
 唯一标识端点。
 
-在较高级别上，已部署应用程序的 Web 功能 URL 具有
+在高层次上，已部署应用程序的 Web 功能 URL 具有
 以下结构：`https://<source>--<label>.modal.run`。
 
 `source`组件代表应用程序所在的工作空间和环境
@@ -65,7 +65,7 @@ remote_function.get_web_url() == requests.get(handle.get_web_url()).json()
 为了将所有这些放在一起，请考虑以下示例。如果该组织的成员
 `ECorp` 工作区使用 `main` 环境（其网络为 `prod`）
 后缀）以使用 `flask-app` 的 Webhook 部署 `text_to_speech` 应用程序
-函数中，URL 将具有以下组成部分：
+函数中，URL 将由以下部分组成：
 
 * *来源*：
   * *工作区名称段*: `ECorp` → `ecorp`
@@ -157,6 +157,16 @@ def web_endpoint_handler():
 系统会要求您使用您的域名更新域 DNS 记录
 注册商，然后验证 Modal 中的配置。一旦记录有
 正确更新和传播后，您的自定义域就可以使用了。
+
+添加自定义域时，选择与[路由匹配的**区域**
+Web 功能的区域](/docs/guide/region-selection#regional-routing)
+域将提供服务，或者如果 Web 功能未指定，则将其保留为 `Default`
+一。区域决定您将被要求创建哪个 DNS 记录，例如
+CNAME 为`cname.us-west.modal.domains`。如果您的 DNS 记录指向不同的
+区域比 Web 功能的路由区域大，请求将失败并返回 404
+“无效函数调用”错误。要修复不匹配问题，请将 DNS 记录指向
+Web Function 区域的目标，或部署一个新的 Web Function
+匹配`routing_region`。
 
 您可以将任何模态 Web 功能分配到工作区中的任何注册域
 与 `custom_domains` 参数。

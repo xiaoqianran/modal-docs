@@ -166,7 +166,6 @@ You can also interact with Volumes using the command line interface. You can run
 Usage: modal volume [OPTIONS] COMMAND [ARGS]...
 
  Read and edit modal.Volume volumes.
- Note: users of modal.NetworkFileSystem should use the modal nfs command instead.
 
 ╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ --help          Show this message and exit.                                                                                                                                                            │

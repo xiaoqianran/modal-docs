@@ -9,9 +9,9 @@ Chatterbox Turbo 是一种最先进的 TTS 模型，可以生成与专有模型�
 目标语音的简短（约 10 秒）音频提示。
 
 查看【Resemble AI 网站】(https://www.resemble.ai/) 或
-[Chatterbox Github](https://github.com/resemble-ai/chatterbox) 存储库了解更多详细信息。## 设置
+[Chatterbox Github](https://github.com/resemble-ai/chatterbox) 存储库了解更多详细信息。
 
-导入`modal`，唯一需要的本地依赖项。
+＃＃ 设置导入`modal`，唯一需要的本地依赖项。
 
 ```python
 import modal
@@ -31,28 +31,48 @@ image = modal.Image.debian_slim(python_version="3.12").uv_pip_install(
     "chatterbox-tts==0.1.7",
     "fastapi[standard]==0.124.4",
     "peft==0.18.0",
-    "setuptools<82",
+    "setuptools==81.0.0",
 )
 
 ```
 
-我们还将使用 Chatterbox 提供的一组语音提示，您可以[此处](https://modal-cdn.com/blog/audio/chatterbox-tts-voices.zip)下载。
-解压缩文件并使用以下 CLI 命令将其上传到名为 `chatterbox-tts-voices` 的 `modal.Volume`：
-
-```shell
-modal volume create chatterbox-tts-voices
-modal volume put chatterbox-tts-voices <PATH-TO-UNZIPPED-VOICE-PROMPTS-DIRECTORY>
-```
-
-现在我们可以实例化该音量并将其与我们的应用程序一起使用。
+我们来下载Chatterbox的公共【语音提示】(https://modal-cdn.com/blog/audio/chatterbox-tts-voices.zip)
+在容器镜像构建过程中。
 
 ```python
-chatterbox_tts_voices_vol = modal.Volume.from_name("chatterbox-tts-voices")
-VOICE_PROMPTS_DIR = "/chatterbox-tts/prompts"
+VOICE_PROMPT_PATH = "/chatterbox-tts/prompts/Lucy.wav"
+
+
+def download_voice_prompt():
+    import io
+    import pathlib
+    import urllib.request
+    import zipfile
+
+    with urllib.request.urlopen(
+        "https://modal-cdn.com/blog/audio/chatterbox-tts-voices.zip", timeout=60
+    ) as response:
+        with zipfile.ZipFile(io.BytesIO(response.read())) as archive:
+            prompts = [
+                name
+                for name in archive.namelist()
+                if pathlib.PurePosixPath(name).name == "Lucy.wav"
+            ]
+            if len(prompts) != 1:
+                raise ValueError(
+                    f"Expected one Lucy.wav voice prompt, found {len(prompts)}"
+                )
+            path = pathlib.Path(VOICE_PROMPT_PATH)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(archive.read(prompts[0]))
+
+
+image = image.run_function(download_voice_prompt)
 
 app = modal.App("example-chatterbox-tts", image=image)
 
 ```
+
 在图像上下文中导入所需的库以确保它们可用
 当容器运行时。这包括音频处理模块和 Chatterbox TTS 模块本身。
 
@@ -65,7 +85,6 @@ with image.imports():
     from fastapi.responses import StreamingResponse
 
 ```
-
 ## TTS 模型类
 
 TTS服务是使用Modal的类语法和GPU加速来实现的。
@@ -74,15 +93,10 @@ TTS服务是使用Modal的类语法和GPU加速来实现的。
 * `scaledown_window=60 * 5`：在最后一次请求后让容器保持活动状态 5 分钟
 * `@modal.concurrent(max_inputs=10)`：每个容器最多允许 10 个并发请求
 
-我们还需要使用 `modal.Secret` 提供 Hugging Face 令牌来访问模型权重，
-并将 `chatterbox-tts-voices` 卷附加到容器。
-
 ```python
 @app.cls(
     gpu="a10g",
     scaledown_window=60 * 5,
-    secrets=[modal.Secret.from_name("hf-token")],
-    volumes={VOICE_PROMPTS_DIR: chatterbox_tts_voices_vol},
 )
 @modal.concurrent(max_inputs=10)
 class Chatterbox:
@@ -107,10 +121,7 @@ class Chatterbox:
         # Generate audio waveform from the input text
         wav = self.model.generate(
             prompt,
-            audio_prompt_path=VOICE_PROMPTS_DIR
-            + "/chatterbox-tts-voices"
-            + "/prompts"
-            + "/Lucy.wav",
+            audio_prompt_path=VOICE_PROMPT_PATH,
         )
 
         # Convert the waveform to bytes

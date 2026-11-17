@@ -163,7 +163,6 @@ with vol.batch_upload() as batch:
 Usage: modal volume [OPTIONS] COMMAND [ARGS]...
 
  Read and edit modal.Volume volumes.
- Note: users of modal.NetworkFileSystem should use the modal nfs command instead.
 
 ╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ --help          Show this message and exit.                                                                                                                                                            │
@@ -369,7 +368,7 @@ def finetune():
 当提交更改时将会丢失！
 
 您可以同时运行的提交数量是有限的。如果你跑太多
-并发提交 由于争用，每次提交将花费更长的时间。如果你是
+并发提交 由于争用，每次提交都会花费更长的时间。如果你是
 提交小的更改，避免进行超过 5 次并发提交（数量
 您可以进行的并发提交数与更改的大小成正比
 正在承诺）。
@@ -484,7 +483,7 @@ Volumes v2 中的文件数量没有限制。
 
 ### 在 v2 中，您可以使用 `sync` 提交
 
-对于 Volumes v2，您可以从沙箱或模态 shell 中触发提交
+对于 Volumes v2，您可以从沙盒或模态 shell 中触发提交
 通过在挂载点上运行 `sync` 命令：
 
 ```bash

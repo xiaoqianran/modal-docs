@@ -3,7 +3,7 @@
 # 使用 ESMFold2 和 ESMC 大规模设计蛋白质结合剂
 
 蛋白质折叠是计算生物学的里程碑式突破。
-但对于许多应用来说，我们不仅仅想预测现有蛋白质的结构——
+但对于许多应用来说，我们不仅仅想预测现有蛋白质的结构 -
 我们想要设计能够调节生物学的新蛋白质。
 
 最重要的方法之一是通过绑定。
@@ -49,17 +49,13 @@ app = modal.App(
 
 我们将使用 `Image.micromamba` 作为我们的基础镜像，因为我们需要一些包
 只能通过 Conda 获得。我们还将安装 [`esm`](https://github.com/Biohub/esm)
-来自 CZ Biohub 的库（它引入了 `transformers` 的自定义分支）和其他一些有用的库
+来自 CZ Biohub 的库和其他一些有用的库
 用于处理蛋白质序列。
 
 我们设置`CUBLAS_WORKSPACE_CONFIG`，它允许我们通过调用来确保再现性
 `torch.use_deterministic_algorithms(True)`位于我们远程代码的顶部。
 
 ```python
-ESM_REVISION = (
-    "f652b471d29da828b31e9b7a9cf7d0a7803240f5"  # see https://github.com/Biohub/esm
-)
-
 image = (
     modal.Image.micromamba(python_version="3.12")
     .run_commands("apt update && apt install -y git build-essential")
@@ -68,7 +64,7 @@ image = (
         channels=["conda-forge", "bioconda"],
     )
     .uv_pip_install(
-        f"esm @ git+https://github.com/Biohub/esm.git@{ESM_REVISION}",
+        "esm==3.4.3",
         "abnumber==0.4.4",
         "pyarrow==18.1.0",
     )
@@ -88,7 +84,7 @@ image = (
 ## 在模态体积上缓存权重和持久结果
 
 ESMFold2 基于 6B 参数 ESMC 编码器构建；与四个人一起
-用于最终评分的批评模型，模型权重约为 50 GB。
+用于最终评分的批评家模型，模型权重约为 50 GB。
 我们将它们缓存在[模态卷](https://modal.com/docs/guide/volumes)
 与重新下载相比，它在冷启动时提供更好的性能
 每次都来自《拥抱的脸》。
@@ -98,6 +94,7 @@ models_volume = modal.Volume.from_name("esmfold2-models", create_if_missing=True
 models_dir = Path("/models")
 
 ```
+
 第二卷将存储我们的结果。
 
 ```python
@@ -108,7 +105,6 @@ results_dir = Path("/results")
 
 
 ```
-
 ## 在 Modal 上设计活页夹
 
 为了在 Modal 上运行活页夹设计，我们定义了一个 `BinderDesignService` 类并
@@ -118,9 +114,8 @@ results_dir = Path("/results")
 四个 ESMFold2“英雄”评论家模型。
 
 在类内部，[`@modal.enter()`生命周期钩子](https://modal.com/docs/guide/lifecycle-functions#modalenter)
-每个容器启动时下载并初始化这些模型一次，因此后续`design` 调用同一个容器重复使用装载的重量。
-
-我们用 `@modal.method()` 装饰我们的 `design` 方法以启用远程
+每个容器启动时下载并初始化这些模型一次，因此后续
+`design` 调用同一个容器重复使用装载的重量。我们用 `@modal.method()` 装饰我们的 `design` 方法以启用远程
 执行。我们会看到它被称为via `.remote()`（单一设计）和via
 `.spawn()` + [`modal.FunctionCall.gather`](https://modal.com/docs/reference/modal.FunctionCall)
 （平行扫描）进一步如下。类本身是一个薄薄的包装
@@ -233,7 +228,8 @@ def run_sweep(
 [捆绑目标](https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/binder-design/binder_design/prompts.py)
 （`cd45`、`ctla4`、`egfr`、`pd-l1`、`pdgfr`）和活页夹模板
 （`minibinder`、`trastuzumab_framework_vhvl`、`atezolizumab_framework_vhvl`、
-`ocankitug_framework_vhvl`)，或者传递任意的`target_sequence` /直接`binder_sequence`。
+`ocankitug_framework_vhvl`)，或者传递任意的`target_sequence` /
+直接`binder_sequence`。
 
 ```shell
 modal run -m 06_gpu_and_ml.binder-design.esmfold2_binder_design::main \
@@ -269,9 +265,7 @@ def main(
     print(f"🧬 average final loss: {avg_final_loss:.4f}")
 
 
-```
-
-`sweep` 对每个 `(target, binder, seed)` 组合进行网格扫描
+````sweep` 对每个 `(target, binder, seed)` 组合进行网格扫描
 您传入的目标和活页夹的数量，使用 Modal 水平缩放设计
 [异步作业处理](https://modal.com/docs/guide/job-queue)。
 选择过程在服务器端运行，生成的镶木地板为

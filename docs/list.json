@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-16T15:29:29.431Z",
+  "fetchedAt": "2026-11-17T15:50:04.487Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 346,
   "ok": 346,
@@ -306,7 +306,7 @@
       "source": "https://modal.com/docs/examples/chatterbox_tts.md",
       "finalUrl": "https://modal.com/docs/examples/chatterbox_tts.md",
       "path": "docs/examples/chatterbox_tts.md",
-      "bytes": 5013,
+      "bytes": 5153,
       "stub": false
     },
     {
@@ -394,7 +394,7 @@
       "source": "https://modal.com/docs/examples/esmfold2_binder_design.md",
       "finalUrl": "https://modal.com/docs/examples/esmfold2_binder_design.md",
       "path": "docs/examples/esmfold2_binder_design.md",
-      "bytes": 11806,
+      "bytes": 11604,
       "stub": false
     },
     {
@@ -866,7 +866,7 @@
       "source": "https://modal.com/docs/guide/developing-debugging.md",
       "finalUrl": "https://modal.com/docs/guide/developing-debugging.md",
       "path": "docs/guide/developing-debugging.md",
-      "bytes": 9148,
+      "bytes": 9060,
       "stub": false
     },
     {
@@ -906,7 +906,7 @@
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
       "path": "docs/guide/endpoint-integrations.md",
-      "bytes": 2945,
+      "bytes": 3570,
       "stub": false
     },
     {
@@ -1514,7 +1514,7 @@
       "source": "https://modal.com/docs/guide/volumes.md",
       "finalUrl": "https://modal.com/docs/guide/volumes.md",
       "path": "docs/guide/volumes.md",
-      "bytes": 25793,
+      "bytes": 25711,
       "stub": false
     },
     {
@@ -1538,7 +1538,7 @@
       "source": "https://modal.com/docs/guide/webhook-urls.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-urls.md",
       "path": "docs/guide/webhook-urls.md",
-      "bytes": 8145,
+      "bytes": 8802,
       "stub": false
     },
     {
@@ -1946,7 +1946,7 @@
       "source": "https://modal.com/docs/sdk/go/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/go/releases.md",
       "path": "docs/sdk/go/releases.md",
-      "bytes": 31426,
+      "bytes": 32890,
       "stub": false
     },
     {
@@ -2362,7 +2362,7 @@
       "source": "https://modal.com/docs/sdk/js/releases.md",
       "finalUrl": "https://modal.com/docs/sdk/js/releases.md",
       "path": "docs/sdk/js/releases.md",
-      "bytes": 29391,
+      "bytes": 30855,
       "stub": false
     },
     {
