@@ -20,7 +20,7 @@ FromID(ctx context.Context, functionID string) (*Function, error)
 
 FromID references a Function by its ID.
 
-```
+```go
 client, err := modal.NewClient()
 if err != nil {
 	return err
@@ -73,6 +73,25 @@ GetWebURL() string
 GetWebURL returns the URL of a Function running as a Web Function.
 Returns empty string if this Function is not a Web Function.
 
+## Info
+
+```go
+Info(ctx context.Context, params *FunctionInfoParams) (*FunctionInfo, error)
+```
+
+Info returns the configuration of the Function, including any overrides
+applied with WithOptions, WithConcurrency, or WithBatching.
+
+SecretIDs only includes Secrets that already exist on Modal. Secrets created
+locally (e.g. with Secrets.FromMap) that have not been used yet, and the
+Secret holding env vars passed to WithOptions, are not included.
+
+**Parameters** (`FunctionInfoParams`)
+
+FunctionInfoParams are options for Function.Info.
+
+* `Refresh` (`bool`)
+
 ## Instance
 
 ```go
@@ -105,7 +124,7 @@ Stats returns historical statistics. The default range is the last hour; the max
 
 Read statistics for the last hour:
 
-```
+```go
 fn, err := client.Functions.FromName(ctx, "libmodal-test-support", "echo_string", nil)
 if err != nil {
 	return err
@@ -119,7 +138,7 @@ fmt.Println(stats.InputSuccessCount, stats.InputFailureCount)
 
 Include all variants over the last 24 hours:
 
-```
+```go
 until := time.Now()
 since := until.Add(-24 * time.Hour)
 variantStats, err := fn.Stats(ctx, &modal.FunctionStatsParams{
@@ -301,7 +320,7 @@ Set AllVariants to true to include the root Function and its variants.
 Missing observations have a nil Value. Use `FunctionMetricsManager.Schema` to
 discover group names and series definitions without fetching samples.
 
-```
+```go
 bucketSize := 5 * time.Minute
 metrics, err := function.Metrics.Export(ctx, &modal.FunctionMetricsExportParams{
 	BucketSize: &bucketSize,
@@ -342,7 +361,7 @@ Use these group names in `FunctionMetricsExportParams.Groups` when exporting.
 
 Inspect the available call metrics:
 
-```
+```go
 schema, err := fn.Metrics.Schema(ctx, &modal.MetricsSchemaParams{
 	Groups: []string{"calls"},
 })

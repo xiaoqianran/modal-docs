@@ -69,24 +69,35 @@ other authentication options. Dedicated Endpoints can also be created with
 ## Call an endpoint
 
 Text-generation models on both Shared and Dedicated Endpoints can be called
-through the OpenAI-compatible Chat Completions and Responses APIs or the
-Anthropic-compatible Messages API. Embedding models can be called through the
-OpenAI-compatible Embeddings API.
+through the OpenAI-compatible Chat Completions (`/v1/chat/completions`),
+Completions (`/v1/completions`), and Responses (`/v1/responses`) APIs or the
+Anthropic-compatible Messages API (`/v1/messages`). Embedding models can be
+called through the OpenAI-compatible Embeddings API (`/v1/embeddings`).
 
-### Model names
+### URLs and model names
 
-Set `model` to the value shown in the dashboard's request examples.
-You can also retrieve it through the OpenAI-compatible Models API:
+An Endpoint's base URL is its hostname, shown in the dashboard after creation
+and in `modal endpoint info`; for example,
+`https://my-endpoint.us-west.modal.direct`. Set `model` to the
+value shown in the dashboard's request examples. You can also retrieve it
+through the OpenAI-compatible Models API:
 
 ```bash
 curl "<your-endpoint-url>/v1/models" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET"
 ```
 
+Shared Endpoints can also be reached through the inference gateway at
+`https://inference.us-west.modal.direct`. In this case, set `model` to the Endpoint's
+hostname (`my-endpoint.us-west.modal.direct`).
+
 ### Send a request
 
 This example uses the Chat Completions API and a
 [proxy token](#proxy-tokens):
+
+<CodeTabs>
+  {#snippet cli()}
 
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
@@ -97,6 +108,53 @@ curl "<your-endpoint-url>/v1/chat/completions" \
     "messages": [{ "role": "user", "content": "Hello!" }]
   }'
 ```
+
+{/snippet}
+
+{#snippet python()}
+
+```python notest
+import os
+
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="<your-endpoint-url>/v1",
+    api_key=f"{os.environ['MODAL_PROXY_TOKEN_ID']}.{os.environ['MODAL_PROXY_TOKEN_SECRET']}",
+)
+
+completion = client.chat.completions.create(
+    model="<model-name>",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+print(completion.choices[0].message.content)
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```typescript notest
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "<your-endpoint-url>/v1",
+  apiKey: `${process.env.MODAL_PROXY_TOKEN_ID}.${process.env.MODAL_PROXY_TOKEN_SECRET}`,
+});
+
+const completion = await client.chat.completions.create({
+  model: "<model-name>",
+  messages: [{ role: "user", content: "Hello!" }],
+});
+console.log(completion.choices[0].message.content);
+```
+
+{/snippet}
+
+</CodeTabs>
+
+For server-sent events, pass `"stream": true`. Token usage is reported in the
+final streamed chunk.
 
 See [Endpoint integrations](/docs/guide/endpoint-integrations) for connecting
 coding agents like OpenCode, Codex, and Claude Code to a Shared Endpoint.

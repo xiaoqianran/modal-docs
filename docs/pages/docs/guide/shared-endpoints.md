@@ -24,7 +24,9 @@ request examples. Shared Endpoints always require a
 
 Shared Endpoints have model-specific limits on concurrent in-flight requests.
 The limit is shared across all Shared Endpoints using the same model in your
-Workspace. Requests above the limit receive an HTTP `429` response; retry them
+Workspace. Each model's limit is shown in
+[Settings → Limits](/settings/limits) under "Shared Endpoint concurrency
+limits". Requests above the limit receive an HTTP `429` response; retry them
 with exponential backoff and jitter.
 
 Use a [Dedicated Endpoint](/docs/guide/dedicated-endpoints) when you need

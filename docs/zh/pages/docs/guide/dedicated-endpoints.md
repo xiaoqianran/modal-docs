@@ -21,7 +21,7 @@ Modal 解析模型，选择兼容的服务配方，然后启动
 仪表板中的 [**端点**](https://modal.com/endpoints) 选项卡。
 
 当您创建 Endpoint 时，Modal 使用其名称作为
-客户端以 `model` 形式发送的 [模型名称](/docs/guide/endpoints#model-names)
+客户端以 `model` 形式发送的 [模型名称](/docs/guide/endpoints#urls-and-model-names)
 请求。
 
 ## 查看生成的源码
@@ -85,7 +85,7 @@ modal endpoint create \
 共享 `Modal-Routing-Affinity-Key` 标头的请求将被路由到同一个容器
 尽最大努力，将对话的提示前缀保留在其中
 容器的缓存。参见
-[亲和路由](/docs/guide/endpoints#affinity-routing)了解如何选择
+[Affinity 路由](/docs/guide/endpoints#affinity-routing) 了解如何选择
 标头值。
 
 ## 指标

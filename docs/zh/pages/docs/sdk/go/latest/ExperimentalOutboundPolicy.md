@@ -10,17 +10,17 @@ ExperimentalOutboundPolicy 是一个不可变的配置，用于替换中的标�
 秘密值永远不会进入沙箱：它们被解析并注入到
 匹配容器外部的请求。
 
-```
+```go
 secret, _ := client.Secrets.FromName(ctx, "api-token", nil)
 outboundPolicy := modal.NewExperimentalOutboundPolicy(
 	modal.ExperimentalOutboundPolicyHeaderReplacement{
 		Domain:  "example.com",
 		Secret:  secret,
-		Headers: map`string`string{"Authorization": "Bearer $API_TOKEN"},
+		Headers: map[string]string{"Authorization": "Bearer $API_TOKEN"},
 	},
 	modal.ExperimentalOutboundPolicyHeaderReplacement{
 		Domain:  "modal.com",
-		Headers: map`string`string{"X-Trace-Token": "trace_abcd"},
+		Headers: map[string]string{"X-Trace-Token": "trace_abcd"},
 	},
 )
 ```

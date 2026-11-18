@@ -197,6 +197,17 @@ https://modal.com/docs/sdk/go/latest/App.md
 https://modal.com/docs/sdk/go/latest/AppInfo.md
 https://modal.com/docs/sdk/go/latest/AppLifecycle.md
 https://modal.com/docs/sdk/go/latest/AppState.md
+https://modal.com/docs/sdk/go/latest/AppStats.md
+https://modal.com/docs/sdk/go/latest/AppStatsCallCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsContainerCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsFunctionCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsFunctionStats.md
+https://modal.com/docs/sdk/go/latest/AppStatsFunctionStatsGroup.md
+https://modal.com/docs/sdk/go/latest/AppStatsRequestCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsSandboxCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsServerCounts.md
+https://modal.com/docs/sdk/go/latest/AppStatsServerStats.md
+https://modal.com/docs/sdk/go/latest/AppStatsServerStatsGroup.md
 https://modal.com/docs/sdk/go/latest/Client.md
 https://modal.com/docs/sdk/go/latest/CloudBucketMount.md
 https://modal.com/docs/sdk/go/latest/Cls.md
@@ -214,6 +225,7 @@ https://modal.com/docs/sdk/go/latest/Function.md
 https://modal.com/docs/sdk/go/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/go/latest/FunctionCall.md
 https://modal.com/docs/sdk/go/latest/FunctionCurrentStats.md
+https://modal.com/docs/sdk/go/latest/FunctionInfo.md
 https://modal.com/docs/sdk/go/latest/FunctionStats.md
 https://modal.com/docs/sdk/go/latest/Image.md
 https://modal.com/docs/sdk/go/latest/LogEntry.md
@@ -229,6 +241,7 @@ https://modal.com/docs/sdk/go/latest/Queue.md
 https://modal.com/docs/sdk/go/latest/Retries.md
 https://modal.com/docs/sdk/go/latest/Sandbox.md
 https://modal.com/docs/sdk/go/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/go/latest/SandboxGroupStats.md
 https://modal.com/docs/sdk/go/latest/SandboxRuntime.md
 https://modal.com/docs/sdk/go/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/go/latest/Secret.md
@@ -245,6 +258,17 @@ https://modal.com/docs/sdk/js/latest/App.md
 https://modal.com/docs/sdk/js/latest/AppInfo.md
 https://modal.com/docs/sdk/js/latest/AppLifecycle.md
 https://modal.com/docs/sdk/js/latest/AppState.md
+https://modal.com/docs/sdk/js/latest/AppStats.md
+https://modal.com/docs/sdk/js/latest/AppStatsCallCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsContainerCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsFunctionCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsFunctionStats.md
+https://modal.com/docs/sdk/js/latest/AppStatsFunctionStatsGroup.md
+https://modal.com/docs/sdk/js/latest/AppStatsRequestCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsSandboxCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsServerCounts.md
+https://modal.com/docs/sdk/js/latest/AppStatsServerStats.md
+https://modal.com/docs/sdk/js/latest/AppStatsServerStatsGroup.md
 https://modal.com/docs/sdk/js/latest/CloudBucketMount.md
 https://modal.com/docs/sdk/js/latest/Cls.md
 https://modal.com/docs/sdk/js/latest/ClsInstance.md
@@ -260,6 +284,7 @@ https://modal.com/docs/sdk/js/latest/Function.md
 https://modal.com/docs/sdk/js/latest/FunctionAutoscalerSettings.md
 https://modal.com/docs/sdk/js/latest/FunctionCall.md
 https://modal.com/docs/sdk/js/latest/FunctionCurrentStats.md
+https://modal.com/docs/sdk/js/latest/FunctionInfo.md
 https://modal.com/docs/sdk/js/latest/FunctionStats.md
 https://modal.com/docs/sdk/js/latest/Image.md
 https://modal.com/docs/sdk/js/latest/LogEntry.md
@@ -280,6 +305,7 @@ https://modal.com/docs/sdk/js/latest/Queue.md
 https://modal.com/docs/sdk/js/latest/Retries.md
 https://modal.com/docs/sdk/js/latest/Sandbox.md
 https://modal.com/docs/sdk/js/latest/SandboxCreateConnectCredentials.md
+https://modal.com/docs/sdk/js/latest/SandboxGroupStats.md
 https://modal.com/docs/sdk/js/latest/SandboxRuntime.md
 https://modal.com/docs/sdk/js/latest/SandboxSnapshot.md
 https://modal.com/docs/sdk/js/latest/Secret.md

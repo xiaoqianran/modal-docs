@@ -66,11 +66,21 @@ async getWebUrl(): Promise<string | undefined>
 
 **返回：** Web URL，如果这不是 Web 函数，则返回未定义
 
+## 信息
+
+```typescript
+async info(params: FunctionInfoParams = {}): Promise<FunctionInfo>
+```**参数** (`FunctionInfoParams`)
+
+* `refresh?` (`boolean`)
+
 ## 实例
 
 ```typescript
 async instance(): Promise<Function_>
-```使用指定的配置创建函数的实例
+```
+
+使用指定的配置创建函数的实例
 `withOptions`、`withConcurrency`、
 和/或`withBatching`。
 
@@ -106,7 +116,6 @@ async stats(params: FunctionStatsParams = {}): Promise<FunctionStats>
 * `until?` (`Date`)：独占结束；默认为当前时间。
 * `container?` (`string`)：限制统计该容器ID。
 * `allVariants?` (`boolean`)：聚合基本函数及其变体。默认为 false。
-
 阅读过去一小时的统计数据。
 
 ```ts
@@ -116,6 +125,7 @@ console.log(stats.inputSuccessCount, stats.inputFailureCount);
 ```
 
 包括过去 24 小时内的所有变体。
+
 ```ts
 const until = new Date();
 const since = new Date(until.getTime() - 24 * 60 * 60 * 1000);
@@ -163,16 +173,16 @@ withBatching(params: FunctionWithBatchingParams): Function_
 
 ```typescript
 withConcurrency(params: FunctionWithConcurrencyParams): Function_
-```
-
-在运行时覆盖静态函数并发配置。
+```在运行时覆盖静态函数并发配置。
 
 **参数** (`FunctionWithConcurrencyParams`)
 
 `Function_.withConcurrency()` 的配置选项。
 
 * `maxInputs` (`number`)
-* `targetInputs?` (`number`)## 带选项
+* `targetInputs?` (`number`)
+
+## 带选项
 
 ```typescript
 withOptions(options: FunctionWithOptionsParams): Function_
@@ -210,6 +220,7 @@ withOptions(options: FunctionWithOptionsParams): Function_
 
 另请参阅：[`modal app logs`](https://modal.com/docs/cli/latest/app#modal-app-logs)
 用于 CLI 访问应用程序的日志。
+
 ### 获取
 
 ```typescript
@@ -228,9 +239,7 @@ fetch(params: FunctionLogFetchParams): AsyncIterable<LogEntry>
 * `source?` (`LogSource`)：按来源过滤：`stdout`、`stderr` 或 `system`。
 * `searchText?` (`string`)：按日志消息中包含的文本进行过滤。
 
-**返回：** `LogEntry` 对象的异步迭代。
-
-```typescript
+**返回：** `LogEntry` 对象的异步迭代。```typescript
 import { ModalClient } from "modal";
 
 const modal = new ModalClient();
@@ -250,11 +259,13 @@ for await (const entry of function_.logs.fetch({
 stream(params: FunctionLogStreamParams = {}): AsyncIterable<LogEntry>
 ```
 
-流式传输新的函数日志，直到达到超时。**参数** (`FunctionLogStreamParams`)
+流式传输新的函数日志，直到达到超时。
+
+**参数** (`FunctionLogStreamParams`)
 
 * `timeoutMs?` (`number`)：结束流之前日志条目之间等待的毫秒数。默认情况下，流会阻塞直至被中断。
 
-**返回：** `LogEntry` 对象到达时的异步迭代。
+**返回：** `LogEntry` 对象到达时的异步可迭代。
 
 ```typescript
 import { ModalClient } from "modal";
@@ -281,7 +292,6 @@ tail(params: FunctionLogTailParams = {}): AsyncIterable<LogEntry>
 
 * `entries?` (`number`)：要返回的日志条目数。默认为 100。
 * `source?` (`LogSource`)：按来源过滤：`stdout`、`stderr` 或 `system`。
-
 **返回：** `LogEntry` 对象的异步迭代。
 
 ```typescript
@@ -296,6 +306,7 @@ for await (const entry of function_.logs.tail({ entries: 20 })) {
 ```
 
 ## 函数.metrics
+
 使用 export() 访问指标示例，并使用 schema() 访问系列定义。
 
 ### 导出
@@ -311,10 +322,11 @@ async export(
 最大范围为 31 天，每个系列最多 500 点。省略
 bucketSizeSecs 让 Modal 选择大约支持的宽度定位
 100桶。边界向下舍入到 UTC 存储桶边界：此后之前的数据
-可以包括在内，并且排除在until处的部分桶。
-缺失的观测值为 null。使用 schema() 来发现定义。
+可以包括在内，并且排除在until处的部分桶。缺失的观测值为 null。使用 schema() 来发现定义。
 
-**参数** (`FunctionMetricsExportParams`)用于导出函数度量样本的选项。
+**参数** (`FunctionMetricsExportParams`)
+
+用于导出函数度量样本的选项。
 
 * `since?` (`Date`)：默认为之前一小时，直到。
 * `until?` (`Date`)：默认为当前时间。
@@ -346,5 +358,4 @@ async schema(
 **参数** (`MetricsSchemaParams`)
 
 用于发现指标定义的选项。
-
 * `groups?` (`string[]`): 省略或传递一个空数组来选择所有组。

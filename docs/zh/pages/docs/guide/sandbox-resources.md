@@ -3,8 +3,6 @@
 # 沙盒资源和定价
 
 本页面介绍模态沙箱的资源配置和定价。
-有关 CPU 和内存选项的一般文档，请参阅
-[预留 CPU 和内存](/docs/guide/resources)。
 
 模态沙箱与许多其他沙箱提供商在两个方面有所不同：
 
@@ -12,23 +10,18 @@
 * 您需要支付 CPU 和内存费用 `max(request, actual)`。爆裂时充电`max(request, actual)`
   意味着您只需为活动资源付费。
 
+沙箱[工作负载往往具有高度可变的资源使用](https://modal.com/blog/sandbox-bursting)，因此这种突发模型往往会导致价格远低于大多数沙箱提供商。
+
 有关更多详细信息，请参阅资源指南中的[计费](/docs/guide/resources#billing)。
 
 ## 按使用量付费
 
 默认情况下，每个 Sandbox 请求 0.125 个 CPU 核心和 128 MiB 内存，
-当主机有闲置容量时可以突破该限制。
-
-Modal 调度沙箱并将其打包到主机上，以便
-绝大多数时间都有额外的 CPU 和内存可用。因为
-沙箱可以可靠地爆发以使用额外的资源，但大多数工作负载却不能
-需要为其沙箱设置资源请求。
+根据需要爆发超出该范围。
+Modal 将沙盒调度并打包到主机上，以便在绝大多数时间有额外的 CPU 和内存可用。最坏的情况是内存不足的驱逐，Modal 支持其突发模型，对于高于其请求但低于 8 GiB 的沙箱，每分钟驱逐概率 SLO 低于 0.0001%（每 694 个沙箱天大约有 1 次驱逐）。由于沙箱可以可靠地爆发以使用额外的资源，因此大多数工作负载不需要为其沙箱设置资源请求。
 
 不设置资源请求意味着您只需为您的 Sandbox 所使用的资源付费
 积极利用每一秒，以较小的默认请求为最小值。
-如果您的沙箱需要，设置[资源请求](#setting-resource-requests)
-保证 CPU 或内存以及 [资源限制](#setting-resource-limits) 如果
-你需要限制它们可以爆裂的程度。
 
 ## 设置资源请求
 
@@ -100,7 +93,6 @@ func main() {
 	})
 }
 ```
-
 {/片段} </CodeTabs>
 
 有关默认值和最大限制的详细信息，请参阅
@@ -157,11 +149,11 @@ CPU 和内存限制的行为方式。
 
 ## 调整你的请求
 
-应用程序页面上的“沙盒”选项卡具有可帮助您监控突发情况的指标，并在需要时找到正确的请求大小：
+应用程序页面上的“沙箱”选项卡具有可帮助您监控突发情况的指标，并在需要时找到正确的请求大小：
 **每个沙箱的 CPU**、**每个沙箱的内存**、**每个沙箱的 CPU 压力**以及
 **退出原因**。
 
-![沙盒指标选项卡上的资源大小图表](https://modal-cdn.com/cdnbot/resource-sizing-chartswb81a46v_6e4fd1b8.webp)
+![沙箱指标选项卡上的资源大小图表](https://modal-cdn.com/cdnbot/resource-sizing-chartswb81a46v_6e4fd1b8.webp)
 
 每个沙箱的 CPU 和每个沙箱的内存显示 CPU 和内存的百分位数
 您的沙箱实际使用的内存。每个沙箱的 CPU 压力和退出原因
@@ -171,6 +163,7 @@ CPU 和内存限制的行为方式。
 
 1. 从CPU的[默认请求值](#pay-for-what-you-use)开始
    和内存，当省略 `cpu` 和 `memory` 参数时使用。
+
 2. 运行典型工作负载并检查每个沙箱的 CPU 和每个内存
    沙盒以查看您的实际使用情况。
 
@@ -191,9 +184,98 @@ CPU 和内存限制的行为方式。
 您还可以使用 GPU 运行沙箱。请参阅 [GPU 加速](/docs/guide/gpu) 了解可用的
 GPU 类型和配置。 GPU 沙箱仅支持
 [`runtime="gvisor"`](/docs/guide/sandboxes#runtimes)。
-
 与 CPU 沙箱不同，GPU 沙箱受到[抢占](/docs/guide/preemption) 的影响。
 设计您的 GPU 工作负载以优雅地处理中断。
+
+## 成本归因
+
+[计费指南中的成本归因工具](/docs/guide/billing#attributing-costs)
+让您按应用程序归因支出，包括所有应用程序的汇总成本
+沙箱。
+
+更精细的沙盒成本细分，可以使用`App.sandboxes.stats()`查询
+一段时间范围内的成本，按以下值分组
+[沙盒标签](/docs/guide/sandboxes#tagging)。此示例打印过去 24 小时的`major_version` 标签每个值的成本：
+
+<CodeTabs>
+  {#snippet python()}
+
+```python notest
+from datetime import datetime, timedelta, timezone
+
+app = modal.App.lookup("my-app")
+
+this_hour = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+since = this_hour - timedelta(days=1)
+
+for group in app.sandboxes.stats(since=since, group_by_tags=["major_version"]):
+    print(group.tags["major_version"], group.cost, group.cost_by_resource)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```javascript notest
+const app = await modal.apps.fromName("my-app");
+
+const HOUR_MS = 60 * 60 * 1000;
+const thisHour = Math.floor(Date.now() / HOUR_MS) * HOUR_MS;
+const since = new Date(thisHour - 24 * HOUR_MS);
+
+for await (const group of app.sandboxes.stats({
+  since,
+  groupByTags: ["major_version"],
+})) {
+  console.log(group.tags.major_version, group.cost, group.costByResource);
+}
+```
+
+{/片段}
+
+{#snippet go()}
+
+```go notest
+app, _ := mc.Apps.FromName(ctx, "my-app", nil)
+
+since := time.Now().UTC().Truncate(time.Hour).Add(-24 * time.Hour)
+
+groups, err := app.Sandboxes.Stats(ctx, &modal.SandboxStatsParams{
+	Since:       &since,
+	GroupByTags: []string{"major_version"},
+})
+if err != nil {
+	panic(err)
+}
+for group, err := range groups {
+	if err != nil {
+		panic(err)
+	}
+	version := "(untagged)"
+	if value := group.Tags["major_version"]; value != nil {
+		version = *value
+	}
+	fmt.Println(version, group.Cost, group.CostByResource)
+}
+```
+
+{/片段} </CodeTabs>
+
+每个组都有以美元为单位的总成本以及按计费资源的细分，例如
+`CPU`、`Memory` 和 GPU 类型。
+
+* `since` 和 `until` 如果您通过了它，则必须位于 UTC 小时边界上，并且
+  查询最多可以跨越 7 天。
+* 没有分组标签的沙箱仍然会被计算在内，并且为空
+  该标签的值。
+* 要按标签过滤，请传递`tags`。只有沙盒具备所有功能
+  包括这些标签和值。
+* 费用不计入积分或预订，因此您的发票可能会较低。
+
+有关所有参数和返回类型，请参阅 SDK 参考
+([Python](/docs/sdk/py/latest/App#sandboxesstats),
+[JavaScript](/docs/sdk/js/latest/App#appsandboxes),
+[转到](/docs/sdk/go/latest/App#appsandboxes))。
 
 ## 其他资源
 

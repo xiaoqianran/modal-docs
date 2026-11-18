@@ -8,17 +8,17 @@ EXPERIMENTAL: the API is subject to change.
 Secret values never enter the Sandbox: they are resolved and injected into
 matching requests outside the container.
 
-```
+```go
 secret, _ := client.Secrets.FromName(ctx, "api-token", nil)
 outboundPolicy := modal.NewExperimentalOutboundPolicy(
 	modal.ExperimentalOutboundPolicyHeaderReplacement{
 		Domain:  "example.com",
 		Secret:  secret,
-		Headers: map`string`string{"Authorization": "Bearer $API_TOKEN"},
+		Headers: map[string]string{"Authorization": "Bearer $API_TOKEN"},
 	},
 	modal.ExperimentalOutboundPolicyHeaderReplacement{
 		Domain:  "modal.com",
-		Headers: map`string`string{"X-Trace-Token": "trace_abcd"},
+		Headers: map[string]string{"X-Trace-Token": "trace_abcd"},
 	},
 )
 ```

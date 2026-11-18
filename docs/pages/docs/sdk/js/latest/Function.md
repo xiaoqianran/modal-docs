@@ -64,6 +64,16 @@ URL for addressing the Web Function via HTTP.
 
 **Returns:** The web URL, or undefined if this is not a Web Function
 
+## info
+
+```typescript
+async info(params: FunctionInfoParams = {}): Promise<FunctionInfo>
+```
+
+**Parameters** (`FunctionInfoParams`)
+
+* `refresh?` (`boolean`)
+
 ## instance
 
 ```typescript

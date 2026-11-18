@@ -28,7 +28,7 @@ production's settings.
 Select the candidate in the **Deployment** dropdown and wait for provisioning
 to finish. Copy its URL from the dashboard to
 [send test requests](/docs/guide/endpoints#call-an-endpoint). Candidates use
-production's [model name](/docs/guide/endpoints#model-names) and authentication
+production's [model name](/docs/guide/endpoints#urls-and-model-names) and authentication
 settings.
 
 ## Mirror production traffic

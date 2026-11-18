@@ -17,10 +17,10 @@
 有两种服务模式可供选择：
 
 |              | [共享端点](/docs/guide/shared-endpoints) | [专用端点](/docs/guide/dedicated-endpoints) |
-| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | **最适合** |快速、完全托管的推理 |隔离容量和定制模型|
 | **型号** | [共享模型](/docs/guide/supported-models#shared-endpoint-models) | [专用模型](/docs/guide/supported-models#dedicated-endpoint-models)，加上自定义权重 |
-| **计费** |每个代币 |计算资源|| **容量** |由莫代尔管理|可配置的自动缩放，包括缩放至零 |
+| **计费** |每个代币|计算资源|| **容量** |由莫代尔管理|可配置的自动缩放，包括缩放至零 |
 
 ## 创建端点
 
@@ -63,31 +63,41 @@ Authorization: Bearer wk-<id>.ws-<secret>
 ```
 
 组合值可以用作 OpenAI 兼容客户端中的 API 密钥。
-请参阅[代理令牌](/docs/guide/webhook-proxy-auth)了解环境范围和
-其他身份验证选项。还可以使用以下命令创建专用端点
+请参阅[代理令牌](/docs/guide/webhook-proxy-auth)了解环境范围和其他身份验证选项。还可以使用以下命令创建专用端点
 `--unauthenticated`。
 
 ## 调用端点
 
 共享端点和专用端点上的文本生成模型都可以调用
-通过 OpenAI 兼容的聊天完成和响应 API 或
-与人类兼容的消息 API。嵌入模型可以通过以下方式调用
-兼容 OpenAI 的嵌入 API。
+通过 OpenAI 兼容的聊天完成 (`/v1/chat/completions`)，
+完成 (`/v1/completions`) 和响应 (`/v1/responses`) API 或
+与人类兼容的消息 API (`/v1/messages`)。嵌入模型可以是
+通过 OpenAI 兼容的 Embeddings API (`/v1/embeddings`) 调用。
 
-### 型号名称
+### URL 和型号名称
 
-将 `model` 设置为仪表板请求示例中显示的值。
-您还可以通过 OpenAI 兼容模型 API 检索它：
+端点的基本 URL 是其主机名，创建后显示在仪表板中
+以及`modal endpoint info`；例如，
+`https://my-endpoint.us-west.modal.direct`。将 `model` 设置为
+仪表板请求示例中显示的值。您还可以找回
+通过 OpenAI 兼容模型 API：
 
 ```bash
 curl "<your-endpoint-url>/v1/models" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET"
 ```
 
+还可以通过位于以下位置的推理网关访问共享端点：
+`https://inference.us-west.modal.direct`。在这种情况下，将 `model` 设置为端点的
+主机名 (`my-endpoint.us-west.modal.direct`)。
+
 ### 发送请求
 
 此示例使用聊天完成 API 和
 [代理令牌](#proxy-tokens):
+
+<CodeTabs>
+  {#snippet cli()}
 
 ```bash
 curl "<your-endpoint-url>/v1/chat/completions" \
@@ -98,7 +108,53 @@ curl "<your-endpoint-url>/v1/chat/completions" \
     "messages": [{ "role": "user", "content": "Hello!" }]
   }'
 ```
-请参阅[端点集成](/docs/guide/endpoint-integrations)进行连接
+
+{/片段}
+
+{#snippet python()}
+
+```python notest
+import os
+
+from openai import OpenAI
+
+client = OpenAI(
+    base_url="<your-endpoint-url>/v1",
+    api_key=f"{os.environ['MODAL_PROXY_TOKEN_ID']}.{os.environ['MODAL_PROXY_TOKEN_SECRET']}",
+)
+
+completion = client.chat.completions.create(
+    model="<model-name>",
+    messages=[{"role": "user", "content": "Hello!"}],
+)
+print(completion.choices[0].message.content)
+```
+
+{/片段}
+
+{#snippet javascript()}
+
+```typescript notest
+import OpenAI from "openai";
+
+const client = new OpenAI({
+  baseURL: "<your-endpoint-url>/v1",
+  apiKey: `${process.env.MODAL_PROXY_TOKEN_ID}.${process.env.MODAL_PROXY_TOKEN_SECRET}`,
+});
+
+const completion = await client.chat.completions.create({
+  model: "<model-name>",
+  messages: [{ role: "user", content: "Hello!" }],
+});
+console.log(completion.choices[0].message.content);
+```
+
+{/片段}
+
+</CodeTabs>
+
+对于服务器发送的事件，传递`"stream": true`。令牌使用情况报告在
+最终的流式传输块。请参阅[端点集成](/docs/guide/endpoint-integrations)进行连接
 将 OpenCode、Codex 和 Claude Code 等编码代理连接到共享端点。
 
 ## 亲和路由
@@ -122,7 +178,6 @@ curl "<your-endpoint-url>/v1/chat/completions" \
     "messages": [{ "role": "user", "content": "Hello!" }]
   }'
 ```
-
 选择与共享前缀匹配的路由键：
 
 * **每次对话一键**，而不是每个用户或应用程序。单键

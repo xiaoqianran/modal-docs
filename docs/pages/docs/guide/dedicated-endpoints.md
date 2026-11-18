@@ -19,7 +19,7 @@ can watch it come online. Dedicated Endpoints can also be created from the
 [**Endpoints**](https://modal.com/endpoints) tab in the dashboard.
 
 When you create an Endpoint, Modal uses its name as the
-[model name](/docs/guide/endpoints#model-names) that clients send as `model` in
+[model name](/docs/guide/endpoints#urls-and-model-names) that clients send as `model` in
 requests.
 
 ## View the generated source

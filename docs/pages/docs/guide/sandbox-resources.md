@@ -1,8 +1,6 @@
 # Sandbox resources and pricing
 
 This page covers resource configuration and pricing for Modal Sandboxes.
-For general documentation on CPU and memory options, see
-[Reserving CPU and memory](/docs/guide/resources).
 
 Modal Sandboxes differ from many other sandbox providers on two dimensions:
 
@@ -10,24 +8,19 @@ Modal Sandboxes differ from many other sandbox providers on two dimensions:
 * You're charged `max(request, actual)` for both CPU and memory. When bursting, charging `max(request, actual)`
   means you only pay for active-resources.
 
+Sandbox [workloads tend to have highly variable resource usage](https://modal.com/blog/sandbox-bursting), so this burst model tends to result in prices far lower than most sandbox providers.
+
 See [Billing](/docs/guide/resources#billing) in the resource guide for more details.
 
 ## Pay for what you use
 
 By default, each Sandbox requests 0.125 CPU cores and 128 MiB of memory and
-can burst beyond that when the host has spare capacity.
+bursts beyond that as needed.
 
-Modal schedules and packs Sandboxes onto hosts so that
-additional CPU and memory is available the vast majority of the time. Because
-Sandboxes can reliably burst to use additional resources, most workloads don't
-need to set a resource request for their Sandboxes.
+Modal schedules and packs Sandboxes onto hosts so that additional CPU and memory is available the vast majority of the time. The worst case is an out-of-memory eviction, and Modal backs its burst model with an eviction probability SLO of less than 0.0001% per minute for Sandboxes above their request but under 8 GiB (about 1 eviction per 694 Sandbox-days). Because Sandboxes can reliably burst to use additional resources, most workloads don't need to set a resource request for their Sandboxes.
 
 Not setting a resource request means you only pay for the resources your Sandbox is
 actively using each second, with the small default request as the minimum.
-
-Set a [resource request](#setting-resource-requests) if your Sandboxes need
-guaranteed CPU or memory and a [resource limit](#setting-resource-limits) if
-you need to cap how much they can burst.
 
 ## Setting resource requests
 
@@ -194,6 +187,97 @@ GPU types and configuration. GPU Sandboxes are only supported with
 
 Unlike CPU Sandboxes, GPU Sandboxes are subject to [preemption](/docs/guide/preemption).
 Design your GPU workloads to handle interruptions gracefully.
+
+## Cost attribution
+
+The [cost attribution tools in the billing guide](/docs/guide/billing#attributing-costs)
+let you attribute spend by App, including costs aggregated over all of an App's
+Sandboxes.
+
+For a more granular breakdown of Sandbox cost, use `App.sandboxes.stats()` to query
+costs over a time range, grouped by the values of
+[Sandbox tags](/docs/guide/sandboxes#tagging). This example prints the last 24 hours of
+cost for each value of the `major_version` tag:
+
+<CodeTabs>
+  {#snippet python()}
+
+```python notest
+from datetime import datetime, timedelta, timezone
+
+app = modal.App.lookup("my-app")
+
+this_hour = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
+since = this_hour - timedelta(days=1)
+
+for group in app.sandboxes.stats(since=since, group_by_tags=["major_version"]):
+    print(group.tags["major_version"], group.cost, group.cost_by_resource)
+```
+
+{/snippet}
+
+{#snippet javascript()}
+
+```javascript notest
+const app = await modal.apps.fromName("my-app");
+
+const HOUR_MS = 60 * 60 * 1000;
+const thisHour = Math.floor(Date.now() / HOUR_MS) * HOUR_MS;
+const since = new Date(thisHour - 24 * HOUR_MS);
+
+for await (const group of app.sandboxes.stats({
+  since,
+  groupByTags: ["major_version"],
+})) {
+  console.log(group.tags.major_version, group.cost, group.costByResource);
+}
+```
+
+{/snippet}
+
+{#snippet go()}
+
+```go notest
+app, _ := mc.Apps.FromName(ctx, "my-app", nil)
+
+since := time.Now().UTC().Truncate(time.Hour).Add(-24 * time.Hour)
+
+groups, err := app.Sandboxes.Stats(ctx, &modal.SandboxStatsParams{
+	Since:       &since,
+	GroupByTags: []string{"major_version"},
+})
+if err != nil {
+	panic(err)
+}
+for group, err := range groups {
+	if err != nil {
+		panic(err)
+	}
+	version := "(untagged)"
+	if value := group.Tags["major_version"]; value != nil {
+		version = *value
+	}
+	fmt.Println(version, group.Cost, group.CostByResource)
+}
+```
+
+{/snippet} </CodeTabs>
+
+Each group has a total cost in USD and a breakdown by billed resource, such as
+`CPU`, `Memory`, and GPU type.
+
+* `since`, and `until` if you pass it, must be on a UTC hour boundary, and a
+  query can span at most 7 days.
+* Sandboxes that don't have a tag you group by are still counted, with a null
+  value for that tag.
+* To filter by tag, pass `tags`. Only Sandboxes that have all
+  of those tags and values are included.
+* Costs don't account for credits or reservations, so your invoice may be lower.
+
+For all parameters and return types, see the SDK reference
+([Python](/docs/sdk/py/latest/App#sandboxesstats),
+[JavaScript](/docs/sdk/js/latest/App#appsandboxes),
+[Go](/docs/sdk/go/latest/App#appsandboxes)).
 
 ## Additional resources
 

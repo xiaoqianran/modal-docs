@@ -29,9 +29,9 @@ Create creates a new Sandbox in the App with the specified Image and options.
 
 SandboxCreateParams are options for creating a Modal Sandbox.
 
-* `CPU` (`float64`): CPU request in fractional, physical cores.
+* `CPU` (`float64`): CPU request in fractional, physical cores. Modal Sandboxes support bursting above the CPU request, so most users don't need to specify a request.
 * `CPULimit` (`float64`): Hard limit in fractional, physical CPU cores. Zero means no limit.
-* `MemoryMiB` (`int`): Memory request in MiB.
+* `MemoryMiB` (`int`): Memory request in MiB. Modal Sandboxes support bursting above the memory request, so most users don't need to specify a request.
 * `MemoryLimitMiB` (`int`): Hard memory limit in MiB. Zero means no limit.
 * `Runtime` (`SandboxRuntime`): Runtime under which the Sandbox executes, or unset to let Modal pick.
 * `GPU` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
@@ -50,19 +50,20 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `BlockNetwork` (`bool`): Whether to block all network access from the Sandbox.
 * `OutboundCIDRAllowlist` (`*Allowlist`): CIDRs the Sandbox is allowed to access. Non-nil enables allowlist mode; nil means open access. Cannot be used with BlockNetwork.
 * `OutboundDomainAllowlist` (`*Allowlist`): Domain names the Sandbox is allowed to access (supports wildcard prefixes like \*.example.com). Non-nil enables allowlist mode; nil means open access. Cannot be used with BlockNetwork.
-* `InboundCIDRAllowlist` (`[]string`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If empty, all IPs are allowed.
+* `InboundCIDRAllowlist` (`[]string`): List of CIDRs allowed to connect inbound to the Sandbox (encrypted tunnels and connection tokens). If empty, all IPs are allowed.
 * `I6PN` (`bool`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can reach each other at their i6pn.modal.local address. Pin every Sandbox in the group to the same specific region. Cannot be used with BlockNetwork.
 * `Cloud` (`string`): Cloud provider to run the Sandbox on.
 * `Regions` (`[]string`): Region(s) to run the Sandbox on.
 * `Verbose` (`bool`): Enable verbose logging.
 * `Proxy` (`*Proxy`): Reference to a Modal Proxy to use in front of this Sandbox.
-* `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready.
+* `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready. If not configured, the Sandbox is ready when it starts.
 * `Name` (`string`): Optional name for the Sandbox. Unique within an App.
 * `Tags` (`map[string]string`): Tags to attach to the Sandbox. Filterable via SandboxList.
 * `ExperimentalOptions` (`map[string]any`): Experimental options. Values must be bool or string. Set "enable\_exit\_snapshot" to true to capture a filesystem snapshot when the Sandbox exits, retrievable with Sandbox.ExperimentalGetExitSnapshot.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
+* `ExperimentalPersistent` (`bool`)
 * `ExperimentalOutboundPolicy` (`*ExperimentalOutboundPolicy`): EXPERIMENTAL: the API is subject to change. Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload.
 
 ## ExperimentalCreate
@@ -94,9 +95,9 @@ Sandbox.SandboxID and use FromID to reattach.
 
 SandboxCreateParams are options for creating a Modal Sandbox.
 
-* `CPU` (`float64`): CPU request in fractional, physical cores.
+* `CPU` (`float64`): CPU request in fractional, physical cores. Modal Sandboxes support bursting above the CPU request, so most users don't need to specify a request.
 * `CPULimit` (`float64`): Hard limit in fractional, physical CPU cores. Zero means no limit.
-* `MemoryMiB` (`int`): Memory request in MiB.
+* `MemoryMiB` (`int`): Memory request in MiB. Modal Sandboxes support bursting above the memory request, so most users don't need to specify a request.
 * `MemoryLimitMiB` (`int`): Hard memory limit in MiB. Zero means no limit.
 * `Runtime` (`SandboxRuntime`): Runtime under which the Sandbox executes, or unset to let Modal pick.
 * `GPU` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
@@ -115,19 +116,20 @@ SandboxCreateParams are options for creating a Modal Sandbox.
 * `BlockNetwork` (`bool`): Whether to block all network access from the Sandbox.
 * `OutboundCIDRAllowlist` (`*Allowlist`): CIDRs the Sandbox is allowed to access. Non-nil enables allowlist mode; nil means open access. Cannot be used with BlockNetwork.
 * `OutboundDomainAllowlist` (`*Allowlist`): Domain names the Sandbox is allowed to access (supports wildcard prefixes like \*.example.com). Non-nil enables allowlist mode; nil means open access. Cannot be used with BlockNetwork.
-* `InboundCIDRAllowlist` (`[]string`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If empty, all IPs are allowed.
+* `InboundCIDRAllowlist` (`[]string`): List of CIDRs allowed to connect inbound to the Sandbox (encrypted tunnels and connection tokens). If empty, all IPs are allowed.
 * `I6PN` (`bool`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can reach each other at their i6pn.modal.local address. Pin every Sandbox in the group to the same specific region. Cannot be used with BlockNetwork.
 * `Cloud` (`string`): Cloud provider to run the Sandbox on.
 * `Regions` (`[]string`): Region(s) to run the Sandbox on.
 * `Verbose` (`bool`): Enable verbose logging.
 * `Proxy` (`*Proxy`): Reference to a Modal Proxy to use in front of this Sandbox.
-* `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready.
+* `ReadinessProbe` (`*Probe`): Probe used to determine when the Sandbox is ready. If not configured, the Sandbox is ready when it starts.
 * `Name` (`string`): Optional name for the Sandbox. Unique within an App.
 * `Tags` (`map[string]string`): Tags to attach to the Sandbox. Filterable via SandboxList.
 * `ExperimentalOptions` (`map[string]any`): Experimental options. Values must be bool or string. Set "enable\_exit\_snapshot" to true to capture a filesystem snapshot when the Sandbox exits, retrievable with Sandbox.ExperimentalGetExitSnapshot.
 * `CustomDomain` (`string`): If non-empty, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `IncludeOidcIdentityToken` (`bool`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `ExperimentalEnableSnapshot` (`bool`): Enable memory snapshots.
+* `ExperimentalPersistent` (`bool`)
 * `ExperimentalOutboundPolicy` (`*ExperimentalOutboundPolicy`): EXPERIMENTAL: the API is subject to change. Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload.
 
 ## FromID
@@ -329,6 +331,43 @@ EXPERIMENTAL: the API is subject to change.
 SandboxExperimentalGetExitSnapshotParams are options for Sandbox.ExperimentalGetExitSnapshot.
 
 * `Timeout` (`*time.Duration`): Timeout is the total time to wait, spread across repeated long polls of at most exitSnapshotLongPollTimeout each. nil (the default) waits until the snapshot reaches a terminal state. 0 performs an immediate check without waiting.
+
+## ExperimentalPause
+
+```go
+ExperimentalPause(ctx context.Context, params *SandboxExperimentalPauseParams) error
+```
+
+ExperimentalPause stops the Sandbox's current container, keeping its state so
+it can be resumed.
+
+Only supported for experimental persistent Sandboxes.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalPauseParams`)
+
+SandboxExperimentalPauseParams are options for Sandbox.ExperimentalPause.
+
+*No configurable options.*
+
+## ExperimentalResume
+
+```go
+ExperimentalResume(ctx context.Context, params *SandboxExperimentalResumeParams) error
+```
+
+ExperimentalResume resumes a paused Sandbox from its saved state.
+
+Only supported for experimental persistent Sandboxes.
+
+EXPERIMENTAL: the API is subject to change.
+
+**Parameters** (`SandboxExperimentalResumeParams`)
+
+SandboxExperimentalResumeParams are options for Sandbox.ExperimentalResume.
+
+*No configurable options.*
 
 ## ExperimentalSetName
 
@@ -589,7 +628,9 @@ SandboxWaitParams are options for Sandbox.Wait.
 WaitUntilReady(ctx context.Context, timeout time.Duration, params *SandboxWaitUntilReadyParams) error
 ```
 
-WaitUntilReady blocks until the Sandbox readiness probe reports ready.
+WaitUntilReady blocks until the Sandbox is ready.
+A Sandbox with a readiness probe is ready once the probe passes;
+a Sandbox without one is ready once it starts.
 
 **Parameters** (`SandboxWaitUntilReadyParams`)
 

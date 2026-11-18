@@ -10,6 +10,30 @@ type Environment struct {
 }
 ```
 
+## FromContext
+
+*Accessed via `client.Environments`*
+
+```go
+FromContext(ctx context.Context) (*Environment, error)
+```
+
+FromContext looks up an Environment object using the current context.
+
+This method returns the Environment that is defined by the local configuration
+(i.e., the Environment set in `ClientParams`, your active profile, or the
+MODAL\_ENVIRONMENT environment variable), or it fetches the default environment
+from the server when not defined locally. If called inside a Modal container,
+it will return the Environment that container is associated with.
+
+```go
+env, err := client.Environments.FromContext(ctx)
+if err != nil {
+	return err
+}
+fmt.Println(env.EnvironmentID, env.Name)
+```
+
 ## FromName
 
 *Accessed via `client.Environments`*

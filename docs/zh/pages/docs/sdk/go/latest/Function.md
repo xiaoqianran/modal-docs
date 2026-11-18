@@ -22,7 +22,7 @@ FromID(ctx context.Context, functionID string) (*Function, error)
 
 FromID 通过 ID 引用函数。
 
-```
+```go
 client, err := modal.NewClient()
 if err != nil {
 	return err
@@ -58,7 +58,9 @@ FunctionFromNameParams 是 client.Functions.FromName 的选项。
 GetCurrentStats(ctx context.Context, params *FunctionGetCurrentStatsParams) (*FunctionCurrentStats, error)
 ```
 
-GetCurrentStats 返回一个 FunctionCurrentStats 对象，其中包含有关该函数的统计信息。**参数** (`FunctionGetCurrentStatsParams`)
+GetCurrentStats 返回一个 FunctionCurrentStats 对象，其中包含有关该函数的统计信息。
+
+**参数** (`FunctionGetCurrentStatsParams`)
 
 FunctionGetCurrentStatsParams 是 Function.GetCurrentStats 的选项。
 
@@ -72,6 +74,25 @@ GetWebURL() string
 
 GetWebURL 返回作为 Web 函数运行的函数的 URL。
 如果此函数不是 Web 函数，则返回空字符串。
+
+## 信息
+
+```go
+Info(ctx context.Context, params *FunctionInfoParams) (*FunctionInfo, error)
+```
+
+信息返回函数的配置，包括任何覆盖
+与 WithOptions、WithConcurrency 或 WithBatching 一起应用。
+
+SecretID 仅包含 Modal 上已存在的 Secret。创造的秘密
+尚未使用的本地（例如使用 Secrets.FromMap），以及
+不包括传递给 WithOptions 的秘密保存环境变量。
+
+**参数** (`FunctionInfoParams`)
+
+FunctionInfoParams 是 Function.Info 的选项。
+
+* `Refresh` (`bool`)
 
 ## 实例
 
@@ -105,7 +126,7 @@ Stats(ctx context.Context, params *FunctionStatsParams) (*FunctionStats, error)
 
 读取最近一小时的统计数据：
 
-```
+```go
 fn, err := client.Functions.FromName(ctx, "libmodal-test-support", "echo_string", nil)
 if err != nil {
 	return err
@@ -116,9 +137,10 @@ if err != nil {
 }
 fmt.Println(stats.InputSuccessCount, stats.InputFailureCount)
 ```
+
 包括过去 24 小时内的所有变体：
 
-```
+```go
 until := time.Now()
 since := until.Add(-24 * time.Hour)
 variantStats, err := fn.Stats(ctx, &modal.FunctionStatsParams{
@@ -132,9 +154,7 @@ if err != nil {
 for metric, distribution := range variantStats.InputPercentileStats {
 	fmt.Println(metric, distribution.Unit, distribution.Percentiles)
 }
-```
-
-将 Container 设置为容器 ID 以将统计信息限制到该容器。
+```将 Container 设置为容器 ID 以将统计信息限制到该容器。
 
 **参数** (`FunctionStatsParams`)
 
@@ -149,10 +169,11 @@ FunctionStatsParams 包含 Function.Stats 的选项。
 
 ```go
 UpdateAutoscaler(ctx context.Context, params *FunctionUpdateAutoscalerParams) (*FunctionAutoscalerSettings, error)
-```UpdateAutoscaler 会覆盖此函数的当前自动缩放器行为。
+```
+
+UpdateAutoscaler 会覆盖此函数的当前自动缩放器行为。
 
 **参数** (`FunctionUpdateAutoscalerParams`)
-
 FunctionUpdateAutoscalerParams 包含用于覆盖函数的自动缩放器行为的选项。
 
 * `MinContainers` (`*uint32`)
@@ -192,8 +213,7 @@ FunctionWithConcurrencyParams 表示模态函数的并发配置。
 WithOptions(options *FunctionWithOptionsParams) *Function
 ```
 
-**参数** (`FunctionWithOptionsParams`)
-FunctionWithOptionsParams 表示模态函数的运行时选项。
+**参数** (`FunctionWithOptionsParams`)FunctionWithOptionsParams 表示模态函数的运行时选项。
 
 * `CPU` (`*float64`)
 * `CPULimit` (`*float64`)
@@ -226,10 +246,10 @@ Fetch(
 
 Fetch 获取与日期范围和过滤器相对应的功能日志。
 
-因为是时间范围的开始。 params.Until 默认为当前时间。该序列按时间顺序生成 `LogEntry` 值。
+因为是时间范围的开始。 params.Until 默认为当前
+时间。该序列按时间顺序生成 `LogEntry` 值。
 
 **参数** (`FunctionLogFetchParams`)
-
 FunctionLogFetchParams 是用于获取函数日志的选项。
 
 * `Until` (`*time.Time`)：直到时间范围结束。它默认为当前时间。
@@ -289,14 +309,13 @@ Export(ctx context.Context, params *FunctionMetricsExportParams) (*ObjectMetrics
 默认为过去一小时内的所有组。由于默认为一小时前
 直到。最大范围为 31 天，每个系列最多 500 点。如果
 BucketSize 被省略，Modal 选择大约支持的宽度目标
-100桶。范围向下舍入到 UTC 存储桶边界，因此数据之前
-可以包括并且排除直到的部分桶。
+100桶。范围向下舍入到 UTC 存储桶边界，因此数据之前可以包括并且排除直到的部分桶。
 
 将 AllVariants 设置为 true 以包含根 Function 及其变体。
 缺失的观测值为零。使用 `FunctionMetricsManager.Schema` 来
 无需获取样本即可发现组名称和系列定义。
 
-```
+```go
 bucketSize := 5 * time.Minute
 metrics, err := function.Metrics.Export(ctx, &modal.FunctionMetricsExportParams{
 	BucketSize: &bucketSize,
@@ -319,8 +338,9 @@ for _, point := range metrics.Series["successful_calls_count"].Points {
 FunctionMetricsExportParams 配置指标导出。
 
 * `Since` (`*time.Time`)：Since 默认为 Until 之前一小时。
-* `Until` (`*time.Time`)：直到默认为当前时间。
-* `BucketSize` (`*time.Duration`): BucketSize 可选； nil 让 Modal 选择支持的宽度。* `Groups` (`[]string`): Groups 选择指标组；空选择所有组。
+* `Until` (`*time.Time`): 直到默认为当前时间。
+* `BucketSize` (`*time.Duration`): BucketSize 可选； nil 让 Modal 选择支持的宽度。
+* `Groups` (`[]string`): Groups 选择指标组；空选择所有组。
 * `AllVariants` (`bool`): AllVariants 包括根 Function 及其所有变体。
 
 ### 架构
@@ -336,7 +356,7 @@ Schema(ctx context.Context, params *MetricsSchemaParams) (map[string]MetricsSche
 
 检查可用的呼叫指标：
 
-```
+```go
 schema, err := fn.Metrics.Schema(ctx, &modal.MetricsSchemaParams{
 	Groups: []string{"calls"},
 })

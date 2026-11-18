@@ -181,7 +181,7 @@ def run_on_80gb():
 
 ## 多GPU训练
 
-Modal 目前支持在单节点上进行多 GPU 训练，并在私有 Beta 版中支持多节点训练（请发送电子邮件至 support@modal.com 获取访问权限）。
+Modal 支持单节点上的多 GPU 训练，以及使用 [Modal Clusters](/docs/guide/multi-node-clusters) 的多节点训练。
 根据您使用的框架，您可能需要使用不同的技术在多个 GPU 上进行训练。
 如果框架重新执行 Python 进程的入口点（例如 [PyTorch Lightning](https://lightning.ai/docs/pytorch/stable/index.html)），如果您希望直接调用训练，则需要将策略设置为 `ddp_spawn` 或 `ddp_notebook`。另一种选择是将训练脚本作为子进程运行。
 

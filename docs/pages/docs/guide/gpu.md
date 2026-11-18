@@ -184,7 +184,7 @@ See [this example](/docs/examples/gpu_fallbacks) for more detail.
 
 ## Multi GPU training
 
-Modal currently supports multi-GPU training on a single node, with multi-node training in private Beta (email us at support@modal.com for access).
+Modal supports multi-GPU training on a single node, and multi-node training with [Modal Clusters](/docs/guide/multi-node-clusters).
 Depending on which framework you are using, you may need to use different techniques to train on multiple GPUs.
 
 If the framework re-executes the entrypoint of the Python process (like [PyTorch Lightning](https://lightning.ai/docs/pytorch/stable/index.html)) you need to either set the strategy to `ddp_spawn` or `ddp_notebook` if you wish to invoke the training directly. Another option is to run the training script as a subprocess instead.

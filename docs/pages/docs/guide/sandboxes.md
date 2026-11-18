@@ -1363,7 +1363,9 @@ be shorter than 64 characters.
 ## Tagging
 
 Sandboxes can also be tagged with key-value pairs. These tags can be used
-to filter results in `Sandbox.list`. Tags are subject to these limits:
+to filter results in `Sandbox.list` and to
+[break down Sandbox costs](/docs/guide/sandbox-resources#cost-attribution). Tags are
+subject to these limits:
 
 * Up to 10 tags per Sandbox.
 * Tag keys may be up to 63 characters.

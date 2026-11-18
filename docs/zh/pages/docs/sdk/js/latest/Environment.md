@@ -1,8 +1,8 @@
-<!-- modal-docs: translation failed; English fallback -->
+<!-- modal-docs: machine-translated zh-CN from English source -->
 
-# Environment
+# 环境
 
-A Modal Environment, with namespaces for accessing its resources.
+模态环境，具有用于访问其资源的名称空间。
 
 ```typescript
 class Environment {
@@ -12,9 +12,9 @@ class Environment {
 }
 ```
 
-## fromName
+## 来自姓名
 
-*Accessed via `modal.environments`*
+*通过`modal.environments`访问*
 
 ```typescript
 async fromName(
@@ -23,30 +23,50 @@ async fromName(
 ): Promise<Environment>
 ```
 
-Look up an Environment by name, optionally creating it if it does not exist.
+按名称查找环境，如果不存在则可以选择创建它。
 
-**Parameters** (`EnvironmentFromNameParams`)
+**参数** (`EnvironmentFromNameParams`)
 
-Optional parameters for `client.environments.fromName()`.
+`client.environments.fromName()` 的可选参数。
 
 * `createIfMissing?` (`boolean`)
 
-**Raises:**
+**加薪：**
 
-* `InvalidError`: The Environment name is invalid.
+* `InvalidError`: 环境名称无效。
 
-## Environment.apps
+## 来自上下文
 
-Namespace for accessing Apps in an `Environment`.
+*通过`modal.environments`访问*
 
-### list
+```typescript
+async fromContext(): Promise<Environment>
+```
+
+使用当前上下文查找环境对象。
+
+该方法返回本地配置定义的环境
+（即 `environment` 传递到 `ModalClient`、您的活动个人资料或`MODAL_ENVIRONMENT`环境变量），或者从以下位置获取默认环境
+本地未定义时的服务器。如果在 Modal 容器内调用，它将返回
+容器关联的环境。
+
+```typescript
+const environment = await client.environments.fromContext();
+console.log(environment.environmentId, environment.name);
+```
+
+## 环境.apps
+
+用于访问 `Environment` 中的应用程序的命名空间。
+
+### 列表
 
 ```typescript
 async *list(): AsyncGenerator<App, void, unknown>
 ```
 
-Yield handles for live Apps in this Environment, excluding stopped and disabled Apps.
-Listing Apps does not create Apps.
+此环境中实时应用程序的产量句柄，不包括已停止和禁用的应用程序。
+列出应用程序不会创建应用程序。
 
 ```typescript
 const environment = await client.environments.fromName("prod");
@@ -55,11 +75,11 @@ for await (const app of environment.apps.list()) {
 }
 ```
 
-## modal.environments.objects
+## 模态.环境.对象
 
-Namespace for creating, listing, and deleting Environments.
+用于创建、列出和删除环境的命名空间。
 
-### create
+### 创建
 
 ```typescript
 async create(
@@ -68,22 +88,21 @@ async create(
 ): Promise<void>
 ```
 
-Create an Environment with the given name.
+使用给定名称创建一个环境。
 
-**Parameters** (`EnvironmentCreateParams`)
+**参数** (`EnvironmentCreateParams`)
+`EnvironmentObjectsService.create` 的可选参数。
 
-Optional parameters for `EnvironmentObjectsService.create`.
+* `restricted?` (`boolean`)：限制对具有明确分配的环境角色的用户的访问。
+* `defaultRole?` (`string`)：工作区成员的默认环境角色。
 
-* `restricted?` (`boolean`): Restrict access to users with explicitly assigned Environment roles.
-* `defaultRole?` (`string`): Default Environment role for workspace members.
-
-### list
+### 列表
 
 ```typescript
 async *list(): AsyncGenerator<Environment, void, unknown>
 ```
 
-Yield Environment handles without additional lookup requests.
+Yield 环境无需额外的查找请求即可处理。
 
 ```typescript
 for await (const environment of client.environments.objects.list()) {
@@ -91,11 +110,11 @@ for await (const environment of client.environments.objects.list()) {
 }
 ```
 
-### delete
+###删除
 
 ```typescript
 async delete(name: string): Promise<void>
 ```
 
-Delete an Environment by name.
-This permanently deletes the Environment and all objects in it.
+按名称删除环境。
+这将永久删除环境及其中的所有对象。

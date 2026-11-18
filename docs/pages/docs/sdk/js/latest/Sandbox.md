@@ -32,9 +32,9 @@ Create a new `Sandbox` in the `App` with the specified `Image` and options.
 
 Optional parameters for `client.sandboxes.create()`.
 
-* `cpu?` (`number`): Reservation of physical CPU cores for the Sandbox, can be fractional.
+* `cpu?` (`number`): Reservation of physical CPU cores for the Sandbox, can be fractional. Modal Sandboxes support bursting above the CPU request, so most users don't need to specify a request.
 * `cpuLimit?` (`number`): Hard limit of physical CPU cores for the Sandbox, can be fractional.
-* `memoryMiB?` (`number`): Reservation of memory in MiB.
+* `memoryMiB?` (`number`): Reservation of memory in MiB. Modal Sandboxes support bursting above the memory request, so most users don't need to specify a request.
 * `memoryLimitMiB?` (`number`): Hard limit of memory in MiB.
 * `runtime?` (`SandboxRuntime`): Runtime under which the Sandbox executes, or undefined to let Modal pick.
 * `gpu?` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
@@ -54,19 +54,20 @@ Optional parameters for `client.sandboxes.create()`.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the Sandbox is allowed to access. If not set, all CIDRs are allowed. Cannot be used with blockNetwork.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the Sandbox is allowed to access. Supports wildcard prefixes (`*.example.com`). Cannot be used with blockNetwork.
 * `experimentalOutboundPolicy?` (`ExperimentalOutboundPolicy`): Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload. See `ExperimentalOutboundPolicy`. EXPERIMENTAL: the API is subject to change.
-* `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
+* `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (encrypted tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
 * `i6pn?` (`boolean`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can address each other directly at their `i6pn.modal.local` address. Pin every Sandbox in the group to the same specific region (e.g. `regions: ["us-east-1"]`). Cannot be used with blockNetwork.
 * `cloud?` (`string`): Cloud provider to run the Sandbox on.
 * `regions?` (`string[]`): Region(s) to run the Sandbox on.
 * `verbose?` (`boolean`): Enable verbose logging.
 * `proxy?` (`Proxy`): Reference to a Modal `Proxy` to use in front of this Sandbox.
-* `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox has become ready.
+* `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox is ready. If not configured, the Sandbox is ready when it starts.
 * `name?` (`string`): Optional name for the Sandbox. Unique within an App.
 * `tags?` (`Record<string, string>`): Tags to attach to the Sandbox. Filterable via `client.sandboxes.list`.
 * `experimentalOptions?` (`Record<string, any>`): Optional experimental options. Values must be booleans or strings.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
+* `experimentalPersistent?` (`boolean`)
 
 ## experimentalCreate
 
@@ -105,9 +106,9 @@ otherwise store `sandbox.sandboxId` and use
 
 Optional parameters for `client.sandboxes.create()`.
 
-* `cpu?` (`number`): Reservation of physical CPU cores for the Sandbox, can be fractional.
+* `cpu?` (`number`): Reservation of physical CPU cores for the Sandbox, can be fractional. Modal Sandboxes support bursting above the CPU request, so most users don't need to specify a request.
 * `cpuLimit?` (`number`): Hard limit of physical CPU cores for the Sandbox, can be fractional.
-* `memoryMiB?` (`number`): Reservation of memory in MiB.
+* `memoryMiB?` (`number`): Reservation of memory in MiB. Modal Sandboxes support bursting above the memory request, so most users don't need to specify a request.
 * `memoryLimitMiB?` (`number`): Hard limit of memory in MiB.
 * `runtime?` (`SandboxRuntime`): Runtime under which the Sandbox executes, or undefined to let Modal pick.
 * `gpu?` (`string`): GPU reservation for the Sandbox (e.g. "A100", "T4:2", "A100-80GB:4").
@@ -127,19 +128,20 @@ Optional parameters for `client.sandboxes.create()`.
 * `outboundCidrAllowlist?` (`string[]`): List of CIDRs the Sandbox is allowed to access. If not set, all CIDRs are allowed. Cannot be used with blockNetwork.
 * `outboundDomainAllowlist?` (`string[]`): List of domain names the Sandbox is allowed to access. Supports wildcard prefixes (`*.example.com`). Cannot be used with blockNetwork.
 * `experimentalOutboundPolicy?` (`ExperimentalOutboundPolicy`): Configuration for replacing headers in outbound HTTPS requests from the Sandbox. Secrets referenced by the policy are resolved outside the Sandbox and are never visible to the workload. See `ExperimentalOutboundPolicy`. EXPERIMENTAL: the API is subject to change.
-* `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
+* `inboundCidrAllowlist?` (`string[]`): List of CIDRs allowed to connect inbound to the Sandbox (encrypted tunnels and connection tokens). If not set, all IPs are allowed. Cannot be used with blockNetwork.
 * `i6pn?` (`boolean`): Enable private IPv6 networking (i6pn) so Sandboxes in the same workspace can address each other directly at their `i6pn.modal.local` address. Pin every Sandbox in the group to the same specific region (e.g. `regions: ["us-east-1"]`). Cannot be used with blockNetwork.
 * `cloud?` (`string`): Cloud provider to run the Sandbox on.
 * `regions?` (`string[]`): Region(s) to run the Sandbox on.
 * `verbose?` (`boolean`): Enable verbose logging.
 * `proxy?` (`Proxy`): Reference to a Modal `Proxy` to use in front of this Sandbox.
-* `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox has become ready.
+* `readinessProbe?` (`Probe`): Probe used to determine when the Sandbox is ready. If not configured, the Sandbox is ready when it starts.
 * `name?` (`string`): Optional name for the Sandbox. Unique within an App.
 * `tags?` (`Record<string, string>`): Tags to attach to the Sandbox. Filterable via `client.sandboxes.list`.
 * `experimentalOptions?` (`Record<string, any>`): Optional experimental options. Values must be booleans or strings.
 * `customDomain?` (`string`): If set, connections to this Sandbox will be subdomains of this domain rather than the default. This requires prior manual setup by Modal and is only available for Enterprise customers.
 * `includeOidcIdentityToken?` (`boolean`): If true, the sandbox will receive a MODAL\_IDENTITY\_TOKEN env var for OIDC-based auth (e.g. to AWS, GCP).
 * `experimentalEnableSnapshot?` (`boolean`): Enable memory snapshots.
+* `experimentalPersistent?` (`boolean`)
 
 ## fromId
 
@@ -389,6 +391,31 @@ await sb.terminate();
 const image = await sb.experimentalGetExitSnapshot();
 const sb2 = await modal.sandboxes.create(app, image);
 ```
+
+EXPERIMENTAL: the API is subject to change.
+
+## experimentalPause
+
+```typescript
+async experimentalPause(): Promise<void>
+```
+
+Stop the Sandbox's current container, keeping its state so it can be
+resumed.
+
+Only supported for experimental persistent Sandboxes.
+
+EXPERIMENTAL: the API is subject to change.
+
+## experimentalResume
+
+```typescript
+async experimentalResume(): Promise<void>
+```
+
+Resume a paused Sandbox from its saved state.
+
+Only supported for experimental persistent Sandboxes.
 
 EXPERIMENTAL: the API is subject to change.
 
@@ -646,9 +673,10 @@ async wait(): Promise<number>
 async waitUntilReady(timeoutMs = 300_000): Promise<void>
 ```
 
-Wait until the Sandbox readiness probe reports the Sandbox is ready.
+Wait until the Sandbox is ready.
 
-This method only works for Sandboxes configured with a readiness probe.
+A Sandbox with a readiness probe is ready once the probe passes;
+a Sandbox without one is ready once it starts.
 
 * `timeoutMs`: Maximum total time to wait, in milliseconds.
 
