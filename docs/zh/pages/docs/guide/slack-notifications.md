@@ -2,8 +2,6 @@
 
 # 松弛通知
 
-<Callout variant="beta" />
-
 您可以将模态工作区与 Slack 集成，以及时接收重要通知。
 
 ## 先决条件
@@ -54,4 +52,4 @@ Modal Slack 应用程序请求以下权限才能与 Slack 集成：
 ![将 Modal 应用添加到 Slack 频道](../../assets/docs/slack-add-modal-app.jpg)
 
 ### 步骤 4：使用 `/modal link` 将 Slack 通道链接到您的模态工作区
-系统将提示您选择要链接到 Slack 频道的工作区。您始终可以通过访问模态工作区中[设置](/settings/slack-notifications)页面上的*Slack通知*部分来取消链接Slack通道。
+系统将提示您选择要链接到 Slack 频道的工作区。您始终可以通过访问模态工作区中的[设置](/settings/slack-notifications)页面上的*Slack通知*部分来取消链接Slack通道。

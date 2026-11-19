@@ -119,7 +119,7 @@ The docs are organized into three main sections:
   - [Using OIDC to authenticate with external services](https://modal.com/docs/guide/oidc-integration.md)
   - [Connecting Modal to your Datadog account](https://modal.com/docs/guide/datadog-integration.md)
   - [Connecting Modal to your OpenTelemetry provider](https://modal.com/docs/guide/otel-integration.md)
-  - [Slack notifications (Beta)](https://modal.com/docs/guide/slack-notifications.md)
+  - [Slack notifications](https://modal.com/docs/guide/slack-notifications.md)
 - Workspace & account settings
   - [Workspaces](https://modal.com/docs/guide/workspaces.md)
   - [Environments](https://modal.com/docs/guide/environments.md)

@@ -12,15 +12,16 @@
 ## 设置
 
 该脚本需要在本地安装一些依赖项。我们包括
-遵循[内联脚本元数据](https://peps.python.org/pep-0723/)，以便像[`uv`](https://docs.astral.sh/uv/)这样的工具可以自动安装这些
+遵循[内联脚本元数据](https://peps.python.org/pep-0723/)，以便
+像[`uv`](https://docs.astral.sh/uv/)这样的工具可以自动安装这些
 依赖关系。
 
 ```python
 # /// script
 # requires-python = ">=3.12"
 # dependencies = [
-#   "harbor[modal]==0.15.0",
-#   "modal~=1.5.3",
+#   "harbor[modal]==0.25.0",
+#   "modal~=1.6.3",
 # ]
 # ///
 ```
@@ -77,6 +78,13 @@ fi
 
 我们只需将任务文件写入临时目录，
 然后让Harbor 处理剩下的事情。
+
+默认情况下，Harbor 为每个任务保留完整声明的 CPU 和内存。
+沙盒，尽管大多数任务使用的要少得多。我们通过了`--cpus limit`并且
+`--memory limit` 这样 Harbor 就会请求一个小的基线并使用
+任务的声明值为[limits](https://modal.com/docs/guide/resources)。
+然后，沙盒可能会突破这些限制，并且您需要为每个沙盒付费
+人们实际使用而不是任务声明的内容。
 
 ```python
 def main() -> None:
@@ -139,6 +147,10 @@ def main() -> None:
                 "oracle",
                 "--env",
                 "modal",
+                "--cpus",
+                "limit",
+                "--memory",
+                "limit",
                 "--n-attempts",
                 str(args.n_parallel),
                 "--n-concurrent",

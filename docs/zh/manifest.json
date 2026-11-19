@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "39d8fd13b7a45af23535732b09350518c7be6bfd",
-      "translatedAt": "2026-11-18T15:28:56.048Z",
-      "bytes": 29896
+      "hash": "e3b8515ce1bb37a983ed892730c70b412accf92b",
+      "translatedAt": "2026-11-19T15:36:07.419Z",
+      "bytes": 29880
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -292,9 +292,9 @@
       "bytes": 11286
     },
     "docs/examples/harbor_evals.md": {
-      "hash": "a01a2403e83e665e3d621f1cd2bd8144a308f8de",
-      "translatedAt": "2026-08-08T18:28:22.390Z",
-      "bytes": 5058
+      "hash": "3a964d6ad11a9ca8c74dfbd334e5b3cfe87e4a55",
+      "translatedAt": "2026-11-19T15:35:48.860Z",
+      "bytes": 5611
     },
     "docs/examples/image_to_image.md": {
       "hash": "389ea8eee5c92be746bf6d694f7637e36bc80c69",
@@ -842,9 +842,9 @@
       "bytes": 4609
     },
     "docs/guide/slack-notifications.md": {
-      "hash": "5c138758bf0c9507b29fa3a81452d4ca9df716fa",
-      "translatedAt": "2026-08-27T17:33:22.121Z",
-      "bytes": 2318
+      "hash": "e76f2866603115ba68989718083953c82e7bf531",
+      "translatedAt": "2026-11-19T15:35:51.924Z",
+      "bytes": 2293
     },
     "docs/guide/servers.md": {
       "hash": "3e4b2437034767accbc9a68cc52716e8b782197c",
@@ -2028,10 +2028,10 @@
       "bytes": 589
     }
   },
-  "updatedAt": "2026-11-18T15:29:53.048Z",
+  "updatedAt": "2026-11-19T15:36:07.419Z",
   "stats": {
-    "translated": 43,
-    "skipped": 351,
+    "translated": 3,
+    "skipped": 391,
     "failed": 0,
     "total": 394
   }

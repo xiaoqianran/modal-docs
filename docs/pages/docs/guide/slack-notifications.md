@@ -1,7 +1,5 @@
 # Slack notifications
 
-<Callout variant="beta" />
-
 You can integrate your Modal Workspace with Slack to receive timely essential notifications.
 
 ## Prerequisites

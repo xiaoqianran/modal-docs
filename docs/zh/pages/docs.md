@@ -119,7 +119,7 @@
   - [使用 OIDC 与外部服务进行身份验证](https://modal.com/docs/guide/oidc-integration.md)
   - [将 Modal 连接到您的 Datadog 帐户](https://modal.com/docs/guide/datadog-integration.md)
   - [将 Modal 连接到您的 OpenTelemetry 提供商](https://modal.com/docs/guide/otel-integration.md)
-  - [Slack 通知（测试版）](https://modal.com/docs/guide/slack-notifications.md)
+  - [Slack 通知](https://modal.com/docs/guide/slack-notifications.md)
 - 工作区和帐户设置
   - [工作空间](https://modal.com/docs/guide/workspaces.md)
   - [环境](https://modal.com/docs/guide/environments.md)- [服务使用者](https://modal.com/docs/guide/service-users.md)
@@ -157,7 +157,7 @@
   - [服务网络功能](https://modal.com/docs/examples/basic_web.md)
 - 大型语言模型（LLM）
   - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
-  - [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
+  - [通过快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
   - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)- [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
   - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
   - [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
@@ -200,7 +200,7 @@
   - [训练编码特工](https://modal.com/docs/examples/swe_gym.md)
   - [让法学硕士数学更好](https://modal.com/docs/examples/miles_grpo.md)
 - 嵌入
-  - [使用 Modal 服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [使用模态服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)

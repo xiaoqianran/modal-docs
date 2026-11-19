@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-18T15:28:45.240Z",
+  "fetchedAt": "2026-11-19T15:35:46.572Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 372,
   "ok": 372,
@@ -10,7 +10,7 @@
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 30430,
+      "bytes": 30423,
       "stub": false
     },
     {
@@ -450,7 +450,7 @@
       "source": "https://modal.com/docs/examples/harbor_evals.md",
       "finalUrl": "https://modal.com/docs/examples/harbor_evals.md",
       "path": "docs/examples/harbor_evals.md",
-      "bytes": 5151,
+      "bytes": 5694,
       "stub": false
     },
     {
@@ -1426,7 +1426,7 @@
       "source": "https://modal.com/docs/guide/slack-notifications.md",
       "finalUrl": "https://modal.com/docs/guide/slack-notifications.md",
       "path": "docs/guide/slack-notifications.md",
-      "bytes": 2548,
+      "bytes": 2520,
       "stub": false
     },
     {
