@@ -1878,9 +1878,9 @@
       "bytes": 3033
     },
     "docs/guide/sandbox-exit-snapshots.md": {
-      "hash": "08a83871ffcccaebfa76ee615bc1973793bff9b2",
-      "translatedAt": "2026-10-26T12:42:36.740Z",
-      "bytes": 7478
+      "hash": "58e00e969414dcd62221400ef6d464ac8653b45f",
+      "translatedAt": "2026-11-21T14:29:53.920Z",
+      "bytes": 7601
     },
     "docs/guide/supported-models.md": {
       "hash": "b1b30f3ad510cb1152053f103965e605a245d4bb",
@@ -2028,7 +2028,7 @@
       "bytes": 589
     }
   },
-  "updatedAt": "2026-11-20T15:17:02.434Z",
+  "updatedAt": "2026-11-21T14:29:53.920Z",
   "stats": {
     "translated": 1,
     "skipped": 393,

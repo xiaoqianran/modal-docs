@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-20T15:15:09.314Z",
+  "fetchedAt": "2026-11-21T14:29:48.823Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 372,
   "ok": 372,
@@ -1290,7 +1290,7 @@
       "source": "https://modal.com/docs/guide/sandbox-exit-snapshots.md",
       "finalUrl": "https://modal.com/docs/guide/sandbox-exit-snapshots.md",
       "path": "docs/guide/sandbox-exit-snapshots.md",
-      "bytes": 8117,
+      "bytes": 8256,
       "stub": false
     },
     {

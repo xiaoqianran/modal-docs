@@ -221,6 +221,8 @@ After that, attempting to use the Image fails with `NotFoundError`.
   memory or directory mounts.
 * **Main container only.** [Sidecar containers](/docs/guide/sandbox-sidecars)
   are not included.
+* **Maximum 256 GiB of changed file data per snapshot.** This limit applies to the
+  combined size of files the snapshot needs to process.
 * **Preemption is not covered.** GPU Sandboxes [may run on preemptible
   capacity](/docs/guide/sandbox-resources#gpu-sandboxes), and a preempted
   host generally does not give the Sandbox enough time to take an exit
