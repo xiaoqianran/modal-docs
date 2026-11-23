@@ -38,16 +38,17 @@ Every audit event captures the same shape alongside the time it occurred:
 Audit events may be queried using the
 [search syntax](/docs/guide/log-search-syntax) with the following keys:
 
-| Key           | Matches                                                     |
-| ------------- | ----------------------------------------------------------- |
-| `action`      | One of the [actions](#actions) below, e.g. `secret.create`. |
-| `actor_email` | The email of the user.                                      |
-| `actor_name`  | The name of the user or service user.                       |
-| `actor_type`  | `user`, `service_user`, or `oauth_grant`.                   |
-| `environment` | The environment name.                                       |
-| `ip_address`  | The client IP address.                                      |
-| `source`      | `web` or `sdk`.                                             |
-| `status`      | `success` or `error`.                                       |
+| Key           | Matches                                                             |
+| ------------- | ------------------------------------------------------------------- |
+| `action`      | One of the [actions](#actions) below, e.g. `secret.create`.         |
+| `actor_email` | The email of the user.                                              |
+| `actor_name`  | The name of the user or service user.                               |
+| `actor_type`  | `user`, `service_user`, or `oauth_grant`.                           |
+| `environment` | The environment name.                                               |
+| `ip_address`  | The client IP address.                                              |
+| `source`      | `web` or `sdk`.                                                     |
+| `status`      | `success` or `error`.                                               |
+| `target_id`   | The ID of the object the event acted on, e.g. `sb-123` or `ap-123`. |
 
 For example:
 

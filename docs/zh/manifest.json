@@ -547,9 +547,9 @@
       "bytes": 4920
     },
     "docs/guide/audit-logs.md": {
-      "hash": "b60336510ace8199e4d62ff09f9d24791510ebc4",
-      "translatedAt": "2026-11-20T15:17:02.434Z",
-      "bytes": 28960
+      "hash": "dd7e62490b4a59376571b84a744f41a462b269b5",
+      "translatedAt": "2026-11-23T17:54:06.103Z",
+      "bytes": 29271
     },
     "docs/guide/dicts.md": {
       "hash": "ccbc08a4039e3a864da786f48f663b33ff236e42",
@@ -2028,10 +2028,10 @@
       "bytes": 589
     }
   },
-  "updatedAt": "2026-11-22T14:25:19.559Z",
+  "updatedAt": "2026-11-23T17:54:06.103Z",
   "stats": {
-    "translated": 0,
-    "skipped": 394,
+    "translated": 1,
+    "skipped": 393,
     "failed": 0,
     "total": 394
   }
