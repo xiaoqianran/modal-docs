@@ -1,9 +1,11 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 候选端点
+<span id="endpoint-candidates"></span>
 
-[专用端点](/docs/guide/dedicated-endpoints) 提供来自其的流量
-**生产**部署。创建**候选**来测试对模型的更改
+# 候选人
+
+[端点](/docs/guide/endpoints) 提供来自其的流量
+生产部署。创建候选项来测试模型的更改
 或重量而不改变生产。每个候选人都有自己的 URL 和
 容器。
 
@@ -13,11 +15,11 @@
 **部署**下拉列表并选择**创建候选人**。
 
 一个端点同时最多可以有五个候选者。选择一个
-[专用端点模型](/docs/guide/supported-models#dedicated-endpoint-models) 具有相同的任务类型
+[支持的模型](/docs/guide/supported-models#dedicated-endpoint-models) 具有相同的任务类型
 生产：文本生成或嵌入。要使用自定义权重，请选择 **自定义权重**，然后提供
 拥抱脸部存储库和修订版或模态体积和路径。权重
 必须与所选的基本型号兼容；看到
-[提供自定义权重](/docs/guide/dedicated-endpoints#serve-custom-weights)。
+[提供自定义权重](/docs/guide/endpoints#serve-custom-weights)。
 
 对源权重的更改不会更新现有候选值。促销
 使用与您测试的相同的重量。
@@ -26,6 +28,7 @@
 生产的设置。
 
 ## 测试候选人
+
 在 **部署** 下拉列表中选择候选者并等待配置
 完成。将其 URL 从仪表板复制到
 [发送测试请求](/docs/guide/endpoints#call-an-endpoint)。考生使用
@@ -53,7 +56,8 @@ URL 和请求模型名称保持不变。
 生产保持其最小、最大和缓冲容器设置及其
 放大和缩小窗口。候选自动缩放更改不进行
 转向生产。
-当推出开始和停止其镜像时，促销会删除候选者
+
+当推出开始并停止其镜像时，促销会删除候选者
 交通。它的 URL 不再可用；其他候选人不变。
 
 要在成功晋升后改回来，请创建并晋升新候选人

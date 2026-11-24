@@ -1,7 +1,9 @@
-# Endpoint candidates
+<span id="endpoint-candidates"></span>
 
-A [Dedicated Endpoint](/docs/guide/dedicated-endpoints) serves traffic from its
-**production** deployment. Create **candidates** to test changes to your model
+# Candidates
+
+An [Endpoint](/docs/guide/endpoints) serves traffic from its
+production deployment. Create candidates to test changes to your model
 or weights without changing production. Each candidate has its own URL and
 containers.
 
@@ -11,11 +13,11 @@ Open your Endpoint in the [dashboard](https://modal.com/endpoints), then open
 the **Deployment** dropdown and choose **Create candidate**.
 
 An Endpoint can have up to five candidates at once. Choose a
-[Dedicated Endpoint model](/docs/guide/supported-models#dedicated-endpoint-models) with the same task type as
+[supported model](/docs/guide/supported-models#dedicated-endpoint-models) with the same task type as
 production: text generation or embeddings. To use custom weights, select **Custom weights**, then provide a
 Hugging Face repository and revision or a Modal Volume and path. The weights
 must be compatible with the selected base model; see
-[Serve custom weights](/docs/guide/dedicated-endpoints#serve-custom-weights).
+[Serve custom weights](/docs/guide/endpoints#serve-custom-weights).
 
 Changes to the source weights do not update an existing candidate. Promotion
 uses the same weights you tested.

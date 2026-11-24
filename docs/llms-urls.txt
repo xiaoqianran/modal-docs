@@ -104,7 +104,6 @@ https://modal.com/docs/guide/customer-supplied-encryption-keys.md
 https://modal.com/docs/guide/data-residency.md
 https://modal.com/docs/guide/datadog-integration.md
 https://modal.com/docs/guide/dataset-ingestion.md
-https://modal.com/docs/guide/dedicated-endpoints.md
 https://modal.com/docs/guide/developing-debugging.md
 https://modal.com/docs/guide/dicts.md
 https://modal.com/docs/guide/dynamic-batching.md
@@ -137,6 +136,7 @@ https://modal.com/docs/guide/log-search-syntax.md
 https://modal.com/docs/guide/managing-deployments.md
 https://modal.com/docs/guide/memory-snapshots.md
 https://modal.com/docs/guide/modal-1-0-migration.md
+https://modal.com/docs/guide/model-api-pricing.md
 https://modal.com/docs/guide/model-weights.md
 https://modal.com/docs/guide/multi-node-clusters.md
 https://modal.com/docs/guide/multi-node-training.md

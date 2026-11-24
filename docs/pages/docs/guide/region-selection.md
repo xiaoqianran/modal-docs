@@ -59,6 +59,7 @@ Modal offers different levels of granularity for container regions. Use broader 
                  "ap-south"
                  "ap-melbourne"
                  "jp"                 Japan
+                 "kr"                 South Korea
                  "au"                 Australia
 ------------------------------------------------------------
                  "uk"                 United Kingdom

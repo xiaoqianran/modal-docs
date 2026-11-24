@@ -13,15 +13,15 @@ For a full list of available regions, please visit our [region selection documen
 
 ‡ *Functions and Sandboxes set the container region with `region=`; Servers use `compute_region=`, and Endpoints use `--compute-region`.*
 
-| **Service**                                              | **Selectable container region?**                                        | **Selectable routing region?**                                          |
-| -------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| [Endpoints (Dedicated)](/docs/guide/dedicated-endpoints) | [Yes](/docs/guide/dedicated-endpoints#configure-capacity-and-placement) | [Yes](/docs/guide/dedicated-endpoints#configure-capacity-and-placement) |
-| [Endpoints (Shared)](/docs/guide/shared-endpoints)\*     | No                                                                      | No                                                                      |
-| [Functions](/docs/guide/functions)                       | [Yes](/docs/guide/region-selection#specifying-a-container-region)       | [Yes](/docs/guide/region-selection#regional-routing)                    |
-| [Sandboxes](/docs/guide/sandboxes)                       | [Yes](/docs/guide/region-selection#specifying-a-container-region)       | N/A†                                                                    |
-| [Servers](/docs/guide/servers)                           | [Yes](/docs/guide/servers#request-routing)                              | [Yes](/docs/guide/servers#request-routing)                              |
+| **Service**                                  | **Selectable container region?**                                  | **Selectable routing region?**                                |
+| -------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- |
+| [Endpoints](/docs/guide/endpoints)           | [Yes](/docs/guide/endpoints#configure-capacity-and-placement)     | [Yes](/docs/guide/endpoints#configure-capacity-and-placement) |
+| [Model APIs](/docs/guide/shared-endpoints)\* | No                                                                | No                                                            |
+| [Functions](/docs/guide/functions)           | [Yes](/docs/guide/region-selection#specifying-a-container-region) | [Yes](/docs/guide/region-selection#regional-routing)          |
+| [Sandboxes](/docs/guide/sandboxes)           | [Yes](/docs/guide/region-selection#specifying-a-container-region) | N/A†                                                          |
+| [Servers](/docs/guide/servers)               | [Yes](/docs/guide/servers#request-routing)                        | [Yes](/docs/guide/servers#request-routing)                    |
 
-\* *Shared Endpoints route through `us-west`, and containers are distributed across Modal's global compute pool.*
+\* *Each Model API's routing region is determined by its model, and containers are distributed across Modal's global compute pool.*
 
 † *Sandboxes don't use a routing region: data-plane requests (including encrypted tunnels, Sandbox Connect Tokens, `exec` input/output) go directly to the container in your selected region. Sandbox lifecycle requests (e.g. create and terminate) are routed through our control plane in `us-east`.*
 
@@ -37,7 +37,7 @@ Before pinning the region of your containers, we recommend assessing which workl
 
 In this section, we'll outline where logs and other data may be stored for different Modal products. For relevant retention policies, please refer to the data retention table in our [security and privacy documentation](/docs/guide/security#data-retention).
 
-Dedicated Endpoints, Shared Endpoints, and Servers do not [store request and response payloads](/docs/guide/security#zero-data-retention).
+Endpoints, Model APIs, and Servers do not [store request and response payloads](/docs/guide/security#zero-data-retention).
 
 | Product                           | Data type                                                                 | Where                                                       | Recommended controls for strict residency requirements                                                                                                                                                                                                                                                |
 | --------------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

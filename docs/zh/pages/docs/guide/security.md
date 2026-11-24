@@ -69,11 +69,11 @@ InfraSec 涵盖了我们如何保护运行您的工作负载的基础设施。
 ### 数据保留
 
 保留率因产品而异；下表显示了每种类型数据的保留时间。所有存储的数据都是静态加密的。
-|数据|产品 |保留|| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+|数据|产品 |保留|| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- |
 |输入和输出| [函数](/docs/guide)（`.remote`、`.spawn`、`.map`、[Web 函数](/docs/guide/webhooks)、计划函数）|最多7天，然后删除|
-|请求和响应有效负载 | [服务器](/docs/guide/servers)、[专用端点](/docs/guide/dedicated-endpoints) 和 [共享端点](/docs/guide/shared-endpoints) |不存储 - 直接代理到服务容器 |
-|应用程序和容器日志 | [功能](/docs/guide)、[沙箱](/docs/guide/sandboxes)、[服务器](/docs/guide/servers)、[专用端点](/docs/guide/dedicated-endpoints) |取决于计划：Starter 1 天，Team 30 天，Enterprise 上可配置（请参阅[定价](/pricing)）|
-|审核日志|工作空间（企业）|每个企业合同（请参阅[审核日志](/docs/guide/audit-logs)）||文件 | [卷](/docs/guide/volumes)、[图像](/docs/guide/images) |持续存在直至您删除它们 |
+|请求和响应有效负载 | [服务器](/docs/guide/servers)、[端点](/docs/guide/endpoints) 和 [模型 API](/docs/guide/shared-endpoints) |不存储 - 直接代理到服务容器 |
+|应用程序和容器日志 | [功能](/docs/guide)、[沙箱](/docs/guide/sandboxes)、[服务器](/docs/guide/servers)、[端点](/docs/guide/endpoints) |取决于计划：Starter 1 天，Team 30 天，Enterprise 上可配置（请参阅[定价](/pricing)）|
+|审核日志|工作空间（企业）|每个企业合同（请参阅[审核日志](/docs/guide/audit-logs)）||文件| [卷](/docs/guide/volumes)、[图像](/docs/guide/images) |持续存在直至您删除它们 |
 |功能和服务器内存快照| [功能](/docs/guide/memory-snapshots)、[服务器](/docs/guide/servers) |创建后 30 天 |
 |沙箱内存快照 | [沙盒](/docs/guide/sandbox-snapshots) |创建后 7 天 |
 |文件系统快照 | [沙箱文件系统快照](/docs/guide/sandbox-snapshots) |创建后 30 天（可配置；存储为图像）||目录快照 | [沙盒目录快照](/docs/guide/sandbox-snapshots) |创建后 30 天（可配置）|
@@ -88,7 +88,7 @@ InfraSec 涵盖了我们如何保护运行您的工作负载的基础设施。
 
 ### 零数据保留
 
-[服务器](/docs/guide/servers)、[专用端点](/docs/guide/dedicated-endpoints) 和[共享端点](/docs/guide/shared-endpoints) 的数据保留为零。请求和响应有效负载永远不会写入磁盘，并且仅作为动态网络流量通过 Modal。
+[服务器](/docs/guide/servers)、[端点](/docs/guide/endpoints) 和 [模型 API](/docs/guide/shared-endpoints) 的数据保留为零。请求和响应有效负载永远不会写入磁盘，并且仅作为动态网络流量通过 Modal。
 对于服务器，写入 stdout 或 stderr 的任何内容都将作为容器日志保留在您的[计划的日志保留期](#data-retention)，因此请确保您的代码不会记录请求或响应有效负载。
 
 ### 数据驻留
@@ -97,12 +97,12 @@ InfraSec 涵盖了我们如何保护运行您的工作负载的基础设施。
 
 ## 共同责任模型Modal 优先考虑客户数据的完整性、安全性和可用性。根据我们的共同责任模式，您还承担以下领域的责任。
 
-|面积 |莫代尔 |客户|
+|面积 |莫代尔|客户|
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 |访问和秘密|提供访问控制，包括 SSO、SCIM、API 令牌和 RBAC，以及用于存储凭据的 [Secrets](/docs/guide/secrets) 管理。                                                       |管理工作区中的身份、分配角色以及轮换和删除 API 令牌。拥有您的秘密的内容和轮换。                                                                                               |
 |加密与网络安全|使用 TLS 1.3 加密传输中的数据和静态数据。                                                                                                                                                |决定您公开哪些端点以及如何对它们进行身份验证。应用数据所需的任何额外加密，例如在敏感字段到达 Modal 之前对其进行加密。                                                    ||漏洞|在我们的[严重性时间范围](#severity-timeframes)内修补平台和运行时，并审核我们的依赖项是否存在已知漏洞。                                                   |修补您的图像、依赖项和代码。                                                                                                                                                                                            |
 |不受信任的代码 |提供隔离原语，用于通过[受限函数和沙箱](/docs/guide/restricted-access#sandboxes-offer-an-alternative-interface-for-untrusted-code)运行不受信任的代码。 |使用这些原语并带有出口限制、资源限制和超时等防护措施，运行不受信任的代码，例如 LLM 生成的或最终用户提交的代码。确保机密和凭证远离不受信任的工作负载。 |
-|数据生命周期 |确保托管存储的持久性并应用我们的[保留](#data-retention) 和删除策略。                                                                                     |维护您在 Modal 中存储的数据的备份，并定期验证其完整性。                                                                                                                                                 |
+|数据生命周期|确保托管存储的持久性并应用我们的[保留](#data-retention) 和删除策略。                                                                                     |维护您在 Modal 中存储的数据的备份，并定期验证其完整性。                                                                                                                                                 |
 |运营|操作平台以实现高可用性、对其进行监控并对平台事件做出响应。                                                                                                     |监控您的应用程序并设计故障转移。                                                                                                                                                                                    ||合规|在我们的[信任中心](https://trust.modal.com) 上提供我们的审计报告和控制文档。                                                                                       |确定哪些法律和法规适用于您的组织和您的数据，并配置和使用 Modal 来满足这些法律和法规。                                                                                                              |
 
 ### 安全功能
@@ -113,7 +113,7 @@ InfraSec 涵盖了我们如何保护运行您的工作负载的基础设施。
 |功能| [受限功能](/docs/guide/restricted-access) |
 |沙箱 | [出站访问控制](/docs/guide/sandbox-networking#outbound-access-control)、[入站访问控制](/docs/guide/sandbox-networking#inbound-access-control) |
 |身份 | [Okta SSO](/docs/guide/okta-sso)、[Microsoft Entra SSO](/docs/guide/entra-sso)、[Google Workspace SSO](/docs/guide/google-sso)、[自定义 SAML SSO](/docs/guide/saml-sso)、[SCIM 集成](/docs/guide/scim?idp=okta)、[OIDC集成](/docs/guide/oidc-integration) ||可观察性| [审核日志](/docs/guide/audit-logs)、[Datadog 集成](/docs/guide/datadog-integration)、[OpenTelemetry 集成](/docs/guide/otel-integration) |
-|加密 | [客户提供的加密密钥](/docs/guide/customer-supplied-encryption-keys) |
+|加密| [客户提供的加密密钥](/docs/guide/customer-supplied-encryption-keys) |
 
 ## 合规标准
 ### 系统和组织控制 (SOC) 2 类型 II

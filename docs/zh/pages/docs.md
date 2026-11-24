@@ -46,12 +46,13 @@
   - [定价和资源](https://modal.com/docs/guide/sandbox-resources.md)
   - [Sidecars（测试版）](https://modal.com/docs/guide/sandbox-sidecars.md)
   - [秘密注入(Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
+- 模型 API
+  - [模型 API](https://modal.com/docs/guide/shared-endpoints.md)- [型号及价格](https://modal.com/docs/guide/model-api-pricing.md)
+  - [代理集成](https://modal.com/docs/guide/endpoint-integrations.md)
 - 端点
-  - [端点](https://modal.com/docs/guide/endpoints.md)- [支持机型](https://modal.com/docs/guide/supported-models.md)
-  - [共享端点](https://modal.com/docs/guide/shared-endpoints.md)
-  - [专用端点](https://modal.com/docs/guide/dedicated-endpoints.md)
-  - [候选端点](https://modal.com/docs/guide/endpoint-candidates.md)
-  - [端点集成](https://modal.com/docs/guide/endpoint-integrations.md)
+  - [端点](https://modal.com/docs/guide/endpoints.md)
+  - [支持机型](https://modal.com/docs/guide/supported-models.md)
+  - [考生](https://modal.com/docs/guide/endpoint-candidates.md)
 - 培训
   - [快速入门](https://modal.com/docs/guide/training-quickstart.md)
   - [Tinker 兼容 API (Beta)](https://modal.com/docs/guide/spindle.md)
@@ -157,7 +158,7 @@
   - [服务网络功能](https://modal.com/docs/examples/basic_web.md)
 - 大型语言模型（LLM）
   - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
-  - [通过快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
+  - [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
   - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)- [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
   - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
   - [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
@@ -200,7 +201,7 @@
   - [训练编码特工](https://modal.com/docs/examples/swe_gym.md)
   - [让法学硕士数学更好](https://modal.com/docs/examples/miles_grpo.md)
 - 嵌入
-  - [使用模态服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [使用 Modal 服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)

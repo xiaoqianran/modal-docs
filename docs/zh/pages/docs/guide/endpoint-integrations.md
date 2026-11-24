@@ -1,13 +1,21 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 端点集成
+<span id="endpoint-integrations"></span>
 
-将 OpenCode、Hermes Agent、Omp、Codex 或 Claude Code 连接到您的
-[共享端点](/docs/guide/shared-endpoints) 通过
-`https://inference.us-west.modal.direct`。将请求的`model`设置为
-端点的主机名，例如 `my-endpoint.us-west.modal.direct`。
+# 代理集成
 
-要查看令牌可以到达哪些共享端点，请列出所有模型 ID：
+使用 [Model API](/docs/guide/shared-endpoints) 的主机名作为代理的主机名
+型号 ID。从仪表板复制它。
+
+如果您的代理要求提供基本 URL，请使用主机名中的区域。例如，
+`my-endpoint.us-west.modal.direct` 的基本 URL 是
+`https://inference.us-west.modal.direct`。对于欧盟模型，请使用其
+`eu-west` 主机名和 `https://inference.eu-west.modal.direct`。包括
+`/v1` 当下面的代理配置显示它时。
+
+对于 API 密钥，请加入您的 [代理令牌](/docs/guide/webhook-proxy-auth) ID 并
+带有句号的秘密 (`wk-<id>.ws-<secret>`)。该令牌需要访问您的
+模型 API 的环境。要列出您的令牌可以使用的模型 ID，请在同一区域请求 `/v1/models`。
 
 ```bash
 curl "https://inference.us-west.modal.direct/v1/models" \
@@ -16,11 +24,10 @@ curl "https://inference.us-west.modal.direct/v1/models" \
 
 ## 开放代码
 
-[安装OpenCode](https://opencode.ai/docs/)并创建一个
-[代理令牌](/docs/guide/endpoints#proxy-tokens)。在 OpenCode CLI 中，运行
-`/connect`，选择模态作为
-[provider](https://opencode.ai/docs/providers/)，并输入令牌作为
-组合形式的 API 密钥`wk-<id>.ws-<secret>`。然后运行 ​​`/models` 并按主机名选择您的端点。
+[安装OpenCode](https://opencode.ai/docs/)，运行`/connect`，选择Modal
+作为[提供者](https://opencode.ai/docs/providers/)。输入您的代理令牌
+作为 API 密钥。然后运行 `/models` 并
+按主机名选择您的模型 API。
 
 对于 CI 或其他无头使用，请在环境中设置令牌，而不是
 运行`/connect`：
@@ -38,24 +45,17 @@ export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 hermes plugins install modal
 ```
 
-系统会提示您创建一个
-[代理令牌](/docs/guide/webhook-proxy-auth)，您可以通过以下方式创建
-[仪表板](/settings/proxy-auth-tokens) 或
-[CLI](/docs/cli/latest/workspace#modal-workspace-proxy-tokens)。
+出现提示时输入您的代理令牌。运行`hermes model`，选择Modal作为
+提供者，然后按主机名选择您的模型 API。
 
-然后运行 `hermes model`，选择 Modal 作为提供者，然后选择您的端点
-通过主机名。
-
-或者，您可以覆盖`MODAL_BASE_URL`；例如，当使用
-[专用端点](/docs/guide/dedicated-endpoints) 形式
+要将 [Endpoint](/docs/guide/endpoints) 与 Hermes 一起使用，
+例如，将 `MODAL_BASE_URL` 设置为其基本 URL
 `https://<workspace>-<env>--<app>.<region>.modal.direct/v1`。
 
 ## 奥普
 
-[安装Omp](https://omp.sh)并创建一个
-[代理令牌](/docs/guide/endpoints#proxy-tokens)。在 Omp CLI 中，运行
-`/login modal` 并输入组合形式的令牌，
-`wk-<id>.ws-<secret>`。然后运行 ​​`/model` 并按主机名选择您的端点。
+[安装 Omp](https://omp.sh)，运行`/login modal`，然后输入您的代理令牌。
+然后运行 ​​`/model` 并按主机名选择您的模型 API。
 
 对于 CI 或其他无头使用，请在环境中设置令牌，而不是
 运行`/login modal`：
@@ -66,9 +66,8 @@ export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 
 ## 法典
 
-[安装Codex](https://learn.chatgpt.com/docs/codex/cli)，创建一个
-[代理令牌](/docs/guide/endpoints#proxy-tokens)，并将 Modal 定义为模型
-`~/.codex/config.toml` 中的提供商：
+[安装 Codex](https://learn.chatgpt.com/docs/codex/cli) 并将 Modal 定义为
+`~/.codex/config.toml`中的模型提供者：
 
 ```toml
 # ~/.codex/config.toml
@@ -79,7 +78,7 @@ env_key = "MODAL_PROXY_TOKEN"
 wire_api = "responses"
 ```
 
-然后，您可以通过以下命令运行 Codex，端点主机名为
+然后，您可以通过以下命令运行 Codex，并将模型 API 主机名设置为
 型号ID：
 
 ```bash
@@ -91,10 +90,9 @@ codex \
 
 ## 克劳德代码
 
-[安装Claude Code](https://code.claude.com/docs/en/quickstart)并创建一个
-[代理令牌](/docs/guide/endpoints#proxy-tokens)。将令牌设置在其组合中
-形成 `wk-<id>.ws-<secret>`，并将 `my-endpoint.us-west.modal.direct` 替换为
-其模型支持工具调用的 Endpoint 的主机名：
+[安装克劳德代码](https://code.claude.com/docs/en/quickstart)。套装
+`ANTHROPIC_AUTH_TOKEN` 到您的代理令牌，`ANTHROPIC_MODEL` 到主机名
+支持工具调用的模型API。
 
 ```bash
 export ANTHROPIC_BASE_URL="https://inference.us-west.modal.direct"

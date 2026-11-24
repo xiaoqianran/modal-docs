@@ -1,74 +1,61 @@
+<span id="dedicated-endpoints"></span> <span id="configuration"></span>
+
 # Endpoints
 
 Modal Endpoints let you deploy
 [supported open models](/docs/guide/supported-models)—or your own custom
-weights—as production-ready inference APIs.
+weights—as production-ready inference APIs on dedicated capacity.
 
-* **Fast inference** — tuned open-source serving engines, with speculative
+* Fast inference — tuned open-source serving engines, with speculative
   decoding where supported, behind Modal's low-latency request proxy.
-* **Managed infrastructure** — Modal handles provisioning, routing, and
+* Managed infrastructure — Modal handles provisioning, routing, and
   capacity management.
-* **Open and inspectable** — use familiar OpenAI- and Anthropic-compatible APIs;
-  [inspect or adapt the generated source](/docs/guide/dedicated-endpoints#view-the-generated-source)
-  behind a Dedicated Endpoint.
+* Open and inspectable — use familiar OpenAI- and Anthropic-compatible APIs;
+  [inspect or adapt the generated source](#view-the-generated-source)
+  behind an Endpoint.
 
-Choose between two serving modes:
+For pay-per-token inference on Modal-managed capacity, see [Model APIs](/docs/guide/shared-endpoints).
 
-|              | [Shared Endpoints](/docs/guide/shared-endpoints)                     | [Dedicated Endpoints](/docs/guide/dedicated-endpoints)                                          |
-| ------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **Best for** | Fast, fully managed inference                                        | Isolated capacity and custom models                                                             |
-| **Models**   | [Shared models](/docs/guide/supported-models#shared-endpoint-models) | [Dedicated models](/docs/guide/supported-models#dedicated-endpoint-models), plus custom weights |
-| **Billing**  | Per token                                                            | Compute resources                                                                               |
-| **Capacity** | Managed by Modal                                                     | Configurable autoscaling, including scale-to-zero                                               |
+<span id="create-a-dedicated-endpoint"></span>
 
 ## Create an endpoint
 
-Choose a model from [supported models](/docs/guide/supported-models), which
-lists the serving modes each model supports. Both CLI examples below require a
-[Proxy Token](#proxy-tokens).
+Choose a model from [supported models](/docs/guide/supported-models).
+By default, creating an Endpoint requires a [Proxy Token](#proxy-tokens) with
+access to the target Environment. If your Workspace uses RBAC, make sure the
+token has been granted access before running the command.
 
-The CLI creates Dedicated Endpoints by default:
+The CLI uses dedicated capacity by default:
 
 ```bash
 modal endpoint create --model Qwen/Qwen3.5-4B
 ```
 
-Pass `--shared` to create a Shared Endpoint:
+Modal selects a compatible serving recipe and starts provisioning. The command
+prints the Endpoint ID and a dashboard link to follow provisioning.
+If your Environment allows public Endpoints, add `--unauthenticated` to create
+one without a Proxy Token.
 
-```bash
-modal endpoint create --shared --model moonshotai/Kimi-K3
-```
-
-The command prints the Endpoint ID and a dashboard link to follow provisioning.
-You can also create an Endpoint from the
-[**Endpoints**](https://modal.com/endpoints) tab in the dashboard. To learn more
-about a model, browse the
-[Model Library](https://modal.com/library).
+You can also create an Endpoint from the [Endpoints](https://modal.com/endpoints)
+tab in the dashboard. Choose Create Endpoint (or Browse all models on an empty
+list) and select `Qwen/Qwen3.5-4B`. If you need a Proxy Token, choose Create
+token in the wizard. Then click Create Endpoint.
 
 ## Proxy tokens
 
-Shared Endpoints always require a
-[Proxy Token](/docs/guide/webhook-proxy-auth). Dedicated Endpoints require one
-by default. Create one with the CLI:
+Create a [Proxy Token](/docs/guide/webhook-proxy-auth) with the CLI:
 
 ```bash
 modal workspace proxy-tokens create
 ```
 
-Join the token ID and secret with a period (`.`) and pass them as a bearer token:
-
-```
-Authorization: Bearer wk-<id>.ws-<secret>
-```
-
-The combined value can be used as the API key in an OpenAI-compatible client.
-See [Proxy Tokens](/docs/guide/webhook-proxy-auth) for environment scoping and
-other authentication options. Dedicated Endpoints can also be created with
-`--unauthenticated`.
+In Workspaces with RBAC enabled, grant the new token access with
+`modal workspace proxy-tokens allow <token-id> <environment-name>`.
+Save the token ID and secret for the request examples below.
 
 ## Call an endpoint
 
-Text-generation models on both Shared and Dedicated Endpoints can be called
+Text-generation models on Endpoints can be called
 through the OpenAI-compatible Chat Completions (`/v1/chat/completions`),
 Completions (`/v1/completions`), and Responses (`/v1/responses`) APIs or the
 Anthropic-compatible Messages API (`/v1/messages`). Embedding models can be
@@ -79,17 +66,17 @@ called through the OpenAI-compatible Embeddings API (`/v1/embeddings`).
 An Endpoint's base URL is its hostname, shown in the dashboard after creation
 and in `modal endpoint info`; for example,
 `https://my-endpoint.us-west.modal.direct`. Set `model` to the
-value shown in the dashboard's request examples. You can also retrieve it
+value shown in the dashboard's request examples. If you create an Endpoint with
+`--name`, use that name as `model`. You can also retrieve it
 through the OpenAI-compatible Models API:
 
 ```bash
+export MODAL_PROXY_TOKEN_ID="wk-..."
+export MODAL_PROXY_TOKEN_SECRET="ws-..."
+
 curl "<your-endpoint-url>/v1/models" \
   -H "Authorization: Bearer $MODAL_PROXY_TOKEN_ID.$MODAL_PROXY_TOKEN_SECRET"
 ```
-
-Shared Endpoints can also be reached through the inference gateway at
-`https://inference.us-west.modal.direct`. In this case, set `model` to the Endpoint's
-hostname (`my-endpoint.us-west.modal.direct`).
 
 ### Send a request
 
@@ -156,8 +143,61 @@ console.log(completion.choices[0].message.content);
 For server-sent events, pass `"stream": true`. Token usage is reported in the
 final streamed chunk.
 
-See [Endpoint integrations](/docs/guide/endpoint-integrations) for connecting
-coding agents like OpenCode, Codex, and Claude Code to a Shared Endpoint.
+## View the generated source
+
+An Endpoint is a Modal App built with the same primitives available in
+the Modal SDK, including [`@app.server()`](/docs/guide/servers). Open the
+**Source** view to inspect its generated `serve.py`. You can copy and adapt that
+code into your own Modal App when you need full control of the serving stack.
+
+## Serve custom weights
+
+Custom weights use the serving recipe for a compatible
+[Endpoint model](/docs/guide/supported-models#dedicated-endpoint-models). Pass that model with `--model`,
+then provide weights from Hugging Face or a Modal Volume.
+
+From Hugging Face:
+
+```bash
+modal endpoint create \
+  --name my-fine-tune \
+  --model Qwen/Qwen3.6-27B \
+  --custom-hf-repo aisingapore/Qwen-SEA-LION-v4.5-27B-IT \
+  --custom-hf-revision da42f2c0984d716fb2032e4176d81adfac98c630
+```
+
+Use `--custom-hf-token` for gated or private repositories.
+
+From a Modal Volume containing a `config.json` file:
+
+```bash
+modal endpoint create \
+  --name my-volume-model \
+  --model Qwen/Qwen3.5-4B \
+  --custom-volume-name my-volume \
+  --custom-volume-path /checkpoints/1234
+```
+
+## Configure capacity and placement
+
+By default, Endpoints scale up under load and down to zero when idle.
+Configure minimum, maximum, and buffer containers from the dashboard.
+
+The routing region controls where requests enter Modal. Compute placement
+controls where containers run. Set them independently:
+
+```bash
+modal endpoint create \
+  --model Qwen/Qwen3.5-4B \
+  --routing-region us-east \
+  --compute-region us-west
+```
+
+Use `--colocate-compute` instead to run compute in the routing region. Pinning
+compute to a region incurs a
+[region selection multiplier](/docs/guide/region-selection#pricing).
+
+<span id="request-routing"></span>
 
 ## Affinity routing
 
@@ -166,6 +206,7 @@ reuses the prefix of an earlier request is fastest when it lands on the same
 container. Multi-turn conversations and agent loops, where each request repeats
 the previous turns, benefit the most.
 
+Endpoints inherit [affinity routing](/docs/guide/servers#request-routing) from Servers.
 To keep the requests of one conversation together, send the same routing key in
 the `Modal-Routing-Affinity-Key` header on each of them. The routing key is an
 arbitrary string; use one per conversation, task, or agent run.
@@ -192,3 +233,47 @@ Choose the routing key to match the shared prefix:
 
 Note that requests may be routed to a different container when the Endpoint
 scales or a container is replaced or overloaded.
+
+## Metrics
+
+The **Activity** view shows request volume over time. Use **Responses** to inspect
+individual requests and **Containers** to inspect the containers serving them.
+
+For text-generation models, **Metrics** separates **Inference metrics**—latency,
+throughput, running and queued requests, cache usage, and speculative
+decoding—from **Server metrics** such as autoscaling and CPU, memory, network,
+and GPU utilization.
+
+## Benchmarks
+
+For text-generation models, the **Benchmark** view can run a repeatable real-time
+or agentic workload against the live Endpoint. Benchmarks generate traffic,
+trigger autoscaling, and incur the usual compute cost.
+
+Treat results as point-in-time measurements: fleet size, placement, and cold
+starts can all affect them.
+
+<span id="manage-a-dedicated-endpoint"></span>
+
+## Manage an Endpoint
+
+List Endpoints in an Environment:
+
+```bash
+modal endpoint list --env prod
+```
+
+Stop an Endpoint when you no longer need it:
+
+```bash
+modal endpoint stop my-endpoint --env prod
+```
+
+Stopping an Endpoint is permanent. It tears down the serving application and
+deletes its managed model cache; the Endpoint cannot be restarted.
+
+## Pricing
+
+Endpoints bill for the GPU, CPU, memory, and other resources used by
+their containers at standard Modal compute rates. An Endpoint scaled to zero
+does not incur compute charges.

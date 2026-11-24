@@ -44,13 +44,14 @@ The docs are organized into three main sections:
   - [Pricing and resources](https://modal.com/docs/guide/sandbox-resources.md)
   - [Sidecars (Beta)](https://modal.com/docs/guide/sandbox-sidecars.md)
   - [Secret injection (Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
+- Model APIs
+  - [Model APIs](https://modal.com/docs/guide/shared-endpoints.md)
+  - [Models and pricing](https://modal.com/docs/guide/model-api-pricing.md)
+  - [Agent integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Endpoints
   - [Endpoints](https://modal.com/docs/guide/endpoints.md)
   - [Supported models](https://modal.com/docs/guide/supported-models.md)
-  - [Shared Endpoints](https://modal.com/docs/guide/shared-endpoints.md)
-  - [Dedicated Endpoints](https://modal.com/docs/guide/dedicated-endpoints.md)
-  - [Endpoint candidates](https://modal.com/docs/guide/endpoint-candidates.md)
-  - [Endpoint integrations](https://modal.com/docs/guide/endpoint-integrations.md)
+  - [Candidates](https://modal.com/docs/guide/endpoint-candidates.md)
 - Training
   - [Quickstart](https://modal.com/docs/guide/training-quickstart.md)
   - [Tinker-compatible API (Beta)](https://modal.com/docs/guide/spindle.md)
