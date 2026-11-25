@@ -4,7 +4,7 @@
 
 # 代理集成
 
-使用 [Model API](/docs/guide/shared-endpoints) 的主机名作为代理的主机名
+使用 [Model API](/docs/guide/model-apis) 的主机名作为代理的主机名
 型号 ID。从仪表板复制它。
 
 如果您的代理要求提供基本 URL，请使用主机名中的区域。例如，
@@ -36,9 +36,11 @@ curl "https://inference.us-west.modal.direct/v1/models" \
 export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 ```
 
+默认情况下，OpenCode 的 Modal 提供程序列出来自 `us-west` 网关的模型。
+
 ## 爱马仕代理
 
-[安装Hermes代理](https://hermes-agent.nousresearch.com/docs/)并安装
+[安装Hermes Agent](https://hermes-agent.nousresearch.com/docs/)并安装
 [模态插件](https://hermes-agent.nousresearch.com/docs/plugins/modal):
 
 ```bash
@@ -47,15 +49,19 @@ hermes plugins install modal
 
 出现提示时输入您的代理令牌。运行`hermes model`，选择Modal作为
 提供者，然后按主机名选择您的模型 API。
-
 要将 [Endpoint](/docs/guide/endpoints) 与 Hermes 一起使用，
 例如，将 `MODAL_BASE_URL` 设置为其基本 URL
 `https://<workspace>-<env>--<app>.<region>.modal.direct/v1`。
 
+要使用 [EU 模型](/docs/guide/model-apis#eu-models)，请设置 `MODAL_BASE_URL`
+到 `eu-west` 主机名或网关。
+
 ## 奥普
 
 [安装 Omp](https://omp.sh)，运行`/login modal`，然后输入您的代理令牌。
-然后运行 ​​`/model` 并按主机名选择您的模型 API。
+然后运行 ​​`/model` 并按主机名选择您的模型 API。或者，设置
+例如，`MODAL_BASE_URL` 到 [Endpoint](/docs/guide/endpoints) 的基本 URL
+`https://<workspace>-<env>--<app>.<region>.modal.direct/v1`。
 
 对于 CI 或其他无头使用，请在环境中设置令牌，而不是
 运行`/login modal`：
@@ -63,6 +69,9 @@ hermes plugins install modal
 ```bash
 export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 ```
+
+要使用 [EU 模型](/docs/guide/model-apis#eu-models)，请设置 `MODAL_BASE_URL`
+到 `eu-west` 主机名或网关。
 
 ## 法典
 

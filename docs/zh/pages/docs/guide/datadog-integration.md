@@ -12,7 +12,7 @@
 
 1.导出Datadog中的Modal审核日志
 2. 将模态函数、沙盒和服务器日志导出到 Datadog
-3. 将模态函数、沙箱和服务器指标导出到 Datadog
+3. 将模态函数、沙盒和服务器指标导出到 Datadog
 
 ## 安装集成
 
@@ -29,7 +29,7 @@
 
 ## 指标
 
-模态 Datadog 集成会将以下指标转发给 Datadog：
+Modal Datadog 集成会将以下指标转发给 Datadog：
 
 * `modal.cpu.utilization`
 * `modal.memory.usage`
@@ -40,6 +40,8 @@
 * `modal.gpu.temperature`
 * `modal.gpu.clock`
 * `modal.gpu.count`
+* `modal.network.egress.bytes`
+* `modal.network.ingress.bytes`
 * `modal.container.running`
 * `modal.container.terminations`
 * `modal.input_events.elapsed_time_us`
@@ -52,19 +54,22 @@
 
 所有指标均标有 `container_id`、`environment_name`、`app_name`、`app_id`、
 `function_name`、`function_id`、`workspace_name`、`workspace_id`。指标来自
-GPU 容器另外标记有 `gpu_billing_type`，GPU 类型为
+GPU 容器还带有 `gpu_billing_type` 标签，GPU 类型为
 容器计费方式为（例如`H100`），可能与物理 GPU 模型不同
 当工作负载被调度到较新的 GPU 上时。
+沙盒中的指标还带有 `sandbox_id` 标签。
 `modal.container.terminations` 改为标记为 `container_id`，
 `environment_name`、`app_name`、`app_id`、`workspace_name`、`workspace_id`、
-`object_id`、`object_type`、`reason`。
-
-已弃用的指标：
+`object_id`、`object_type`、`reason`。已弃用的指标：
 
 * `modal.memory.utilization`（使用`modal.memory.usage`）
 * `modal.gpu.memory.utilization`（使用`modal.gpu.memory.usage`）
 
-可以使用`modal.input_events.successes`和`modal.input_events.total_inputs`衡量某个功能或应用程序的成功率。
+`modal.network.egress.bytes` 统计容器发送的字节数，流量相同
+计量[网络出口计费](/docs/guide/network-egress-billing)。
+
+可以使用`modal.input_events.successes`和`modal.input_events.total_inputs`
+衡量某个功能或应用程序的成功率。
 
 作为[官方 Datadog 集成](https://docs.datadoghq.com/integrations/modal/)，
 Datadog 上的模态指标是免费的，而日志是收费的。
@@ -105,7 +110,7 @@ Modal 在日志记录的`.message`字段中传递日志消息。至
 ## 节省成本
 
 模态 Datadog 集成会将所有日志转发到 Datadog，这可能是
-对于冗长的应用程序来说代价高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
+对于冗长的应用程序来说成本高昂。我们建议使用[日志管道](https://docs.datadoghq.com/logs/log_configuration/pipelines/?tab=source)
 或[索引排除过滤器](https://docs.datadoghq.com/logs/indexes/?tab=ui#exclusion-filters)
 在将日志发送到 Datadog 之前对其进行过滤。
 
@@ -121,7 +126,7 @@ Datadog，授权将被撤销。
 1. 进入【模态指标设置页面】(http://modal.com/settings/metrics)
    并选择“删除 Datadog 集成”。
 2. 在 Datadog 模态集成磁贴的配置选项卡上，
-单击卸载集成。
+   单击卸载集成。
 3. 确认您要卸载集成。
 4. 确保与此集成关联的所有 API 密钥均已
    通过在 [API 密钥](https://app.datadoghq.com/organization-settings/api-keys?filter=Modal) 上搜索集成名称来禁用

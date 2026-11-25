@@ -295,12 +295,12 @@ The lifecycle events, in order, are:
    commands inside the Sandbox with `sandbox.exec(...)`. Network tunnels and volume
    mounts are active.
 
-4. **Ready** — If [readiness probes](/docs/guide/sandboxes#readiness-probes) are
-   enabled for the Sandbox, this event fires once the probe succeeds, indicating that
+4. **Ready** — When a [readiness probe](/docs/guide/sandboxes#readiness-probes) is
+   configured for a Sandbox, this event fires once the probe succeeds, indicating that
    the service inside the Sandbox is fully initialized and ready to accept traffic.
    This is especially useful for Sandboxes running web servers or other services
    that need warm-up time before they can handle requests. If readiness probes are
-   not configured, this event is skipped.
+   not configured, this event is fires once the Sandbox has started.
 
 5. **Finished** — The Sandbox has stopped running. This can happen for several
    reasons: the entrypoint process exited on its own, the Sandbox was explicitly
@@ -374,8 +374,8 @@ the polling or signaling yourself. Modal also uses probe results to give you
 observability into how long this startup phase typically takes.
 
 A readiness probe is a check that Modal runs automatically inside the Sandbox at a
-configurable interval. You can then call `wait_until_ready()` to block until the probe
-succeeds.
+configurable interval. Calling `wait_until_ready()` on a Sandbox will block until
+the probe succeeds, or when the Sandbox has started if no probe is configured.
 
 There are two types of readiness probes:
 
@@ -662,10 +662,8 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 
 {/snippet} </CodeTabs>
 
-If you call `wait_until_ready()` on a Sandbox that was not configured with a readiness
-probe, an error will be raised. Similarly, calling it after the Sandbox has been
-terminated will raise an error. However, calling `wait_until_ready()` after the Sandbox
-has already become ready returns immediately.
+Calling `wait_until_ready()` after the Sandbox has been terminated will raise an
+error. If the Sandbox has already become ready, the method returns immediately.
 
 ## Return Codes
 
@@ -801,9 +799,6 @@ fmt.Println(string(stdout)) // Linux modal 7.2.6
 {/snippet} </CodeTabs>
 
 [GPU](/docs/guide/gpu) Sandboxes are only supported with `runtime="gvisor"`.
-
-Nested virtualization is available on the [Enterprise plan](/pricing) by setting
-`experimental_options={"enable_nested_virt": True}` on a VM Sandbox.
 
 ### Running Docker in a Sandbox
 

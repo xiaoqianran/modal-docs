@@ -47,7 +47,7 @@
   - [Sidecars（测试版）](https://modal.com/docs/guide/sandbox-sidecars.md)
   - [秘密注入(Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
 - 模型 API
-  - [模型 API](https://modal.com/docs/guide/shared-endpoints.md)- [型号及价格](https://modal.com/docs/guide/model-api-pricing.md)
+  - [模型 API](https://modal.com/docs/guide/model-apis.md)- [型号及价格](https://modal.com/docs/guide/model-api-pricing.md)
   - [代理集成](https://modal.com/docs/guide/endpoint-integrations.md)
 - 端点
   - [端点](https://modal.com/docs/guide/endpoints.md)
@@ -73,33 +73,33 @@
   - [作业队列](https://modal.com/docs/guide/job-queue.md)
   - [动态批处理](https://modal.com/docs/guide/dynamic-batching.md)
   - [多节点集群](https://modal.com/docs/guide/multi-node-clusters.md)
-- 部署
+- Deployment
   - [应用程序、功能和入口点](https://modal.com/docs/guide/apps.md)
   - [管理部署](https://modal.com/docs/guide/managing-deployments.md)
   - [持续部署](https://modal.com/docs/guide/continuous-deployment.md)
   - [预定功能](https://modal.com/docs/guide/cron.md)
   - [可观测性](https://modal.com/docs/guide/programmatic-observability.md)
-- HTTP 应用程序
-  - [服务器](https://modal.com/docs/guide/servers.md)
+- HTTP Applications
+  - [Servers](https://modal.com/docs/guide/servers.md)
   - [粘性会话](https://modal.com/docs/guide/sticky-sessions.md)
   - [网页功能](https://modal.com/docs/guide/webhooks.md)
   - [流媒体端点](https://modal.com/docs/guide/streaming-endpoints.md)
   - [Web 功能 URL](https://modal.com/docs/guide/webhook-urls.md)
   - [请求超时](https://modal.com/docs/guide/webhook-timeouts.md)
   - [代理代币](https://modal.com/docs/guide/webhook-proxy-auth.md)
-- 网络- [隧道](https://modal.com/docs/guide/tunnels.md)
+- Networking- [Tunnels](https://modal.com/docs/guide/tunnels.md)
   - [代理（测试版）](https://modal.com/docs/guide/proxy-ips.md)
   - [集群网络](https://modal.com/docs/guide/private-networking.md)
 - 数据共享和存储
   - [传递本地数据](https://modal.com/docs/guide/local-data.md)
-  - [卷数](https://modal.com/docs/guide/volumes.md)
+  - [Volumes](https://modal.com/docs/guide/volumes.md)
   - [存储模型权重](https://modal.com/docs/guide/model-weights.md)
   - [云桶坐骑](https://modal.com/docs/guide/cloud-bucket-mounts.md)
-  - [词典](https://modal.com/docs/guide/dicts.md)
-  - [队列](https://modal.com/docs/guide/queues.md)
+  - [Dicts](https://modal.com/docs/guide/dicts.md)
+  - [Queues](https://modal.com/docs/guide/queues.md)
   - [数据集摄取](https://modal.com/docs/guide/dataset-ingestion.md)
 - 秘密和环境变量
-  - [秘密](https://modal.com/docs/guide/secrets.md)
+  - [Secrets](https://modal.com/docs/guide/secrets.md)
   - [环境变量](https://modal.com/docs/guide/environment_variables.md)
 - 性能
   - [冷启动性能](https://modal.com/docs/guide/cold-start.md)
@@ -146,6 +146,7 @@
   - [异步API使用](https://modal.com/docs/guide/async.md)
   - [全局变量](https://modal.com/docs/guide/global-variables.md)
   - [地区选择](https://modal.com/docs/guide/region-selection.md)
+  - [本地化放置](https://modal.com/docs/guide/localized.md)
   - [GPU指标](https://modal.com/docs/guide/gpu-metrics.md)
   - [搜索语法](https://modal.com/docs/guide/log-search-syntax.md)
 
@@ -158,20 +159,20 @@
   - [服务网络功能](https://modal.com/docs/examples/basic_web.md)
 - 大型语言模型（LLM）
   - [使用 vLLM 部署兼容 OpenAI 的 LLM 服务](https://modal.com/docs/examples/llm_inference.md)
-  - [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)
-  - [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)- [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
+  - [使用快照将 Ministral 3 冷启动时间缩短 10 倍](https://modal.com/docs/examples/ministral3_inference.md)- [使用 vLLM 最大化批处理中的每秒令牌数](https://modal.com/docs/examples/vllm_throughput.md)
+  - [使用 SGLang 提供超低延迟聊天机器人](https://modal.com/docs/examples/sglang_low_latency.md)
   - [部署 Nemotron 3](https://modal.com/docs/examples/nemotron_inference.md)
   - [用 SGLang 服务 Inkling-Small](https://modal.com/docs/examples/inkling_small.md)
   - [服务DeepSeek-V4-Flash](https://modal.com/docs/examples/deepseek_v4_flash.md)
   - [运行多模式 RAG 聊天机器人来回答有关 PDF 的问题](https://modal.com/docs/examples/chat_with_pdf_vision.md)
-  - [使用 FastMCP 部署无状态 MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
+  - [使用FastMCP部署无状态MCP](https://modal.com/docs/examples/mcp_server_stateless.md)
 - 图像、视频和 3D
   - [使用 Flux Kontext 编辑图像](https://modal.com/docs/examples/image_to_image.md)
   - [微调你脸上的Wan2.1视频模型](https://modal.com/docs/examples/music-video-gen.md)
   - [使用 torch.compile 快速运行 Flux](https://modal.com/docs/examples/flux.md)
   - [使用 LTX-Video 制作动画图像](https://modal.com/docs/examples/image_to_video.md)
   - [使用LTX-Video生成视频剪辑](https://modal.com/docs/examples/ltx.md)
-  - [使用 CLI、API 和 Web UI 运行稳定的 Diffusion](https://modal.com/docs/examples/text_to_image.md)
+- [使用 CLI、API 和 Web UI 运行稳定的扩散](https://modal.com/docs/examples/text_to_image.md)
 - 音频
   - [使用 Kyutai STT 以语音速度传输文字记录](https://modal.com/docs/examples/streaming_kyutai_stt.md)
   - [使用 ACE-Step 制作音乐](https://modal.com/docs/examples/generate_music.md)
@@ -183,8 +184,8 @@
   - [FastRTC 的 WebRTC 快速入门](https://modal.com/docs/examples/fastrtc_flip_webcam.md)
 - 计算生物学
   - [使用 ESMFold2 设计蛋白质结合剂](https://modal.com/docs/examples/esmfold2_binder_design.md)
-  - [用 Chai-1 折叠蛋白质](https://modal.com/docs/examples/chai1.md)
-  - [构建蛋白质折叠仪表板](https://modal.com/docs/examples/esm3.md)- [用 Boltz-2 折叠蛋白质](https://modal.com/docs/examples/boltz_predict.md)
+  - [用 Chai-1 折叠蛋白质](https://modal.com/docs/examples/chai1.md)- [构建蛋白质折叠仪表板](https://modal.com/docs/examples/esm3.md)
+  - [用 Boltz-2 折叠蛋白质](https://modal.com/docs/examples/boltz_predict.md)
 - 模态沙箱
   - [在模态上运行光标云代理](https://modal.com/docs/examples/cursor.md)
   - [构建可扩展的AI编码平台](https://modal.com/docs/examples/modal-vibe.md)
@@ -194,14 +195,14 @@
   - [在模态沙箱上运行大规模并行评估](https://modal.com/docs/examples/harbor_evals.md)
   - [构建一个有状态的沙盒代码解释器](https://modal.com/docs/examples/simple_code_interpreter.md)
   - [在沙盒中运行 Node.js、Ruby 等](https://modal.com/docs/examples/safe_code_execution.md)
-  - [加速沙盒从暖池开始](https://modal.com/docs/examples/sandbox_pool.md)
-- [将机密注入出站请求](https://modal.com/docs/examples/sandbox_secret_injection.md)
+- [加速沙盒从暖池开始](https://modal.com/docs/examples/sandbox_pool.md)
+  - [将机密注入出站请求](https://modal.com/docs/examples/sandbox_secret_injection.md)
 - 强化学习
   - [用代码画花](https://modal.com/docs/examples/paint_flowers.md)
   - [训练编码特工](https://modal.com/docs/examples/swe_gym.md)
   - [让法学硕士数学更好](https://modal.com/docs/examples/miles_grpo.md)
 - 嵌入
-  - [使用 Modal 服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
+  - [使用模态服务器服务 Liquid AI 嵌入](https://modal.com/docs/examples/liquidai_embeddings_server.md)
   - [使用 TEI 嵌入数百万文档](https://modal.com/docs/examples/amazon_embeddings.md)
 - 并行处理和作业调度
   - [部署黑客新闻 Slackbot](https://modal.com/docs/examples/hackernews_alerts.md)
@@ -402,8 +403,8 @@
   - [Python SDK 和 CLI 发行说明](https://modal.com/docs/sdk/py/releases.md)
   - [`modal app`](https://modal.com/docs/cli/latest/app.md)
   - [`modal billing`](https://modal.com/docs/cli/latest/billing.md)
-  - [`modal changelog`](https://modal.com/docs/cli/latest/changelog.md)- [`modal config`](https://modal.com/docs/cli/latest/config.md)
-  - [`modal container`](https://modal.com/docs/cli/latest/container.md)
+  - [`modal changelog`](https://modal.com/docs/cli/latest/changelog.md)
+  - [`modal config`](https://modal.com/docs/cli/latest/config.md)- [`modal container`](https://modal.com/docs/cli/latest/container.md)
   - [`modal curl`](https://modal.com/docs/cli/latest/curl.md)
   - [`modal dashboard`](https://modal.com/docs/cli/latest/dashboard.md)
   - [`modal deploy`](https://modal.com/docs/cli/latest/deploy.md)
@@ -424,3 +425,7 @@
   - [`modal token`](https://modal.com/docs/cli/latest/token.md)
   - [`modal volume`](https://modal.com/docs/cli/latest/volume.md)
   - [`modal workspace`](https://modal.com/docs/cli/latest/workspace.md)
+
+## 品牌
+
+- [徽标、品牌颜色和新闻图片](https://modal.com/brand.md)

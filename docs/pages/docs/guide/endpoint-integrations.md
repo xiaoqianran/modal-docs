@@ -2,7 +2,7 @@
 
 # Agent integrations
 
-Use the hostname of your [Model API](/docs/guide/shared-endpoints) as the agent's
+Use the hostname of your [Model API](/docs/guide/model-apis) as the agent's
 model ID. Copy it from the dashboard.
 
 If your agent asks for a base URL, use the region in the hostname. For example,
@@ -36,6 +36,8 @@ running `/connect`:
 export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 ```
 
+By default, OpenCode's Modal provider lists models from the `us-west` gateway.
+
 ## Hermes Agent
 
 [Install Hermes Agent](https://hermes-agent.nousresearch.com/docs/) and install
@@ -52,10 +54,15 @@ To use an [Endpoint](/docs/guide/endpoints) with Hermes,
 set `MODAL_BASE_URL` to its base URL, for example
 `https://<workspace>-<env>--<app>.<region>.modal.direct/v1`.
 
+To use an [EU model](/docs/guide/model-apis#eu-models), set `MODAL_BASE_URL`
+to an `eu-west` hostname or gateway.
+
 ## Omp
 
 [Install Omp](https://omp.sh), run `/login modal`, and enter your Proxy Token.
-Then run `/model` and select your Model API by hostname.
+Then run `/model` and select your Model API by hostname. Alternatively, set
+`MODAL_BASE_URL` to an [Endpoint](/docs/guide/endpoints)'s base URL, for example
+`https://<workspace>-<env>--<app>.<region>.modal.direct/v1`.
 
 For CI or other headless use, set the token in the environment instead of
 running `/login modal`:
@@ -63,6 +70,9 @@ running `/login modal`:
 ```bash
 export MODAL_PROXY_TOKEN="wk-<id>.ws-<secret>"
 ```
+
+To use an [EU model](/docs/guide/model-apis#eu-models), set `MODAL_BASE_URL`
+to an `eu-west` hostname or gateway.
 
 ## Codex
 

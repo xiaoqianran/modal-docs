@@ -25,6 +25,8 @@ The Modal OpenTelemetry Integration will forward the following metrics to your p
 * `modal.gpu.temperature`
 * `modal.gpu.clock`
 * `modal.gpu.count`
+* `modal.network.egress.bytes`
+* `modal.network.ingress.bytes`
 * `modal.container.running`
 * `modal.container.terminations`
 * `modal.input_events.elapsed_time_us`
@@ -40,6 +42,9 @@ Deprecated metrics:
 * `modal.memory.utilization` (use `modal.memory.usage`)
 * `modal.gpu.memory.utilization` (use `modal.gpu.memory.usage`)
 
+`modal.network.egress.bytes` counts the bytes a container sends, the same traffic
+metered for [network egress billing](/docs/guide/network-egress-billing).
+
 `modal.input_events.successes` and `modal.input_events.total_inputs` can be used to measure the success rate of a certain function or app.
 
 These metrics are tagged with `container_id`, `environment_name`, `app_name`,
@@ -47,6 +52,7 @@ These metrics are tagged with `container_id`, `environment_name`, `app_name`,
 Metrics from GPU containers are additionally tagged with `gpu_billing_type`, the GPU
 type the container is billed as (e.g. `H100`), which may differ from the physical GPU
 model when a workload is scheduled onto a newer GPU.
+Metrics from Sandboxes are additionally tagged with `sandbox_id`.
 `modal.container.terminations` is instead tagged with `container_id`,
 `environment_name`, `app_name`, `app_id`, `workspace_name`, `workspace_id`,
 `object_id`, `object_type`, and `reason`.

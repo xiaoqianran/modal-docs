@@ -1,6 +1,6 @@
 # Proxy Tokens
 
-Use Proxy Tokens to prevent unauthorized clients from reaching your [Model APIs](/docs/guide/shared-endpoints), [Endpoints](/docs/guide/endpoints), [Servers](/docs/guide/servers), and [Web Functions](/docs/guide/webhooks). Proxy Tokens can be created in the [Dashboard settings](/settings/proxy-auth-tokens) or with the [`modal workspace proxy-tokens`](/docs/cli/latest/workspace#modal-workspace-proxy-tokens) CLI.
+Use Proxy Tokens to prevent unauthorized clients from reaching your [Model APIs](/docs/guide/model-apis), [Endpoints](/docs/guide/endpoints), [Servers](/docs/guide/servers), and [Web Functions](/docs/guide/webhooks). Proxy Tokens can be created in the [Dashboard settings](/settings/proxy-auth-tokens) or with the [`modal workspace proxy-tokens`](/docs/cli/latest/workspace#modal-workspace-proxy-tokens) CLI.
 
 ## Authentication models
 

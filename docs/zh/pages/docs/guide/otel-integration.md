@@ -19,13 +19,15 @@
 Modal OpenTelemetry 集成会将以下指标转发给您的提供商：
 
 * `modal.cpu.utilization`
-* `modal.memory.usage`
-* `modal.gpu.memory.usage`* `modal.gpu.compute.utilization`
+* `modal.memory.usage`* `modal.gpu.memory.usage`
+* `modal.gpu.compute.utilization`
 * `modal.gpu.power.usage`
 * `modal.gpu.power.utilization`
 * `modal.gpu.temperature`
 * `modal.gpu.clock`
 * `modal.gpu.count`
+* `modal.network.egress.bytes`
+* `modal.network.ingress.bytes`
 * `modal.container.running`
 * `modal.container.terminations`
 * `modal.input_events.elapsed_time_us`
@@ -41,6 +43,9 @@ Modal OpenTelemetry 集成会将以下指标转发给您的提供商：
 * `modal.memory.utilization`（使用`modal.memory.usage`）
 * `modal.gpu.memory.utilization`（使用`modal.gpu.memory.usage`）
 
+`modal.network.egress.bytes` 统计容器发送的字节数，流量相同
+计量[网络出口计费](/docs/guide/network-egress-billing)。
+
 `modal.input_events.successes`和`modal.input_events.total_inputs`可以用来衡量某个功能或应用程序的成功率。
 
 这些指标标记有 `container_id`、`environment_name`、`app_name`、
@@ -48,6 +53,7 @@ Modal OpenTelemetry 集成会将以下指标转发给您的提供商：
 来自 GPU 容器的指标还带有 `gpu_billing_type`（GPU）标记
 容器计费类型（例如`H100`），可能与物理 GPU 不同
 当工作负载被调度到较新的 GPU 上时的模型。
+沙盒中的指标还带有 `sandbox_id` 标签。
 `modal.container.terminations` 改为标记为 `container_id`，
 `environment_name`、`app_name`、`app_id`、`workspace_name`、`workspace_id`、
 `object_id`、`object_type`、`reason`。
@@ -61,8 +67,7 @@ Modal OpenTelemetry 集成会将以下指标转发给您的提供商：
 </Callout>
 
 Modal OpenTelemetry 集成允许您将自定义指标和跨度发送给您的提供商。你会
-然后需要导出我们的收集器环境变量。这些配置 OpenTelemetry SDK
-以 HTTP 格式向我们的收集器发送消息。您不需要执行此操作即可获得
+然后需要导出我们的收集器环境变量。这些配置 OpenTelemetry SDK以 HTTP 格式向我们的收集器发送消息。您不需要执行此操作即可获得
 上面的开箱即用指标，仅适用于您自己的自定义指标。
 
 ```python
@@ -75,7 +80,9 @@ Modal OpenTelemetry 集成允许您将自定义指标和跨度发送给您的提
 )
 def custom_metrics():
    ...
-```所有 OpenTelemetry SDK 都应选择此配置，并且您的自定义指标和跨度将是
+```
+
+所有 OpenTelemetry SDK 都应选择此配置，并且您的自定义指标和跨度将是
 发送到您配置的提供商。
 
 ## 安装集成
@@ -84,10 +91,10 @@ def custom_metrics():
    Modal 集成会将日志发送到。请注意，这应该是基本 URL
    OpenTelemetry 提供程序的名称，而不是特定的端点。例如，对于
    [美国新圣物实例](https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/#configure-endpoint-port-protocol),
-   端点 URL 是 `https://otlp.nr-data.net`，而不是 `https://otlp.nr-data.net/v1/logs`。
-2. 找出将日志发送到您的服务器所需的 API 密钥或其他身份验证方法
+端点 URL 是 `https://otlp.nr-data.net`，而不是 `https://otlp.nr-data.net/v1/logs`。
+2. 找出将日志发送到您的 API 密钥或其他身份验证方法
    OpenTelemetry 提供商。这是模态集成将用来进行身份验证的密钥
-与您的提供商。 Modal 可以提供任何键/值 HTTP 标头对。例如，对于
+   与您的提供商。 Modal 可以提供任何键/值 HTTP 标头对。例如，对于
    [新遗物](https://docs.newrelic.com/docs/opentelemetry/best-practices/opentelemetry-otlp/#api-key),
    标题是`api-key`。
 3. 在 Modal 中创建一个新的 OpenTelemetry Secret，每个标头有一个密钥。这些键应该是
@@ -104,6 +111,5 @@ def custom_metrics():
 
 卸载集成后，所有日志将停止发送到
 您的提供商。
-
 1. 进入【模态指标设置页面】(http://modal.com/settings/metrics)
    并禁用 OpenTelemetry 集成。

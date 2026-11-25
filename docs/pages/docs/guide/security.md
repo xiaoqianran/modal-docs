@@ -71,7 +71,7 @@ Retention varies by product; the table below shows how long each type of data is
 | Data                                  | Product                                                                                                                          | Retention                                                                                               |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | Inputs and outputs                    | [Functions](/docs/guide) (`.remote`, `.spawn`, `.map`, [Web Functions](/docs/guide/webhooks), Scheduled Functions)               | Up to 7 days, then deleted                                                                              |
-| Request and response payloads         | [Servers](/docs/guide/servers), [Endpoints](/docs/guide/endpoints), and [Model APIs](/docs/guide/shared-endpoints)               | Not stored — proxied directly to the serving container                                                  |
+| Request and response payloads         | [Servers](/docs/guide/servers), [Endpoints](/docs/guide/endpoints), and [Model APIs](/docs/guide/model-apis)                     | Not stored — proxied directly to the serving container                                                  |
 | App and container logs                | [Functions](/docs/guide), [Sandboxes](/docs/guide/sandboxes), [Servers](/docs/guide/servers), [Endpoints](/docs/guide/endpoints) | Plan-dependent: 1 day on Starter, 30 days on Team, configurable on Enterprise (see [pricing](/pricing)) |
 | Audit logs                            | Workspace (Enterprise)                                                                                                           | Per Enterprise contract (see [Audit logs](/docs/guide/audit-logs))                                      |
 | Files                                 | [Volumes](/docs/guide/volumes), [Images](/docs/guide/images)                                                                     | Persistent until you delete them                                                                        |
@@ -91,7 +91,7 @@ While we store app logs and metadata as part of operating the platform, we acces
 
 ### Zero data retention
 
-[Servers](/docs/guide/servers), [Endpoints](/docs/guide/endpoints), and [Model APIs](/docs/guide/shared-endpoints) have zero data retention. Request and response payloads are never written to disk and pass through Modal only as in-flight network traffic.
+[Servers](/docs/guide/servers), [Endpoints](/docs/guide/endpoints), and [Model APIs](/docs/guide/model-apis) have zero data retention. Request and response payloads are never written to disk and pass through Modal only as in-flight network traffic.
 
 For Servers, anything written to stdout or stderr is retained as container logs for your [plan's log retention period](#data-retention), so ensure that your code does not log request or response payloads.
 

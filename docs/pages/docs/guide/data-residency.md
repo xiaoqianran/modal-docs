@@ -13,15 +13,15 @@ For a full list of available regions, please visit our [region selection documen
 
 ‡ *Functions and Sandboxes set the container region with `region=`; Servers use `compute_region=`, and Endpoints use `--compute-region`.*
 
-| **Service**                                  | **Selectable container region?**                                  | **Selectable routing region?**                                |
-| -------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- |
-| [Endpoints](/docs/guide/endpoints)           | [Yes](/docs/guide/endpoints#configure-capacity-and-placement)     | [Yes](/docs/guide/endpoints#configure-capacity-and-placement) |
-| [Model APIs](/docs/guide/shared-endpoints)\* | No                                                                | No                                                            |
-| [Functions](/docs/guide/functions)           | [Yes](/docs/guide/region-selection#specifying-a-container-region) | [Yes](/docs/guide/region-selection#regional-routing)          |
-| [Sandboxes](/docs/guide/sandboxes)           | [Yes](/docs/guide/region-selection#specifying-a-container-region) | N/A†                                                          |
-| [Servers](/docs/guide/servers)               | [Yes](/docs/guide/servers#request-routing)                        | [Yes](/docs/guide/servers#request-routing)                    |
+| **Service**                            | **Selectable container region?**                                  | **Selectable routing region?**                                |
+| -------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------- |
+| [Endpoints](/docs/guide/endpoints)     | [Yes](/docs/guide/endpoints#configure-capacity-and-placement)     | [Yes](/docs/guide/endpoints#configure-capacity-and-placement) |
+| [Model APIs](/docs/guide/model-apis)\* | No                                                                | No                                                            |
+| [Functions](/docs/guide/functions)     | [Yes](/docs/guide/region-selection#specifying-a-container-region) | [Yes](/docs/guide/region-selection#regional-routing)          |
+| [Sandboxes](/docs/guide/sandboxes)     | [Yes](/docs/guide/region-selection#specifying-a-container-region) | N/A†                                                          |
+| [Servers](/docs/guide/servers)         | [Yes](/docs/guide/servers#request-routing)                        | [Yes](/docs/guide/servers#request-routing)                    |
 
-\* *Each Model API's routing region is determined by its model, and containers are distributed across Modal's global compute pool.*
+\* *Each Model API's routing region is determined by its model, and containers are distributed across Modal's global compute pool. [EU models](/docs/guide/model-apis#eu-models) route through `eu-west` and run only on containers in the European Economic Area (EEA).*
 
 † *Sandboxes don't use a routing region: data-plane requests (including encrypted tunnels, Sandbox Connect Tokens, `exec` input/output) go directly to the container in your selected region. Sandbox lifecycle requests (e.g. create and terminate) are routed through our control plane in `us-east`.*
 

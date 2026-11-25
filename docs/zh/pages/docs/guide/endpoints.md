@@ -16,7 +16,7 @@
   [检查或调整生成的源](#view-the- generated-source)
   在端点后面。
 
-有关 Modal 管理容量的按令牌付费推断，请参阅[模型 API](/docs/guide/shared-endpoints)。
+有关 Modal 管理容量的按令牌付费推断，请参阅[模型 API](/docs/guide/model-apis)。
 
 <span id="create-a-dedicated-endpoint"></span>
 
@@ -59,7 +59,7 @@ modal workspace proxy-tokens create
 可以调用 Endpoints 上的文本生成模型
 通过 OpenAI 兼容的聊天完成 (`/v1/chat/completions`)，
 完成 (`/v1/completions`) 和响应 (`/v1/responses`) API 或
-与人类兼容的消息 API (`/v1/messages`)。嵌入模型可以是
+Anthropic-compatible Messages API (`/v1/messages`).嵌入模型可以是
 通过 OpenAI 兼容的 Embeddings API (`/v1/embeddings`) 调用。
 
 ### URL 和型号名称
@@ -67,7 +67,7 @@ modal workspace proxy-tokens create
 端点的基本 URL 是其主机名，创建后显示在仪表板中
 并在`modal endpoint info`；例如，
 `https://my-endpoint.us-west.modal.direct`。将 `model` 设置为
-仪表板请求示例中显示的值。如果您使用以下命令创建端点
+value shown in the dashboard's request examples. If you create an Endpoint with
 `--name`，将该名称用作`model`。您还可以找回
 通过 OpenAI 兼容模型 API：
 
@@ -238,7 +238,7 @@ curl "<your-endpoint-url>/v1/chat/completions" \
 **活动**视图显示随时间变化的请求量。使用**响应**进行检查
 个人请求和**容器**检查为其提供服务的容器。
 
-对于文本生成模型，**指标**将**推理指标**—延迟、
+对于文本生成模型，**指标**将**推理指标**分开，即延迟、
 吞吐量、正在运行和排队的请求、缓存使用情况和推测
 解码——来自**服务器指标**，例如自动缩放和CPU、内存、网络、
 和 GPU 利用率。

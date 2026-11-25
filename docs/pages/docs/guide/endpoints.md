@@ -14,7 +14,7 @@ weights—as production-ready inference APIs on dedicated capacity.
   [inspect or adapt the generated source](#view-the-generated-source)
   behind an Endpoint.
 
-For pay-per-token inference on Modal-managed capacity, see [Model APIs](/docs/guide/shared-endpoints).
+For pay-per-token inference on Modal-managed capacity, see [Model APIs](/docs/guide/model-apis).
 
 <span id="create-a-dedicated-endpoint"></span>
 

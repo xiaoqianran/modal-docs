@@ -22,9 +22,9 @@
       "bytes": 1352
     },
     "docs.md": {
-      "hash": "cb923cc572a21eda64e675edf41ed154637b45b9",
-      "translatedAt": "2026-11-24T17:25:55.729Z",
-      "bytes": 29887
+      "hash": "9348545f73c4c984c78efc52bcdd914423824631",
+      "translatedAt": "2026-11-25T17:01:55.824Z",
+      "bytes": 30025
     },
     "docs/cli/latest/config.md": {
       "hash": "b1719805b290cfb9637b59e303649176439395bd",
@@ -542,9 +542,9 @@
       "bytes": 4687
     },
     "docs/guide/datadog-integration.md": {
-      "hash": "f2ecf4be5dd4ddbc85698194c993faee237d9fda",
-      "translatedAt": "2026-11-15T13:47:52.669Z",
-      "bytes": 4920
+      "hash": "8598b0ab2dd6d1f388cb2634507b31217cf7e527",
+      "translatedAt": "2026-11-25T17:01:49.836Z",
+      "bytes": 5178
     },
     "docs/guide/audit-logs.md": {
       "hash": "b1d7004d21df0ddc86c2263d94cd4bb833d3b8e2",
@@ -572,9 +572,9 @@
       "bytes": 5894
     },
     "docs/guide/endpoint-integrations.md": {
-      "hash": "c00bc9196e76c4746ff8420304e7f8c0825b5629",
-      "translatedAt": "2026-11-24T17:26:21.566Z",
-      "bytes": 3453
+      "hash": "dbcc3375b7786ba3d55eb2de32fc73eba5cb0042",
+      "translatedAt": "2026-11-25T17:01:53.448Z",
+      "bytes": 3938
     },
     "docs/guide/endpoint-metrics.md": {
       "hash": "3788d01b07cc3df5f898f9156ad62e4207240d44",
@@ -597,9 +597,9 @@
       "bytes": 2224
     },
     "docs/guide/endpoints.md": {
-      "hash": "331ebbcfd8a319424b1603b1abcf16067cd976c2",
-      "translatedAt": "2026-11-24T17:26:31.851Z",
-      "bytes": 8553
+      "hash": "af7be192e3f61146c0582999641677f0507c480d",
+      "translatedAt": "2026-11-25T17:01:59.701Z",
+      "bytes": 8560
     },
     "docs/guide/fast-pull-from-registry.md": {
       "hash": "73b08889e83c4b24978756264984d796b94fabd7",
@@ -712,9 +712,9 @@
       "bytes": 3024
     },
     "docs/guide/otel-integration.md": {
-      "hash": "a75d722ac4c769f35ab4d9e53ae94ff4778b21cd",
-      "translatedAt": "2026-10-23T11:24:26.851Z",
-      "bytes": 4619
+      "hash": "9d18baf6ef5208a739c503907780819a7f299e07",
+      "translatedAt": "2026-11-25T17:02:07.945Z",
+      "bytes": 4857
     },
     "docs/guide/parametrized-functions.md": {
       "hash": "c963adf94db86aadd82b7a3b2eb7b4f9d1da0934",
@@ -757,9 +757,9 @@
       "bytes": 3587
     },
     "docs/guide/region-selection.md": {
-      "hash": "2f4008f3d4982a66925d7f7e37cf0871d0d32283",
-      "translatedAt": "2026-11-24T17:26:45.289Z",
-      "bytes": 5407
+      "hash": "c887cbbad22bd0e567d817527ffacb423103a583",
+      "translatedAt": "2026-11-25T17:02:08.624Z",
+      "bytes": 5734
     },
     "docs/guide/retries.md": {
       "hash": "2517360db58b6d27496728db01b7ab661caa7225",
@@ -832,9 +832,9 @@
       "bytes": 9348
     },
     "docs/guide/sandboxes.md": {
-      "hash": "7c78cacc0e54ca9c0254d402983450f47a83ab16",
-      "translatedAt": "2026-11-18T15:29:09.499Z",
-      "bytes": 41829
+      "hash": "2c4362ec13c58640f76e69001e7d1e2e0a061892",
+      "translatedAt": "2026-11-25T17:02:26.315Z",
+      "bytes": 41648
     },
     "docs/guide/service-users.md": {
       "hash": "ffa551879d951668603cac71439f7ed839daea7b",
@@ -847,9 +847,9 @@
       "bytes": 2293
     },
     "docs/guide/servers.md": {
-      "hash": "3e4b2437034767accbc9a68cc52716e8b782197c",
-      "translatedAt": "2026-10-17T10:30:26.719Z",
-      "bytes": 8622
+      "hash": "1dd3983c1b4df9ddfb83ce70d65b1213770e81cd",
+      "translatedAt": "2026-11-25T17:02:35.993Z",
+      "bytes": 8757
     },
     "docs/guide/streaming-endpoints.md": {
       "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
@@ -862,9 +862,9 @@
       "bytes": 2115
     },
     "docs/guide/security.md": {
-      "hash": "e94aa3fcf4d43a54932f3be80a95c9ec11b81f8e",
-      "translatedAt": "2026-11-24T17:27:15.623Z",
-      "bytes": 12731
+      "hash": "3f81d251f25369eba5ac0064d76c8dfb98b83360",
+      "translatedAt": "2026-11-25T17:02:29.823Z",
+      "bytes": 12717
     },
     "docs/guide/tunnels.md": {
       "hash": "55d9ff7fb0dc64ff0583f3705220a864517950e5",
@@ -892,9 +892,9 @@
       "bytes": 2741
     },
     "docs/guide/webhook-proxy-auth.md": {
-      "hash": "d7f860d35a76dd332c905baae15a1e61927201c5",
-      "translatedAt": "2026-11-24T17:27:18.655Z",
-      "bytes": 3496
+      "hash": "c27efb68b7c4842e43e25ebe4769e6759aef57aa",
+      "translatedAt": "2026-11-25T17:02:31.949Z",
+      "bytes": 3493
     },
     "docs/guide/webhook-urls.md": {
       "hash": "d561108502ad2352cb65f0d0277623f330501a15",
@@ -1497,9 +1497,9 @@
       "bytes": 27243
     },
     "docs/guide/data-residency.md": {
-      "hash": "e9d23bcceaafae37768371c31f79f671d43b2e00",
-      "translatedAt": "2026-11-24T17:26:13.665Z",
-      "bytes": 9936
+      "hash": "dfe740d91aeabbc393ad38e6ad2e984025a4ebe6",
+      "translatedAt": "2026-11-25T17:01:45.371Z",
+      "bytes": 10036
     },
     "docs/sdk/go/latest/FunctionAutoscalerSettings.md": {
       "hash": "abeacba83058eb325c3015c9df2c1a3050e2cc1c",
@@ -2028,16 +2028,31 @@
       "bytes": 589
     },
     "docs/guide/model-api-pricing.md": {
-      "hash": "40ac4d7f3d2c5886293e8adf6362c5c1de18a71c",
-      "translatedAt": "2026-11-24T17:26:39.493Z",
-      "bytes": 1743
+      "hash": "e4017187116e90aa8f859423ff38c04e6a3436e9",
+      "translatedAt": "2026-11-25T17:02:05.525Z",
+      "bytes": 1892
+    },
+    "brand.md": {
+      "hash": "4ebc254c32ae4a21c10e99b3dd3ee9f59589beeb",
+      "translatedAt": "2026-11-25T17:01:33.953Z",
+      "bytes": 2194
+    },
+    "docs/guide/localized.md": {
+      "hash": "b391b1f794a62c51f2bfcc4e27f0de4972e3a304",
+      "translatedAt": "2026-11-25T17:02:00.078Z",
+      "bytes": 3377
+    },
+    "docs/guide/model-apis.md": {
+      "hash": "d17f10a9b6af2161583bab35901dc2fcc20bf9b2",
+      "translatedAt": "2026-11-25T17:02:02.520Z",
+      "bytes": 2455
     }
   },
-  "updatedAt": "2026-11-24T17:27:18.655Z",
+  "updatedAt": "2026-11-25T17:02:35.993Z",
   "stats": {
-    "translated": 12,
+    "translated": 15,
     "skipped": 383,
     "failed": 0,
-    "total": 395
+    "total": 398
   }
 }

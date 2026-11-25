@@ -110,6 +110,8 @@ The valid options for `routing_region=` are:
 
 Modal has a variety of tools to optimize network latency--even down to ~10ms in extreme cases like real-time robotics. Using container region selection in conjunction with a nearby routing region can eliminate significant network overhead.
 
+For latency-sensitive Functions and Servers, consider [localized placement](/docs/guide/localized) to prefer placements near a target location. Modal will attempt to schedule your containers as close to that location as possible. If no capacity is available within your preferred area, Modal will try the closest available locations farther away.
+
 [Cloudping.co](https://www.cloudping.co) provides good estimates of the latency between regions. For example, the round-trip latency between AWS `us-east` (Virginia, USA) and `us-west` (Oregon, USA) is around 60ms.
 
 Splitting out regional deployments with separate Functions can be done like so:

@@ -45,7 +45,7 @@ The docs are organized into three main sections:
   - [Sidecars (Beta)](https://modal.com/docs/guide/sandbox-sidecars.md)
   - [Secret injection (Beta)](https://modal.com/docs/guide/sandbox-secret-injection.md)
 - Model APIs
-  - [Model APIs](https://modal.com/docs/guide/shared-endpoints.md)
+  - [Model APIs](https://modal.com/docs/guide/model-apis.md)
   - [Models and pricing](https://modal.com/docs/guide/model-api-pricing.md)
   - [Agent integrations](https://modal.com/docs/guide/endpoint-integrations.md)
 - Endpoints
@@ -147,6 +147,7 @@ The docs are organized into three main sections:
   - [Asynchronous API usage](https://modal.com/docs/guide/async.md)
   - [Global variables](https://modal.com/docs/guide/global-variables.md)
   - [Region selection](https://modal.com/docs/guide/region-selection.md)
+  - [Localized placement](https://modal.com/docs/guide/localized.md)
   - [GPU Metrics](https://modal.com/docs/guide/gpu-metrics.md)
   - [Search syntax](https://modal.com/docs/guide/log-search-syntax.md)
 
@@ -436,3 +437,7 @@ The docs are organized into three main sections:
   - [`modal token`](https://modal.com/docs/cli/latest/token.md)
   - [`modal volume`](https://modal.com/docs/cli/latest/volume.md)
   - [`modal workspace`](https://modal.com/docs/cli/latest/workspace.md)
+
+## Brand
+
+- [Logo, Brand Colors, and Press Images](https://modal.com/brand.md)

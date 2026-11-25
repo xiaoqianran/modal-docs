@@ -1,16 +1,24 @@
 {
-  "fetchedAt": "2026-11-24T17:25:30.983Z",
+  "fetchedAt": "2026-11-25T17:01:31.270Z",
   "llmsUrl": "https://modal.com/llms.txt",
-  "totalUrls": 372,
-  "ok": 372,
+  "totalUrls": 374,
+  "ok": 374,
   "failed": 0,
   "pages": [
+    {
+      "url": "https://modal.com/brand.md",
+      "source": "https://modal.com/brand.md",
+      "finalUrl": "https://modal.com/brand.md",
+      "path": "brand.md",
+      "bytes": 2188,
+      "stub": false
+    },
     {
       "url": "https://modal.com/docs",
       "source": "https://modal.com/docs",
       "finalUrl": "https://modal.com/docs.md",
       "path": "docs.md",
-      "bytes": 30415,
+      "bytes": 30558,
       "stub": false
     },
     {
@@ -834,7 +842,7 @@
       "source": "https://modal.com/docs/guide/data-residency.md",
       "finalUrl": "https://modal.com/docs/guide/data-residency.md",
       "path": "docs/guide/data-residency.md",
-      "bytes": 11827,
+      "bytes": 11919,
       "stub": false
     },
     {
@@ -842,7 +850,7 @@
       "source": "https://modal.com/docs/guide/datadog-integration.md",
       "finalUrl": "https://modal.com/docs/guide/datadog-integration.md",
       "path": "docs/guide/datadog-integration.md",
-      "bytes": 5206,
+      "bytes": 5492,
       "stub": false
     },
     {
@@ -898,7 +906,7 @@
       "source": "https://modal.com/docs/guide/endpoint-integrations.md",
       "finalUrl": "https://modal.com/docs/guide/endpoint-integrations.md",
       "path": "docs/guide/endpoint-integrations.md",
-      "bytes": 3368,
+      "bytes": 3833,
       "stub": false
     },
     {
@@ -906,7 +914,7 @@
       "source": "https://modal.com/docs/guide/endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/endpoints.md",
       "path": "docs/guide/endpoints.md",
-      "bytes": 9078,
+      "bytes": 9072,
       "stub": false
     },
     {
@@ -1078,6 +1086,14 @@
       "stub": false
     },
     {
+      "url": "https://modal.com/docs/guide/localized.md",
+      "source": "https://modal.com/docs/guide/localized.md",
+      "finalUrl": "https://modal.com/docs/guide/localized.md",
+      "path": "docs/guide/localized.md",
+      "bytes": 3890,
+      "stub": false
+    },
+    {
       "url": "https://modal.com/docs/guide/log-search-syntax.md",
       "source": "https://modal.com/docs/guide/log-search-syntax.md",
       "finalUrl": "https://modal.com/docs/guide/log-search-syntax.md",
@@ -1114,7 +1130,15 @@
       "source": "https://modal.com/docs/guide/model-api-pricing.md",
       "finalUrl": "https://modal.com/docs/guide/model-api-pricing.md",
       "path": "docs/guide/model-api-pricing.md",
-      "bytes": 3194,
+      "bytes": 3503,
+      "stub": false
+    },
+    {
+      "url": "https://modal.com/docs/guide/model-apis.md",
+      "source": "https://modal.com/docs/guide/model-apis.md",
+      "finalUrl": "https://modal.com/docs/guide/model-apis.md",
+      "path": "docs/guide/model-apis.md",
+      "bytes": 2535,
       "stub": false
     },
     {
@@ -1178,7 +1202,7 @@
       "source": "https://modal.com/docs/guide/otel-integration.md",
       "finalUrl": "https://modal.com/docs/guide/otel-integration.md",
       "path": "docs/guide/otel-integration.md",
-      "bytes": 4851,
+      "bytes": 5137,
       "stub": false
     },
     {
@@ -1250,7 +1274,7 @@
       "source": "https://modal.com/docs/guide/region-selection.md",
       "finalUrl": "https://modal.com/docs/guide/region-selection.md",
       "path": "docs/guide/region-selection.md",
-      "bytes": 5833,
+      "bytes": 6181,
       "stub": false
     },
     {
@@ -1354,7 +1378,7 @@
       "source": "https://modal.com/docs/guide/sandboxes.md",
       "finalUrl": "https://modal.com/docs/guide/sandboxes.md",
       "path": "docs/guide/sandboxes.md",
-      "bytes": 43113,
+      "bytes": 42915,
       "stub": false
     },
     {
@@ -1394,7 +1418,7 @@
       "source": "https://modal.com/docs/guide/security.md",
       "finalUrl": "https://modal.com/docs/guide/security.md",
       "path": "docs/guide/security.md",
-      "bytes": 17019,
+      "bytes": 17013,
       "stub": false
     },
     {
@@ -1402,7 +1426,7 @@
       "source": "https://modal.com/docs/guide/servers.md",
       "finalUrl": "https://modal.com/docs/guide/servers.md",
       "path": "docs/guide/servers.md",
-      "bytes": 9745,
+      "bytes": 9889,
       "stub": false
     },
     {
@@ -1411,14 +1435,6 @@
       "finalUrl": "https://modal.com/docs/guide/service-users.md",
       "path": "docs/guide/service-users.md",
       "bytes": 4884,
-      "stub": false
-    },
-    {
-      "url": "https://modal.com/docs/guide/shared-endpoints.md",
-      "source": "https://modal.com/docs/guide/shared-endpoints.md",
-      "finalUrl": "https://modal.com/docs/guide/shared-endpoints.md",
-      "path": "docs/guide/shared-endpoints.md",
-      "bytes": 2258,
       "stub": false
     },
     {
@@ -1522,7 +1538,7 @@
       "source": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "path": "docs/guide/webhook-proxy-auth.md",
-      "bytes": 3606,
+      "bytes": 3600,
       "stub": false
     },
     {

@@ -1,6 +1,6 @@
 <!-- modal-docs: machine-translated zh-CN from English source -->
 
-# 沙盒
+# 沙箱
 
 此页面是沙箱的高级指南，
 用于在 Modal 上执行不受信任代码的安全容器。沙箱很有用
@@ -134,7 +134,7 @@ func main() {
 ＃＃ 配置
 沙箱是通过参数配置的
 [`Sandbox.create`](/docs/sdk/py/latest/Sandbox#create)。参考`Sandbox.create`
-有关沙盒配置的完整文档，或参阅
+有关沙箱配置的完整文档，或参见
 [JavaScript](/docs/sdk/js/latest/Sandbox) 和 [Go](/docs/sdk/go/latest/Sandbox)
 SDK 参考。
 
@@ -291,14 +291,15 @@ func main() {
    入口点进程（如果有）正在运行。此时就可以开始执行了
    沙盒内的命令带有`sandbox.exec(...)`。网络隧道和容量
    坐骑处于活动状态。
-4. **准备就绪** — 如果[就绪探针](/docs/guide/sandboxes#readiness-probes)
-   为沙盒启用，一旦探测成功，就会触发此事件，表明
+4. **就绪** — 当[就绪探针](/docs/guide/sandboxes#readiness-probes) 就绪时
+   配置为沙箱，一旦探测成功，就会触发此事件，表明
    沙箱内的服务已完全初始化并准备好接受流量。
    这对于运行 Web 服务器或其他服务的沙箱特别有用
    在处理请求之前需要预热时间。如果就绪探针是
-   未配置，将跳过此事件。
+   未配置，一旦沙盒启动，就会触发此事件。
 
-5. **完成** — 沙箱已停止运行。这可能会发生在几个人身上原因：入口点进程自行退出，沙箱被显式地退出
+5. **完成** — 沙盒已停止运行。这可能会发生在几个人身上
+   原因：入口点进程自行退出，沙箱被显式地退出
    终止（通过仪表板或`sandbox.terminate()`），超时或空闲超时
    已达到，或发生内存不足的情况。完成后，不再继续
    可以在沙箱内执行命令。您可以详细了解为什么沙盒
@@ -318,7 +319,6 @@ sb = modal.Sandbox.create(app=sb_app, timeout=10*60)  # 10 minutes
 ```
 
 {/片段}
-
 {#snippet python\_async()}
 
 ```python fixture:sb_app
@@ -326,6 +326,7 @@ sb = await modal.Sandbox.create.aio(app=sb_app, timeout=10*60)  # 10 minutes
 ```
 
 {/片段}
+
 {#snippet javascript()}
 
 ```javascript notest
@@ -368,8 +369,8 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 可观察到此启动阶段通常需要多长时间。
 
 就绪探测是检查 Modal 是否在沙箱内自动运行
-可配置的间隔。然后你可以调用`wait_until_ready()`来阻塞，直到探针
-成功了。
+可配置的间隔。在沙盒上调用 `wait_until_ready()` 将被阻止，直到
+探测成功，或者如果未配置探测，则在沙盒启动时成功。
 
 有两种类型的就绪探针：
 
@@ -377,11 +378,11 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
   当您的启动逻辑包括启动服务器时，这是最常见的选择。
 * **Execprobe** — 在沙箱内运行任意命令，并在以下情况下成功：
   命令退出，状态代码为 0。将此用于任何其他就绪条件：检查
-  文件存在，验证安装脚本是否已完成，确认依赖项
+  文件存在，验证安装脚本是否已完成，确认依赖关系
   安装等
 
 两种探头类型都接受一个`interval_ms`参数（默认值：100ms）来控制如何
-通常会重试检查，直到成功为止。
+通常会重试该检查，直到成功为止。
 
 #### TCP 就绪探测
 
@@ -445,6 +446,7 @@ await sb.waitUntilReady();
 // The server is now ready — interact with it via tunnels, exec, etc.
 await sb.terminate();
 ```
+
 {/片段}
 
 {#snippet go()}
@@ -597,10 +599,9 @@ func main() {
 }
 ```
 
-{/片段} </CodeTabs>
-
-**注意：** 就绪探针最多运行 5 分钟。如果探头没有
-在该窗口内成功，`wait_until_ready()`将提高`modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
+{/片段} </CodeTabs>**注意：** 就绪探针最多运行 5 分钟。如果探头没有
+在该窗口内成功，`wait_until_ready()`将提高
+`modal.exception.TimeoutError`。这是 Modal 自己的错误类而不是
 内置`TimeoutError`，所以裸露的`except TimeoutError`无法捕获它。探头
 超时不会自动终止沙盒 - 您可能想要捕获
 如果从未准备就绪，则会出现错误并显式终止沙箱：
@@ -653,11 +654,8 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 ```
 
 {/片段} </CodeTabs>
-
-如果您在未配置就绪状态的沙箱上调用 `wait_until_ready()`
-探针，将引发错误。同样，在沙箱结束后调用它
-终止会引发错误。然而，在沙盒之后调用`wait_until_ready()`
-已经准备好立即返回。
+沙盒终止后调用`wait_until_ready()`将引发
+错误。如果沙箱已经准备好，该方法立即返回。
 
 ## 返回代码
 
@@ -666,10 +664,10 @@ if err := sb.WaitUntilReady(ctx, 5*time.Minute); err != nil {
 它们可用于以下两者：
 
 * 沙箱中的进程（通过 [`ContainerProcess.returncode`](/docs/sdk/py/latest/container_process#returncode) / [`ContainerProcess.poll()`](/docs/sdk/py/latest/container_process#poll))
-* 沙箱本身（通过 [`Sandbox.returncode`](/docs/sdk/py/latest/Sandbox#returncode) / [`Sandbox.poll()`](/docs/sdk/py/latest/Sandbox#poll))
+* 沙箱本身（通过 [`Sandbox.returncode`](/docs/sdk/py/latest/Sandbox#returncode) / [`Sandbox.poll()`](/docs/sdk/py/latest/Sandbox#poll))<CodeTabs>
+  {#snippet python()}
 
-<CodeTabs>
-  {#snippet python()}```python fixture:sb_app
+```python fixture:sb_app
 sb = modal.Sandbox.create(app=sb_app)
 
 # Read returncode of individual process
@@ -743,14 +741,14 @@ fmt.Println(returnCodeSb) // 137
 
 沙箱在两个运行时之一上运行：
 
-* [**gVisor**](https://gvisor.dev/)，Google 开发的容器运行时，
-  提供强大的隔离性，适合大多数工作负载。
+* [**gVisor**](https://gvisor.dev/)，Google开发的容器运行时，
+  提供强隔离，适合大多数工作负载。
 * **虚拟机** 在具有自己的 Linux 内核的虚拟机中运行沙箱。使用
   适用于需要完整 Linux 环境的工作负载的 VM 运行时，例如
   在沙箱内运行 Docker，安装
   [FUSE](https://man7.org/linux/man-pages/man4/fuse.4.html) 文件系统，或
-  使用嵌套管理资源
-[cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。
+使用嵌套管理资源
+  [cgroups](https://man7.org/linux/man-pages/man7/cgroups.7.html)。
 
 通过 `runtime` 参数切换运行时，或者保持未设置状态，让 Modal 为您选择。
 
@@ -792,14 +790,11 @@ fmt.Println(string(stdout)) // Linux modal 7.2.6
 
 [GPU](/docs/guide/gpu) 沙箱仅支持 `runtime="gvisor"`。
 
-通过设置，可以在 [企业计划](/定价) 上使用嵌套虚拟化
-VM 沙盒上的`experimental_options={"enable_nested_virt": True}`。
-
 ### 在沙箱中运行 Docker
 
-使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙箱入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
-可以互相到达，并且`/var/lib/docker`包含在
-[文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
+使用VM运行时在沙箱中运行Docker。启动 `dockerd` 作为沙箱
+入口点并使用 `sb.exec` 运行容器。 Docker 桥上的容器
+可以互相到达，并且`/var/lib/docker`包含在[文件系统快照](/docs/guide/sandbox-snapshots#filesystem-snapshots)。
 
 <CodeTabs>
   {#snippet python()}
@@ -965,6 +960,7 @@ fmt.Println(string(stdout))
 {/片段} </CodeTabs>
 
 ### OIDC 身份令牌
+
 将`include_oidc_identity_token=True`传递给`modal.Sandbox.create`来注入
 `MODAL_IDENTITY_TOKEN` 包含 OIDC 令牌的环境变量
 沙盒。请参阅 [OIDC 集成指南](/docs/guide/oidc-integration)
@@ -1014,6 +1010,7 @@ modal.Sandbox.create(app=app, image=image)
 ```
 
 {/片段}
+
 {#snippet python\_async()}
 
 ```python notest
@@ -1068,7 +1065,6 @@ await modal.sandboxes.create(app, image);
 {/片段}
 
 {#snippet go()}
-
 ```go notest
 // build_sandbox_image.go
 app, err := mc.Apps.FromName(ctx, "sandbox-app", &modal.AppFromNameParams{
@@ -1095,13 +1091,14 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, nil)
 
 <Callout variant="info">
 
-* **Modal 在拉取后将外部图像标签视为不可变。** 对于[外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
+* **Modal 在拉取后将外部图像标签视为不可变。** 对于 [外部注册表](/docs/guide/existing-images) 图像，`Image.build` 始终返回缓存版本 - Modal 不会检测对可变标签（如 `:latest`）的上游更改。
 * 要获取新版本的外部注册表映像，请更新部署脚本中的标签（例如，`ubuntu:24.04` → `ubuntu:24.04-20240523`）。
 
 </Callout>
 
-## 使用入口点运行沙箱在大多数情况下，沙箱被视为可以运行任意命令的通用容器
-命令。但是，在某些情况下，您可能想要运行单个命令或脚本
+## 使用入口点运行沙箱
+
+在大多数情况下，沙箱被视为可以运行任意命令的通用容器命令。但是，在某些情况下，您可能想要运行单个命令或脚本
 作为沙盒的入口点。您可以通过将命令参数传递给
 沙箱构造函数：
 
@@ -1153,7 +1150,6 @@ sb, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 更具体的例子。
 
 ## 从其他代码引用沙箱
-
 如果您有正在运行的沙箱，则可以使用 `from_id` 方法检索它。
 
 <CodeTabs>
@@ -1224,9 +1220,9 @@ fmt.Println(string(stdout))
 
 一个常见的用例是保持沙箱池可用于执行任务
 当它们进来时。您可以保留“开放”沙箱的`object_id`列表，并且
-重用它们，在使用它们的任何函数中关闭`object_id`。## 命名沙箱
+重用它们，在使用它们的任何函数中关闭`object_id`。
 
-您可以在创建沙箱时为其指定名称。每个名称在应用程序中必须是唯一的 -
+## 命名沙箱您可以在创建沙箱时为其指定名称。每个名称在应用程序中必须是唯一的 -
 一次只有一个“正在运行”的沙箱可以使用给定名称。请注意，关联的应用程序必须是
 已部署的应用程序。一旦沙箱完全停止运行，其名称就可以重复使用。
 一些应用程序发现沙箱名称对于确保不超过一个沙箱是有用的。
@@ -1253,6 +1249,7 @@ sb2 = await modal.Sandbox.create.aio(app=sb_app, name="my-name")
 ```
 
 {/片段}
+
 {#snippet javascript()}
 
 ```javascript notest
@@ -1276,7 +1273,6 @@ sb2, err := mc.Sandboxes.Create(ctx, app, image, &modal.SandboxCreateParams{
 ```
 
 {/片段} </CodeTabs>
-
 可以使用 `from_name()` *但只能从已部署的应用程序中获取指定的沙箱
 如果沙盒当前正在运行*。如果没有找到正在运行的沙箱，`from_name()`将引发
 一个错误。
@@ -1342,15 +1338,16 @@ fmt.Println(sb1.SandboxID == sb2.SandboxID)
 沙箱名称只能包含字母数字字符、短划线、句点和下划线，并且必须
 少于 64 个字符。
 
-## 标记沙箱还可以用键值对标记。可以使用这些标签
-过滤 `Sandbox.list` 中的结果并
+## 标记
+
+沙箱还可以用键值对标记。可以使用这些标签过滤 `Sandbox.list` 中的结果并
 [细分沙盒成本](/docs/guide/sandbox-resources#cost-attribution)。标签是
 受这些限制：
 
 * 每个沙盒最多 10 个标签。
 * 标签键最多可包含 63 个字符。
 * 沙盒上所有标签键和值最多 512 字节。
-* 可以在沙箱运行时设置标签，但不能在沙箱终止后设置。
+* 可以在沙盒运行时设置标签，但不能在沙盒终止后设置标签。
 
 <CodeTabs>
   {#snippet python()}
@@ -1485,8 +1482,8 @@ for sandbox := range it {
 ```
 
 {/片段} </CodeTabs>
-## 清理客户端资源
 
+## 清理客户端资源
 当您使用 SDK 中的沙箱句柄与沙箱交互时（例如，
 调用`exec()`），它打开与远程沙箱的直接连接并保持
 它为后续命令打开。此连接和相关资源是

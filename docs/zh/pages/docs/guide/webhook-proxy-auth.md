@@ -2,7 +2,7 @@
 
 # 代理令牌
 
-使用代理令牌防止未经授权的客户端访问您的[模型 API](/docs/guide/shared-endpoints)、[端点](/docs/guide/endpoints)、[服务器](/docs/guide/servers) 和 [Web Functions](/docs/guide/webhooks)。代理令牌可以在 [仪表板设置](/settings/proxy-auth-tokens) 中或使用 [`modal workspace proxy-tokens`](/docs/cli/latest/workspace#modal-workspace-proxy-tokens) CLI 创建。
+使用代理令牌可防止未经授权的客户端访问您的[模型 API](/docs/guide/model-apis)、[端点](/docs/guide/endpoints)、[服务器](/docs/guide/servers) 和 [Web Functions](/docs/guide/webhooks)。代理令牌可以在 [仪表板设置](/settings/proxy-auth-tokens) 中或使用 [`modal workspace proxy-tokens`](/docs/cli/latest/workspace#modal-workspace-proxy-tokens) CLI 创建。
 
 ## 认证模型
 

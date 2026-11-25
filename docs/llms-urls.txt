@@ -1,3 +1,4 @@
+https://modal.com/brand.md
 https://modal.com/docs
 https://modal.com/docs/cli/latest/app.md
 https://modal.com/docs/cli/latest/billing.md
@@ -132,11 +133,13 @@ https://modal.com/docs/guide/job-queue.md
 https://modal.com/docs/guide/jupyter-notebooks.md
 https://modal.com/docs/guide/lifecycle-functions.md
 https://modal.com/docs/guide/local-data.md
+https://modal.com/docs/guide/localized.md
 https://modal.com/docs/guide/log-search-syntax.md
 https://modal.com/docs/guide/managing-deployments.md
 https://modal.com/docs/guide/memory-snapshots.md
 https://modal.com/docs/guide/modal-1-0-migration.md
 https://modal.com/docs/guide/model-api-pricing.md
+https://modal.com/docs/guide/model-apis.md
 https://modal.com/docs/guide/model-weights.md
 https://modal.com/docs/guide/multi-node-clusters.md
 https://modal.com/docs/guide/multi-node-training.md
@@ -174,7 +177,6 @@ https://modal.com/docs/guide/secrets.md
 https://modal.com/docs/guide/security.md
 https://modal.com/docs/guide/servers.md
 https://modal.com/docs/guide/service-users.md
-https://modal.com/docs/guide/shared-endpoints.md
 https://modal.com/docs/guide/slack-notifications.md
 https://modal.com/docs/guide/spindle.md
 https://modal.com/docs/guide/sticky-sessions.md
