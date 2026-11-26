@@ -25,7 +25,7 @@ Modal 在多个不同的云中全局运行容器。默认情况下，
 | `short` | <800公里| <20 毫秒 | 1.8 倍 |
 | `medium` | <2,500 公里 | <50 毫秒 | 1.5 倍 |
 | `long` | <6,400 公里 | <100 毫秒 | 1.1 倍 |
-| `none`（任何地方）|任何 |不适用 | 1x |
+| `none`（任何地方）|任何|不适用 | 1x |
 
 ## 配置本地化放置
 
@@ -86,10 +86,12 @@ Modal 将尝试将容器放置在给定的`preferred_distance`内
 
 ## 位置选项
 
-支持的`target_location`有`ashburn`、`chicago`、`columbus`、`dallas`、
+`target_location` 支持的选项有 `ashburn`、`chicago`、`columbus`、`dallas`、
 `dublin`、`frankfurt`、`los-angeles`、`phoenix` 和 `san-jose`。
+
+随着时间的推移，将会添加更多地点。如果您需要的地点不在此处，请告诉我们！
 
 ## 限制
 
-* 沙盒或集群函数不支持本地化放置
-  服务器。
+沙箱、函数或服务器不支持本地化放置
+`modal.clustered` 装饰器。

@@ -96,7 +96,7 @@ curl "https://parametrized-endpoint.modal.run?foo=hedgehog"
 ## 将参数化函数与生命周期函数结合使用
 参数化函数可以与[生命周期函数](/docs/guide/lifecycle-functions) 一起使用。
 
-例如，您可以通过以下方式参数化 [`@modal.enter`](/docs/guide/lifecycle-functions#enter) 生命周期函数来加载特定模型：
+例如，以下是如何参数化 [`@modal.enter`](/docs/guide/lifecycle-functions#modalenter) 生命周期函数来加载特定模型：
 
 ```python
 @app.cls()
@@ -117,4 +117,4 @@ class Model:
 
 ## 性能
 
-目前，参数化函数创建的速率限制为每秒 1 个，并可突发至 1000 个。如果您需要更高的速率限制，请[联系](mailto:support@modal.com)。
+目前，参数化函数创建的速率限制为每秒 1 个，并可突发至 1000 个。如果您需要更高的速率限制，请[联系我们](mailto:support@modal.com)。

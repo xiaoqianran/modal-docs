@@ -170,7 +170,7 @@ or saved to a
 
 Some work is tricky to serialize, like spinning up a network connection or an inference server.
 If you can move this initialization logic out of the function body and into the global scope or a
-[container `enter` method](https://modal.com/docs/guide/lifecycle-functions#enter),
+[container `enter` method](https://modal.com/docs/guide/lifecycle-functions#modalenter),
 you can move this work into the warm up period.
 Containers will not be considered warm until all `enter` methods have completed,
 so no inputs will be routed to containers that have yet to complete this initialization.

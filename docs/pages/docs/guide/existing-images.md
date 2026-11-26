@@ -100,7 +100,7 @@ containing the environment variables `AWS_ACCESS_KEY_ID`,
 `AWS_SECRET_ACCESS_KEY`, and `AWS_REGION`. The AWS IAM user account associated
 with those keys must have access to the private registry you want to access.
 
-Alternatively, you can use [OIDC token authentication](/docs/guide/oidc-integration#pull-images-from-aws-elastic-container-registry-ecr).
+Alternatively, you can use [OIDC token authentication](/docs/guide/oidc-integration#demo-usage-with-aws-elastic-container-registry-ecr).
 
 The user needs to have the following read-only policies:
 

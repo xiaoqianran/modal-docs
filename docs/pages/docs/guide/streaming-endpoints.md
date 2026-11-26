@@ -122,5 +122,5 @@ async def wrapper(segments):
 ## Further examples
 
 * Complete code for the simple examples given above is available
-  [in our modal-examples Github repository](https://github.com/modal-labs/modal-examples/blob/main/07_web_endpoints/streaming.py).
-* [An end-to-end example of streaming Youtube video transcriptions with OpenAI's whisper model.](https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/openai_whisper/streaming/main.py)
+  [in our modal-examples Github repository](https://github.com/modal-labs/modal-examples/blob/main/07_web/streaming.py).
+* [An end-to-end example of streaming audio transcriptions with OpenAI's Whisper model.](https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/speech-to-text/streaming_whisper.py)

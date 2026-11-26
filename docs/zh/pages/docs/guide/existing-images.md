@@ -11,7 +11,7 @@ custom_image = modal.Image.from_dockerfile("./src/Dockerfile")
 
 ## 使用 `.from_registry` 从公共注册表加载图像
 
-要从公共注册表加载图像，只需将图像名称（包括任何标签）传递到 [`Image.from_registry`](/docs/sdk/py/latest/Image#from_registry)：
+要从公共注册表加载图像，只需将图像名称（包括任何标签）传递给 [`Image.from_registry`](/docs/sdk/py/latest/Image#from_registry)：
 
 ```python
 sklearn_image = modal.Image.from_registry("huanjason/scikit-learn")
@@ -77,7 +77,7 @@ REGISTRY_PASSWORD=dckr_pat_REDACTED
 
 ### 弹性容器注册表 (ECR)
 
-您可以通过指定完整图像 URI 从您的 AWS ECR 账户中提取图像
+您可以通过指定完整图像 URI 从 AWS ECR 账户中提取图像
 如下：
 
 ```python
@@ -99,7 +99,7 @@ app = modal.App(image=image)
 包含环境变量`AWS_ACCESS_KEY_ID`，
 `AWS_SECRET_ACCESS_KEY`和`AWS_REGION`。关联的 AWS IAM 用户账户
 使用这些密钥必须能够访问您想要访问的私有注册表。
-或者，您可以使用 [OIDC 令牌身份验证](/docs/guide/oidc-integration#pull-images-from-aws-elastic-container-registry-ecr)。
+或者，您可以使用 [OIDC 令牌身份验证](/docs/guide/oidc-integration#demo-usage-with-aws-elastic-container-registry-ecr)。
 
 用户需要具有以下只读策略：
 
@@ -152,7 +152,7 @@ ECR 上的图像必须是私有的并遵循
 ### Azure 容器注册表 (ACR)
 
 Modal 没有本机 Azure 支持，但您可以使用以下命令从私有 ACR 中提取图像
-ACR 的[基于令牌的存储库权限](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-token-based-repository-permissions)
+ACR 的 [基于令牌的存储库权限](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-token-based-repository-permissions)
 生成长期存在的 Docker 凭证。然后可以存储这些凭据（令牌和密码）
 作为模态秘密并与 [`modal.Image.from_registry`](/docs/sdk/py/latest/Image#from_registry) 一起使用
 与 [Docker Hub 私有注册表](#docker-hub-private) 凭据相同。
@@ -178,7 +178,7 @@ def fit():
 由于 Modal 不使用 Docker 来构建容器，因此我们有自己的容器
 的实施
 [Dockerfile规范](https://docs.docker.com/engine/reference/builder/)。
-大多数 Dockerfile 应该可以开箱即用，但有一些差异
+大多数 Dockerfile 应该开箱即用，但有一些差异
 请注意。
 
 首先，一些次要的 Dockerfile 命令和标志尚未实现。

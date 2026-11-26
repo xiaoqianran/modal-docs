@@ -97,7 +97,7 @@ curl "https://parametrized-endpoint.modal.run?foo=hedgehog"
 
 Parametrized functions can be used with [lifecycle functions](/docs/guide/lifecycle-functions).
 
-For example, here is how you might parametrize the [`@modal.enter`](/docs/guide/lifecycle-functions#enter) lifecycle function to load a specific model:
+For example, here is how you might parametrize the [`@modal.enter`](/docs/guide/lifecycle-functions#modalenter) lifecycle function to load a specific model:
 
 ```python
 @app.cls()

@@ -101,7 +101,7 @@ CUDA工具包的组件可以通过`pip`安装，
 这些组件被列为一些流行的 GPU 加速 Python 库的依赖项，例如 `torch`。
 
 因为Modal已经包含了CUDA堆栈的较低部分，所以您可以安装这些库
-使用 [`modal.Image` 的 `pip_install` 方法](/docs/guide/images#add-python-packages-with-pip_install)，就像任何其他 Python 库一样：
+使用 [`modal.Image` 的 `pip_install` 方法](/docs/guide/images#add-python-packages)，就像任何其他 Python 库一样：
 
 ```python
 image = modal.Image.debian_slim().pip_install("torch")
@@ -185,5 +185,5 @@ def run_tiny_model():
 要查看这些安装模式的实际效果，请查看以下示例：
 
 * [大型 GPU 上的快速 LLM 推理](/docs/examples/llm_inference)
-* [优化的通量推断](/docs/examples/flux)
+* [优化通量推断](/docs/examples/flux)
 * [微调模型来绘制花朵](/docs/examples/paint_flowers)

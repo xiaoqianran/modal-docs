@@ -70,7 +70,7 @@ class Processor:
 
 @app.local_entrypoint()
 async def main():
-    await Processor().run.remote(x=123)
+    await Processor().run.remote.aio(x=123)
 ```
 
 注意： `@modal.enter()` 装饰器取代了早期的 `__enter__` 语法，

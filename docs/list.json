@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-25T17:01:31.270Z",
+  "fetchedAt": "2026-11-26T16:42:50.876Z",
   "llmsUrl": "https://modal.com/llms.txt",
   "totalUrls": 374,
   "ok": 374,
@@ -330,7 +330,7 @@
       "source": "https://modal.com/docs/examples/computer_use_vnc.md",
       "finalUrl": "https://modal.com/docs/examples/computer_use_vnc.md",
       "path": "docs/examples/computer_use_vnc.md",
-      "bytes": 14513,
+      "bytes": 14503,
       "stub": false
     },
     {
@@ -778,7 +778,7 @@
       "source": "https://modal.com/docs/guide/budgets.md",
       "finalUrl": "https://modal.com/docs/guide/budgets.md",
       "path": "docs/guide/budgets.md",
-      "bytes": 3349,
+      "bytes": 3353,
       "stub": false
     },
     {
@@ -794,7 +794,7 @@
       "source": "https://modal.com/docs/guide/cold-start.md",
       "finalUrl": "https://modal.com/docs/guide/cold-start.md",
       "path": "docs/guide/cold-start.md",
-      "bytes": 11239,
+      "bytes": 11244,
       "stub": false
     },
     {
@@ -826,7 +826,7 @@
       "source": "https://modal.com/docs/guide/cuda.md",
       "finalUrl": "https://modal.com/docs/guide/cuda.md",
       "path": "docs/guide/cuda.md",
-      "bytes": 10063,
+      "bytes": 10046,
       "stub": false
     },
     {
@@ -946,7 +946,7 @@
       "source": "https://modal.com/docs/guide/existing-images.md",
       "finalUrl": "https://modal.com/docs/guide/existing-images.md",
       "path": "docs/guide/existing-images.md",
-      "bytes": 9223,
+      "bytes": 9222,
       "stub": false
     },
     {
@@ -1058,7 +1058,7 @@
       "source": "https://modal.com/docs/guide/job-queue.md",
       "finalUrl": "https://modal.com/docs/guide/job-queue.md",
       "path": "docs/guide/job-queue.md",
-      "bytes": 5543,
+      "bytes": 5573,
       "stub": false
     },
     {
@@ -1074,7 +1074,7 @@
       "source": "https://modal.com/docs/guide/lifecycle-functions.md",
       "finalUrl": "https://modal.com/docs/guide/lifecycle-functions.md",
       "path": "docs/guide/lifecycle-functions.md",
-      "bytes": 3824,
+      "bytes": 3828,
       "stub": false
     },
     {
@@ -1090,7 +1090,7 @@
       "source": "https://modal.com/docs/guide/localized.md",
       "finalUrl": "https://modal.com/docs/guide/localized.md",
       "path": "docs/guide/localized.md",
-      "bytes": 3890,
+      "bytes": 4025,
       "stub": false
     },
     {
@@ -1210,7 +1210,7 @@
       "source": "https://modal.com/docs/guide/parametrized-functions.md",
       "finalUrl": "https://modal.com/docs/guide/parametrized-functions.md",
       "path": "docs/guide/parametrized-functions.md",
-      "bytes": 4485,
+      "bytes": 4490,
       "stub": false
     },
     {
@@ -1218,7 +1218,7 @@
       "source": "https://modal.com/docs/guide/preemption.md",
       "finalUrl": "https://modal.com/docs/guide/preemption.md",
       "path": "docs/guide/preemption.md",
-      "bytes": 1826,
+      "bytes": 1831,
       "stub": false
     },
     {
@@ -1266,7 +1266,7 @@
       "source": "https://modal.com/docs/guide/rbac.md",
       "finalUrl": "https://modal.com/docs/guide/rbac.md",
       "path": "docs/guide/rbac.md",
-      "bytes": 15239,
+      "bytes": 15243,
       "stub": false
     },
     {
@@ -1442,7 +1442,7 @@
       "source": "https://modal.com/docs/guide/slack-notifications.md",
       "finalUrl": "https://modal.com/docs/guide/slack-notifications.md",
       "path": "docs/guide/slack-notifications.md",
-      "bytes": 2520,
+      "bytes": 2522,
       "stub": false
     },
     {
@@ -1466,7 +1466,7 @@
       "source": "https://modal.com/docs/guide/streaming-endpoints.md",
       "finalUrl": "https://modal.com/docs/guide/streaming-endpoints.md",
       "path": "docs/guide/streaming-endpoints.md",
-      "bytes": 4742,
+      "bytes": 4727,
       "stub": false
     },
     {
@@ -1522,7 +1522,7 @@
       "source": "https://modal.com/docs/guide/user-groups.md",
       "finalUrl": "https://modal.com/docs/guide/user-groups.md",
       "path": "docs/guide/user-groups.md",
-      "bytes": 6181,
+      "bytes": 6185,
       "stub": false
     },
     {
@@ -1538,7 +1538,7 @@
       "source": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "finalUrl": "https://modal.com/docs/guide/webhook-proxy-auth.md",
       "path": "docs/guide/webhook-proxy-auth.md",
-      "bytes": 3600,
+      "bytes": 3604,
       "stub": false
     },
     {
@@ -1562,7 +1562,7 @@
       "source": "https://modal.com/docs/guide/webhooks.md",
       "finalUrl": "https://modal.com/docs/guide/webhooks.md",
       "path": "docs/guide/webhooks.md",
-      "bytes": 15942,
+      "bytes": 15947,
       "stub": false
     },
     {

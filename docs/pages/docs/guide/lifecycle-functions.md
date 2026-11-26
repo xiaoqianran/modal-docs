@@ -69,7 +69,7 @@ class Processor:
 
 @app.local_entrypoint()
 async def main():
-    await Processor().run.remote(x=123)
+    await Processor().run.remote.aio(x=123)
 ```
 
 Note: The `@modal.enter()` decorator replaces the earlier `__enter__` syntax, which

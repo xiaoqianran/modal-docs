@@ -101,7 +101,7 @@ and [`nvidia-cuda-nvrtc-cu12`](https://pypi.org/project/nvidia-cuda-nvrtc-cu12/)
 These components are listed as dependencies of some popular GPU-accelerated Python libraries, like `torch`.
 
 Because Modal already includes the lower parts of the CUDA stack, you can install these libraries
-with [the `pip_install` method of `modal.Image`](/docs/guide/images#add-python-packages-with-pip_install), just like any other Python library:
+with [the `pip_install` method of `modal.Image`](/docs/guide/images#add-python-packages), just like any other Python library:
 
 ```python
 image = modal.Image.debian_slim().pip_install("torch")

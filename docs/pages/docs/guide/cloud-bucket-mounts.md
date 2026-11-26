@@ -91,7 +91,7 @@ All these values are required.
 Modal provides [OIDC integration](/docs/guide/oidc-integration) and will automatically generate identity tokens to authenticate to AWS.
 OIDC eliminates the need for manual token passing through Modal Secrets and is based on short-lived tokens, which limits the window of exposure if a token is compromised.
 To use this feature, you must [configure AWS to trust Modal's OIDC provider](/docs/guide/oidc-integration#step-1-configure-aws-to-trust-modals-oidc-provider)
-and [create an IAM role that can be assumed by Modal Functions](/docs/guide/oidc-integration#step-2-create-an-iam-role-that-can-be-assumed-by-modal-functions).
+and [create an IAM role that can be assumed by Modal Functions](/docs/guide/oidc-integration#step-3-create-an-iam-role-that-can-be-assumed-by-modal-functions).
 
 Then, you specify the IAM role that your Modal Function should assume to access the S3 bucket.
 

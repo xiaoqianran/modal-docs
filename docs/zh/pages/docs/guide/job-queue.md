@@ -59,7 +59,7 @@ def main():
 * `process_job` 是执行实际作业处理的模态函数。
   要在 Modal 上部署 `process_job` 功能，请运行
   `modal deploy my_job_queue.py`。
-* `submit_job` 通过首先查找部署的 `process_job` 来提交新作业
+* `submit_job` 通过首先查找已部署的`process_job` 来提交新作业
   函数，然后使用作业数据调用`.spawn()`。它返回唯一的 ID
   生成的函数调用。
 * `get_job_result` 尝试检索先前提交的作业的结果
@@ -156,6 +156,6 @@ Modal 根据工作负载自动扩展作业队列，启动新的作业队列
 
 您可以通过配置来自定义作业队列的行为
 `@app.function()` 装饰器，具有以下选项
-[`retries`](/docs/guide/retries#function-retries),
+[`retries`](/docs/guide/retries#automatically-recover-from-flakes-with-retries),
 [`timeout`](/docs/guide/timeouts#timeouts)，以及
 [`max_containers`](/docs/guide/scale#configuring-autoscaling-behavior)。

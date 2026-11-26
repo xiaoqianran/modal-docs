@@ -37,7 +37,7 @@ def stream_me():
 
 ```shell
 curl --no-buffer https://modal-labs--example-streaming-stream-me.modal.run
-````text/event-stream` 的 MIME 类型在此示例中很重要，因为它告诉我们
+```在此示例中，`text/event-stream` 的 MIME 类型很重要，因为它告诉我们
 下游 Web 服务器立即返回响应，而不是缓冲
 它们以字节块的形式存在（这对于压缩来说更有效）。
 
@@ -88,7 +88,7 @@ def mapped():
 
 此代码片段将跨容器传播十个`map_me(i)`执行，并且
 完成后返回每个字符串响应部分。默认情况下，结果将是
-已订购，但如果没有必要，请传递 `order_outputs=False` 作为关键字
+已订购，但如果不需要，请传递 `order_outputs=False` 作为关键字
 `.map` 调用的参数。
 
 ### 异步流
@@ -121,5 +121,5 @@ async def wrapper(segments):
 ## 更多示例
 
 * 上面给出的简单示例的完整代码可用
-  [在我们的模态示例 Github 存储库中](https://github.com/modal-labs/modal-examples/blob/main/07_web_endpoints/streaming.py)。
-* [使用 OpenAI 的耳语模型进行流式 Youtube 视频转录的端到端示例。](https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/openai_whisper/streaming/main.py)
+  [在我们的模态示例 Github 存储库中](https://github.com/modal-labs/modal-examples/blob/main/07_web/streaming.py)。
+* [使用 OpenAI 的 Whisper 模型进行流式音频转录的端到端示例。](https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/speech-to-text/streaming_whisper.py)

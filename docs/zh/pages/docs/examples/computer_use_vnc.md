@@ -119,7 +119,7 @@ SANDBOX_COMMAND = textwrap.dedent(
 
 代理循环是代理的核心。在每一步中，它都会查看当前
 页面，选择一个操作，例如单击、键入或导航，并使用
-浏览器使用。循环重复直到模型决定任务完成。
+浏览器使用。循环重复，直到模型决定任务完成。
 
 ```python
 AGENT_SCRIPT = textwrap.dedent(
@@ -340,12 +340,12 @@ async def create_session(body: dict):
 
 @web_app.get("/api/session/{sandbox_id}")
 async def session_status(sandbox_id: str):
+    sandbox = modal.Sandbox.from_id(sandbox_id)
     try:
-        sandbox = await modal.Sandbox.from_id.aio(sandbox_id)
+        returncode = await sandbox.poll.aio()
     except modal.exception.NotFoundError as exc:
         raise fastapi.HTTPException(404, "Session not found.") from exc
 
-    returncode = await sandbox.poll.aio()
     if returncode is None:
         return {"state": "running"}
     stdout = await sandbox.stdout.read.aio()

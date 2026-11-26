@@ -92,7 +92,7 @@ export AWS_SESSION_TOKEN=XXX...
 Modal 提供 [OIDC 集成](/docs/guide/oidc-integration)，并将自动生成身份令牌以向 AWS 进行身份验证。
 OIDC 消除了通过模态秘密手动传递令牌的需要，并且基于短期令牌，这限制了令牌被泄露时的暴露窗口。
 要使用此功能，您必须[将 AWS 配置为信任 Modal 的 OIDC 提供商](/docs/guide/oidc-integration#step-1-configure-aws-to-trust-modals-oidc-provider)
-以及[创建可由模态函数代入的 IAM 角色](/docs/guide/oidc-integration#step-2-create-an-iam-role-that-can-be-assumed-by-modal-functions)。
+以及[创建可由模态函数代入的 IAM 角色](/docs/guide/oidc-integration#step-3-create-an-iam-role-that-can-be-assumed-by-modal-functions)。
 
 然后，您指定模态函数应承担的访问 S3 存储桶的 IAM 角色。
 

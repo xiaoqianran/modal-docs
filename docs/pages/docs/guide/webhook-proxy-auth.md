@@ -78,7 +78,7 @@ On Workspaces with RBAC enabled, tokens are scoped to specific Environments. See
 
 Workspace Managers can prevent deployments in an Environment from exposing unauthenticated URLs — Endpoints created with `--unauthenticated`, Servers with `unauthenticated=True`, and Web Functions without `requires_proxy_auth=True`.
 
-The control lives in [Settings → Environments](/settings/workspace-management/environments):
+The control lives in [Settings → Environments](/settings/workspace-management/environments/all):
 
 * **Workspace defaults** sets a default that applies to every Environment unless the Environment overrides it.
 * Each Environment can **Inherit** the workspace default, or explicitly **Block** or **Allow** unauthenticated URLs.

@@ -187,9 +187,9 @@
       "bytes": 16281
     },
     "docs/examples/computer_use_vnc.md": {
-      "hash": "cc057f08e874a52813ecf474dfcdf1880c8864d3",
-      "translatedAt": "2026-10-24T10:43:36.243Z",
-      "bytes": 14343
+      "hash": "6e0c431dc4d63fb0a1c0de96e9bd002432ce5de9",
+      "translatedAt": "2026-11-26T16:42:54.866Z",
+      "bytes": 14336
     },
     "docs/cli/changelog.md": {
       "hash": "98b30dd4a33c8356e1486e5a47d99d0f7e3e5dd7",
@@ -492,9 +492,9 @@
       "bytes": 4911
     },
     "docs/guide/budgets.md": {
-      "hash": "2a1067afc706e726ca25ecbceee9b157f71ad1da",
-      "translatedAt": "2026-10-01T12:56:34.666Z",
-      "bytes": 3145
+      "hash": "7d82a5802394f6c16c1ec6881687b0b9c9348faf",
+      "translatedAt": "2026-11-26T16:42:53.623Z",
+      "bytes": 3155
     },
     "docs/guide/billing.md": {
       "hash": "8958447ce75176f7cebcdc12514303f736ab9800",
@@ -502,14 +502,14 @@
       "bytes": 3346
     },
     "docs/guide/cloud-bucket-mounts.md": {
-      "hash": "ac493c1750884ea8a774d80d2ac2cc1231932a70",
-      "translatedAt": "2026-10-07T13:06:58.316Z",
+      "hash": "943ad8f2d12e225380a56f45d1277431f24293e6",
+      "translatedAt": "2026-11-26T16:43:01.482Z",
       "bytes": 10477
     },
     "docs/guide/cold-start.md": {
-      "hash": "d52d21dc31d276ebab77c376cbf5410456ecee22",
-      "translatedAt": "2026-08-08T18:29:00.986Z",
-      "bytes": 10055
+      "hash": "b0c4935b9c4b3255299b62acbd494b0dbe19f18e",
+      "translatedAt": "2026-11-26T16:43:00.743Z",
+      "bytes": 10069
     },
     "docs/guide/continuous-deployment.md": {
       "hash": "2653747e82ebbdf64825b1bac09a3d89e072f34a",
@@ -532,9 +532,9 @@
       "bytes": 7599
     },
     "docs/guide/cuda.md": {
-      "hash": "af906ca2b18de63085279ce8248b490353dd4470",
-      "translatedAt": "2026-10-29T12:46:18.684Z",
-      "bytes": 9605
+      "hash": "0d3661f82b951f9196a9c6939915a699fe0b570c",
+      "translatedAt": "2026-11-26T16:43:06.267Z",
+      "bytes": 9585
     },
     "docs/guide/dataset-ingestion.md": {
       "hash": "c63c7491991c6d825e5e81ef0b7775a9c7650f03",
@@ -612,9 +612,9 @@
       "bytes": 1634
     },
     "docs/guide/existing-images.md": {
-      "hash": "074ec6ada9c830ac69289b545aa6a26edb1b7680",
-      "translatedAt": "2026-08-12T07:42:22.754Z",
-      "bytes": 8887
+      "hash": "ed1394c902eac7a10abaf3264ca0e34b860b5941",
+      "translatedAt": "2026-11-26T16:43:08.934Z",
+      "bytes": 8875
     },
     "docs/guide/gpu-health.md": {
       "hash": "38025bcc27e0f76d4610b051998ab58ec1922ee5",
@@ -637,9 +637,9 @@
       "bytes": 7414
     },
     "docs/guide/job-queue.md": {
-      "hash": "7a5152e855ad73ba499f402f707b41ff962e9e69",
-      "translatedAt": "2026-08-08T18:29:23.154Z",
-      "bytes": 5370
+      "hash": "f7a834497d755e5c13f1bf18ad006d0523b402af",
+      "translatedAt": "2026-11-26T16:43:08.841Z",
+      "bytes": 5402
     },
     "docs/guide/high-performance-llm-inference.md": {
       "hash": "a2043b3c71c381dbc8db45bb0bb4a176da38bbb6",
@@ -662,9 +662,9 @@
       "bytes": 1076
     },
     "docs/guide/lifecycle-functions.md": {
-      "hash": "afcf9f72f85721b9f7fdb4610cc05b3c656808dc",
-      "translatedAt": "2026-08-08T18:29:24.922Z",
-      "bytes": 3666
+      "hash": "8ac992cd81f04a3602f356cd1fcfea237d561010",
+      "translatedAt": "2026-11-26T16:43:10.294Z",
+      "bytes": 3670
     },
     "docs/guide/managing-deployments.md": {
       "hash": "d1c2349f4c514906e46fc6052ab5e257c3f2d314",
@@ -717,14 +717,14 @@
       "bytes": 4857
     },
     "docs/guide/parametrized-functions.md": {
-      "hash": "c963adf94db86aadd82b7a3b2eb7b4f9d1da0934",
-      "translatedAt": "2026-08-08T18:29:36.234Z",
-      "bytes": 4292
+      "hash": "01029b4bbd39749ef18f6334f063f0b203be71ac",
+      "translatedAt": "2026-11-26T16:43:13.267Z",
+      "bytes": 4291
     },
     "docs/guide/preemption.md": {
-      "hash": "4bacf8d6888fbe857ce0d920255065c7a0fbc5ad",
-      "translatedAt": "2026-08-08T18:29:36.469Z",
-      "bytes": 1581
+      "hash": "18f41a1833c518386c517ee4cd709e81a188271d",
+      "translatedAt": "2026-11-26T16:43:13.544Z",
+      "bytes": 1586
     },
     "docs/guide/notebooks.md": {
       "hash": "c497f501318775173b5f457d651486e7b1e5ab7d",
@@ -792,9 +792,9 @@
       "bytes": 8710
     },
     "docs/guide/rbac.md": {
-      "hash": "e0d44ff2adfe4e56a304d48f5f9bc53a09103c07",
-      "translatedAt": "2026-11-12T14:59:17.925Z",
-      "bytes": 12313
+      "hash": "d2916251513417d224ad179f210417e7042c9c72",
+      "translatedAt": "2026-11-26T16:43:27.419Z",
+      "bytes": 12322
     },
     "docs/guide/sandbox-spawn.md": {
       "hash": "ed3a2a1bfaacaad910a68c533a2af0e7e39bb000",
@@ -842,9 +842,9 @@
       "bytes": 4609
     },
     "docs/guide/slack-notifications.md": {
-      "hash": "e76f2866603115ba68989718083953c82e7bf531",
-      "translatedAt": "2026-11-19T15:35:51.924Z",
-      "bytes": 2293
+      "hash": "3ab96311fbc0c0111222de73112ec3ae24a65ff0",
+      "translatedAt": "2026-11-26T16:43:16.127Z",
+      "bytes": 2297
     },
     "docs/guide/servers.md": {
       "hash": "1dd3983c1b4df9ddfb83ce70d65b1213770e81cd",
@@ -852,9 +852,9 @@
       "bytes": 8757
     },
     "docs/guide/streaming-endpoints.md": {
-      "hash": "ee34d868236ef8e96fdc810629fd0c5a7258841a",
-      "translatedAt": "2026-08-08T18:30:03.311Z",
-      "bytes": 4503
+      "hash": "eb81c9d916a8d97f1af7e1bcd5ca8255ca5d629f",
+      "translatedAt": "2026-11-26T16:43:19.636Z",
+      "bytes": 4490
     },
     "docs/guide/timeouts.md": {
       "hash": "89a61e17769d1c30cb0b0edffeacdf7460c379a5",
@@ -892,9 +892,9 @@
       "bytes": 2741
     },
     "docs/guide/webhook-proxy-auth.md": {
-      "hash": "c27efb68b7c4842e43e25ebe4769e6759aef57aa",
-      "translatedAt": "2026-11-25T17:02:31.949Z",
-      "bytes": 3493
+      "hash": "c73ba87172bbb63736e5a5e4c7d734e4ef5fc0aa",
+      "translatedAt": "2026-11-26T16:43:23.928Z",
+      "bytes": 3497
     },
     "docs/guide/webhook-urls.md": {
       "hash": "d561108502ad2352cb65f0d0277623f330501a15",
@@ -917,9 +917,9 @@
       "bytes": 4170
     },
     "docs/guide/webhooks.md": {
-      "hash": "6ccc4f079a5701de871c9a707381faabae14ed12",
-      "translatedAt": "2026-11-10T14:42:38.396Z",
-      "bytes": 15568
+      "hash": "47d0670798f6e66e5fa92eec9d6bc11daf2457e4",
+      "translatedAt": "2026-11-26T16:43:29.699Z",
+      "bytes": 15573
     },
     "docs/guide/workspaces.md": {
       "hash": "b0bc06ba564fa502f083bbf50d1cdb1cd2b1a2ab",
@@ -1593,9 +1593,9 @@
       "bytes": 2182
     },
     "docs/guide/user-groups.md": {
-      "hash": "87b9d648fae1f2abec41cdec9b567a200fe6723a",
-      "translatedAt": "2026-10-08T13:14:29.969Z",
-      "bytes": 5720
+      "hash": "fe788bab707ff0f74025320c31ceff142408cb0d",
+      "translatedAt": "2026-11-26T16:43:23.449Z",
+      "bytes": 5724
     },
     "docs/guide/getting-started.md": {
       "hash": "e609bcf69c16d4e0c279138f715763f36e43865b",
@@ -2038,9 +2038,9 @@
       "bytes": 2194
     },
     "docs/guide/localized.md": {
-      "hash": "b391b1f794a62c51f2bfcc4e27f0de4972e3a304",
-      "translatedAt": "2026-11-25T17:02:00.078Z",
-      "bytes": 3377
+      "hash": "126ad5ec9097b45799c09cf1f4747497044f7f95",
+      "translatedAt": "2026-11-26T16:43:12.717Z",
+      "bytes": 3514
     },
     "docs/guide/model-apis.md": {
       "hash": "d17f10a9b6af2161583bab35901dc2fcc20bf9b2",
@@ -2048,10 +2048,10 @@
       "bytes": 2455
     }
   },
-  "updatedAt": "2026-11-25T17:02:35.993Z",
+  "updatedAt": "2026-11-26T16:43:29.699Z",
   "stats": {
-    "translated": 15,
-    "skipped": 383,
+    "translated": 17,
+    "skipped": 381,
     "failed": 0,
     "total": 398
   }

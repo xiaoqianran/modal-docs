@@ -13,7 +13,7 @@ with Function run duration.
 
 Design your applications to be fault and preemption tolerant. Modal will send an
 interrupt signal to your container when preemption occurs. This will cause the
-Function's [exit handler](/docs/guide/lifecycle-functions#exit) to run, which
+Function's [exit handler](/docs/guide/lifecycle-functions#modalexit) to run, which
 can perform any cleanup within its grace period.
 
 Other best practices for handling preemptions include:

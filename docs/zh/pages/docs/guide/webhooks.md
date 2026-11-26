@@ -223,7 +223,7 @@ ASGI 应用程序中的事件循环。请参阅[本指南](/docs/guide/concurren
 
 #### ASGI 寿命
 
-虽然我们建议使用 [`@modal.enter`](https://modal.com/docs/guide/lifecycle-functions#enter) 来定义容器生命周期挂钩，但我们也支持 [ASGI 生命周期协议](https://asgi.readthedocs.io/en/latest/specs/lifespan.html)。生命周期从容器启动时开始，通常是在第一次请求时。这是使用 [FastAPI](https://fastapi.tiangolo.com/advanced/events/#lifespan) 的示例：
+虽然我们建议使用 [`@modal.enter`](https://modal.com/docs/guide/lifecycle-functions#modalenter) 来定义容器生命周期挂钩，但我们也支持 [ASGI 生命周期协议](https://asgi.readthedocs.io/en/latest/specs/lifespan.html)。生命周期从容器启动时开始，通常是在第一次请求时。这是使用 [FastAPI](https://fastapi.tiangolo.com/advanced/events/#lifespan) 的示例：
 
 ```python
 import modal

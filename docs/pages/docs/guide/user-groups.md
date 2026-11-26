@@ -108,7 +108,7 @@ may still have access through other RBAC settings.
 
 ### From Environment settings
 
-1. Open [Environment settings](/settings/workspace-management/environments).
+1. Open [Environment settings](/settings/workspace-management/environments/all).
 2. Click **Manage** for a Restricted Environment, then open the **Access
    Restrictions** tab.
 3. Select the **Groups** tab and click **Add Group**.

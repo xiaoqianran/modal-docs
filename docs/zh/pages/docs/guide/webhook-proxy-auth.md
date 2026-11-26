@@ -79,7 +79,7 @@ curl -H "Authorization: Bearer $TOKEN_ID.$TOKEN_SECRET" \
 
 工作区管理器可以防止环境中的部署暴露未经身份验证的 URL — 使用 `--unauthenticated` 创建的端点、使用 `unauthenticated=True` 创建的服务器以及不使用 `requires_proxy_auth=True` 的 Web 功能。
 
-该控件位于[设置→环境](/settings/workspace-management/environments)：
+该控件位于[设置→环境](/settings/workspace-management/environments/all)：
 
 * **工作空间默认值** 设置适用于每个环境的默认值，除非环境覆盖它。
 * 每个环境都可以**继承**工作区默认值，或显式**阻止**或**允许**未经身份验证的 URL。

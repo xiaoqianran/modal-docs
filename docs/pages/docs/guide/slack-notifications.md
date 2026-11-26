@@ -4,7 +4,7 @@ You can integrate your Modal Workspace with Slack to receive timely essential no
 
 ## Prerequisites
 
-* You are a [Workspace Manager](/docs/guide/workspaces#administrating-workspace-members) in the Modal Workspace you're installing the Slack integration in.
+* You are a [Workspace Manager](/docs/guide/workspaces#administering-workspace-membership) in the Modal Workspace you're installing the Slack integration in.
 * You have permissions to install apps in your Slack workspace.
 
 ## Supported notifications

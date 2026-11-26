@@ -6,7 +6,7 @@
 
 ## 先决条件
 
-* 您是要在其中安装 Slack 集成的模态工作区中的[工作区管理员](/docs/guide/workspaces#administrate-workspace-members)。
+* 您是要在其中安装 Slack 集成的模态工作区中的[工作区管理员](/docs/guide/workspaces#administering-workspace-membership)。
 * 您有权在 Slack 工作区中安装应用程序。
 
 ## 支持的通知

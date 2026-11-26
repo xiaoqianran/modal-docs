@@ -87,10 +87,12 @@ Each container is billed at the higher rate between its localized multiplier and
 
 ## Location options
 
-Supported `target_location` are `ashburn`, `chicago`, `columbus`, `dallas`,
+Supported options for `target_location` are `ashburn`, `chicago`, `columbus`, `dallas`,
 `dublin`, `frankfurt`, `los-angeles`, `phoenix`, and `san-jose`.
+
+More locations will be added over time. Let us know if you need a location which is not here!
 
 ## Limitations
 
-* Localized placement is not supported for Sandboxes or clustered Functions or
-  Servers.
+Localized placement is not supported for Sandboxes, or for Functions or Servers with
+the `modal.clustered` decorator.

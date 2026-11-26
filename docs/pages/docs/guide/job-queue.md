@@ -155,6 +155,6 @@ reliability features like automatic retries and timeout handling.
 
 You can customize the behavior of the job queue by configuring the
 `@app.function()` decorator with options like
-[`retries`](/docs/guide/retries#function-retries),
+[`retries`](/docs/guide/retries#automatically-recover-from-flakes-with-retries),
 [`timeout`](/docs/guide/timeouts#timeouts), and
 [`max_containers`](/docs/guide/scale#configuring-autoscaling-behavior).

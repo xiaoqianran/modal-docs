@@ -41,7 +41,7 @@ Service users do not use the member default: they default to **No Access** in ev
 
 ## Setting up Restricted Environments
 
-Create and manage Restricted Environments from [Environment settings](/settings/workspace-management/environments).
+Create and manage Restricted Environments from [Environment settings](/settings/workspace-management/environments/all).
 
 You can also create a Restricted Environment with [`modal environment create --restricted NAME`](/docs/cli/latest/environment#modal-environment-create).
 
